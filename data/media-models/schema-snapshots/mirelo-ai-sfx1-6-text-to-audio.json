@@ -1,0 +1,129 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "mirelo-ai/sfx1.6/text-to-audio",
+  "task": "text-to-audio",
+  "source_url": "https://fal.ai/models/mirelo-ai/sfx1.6/text-to-audio",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=mirelo-ai%2Fsfx1.6%2Ftext-to-audio",
+  "retrieved_at": "2026-09-23T14:38:08.125Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "text-to-audio",
+  "bytes_sha256": "1fcc9cbffff8b76b35fe10e1a50d9ef90a327ed6fd87a115112ea436a142640b",
+  "queue_path": "/mirelo-ai/sfx1.6/text-to-audio",
+  "input_name": "Sfx16TextToAudioInput",
+  "input": {
+    "$refName": "Sfx16TextToAudioInput",
+    "type": "object",
+    "properties": {
+      "num_samples": {
+        "type": "integer",
+        "default": 2,
+        "minimum": 1,
+        "maximum": 4,
+        "description": "Number of variations to generate."
+      },
+      "seed": {
+        "description": "Seed for generation. -1 or None for random.",
+        "anyOf": [
+          {
+            "type": "integer",
+            "minimum": -1,
+            "maximum": 18446744073709552000
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "double_output": {
+        "type": "boolean",
+        "default": false,
+        "description": "Only used when ambience=true: concatenate the loop with itself for a 2x-length output."
+      },
+      "ambience": {
+        "type": "boolean",
+        "default": false,
+        "description": "When true, generate a seamlessly loopable ambience tile (room tone, rain, drones, etc.). When false, generate a generic text-conditioned SFX of `duration` seconds."
+      },
+      "duration": {
+        "type": "number",
+        "default": 10,
+        "minimum": 0.1,
+        "maximum": 60,
+        "description": "Duration of the generated audio in seconds. The minimum is 0.1s for ordinary sound effects and 1s when ambience=true."
+      },
+      "upload_audio_format": {
+        "type": "string",
+        "enum": [
+          "wav",
+          "mp3",
+          "aac",
+          "flac"
+        ],
+        "default": "wav",
+        "description": "Audio format for the returned files."
+      },
+      "text_prompt": {
+        "type": "string",
+        "minLength": 4,
+        "description": "Text prompt for the generated audio."
+      }
+    },
+    "required": [
+      "text_prompt"
+    ]
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs."
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics."
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "Sfx16TextToAudioInput",
+    "Sfx16TextToAudioOutput",
+    "Audio"
+  ]
+}

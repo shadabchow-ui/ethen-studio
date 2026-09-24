@@ -1,0 +1,84 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/speech-to-text/stream",
+  "task": "speech",
+  "source_url": "https://fal.ai/models/fal-ai/speech-to-text/stream",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fspeech-to-text%2Fstream",
+  "retrieved_at": "2026-09-23T14:37:46.505Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "speech-to-text",
+  "bytes_sha256": "b30311f011de6d7ea48e70bf250b504124ca7823f2d6bde7b255981a11dc81da",
+  "queue_path": "/fal-ai/speech-to-text/stream",
+  "input_name": "SpeechToTextStreamInput",
+  "input": {
+    "$refName": "SpeechToTextStreamInput",
+    "type": "object",
+    "properties": {
+      "use_pnc": {
+        "type": "boolean",
+        "default": true,
+        "description": "Whether to use Canary's built-in punctuation & capitalization"
+      },
+      "audio_url": {
+        "type": "string",
+        "description": "Local filesystem path (or remote URL) to a long audio file"
+      }
+    },
+    "required": [
+      "audio_url"
+    ]
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs."
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics."
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "SpeechToTextStreamInput",
+    "SpeechToTextStreamOutput"
+  ]
+}

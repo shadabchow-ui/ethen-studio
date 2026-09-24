@@ -1,0 +1,171 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/tada/3b/text-to-speech",
+  "task": "text-to-audio",
+  "source_url": "https://fal.ai/models/fal-ai/tada/3b/text-to-speech",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Ftada%2F3b%2Ftext-to-speech",
+  "retrieved_at": "2026-09-23T14:38:00.153Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "audio-to-audio",
+  "bytes_sha256": "2b425deace8783f66714916980d788b7e7ac6a346f32e37ba62b8090fc81dde2",
+  "queue_path": "/fal-ai/tada/3b/text-to-speech",
+  "input_name": "Tada3bTextToSpeechInput",
+  "input": {
+    "$refName": "Tada3bTextToSpeechInput",
+    "type": "object",
+    "properties": {
+      "prompt": {
+        "type": "string",
+        "description": "The text to synthesize into speech using the reference speaker's voice."
+      },
+      "acoustic_cfg_scale": {
+        "type": "number",
+        "default": 1.6,
+        "minimum": 0,
+        "maximum": 10,
+        "description": "Classifier-free guidance scale for acoustic feature generation."
+      },
+      "transcript": {
+        "type": "string",
+        "default": "",
+        "description": "Transcript of the reference audio. For non-English audio, providing a transcript is required since the built-in ASR is English-only."
+      },
+      "repetition_penalty": {
+        "type": "number",
+        "default": 1.1,
+        "minimum": 1,
+        "maximum": 2,
+        "description": "Penalty applied to repeated tokens during generation."
+      },
+      "output_format": {
+        "type": "string",
+        "enum": [
+          "wav",
+          "mp3"
+        ],
+        "default": "wav",
+        "description": "The format of the output audio file."
+      },
+      "noise_temperature": {
+        "type": "number",
+        "default": 0.9,
+        "minimum": 0,
+        "maximum": 2,
+        "description": "Temperature for noise in the flow matching diffusion process."
+      },
+      "language": {
+        "type": "string",
+        "enum": [
+          "en",
+          "ar",
+          "ch",
+          "de",
+          "es",
+          "fr",
+          "it",
+          "ja",
+          "pl",
+          "pt"
+        ],
+        "default": "en",
+        "description": "Language for text alignment. Use the appropriate code for non-English synthesis."
+      },
+      "num_extra_steps": {
+        "type": "integer",
+        "default": 0,
+        "minimum": 0,
+        "maximum": 50,
+        "description": "Number of extra autoregressive steps for speech continuation beyond the input text. Useful for generating trailing prosody or silence."
+      },
+      "temperature": {
+        "type": "number",
+        "default": 0.6,
+        "maximum": 2,
+        "description": "Sampling temperature for text token generation. Must be greater than 0. Higher values produce more varied output."
+      },
+      "num_inference_steps": {
+        "type": "integer",
+        "default": 20,
+        "minimum": 1,
+        "maximum": 50,
+        "description": "Number of ODE solver steps for flow matching acoustic generation. More steps improve quality at the cost of speed."
+      },
+      "top_p": {
+        "type": "number",
+        "default": 0.9,
+        "minimum": 0,
+        "maximum": 1,
+        "description": "Top-p (nucleus) sampling parameter for text generation."
+      },
+      "speed_up_factor": {
+        "type": "number",
+        "default": 1,
+        "minimum": 0.5,
+        "maximum": 2,
+        "description": "Factor to speed up or slow down the generated speech. Values > 1.0 speed up, < 1.0 slow down."
+      },
+      "audio_url": {
+        "type": "string",
+        "description": "URL of the reference audio file for voice cloning. The model will replicate this speaker's voice characteristics."
+      }
+    },
+    "required": [
+      "audio_url",
+      "prompt"
+    ]
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs."
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics."
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "Tada3bTextToSpeechInput",
+    "Tada3bTextToSpeechOutput",
+    "AudioFile"
+  ]
+}

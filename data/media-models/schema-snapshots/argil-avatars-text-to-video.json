@@ -1,0 +1,144 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "argil/avatars/text-to-video",
+  "task": "text-to-video",
+  "source_url": "https://fal.ai/models/argil/avatars/text-to-video",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=argil%2Favatars%2Ftext-to-video",
+  "retrieved_at": "2026-09-20T09:39:51.900Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "text-to-video",
+  "bytes_sha256": "4fb7d1130a7bf4b3207d183bc82f5ab3dad87af64b4a75ba1b571de79903aaf8",
+  "queue_path": "/argil/avatars/text-to-video",
+  "input_name": "AvatarsTextToVideoInput",
+  "input": {
+    "$refName": "AvatarsTextToVideoInput",
+    "type": "object",
+    "properties": {
+      "text": {
+        "type": "string"
+      },
+      "voice": {
+        "type": "string",
+        "enum": [
+          "Rachel",
+          "Clyde",
+          "Roger",
+          "Sarah",
+          "Laura",
+          "Thomas",
+          "Charlie",
+          "George",
+          "Callum",
+          "River",
+          "Harry",
+          "Liam",
+          "Alice",
+          "Matilda",
+          "Will",
+          "Jessica",
+          "Lilly",
+          "Bill",
+          "Oxley",
+          "Luna"
+        ]
+      },
+      "remove_background": {
+        "type": "boolean",
+        "default": false,
+        "description": "Enabling the remove background feature will result in a 50% increase in the price."
+      },
+      "avatar": {
+        "type": "string",
+        "enum": [
+          "Mia outdoor (UGC)",
+          "Lara (Masterclass)",
+          "Ines (UGC)",
+          "Maria (Masterclass)",
+          "Emma (UGC)",
+          "Sienna (Masterclass)",
+          "Elena (UGC)",
+          "Jasmine (Masterclass)",
+          "Amara (Masterclass)",
+          "Ryan podcast (UGC)",
+          "Tyler (Masterclass)",
+          "Jayse (Masterclass)",
+          "Paul (Masterclass)",
+          "Matteo (UGC)",
+          "Daniel car (UGC)",
+          "Dario (Masterclass)",
+          "Viva (Masterclass)",
+          "Chen (Masterclass)",
+          "Alex (Masterclass)",
+          "Vanessa (UGC)",
+          "Laurent (UGC)",
+          "Noemie car (UGC)",
+          "Brandon (UGC)",
+          "Byron (Masterclass)",
+          "Calista (Masterclass)",
+          "Milo (Masterclass)",
+          "Fabien (Masterclass)",
+          "Rose (UGC)"
+        ]
+      }
+    },
+    "required": [
+      "avatar",
+      "text",
+      "voice"
+    ]
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs."
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics."
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "AvatarsTextToVideoInput",
+    "AvatarsTextToVideoOutput",
+    "Video"
+  ]
+}

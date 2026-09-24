@@ -1,0 +1,103 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/hunyuan-3d/v3.1/pro/text-to-3d",
+  "task": "3d-generation",
+  "source_url": "https://fal.ai/models/fal-ai/hunyuan-3d/v3.1/pro/text-to-3d",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fhunyuan-3d%2Fv3.1%2Fpro%2Ftext-to-3d",
+  "retrieved_at": "2026-09-23T14:36:35.246Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "text-to-3d",
+  "bytes_sha256": "b4bc6fe0513d5fb59cc8dfc3b7dd0a41ac2fff9af331f9f4b039443ea1a4e30e",
+  "queue_path": "/fal-ai/hunyuan-3d/v3.1/pro/text-to-3d",
+  "input_name": "Hunyuan3dV31ProTextTo3dInput",
+  "input": {
+    "$refName": "Hunyuan3dV31ProTextTo3dInput",
+    "type": "object",
+    "properties": {
+      "enable_pbr": {
+        "type": "boolean",
+        "default": false,
+        "description": "Enable PBR material generation (metallic, roughness, normal textures). Ignored when generate_type is Geometry."
+      },
+      "face_count": {
+        "type": "integer",
+        "default": 500000,
+        "minimum": 40000,
+        "maximum": 1500000,
+        "description": "Target polygon face count. Range: 40,000-1,500,000. Default: 500,000."
+      },
+      "generate_type": {
+        "type": "string",
+        "enum": [
+          "Normal",
+          "Geometry"
+        ],
+        "default": "Normal",
+        "description": "Generation task type. Normal: textured model. Geometry: geometry-only white model (no textures). LowPoly/Sketch are not available in v3.1."
+      },
+      "prompt": {
+        "type": "string",
+        "maxLength": 1024,
+        "description": "Text description of the 3D content to generate. Max 1024 UTF-8 characters."
+      }
+    },
+    "required": [
+      "prompt"
+    ]
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs."
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics."
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "Hunyuan3dV31ProTextTo3dInput",
+    "Hunyuan3dV31ProTextTo3dOutput",
+    "ModelUrls",
+    "File"
+  ]
+}

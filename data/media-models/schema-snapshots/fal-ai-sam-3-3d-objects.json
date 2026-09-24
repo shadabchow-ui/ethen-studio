@@ -1,0 +1,267 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/sam-3/3d-objects",
+  "task": "3d-generation",
+  "source_url": "https://fal.ai/models/fal-ai/sam-3/3d-objects",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fsam-3%2F3d-objects",
+  "retrieved_at": "2026-09-23T14:37:45.248Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "image-to-3d",
+  "bytes_sha256": "9eaa5d5de00945f8e2dca1e1929fb3482a5b34349ea064a0c3f278a88f960d8d",
+  "queue_path": "/fal-ai/sam-3/3d-objects",
+  "input_name": "Sam33dObjectsInput",
+  "input": {
+    "$refName": "Sam33dObjectsInput",
+    "type": "object",
+    "properties": {
+      "pointmap_url": {
+        "description": "Optional URL to external pointmap/depth data (NPY or NPZ format) for improved 3D reconstruction depth estimation",
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "image_url": {
+        "type": "string",
+        "description": "URL of the image to reconstruct in 3D"
+      },
+      "point_prompts": {
+        "type": "array",
+        "default": [],
+        "description": "Point prompts for auto-segmentation when no masks provided",
+        "items": {
+          "$refName": "PointPromptBase",
+          "type": "object",
+          "properties": {
+            "object_id": {
+              "description": "Optional object identifier. Prompts sharing an object id refine the same object. When a text prompt is also given, the id selects which detected object the points refine.",
+              "anyOf": [
+                {
+                  "type": "integer"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "x": {
+              "description": "X Coordinate of the prompt",
+              "anyOf": [
+                {
+                  "type": "integer"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "y": {
+              "description": "Y Coordinate of the prompt",
+              "anyOf": [
+                {
+                  "type": "integer"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "label": {
+              "description": "1 for foreground, 0 for background",
+              "anyOf": [
+                {
+                  "type": "integer",
+                  "enum": [
+                    0,
+                    1
+                  ]
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            }
+          }
+        }
+      },
+      "box_prompts": {
+        "type": "array",
+        "default": [],
+        "description": "Box prompts for auto-segmentation when no masks provided. Multiple boxes supported - each produces a separate object mask for 3D reconstruction.",
+        "items": {
+          "$refName": "BoxPromptBase",
+          "type": "object",
+          "properties": {
+            "x_min": {
+              "description": "X Min Coordinate of the box",
+              "anyOf": [
+                {
+                  "type": "integer"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "object_id": {
+              "description": "Optional object identifier. Boxes sharing an object id refine the same object.",
+              "anyOf": [
+                {
+                  "type": "integer"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "y_min": {
+              "description": "Y Min Coordinate of the box",
+              "anyOf": [
+                {
+                  "type": "integer"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "y_max": {
+              "description": "Y Max Coordinate of the box",
+              "anyOf": [
+                {
+                  "type": "integer"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "x_max": {
+              "description": "X Max Coordinate of the box",
+              "anyOf": [
+                {
+                  "type": "integer"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            }
+          }
+        }
+      },
+      "export_textured_glb": {
+        "type": "boolean",
+        "default": false,
+        "description": "If True, exports GLB with baked texture and UVs instead of vertex colors."
+      },
+      "seed": {
+        "description": "Random seed for reproducibility",
+        "anyOf": [
+          {
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "prompt": {
+        "default": "car",
+        "description": "Text prompt for auto-segmentation when no masks provided (e.g., 'chair', 'lamp')",
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "mask_urls": {
+        "type": "array",
+        "description": "Optional list of mask URLs (one per object). If not provided, use prompt/point_prompts/box_prompts to auto-segment, or entire image will be used.",
+        "items": {
+          "type": "string"
+        }
+      },
+      "detection_threshold": {
+        "description": "Detection confidence threshold (0.1-1.0). Lower = more detections but less precise. If not set, uses the model's default.",
+        "anyOf": [
+          {
+            "type": "number",
+            "minimum": 0.1,
+            "maximum": 1
+          },
+          {
+            "type": "null"
+          }
+        ]
+      }
+    },
+    "required": [
+      "image_url"
+    ]
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs."
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics."
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "Sam33dObjectsInput",
+    "Sam33dObjectsOutput",
+    "PointPromptBase",
+    "BoxPromptBase",
+    "File",
+    "SAM3DObjectMetadata"
+  ]
+}

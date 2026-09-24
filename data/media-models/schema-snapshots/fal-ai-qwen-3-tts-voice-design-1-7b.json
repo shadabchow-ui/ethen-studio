@@ -1,0 +1,223 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/qwen-3-tts/voice-design/1.7b",
+  "task": "text-to-audio",
+  "source_url": "https://fal.ai/models/fal-ai/qwen-3-tts/voice-design/1.7b",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fqwen-3-tts%2Fvoice-design%2F1.7b",
+  "retrieved_at": "2026-09-23T14:37:43.270Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "text-to-speech",
+  "bytes_sha256": "8df5708be4be7dc04991cf52a2f1569c859ef894337af915d0d97624108dc17c",
+  "queue_path": "/fal-ai/qwen-3-tts/voice-design/1.7b",
+  "input_name": "Qwen3TtsVoiceDesign17bInput",
+  "input": {
+    "$refName": "Qwen3TtsVoiceDesign17bInput",
+    "type": "object",
+    "properties": {
+      "max_new_tokens": {
+        "default": 200,
+        "description": "Maximum number of new codec tokens to generate.",
+        "anyOf": [
+          {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 8192
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "prompt": {
+        "type": "string",
+        "description": "Optional prompt to guide the style of the generated speech."
+      },
+      "text": {
+        "type": "string",
+        "description": "The text to be converted to speech."
+      },
+      "subtalker_temperature": {
+        "default": 0.9,
+        "description": "Temperature for sub-talker sampling.",
+        "anyOf": [
+          {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 1
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "repetition_penalty": {
+        "default": 1.05,
+        "description": "Penalty to reduce repeated tokens/codes.",
+        "anyOf": [
+          {
+            "type": "number",
+            "minimum": 0
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "subtalker_top_p": {
+        "default": 1,
+        "description": "Top-p for sub-talker sampling.",
+        "anyOf": [
+          {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 1
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "language": {
+        "type": "string",
+        "enum": [
+          "Auto",
+          "English",
+          "Chinese",
+          "Spanish",
+          "French",
+          "German",
+          "Italian",
+          "Japanese",
+          "Korean",
+          "Portuguese",
+          "Russian"
+        ],
+        "default": "Auto",
+        "description": "The language of the voice to be designed."
+      },
+      "subtalker_top_k": {
+        "default": 50,
+        "description": "Top-k for sub-talker sampling.",
+        "anyOf": [
+          {
+            "type": "integer",
+            "minimum": 0
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "top_p": {
+        "default": 1,
+        "description": "Top-p sampling parameter.",
+        "anyOf": [
+          {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 1
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "temperature": {
+        "default": 0.9,
+        "description": "Sampling temperature; higher => more random.",
+        "anyOf": [
+          {
+            "type": "number",
+            "maximum": 1
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "subtalker_dosample": {
+        "default": true,
+        "description": "Sampling switch for the sub-talker.",
+        "anyOf": [
+          {
+            "type": "boolean"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "top_k": {
+        "default": 50,
+        "description": "Top-k sampling parameter.",
+        "anyOf": [
+          {
+            "type": "integer",
+            "minimum": 0
+          },
+          {
+            "type": "null"
+          }
+        ]
+      }
+    },
+    "required": [
+      "text",
+      "prompt"
+    ]
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs."
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics."
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "Qwen3TtsVoiceDesign17bInput",
+    "Qwen3TtsVoiceDesign17bOutput",
+    "AudioFile"
+  ]
+}

@@ -1,0 +1,22 @@
+{
+  "fixtureId": "sol24-authorized-invoice-2026-07-26",
+  "authorizedPurpose": "SOL-24 deterministic provider-invoice reconciliation",
+  "currency": "USD",
+  "toleranceUsd": 0.000001,
+  "lineItems": [
+    {
+      "providerInvoiceLineId": "openai-fixture-line-1",
+      "modelId": "openai/gpt-4o-mini",
+      "inputTokens": 1000000,
+      "outputTokens": 1000000,
+      "invoicedCostUsd": 0.75
+    },
+    {
+      "providerInvoiceLineId": "anthropic-fixture-line-1",
+      "modelId": "anthropic/claude-haiku-4-5-20251001",
+      "inputTokens": 100000,
+      "outputTokens": 10000,
+      "invoicedCostUsd": 0.15
+    }
+  ]
+}

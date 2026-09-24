@@ -1,0 +1,190 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "hitem3d/hi3d/multi-view-to-3d",
+  "task": "3d-generation",
+  "source_url": "https://fal.ai/models/hitem3d/hi3d/multi-view-to-3d",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=hitem3d%2Fhi3d%2Fmulti-view-to-3d",
+  "retrieved_at": "2026-09-23T14:38:05.054Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "image-to-3d",
+  "bytes_sha256": "f468d2cecc60820c19f3920f0bc8e6e48913b3f640d6df573a2f7895707b303e",
+  "queue_path": "/hitem3d/hi3d/multi-view-to-3d",
+  "input_name": "Hi3dMultiViewTo3dInput",
+  "input": {
+    "$refName": "Hi3dMultiViewTo3dInput",
+    "type": "object",
+    "description": "Input for multi-view image-to-3D generation.\n\nAt least one view is required; provide as many of the four canonical\nviews as available for the best reconstruction.",
+    "properties": {
+      "enable_pbr": {
+        "type": "boolean",
+        "default": true,
+        "description": "Generate PBR material maps together with the texture. Only supported (and billed) for v2.0/v2.1 and v3.0 models when enable_texture is true; ignored otherwise."
+      },
+      "resolution": {
+        "description": "Generation resolution. Supported values depend on the model: v1.5/v2.0 accept 512, 1024, 1536 and 1536pro; v2.1 accepts 1536fast and 1536pro; scene-portraitv1.5 accepts 1536; scene-portraitv2.0 accepts 1536pro; scene-portraitv2.1 accepts 1536profast and 1536pro. Defaults to the model's recommended r",
+        "anyOf": [
+          {
+            "type": "string",
+            "enum": [
+              "512",
+              "1024",
+              "1536",
+              "1536pro",
+              "1536fast",
+              "1536profast"
+            ]
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "enable_texture": {
+        "type": "boolean",
+        "default": true,
+        "description": "Whether to generate textures in addition to geometry. When false, only the geometry mesh is generated (and billed)."
+      },
+      "right_image_url": {
+        "description": "URL of the right view image (PNG/JPEG/WebP, up to 20MB).",
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "face_count": {
+        "description": "Target face count of the generated model. When unset, the partner picks the recommended count for the resolution (e.g. 500k for 512, 1M for 1024, 2M for 1536).",
+        "anyOf": [
+          {
+            "type": "integer",
+            "minimum": 100000,
+            "maximum": 2000000
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "front_image_url": {
+        "description": "URL of the front view image (PNG/JPEG/WebP, up to 20MB).",
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "left_image_url": {
+        "description": "URL of the left view image (PNG/JPEG/WebP, up to 20MB).",
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "export_format": {
+        "type": "string",
+        "enum": [
+          "glb",
+          "obj",
+          "stl",
+          "fbx",
+          "usdz"
+        ],
+        "default": "glb",
+        "description": "File format of the generated model."
+      },
+      "back_image_url": {
+        "description": "URL of the back view image (PNG/JPEG/WebP, up to 20MB).",
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "model": {
+        "type": "string",
+        "enum": [
+          "hitem3dv1.5",
+          "hitem3dv2.0",
+          "hitem3dv2.1",
+          "scene-portraitv1.5",
+          "scene-portraitv2.0",
+          "scene-portraitv2.1"
+        ],
+        "default": "hitem3dv2.1",
+        "description": "Model version used for generation. 'hitem3d*' are the general models; 'scene-portrait*' are tuned for portraits/characters."
+      },
+      "enable_safety_checker": {
+        "type": "boolean",
+        "default": true,
+        "description": "If set to true, input images are checked for safety before processing."
+      }
+    }
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs."
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics."
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "Hi3dMultiViewTo3dInput",
+    "Hi3dMultiViewTo3dOutput",
+    "File"
+  ]
+}

@@ -1,0 +1,127 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/minimax/voice-clone",
+  "task": "speech",
+  "source_url": "https://fal.ai/models/fal-ai/minimax/voice-clone",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fminimax%2Fvoice-clone",
+  "retrieved_at": "2026-09-23T14:37:33.833Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "text-to-speech",
+  "bytes_sha256": "104159d2e463708cd3aff6523d5519903f72c48942fe355a285a794176915071",
+  "queue_path": "/fal-ai/minimax/voice-clone",
+  "input_name": "MinimaxVoiceCloneInput",
+  "input": {
+    "$refName": "MinimaxVoiceCloneInput",
+    "type": "object",
+    "properties": {
+      "noise_reduction": {
+        "type": "boolean",
+        "default": false,
+        "description": "Enable noise reduction for the cloned voice"
+      },
+      "audio_url": {
+        "type": "string",
+        "description": "URL of the input audio file for voice cloning. Should be at least 10 seconds\n            long. To retain the voice permanently, use it with a TTS (text-to-speech)\n            endpoint at least once within 7 days. Otherwise, it will be\n            automatically deleted."
+      },
+      "text": {
+        "default": "Hello, this is a preview of your cloned voice! I hope you like it!",
+        "description": "Text to generate a TTS preview with the cloned voice (optional)",
+        "anyOf": [
+          {
+            "type": "string",
+            "maxLength": 1000
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "model": {
+        "type": "string",
+        "enum": [
+          "speech-02-hd",
+          "speech-02-turbo",
+          "speech-01-hd",
+          "speech-01-turbo"
+        ],
+        "default": "speech-02-hd",
+        "description": "TTS model to use for preview. Options: speech-02-hd, speech-02-turbo, speech-01-hd, speech-01-turbo"
+      },
+      "accuracy": {
+        "description": "Text validation accuracy threshold (0-1)",
+        "anyOf": [
+          {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 1
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "need_volume_normalization": {
+        "type": "boolean",
+        "default": false,
+        "description": "Enable volume normalization for the cloned voice"
+      }
+    },
+    "required": [
+      "audio_url"
+    ]
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs."
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics."
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "MinimaxVoiceCloneInput",
+    "MinimaxVoiceCloneOutput",
+    "File"
+  ]
+}

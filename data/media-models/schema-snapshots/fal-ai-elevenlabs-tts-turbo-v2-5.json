@@ -1,0 +1,162 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/elevenlabs/tts/turbo-v2.5",
+  "task": "text-to-audio",
+  "source_url": "https://fal.ai/models/fal-ai/elevenlabs/tts/turbo-v2.5",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Felevenlabs%2Ftts%2Fturbo-v2.5",
+  "retrieved_at": "2026-09-23T14:36:29.778Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "text-to-speech",
+  "bytes_sha256": "981ea3a8cfde44da19c5e4d7c3fab38053517c1851964bbec1a566d0bada8fcd",
+  "queue_path": "/fal-ai/elevenlabs/tts/turbo-v2.5",
+  "input_name": "ElevenlabsTtsTurboV25Input",
+  "input": {
+    "$refName": "ElevenlabsTtsTurboV25Input",
+    "type": "object",
+    "properties": {
+      "language_code": {
+        "description": "Language code (ISO 639-1) used to enforce a language for the model. An error will be returned if language code is not supported by the model.",
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "similarity_boost": {
+        "type": "number",
+        "default": 0.75,
+        "minimum": 0,
+        "maximum": 1,
+        "description": "Similarity boost (0-1)"
+      },
+      "stability": {
+        "type": "number",
+        "default": 0.5,
+        "minimum": 0,
+        "maximum": 1,
+        "description": "Voice stability (0-1)"
+      },
+      "apply_text_normalization": {
+        "type": "string",
+        "enum": [
+          "auto",
+          "on",
+          "off"
+        ],
+        "default": "auto",
+        "description": "This parameter controls text normalization with three modes: 'auto', 'on', and 'off'. When set to 'auto', the system will automatically decide whether to apply text normalization (e.g., spelling out numbers). With 'on', text normalization will always be applied, while with 'off', it will be skipped."
+      },
+      "style": {
+        "type": "number",
+        "default": 0,
+        "minimum": 0,
+        "maximum": 1,
+        "description": "Style exaggeration (0-1)"
+      },
+      "next_text": {
+        "description": "The text that comes after the text of the current request. Can be used to improve the speech's continuity when concatenating together multiple generations or to influence the speech's continuity in the current generation.",
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "timestamps": {
+        "type": "boolean",
+        "default": false,
+        "description": "Whether to return timestamps for each word in the generated speech"
+      },
+      "speed": {
+        "type": "number",
+        "default": 1,
+        "minimum": 0.7,
+        "maximum": 1.2,
+        "description": "Speech speed (0.7-1.2). Values below 1.0 slow down the speech, above 1.0 speed it up. Extreme values may affect quality."
+      },
+      "previous_text": {
+        "description": "The text that came before the text of the current request. Can be used to improve the speech's continuity when concatenating together multiple generations or to influence the speech's continuity in the current generation.",
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "voice": {
+        "type": "string",
+        "default": "Rachel",
+        "description": "The voice to use for speech generation"
+      },
+      "text": {
+        "type": "string",
+        "minLength": 1,
+        "description": "The text to convert to speech"
+      }
+    },
+    "required": [
+      "text"
+    ]
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs."
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics."
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "ElevenlabsTtsTurboV25Input",
+    "ElevenlabsTtsTurboV25Output",
+    "File"
+  ]
+}

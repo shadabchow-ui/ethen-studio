@@ -1,0 +1,110 @@
+{
+  "schemaVersion": 1,
+  "name": "Ethen Candidate Geometry System",
+  "status": "CANDIDATE",
+  "originMilestone": "D04",
+  "principle": "Extend the certified V2 geometry; never edit it. New values are copied forward, not moved.",
+  "layout": {
+    "sidebar": 256,
+    "sidebarCollapsed": 56,
+    "topbar": 56,
+    "navRow": 36,
+    "controlSmall": 32,
+    "controlMedium": 40,
+    "controlLarge": 48,
+    "pageGutter": 24,
+    "pageGap": 24,
+    "contextRail": 320,
+    "contextRailWide": 404,
+    "carryForwardSource": "components/design-system/v2/geometry.ts#V2_GEOMETRY"
+  },
+  "radii": {
+    "base": 6,
+    "small": 8,
+    "raised": 12,
+    "large": 16,
+    "pill": 999,
+    "pillRestriction": "999 is restricted to true pills, avatars, switches, toggle tracks and removable tags. All other surfaces use the 6 / 8 / 12 / 16 ladder. Enforcement arms at D17, not here.",
+    "pillAllowedClasses": [
+      "avatar",
+      "switch",
+      "toggle-track",
+      "removable-tag",
+      "status-dot"
+    ]
+  },
+  "spacing": {
+    "raw": [
+      4,
+      8,
+      12,
+      16,
+      20,
+      24,
+      32,
+      40,
+      48,
+      64
+    ],
+    "carryForwardSource": "components/design-system/v2/geometry.ts#V2_SPACING",
+    "added": [
+      64
+    ],
+    "semantic": {
+      "compact": 4,
+      "tight": 8,
+      "default": 16,
+      "comfortable": 24,
+      "spacious": 32,
+      "section": 48,
+      "page": 64
+    }
+  },
+  "elevation": {
+    "tiers": {
+      "base": {
+        "surface": "var(--eds-canvas)",
+        "border": "none",
+        "shadow": null
+      },
+      "raised": {
+        "surface": "var(--eds-card)",
+        "border": "1px solid var(--eds-rule-hair)",
+        "shadow": null
+      },
+      "overlay": {
+        "surface": "var(--eds-card)",
+        "border": "1px solid var(--eds-rule)",
+        "shadow": "0 12px 32px rgba(0, 0, 0, 0.18)"
+      },
+      "sunken": {
+        "surface": "var(--eds-paper)",
+        "border": "1px solid var(--eds-rule-hair)",
+        "shadow": null
+      }
+    },
+    "shadowRule": "Only the Overlay tier casts a shadow. All other tiers separate by surface colour and border alone."
+  },
+  "focus": {
+    "ring": "2px solid var(--eds-lapis-strong)",
+    "offset": "2px",
+    "guarantee": "Visible on all four elevation tiers in both themes: lapis-strong holds 12.20:1 (Light) and 8.62:1 (Dark) against canvas per the D02 contrast matrix."
+  },
+  "activeState": {
+    "signals": [
+      "background-wash",
+      "marker-2px",
+      "weight-shift"
+    ],
+    "wash": "var(--eds-lapis-wash)",
+    "marker": "2px solid var(--eds-lapis)",
+    "weightFrom": 400,
+    "weightTo": 600,
+    "rule": "All three signals, never fewer. Colour alone is prohibited."
+  },
+  "densityTargets": {
+    "compact": 24,
+    "default": 36,
+    "roomy": 44
+  }
+}

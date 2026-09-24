@@ -1,0 +1,368 @@
+/*
+ * FOUNDATION-01 — Canonical application theme authority.
+ *
+ * Loaded after globals.css. Legacy product styles may keep their historical
+ * token names, but standard application surfaces resolve through this final
+ * semantic layer. Dark developer/media surfaces remain opt-in exceptions.
+ */
+
+:root[data-theme="light"]:not(.dark) {
+  color-scheme: light;
+
+  /* Standard canvas and panels: white-on-white with thin gray outlines. */
+  --bg-base: #ffffff;
+  --bg-surface: #ffffff;
+  --bg-elevated: #ffffff;
+  --bg-inset: #f7f7f7;
+  --bg-tint: #ffffff;
+
+  --text-primary: #111111;
+  --text-secondary: #525252;
+  --text-tertiary: #737373;
+  --text-muted: #737373;
+  --text-disabled: #a3a3a3;
+
+  --border-subtle: rgba(0, 0, 0, 0.08);
+  --border-default: rgba(0, 0, 0, 0.12);
+  --border-strong: rgba(0, 0, 0, 0.18);
+
+  --accent: #111111;
+  --accent-hover: #2a2a2a;
+  --accent-muted: #f5f5f5;
+  --accent-fg: #ffffff;
+  --focus-ring: 0 0 0 2px #ffffff, 0 0 0 4px rgba(17, 17, 17, 0.22);
+
+  /* Status colors remain semantic across theme modes. */
+  --status-success: #16a34a;
+  --status-warning: #d97706;
+  --status-danger: #dc2626;
+
+  /* Console compatibility tokens. */
+  --console-black: #ffffff;
+  --console-sidebar: #ffffff;
+  --console-bg: #ffffff;
+  --console-surface: #ffffff;
+  --console-surface-strong: #ffffff;
+  --console-surface-hover: #f7f7f7;
+  --console-surface-muted: #ffffff;
+  --console-surface-overlay: #ffffff;
+  --console-surface-shell: #ffffff;
+  --console-surface-card: #ffffff;
+  --console-surface-card-elevated: #ffffff;
+  --console-surface-data: #ffffff;
+  --console-surface-editor: #0a0a0a;
+  --console-text: #111111;
+  --console-text-primary: #111111;
+  --console-text-secondary: #525252;
+  --console-text-tertiary: #737373;
+  --console-text-muted: #737373;
+  --console-text-metadata: #737373;
+  --console-text-faint: #8a8a8a;
+  --console-text-dim: #a3a3a3;
+  --console-border: rgba(0, 0, 0, 0.12);
+  --console-border-soft: rgba(0, 0, 0, 0.08);
+  --console-border-subtle: rgba(0, 0, 0, 0.08);
+  --console-border-default: rgba(0, 0, 0, 0.12);
+  --console-border-strong: rgba(0, 0, 0, 0.18);
+  --console-hairline: rgba(0, 0, 0, 0.08);
+  --console-hairline-strong: rgba(0, 0, 0, 0.16);
+  --console-focus-ring: var(--focus-ring);
+
+  /* Shell and System Lab compatibility tokens. */
+  --shell-surface-body: #ffffff;
+  --shell-surface-card: #ffffff;
+  --shell-border: rgba(0, 0, 0, 0.08);
+  --ethen-bg-sidebar: #ffffff;
+  --ethen-bg-surface: #ffffff;
+  --ethen-bg-muted: #ffffff;
+  --ethen-hover: rgba(0, 0, 0, 0.045);
+  --ethen-active: rgba(0, 0, 0, 0.075);
+  --ethen-border: rgba(0, 0, 0, 0.08);
+  --ethen-border-strong: rgba(0, 0, 0, 0.16);
+  --ethen-surface-root: #ffffff;
+  --ethen-surface-canvas: #ffffff;
+  --ethen-surface-panel: #ffffff;
+  --ethen-surface-panel-raised: #ffffff;
+  --ethen-surface-active: #f7f7f7;
+  --ethen-border-faint: rgba(0, 0, 0, 0.06);
+  --ethen-divider-faint: rgba(0, 0, 0, 0.06);
+  --ethen-shadow-panel: none;
+  --ethen-shadow-shell: none;
+
+  /* Flat compatibility aliases. Standard panels remain white. */
+  --glass-chrome-fill: #ffffff;
+  --glass-chrome-border: rgba(0, 0, 0, 0.08);
+  --glass-chrome-highlight: rgba(0, 0, 0, 0.02);
+  --glass-panel-fill: #ffffff;
+  --glass-panel-border: rgba(0, 0, 0, 0.08);
+  --glass-panel-highlight: rgba(0, 0, 0, 0.02);
+  --glass-elevated-fill: #ffffff;
+  --glass-elevated-border: rgba(0, 0, 0, 0.08);
+  --glass-elevated-highlight: rgba(0, 0, 0, 0.02);
+  --glass-control-fill: #ffffff;
+  --glass-control-border: rgba(0, 0, 0, 0.10);
+  --glass-inner-highlight: rgba(0, 0, 0, 0.02);
+  --glass-overlay: rgba(0, 0, 0, 0.24);
+  --glass-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+
+  --ethen-glass-bg-subtle: #ffffff;
+  --ethen-glass-bg-standard: #ffffff;
+  --ethen-glass-bg-strong: #ffffff;
+  --ethen-glass-border: rgba(0, 0, 0, 0.08);
+  --ethen-glass-border-strong: rgba(0, 0, 0, 0.16);
+  --ethen-glass-highlight: rgba(0, 0, 0, 0.02);
+  --ethen-glass-highlight-strong: rgba(0, 0, 0, 0.04);
+  --ethen-glass-shadow-subtle: none;
+  --ethen-glass-shadow-standard: 0 1px 2px rgba(0, 0, 0, 0.04);
+  --ethen-glass-shadow-strong: 0 2px 6px rgba(0, 0, 0, 0.06);
+  --ethen-glass-blur-subtle: 0px;
+  --ethen-glass-blur-standard: 0px;
+  --ethen-glass-blur-strong: 0px;
+
+  --ws-handle-line-rest: rgba(0, 0, 0, 0.08);
+  --ws-handle-line-hover: rgba(0, 0, 0, 0.14);
+  --ws-handle-line-active: rgba(0, 0, 0, 0.22);
+  --ws-handle-line-disabled: rgba(0, 0, 0, 0.035);
+  --ws-handle-thumb-rest: rgba(0, 0, 0, 0.12);
+  --ws-handle-thumb-hover: rgba(0, 0, 0, 0.18);
+  --ws-handle-thumb-active: rgba(0, 0, 0, 0.22);
+  --ws-panel-bg: #ffffff;
+  --ws-panel-bg-sidebar: #ffffff;
+  --ws-panel-bg-deep: #ffffff;
+
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.04);
+  --shadow-md: 0 1px 3px rgba(0, 0, 0, 0.05);
+  --shadow-lg: 0 4px 12px rgba(0, 0, 0, 0.06);
+  --shadow-panel: 0 0 0 1px var(--border-subtle);
+  --shadow-inner: none;
+}
+
+/* Legacy "light workspace" must be genuinely light. */
+:root[data-theme="light"]:not(.dark) .agent-workspace-light {
+  --bg-base: #ffffff;
+  --bg-surface: #ffffff;
+  --bg-elevated: #ffffff;
+  --bg-inset: #f7f7f7;
+  --bg-tint: #ffffff;
+  --text-primary: #111111;
+  --text-secondary: #525252;
+  --text-tertiary: #737373;
+  --text-muted: #737373;
+  --text-disabled: #a3a3a3;
+  --border-subtle: rgba(0, 0, 0, 0.08);
+  --border-default: rgba(0, 0, 0, 0.12);
+  --border-strong: rgba(0, 0, 0, 0.18);
+  --accent: #111111;
+  --accent-hover: #2a2a2a;
+  --accent-muted: #f5f5f5;
+  --accent-fg: #ffffff;
+  --glass-chrome-fill: #ffffff;
+  --glass-panel-fill: #ffffff;
+  --glass-elevated-fill: #ffffff;
+  --glass-control-fill: #ffffff;
+  --ethen-glass-bg-subtle: #ffffff;
+  --ethen-glass-bg-standard: #ffffff;
+  --ethen-glass-bg-strong: #ffffff;
+  --ethen-glass-border: rgba(0, 0, 0, 0.08);
+  --ethen-glass-border-strong: rgba(0, 0, 0, 0.16);
+  --ethen-glass-blur-subtle: 0px;
+  --ethen-glass-blur-standard: 0px;
+  --ethen-glass-blur-strong: 0px;
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.04);
+  --shadow-md: 0 1px 3px rgba(0, 0, 0, 0.05);
+  --shadow-lg: 0 4px 12px rgba(0, 0, 0, 0.06);
+}
+
+/* Shared standard panels and controls. */
+:root[data-theme="light"]:not(.dark) :is(
+  .ethen-console-sidebar,
+  .ethen-console-topbar,
+  .ethen-console-card,
+  .ethen-console-table,
+  .ethen-console-empty,
+  .glass-chrome,
+  .glass-panel,
+  .glass-elevated,
+  .glass-card,
+  .ethen-glass,
+  .ethen-glass-subtle,
+  .ethen-glass-strong,
+  .travel-panel,
+  .aiGatewaySmokedPanel
+) {
+  background-color: #ffffff;
+  color: var(--text-primary);
+  border-color: var(--border-subtle);
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+
+:root[data-theme="light"]:not(.dark) :is(
+  .ethen-console-button,
+  .ethen-console-input,
+  .aiGatewaySmokedControl,
+  .travel-field-shell
+) {
+  background: #ffffff;
+  color: var(--text-primary);
+  border-color: var(--border-default);
+  box-shadow: none;
+}
+
+/* Sidebar compatibility: the old jet-black opt-in is theme-aware now. */
+:root[data-theme="light"]:not(.dark) .sidebar-jet-black {
+  background: #ffffff !important;
+  border-right-color: var(--border-subtle) !important;
+}
+
+:root[data-theme="light"]:not(.dark) .sidebar-jet-black,
+:root[data-theme="light"]:not(.dark) .sidebar-jet-black * {
+  --bg-base: #ffffff;
+  --bg-surface: #ffffff;
+  --bg-elevated: #ffffff;
+  --bg-inset: #f7f7f7;
+  --bg-tint: #ffffff;
+  --text-primary: #111111;
+  --text-secondary: #525252;
+  --text-tertiary: #737373;
+  --text-muted: #737373;
+  --text-disabled: #a3a3a3;
+  --border-subtle: rgba(0, 0, 0, 0.08);
+  --border-default: rgba(0, 0, 0, 0.12);
+  --border-strong: rgba(0, 0, 0, 0.18);
+}
+
+:root[data-theme="light"]:not(.dark) .sidebar-jet-black :is(
+  .glass-chrome,
+  .ethen-glass-subtle,
+  .sidebar-search-btn,
+  .sidebar-theme-btn,
+  .sidebar-session-link:hover,
+  .sidebar-agent-item:hover,
+  nav a:hover,
+  nav button:hover
+) {
+  background: #ffffff !important;
+  color: var(--text-primary) !important;
+  border-color: var(--border-subtle) !important;
+}
+
+:root[data-theme="light"]:not(.dark) .sidebar-logo-img {
+  filter: none;
+}
+
+/* On phones, prioritize the active run, approvals, composer, and safety
+   footer. The desktop navigation rail is intentionally removed rather than
+   forcing the protected workspace into a horizontal scroll area. */
+@media (max-width: 639px) {
+  [data-code-console-shell] [data-panel-id="sidebar"] {
+    display: none !important;
+  }
+
+  [data-code-console-shell] [data-panel-id="main"],
+  [data-code-console-shell] [data-panel-id="main"] > * {
+    min-width: 0 !important;
+    width: 100% !important;
+  }
+}
+
+/* Studio controls follow the global theme; media canvases can opt into dark. */
+:root[data-theme="light"]:not(.dark) :is(
+  .studio-stage-glass,
+  .studio-jet-panel,
+  .studio-jet-card
+) {
+  background: #ffffff;
+  border-color: var(--border-subtle);
+  box-shadow: none;
+}
+
+:root[data-theme="light"]:not(.dark) .studio-glass-inset {
+  background: #f7f7f7;
+  border-color: var(--border-subtle);
+  box-shadow: none;
+}
+
+:root[data-theme="light"]:not(.dark) .studio-workbench-bg {
+  background: #ffffff;
+}
+
+/* Console homepage literals. */
+:root[data-theme="light"]:not(.dark) .homepage-shell {
+  background: #ffffff;
+}
+
+:root[data-theme="light"]:not(.dark) :is(
+  .home-composer-root,
+  .source-chip,
+  .home-chip,
+  .homepage-header-title,
+  .homepage-suggestion-chip,
+  .home-mode-chip > button
+) {
+  background: #ffffff;
+  border-color: var(--border-default);
+  color: var(--text-primary);
+  box-shadow: none;
+}
+
+:root[data-theme="light"]:not(.dark) :is(
+  .home-welcome-heading,
+  .home-composer-input,
+  .source-chip-label,
+  .home-chip
+) {
+  color: var(--text-primary);
+}
+
+:root[data-theme="light"]:not(.dark) :is(
+  .home-composer-input::placeholder,
+  .source-chip-index,
+  .source-chip-domain,
+  .source-chip-more
+) {
+  color: var(--text-tertiary);
+}
+
+:root[data-theme="light"]:not(.dark) :is(
+  .homepage-header-title:hover,
+  .homepage-suggestion-chip:hover,
+  .home-chip:hover,
+  .source-chip:hover,
+  .home-mode-chip > button:hover
+) {
+  background: #f7f7f7;
+  border-color: var(--border-default);
+  color: var(--text-primary);
+}
+
+/* Reading surfaces: code remains an approved dark exception. */
+:root[data-theme="light"]:not(.dark) .ethen-prose code:not(pre > code) {
+  background: #f7f7f7;
+  border-color: var(--border-subtle);
+  color: var(--text-primary);
+}
+
+:root[data-theme="light"]:not(.dark) .ethen-prose a {
+  color: var(--text-primary);
+  text-decoration-color: rgba(0, 0, 0, 0.3);
+}
+
+:root[data-theme="light"]:not(.dark) .ethen-prose blockquote {
+  background: #ffffff;
+}
+
+/* Explicit approved dark surfaces in light mode. */
+:root[data-theme="light"]:not(.dark) :is(
+  .coding-console-dark,
+  .code-console-shell,
+  .designer-console-dark,
+  [data-code],
+  [data-terminal],
+  .terminal,
+  .diff-view,
+  .ethen-code-block,
+  .ethen-prose pre
+) {
+  color-scheme: dark;
+}

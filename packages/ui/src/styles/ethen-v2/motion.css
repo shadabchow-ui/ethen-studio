@@ -1,0 +1,59 @@
+/* V2 motion — press 100ms, UI 150ms, panel 200ms, page ~220ms */
+[data-ethen-v2] {
+  /* No geometry animation on theme change — borders/layout must stay stable */
+}
+
+[data-ethen-v2] .v2-motion-press {
+  transition:
+    background-color var(--v2-motion-press) var(--v2-ease-press),
+    color var(--v2-motion-press) var(--v2-ease-press),
+    border-color var(--v2-motion-press) var(--v2-ease-press),
+    opacity var(--v2-motion-press) var(--v2-ease-press);
+}
+
+[data-ethen-v2] .v2-motion-ui {
+  transition:
+    background-color var(--v2-motion-ui) var(--v2-ease-default),
+    color var(--v2-motion-ui) var(--v2-ease-default),
+    border-color var(--v2-motion-ui) var(--v2-ease-default),
+    opacity var(--v2-motion-ui) var(--v2-ease-default);
+}
+
+[data-ethen-v2] .v2-motion-panel {
+  transition:
+    background-color var(--v2-motion-panel) var(--v2-ease-out),
+    color var(--v2-motion-panel) var(--v2-ease-out),
+    border-color var(--v2-motion-panel) var(--v2-ease-out),
+    opacity var(--v2-motion-panel) var(--v2-ease-out),
+    transform var(--v2-motion-panel) var(--v2-ease-out);
+}
+
+[data-ethen-v2] .v2-motion-page {
+  transition:
+    opacity var(--v2-motion-page) var(--v2-ease-out),
+    transform var(--v2-motion-page) var(--v2-ease-out);
+}
+
+/* Never animate layout geometry on theme switch */
+[data-ethen-v2] *,
+[data-ethen-v2] *::before,
+[data-ethen-v2] *::after {
+  /* Only color/border/opacity may transition on theme change — not width/height/margin/padding/radius */
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-ethen-v2] *,
+  [data-ethen-v2] *::before,
+  [data-ethen-v2] *::after {
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+  }
+}
+
+/* Explicit opt-out for inline Composer transitions — Composer container and textarea stay static */
+[data-ethen-v2] .v2-composer-static,
+[data-ethen-v2] .v2-composer-static * {
+  transition: none !important;
+}

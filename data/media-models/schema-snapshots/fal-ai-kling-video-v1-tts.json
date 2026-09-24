@@ -1,0 +1,141 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/kling-video/v1/tts",
+  "task": "text-to-audio",
+  "source_url": "https://fal.ai/models/fal-ai/kling-video/v1/tts",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fkling-video%2Fv1%2Ftts",
+  "retrieved_at": "2026-09-23T14:36:48.951Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "text-to-speech",
+  "bytes_sha256": "811a38396daa05a1165a194e1230f1e12e441450e5edee3fe15f084289a8e945",
+  "queue_path": "/fal-ai/kling-video/v1/tts",
+  "input_name": "KlingVideoV1TtsInput",
+  "input": {
+    "$refName": "KlingVideoV1TtsInput",
+    "type": "object",
+    "properties": {
+      "text": {
+        "type": "string",
+        "maxLength": 500,
+        "description": "The text to be converted to speech"
+      },
+      "voice_speed": {
+        "type": "number",
+        "default": 1,
+        "minimum": 0.8,
+        "maximum": 2,
+        "description": "Rate of speech"
+      },
+      "voice_id": {
+        "type": "string",
+        "enum": [
+          "genshin_vindi2",
+          "zhinen_xuesheng",
+          "AOT",
+          "ai_shatang",
+          "genshin_klee2",
+          "genshin_kirara",
+          "ai_kaiya",
+          "oversea_male1",
+          "ai_chenjiahao_712",
+          "girlfriend_4_speech02",
+          "chat1_female_new-3",
+          "chat_0407_5-1",
+          "cartoon-boy-07",
+          "uk_boy1",
+          "cartoon-girl-01",
+          "PeppaPig_platform",
+          "ai_huangzhong_712",
+          "ai_huangyaoshi_712",
+          "ai_laoguowang_712",
+          "chengshu_jiejie",
+          "you_pingjing",
+          "calm_story1",
+          "uk_man2",
+          "laopopo_speech02",
+          "heainainai_speech02",
+          "reader_en_m-v1",
+          "commercial_lady_en_f-v1",
+          "tiyuxi_xuedi",
+          "tiexin_nanyou",
+          "girlfriend_1_speech02",
+          "girlfriend_2_speech02",
+          "zhuxi_speech02",
+          "uk_oldman3",
+          "dongbeilaotie_speech02",
+          "chongqingxiaohuo_speech02",
+          "chuanmeizi_speech02",
+          "chaoshandashu_speech02",
+          "ai_taiwan_man2_speech02",
+          "xianzhanggui_speech02",
+          "tianjinjiejie_speech02",
+          "diyinnansang_DB_CN_M_04-v2",
+          "yizhipiannan-v1",
+          "guanxiaofang-v2",
+          "tianmeixuemei-v1",
+          "daopianyansang-v1",
+          "mengwa-v1"
+        ],
+        "default": "genshin_vindi2",
+        "description": "The voice ID to use for speech synthesis"
+      }
+    },
+    "required": [
+      "text"
+    ]
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs."
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics."
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "KlingVideoV1TtsInput",
+    "KlingVideoV1TtsOutput",
+    "File"
+  ]
+}

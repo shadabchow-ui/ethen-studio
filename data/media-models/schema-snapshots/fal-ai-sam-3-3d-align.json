@@ -1,0 +1,119 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/sam-3/3d-align",
+  "task": "3d-generation",
+  "source_url": "https://fal.ai/models/fal-ai/sam-3/3d-align",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fsam-3%2F3d-align",
+  "retrieved_at": "2026-09-23T14:37:43.928Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "3d-to-3d",
+  "bytes_sha256": "35d6d687d7d70688b447825c19003cf649aa3f86ad2e98831d630af1c354fc57",
+  "queue_path": "/fal-ai/sam-3/3d-align",
+  "input_name": "Sam33dAlignInput",
+  "input": {
+    "$refName": "Sam33dAlignInput",
+    "type": "object",
+    "properties": {
+      "body_mask_url": {
+        "description": "URL of the human mask image. If not provided, uses full image.",
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "image_url": {
+        "type": "string",
+        "description": "URL of the original image used for MoGe depth estimation"
+      },
+      "body_mesh_url": {
+        "type": "string",
+        "description": "URL of the SAM-3D Body mesh file (.ply or .glb) to align"
+      },
+      "object_mesh_url": {
+        "description": "Optional URL of SAM-3D Object mesh (.glb) to create combined scene",
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "focal_length": {
+        "description": "Focal length from SAM-3D Body metadata. If not provided, estimated from MoGe.",
+        "anyOf": [
+          {
+            "type": "number"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      }
+    },
+    "required": [
+      "image_url",
+      "body_mesh_url"
+    ]
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs."
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics."
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "Sam33dAlignInput",
+    "Sam33dAlignOutput",
+    "File",
+    "SAM3DBodyAlignmentInfo"
+  ]
+}

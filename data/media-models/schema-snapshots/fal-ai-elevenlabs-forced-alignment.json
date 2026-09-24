@@ -1,0 +1,88 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/elevenlabs/forced-alignment",
+  "task": "speech",
+  "source_url": "https://fal.ai/models/fal-ai/elevenlabs/forced-alignment",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Felevenlabs%2Fforced-alignment",
+  "retrieved_at": "2026-09-23T14:36:24.084Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "speech-to-text",
+  "bytes_sha256": "fde6ecb48a087a1789565a7cc8d820b504c723fb44d53186acbb36f21e28fc9b",
+  "queue_path": "/fal-ai/elevenlabs/forced-alignment",
+  "input_name": "ElevenlabsForcedAlignmentInput",
+  "input": {
+    "$refName": "ElevenlabsForcedAlignmentInput",
+    "type": "object",
+    "properties": {
+      "audio_url": {
+        "type": "string",
+        "description": "URL of the audio file to align. The file can be up to 3 GB and the audio can be up to 10 hours long."
+      },
+      "text": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 675000,
+        "description": "Transcript to align with the audio"
+      }
+    },
+    "required": [
+      "audio_url",
+      "text"
+    ]
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs."
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics."
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "ElevenlabsForcedAlignmentInput",
+    "ElevenlabsForcedAlignmentOutput",
+    "ForcedAlignmentWord",
+    "ForcedAlignmentCharacter"
+  ]
+}

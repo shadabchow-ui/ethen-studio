@@ -1,0 +1,273 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/minimax/speech-02-turbo",
+  "task": "speech",
+  "source_url": "https://fal.ai/models/fal-ai/minimax/speech-02-turbo",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fminimax%2Fspeech-02-turbo",
+  "retrieved_at": "2026-09-23T14:37:28.668Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "text-to-speech",
+  "bytes_sha256": "cf7b3bad5dc3634ba63dd8b740a81de3a21229d20900011e0a916d54a0dab9a7",
+  "queue_path": "/fal-ai/minimax/speech-02-turbo",
+  "input_name": "MinimaxSpeech02TurboInput",
+  "input": {
+    "$refName": "MinimaxSpeech02TurboInput",
+    "type": "object",
+    "properties": {
+      "audio_setting": {
+        "$refName": "AudioSetting",
+        "type": "object",
+        "properties": {
+          "format": {
+            "type": "string",
+            "enum": [
+              "mp3",
+              "pcm",
+              "flac"
+            ],
+            "default": "mp3",
+            "description": "Audio format"
+          },
+          "sample_rate": {
+            "type": "integer",
+            "enum": [
+              8000,
+              16000,
+              22050,
+              24000,
+              32000,
+              44100
+            ],
+            "default": 32000,
+            "description": "Sample rate of generated audio"
+          },
+          "bitrate": {
+            "type": "integer",
+            "enum": [
+              32000,
+              64000,
+              128000,
+              256000
+            ],
+            "default": 128000,
+            "description": "Bitrate of generated audio"
+          },
+          "channel": {
+            "type": "integer",
+            "enum": [
+              1,
+              2
+            ],
+            "default": 1,
+            "description": "Number of audio channels (1=mono, 2=stereo)"
+          }
+        }
+      },
+      "text": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 5000,
+        "description": "Text to convert to speech (max 5000 characters, minimum 1 non-whitespace character)"
+      },
+      "language_boost": {
+        "description": "Enhance recognition of specified languages and dialects",
+        "anyOf": [
+          {
+            "type": "string",
+            "enum": [
+              "Chinese",
+              "Chinese,Yue",
+              "English",
+              "Arabic",
+              "Russian",
+              "Spanish",
+              "French",
+              "Portuguese",
+              "German",
+              "Turkish",
+              "Dutch",
+              "Ukrainian",
+              "Vietnamese",
+              "Indonesian",
+              "Japanese",
+              "Italian",
+              "Korean",
+              "Thai",
+              "Polish",
+              "Romanian",
+              "Greek",
+              "Czech",
+              "Finnish",
+              "Hindi",
+              "Bulgarian",
+              "Danish",
+              "Hebrew",
+              "Malay",
+              "Slovak",
+              "Swedish",
+              "Croatian",
+              "Hungarian",
+              "Norwegian",
+              "Slovenian",
+              "Catalan",
+              "Nynorsk",
+              "Afrikaans",
+              "auto"
+            ]
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "pronunciation_dict": {
+        "description": "Custom pronunciation dictionary for text replacement",
+        "anyOf": [
+          {
+            "$refName": "PronunciationDict",
+            "type": "object",
+            "properties": {
+              "tone_list": {
+                "type": "array",
+                "description": "List of pronunciation replacements in format ['text/(pronunciation)', ...]. For Chinese, tones are 1-5. Example: ['燕少飞/(yan4)(shao3)(fei1)']",
+                "items": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "voice_setting": {
+        "$refName": "VoiceSetting",
+        "type": "object",
+        "properties": {
+          "vol": {
+            "type": "number",
+            "default": 1,
+            "minimum": 0.01,
+            "maximum": 10,
+            "description": "Volume (0-10)"
+          },
+          "pitch": {
+            "type": "integer",
+            "default": 0,
+            "minimum": -12,
+            "maximum": 12,
+            "description": "Voice pitch (-12 to 12)"
+          },
+          "emotion": {
+            "description": "Emotion of the generated speech",
+            "anyOf": [
+              {
+                "type": "string",
+                "enum": [
+                  "happy",
+                  "sad",
+                  "angry",
+                  "fearful",
+                  "disgusted",
+                  "surprised",
+                  "neutral"
+                ]
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "english_normalization": {
+            "type": "boolean",
+            "default": false,
+            "description": "Enables English text normalization to improve number reading performance, with a slight increase in latency"
+          },
+          "voice_id": {
+            "type": "string",
+            "default": "Wise_Woman",
+            "minLength": 1,
+            "description": "Predefined voice ID to use for synthesis"
+          },
+          "speed": {
+            "type": "number",
+            "default": 1,
+            "minimum": 0.5,
+            "maximum": 2,
+            "description": "Speech speed (0.5-2.0)"
+          }
+        }
+      },
+      "output_format": {
+        "type": "string",
+        "enum": [
+          "url",
+          "hex"
+        ],
+        "default": "hex",
+        "description": "Format of the output content (non-streaming only)"
+      }
+    },
+    "required": [
+      "text"
+    ]
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs."
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics."
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "MinimaxSpeech02TurboInput",
+    "MinimaxSpeech02TurboOutput",
+    "AudioSetting",
+    "PronunciationDict",
+    "VoiceSetting",
+    "File"
+  ]
+}

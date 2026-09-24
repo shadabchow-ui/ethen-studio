@@ -1,0 +1,112 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "tripo3d/p1/text-to-3d",
+  "task": "3d-generation",
+  "source_url": "https://fal.ai/models/tripo3d/p1/text-to-3d",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=tripo3d%2Fp1%2Ftext-to-3d",
+  "retrieved_at": "2026-09-23T14:38:14.474Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "text-to-3d",
+  "bytes_sha256": "f29e9bb89805ccae17a7229accf88bcf072fdada10f2501c6ee0ae1714df0a7b",
+  "queue_path": "/tripo3d/p1/text-to-3d",
+  "input_name": "P1TextTo3dInput",
+  "input": {
+    "$refName": "P1TextTo3dInput",
+    "type": "object",
+    "description": "Input for Text to 3D generation using the P1 model.\n\nP1 is optimized for clean low-poly mesh generation in ~2 seconds.\nIt supports a restricted parameter set compared to H3.1/v2.5.",
+    "properties": {
+      "texture": {
+        "type": "boolean",
+        "default": true,
+        "description": "Whether to generate textures for the model."
+      },
+      "model_seed": {
+        "description": "Seed for geometry generation reproducibility.",
+        "anyOf": [
+          {
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "prompt": {
+        "type": "string",
+        "maxLength": 1024,
+        "description": "Text description of the 3D object to generate. Maximum 1024 characters."
+      },
+      "face_limit": {
+        "description": "Target number of faces for the generated mesh. If not set, the model adaptively determines the count.",
+        "anyOf": [
+          {
+            "type": "integer",
+            "minimum": 48,
+            "maximum": 20000
+          },
+          {
+            "type": "null"
+          }
+        ]
+      }
+    },
+    "required": [
+      "prompt"
+    ]
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs."
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics."
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "P1TextTo3dInput",
+    "P1TextTo3dOutput",
+    "File",
+    "ModelUrls"
+  ]
+}

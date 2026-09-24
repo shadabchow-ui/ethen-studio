@@ -1,0 +1,78 @@
+/* V2 typography — production contract. Geist Sans for UI, Geist Mono for code. */
+[data-ethen-v2] .v2-page-title {
+  font-family: var(--v2-font-sans);
+  font-size: var(--v2-type-page-size);
+  font-weight: var(--v2-type-page-weight);
+  line-height: var(--v2-type-page-line);
+  letter-spacing: -0.02em;
+  color: var(--v2-text-primary);
+}
+
+[data-ethen-v2] .v2-section-title {
+  font-family: var(--v2-font-sans);
+  font-size: var(--v2-type-section-size);
+  font-weight: var(--v2-type-section-weight);
+  line-height: var(--v2-type-section-line);
+  letter-spacing: -0.01em;
+  color: var(--v2-text-primary);
+}
+
+[data-ethen-v2] .v2-ui {
+  font-family: var(--v2-font-sans);
+  font-size: var(--v2-type-ui-size);
+  font-weight: var(--v2-type-ui-weight);
+  line-height: var(--v2-type-ui-line);
+  color: var(--v2-text-primary);
+}
+
+[data-ethen-v2] .v2-ui-medium {
+  font-family: var(--v2-font-sans);
+  font-size: var(--v2-type-ui-size);
+  font-weight: var(--v2-type-ui-weight-medium);
+  line-height: var(--v2-type-ui-line);
+  color: var(--v2-text-primary);
+}
+
+[data-ethen-v2] .v2-secondary {
+  font-family: var(--v2-font-sans);
+  font-size: var(--v2-type-secondary-size);
+  font-weight: 400;
+  line-height: var(--v2-type-secondary-line);
+  color: var(--v2-text-secondary);
+}
+
+[data-ethen-v2] .v2-metadata {
+  font-family: var(--v2-font-sans);
+  font-size: var(--v2-type-metadata-size);
+  font-weight: 400;
+  line-height: var(--v2-type-metadata-line);
+  color: var(--v2-text-tertiary);
+}
+
+[data-ethen-v2] .v2-code {
+  font-family: var(--v2-font-mono);
+  font-size: var(--v2-type-code-size);
+  font-weight: 400;
+  line-height: var(--v2-type-code-line);
+  color: var(--v2-text-secondary);
+}
+
+[data-ethen-v2] .v2-code-large {
+  font-family: var(--v2-font-mono);
+  font-size: var(--v2-type-code-size-large);
+  font-weight: 400;
+  line-height: 20px;
+  color: var(--v2-text-secondary);
+}
+
+/* Long-label handling — truncate, wrap, and break utilities that preserve the type scale */
+[data-ethen-v2] .v2-truncate {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+[data-ethen-v2] .v2-wrap {
+  overflow-wrap: break-word;
+  word-break: break-word;
+}

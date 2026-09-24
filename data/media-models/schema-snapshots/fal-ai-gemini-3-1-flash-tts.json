@@ -1,0 +1,319 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/gemini-3.1-flash-tts",
+  "task": "text-to-audio",
+  "source_url": "https://fal.ai/models/fal-ai/gemini-3.1-flash-tts",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fgemini-3.1-flash-tts",
+  "retrieved_at": "2026-09-23T14:36:32.173Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "text-to-speech",
+  "bytes_sha256": "040998f07c6ed8f3e6ae0e1d2c90978bc86b40b9f89dbfea77e1a54af744f1ce",
+  "queue_path": "/fal-ai/gemini-3.1-flash-tts",
+  "input_name": "Gemini31FlashTtsInput",
+  "input": {
+    "$refName": "Gemini31FlashTtsInput",
+    "type": "object",
+    "description": "Input for Gemini 3.1 Flash TTS preview speech generation.",
+    "properties": {
+      "language_code": {
+        "description": "Language for multilingual synthesis. When set, steers the model to speak in the specified language. If not set, the model auto-detects the language from the text.",
+        "anyOf": [
+          {
+            "type": "string",
+            "enum": [
+              "Arabic (Egypt)",
+              "Bangla (Bangladesh)",
+              "Dutch (Netherlands)",
+              "English (India)",
+              "English (US)",
+              "French (France)",
+              "German (Germany)",
+              "Hindi (India)",
+              "Indonesian (Indonesia)",
+              "Italian (Italy)",
+              "Japanese (Japan)",
+              "Korean (South Korea)",
+              "Marathi (India)",
+              "Polish (Poland)",
+              "Portuguese (Brazil)",
+              "Romanian (Romania)",
+              "Russian (Russia)",
+              "Spanish (Spain)",
+              "Tamil (India)",
+              "Telugu (India)",
+              "Thai (Thailand)",
+              "Turkish (Turkey)",
+              "Ukrainian (Ukraine)",
+              "Vietnamese (Vietnam)",
+              "Afrikaans (South Africa)",
+              "Albanian (Albania)",
+              "Amharic (Ethiopia)",
+              "Arabic (World)",
+              "Armenian (Armenia)",
+              "Azerbaijani (Azerbaijan)",
+              "Basque (Spain)",
+              "Belarusian (Belarus)",
+              "Bulgarian (Bulgaria)",
+              "Burmese (Myanmar)",
+              "Catalan (Spain)",
+              "Cebuano (Philippines)",
+              "Chinese Mandarin (China)",
+              "Chinese Mandarin (Taiwan)",
+              "Croatian (Croatia)",
+              "Czech (Czech Republic)",
+              "Danish (Denmark)",
+              "English (Australia)",
+              "English (UK)",
+              "Estonian (Estonia)",
+              "Filipino (Philippines)",
+              "Finnish (Finland)",
+              "French (Canada)",
+              "Galician (Spain)",
+              "Georgian (Georgia)",
+              "Greek (Greece)",
+              "Gujarati (India)",
+              "Haitian Creole (Haiti)",
+              "Hebrew (Israel)",
+              "Hungarian (Hungary)",
+              "Icelandic (Iceland)",
+              "Javanese (Java)",
+              "Kannada (India)",
+              "Konkani (India)",
+              "Lao (Laos)",
+              "Latin (Vatican City)",
+              "Latvian (Latvia)",
+              "Lithuanian (Lithuania)",
+              "Luxembourgish (Luxembourg)",
+              "Macedonian (North Macedonia)",
+              "Maithili (India)",
+              "Malagasy (Madagascar)",
+              "Malay (Malaysia)",
+              "Malayalam (India)",
+              "Mongolian (Mongolia)",
+              "Nepali (Nepal)",
+              "Norwegian Bokmal (Norway)",
+              "Norwegian Nynorsk (Norway)",
+              "Odia (India)",
+              "Pashto (Afghanistan)",
+              "Persian (Iran)",
+              "Portuguese (Portugal)",
+              "Punjabi (India)",
+              "Serbian (Serbia)",
+              "Sindhi (India)",
+              "Sinhala (Sri Lanka)",
+              "Slovak (Slovakia)",
+              "Slovenian (Slovenia)",
+              "Spanish (Latin America)",
+              "Spanish (Mexico)",
+              "Swahili (Kenya)",
+              "Swedish (Sweden)",
+              "Urdu (Pakistan)"
+            ]
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "temperature": {
+        "type": "number",
+        "default": 1,
+        "minimum": 0,
+        "maximum": 2,
+        "description": "Controls the randomness of the speech output. Higher values produce more creative and varied delivery, while lower values make the output more predictable and focused."
+      },
+      "output_format": {
+        "type": "string",
+        "enum": [
+          "wav",
+          "mp3",
+          "ogg_opus"
+        ],
+        "default": "mp3",
+        "description": "Audio output format. mp3: compressed, small file size (recommended). wav: uncompressed PCM wrapped in WAV (24 kHz, 16-bit mono). ogg_opus: Ogg container with Opus codec, good quality-to-size ratio."
+      },
+      "style_instructions": {
+        "description": "Optional style and delivery instructions prepended to the prompt. Controls expressiveness, accent, pace, tone, and emotional expression using natural language. Use this to separate style control from the text content. Examples: 'Speak warmly and slowly', 'Read this as a dramatic newscast', 'Use a Br",
+        "anyOf": [
+          {
+            "type": "string",
+            "maxLength": 4000
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "voice": {
+        "type": "string",
+        "enum": [
+          "Achernar",
+          "Achird",
+          "Algenib",
+          "Algieba",
+          "Alnilam",
+          "Aoede",
+          "Autonoe",
+          "Callirrhoe",
+          "Charon",
+          "Despina",
+          "Enceladus",
+          "Erinome",
+          "Fenrir",
+          "Gacrux",
+          "Iapetus",
+          "Kore",
+          "Laomedeia",
+          "Leda",
+          "Orus",
+          "Pulcherrima",
+          "Puck",
+          "Rasalgethi",
+          "Sadachbia",
+          "Sadaltager",
+          "Schedar",
+          "Sulafat",
+          "Umbriel",
+          "Vindemiatrix",
+          "Zephyr",
+          "Zubenelgenubi"
+        ],
+        "default": "Kore",
+        "description": "Voice preset for single-speaker synthesis. 30 distinct voices are available. Ignored when speakers is set. Popular choices: Kore (strong, firm female), Puck (upbeat, lively male), Charon (calm, professional male), Zephyr (bright, clear female), Aoede (warm, melodic female)."
+      },
+      "speakers": {
+        "description": "Multi-speaker voice configuration. When set, enables multi-speaker synthesis where different parts of the text are spoken by different voices. Each speaker needs a voice and a speaker_id (alias) that matches prefixes in the prompt.",
+        "anyOf": [
+          {
+            "type": "array",
+            "minItems": 2,
+            "maxItems": 10,
+            "items": {
+              "$refName": "SpeakerConfig",
+              "type": "object",
+              "description": "Voice configuration for a single speaker in multi-speaker synthesis.",
+              "properties": {
+                "speaker_id": {
+                  "type": "string",
+                  "description": "Alias used to identify this speaker in the prompt. Use this alias as a prefix in the prompt field, e.g. 'Alice: Hello! Bob: Hi there!'. Must be alphanumeric with no whitespace."
+                },
+                "voice": {
+                  "type": "string",
+                  "enum": [
+                    "Achernar",
+                    "Achird",
+                    "Algenib",
+                    "Algieba",
+                    "Alnilam",
+                    "Aoede",
+                    "Autonoe",
+                    "Callirrhoe",
+                    "Charon",
+                    "Despina",
+                    "Enceladus",
+                    "Erinome",
+                    "Fenrir",
+                    "Gacrux",
+                    "Iapetus",
+                    "Kore",
+                    "Laomedeia",
+                    "Leda",
+                    "Orus",
+                    "Pulcherrima",
+                    "Puck",
+                    "Rasalgethi",
+                    "Sadachbia",
+                    "Sadaltager",
+                    "Schedar",
+                    "Sulafat",
+                    "Umbriel",
+                    "Vindemiatrix",
+                    "Zephyr",
+                    "Zubenelgenubi"
+                  ],
+                  "description": "Voice preset for this speaker."
+                }
+              },
+              "required": [
+                "voice",
+                "speaker_id"
+              ]
+            }
+          },
+          {
+            "type": "array",
+            "minItems": 0,
+            "maxItems": 0
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "prompt": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 50000,
+        "description": "The text to convert to speech. Gemini 3.1 Flash TTS supports natural-language prompting for style, pace, accent, and emotional expression — include delivery instructions inline with the text (e.g. 'Say cheerfully: Have a wonderful day!'). Supports expressive audio tags like [sigh], [laughing], [whis"
+      }
+    },
+    "required": [
+      "prompt"
+    ]
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs."
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics."
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "Gemini31FlashTtsInput",
+    "Gemini31FlashTtsOutput",
+    "SpeakerConfig",
+    "File"
+  ]
+}

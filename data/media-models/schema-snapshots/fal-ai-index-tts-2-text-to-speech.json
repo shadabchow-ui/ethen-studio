@@ -1,0 +1,197 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/index-tts-2/text-to-speech",
+  "task": "text-to-audio",
+  "source_url": "https://fal.ai/models/fal-ai/index-tts-2/text-to-speech",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Findex-tts-2%2Ftext-to-speech",
+  "retrieved_at": "2026-09-23T14:36:46.566Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "text-to-speech",
+  "bytes_sha256": "fa2d795fe98e5d30ebd190e6f18e08a53cd9390d25c1e6ddd2e8668259090734",
+  "queue_path": "/fal-ai/index-tts-2/text-to-speech",
+  "input_name": "IndexTts2TextToSpeechInput",
+  "input": {
+    "$refName": "IndexTts2TextToSpeechInput",
+    "type": "object",
+    "properties": {
+      "prompt": {
+        "type": "string",
+        "description": "The speech prompt to generate"
+      },
+      "audio_url": {
+        "type": "string",
+        "description": "The audio file to generate the speech from."
+      },
+      "emotion_prompt": {
+        "description": "The emotional prompt to influence the emotional style. Must be used together with should_use_prompt_for_emotion.",
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "strength": {
+        "type": "number",
+        "default": 1,
+        "minimum": 0,
+        "maximum": 1,
+        "description": "The strength of the emotional style transfer. Higher values result in stronger emotional influence."
+      },
+      "emotional_audio_url": {
+        "description": "The emotional reference audio file to extract the style from.",
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "should_use_prompt_for_emotion": {
+        "default": false,
+        "description": "Whether to use the `prompt` to calculate emotional strengths, if enabled it will overwrite the `emotional_strengths` values. If `emotion_prompt` is provided, it will be used to instead of `prompt` to extract the emotional style.",
+        "anyOf": [
+          {
+            "type": "boolean"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "emotional_strengths": {
+        "description": "The strengths of individual emotions for fine-grained control.",
+        "anyOf": [
+          {
+            "$refName": "EmotionalStrengths",
+            "type": "object",
+            "properties": {
+              "surprised": {
+                "type": "number",
+                "default": 0,
+                "minimum": 0,
+                "maximum": 1,
+                "description": "Strength of surprise emotion"
+              },
+              "melancholic": {
+                "type": "number",
+                "default": 0,
+                "minimum": 0,
+                "maximum": 1,
+                "description": "Strength of melancholic emotion"
+              },
+              "calm": {
+                "type": "number",
+                "default": 0,
+                "minimum": 0,
+                "maximum": 1,
+                "description": "Strength of calm emotion"
+              },
+              "afraid": {
+                "type": "number",
+                "default": 0,
+                "minimum": 0,
+                "maximum": 1,
+                "description": "Strength of fear emotion"
+              },
+              "sad": {
+                "type": "number",
+                "default": 0,
+                "minimum": 0,
+                "maximum": 1,
+                "description": "Strength of sadness emotion"
+              },
+              "angry": {
+                "type": "number",
+                "default": 0,
+                "minimum": 0,
+                "maximum": 1,
+                "description": "Strength of anger emotion"
+              },
+              "happy": {
+                "type": "number",
+                "default": 0,
+                "minimum": 0,
+                "maximum": 1,
+                "description": "Strength of happiness emotion"
+              },
+              "disgusted": {
+                "type": "number",
+                "default": 0,
+                "minimum": 0,
+                "maximum": 1,
+                "description": "Strength of disgust emotion"
+              }
+            }
+          },
+          {
+            "type": "null"
+          }
+        ]
+      }
+    },
+    "required": [
+      "audio_url",
+      "prompt"
+    ]
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs."
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics."
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "IndexTts2TextToSpeechInput",
+    "IndexTts2TextToSpeechOutput",
+    "EmotionalStrengths",
+    "File"
+  ]
+}

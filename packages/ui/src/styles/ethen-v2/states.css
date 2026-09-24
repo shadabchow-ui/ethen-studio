@@ -1,0 +1,100 @@
+/* V2 interaction states — hover/active/pressed/disabled/selected + keyboard focus-visible */
+
+/* Base interactive — cheap properties only, no transition-all */
+[data-ethen-v2] .v2-interactive {
+  transition:
+    background-color var(--v2-motion-ui) var(--v2-ease-default),
+    color var(--v2-motion-ui) var(--v2-ease-default),
+    border-color var(--v2-motion-ui) var(--v2-ease-default),
+    opacity var(--v2-motion-ui) var(--v2-ease-default);
+}
+
+[data-ethen-v2] .v2-interactive:hover {
+  background: var(--v2-hover);
+  color: var(--v2-text-primary);
+}
+
+[data-ethen-v2] .v2-interactive:active {
+  background: var(--v2-active);
+  color: var(--v2-text-primary);
+  transition-duration: var(--v2-motion-press);
+  transition-timing-function: var(--v2-ease-press);
+}
+
+[data-ethen-v2] .v2-interactive:disabled,
+[data-ethen-v2] .v2-interactive[aria-disabled="true"] {
+  opacity: var(--v2-disabled-opacity);
+  pointer-events: none;
+  cursor: not-allowed;
+}
+
+[data-ethen-v2] .v2-interactive[aria-selected="true"],
+[data-ethen-v2] .v2-interactive[data-selected="true"],
+[data-ethen-v2] .v2-selected {
+  background: var(--v2-selected);
+  color: var(--v2-text-primary);
+  border-color: var(--v2-border-strong);
+}
+
+/* Pressed/selected vs focused — selected uses background, focus uses ring */
+[data-ethen-v2] .v2-selected:focus-visible {
+  outline: var(--v2-focus-width) solid var(--v2-focus);
+  outline-offset: var(--v2-focus-offset);
+}
+
+/* Keyboard focus — visible only on :focus-visible for real controls */
+[data-ethen-v2] :where(button, a, input, select, textarea, [role="button"], [role="menuitem"], [role="option"], [role="tab"], [tabindex]):focus-visible {
+  outline: var(--v2-focus-width) solid var(--v2-focus);
+  outline-offset: var(--v2-focus-offset);
+}
+
+/* Focus ring utility for custom controls */
+[data-ethen-v2] .v2-focus-ring:focus-visible {
+  outline: var(--v2-focus-width) solid var(--v2-focus);
+  outline-offset: var(--v2-focus-offset);
+}
+
+/* Mouse click must not leave a persistent ring — :focus (not :focus-visible) has no outline */
+[data-ethen-v2] :where(button, a, input, select, textarea):focus:not(:focus-visible) {
+  outline: none;
+}
+
+/* Disabled state */
+[data-ethen-v2] .v2-disabled,
+[data-ethen-v2] :disabled {
+  color: var(--v2-text-disabled);
+}
+
+/* Composer container and text-entry surface must NEVER show focus ring/glow/border change */
+[data-ethen-v2] .v2-composer,
+[data-ethen-v2] .v2-composer:focus,
+[data-ethen-v2] .v2-composer:focus-within,
+[data-ethen-v2] .v2-composer:focus-visible {
+  outline: none !important;
+  box-shadow: none !important;
+  border-color: var(--v2-border-default) !important;
+}
+
+[data-ethen-v2] .v2-composer textarea,
+[data-ethen-v2] .v2-composer textarea:focus,
+[data-ethen-v2] .v2-composer textarea:focus-visible,
+[data-ethen-v2] .v2-composer textarea:focus-within {
+  outline: none !important;
+  box-shadow: none !important;
+  border-color: transparent !important;
+}
+
+/* Resize handle — keyboard accessible */
+[data-ethen-v2] [data-resize-handle]:focus-visible,
+[data-ethen-v2] .v2-resize-handle:focus-visible {
+  outline: var(--v2-focus-width) solid var(--v2-focus);
+  outline-offset: 1px;
+}
+
+/* Links — keyboard focus visible, hover subtle */
+[data-ethen-v2] a:focus-visible {
+  outline: var(--v2-focus-width) solid var(--v2-focus);
+  outline-offset: 2px;
+  text-decoration: underline;
+  text-decoration-color: var(--v2-focus);
+}

@@ -1,0 +1,118 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/luma-dream-machine/ray-2",
+  "task": "unknown",
+  "source_url": "https://fal.ai/models/fal-ai/luma-dream-machine/ray-2",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fluma-dream-machine%2Fray-2",
+  "retrieved_at": "2026-09-20T09:40:04.924Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "text-to-video",
+  "bytes_sha256": "e26a27eb8a9dc90ae804862ebb4dc9d2b6ca941b8b433b8784eda15e9a873b29",
+  "queue_path": "/fal-ai/luma-dream-machine/ray-2",
+  "input_name": "LumaDreamMachineRay2Input",
+  "input": {
+    "$refName": "LumaDreamMachineRay2Input",
+    "type": "object",
+    "properties": {
+      "aspect_ratio": {
+        "type": "string",
+        "enum": [
+          "16:9",
+          "9:16",
+          "4:3",
+          "3:4",
+          "21:9",
+          "9:21"
+        ],
+        "default": "16:9",
+        "description": "The aspect ratio of the generated video"
+      },
+      "prompt": {
+        "type": "string",
+        "minLength": 3,
+        "maxLength": 5000
+      },
+      "resolution": {
+        "type": "string",
+        "enum": [
+          "540p",
+          "720p",
+          "1080p"
+        ],
+        "default": "540p",
+        "description": "The resolution of the generated video (720p costs 2x more, 1080p costs 4x more)"
+      },
+      "loop": {
+        "type": "boolean",
+        "default": false,
+        "description": "Whether the video should loop (end of video is blended with the beginning)"
+      },
+      "duration": {
+        "type": "string",
+        "enum": [
+          "5s",
+          "9s"
+        ],
+        "default": "5s",
+        "description": "The duration of the generated video (9s costs 2x more)"
+      }
+    },
+    "required": [
+      "prompt"
+    ]
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs."
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics."
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "LumaDreamMachineRay2Input",
+    "LumaDreamMachineRay2Output",
+    "File"
+  ]
+}

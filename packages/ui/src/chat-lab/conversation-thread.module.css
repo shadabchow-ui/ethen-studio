@@ -1,0 +1,476 @@
+.thread {
+  display: flex;
+  flex-direction: column;
+  gap: 34px;
+  margin: 0 auto;
+  max-width: var(--chat-measure);
+  width: 100%;
+}
+
+.visuallyHidden {
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  height: 1px;
+  overflow: hidden;
+  position: absolute;
+  white-space: nowrap;
+  width: 1px;
+}
+
+/* ── user turn: a small contained surface, never a brand-filled bubble ─── */
+.userTurn {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.userBubble {
+  background: var(--chat-surface-hover);
+  border: 1px solid var(--chat-border);
+  border-radius: var(--chat-radius-message);
+  color: var(--chat-text);
+  max-width: 80%;
+  padding: 10px 14px;
+}
+
+.userBubble p {
+  font-size: var(--eds-type-body-size);
+  line-height: 23px;
+  margin: 0;
+}
+
+.userAttachments {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  list-style: none;
+  margin: 0 0 8px;
+  padding: 0;
+}
+
+.userAttachments li {
+  align-items: center;
+  background: var(--chat-surface-sunken);
+  border: 1px solid var(--chat-border);
+  border-radius: 6px;
+  color: var(--chat-text-secondary);
+  display: inline-flex;
+  font-size: var(--eds-type-caption-size);
+  gap: 5px;
+  padding: 3px 7px;
+}
+
+/* ── Ethen turn: open canvas ──────────────────────────────────────────── */
+.ethenTurn {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.prose {
+  color: var(--chat-text);
+  font-size: 16px;
+  line-height: 1.62;
+}
+
+.prose > * { margin: 0; }
+.prose > * + * { margin-top: 16px; }
+
+/* Response headings stay compact and calm next to 16px body: medium, not
+ * semibold, so hierarchy reads without article-headline weight. */
+.prose h3 {
+  color: var(--chat-text);
+  font-size: 17px;
+  font-weight: var(--eds-font-weight-medium) !important;
+  letter-spacing: -0.005em;
+  line-height: 24px;
+  margin-top: 26px;
+  text-transform: none;
+}
+
+/* app/globals.css styles bare `p` and `li` directly, which beats inherited
+ * line-height. The reading measure is the point of this surface, so it is
+ * restated rather than left to whichever sheet loads last. */
+.prose p,
+.prose li,
+.prose blockquote {
+  font-family: inherit;
+  line-height: 1.62;
+}
+
+/* Tailwind preflight strips list markers globally; a response with numbered
+ * steps is meaningless without them, so they are restored here. */
+.prose ul { list-style: disc; padding-left: 22px; }
+.prose ol { list-style: decimal; padding-left: 22px; }
+.prose li::marker { color: var(--chat-text-muted); }
+.prose li + li { margin-top: 7px; }
+
+.prose blockquote {
+  border-left: 2px solid var(--chat-border-strong);
+  color: var(--chat-text-secondary);
+  padding: 2px 0 2px 14px;
+}
+
+.inlineCode {
+  background: var(--chat-surface-sunken);
+  border: 1px solid var(--chat-border);
+  border-radius: 4px;
+  font-family: var(--eds-font-mono);
+  font-size: 0.88em;
+  padding: 1px 4px;
+}
+
+/* Code is allowed to exceed the prose measure; it scrolls inside its own box. */
+.codeBlock {
+  background: var(--chat-surface-sunken);
+  border: 1px solid var(--chat-border);
+  border-radius: 10px;
+  margin: 0;
+  overflow: hidden;
+}
+
+.codeBlock figcaption {
+  align-items: center;
+  border-bottom: 1px solid var(--chat-border);
+  color: var(--chat-text-muted);
+  display: flex;
+  font-family: var(--eds-font-mono);
+  font-size: var(--eds-type-mono-micro-size);
+  justify-content: space-between;
+  padding: 6px 8px 6px 12px;
+}
+
+.codeCopy {
+  align-items: center;
+  background: none;
+  border: 0;
+  border-radius: 6px;
+  color: var(--chat-text-muted);
+  cursor: pointer;
+  display: inline-flex;
+  font: inherit;
+  gap: 4px;
+  padding: 3px 6px;
+  transition: background var(--chat-motion-press, var(--eds-motion-ui)) ease, color var(--chat-motion-press, var(--eds-motion-ui)) ease;
+}
+
+.codeCopy:hover { background: var(--chat-surface-hover); color: var(--chat-text); }
+.codeCopy:focus-visible { outline: var(--chat-focus); outline-offset: 1px; }
+
+.codeBlock pre {
+  margin: 0;
+  overflow-x: auto;
+  padding: 12px;
+}
+
+.codeBlock code {
+  color: var(--chat-text-secondary);
+  font-family: var(--eds-font-mono);
+  font-size: var(--eds-type-code-size);
+  line-height: var(--eds-type-code-line);
+  white-space: pre;
+}
+
+.tableWrap { overflow-x: auto; }
+
+.tableWrap table {
+  border-collapse: collapse;
+  font-size: var(--eds-type-ui-size);
+  min-width: 100%;
+  width: max-content;
+}
+
+.tableWrap th, .tableWrap td {
+  border-bottom: 1px solid var(--chat-border);
+  padding: 8px 14px 8px 0;
+  text-align: left;
+  vertical-align: top;
+}
+
+.tableWrap th {
+  color: var(--chat-text-muted);
+  font-size: var(--eds-type-label-size);
+  font-weight: var(--eds-font-weight-medium);
+  letter-spacing: var(--eds-type-label-tracking);
+  text-transform: uppercase;
+}
+
+.tableWrap td { color: var(--chat-text-secondary); }
+
+/* ── tool activity: execution state, never reasoning ──────────────────── */
+.activity {
+  border-left: 1px solid var(--chat-border);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  list-style: none;
+  margin: 0;
+  padding: 2px 0 2px 14px;
+}
+
+.activityStep {
+  align-items: baseline;
+  color: var(--chat-text-muted);
+  display: flex;
+  font-size: var(--eds-type-ui-sm-size);
+  gap: 8px;
+  line-height: 18px;
+  position: relative;
+}
+
+.activityDot {
+  background: var(--chat-text-muted);
+  border-radius: 50%;
+  height: 5px;
+  left: -17px;
+  position: absolute;
+  top: 6px;
+  width: 5px;
+}
+
+.activityStep[data-state="running"] .activityDot { background: var(--chat-accent); animation: pulse 1.4s ease-in-out infinite; }
+.activityStep[data-state="failed"] .activityDot { background: var(--chat-danger); }
+.activityStep[data-state="running"] .activityLabel { color: var(--chat-text); }
+.activityStep[data-state="failed"] .activityLabel { color: var(--chat-danger); }
+
+.activityLabel { color: var(--chat-text-secondary); }
+.activityDetail { color: var(--chat-text-muted); font-size: var(--eds-type-caption-size); }
+
+/* A finished trail collapses to compact form instead of holding vertical space. */
+.activity[data-complete="true"] { row-gap: 2px; }
+.activity[data-complete="true"] .activityDetail { display: none; }
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.35; }
+}
+
+.streamingStatus {
+  color: var(--chat-text-muted);
+  font-size: var(--eds-type-caption-size);
+  margin: 0;
+}
+
+/* The caret belongs at the END OF THE TEXT, not on a line of its own, so it
+ * is drawn on the last block rather than appended as a sibling. */
+.prose[data-streaming="true"] > *:last-child::after {
+  animation: blink 1s steps(2, start) infinite;
+  background: var(--chat-accent);
+  content: "";
+  display: inline-block;
+  height: 15px;
+  margin-left: 3px;
+  vertical-align: -2px;
+  width: 2px;
+}
+
+@keyframes blink { 50% { opacity: 0; } }
+
+@media (prefers-reduced-motion: reduce) {
+  .activityStep[data-state="running"] .activityDot { animation: none; }
+  .prose[data-streaming="true"] > *:last-child::after { animation: none; }
+}
+
+/* ── sources: a compact disclosure list, not a card ────────────────────── */
+.sources {
+  border-bottom: 1px solid var(--chat-border);
+  border-top: 1px solid var(--chat-border);
+}
+
+.sourcesHeader {
+  align-items: center;
+  background: none;
+  border: 0;
+  border-radius: 6px;
+  color: var(--chat-text-secondary);
+  cursor: pointer;
+  display: flex;
+  font: inherit;
+  font-size: var(--eds-type-ui-sm-size);
+  gap: 8px;
+  padding: 9px 8px;
+  transition: background var(--chat-motion-press, var(--eds-motion-ui)) ease, color var(--chat-motion-press, var(--eds-motion-ui)) ease;
+  width: 100%;
+}
+
+.sourcesHeader:hover { background: var(--chat-surface-hover); color: var(--chat-text); }
+.sourcesHeader:focus-visible { outline: var(--chat-focus); outline-offset: -2px; }
+
+.sourcesCount {
+  background: var(--chat-surface-active);
+  border-radius: 4px;
+  color: var(--chat-text-muted);
+  font-size: var(--eds-type-caption-size);
+  padding: 1px 6px;
+}
+
+.sourceList {
+  display: flex;
+  flex-direction: column;
+  list-style: none;
+  margin: 0;
+  padding: 2px 0 6px;
+}
+
+.sourceRow {
+  align-items: baseline;
+  background: none;
+  border: 0;
+  border-radius: 6px;
+  color: var(--chat-text);
+  cursor: pointer;
+  display: flex;
+  font: inherit;
+  gap: 10px;
+  padding: 7px 8px;
+  text-align: left;
+  transition: background var(--chat-motion-press, var(--eds-motion-ui)) ease;
+  width: 100%;
+}
+
+.sourceRow:hover { background: var(--chat-surface-hover); }
+.sourceRow:focus-visible { outline: var(--chat-focus); outline-offset: -2px; }
+
+.sourceIndex {
+  color: var(--chat-text-muted);
+  flex: none;
+  font-family: var(--eds-font-mono);
+  font-size: var(--eds-type-mono-micro-size);
+}
+
+.sourceText { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+
+.sourceTitle {
+  font-size: var(--eds-type-ui-sm-size);
+  line-height: 18px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.sourceMeta { color: var(--chat-text-muted); font-size: var(--eds-type-caption-size); line-height: 16px; }
+
+/* ── artifact handoff card ────────────────────────────────────────────── */
+.artifactCard {
+  align-items: center;
+  background: var(--chat-surface-hover);
+  border: 1px solid var(--chat-border);
+  border-radius: var(--chat-radius-menu);
+  color: var(--chat-text-secondary);
+  cursor: pointer;
+  display: flex;
+  font: inherit;
+  gap: 12px;
+  max-width: 420px;
+  padding: 10px 12px;
+  text-align: left;
+  transition: background var(--chat-motion-press, var(--eds-motion-ui)) ease, border-color var(--chat-motion-press, var(--eds-motion-ui)) ease;
+}
+
+.artifactCard:hover { background: var(--chat-surface-active); border-color: var(--chat-border-strong); }
+.artifactCard:focus-visible { outline: var(--chat-focus); outline-offset: 2px; }
+
+.artifactIcon { align-items: center; color: var(--chat-accent); display: inline-flex; flex: none; }
+.artifactText { display: flex; flex: 1; flex-direction: column; gap: 2px; min-width: 0; }
+
+.artifactTitle {
+  color: var(--chat-text);
+  font-family: var(--eds-font-mono);
+  font-size: var(--eds-type-mono-meta-size);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.artifactMeta { color: var(--chat-text-muted); font-size: var(--eds-type-caption-size); }
+
+/* ── a turn-local failure ─────────────────────────────────────────────── */
+.turnError {
+  align-items: center;
+  border: 1px solid var(--chat-border-strong);
+  border-left: 2px solid var(--chat-danger);
+  border-radius: var(--chat-radius-menu);
+  display: flex;
+  gap: 12px;
+  justify-content: space-between;
+  padding: 10px 12px;
+}
+
+.turnError div { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+.turnError strong { color: var(--chat-text); font-size: var(--eds-type-ui-sm-size); font-weight: var(--eds-font-weight-medium); }
+.turnError span { color: var(--chat-text-secondary); font-size: var(--eds-type-caption-size); line-height: 17px; }
+
+.turnError button {
+  background: none;
+  border: 1px solid var(--chat-border-strong);
+  border-radius: 6px;
+  color: var(--chat-text);
+  cursor: pointer;
+  flex: none;
+  font: inherit;
+  font-size: var(--eds-type-caption-size);
+  padding: 4px 8px;
+  transition: background var(--chat-motion-press, var(--eds-motion-ui)) ease;
+}
+
+.turnError button:hover { background: var(--chat-surface-hover); }
+.turnError button:focus-visible { outline: var(--chat-focus); outline-offset: 2px; }
+
+/* ── message actions: quiet, but reachable by keyboard ────────────────── */
+.actions {
+  display: flex;
+  gap: 2px;
+  margin-left: -6px;
+  opacity: 0;
+  transition: opacity var(--chat-motion-press, var(--eds-motion-ui)) ease;
+}
+
+.ethenTurn:hover .actions,
+.actions:focus-within { opacity: 1; }
+
+/* Reserved geometry while streaming: actions appear without moving text. */
+.actionsPlaceholder { min-height: 28px; }
+
+.action,
+.actionIcon,
+.actionMenu {
+  align-items: center;
+  background: none;
+  border: 0;
+  border-radius: 6px;
+  color: var(--chat-text-muted);
+  cursor: pointer;
+  display: inline-flex;
+  font: inherit;
+  font-size: var(--eds-type-caption-size);
+  gap: 5px;
+  min-height: 28px;
+  padding: 0 8px;
+}
+
+.actionIcon, .actionMenu { justify-content: center; min-width: 28px; padding: 0; }
+
+.action, .actionIcon, .actionMenu { transition: background var(--chat-motion-press, var(--eds-motion-ui)) ease, color var(--chat-motion-press, var(--eds-motion-ui)) ease; }
+.action:hover, .actionIcon:hover, .actionMenu:hover { background: var(--chat-surface-hover); color: var(--chat-text); }
+/* CHAT_A5.1 — unwired controls stay visible but inert, never hover-lit. */
+.actionIcon:disabled,
+.sourceRow:disabled {
+  cursor: default;
+  opacity: 0.45;
+}
+.actionIcon:disabled:hover,
+.sourceRow:disabled:hover {
+  background: none;
+  color: var(--chat-text-muted);
+}
+.action:focus-visible, .actionIcon:focus-visible, .actionMenu:focus-visible { outline: var(--chat-focus); outline-offset: 1px; }
+
+@media (max-width: 768px) {
+  .thread { gap: 28px; }
+  .prose { font-size: 16px; }
+  .userBubble { max-width: 92%; }
+  /* No hover on touch: actions are permanently visible, at touch size. */
+  .actions { opacity: 1; }
+  .actionsPlaceholder { min-height: 40px; }
+  .action, .actionIcon, .actionMenu { min-height: 40px; min-width: 40px; }
+  .artifactCard { max-width: 100%; }
+}

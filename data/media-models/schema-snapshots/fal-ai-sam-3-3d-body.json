@@ -1,0 +1,108 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/sam-3/3d-body",
+  "task": "3d-generation",
+  "source_url": "https://fal.ai/models/fal-ai/sam-3/3d-body",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fsam-3%2F3d-body",
+  "retrieved_at": "2026-09-23T14:37:44.564Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "image-to-3d",
+  "bytes_sha256": "672cac40ea153eb01a0da1743879128c611022e64f666846a9bced6aa7cb11fe",
+  "queue_path": "/fal-ai/sam-3/3d-body",
+  "input_name": "Sam33dBodyInput",
+  "input": {
+    "$refName": "Sam33dBodyInput",
+    "type": "object",
+    "properties": {
+      "include_mhr_params": {
+        "type": "boolean",
+        "default": true,
+        "description": "Include the full MHR (Meta Human Representation) parameter set per person in the response metadata (shape, pose, expression, global rotations, joint coordinates, packed model params, raw pose). Set to `false` to return a leaner metadata block with only keypoints and camera parameters."
+      },
+      "image_url": {
+        "type": "string",
+        "description": "URL of the image containing humans"
+      },
+      "export_meshes": {
+        "type": "boolean",
+        "default": true,
+        "description": "Export individual mesh files (.ply) per person"
+      },
+      "mask_url": {
+        "description": "Optional URL of a binary mask image (white=person, black=background). When provided, skips auto human detection and uses this mask instead. Bbox is auto-computed from the mask.",
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "include_3d_keypoints": {
+        "type": "boolean",
+        "default": true,
+        "description": "Include 3D keypoint markers (spheres) in the GLB mesh for visualization"
+      }
+    },
+    "required": [
+      "image_url"
+    ]
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs."
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics."
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "Sam33dBodyInput",
+    "Sam33dBodyOutput",
+    "File",
+    "SAM3DBodyMetadata",
+    "SAM3DBodyPersonMetadata"
+  ]
+}

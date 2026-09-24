@@ -1,0 +1,207 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/bytedance/seed-speech/tts/v2",
+  "task": "text-to-audio",
+  "source_url": "https://fal.ai/models/fal-ai/bytedance/seed-speech/tts/v2",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fbytedance%2Fseed-speech%2Ftts%2Fv2",
+  "retrieved_at": "2026-09-23T14:36:17.943Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "text-to-speech",
+  "bytes_sha256": "2df6949382cd38ffc359da866bdf894bc838a046140d2f4cb5ed17564f0ed725",
+  "queue_path": "/fal-ai/bytedance/seed-speech/tts/v2",
+  "input_name": "BytedanceSeedSpeechTtsV2Input",
+  "input": {
+    "$refName": "BytedanceSeedSpeechTtsV2Input",
+    "type": "object",
+    "properties": {
+      "text": {
+        "type": "string",
+        "maxLength": 5000,
+        "description": "The text to synthesize into speech."
+      },
+      "volume": {
+        "type": "number",
+        "default": 1,
+        "minimum": 0.5,
+        "maximum": 2,
+        "description": "Volume. 1.0 is normal volume, 0.5 is half, 2.0 is double."
+      },
+      "output_format": {
+        "type": "string",
+        "enum": [
+          "mp3",
+          "opus"
+        ],
+        "default": "mp3",
+        "description": "Output audio format. 'mp3' returns MP3 audio; 'opus' returns Opus audio in an Ogg container."
+      },
+      "voice": {
+        "type": "string",
+        "enum": [
+          "vivi_mixed_en_zh_ja_es_id",
+          "mindy_en_es_id_pt_zh",
+          "stokie_en",
+          "dacey_en",
+          "tim_en",
+          "kian_en_zh",
+          "cedric_en_zh",
+          "sophie_en_zh",
+          "jean_en_zh",
+          "magnus_en_zh",
+          "mabel_en_zh",
+          "nadia_en_zh",
+          "opal_en_zh",
+          "pearl_en_zh",
+          "quentin_en_zh",
+          "vienna_mixed_en_zh",
+          "alina_mixed_en_zh",
+          "corinne_mixed_en_zh",
+          "esther_mixed_en_zh",
+          "freya_mixed_en_zh",
+          "gigi_mixed_en_zh",
+          "holly_mixed_en_zh",
+          "lyla_mixed_en_zh",
+          "daisy_mixed_en_zh",
+          "tracy_es_zh",
+          "jess_ja_es_id_pt_en_zh",
+          "pinky_es_ko_mixed_en_zh",
+          "sweety_ja_es",
+          "sandy_es_mixed_en_zh",
+          "sven_de",
+          "minimi_ja",
+          "usseau_fr",
+          "felipe_es",
+          "han_id",
+          "martins_pt",
+          "enzo_it",
+          "shane_ko",
+          "bonnie_zh",
+          "felix_zh",
+          "celeste_zh",
+          "monkey_king_zh"
+        ],
+        "default": "stokie_en",
+        "description": "Voice to use for synthesis. The preset name encodes the voice and its supported language codes. 'mixed_en_zh' means the voice can seamlessly blend English and Chinese; separate codes (e.g. 'en_zh') mean the voice supports each language independently."
+      },
+      "pitch": {
+        "type": "integer",
+        "default": 0,
+        "minimum": -12,
+        "maximum": 12,
+        "description": "Voice pitch shift in semitones. 0 is normal pitch, -12 lowers by one octave, 12 raises by one octave."
+      },
+      "sample_rate": {
+        "type": "integer",
+        "enum": [
+          8000,
+          16000,
+          22050,
+          24000,
+          32000,
+          44100,
+          48000
+        ],
+        "default": 24000,
+        "description": "Sample rate of the output audio in Hz."
+      },
+      "language": {
+        "description": "Force the text to be read as a single language, disabling automatic language detection. Leave unset for automatic detection (including seamless Chinese/English mixing on bilingual voices). Codes: zh (Chinese), en (English), ja (Japanese), es-mx (Mexican Spanish), id (Indonesian), pt-br (Brazilian Po",
+        "anyOf": [
+          {
+            "type": "string",
+            "enum": [
+              "zh",
+              "en",
+              "ja",
+              "es-mx",
+              "id",
+              "pt-br",
+              "ko",
+              "it",
+              "de",
+              "fr"
+            ]
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "voice_instruction": {
+        "description": "Optional natural-language instruction that steers the delivery (tone, emotion, pace, volume), e.g. 'Speak in a cheerful tone' or 'Could you speak a bit slower?'. It is not spoken aloud and does not affect billing.",
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "speed": {
+        "type": "number",
+        "default": 1,
+        "minimum": 0.5,
+        "maximum": 2,
+        "description": "Speech speed. 1.0 is normal speed, 0.5 is half speed, 2.0 is double speed."
+      }
+    },
+    "required": [
+      "text"
+    ]
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs."
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics."
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "BytedanceSeedSpeechTtsV2Input",
+    "BytedanceSeedSpeechTtsV2Output",
+    "File"
+  ]
+}

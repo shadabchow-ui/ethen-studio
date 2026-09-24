@@ -1,0 +1,179 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "tripo3d/h3.1/text-to-3d",
+  "task": "3d-generation",
+  "source_url": "https://fal.ai/models/tripo3d/h3.1/text-to-3d",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=tripo3d%2Fh3.1%2Ftext-to-3d",
+  "retrieved_at": "2026-09-23T14:38:13.758Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "text-to-3d",
+  "bytes_sha256": "1ad326e2d1872fd0a8663c0acce3c9b135b4de96fbdf7906ccf0c28320a9f36c",
+  "queue_path": "/tripo3d/h3.1/text-to-3d",
+  "input_name": "H31TextTo3dInput",
+  "input": {
+    "$refName": "H31TextTo3dInput",
+    "type": "object",
+    "description": "Input for Text to 3D generation using full-featured models (H3.1, v2.5).",
+    "properties": {
+      "auto_size": {
+        "type": "boolean",
+        "default": false,
+        "description": "Auto-scale the model to real-world dimensions (meters)."
+      },
+      "texture_quality": {
+        "type": "string",
+        "enum": [
+          "standard",
+          "detailed"
+        ],
+        "default": "standard",
+        "description": "Quality level for textures. 'detailed' produces higher-resolution textures."
+      },
+      "image_seed": {
+        "description": "Seed for the text-to-image step.",
+        "anyOf": [
+          {
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "prompt": {
+        "type": "string",
+        "maxLength": 1024,
+        "description": "Text description of the 3D object to generate. Maximum 1024 characters."
+      },
+      "face_limit": {
+        "description": "Target number of faces for the generated mesh. If not set, the model adaptively determines the count.",
+        "anyOf": [
+          {
+            "type": "integer",
+            "minimum": 1000,
+            "maximum": 2000000
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "texture_seed": {
+        "description": "Seed for texture generation reproducibility.",
+        "anyOf": [
+          {
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "texture": {
+        "type": "boolean",
+        "default": true,
+        "description": "Whether to generate textures for the model."
+      },
+      "quad": {
+        "type": "boolean",
+        "default": false,
+        "description": "Generate quad (4-sided) mesh topology instead of triangles. When Tripo emits FBX bytes for quad output, the returned model file is FBX."
+      },
+      "pbr": {
+        "type": "boolean",
+        "default": true,
+        "description": "Whether to generate PBR (Physically Based Rendering) materials. If true, texture is also enabled."
+      },
+      "negative_prompt": {
+        "description": "Text describing features to avoid in the generated model.",
+        "anyOf": [
+          {
+            "type": "string",
+            "maxLength": 1024
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "geometry_quality": {
+        "type": "string",
+        "enum": [
+          "standard",
+          "detailed"
+        ],
+        "default": "standard",
+        "description": "Quality level for geometry."
+      },
+      "model_seed": {
+        "description": "Seed for geometry generation reproducibility.",
+        "anyOf": [
+          {
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      }
+    },
+    "required": [
+      "prompt"
+    ]
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs."
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics."
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "H31TextTo3dInput",
+    "H31TextTo3dOutput",
+    "File",
+    "ModelUrls"
+  ]
+}

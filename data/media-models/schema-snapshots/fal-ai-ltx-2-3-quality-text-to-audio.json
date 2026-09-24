@@ -1,0 +1,140 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/ltx-2.3-quality/text-to-audio",
+  "task": "text-to-audio",
+  "source_url": "https://fal.ai/models/fal-ai/ltx-2.3-quality/text-to-audio",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fltx-2.3-quality%2Ftext-to-audio",
+  "retrieved_at": "2026-09-23T14:37:03.144Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "text-to-audio",
+  "bytes_sha256": "d5549b0e43de0f3f6eb9909356181996c840400321fbf364e30a298977374ef0",
+  "queue_path": "/fal-ai/ltx-2.3-quality/text-to-audio",
+  "input_name": "Ltx23QualityTextToAudioInput",
+  "input": {
+    "$refName": "Ltx23QualityTextToAudioInput",
+    "type": "object",
+    "description": "Text-to-audio generation using the LTX-2.3 audio branch.",
+    "properties": {
+      "guidance_scale": {
+        "type": "number",
+        "default": 1,
+        "minimum": 1,
+        "maximum": 20,
+        "description": "Classifier-free guidance scale."
+      },
+      "enable_prompt_expansion": {
+        "type": "boolean",
+        "default": false,
+        "description": "Whether to enable prompt expansion."
+      },
+      "negative_prompt": {
+        "type": "string",
+        "default": "pc game, console game, video game, cartoon, childish, ugly",
+        "description": "The negative prompt to steer generation away from."
+      },
+      "num_frames": {
+        "type": "integer",
+        "default": 121,
+        "minimum": 9,
+        "maximum": 481,
+        "description": "The audio duration expressed in LTX video-frame units. Duration is approximately num_frames / frames_per_second seconds."
+      },
+      "prompt": {
+        "type": "string",
+        "description": "The prompt to generate the audio from."
+      },
+      "num_inference_steps": {
+        "type": "integer",
+        "default": 15,
+        "minimum": 8,
+        "maximum": 30,
+        "description": "Number of inference steps."
+      },
+      "enable_safety_checker": {
+        "type": "boolean",
+        "default": true,
+        "description": "Whether to enable the safety checker."
+      },
+      "sync_mode": {
+        "type": "boolean",
+        "default": false,
+        "description": "If True, the audio is returned as a data URI inline in the response. Useful for short-lived requests and tests."
+      },
+      "frames_per_second": {
+        "type": "number",
+        "default": 24,
+        "minimum": 1,
+        "maximum": 60,
+        "description": "Frame rate used to derive the generated audio duration."
+      },
+      "seed": {
+        "description": "Random seed for reproducibility. If None, a random seed is chosen.",
+        "anyOf": [
+          {
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      }
+    },
+    "required": [
+      "prompt"
+    ]
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs."
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics."
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "Ltx23QualityTextToAudioInput",
+    "Ltx23QualityTextToAudioOutput",
+    "File"
+  ]
+}

@@ -1,0 +1,121 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/elevenlabs/tts/eleven-v3",
+  "task": "text-to-audio",
+  "source_url": "https://fal.ai/models/fal-ai/elevenlabs/tts/eleven-v3",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Felevenlabs%2Ftts%2Feleven-v3",
+  "retrieved_at": "2026-09-23T14:36:28.385Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "text-to-audio",
+  "bytes_sha256": "256ffbb2aaed219372b6a6b8f9886b4cded901b873d4a966630b848d750dd8fb",
+  "queue_path": "/fal-ai/elevenlabs/tts/eleven-v3",
+  "input_name": "ElevenlabsTtsElevenV3Input",
+  "input": {
+    "$refName": "ElevenlabsTtsElevenV3Input",
+    "type": "object",
+    "description": "Request model for eleven_v3 which doesn't support previous_text/next_text",
+    "properties": {
+      "language_code": {
+        "description": "Language code (ISO 639-1) used to enforce a language for the model.",
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "timestamps": {
+        "type": "boolean",
+        "default": false,
+        "description": "Whether to return timestamps for each word in the generated speech"
+      },
+      "stability": {
+        "type": "number",
+        "default": 0.5,
+        "minimum": 0,
+        "maximum": 1,
+        "description": "Voice stability (0-1)"
+      },
+      "text": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 5000,
+        "description": "The text to convert to speech"
+      },
+      "voice": {
+        "type": "string",
+        "default": "Rachel",
+        "description": "The voice to use for speech generation"
+      },
+      "apply_text_normalization": {
+        "type": "string",
+        "enum": [
+          "auto",
+          "on",
+          "off"
+        ],
+        "default": "auto",
+        "description": "This parameter controls text normalization with three modes: 'auto', 'on', and 'off'. When set to 'auto', the system will automatically decide whether to apply text normalization (e.g., spelling out numbers). With 'on', text normalization will always be applied, while with 'off', it will be skipped."
+      }
+    },
+    "required": [
+      "text"
+    ]
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs."
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics."
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "ElevenlabsTtsElevenV3Input",
+    "ElevenlabsTtsElevenV3Output",
+    "File"
+  ]
+}

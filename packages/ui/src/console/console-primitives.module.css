@@ -1,0 +1,1293 @@
+/* CONSOLE_A1 — Console primitives.
+ *
+ * Restraint is the brief. Hairlines instead of borders everywhere, one tonal
+ * step instead of a shadow, 6–12px radii, 32px controls, and no card unless the
+ * content is genuinely a discrete object (spec §85).
+ */
+
+.srOnly {
+  border: 0;
+  clip-path: inset(50%);
+  height: 1px;
+  overflow: hidden;
+  position: absolute;
+  white-space: nowrap;
+  width: 1px;
+}
+
+/* --------------------------------------------------------- the page system */
+
+.page {
+  padding: 28px var(--console-gutter) 72px;
+  width: 100%;
+}
+
+/* CONSOLE_C4 — responsive page gutters: 32 desktop / 24 around 1024 / 20
+ * tablet / 16 phone (767 block below). */
+@media (max-width: 1279px) {
+  .page {
+    padding-left: 24px;
+    padding-right: 24px;
+  }
+}
+
+@media (max-width: 1023px) {
+  .page {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+}
+
+.pageInner {
+  margin: 0 auto;
+  width: 100%;
+}
+
+.page[data-width="readable"] .pageInner {
+  max-width: var(--console-width-readable);
+}
+
+.page[data-width="standard"] .pageInner {
+  max-width: var(--console-width-standard);
+}
+
+.page[data-width="wide"] .pageInner {
+  max-width: var(--console-width-wide);
+}
+
+/* fluid takes the canvas. It is the only class with no maximum, and it exists
+ * for analytics, logs and immersive workspaces — never for reading. */
+.page[data-width="fluid"] .pageInner {
+  max-width: none;
+}
+
+.pageHeader {
+  align-items: flex-start;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px 16px;
+  margin-bottom: 24px;
+}
+
+.pageHeaderMain {
+  flex: 1;
+  min-width: 240px;
+}
+
+.pageTitle {
+  align-items: baseline;
+  color: var(--console-text);
+  display: flex;
+  font-size: 24px;
+  font-weight: 600;
+  gap: 10px;
+  letter-spacing: -0.015em;
+  line-height: 30px;
+  margin: 0;
+}
+
+/* No editorial serif in the Console. The display face is the marketing voice;
+ * an operating console has none. */
+
+.pageCount {
+  color: var(--console-text-muted);
+  font-size: 15px;
+  font-variant-numeric: tabular-nums;
+  font-weight: 400;
+}
+
+.pageDescription {
+  color: var(--console-text-secondary);
+  font-size: 13px;
+  line-height: 19px;
+  margin: 8px 0 0;
+  max-width: 72ch;
+}
+
+.pageActions,
+.pageMeta {
+  align-items: center;
+  display: flex;
+  flex: none;
+  gap: 8px;
+}
+
+.section {
+  margin-top: 32px;
+}
+
+.sectionHeader {
+  align-items: baseline;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 12px;
+  margin-bottom: 12px;
+}
+
+.sectionTitle {
+  color: var(--console-text);
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: -0.005em;
+  line-height: 21px;
+  margin: 0;
+}
+
+.sectionAction {
+  margin-left: auto;
+}
+
+.mockNotice {
+  align-items: center;
+  color: var(--console-text-muted);
+  display: flex;
+  font-size: 12px;
+  gap: 6px;
+  margin: 10px 0 0;
+}
+
+.mockNotice svg {
+  flex: none;
+  opacity: 0.7;
+}
+
+/* ------------------------------------------------------------ metric strip */
+
+/* One instrument strip, four measures, hairline dividers. Not four cards. */
+.metricStrip {
+  background: var(--console-panel);
+  border: 1px solid var(--console-border);
+  border-radius: var(--console-radius-panel);
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  overflow: hidden;
+}
+
+.metric {
+  border-left: 1px solid var(--console-border);
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 0;
+  padding: 14px 18px 16px;
+}
+
+.metric:first-child {
+  border-left: 0;
+}
+
+.metricLabel {
+  color: var(--console-text-secondary);
+  font-size: 12px;
+  line-height: 16px;
+  margin: 0;
+}
+
+.metricValue {
+  color: var(--console-text);
+  font-size: 28px;
+  font-variant-numeric: tabular-nums;
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  line-height: 32px;
+  margin: 0;
+}
+
+.metricFoot {
+  align-items: center;
+  display: flex;
+  gap: 8px;
+  min-height: 20px;
+}
+
+.metricDetail {
+  color: var(--console-text-muted);
+  font-size: 12px;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.metricDelta {
+  align-items: center;
+  color: var(--console-text-secondary);
+  display: inline-flex;
+  font-size: 12px;
+  font-variant-numeric: tabular-nums;
+  gap: 2px;
+}
+
+.metricDelta svg {
+  height: 12px;
+  width: 12px;
+}
+
+.metricDelta[data-tone="good"] {
+  color: var(--console-success);
+}
+
+.metricDelta[data-tone="bad"] {
+  color: var(--console-danger);
+}
+
+.metricAction {
+  margin-left: auto;
+}
+
+/* ------------------------------------------------------------------ status */
+
+.status {
+  font-size: 13px;
+  white-space: nowrap;
+}
+
+/* ------------------------------------------------------------------- cards */
+
+.card {
+  background: var(--console-panel);
+  border: 1px solid var(--console-border);
+  border-radius: var(--console-radius-panel);
+  padding: 16px;
+}
+
+.productCard {
+  align-items: flex-start;
+  background: var(--console-panel);
+  border: 1px solid var(--console-border);
+  border-radius: var(--console-radius-panel);
+  display: grid;
+  gap: 4px 12px;
+  grid-template-columns: 32px minmax(0, 1fr);
+  padding: 14px;
+}
+
+.productIcon {
+  align-items: center;
+  background: var(--console-accent-wash);
+  border-radius: var(--console-radius-control);
+  color: var(--console-accent-strong);
+  display: flex;
+  height: 32px;
+  justify-content: center;
+  width: 32px;
+}
+
+.productBody {
+  min-width: 0;
+}
+
+.productName {
+  color: var(--console-text);
+  font-size: 14px;
+  font-weight: 600;
+  margin: 4px 0 0;
+}
+
+.productPurpose {
+  color: var(--console-text-secondary);
+  font-size: 12px;
+  line-height: 17px;
+  margin: 4px 0 0;
+}
+
+.productContext {
+  color: var(--console-text-muted);
+  font-size: 12px;
+  margin: 8px 0 0;
+}
+
+.productOpen {
+  grid-column: 2;
+  justify-self: start;
+  margin-top: 10px;
+}
+
+/* --------------------------------------------------------- activity rows */
+
+.activityRow {
+  align-items: center;
+  border-bottom: 1px solid var(--console-border);
+  display: grid;
+  gap: 12px;
+  grid-template-columns: 20px minmax(160px, 1.6fr) minmax(96px, 0.7fr) minmax(120px, 1fr) 108px 64px;
+  min-height: 46px;
+  padding: 6px 8px 6px 4px;
+}
+
+.activityRow:last-child {
+  border-bottom: 0;
+}
+
+.activityRow:hover {
+  background: var(--console-hover);
+}
+
+.activityIcon {
+  color: var(--console-text-muted);
+  display: flex;
+}
+
+.activityName {
+  color: var(--console-text);
+  font-size: 13px;
+  font-weight: 500;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* CONSOLE_C4 — the name button looks like the name and keeps its ellipsis;
+ * on phones it is the primary navigation affordance at touch geometry. */
+.activityNameButton {
+  background: transparent;
+  border: 0;
+  border-radius: var(--console-radius-control);
+  color: inherit;
+  cursor: pointer;
+  font: inherit;
+  margin: 0;
+  min-width: 0;
+  overflow: hidden;
+  padding: 0;
+  text-align: left;
+}
+
+.activityNameButton .activityName {
+  display: block;
+}
+
+.activityNameButton:focus-visible {
+  outline: var(--console-focus);
+  outline-offset: 1px;
+}
+
+.activityType,
+.activityDetail {
+  color: var(--console-text-muted);
+  font-size: 12px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.activityStatus {
+  font-size: 12px;
+}
+
+.activityOpen {
+  justify-self: end;
+}
+
+/* ------------------------------------------------------------------ tables */
+
+.tableWrap {
+  border-top: 1px solid var(--console-border);
+  overflow-x: auto;
+  width: 100%;
+}
+
+/* CONSOLE_C5 — long-table scroll region: the header pins to the top of the
+ * scrollport on an opaque canvas swatch, so rows slide under it. */
+.tableWrap[data-sticky="true"] {
+  max-height: 480px;
+  overflow-y: auto;
+}
+
+.tableWrap[data-sticky="true"] thead th {
+  background: var(--console-canvas);
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+
+.table {
+  border-collapse: collapse;
+  min-width: 100%;
+  width: 100%;
+}
+
+/* CONSOLE_C4 — headers read as labels, not signage: 12px/16px, weight 500,
+ * sentence case. Ordinary rows sit at ~48px, compact at ~40px. */
+.table thead th {
+  border-bottom: 1px solid var(--console-border);
+  color: var(--console-text-muted);
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 16px;
+  padding: 10px 12px;
+  text-align: left;
+  white-space: nowrap;
+}
+
+.table thead th[data-align="end"],
+.table td[data-align="end"] {
+  text-align: right;
+}
+
+.table td {
+  border-bottom: 1px solid var(--console-border);
+  color: var(--console-text-secondary);
+  font-size: 13px;
+  font-variant-numeric: tabular-nums;
+  padding: 12px;
+  vertical-align: middle;
+  /* Operational columns are read as a grid of values; a wrapped date reads as
+   * two values. Cells that genuinely carry long text truncate instead. */
+  white-space: nowrap;
+}
+
+.table[data-density="compact"] td {
+  padding: 8px 12px;
+}
+
+/* CONSOLE_C5 — row headers read as values, not column labels: the same type,
+ * padding and truncation contract as body cells (`th` defaults to bold and
+ * centered, which would promote every row name to signage). */
+.table tbody th {
+  border-bottom: 1px solid var(--console-border);
+  color: var(--console-text-secondary);
+  font-size: 13px;
+  font-variant-numeric: tabular-nums;
+  font-weight: 400;
+  padding: 12px;
+  text-align: left;
+  vertical-align: middle;
+  white-space: nowrap;
+}
+
+.table[data-density="compact"] tbody th {
+  padding: 8px 12px;
+}
+
+.table tbody tr {
+  min-height: var(--console-table-row);
+}
+
+.table tbody tr:hover {
+  background: var(--console-hover);
+}
+
+.table tbody tr:last-child td,
+.table tbody tr:last-child th {
+  border-bottom: 0;
+}
+
+.tableMenuHead,
+.tableMenuCell {
+  text-align: right;
+  white-space: nowrap;
+  width: 1%;
+}
+
+.rowMenu,
+.rowExpand {
+  align-items: center;
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: var(--console-radius-control);
+  color: var(--console-text-muted);
+  cursor: pointer;
+  display: inline-flex;
+  height: 28px;
+  justify-content: center;
+  width: 28px;
+}
+
+.rowMenu:hover,
+.rowExpand:hover {
+  background: var(--console-elevated);
+  color: var(--console-text);
+}
+
+.rowMenu:focus-visible,
+.rowExpand:focus-visible {
+  outline: var(--console-focus);
+  outline-offset: var(--console-focus-offset);
+}
+
+.rowExpand {
+  display: none;
+}
+
+.tableState {
+  border-top: 1px solid var(--console-border);
+  padding: 8px 0 0;
+}
+
+/* ----------------------------------------------------------------- filters */
+
+.filters {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+/* CONSOLE_C4 — the Filters count disclosure only exists on crowded phones;
+ * desktop keeps every control visible. */
+.filtersToggle {
+  align-items: center;
+  background: var(--console-panel);
+  border: 1px solid var(--console-border);
+  border-radius: var(--console-radius-control);
+  color: var(--console-text);
+  cursor: pointer;
+  display: none;
+  font: inherit;
+  font-size: 13px;
+  gap: 8px;
+  min-height: var(--console-row);
+  padding: 0 12px;
+}
+
+.filtersToggle:focus-visible {
+  outline: var(--console-focus);
+  outline-offset: 1px;
+}
+
+.filterSelects {
+  align-items: center;
+  display: contents;
+}
+
+.filterSearch {
+  align-items: center;
+  background: var(--console-panel);
+  border: 1px solid var(--console-border);
+  border-radius: var(--console-radius-control);
+  display: flex;
+  gap: 8px;
+  height: var(--console-row);
+  min-width: 220px;
+  padding: 0 10px;
+}
+
+.filterSearch:focus-within {
+  border-color: var(--console-border-control);
+  outline: var(--console-focus);
+  outline-offset: 1px;
+}
+
+.filterSearchIcon {
+  color: var(--console-text-muted);
+  flex: none;
+}
+
+.filterInput {
+  background: transparent;
+  border: 0;
+  color: var(--console-text);
+  flex: 1;
+  font-family: inherit;
+  font-size: 13px;
+  min-width: 0;
+  outline: none;
+}
+
+.filterInput::placeholder {
+  color: var(--console-text-muted);
+}
+
+.filterSelect {
+  align-items: center;
+  background: var(--console-panel);
+  border: 1px solid var(--console-border);
+  border-radius: var(--console-radius-control);
+  display: inline-flex;
+  gap: 6px;
+  height: var(--console-row);
+  padding: 0 8px 0 10px;
+  position: relative;
+}
+
+.filterSelect:focus-within {
+  border-color: var(--console-border-control);
+  outline: var(--console-focus);
+  outline-offset: 1px;
+}
+
+.filterSelectLabel {
+  color: var(--console-text-muted);
+  font-size: 12px;
+  white-space: nowrap;
+}
+
+.filterSelect select {
+  appearance: none;
+  background: transparent;
+  border: 0;
+  color: var(--console-text);
+  font-family: inherit;
+  font-size: 13px;
+  outline: none;
+  padding-right: 18px;
+}
+
+.filterSelect select option {
+  background: var(--console-overlay);
+  color: var(--console-text);
+}
+
+.filterChevron {
+  color: var(--console-text-muted);
+  pointer-events: none;
+  position: absolute;
+  right: 8px;
+}
+
+.filterNote {
+  color: var(--console-text-muted);
+  font-size: 12px;
+  font-variant-numeric: tabular-nums;
+}
+
+.filterClear {
+  margin-left: auto;
+}
+
+/* CONSOLE_C4 — Console button grammar: press lands on the next frame with no
+ * translation, and Console buttons keep the 6px control radius. Doubled
+ * classes win over the EDS base regardless of stylesheet order. */
+.page .eds-button.eds-button:active,
+.dialog .eds-button.eds-button:active {
+  transform: none;
+}
+
+.page .eds-button.eds-button,
+.dialog .eds-button.eds-button {
+  border-radius: var(--console-radius-control);
+}
+
+/* ------------------------------------------------------------------ states */
+
+.emptyState {
+  padding: 44px 16px;
+  text-align: center;
+}
+
+.emptyTitle {
+  color: var(--console-text);
+  font-size: 14px;
+  font-weight: 600;
+  margin: 0;
+}
+
+.emptyDetail {
+  color: var(--console-text-secondary);
+  font-size: 13px;
+  margin: 6px auto 0;
+  max-width: 46ch;
+}
+
+.emptyAction {
+  margin-top: 14px;
+}
+
+.errorState {
+  align-items: flex-start;
+  background: color-mix(in srgb, var(--console-warning) 8%, var(--console-panel));
+  border: 1px solid color-mix(in srgb, var(--console-warning) 30%, transparent);
+  border-radius: var(--console-radius-panel);
+  display: flex;
+  gap: 12px;
+  padding: 16px;
+}
+
+.errorState[data-compact="true"] {
+  align-items: center;
+  padding: 10px 12px;
+}
+
+.errorIcon {
+  color: var(--console-warning);
+  flex: none;
+  margin-top: 1px;
+}
+
+.errorBody {
+  flex: 1;
+  min-width: 0;
+}
+
+.errorTitle {
+  color: var(--console-text);
+  font-size: 13px;
+  font-weight: 600;
+  margin: 0;
+}
+
+.errorDetail {
+  color: var(--console-text-secondary);
+  font-size: 12px;
+  margin: 4px 0 0;
+}
+
+/* Skeletons use the real page geometry so nothing moves when data lands. */
+.skeletonBlock,
+.skeletonValue,
+.skeletonHead,
+.skeletonCell {
+  background: linear-gradient(90deg, var(--console-skeleton) 0%, var(--console-skeleton-sheen) 50%, var(--console-skeleton) 100%);
+  background-size: 240% 100%;
+  border-radius: var(--console-radius-control);
+  display: block;
+  animation: consoleSheen 1.8s ease-in-out infinite;
+}
+
+.skeletonBlock {
+  border-radius: var(--console-radius-panel);
+  width: 100%;
+}
+
+.skeletonValue {
+  height: 26px;
+  margin: 3px 0;
+  width: 88px;
+}
+
+.skeletonHead {
+  height: 12px;
+  margin: 12px 0;
+  width: 180px;
+}
+
+.skeletonRow {
+  align-items: center;
+  border-top: 1px solid var(--console-border);
+  display: flex;
+  gap: 24px;
+  padding: 16px 0;
+}
+
+.skeletonCell {
+  height: 12px;
+}
+
+.skeletonCell[data-index="0"] {
+  width: 22%;
+}
+
+.skeletonCell[data-index="1"] {
+  width: 18%;
+}
+
+.skeletonCell[data-index="2"] {
+  width: 12%;
+}
+
+.skeletonCell[data-index="3"] {
+  width: 14%;
+}
+
+.skeletonCell[data-index="4"] {
+  width: 10%;
+}
+
+@keyframes consoleSheen {
+  from {
+    background-position: 120% 0;
+  }
+  to {
+    background-position: -120% 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .skeletonBlock,
+  .skeletonValue,
+  .skeletonHead,
+  .skeletonCell {
+    animation: none;
+    background: var(--console-skeleton);
+  }
+}
+
+/* ------------------------------------------------------------------ dialog */
+
+.dialogScrim {
+  align-items: center;
+  background: var(--console-scrim);
+  display: flex;
+  inset: 0;
+  justify-content: center;
+  padding: 24px 16px;
+  position: fixed;
+  z-index: 95;
+}
+
+.dialog {
+  background: var(--console-overlay);
+  border: 1px solid var(--console-border-strong);
+  border-radius: var(--console-radius-dialog);
+  box-shadow: var(--console-overlay-shadow);
+  display: flex;
+  flex-direction: column;
+  max-height: min(88vh, 760px);
+  max-width: 100%;
+  overflow: hidden;
+}
+
+.dialogHeader {
+  align-items: flex-start;
+  border-bottom: 1px solid var(--console-border);
+  display: flex;
+  gap: 12px;
+  padding: 16px 16px 14px 20px;
+}
+
+.dialogTitle {
+  color: var(--console-text);
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: -0.005em;
+  line-height: 22px;
+  margin: 0;
+}
+
+.dialogDescription {
+  color: var(--console-text-secondary);
+  font-size: 12px;
+  margin: 4px 0 0;
+}
+
+.dialogClose {
+  align-items: center;
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: var(--console-radius-control);
+  color: var(--console-text-muted);
+  cursor: pointer;
+  display: inline-flex;
+  flex: none;
+  height: 28px;
+  justify-content: center;
+  margin-left: auto;
+  width: 28px;
+}
+
+.dialogClose:hover {
+  background: var(--console-hover);
+  color: var(--console-text);
+}
+
+.dialogClose:focus-visible {
+  outline: var(--console-focus);
+  outline-offset: var(--console-focus-offset);
+}
+
+/* CONSOLE_C4 — dialog content scrolls while the footer stays reachable: the
+ * body takes the shrink, the footer sticks above keyboard and safe area. */
+.dialogBody {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  padding: 18px 20px;
+}
+
+.dialogFooter {
+  align-items: center;
+  background: var(--console-overlay);
+  border-top: 1px solid var(--console-border);
+  bottom: 0;
+  display: flex;
+  gap: 8px;
+  justify-content: flex-end;
+  padding: 14px 20px calc(14px + env(safe-area-inset-bottom));
+  position: sticky;
+}
+
+/* -------------------------------------------------------------------- tabs */
+
+.tabs {
+  border-bottom: 1px solid var(--console-border);
+  display: flex;
+  gap: 2px;
+}
+
+.tab {
+  background: transparent;
+  border: 0;
+  border-bottom: 2px solid transparent;
+  color: var(--console-text-muted);
+  cursor: pointer;
+  font: inherit;
+  font-size: 13px;
+  margin-bottom: -1px;
+  padding: 8px 12px;
+}
+
+.tab:hover {
+  color: var(--console-text);
+}
+
+.tab[aria-selected="true"] {
+  border-bottom-color: var(--console-accent);
+  color: var(--console-text);
+  font-weight: 600;
+}
+
+.tab:focus-visible {
+  outline: var(--console-focus);
+  outline-offset: -2px;
+}
+
+/* ------------------------------------------------------------------ fields */
+
+.field {
+  margin-bottom: 16px;
+}
+
+.fieldLabel {
+  color: var(--console-text);
+  display: block;
+  font-size: 13px;
+  font-weight: 500;
+  margin-bottom: 4px;
+}
+
+.fieldDescription {
+  color: var(--console-text-muted);
+  font-size: 12px;
+  margin: 0 0 6px;
+}
+
+.field input[type="text"],
+.field select,
+.field textarea {
+  background: var(--console-panel);
+  border: 1px solid var(--console-border-strong);
+  border-radius: var(--console-radius-control);
+  color: var(--console-text);
+  font-family: inherit;
+  font-size: 13px;
+  min-height: var(--console-row);
+  padding: 0 10px;
+  width: 100%;
+}
+
+.field textarea {
+  padding: 8px 10px;
+}
+
+.field input[type="text"]:focus-visible,
+.field select:focus-visible,
+.field textarea:focus-visible {
+  outline: var(--console-focus);
+  outline-offset: var(--console-focus-offset);
+}
+
+/* --------------------------------------------------------------- responsive */
+
+@media (max-width: 1099px) {
+  .metricStrip {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .metric:nth-child(3) {
+    border-left: 0;
+  }
+
+  .metric:nth-child(n + 3) {
+    border-top: 1px solid var(--console-border);
+  }
+}
+
+@media (max-width: 899px) {
+  .activityRow {
+    grid-template-columns: 20px minmax(0, 1fr) 100px 56px;
+  }
+
+  .activityType,
+  .activityDetail {
+    display: none;
+  }
+}
+
+@media (max-width: 767px) {
+  .page {
+    padding: 16px 16px 56px;
+  }
+
+  .pageTitle {
+    font-size: 21px;
+    line-height: 27px;
+  }
+
+  .pageActions {
+    width: 100%;
+  }
+
+  /* The primary action takes the remaining width; secondary and quiet actions
+   * stay their natural size, so a page with one action gets a full-width
+   * button and a page with three does not get three identical slabs. */
+  .pageActions > *:last-child {
+    flex: 1;
+  }
+
+  .metricStrip {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .metric {
+    border-left: 0;
+    border-top: 1px solid var(--console-border);
+    flex-direction: row;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: 4px 10px;
+    padding: 12px 14px;
+  }
+
+  .metric:first-child {
+    border-top: 0;
+  }
+
+  .metricLabel {
+    flex: 1;
+  }
+
+  .metricValue {
+    font-size: 22px;
+    line-height: 26px;
+  }
+
+  .metricFoot {
+    flex-basis: 100%;
+  }
+
+  /* A wide desktop table is not a mobile design. Rows become stacked records:
+   * primary columns lead, meta columns form the supporting line, and detail
+   * columns appear only when the row is expanded (spec §108). Explicit ARIA
+   * roles keep the table semantics that `display: block` would otherwise
+   * strip from the accessibility tree. */
+  .tableWrap {
+    border-top: 0;
+    overflow-x: visible;
+  }
+
+  .table,
+  .table thead,
+  .table tbody,
+  .table tr,
+  .table td,
+  .table tbody th {
+    display: block;
+    width: auto;
+  }
+
+  .table thead {
+    display: none;
+  }
+
+  /* Flex, not grid: the meta columns must FLOW into one supporting line
+   * instead of each claiming its own row. */
+  .table tbody tr {
+    align-items: baseline;
+    border-bottom: 1px solid var(--console-border);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2px 10px;
+    padding: 12px 76px 12px 0;
+    position: relative;
+  }
+
+  .table td,
+  .table tbody th {
+    border: 0;
+    flex: 0 0 auto;
+    padding: 0;
+    text-align: left !important;
+  }
+
+  .table td[data-mobile="primary"],
+  .table tbody th[data-mobile="primary"] {
+    color: var(--console-text);
+    flex: 1 0 100%;
+    font-size: 14px;
+    font-weight: 500;
+  }
+
+  .table td[data-mobile="meta"],
+  .table tbody th[data-mobile="meta"] {
+    color: var(--console-text-muted);
+    font-size: 12px;
+  }
+
+  .table td[data-mobile="meta"]::before,
+  .table tbody th[data-mobile="meta"]::before {
+    content: attr(data-label) " · ";
+  }
+
+  .table td[data-mobile="detail"],
+  .table tbody th[data-mobile="detail"] {
+    display: none;
+    color: var(--console-text-secondary);
+    flex: 1 0 100%;
+    font-size: 12px;
+    padding-top: 2px;
+  }
+
+  .table td[data-mobile="detail"]::before,
+  .table tbody th[data-mobile="detail"]::before {
+    color: var(--console-text-muted);
+    content: attr(data-label) " · ";
+  }
+
+  .table tr[data-expanded="true"] td[data-mobile="detail"],
+  .table tr[data-expanded="true"] th[data-mobile="detail"] {
+    display: block;
+  }
+
+  .tableMenuCell {
+    align-items: center;
+    display: flex;
+    gap: 2px;
+    justify-content: flex-end;
+    position: absolute;
+    right: 0;
+    top: 8px;
+    width: auto;
+  }
+
+  .rowExpand {
+    display: inline-flex;
+    height: 36px;
+    width: 36px;
+  }
+
+  .rowMenu {
+    height: 36px;
+    width: 36px;
+  }
+
+  .table tr[data-expanded="true"] .rowExpand svg {
+    transform: rotate(180deg);
+  }
+
+  /* Tabs beside a section title must scroll, never wrap into the title. */
+  .tabs {
+    max-width: 100%;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+
+  /* CONSOLE_C2 — shared tab controls get a ~44px hit area on touch widths. */
+  .tab {
+    min-height: 44px;
+  }
+
+  /* CONSOLE_C4 — editable fields stay at ~16px on phones (no focus zoom)
+   * with ~44px touch geometry; dialog actions keep the same target. */
+  .field input[type="text"],
+  .field select,
+  .field textarea,
+  .filterInput {
+    font-size: 16px;
+    min-height: 44px;
+  }
+
+  .dialogBody {
+    padding: 16px;
+  }
+
+  .dialogFooter {
+    flex-wrap: wrap;
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+
+  .dialogFooter .eds-button {
+    min-height: 44px;
+  }
+
+  .filters {
+    gap: 6px;
+  }
+
+  /* CONSOLE_C4 — Search + Filters count on crowded phones; selects collapse
+   * behind the disclosure instead of filling the screen. */
+  .filtersToggle {
+    display: inline-flex;
+    min-height: 44px;
+  }
+
+  .filterSelects {
+    display: none;
+    flex-basis: 100%;
+  }
+
+  .filterSelects[data-open="true"] {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .filterSelects[data-open="true"] .filterSelect {
+    min-height: 44px;
+  }
+
+  .filterSearch {
+    height: auto;
+    min-height: 44px;
+    min-width: 100%;
+  }
+
+  .filterSelect {
+    height: 40px;
+  }
+
+  .filterInput {
+    font-size: 16px;
+  }
+
+  .filterClear {
+    margin-left: 0;
+  }
+
+  .productCard {
+    padding: 12px;
+  }
+
+  .dialogScrim {
+    align-items: flex-end;
+    padding: 0;
+  }
+
+  .dialog {
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+    max-height: 92dvh;
+    width: 100% !important;
+  }
+
+  .activityRow {
+    grid-template-columns: 20px minmax(0, 1fr) auto;
+    min-height: 52px;
+  }
+
+  .activityNameButton {
+    align-items: center;
+    display: flex;
+    min-height: 44px;
+  }
+
+  .activityOpen {
+    display: none;
+  }
+}
+
+@media (max-width: 359px) {
+  .page {
+    padding: 14px 12px 48px;
+  }
+
+  .pageTitle {
+    font-size: 19px;
+  }
+
+  .metricValue {
+    font-size: 20px;
+  }
+}

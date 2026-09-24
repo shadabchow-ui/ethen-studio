@@ -1,0 +1,381 @@
+.rail {
+  background: var(--chat-sidebar);
+  border-right: 1px solid var(--chat-border);
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-height: 0;
+  width: var(--chat-rail-width);
+}
+
+.rail[data-variant="drawer"] {
+  border-right: 0;
+  width: min(300px, 86vw);
+}
+
+/* ── brand ───────────────────────────────────────────────────────────────
+ * The approved Ethen treatment is the WORDMARK. No glyph is invented here:
+ * there is no authoritative Ethen mark in the repository, and drawing one in
+ * a design lab would quietly create brand. */
+.brandRow {
+  align-items: center;
+  display: flex;
+  gap: 8px;
+  justify-content: space-between;
+  padding: 14px 14px 10px;
+}
+
+.brand {
+  align-items: baseline;
+  display: flex;
+  gap: 6px;
+}
+
+.wordmark {
+  color: var(--chat-text);
+  font-size: 17px;
+  font-weight: 650;
+  letter-spacing: -0.01em;
+  margin: 0;
+}
+
+.product {
+  color: var(--chat-text-muted);
+  font-size: var(--eds-type-ui-sm-size);
+  letter-spacing: 0.01em;
+  margin: 0;
+}
+
+.primary {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  padding: 0 8px 8px;
+}
+
+/* + New — the strongest thing in the rail, and still not a filled CTA. */
+.newChat {
+  align-items: center;
+  background: var(--chat-surface-active);
+  border: 1px solid var(--chat-border);
+  border-radius: var(--chat-radius-control);
+  color: var(--chat-text);
+  cursor: pointer;
+  display: flex;
+  font: inherit;
+  font-size: var(--eds-type-ui-size);
+  gap: 8px;
+  height: 34px;
+  margin-bottom: 6px;
+  padding: 0 8px;
+  text-align: left;
+  width: 100%;
+}
+
+.newChat span { flex: 1; }
+.newChat { transition: background var(--chat-motion-press, var(--eds-motion-ui)) ease, border-color var(--chat-motion-press, var(--eds-motion-ui)) ease; }
+.newChat:hover { background: var(--chat-surface-hover); border-color: var(--chat-border-strong); }
+.newChat:focus-visible { outline: var(--chat-focus); outline-offset: 2px; }
+
+.navRow {
+  align-items: center;
+  background: none;
+  border: 0;
+  border-radius: var(--chat-radius-control);
+  color: var(--chat-text-secondary);
+  cursor: pointer;
+  display: flex;
+  font: inherit;
+  font-size: var(--eds-type-ui-size);
+  gap: 8px;
+  height: var(--chat-row-height);
+  padding: 0 8px;
+  text-align: left;
+  transition: background var(--chat-motion-press, var(--eds-motion-ui)) ease, color var(--chat-motion-press, var(--eds-motion-ui)) ease;
+  width: 100%;
+}
+
+.navRow:hover { background: var(--chat-surface-hover); color: var(--chat-text); }
+/* CHAT_A5.1 — lab-unavailable entries: visibly inert, never hover-lit. */
+.navRow:disabled,
+.rowButton:disabled,
+.sectionAction:disabled {
+  cursor: default;
+  opacity: 0.45;
+}
+.navRow:disabled:hover,
+.sectionAction:disabled:hover {
+  background: none;
+  color: var(--chat-text-muted);
+}
+.row:hover .rowButton:disabled { color: var(--chat-text-secondary); }
+.navRow:focus-visible { outline: var(--chat-focus); outline-offset: -2px; }
+.navRow[data-active="true"] { background: var(--chat-surface-active); color: var(--chat-text); }
+
+.navIcon { align-items: center; color: var(--chat-text-muted); display: inline-flex; flex: none; }
+.navRow:hover .navIcon, .navRow[data-active="true"] .navIcon { color: var(--chat-text-secondary); }
+.navLabel { flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+.shortcut {
+  background: none;
+  border: 0;
+  color: var(--chat-text-muted);
+  font-family: var(--eds-font-mono);
+  font-size: 11px;
+  opacity: 0;
+}
+
+.newChat:hover .shortcut,
+.newChat:focus-visible .shortcut,
+.navRow:hover .shortcut,
+.navRow:focus-visible .shortcut { opacity: 1; }
+
+/* ── scrolling history ─────────────────────────────────────────────────── */
+.scroll {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  padding: 4px 8px 8px;
+  scrollbar-width: thin;
+  scrollbar-color: var(--chat-border-strong) transparent;
+}
+
+/* CHAT_A5.1 — the rail scrollbar stays discoverable but quiet: a thin warm
+ * muted thumb on a transparent track, scoped to the Chat rail only. */
+.scroll::-webkit-scrollbar { width: 8px; }
+.scroll::-webkit-scrollbar-track { background: transparent; }
+.scroll::-webkit-scrollbar-thumb {
+  background: var(--chat-border-strong);
+  border: 2px solid transparent;
+  border-radius: 999px;
+  background-clip: padding-box;
+}
+.scroll::-webkit-scrollbar-thumb:hover { background: var(--chat-text-muted); background-clip: padding-box; }
+
+.section + .section { margin-top: 12px; }
+
+.sectionHeader {
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+  min-height: 24px;
+  padding: 0 8px;
+}
+
+.sectionHeader h2 {
+  color: var(--chat-text-muted);
+  font-size: var(--eds-type-label-size);
+  font-weight: var(--eds-font-weight-medium) !important;
+  letter-spacing: var(--eds-type-label-tracking);
+  line-height: var(--eds-type-label-line);
+  margin: 0;
+  text-transform: uppercase;
+}
+
+.sectionAction {
+  align-items: center;
+  background: none;
+  border: 0;
+  border-radius: 5px;
+  color: var(--chat-text-muted);
+  cursor: pointer;
+  display: inline-flex;
+  height: 20px;
+  justify-content: center;
+  opacity: 0;
+  padding: 0;
+  width: 20px;
+}
+
+.section:hover .sectionAction,
+.sectionAction:focus-visible { opacity: 1; }
+.sectionAction:hover { background: var(--chat-surface-hover); color: var(--chat-text); }
+.sectionAction:focus-visible { outline: var(--chat-focus); outline-offset: 1px; }
+
+.emptyHint {
+  align-items: flex-start;
+  color: var(--chat-text-muted);
+  display: flex;
+  font-size: var(--eds-type-caption-size);
+  gap: 8px;
+  line-height: 16px;
+  margin: 4px 0 0;
+  padding: 0 8px;
+}
+
+.emptyHint svg { flex: none; margin-top: 1px; }
+
+.rows { display: flex; flex-direction: column; gap: 1px; list-style: none; margin: 2px 0 0; padding: 0; }
+
+/* Rows carry NO card border. Hover is a tonal step toward the canvas; the
+ * active row is one step further and is the only one that changes text. */
+.row {
+  align-items: center;
+  border-radius: var(--chat-radius-control);
+  display: flex;
+  min-height: 30px;
+  padding-right: 2px;
+  position: relative;
+  transition: background var(--chat-motion-press, var(--eds-motion-ui)) ease;
+}
+
+.row:hover { background: var(--chat-surface-hover); }
+.row[data-active="true"] { background: var(--chat-surface-active); }
+
+.rowButton {
+  background: none;
+  border: 0;
+  color: var(--chat-text-secondary);
+  cursor: pointer;
+  flex: 1;
+  font: inherit;
+  font-size: var(--eds-type-ui-size);
+  min-width: 0;
+  padding: 6px 4px 6px 8px;
+  text-align: left;
+}
+
+.row:hover .rowButton, .row[data-active="true"] .rowButton { color: var(--chat-text); }
+.rowButton:focus-visible { outline: var(--chat-focus); outline-offset: -2px; }
+
+.rowTitle {
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.rowMeta {
+  color: var(--chat-text-muted);
+  font-size: var(--eds-type-caption-size);
+  padding-right: 8px;
+}
+
+/* `…` is revealed on hover AND on keyboard focus — never hover-only. */
+.rowMenu {
+  color: var(--chat-text-muted);
+  flex: none;
+  height: 24px;
+  min-height: 24px;
+  opacity: 0;
+  padding: 0;
+  width: 24px;
+}
+
+.row:hover .rowMenu,
+.rowMenu:focus-visible,
+.rowMenu[aria-expanded="true"] { opacity: 1; }
+
+.rowMenuPopup { min-width: 176px; }
+
+/* ── foot ─────────────────────────────────────────────────────────────── */
+.foot {
+  border-top: 1px solid var(--chat-border);
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 8px;
+}
+
+/* The escape hatch. Visible, permanently secondary. */
+.platformLink {
+  align-items: center;
+  border-radius: var(--chat-radius-control);
+  color: var(--chat-text-muted);
+  display: flex;
+  font-size: var(--eds-type-ui-sm-size);
+  gap: 6px;
+  min-height: 30px;
+  padding: 0 8px;
+  text-decoration: none;
+  transition: background var(--chat-motion-press, var(--eds-motion-ui)) ease, color var(--chat-motion-press, var(--eds-motion-ui)) ease;
+}
+
+.platformLink:hover { background: var(--chat-surface-hover); color: var(--chat-text-secondary); }
+.platformLink:focus-visible { outline: var(--chat-focus); outline-offset: -2px; }
+
+.account {
+  border-radius: var(--chat-radius-control);
+  gap: 8px;
+  min-height: 40px;
+  padding: 0 8px;
+  width: 100%;
+}
+
+.accountMenu { min-width: 216px; }
+
+.avatar {
+  align-items: center;
+  background: var(--chat-surface-active);
+  border: 1px solid var(--chat-border-strong);
+  border-radius: 6px;
+  color: var(--chat-text);
+  display: inline-flex;
+  flex: none;
+  font-size: var(--eds-type-ui-sm-size);
+  height: 24px;
+  justify-content: center;
+  width: 24px;
+}
+
+.accountText { display: flex; flex: 1; flex-direction: column; gap: 0; min-width: 0; text-align: left; }
+
+.accountName {
+  color: var(--chat-text);
+  font-size: var(--eds-type-ui-sm-size);
+  line-height: 16px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.accountPlan {
+  color: var(--chat-text-muted);
+  font-size: var(--eds-type-caption-size);
+  line-height: 14px;
+}
+
+.iconButton {
+  align-items: center;
+  background: none;
+  border: 0;
+  border-radius: var(--chat-radius-control);
+  color: var(--chat-text-secondary);
+  cursor: pointer;
+  display: inline-flex;
+  height: 36px;
+  justify-content: center;
+  padding: 0;
+  width: 36px;
+}
+
+.iconButton:hover { background: var(--chat-surface-hover); color: var(--chat-text); }
+.iconButton:focus-visible { outline: var(--chat-focus); outline-offset: 2px; }
+
+@media (max-width: 768px) {
+  /* CHAT_A3 — touch floor: drawer rows hit 44px; small chrome keeps its
+   * visual and gains an invisible halo instead. */
+  .navRow, .row { min-height: 44px; }
+  .newChat { height: 44px; }
+  .rowMenu { height: 32px; min-height: 32px; opacity: 1; position: relative; width: 32px; }
+  .rowMenu::after {
+    content: "";
+    inset: -6px;
+    position: absolute;
+  }
+  .sectionAction { height: 32px; opacity: 1; position: relative; width: 32px; }
+  .sectionAction::after {
+    content: "";
+    inset: -6px;
+    position: absolute;
+  }
+  .platformLink { min-height: 44px; }
+  .account { min-height: 48px; }
+  .shortcut { display: none; }
+  .iconButton { position: relative; }
+  .iconButton::after {
+    content: "";
+    inset: -4px;
+    position: absolute;
+  }
+}

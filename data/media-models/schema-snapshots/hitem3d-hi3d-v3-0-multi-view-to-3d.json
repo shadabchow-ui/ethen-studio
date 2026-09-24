@@ -1,0 +1,179 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "hitem3d/hi3d/v3.0/multi-view-to-3d",
+  "task": "3d-generation",
+  "source_url": "https://fal.ai/models/hitem3d/hi3d/v3.0/multi-view-to-3d",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=hitem3d%2Fhi3d%2Fv3.0%2Fmulti-view-to-3d",
+  "retrieved_at": "2026-09-23T14:38:05.872Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "image-to-3d",
+  "bytes_sha256": "faa25d7f28e813908288594142c72467a4fd7f1f4103b8c178a55a541189e13c",
+  "queue_path": "/hitem3d/hi3d/v3.0/multi-view-to-3d",
+  "input_name": "Hi3dV30MultiViewTo3dInput",
+  "input": {
+    "$refName": "Hi3dV30MultiViewTo3dInput",
+    "type": "object",
+    "description": "Input for Hi3D v3.0 multi-view generation.",
+    "properties": {
+      "enable_pbr": {
+        "type": "boolean",
+        "default": true,
+        "description": "Generate PBR material maps together with the texture. Only supported (and billed) for v2.0/v2.1 and v3.0 models when enable_texture is true; ignored otherwise."
+      },
+      "resolution": {
+        "type": "string",
+        "enum": [
+          "2048quality",
+          "2048master"
+        ],
+        "default": "2048quality",
+        "description": "Generation resolution. 2048quality is the faster default; 2048master provides the highest quality."
+      },
+      "enable_texture": {
+        "type": "boolean",
+        "default": true,
+        "description": "Whether to generate textures in addition to geometry. When false, only the geometry mesh is generated (and billed)."
+      },
+      "right_image_url": {
+        "description": "URL of the right view image (PNG/JPEG/WebP, up to 20MB).",
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "face_count": {
+        "description": "Target face count. The partner recommends 2,000,000 for 2048quality and 5,000,000 for 2048master.",
+        "anyOf": [
+          {
+            "type": "integer",
+            "minimum": 100000,
+            "maximum": 5000000
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "front_image_url": {
+        "description": "URL of the front view image (PNG/JPEG/WebP, up to 20MB).",
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "shading": {
+        "type": "number",
+        "default": 0.5,
+        "minimum": 0,
+        "maximum": 1,
+        "description": "De-shading strength."
+      },
+      "left_image_url": {
+        "description": "URL of the left view image (PNG/JPEG/WebP, up to 20MB).",
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "export_format": {
+        "type": "string",
+        "enum": [
+          "glb",
+          "obj",
+          "stl",
+          "fbx",
+          "usdz"
+        ],
+        "default": "glb",
+        "description": "File format of the generated model."
+      },
+      "back_image_url": {
+        "description": "URL of the back view image (PNG/JPEG/WebP, up to 20MB).",
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "model": {
+        "type": "string",
+        "default": "hi3dv3.0",
+        "description": "Hi3D v3.0 model version used by this endpoint."
+      },
+      "enable_safety_checker": {
+        "type": "boolean",
+        "default": true,
+        "description": "If set to true, input images are checked for safety before processing."
+      }
+    }
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs."
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics."
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "Hi3dV30MultiViewTo3dInput",
+    "Hi3dV30MultiViewTo3dOutput",
+    "File"
+  ]
+}

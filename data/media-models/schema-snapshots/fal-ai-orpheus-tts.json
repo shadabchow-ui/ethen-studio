@@ -1,0 +1,109 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/orpheus-tts",
+  "task": "text-to-audio",
+  "source_url": "https://fal.ai/models/fal-ai/orpheus-tts",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Forpheus-tts",
+  "retrieved_at": "2026-09-23T14:37:39.390Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "text-to-speech",
+  "bytes_sha256": "39544af0186ce1f6d667a44ba811b60dbb47ee695ee490e1c8db64e65ec8a443",
+  "queue_path": "/fal-ai/orpheus-tts",
+  "input_name": "OrpheusTtsInput",
+  "input": {
+    "$refName": "OrpheusTtsInput",
+    "type": "object",
+    "properties": {
+      "voice": {
+        "type": "string",
+        "enum": [
+          "tara",
+          "leah",
+          "jess",
+          "leo",
+          "dan",
+          "mia",
+          "zac",
+          "zoe"
+        ],
+        "default": "tara",
+        "description": "Voice ID for the desired voice."
+      },
+      "repetition_penalty": {
+        "type": "number",
+        "default": 1.2,
+        "minimum": 1.1,
+        "maximum": 2,
+        "description": "Repetition penalty (>= 1.1 required for stable generations)."
+      },
+      "text": {
+        "type": "string",
+        "description": "The text to be converted to speech. You can additionally add the following emotive tags: <laugh>, <chuckle>, <sigh>, <cough>, <sniffle>, <groan>, <yawn>, <gasp>"
+      },
+      "temperature": {
+        "type": "number",
+        "default": 0.7,
+        "minimum": 0,
+        "maximum": 2,
+        "description": "Temperature for generation (higher = more creative)."
+      }
+    },
+    "required": [
+      "text"
+    ]
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs."
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics."
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "OrpheusTtsInput",
+    "OrpheusTtsOutput",
+    "File"
+  ]
+}

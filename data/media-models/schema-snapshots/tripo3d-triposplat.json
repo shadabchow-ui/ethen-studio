@@ -1,0 +1,127 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "tripo3d/triposplat",
+  "task": "3d-generation",
+  "source_url": "https://fal.ai/models/tripo3d/triposplat",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=tripo3d%2Ftriposplat",
+  "retrieved_at": "2026-09-23T14:38:19.426Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "image-to-3d",
+  "bytes_sha256": "069884d979d6d14a0af9bb9e0e7dc970ece839a193151037ce03bec183c8d5a0",
+  "queue_path": "/tripo3d/triposplat",
+  "input_name": "TriposplatInput",
+  "input": {
+    "$refName": "TriposplatInput",
+    "type": "object",
+    "properties": {
+      "num_gaussians": {
+        "type": "integer",
+        "default": 262144,
+        "minimum": 32768,
+        "maximum": 262144,
+        "description": "Target number of Gaussians in the output splat. Higher means more detail but larger files and slower rendering. Rounded to the nearest multiple of 32 internally."
+      },
+      "enable_safety_checker": {
+        "type": "boolean",
+        "default": true,
+        "description": "Enable safety checking of the input image."
+      },
+      "num_inference_steps": {
+        "type": "integer",
+        "default": 20,
+        "minimum": 1,
+        "maximum": 50,
+        "description": "Number of flow-matching sampler steps. More steps improve fidelity with a roughly linear runtime cost."
+      },
+      "guidance_scale": {
+        "type": "number",
+        "default": 3,
+        "minimum": 0,
+        "maximum": 10,
+        "description": "Classifier-free guidance strength. Values at or below 1.0 disable guidance; higher values increase detail and adherence to the input image, but too high can oversaturate colors."
+      },
+      "output_format": {
+        "type": "string",
+        "enum": [
+          "ply",
+          "splat"
+        ],
+        "default": "ply",
+        "description": "File format for the generated Gaussian splat."
+      },
+      "image_url": {
+        "type": "string",
+        "description": "URL of the input image to convert into a 3D Gaussian splat."
+      },
+      "seed": {
+        "description": "Random seed for reproducibility. If None, a random seed is generated.",
+        "anyOf": [
+          {
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      }
+    },
+    "required": [
+      "image_url"
+    ]
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs."
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics."
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "TriposplatInput",
+    "TriposplatOutput",
+    "File",
+    "Image"
+  ]
+}

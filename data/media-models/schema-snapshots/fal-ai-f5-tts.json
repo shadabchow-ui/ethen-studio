@@ -1,0 +1,104 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/f5-tts",
+  "task": "text-to-audio",
+  "source_url": "https://fal.ai/models/fal-ai/f5-tts",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Ff5-tts",
+  "retrieved_at": "2026-09-23T14:36:31.478Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "text-to-audio",
+  "bytes_sha256": "dc68ca070fd0469d1a71a8d9dca3605637d5601ce3b371a36ecf5fedb831b360",
+  "queue_path": "/fal-ai/f5-tts",
+  "input_name": "F5TtsInput",
+  "input": {
+    "$refName": "F5TtsInput",
+    "type": "object",
+    "properties": {
+      "model_type": {
+        "type": "string",
+        "enum": [
+          "F5-TTS",
+          "E2-TTS"
+        ],
+        "description": "The name of the model to be used for TTS."
+      },
+      "ref_audio_url": {
+        "type": "string",
+        "description": "The URL of the reference audio file."
+      },
+      "gen_text": {
+        "type": "string",
+        "description": "The text to be converted to speech. Maximum 5000 characters."
+      },
+      "remove_silence": {
+        "type": "boolean",
+        "default": true,
+        "description": "Whether to remove the silence from the audio file."
+      },
+      "ref_text": {
+        "type": "string",
+        "default": "",
+        "description": "The reference text to be used for TTS. If not provided, an ASR (Automatic Speech Recognition) model will be used to generate the reference text."
+      }
+    },
+    "required": [
+      "gen_text",
+      "ref_audio_url",
+      "model_type"
+    ]
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs."
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics."
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "F5TtsInput",
+    "F5TtsOutput",
+    "AudioFile"
+  ]
+}

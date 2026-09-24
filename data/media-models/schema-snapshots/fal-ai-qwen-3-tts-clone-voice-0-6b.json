@@ -1,0 +1,91 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/qwen-3-tts/clone-voice/0.6b",
+  "task": "text-to-audio",
+  "source_url": "https://fal.ai/models/fal-ai/qwen-3-tts/clone-voice/0.6b",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fqwen-3-tts%2Fclone-voice%2F0.6b",
+  "retrieved_at": "2026-09-23T14:37:40.033Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "audio-to-audio",
+  "bytes_sha256": "15935186292feaeddad03db71ee0b416066bda8524ae081a4894c90bf304e1ba",
+  "queue_path": "/fal-ai/qwen-3-tts/clone-voice/0.6b",
+  "input_name": "Qwen3TtsCloneVoice06bInput",
+  "input": {
+    "$refName": "Qwen3TtsCloneVoice06bInput",
+    "type": "object",
+    "properties": {
+      "audio_url": {
+        "type": "string",
+        "description": "URL to the reference audio file used for voice cloning. Must be at most 300 seconds (5 minutes) long; a short clip of clean speech is sufficient."
+      },
+      "reference_text": {
+        "description": "Optional reference text that was used when creating the speaker embedding. Providing this can improve synthesis quality when using a cloned voice.",
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      }
+    },
+    "required": [
+      "audio_url"
+    ]
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs."
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics."
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "Qwen3TtsCloneVoice06bInput",
+    "Qwen3TtsCloneVoice06bOutput",
+    "File"
+  ]
+}

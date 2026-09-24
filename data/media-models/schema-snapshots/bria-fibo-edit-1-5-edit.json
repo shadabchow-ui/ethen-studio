@@ -1,0 +1,158 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "bria/fibo-edit-1.5/edit",
+  "task": "image-editing",
+  "source_url": "https://fal.ai/models/bria/fibo-edit-1.5/edit",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=bria%2Ffibo-edit-1.5%2Fedit",
+  "retrieved_at": "2026-09-20T09:39:57.714Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "image-to-image",
+  "bytes_sha256": "5c1747c3c460da37e5429d5d02f1c46db0c247545bad86bceeb5af0f9238e6f5",
+  "queue_path": "/bria/fibo-edit-1.5/edit",
+  "input_name": "FiboEdit15EditInput",
+  "input": {
+    "$refName": "FiboEdit15EditInput",
+    "type": "object",
+    "properties": {
+      "sync_mode": {
+        "type": "boolean",
+        "default": false,
+        "description": "If true, returns the image directly in the response (increases latency)."
+      },
+      "instruction": {
+        "description": "Instruction for image editing.",
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "structured_instruction": {
+        "description": "A pre-built structured prompt, used verbatim instead of having VGL build one when no instruction is sent. Accepts what a previous edit returned.",
+        "anyOf": [
+          {
+            "$refName": "StructuredInstruction",
+            "unsupported": "depth-exceeded"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "image_urls": {
+        "description": "1-4 reference images (files or URLs). Order is significant: the instruction is resolved against the images in the order they are sent.",
+        "anyOf": [
+          {
+            "type": "array",
+            "items": {
+              "unsupported": "depth-exceeded"
+            }
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "mask_url": {
+        "description": "Mask (file or URL) marking the region to regenerate: white where the model should edit, black elsewhere. Single-reference requests only, and it must be the same size as that image. A masked edit comes back at the reference's own resolution.",
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "seed": {
+        "type": "integer",
+        "default": 5555,
+        "description": "Random seed for reproducibility."
+      },
+      "aspect_ratio": {
+        "description": "Output aspect ratio. Left unset, the output keeps the ratio of the first reference image. A chosen ratio applies only with two or more reference images; with a single reference the output keeps that image's ratio either way.",
+        "anyOf": [
+          {
+            "type": "string",
+            "enum": [
+              "1:1",
+              "2:3",
+              "3:2",
+              "3:4",
+              "4:3",
+              "4:5",
+              "5:4",
+              "9:16",
+              "16:9"
+            ]
+          },
+          {
+            "type": "null"
+          }
+        ]
+      }
+    }
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs."
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics."
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "FiboEdit15EditInput",
+    "FiboEdit15EditOutput",
+    "StructuredInstruction",
+    "Image",
+    "PhotographicCharacteristics",
+    "Lighting",
+    "PromptObject",
+    "Aesthetics"
+  ]
+}

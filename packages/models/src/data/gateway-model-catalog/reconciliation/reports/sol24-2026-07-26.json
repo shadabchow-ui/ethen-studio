@@ -1,0 +1,15 @@
+{
+  "reportId": "sol24-reconciliation-2026-07-26",
+  "invoiceFixtureId": "sol24-authorized-invoice-2026-07-26",
+  "priceSetVersion": "2026-08-25",
+  "currency": "USD",
+  "computedCostUsd": 0.9,
+  "invoicedCostUsd": 0.9,
+  "varianceUsd": 0,
+  "toleranceUsd": 0.000001,
+  "withinTolerance": true,
+  "priceRecordIds": [
+    "openai-gpt-4o-mini-standard-2026-08-25",
+    "anthropic-claude-haiku-4-5-standard-2026-08-25"
+  ]
+}

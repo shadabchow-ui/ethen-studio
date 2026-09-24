@@ -1,0 +1,1280 @@
+/* CONSOLE_A1 — the Console shell.
+ *
+ * Geometry is the design here. The rail is 256px and its rows are 32px because
+ * an operating console is read in rows; the canvas carries no chrome of its own
+ * so the page header is the first thing under the top edge; and depth is made
+ * of one tonal step and a hairline, never a shadow (spec §96).
+ */
+
+.shell {
+  background: var(--console-canvas);
+  color: var(--console-text);
+  display: flex;
+  font-family: var(--eds-font-sans);
+  font-size: var(--eds-type-ui-size);
+  height: 100dvh;
+  line-height: var(--eds-type-ui-line);
+  min-height: 100dvh;
+  overflow: hidden;
+  position: relative;
+  width: 100%;
+}
+
+.srOnly {
+  border: 0;
+  clip-path: inset(50%);
+  height: 1px;
+  overflow: hidden;
+  position: absolute;
+  white-space: nowrap;
+  width: 1px;
+}
+
+/* ---------------------------------------------------------------- the rail */
+
+.rail {
+  background: var(--console-sidebar);
+  border-right: 1px solid var(--console-border);
+  display: flex;
+  flex-direction: column;
+  flex: none;
+  /* CONSOLE_C2 — desktop rail geometry is immediate: no width animation. */
+  width: var(--console-rail);
+}
+
+/* CONSOLE_C4 — press lands on the next frame with no translation anywhere
+ * inside the Console shell, including EDS buttons (doubled class wins over
+ * the EDS base regardless of stylesheet order). */
+.shell .eds-button.eds-button:active {
+  transform: none;
+}
+
+/* CONSOLE_C2 — hover is a 60–80ms tonal shift, never motion. Press lands on
+ * the next frame with no scale or translation (no press-time transform). */
+.railItem,
+.groupButton,
+.railLink,
+.workspaceButton,
+.search,
+.accountButton,
+.menuItem,
+.flyoutItem,
+.paletteRow {
+  transition:
+    background-color 70ms ease,
+    color 70ms ease;
+}
+
+.shell[data-collapsed="true"] .rail {
+  width: var(--console-rail-collapsed);
+}
+
+.brandRow {
+  align-items: center;
+  display: flex;
+  gap: 8px;
+  height: 48px;
+  padding: 0 8px 0 12px;
+}
+
+.brand {
+  align-items: baseline;
+  display: flex;
+  gap: 6px;
+  min-width: 0;
+  overflow: hidden;
+}
+
+.brandName {
+  color: var(--console-text);
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+.brandQualifier {
+  color: var(--console-text-muted);
+  font-size: 13px;
+  font-weight: 400;
+  letter-spacing: 0.01em;
+}
+
+/* No new brand mark is invented here. The collapsed rail shows the initial of
+ * the approved wordmark, set in the same face — not a logo. */
+.brandMark {
+  color: var(--console-text);
+  display: none;
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  width: 100%;
+  text-align: center;
+}
+
+.railToggle,
+.drawerClose {
+  align-items: center;
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: var(--console-radius-control);
+  color: var(--console-text-muted);
+  cursor: pointer;
+  display: inline-flex;
+  flex: none;
+  height: 28px;
+  justify-content: center;
+  margin-left: auto;
+  position: relative;
+  width: 28px;
+}
+
+.railToggle:hover,
+.drawerClose:hover {
+  background: var(--console-hover);
+  color: var(--console-text);
+}
+
+.railToggle:focus-visible,
+.drawerClose:focus-visible {
+  outline: var(--console-focus);
+  outline-offset: var(--console-focus-offset);
+}
+
+.drawerClose {
+  display: none;
+}
+
+/* ------------------------------------------------ workspace + global search */
+
+.context {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 4px 8px 12px;
+}
+
+.menuAnchor {
+  position: relative;
+}
+
+.workspaceButton,
+.search {
+  align-items: center;
+  background: var(--console-panel);
+  border: 1px solid var(--console-border);
+  border-radius: var(--console-radius-control);
+  color: var(--console-text);
+  cursor: pointer;
+  display: flex;
+  font-family: inherit;
+  font-size: 13px;
+  gap: 8px;
+  height: var(--console-row);
+  padding: 0 8px;
+  position: relative;
+  text-align: left;
+  width: 100%;
+}
+
+.workspaceButton:hover,
+.search:hover {
+  background: var(--console-elevated);
+  border-color: var(--console-border-strong);
+}
+
+.workspaceButton:focus-visible,
+.search:focus-visible {
+  outline: var(--console-focus);
+  outline-offset: var(--console-focus-offset);
+}
+
+.workspaceMark {
+  color: var(--console-accent);
+  flex: none;
+}
+
+.workspaceName {
+  flex: 1;
+  font-weight: 500;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.workspaceChevron {
+  color: var(--console-text-muted);
+  flex: none;
+}
+
+.searchIcon {
+  color: var(--console-text-muted);
+  flex: none;
+}
+
+.searchLabel {
+  color: var(--console-text-muted);
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.searchKbd {
+  flex: none;
+}
+
+/* ------------------------------------------------------------ navigation */
+
+.navScroll {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  padding: 0 8px;
+  scrollbar-width: thin;
+}
+
+.navList {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.railItem,
+.groupButton,
+.railLink {
+  align-items: center;
+  background: transparent;
+  border: 0;
+  border-radius: var(--console-radius-row);
+  color: var(--console-text-secondary);
+  cursor: pointer;
+  display: flex;
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 400;
+  gap: 10px;
+  line-height: 18px;
+  min-height: var(--console-row);
+  padding: 0 8px;
+  position: relative;
+  text-align: left;
+  text-decoration: none;
+  width: 100%;
+}
+
+.railItem:hover,
+.groupButton:hover,
+.railLink:hover {
+  background: var(--console-hover);
+  color: var(--console-text);
+}
+
+.railItem:focus-visible,
+.groupButton:focus-visible,
+.railLink:focus-visible {
+  outline: var(--console-focus);
+  outline-offset: -1px;
+}
+
+/* EDS active contract (--eds-active-*): wash + 2px marker + weight shift.
+ * All three signals, never colour alone. */
+.railItem[data-current="true"] {
+  background: var(--console-active);
+  color: var(--console-text);
+  font-weight: 600;
+}
+
+.railItem[data-current="true"]::before {
+  background: var(--console-accent);
+  border-radius: 0 1px 1px 0;
+  content: "";
+  height: 16px;
+  left: -8px;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 2px;
+}
+
+.groupButton[data-within="true"] {
+  color: var(--console-text);
+}
+
+.rowIcon {
+  color: inherit;
+  flex: none;
+  opacity: 0.86;
+}
+
+.railItem[data-current="true"] .rowIcon {
+  color: var(--console-accent-strong);
+  opacity: 1;
+}
+
+.rowLabel {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.rowTrailing {
+  color: var(--console-text-muted);
+  flex: none;
+}
+
+.rowBadge {
+  background: var(--console-accent-wash);
+  border-radius: 4px;
+  color: var(--console-accent-strong);
+  flex: none;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  padding: 1px 5px;
+  text-transform: uppercase;
+}
+
+.rowCount {
+  background: var(--console-elevated);
+  border-radius: 999px;
+  color: var(--console-text-secondary);
+  flex: none;
+  font-size: 11px;
+  font-variant-numeric: tabular-nums;
+  min-width: 18px;
+  padding: 1px 5px;
+  text-align: center;
+}
+
+.groupItem {
+  position: relative;
+}
+
+.groupChevron {
+  color: var(--console-text-muted);
+  flex: none;
+  transform: rotate(-90deg);
+  transition: transform var(--eds-motion-ui) ease;
+}
+
+.groupChevron[data-open="true"] {
+  transform: rotate(0deg);
+}
+
+.subList {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  list-style: none;
+  margin: 1px 0 4px;
+  padding: 0;
+}
+
+/* Modest indent, no tree connector lines (spec §16). */
+.railItem[data-nested="true"] {
+  padding-left: 34px;
+}
+
+.railItem[data-nested="true"]::before {
+  left: 0;
+}
+
+/* ------------------------------------------------------------- rail bottom */
+
+.railFoot {
+  border-top: 1px solid var(--console-border);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  flex: none;
+  padding: 8px;
+}
+
+.accountButton {
+  align-items: center;
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: var(--console-radius-control);
+  color: var(--console-text);
+  cursor: pointer;
+  display: flex;
+  font-family: inherit;
+  gap: 8px;
+  min-height: 40px;
+  padding: 4px 6px;
+  position: relative;
+  text-align: left;
+  width: 100%;
+}
+
+.accountButton:hover {
+  background: var(--console-hover);
+}
+
+.accountButton:focus-visible {
+  outline: var(--console-focus);
+  outline-offset: var(--console-focus-offset);
+}
+
+.avatar {
+  align-items: center;
+  background: var(--console-accent-wash);
+  border: 1px solid var(--console-border-strong);
+  border-radius: 999px;
+  color: var(--console-accent-strong);
+  display: flex;
+  flex: none;
+  font-size: 12px;
+  font-weight: 600;
+  height: 26px;
+  justify-content: center;
+  width: 26px;
+}
+
+.accountText {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.accountName {
+  font-size: 13px;
+  font-weight: 500;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.accountRole {
+  color: var(--console-text-muted);
+  font-size: 11px;
+  line-height: 15px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.accountMore {
+  color: var(--console-text-muted);
+  flex: none;
+}
+
+/* ---------------------------------------------------------- collapsed rail */
+
+.tip {
+  background: var(--console-overlay);
+  border: 1px solid var(--console-border-strong);
+  border-radius: var(--console-radius-control);
+  box-shadow: var(--console-overlay-shadow);
+  color: var(--console-text);
+  display: none;
+  font-size: 12px;
+  left: calc(100% + 10px);
+  padding: 4px 8px;
+  pointer-events: none;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  white-space: nowrap;
+  z-index: 40;
+}
+
+/* CONSOLE_C2 — collapsed-rail tooltips escape the scroller (viewport-side
+ * absolute positioning beside a 52px rail) with a ~400ms pointer delay,
+ * immediate keyboard/focus disclosure, and immediate dismissal. */
+.shell[data-collapsed="true"] .rail :is(.railItem, .groupButton, .railLink, .workspaceButton, .search, .accountButton, .railToggle) .tip {
+  display: block;
+  opacity: 0;
+  visibility: hidden;
+  transition:
+    opacity var(--eds-motion-instant) ease,
+    visibility 0s linear var(--eds-motion-instant);
+}
+
+.shell[data-collapsed="true"] .rail :is(.railItem, .groupButton, .railLink, .workspaceButton, .search, .accountButton, .railToggle):hover .tip {
+  opacity: 1;
+  visibility: visible;
+  transition-delay: 400ms;
+}
+
+.shell[data-collapsed="true"] .rail :is(.railItem, .groupButton, .railLink, .workspaceButton, .search, .accountButton, .railToggle):is(:focus-visible, :focus-within) .tip {
+  opacity: 1;
+  visibility: visible;
+  transition-delay: 0ms;
+}
+
+.shell[data-collapsed="true"] .brand,
+.shell[data-collapsed="true"] .rowLabel,
+.shell[data-collapsed="true"] .rowBadge,
+.shell[data-collapsed="true"] .rowTrailing,
+.shell[data-collapsed="true"] .rowCount,
+.shell[data-collapsed="true"] .groupChevron,
+.shell[data-collapsed="true"] .workspaceName,
+.shell[data-collapsed="true"] .workspaceChevron,
+.shell[data-collapsed="true"] .searchLabel,
+.shell[data-collapsed="true"] .searchKbd,
+.shell[data-collapsed="true"] .accountText,
+.shell[data-collapsed="true"] .accountMore {
+  /* Removed visually, kept in the accessibility tree: the collapsed rail must
+   * not become a row of unlabelled squares to a screen reader (spec §110). */
+  border: 0;
+  clip-path: inset(50%);
+  height: 1px;
+  overflow: hidden;
+  position: absolute;
+  white-space: nowrap;
+  width: 1px;
+}
+
+.shell[data-collapsed="true"] .brandMark {
+  display: block;
+}
+
+.shell[data-collapsed="true"] .brandRow {
+  flex-direction: column;
+  gap: 2px;
+  height: auto;
+  padding: 8px 4px;
+}
+
+.shell[data-collapsed="true"] .railToggle {
+  margin: 0;
+}
+
+.shell[data-collapsed="true"] .context,
+.shell[data-collapsed="true"] .navScroll,
+.shell[data-collapsed="true"] .railFoot {
+  padding-left: 6px;
+  padding-right: 6px;
+}
+
+.shell[data-collapsed="true"] :is(.railItem, .groupButton, .railLink, .workspaceButton, .search, .accountButton) {
+  gap: 0;
+  justify-content: center;
+  padding: 0;
+  width: 40px;
+}
+
+.shell[data-collapsed="true"] .railItem[data-nested="true"] {
+  padding-left: 0;
+}
+
+.shell[data-collapsed="true"] .railItem[data-current="true"]::before {
+  left: -6px;
+}
+
+.shell[data-collapsed="true"] .accountButton {
+  min-height: 40px;
+}
+
+.shell[data-collapsed="true"] .subList {
+  display: none;
+}
+
+.flyout {
+  background: var(--console-overlay);
+  border: 1px solid var(--console-border-strong);
+  border-radius: var(--console-radius-menu);
+  box-shadow: var(--console-overlay-shadow);
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  /* Viewport-anchored (see the shell): the nav scroller clips on both axes, so
+   * an `absolute` flyout beside a 52px rail would be cut off at the rail edge.
+   * The inline top/left come from the button's own rect. */
+  left: calc(var(--console-rail-collapsed) + 14px);
+  max-height: 80vh;
+  min-width: 208px;
+  overflow-y: auto;
+  padding: 6px;
+  position: fixed;
+  top: 96px;
+  z-index: 50;
+}
+
+.flyoutTitle {
+  color: var(--console-text-muted);
+  font-size: 11px;
+  letter-spacing: 0.04em;
+  margin: 2px 8px 4px;
+  text-transform: uppercase;
+}
+
+.flyoutItem {
+  align-items: center;
+  background: transparent;
+  border: 0;
+  border-radius: var(--console-radius-row);
+  color: var(--console-text-secondary);
+  cursor: pointer;
+  display: flex;
+  font: inherit;
+  font-size: 13px;
+  gap: 10px;
+  min-height: var(--console-row);
+  padding: 0 8px;
+  text-align: left;
+  white-space: nowrap;
+}
+
+.flyoutItem:hover {
+  background: var(--console-hover);
+  color: var(--console-text);
+}
+
+.flyoutItem:focus-visible {
+  outline: var(--console-focus);
+  outline-offset: -1px;
+}
+
+.flyoutItem[data-current="true"] {
+  background: var(--console-active);
+  color: var(--console-text);
+  font-weight: 600;
+}
+
+/* ------------------------------------------------------------------ menus */
+
+.menu {
+  background: var(--console-overlay);
+  border: 1px solid var(--console-border-strong);
+  border-radius: var(--console-radius-menu);
+  box-shadow: var(--console-overlay-shadow);
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  left: 0;
+  /* CONSOLE_C2 — menus scroll internally instead of overflowing the viewport. */
+  max-height: min(340px, 62vh);
+  min-width: 244px;
+  overflow-y: auto;
+  padding: 6px;
+  position: absolute;
+  z-index: 60;
+}
+
+.menu[data-placement="below"] {
+  top: calc(100% + 6px);
+}
+
+.menu[data-placement="above"] {
+  bottom: calc(100% + 6px);
+}
+
+.menuSection,
+.menuIdentity {
+  color: var(--console-text-muted);
+  font-size: 11px;
+  letter-spacing: 0.04em;
+  margin: 4px 8px 2px;
+  text-transform: uppercase;
+}
+
+.menuIdentity {
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+.menuOrg,
+.menuContext {
+  align-items: center;
+  color: var(--console-text);
+  display: flex;
+  font-size: 13px;
+  font-weight: 500;
+  gap: 8px;
+  padding: 4px 8px 6px;
+}
+
+.menuContext {
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0;
+}
+
+.menuRule {
+  background: var(--console-border);
+  border: 0;
+  height: 1px;
+  margin: 5px 0;
+}
+
+.menuItem {
+  align-items: center;
+  background: transparent;
+  border: 0;
+  border-radius: var(--console-radius-row);
+  color: var(--console-text-secondary);
+  cursor: pointer;
+  display: flex;
+  font: inherit;
+  font-size: 13px;
+  gap: 10px;
+  min-height: var(--console-row);
+  padding: 0 8px;
+  text-align: left;
+  text-decoration: none;
+  width: 100%;
+}
+
+.menuItem:hover {
+  background: var(--console-hover);
+  color: var(--console-text);
+}
+
+.menuItem:focus-visible {
+  outline: var(--console-focus);
+  outline-offset: -1px;
+}
+
+/* CONSOLE_C5 — intentionally disabled rows stay legible (the reason ships in
+ * `title`) but never hover, never focus, never fire. */
+.menuItem:disabled {
+  cursor: not-allowed;
+  opacity: 0.55;
+}
+
+.menuItem:disabled:hover {
+  background: transparent;
+  color: var(--console-text-secondary);
+}
+
+/* CONSOLE_C5 — shortcuts dialog rows: key on the left, action on the right. */
+.shortcutsList {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin: 0;
+}
+
+.shortcutsRow {
+  align-items: baseline;
+  display: flex;
+  gap: 12px;
+  padding: 6px 0;
+}
+
+.shortcutsRow + .shortcutsRow {
+  border-top: 1px solid var(--console-border);
+}
+
+.shortcutsKeys {
+  flex: none;
+  margin: 0;
+  min-width: 120px;
+}
+
+.shortcutsAction {
+  color: var(--console-text-secondary);
+  font-size: 13px;
+  margin: 0;
+}
+
+.menuIcon {
+  color: var(--console-text-muted);
+  flex: none;
+}
+
+.menuItemText {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.menuItemDetail {
+  color: var(--console-text-muted);
+  font-size: 11px;
+  line-height: 15px;
+}
+
+.menuCheck {
+  color: var(--console-accent);
+  flex: none;
+}
+
+/* ----------------------------------------------------------------- canvas */
+
+.main {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  min-width: 0;
+  overflow: hidden;
+}
+
+.canvas {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  scrollbar-width: thin;
+}
+
+.degraded {
+  align-items: center;
+  background: color-mix(in srgb, var(--console-warning) 12%, var(--console-canvas));
+  border-bottom: 1px solid color-mix(in srgb, var(--console-warning) 34%, transparent);
+  color: var(--console-text);
+  display: flex;
+  flex: none;
+  font-size: 13px;
+  gap: 10px;
+  padding: 8px 20px;
+}
+
+.degraded svg {
+  color: var(--console-warning);
+  flex: none;
+}
+
+.degradedAction {
+  margin-left: auto;
+}
+
+.immersiveBar {
+  align-items: center;
+  background: var(--console-canvas);
+  border-bottom: 1px solid var(--console-border);
+  display: flex;
+  flex: none;
+  gap: 12px;
+  height: 44px;
+  padding: 0 16px;
+}
+
+/* -------------------------------------------------------- command palette */
+
+.paletteScrim {
+  align-items: flex-start;
+  background: var(--console-scrim);
+  display: flex;
+  inset: 0;
+  justify-content: center;
+  padding: 12vh 16px 16px;
+  position: absolute;
+  z-index: 90;
+}
+
+.palette {
+  background: var(--console-overlay);
+  border: 1px solid var(--console-border-strong);
+  border-radius: var(--console-radius-dialog);
+  box-shadow: var(--console-overlay-shadow);
+  display: flex;
+  flex-direction: column;
+  max-height: min(560px, 70vh);
+  overflow: hidden;
+  width: min(620px, 100%);
+}
+
+/* CONSOLE_C2 — palette header with a visible Close on mobile. The title is
+ * the modal's accessible name partner; desktop keeps the input-only look. */
+.paletteHead {
+  align-items: center;
+  display: none;
+  justify-content: space-between;
+  padding: 10px 8px 0 14px;
+}
+
+.paletteTitle {
+  color: var(--console-text-muted);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  margin: 0;
+  text-transform: uppercase;
+}
+
+.paletteClose {
+  align-items: center;
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: var(--console-radius-control);
+  color: var(--console-text-muted);
+  cursor: pointer;
+  display: inline-flex;
+  height: 44px;
+  justify-content: center;
+  width: 44px;
+}
+
+.paletteClose:hover {
+  background: var(--console-hover);
+  color: var(--console-text);
+}
+
+.paletteClose:focus-visible {
+  outline: var(--console-focus);
+  outline-offset: var(--console-focus-offset);
+}
+
+.paletteInputWrap {
+  align-items: center;
+  border-bottom: 1px solid var(--console-border);
+  display: flex;
+  gap: 10px;
+  padding: 0 12px;
+}
+
+.paletteIcon {
+  color: var(--console-text-muted);
+  flex: none;
+}
+
+.paletteInput {
+  background: transparent;
+  border: 0;
+  color: var(--console-text);
+  flex: 1;
+  font-family: inherit;
+  font-size: 15px;
+  min-width: 0;
+  outline: none;
+  padding: 14px 0;
+}
+
+.paletteInput::placeholder {
+  color: var(--console-text-muted);
+}
+
+.paletteKbd {
+  flex: none;
+}
+
+.paletteResults {
+  overflow-y: auto;
+  padding: 6px;
+  scrollbar-width: thin;
+}
+
+.paletteGroup {
+  padding-bottom: 4px;
+}
+
+.paletteGroupTitle {
+  color: var(--console-text-muted);
+  font-size: 11px;
+  letter-spacing: 0.04em;
+  margin: 6px 8px 2px;
+  text-transform: uppercase;
+}
+
+.paletteRow {
+  align-items: center;
+  background: transparent;
+  border: 0;
+  border-radius: var(--console-radius-row);
+  color: var(--console-text-secondary);
+  cursor: pointer;
+  display: flex;
+  font: inherit;
+  font-size: 13px;
+  gap: 10px;
+  min-height: 34px;
+  padding: 0 8px;
+  text-align: left;
+  width: 100%;
+}
+
+.paletteRow[data-active="true"] {
+  background: var(--console-active);
+  color: var(--console-text);
+}
+
+.paletteRowIcon {
+  color: var(--console-text-muted);
+  flex: none;
+}
+
+.paletteRow[data-active="true"] .paletteRowIcon {
+  color: var(--console-accent-strong);
+}
+
+.paletteRowLabel {
+  flex: none;
+  font-weight: 500;
+}
+
+.paletteRowDetail {
+  color: var(--console-text-muted);
+  flex: 1;
+  font-size: 12px;
+  min-width: 0;
+  overflow: hidden;
+  text-align: right;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.paletteEmpty {
+  color: var(--console-text-muted);
+  font-size: 13px;
+  margin: 0;
+  padding: 24px 12px;
+  text-align: center;
+}
+
+.paletteFoot {
+  align-items: center;
+  border-top: 1px solid var(--console-border);
+  color: var(--console-text-muted);
+  display: flex;
+  font-size: 12px;
+  gap: 14px;
+  margin: 0;
+  padding: 8px 12px;
+}
+
+.paletteFootNote {
+  margin-left: auto;
+}
+
+/* --------------------------------------------------------------- mobile */
+
+.mobileBar {
+  display: none;
+}
+
+.mobileMenu {
+  align-items: center;
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: var(--console-radius-control);
+  color: var(--console-text);
+  cursor: pointer;
+  display: inline-flex;
+  height: 40px;
+  justify-content: center;
+  width: 40px;
+}
+
+.mobileMenu:focus-visible {
+  outline: var(--console-focus);
+  outline-offset: var(--console-focus-offset);
+}
+
+.mobileTitle {
+  flex: 1;
+  font-size: 15px;
+  font-weight: 600;
+  overflow: hidden;
+  text-align: center;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.scrim {
+  background: var(--console-scrim);
+  border: 0;
+  cursor: pointer;
+  display: none;
+  inset: 0;
+  position: absolute;
+  z-index: 70;
+}
+
+/* 1024–1279 — the rail keeps the user's preference; the canvas takes the
+ * saving instead, through tighter gutters. */
+@media (max-width: 1279px) {
+  .shell {
+    --console-gutter: 24px;
+  }
+}
+
+/* 768–1023 — the rail keeps its full 256px. Shrinking it to ~224 truncates
+ * "Models & Infrastructure" to an ellipsis, and a nav label a user cannot read
+ * is a worse trade than 32px of canvas. The gutter gives the space instead. */
+@media (max-width: 1023px) {
+  .shell {
+    --console-gutter: 20px;
+  }
+}
+
+/* Below 768 — the rail becomes a drawer and the mobile bar appears. The two
+ * are never shown together. */
+@media (max-width: 767px) {
+  .shell {
+    display: block;
+    overflow: auto;
+  }
+
+  .mobileBar {
+    align-items: center;
+    background: var(--console-sidebar);
+    border-bottom: 1px solid var(--console-border);
+    display: flex;
+    gap: 4px;
+    height: 52px;
+    padding: 0 8px;
+    position: sticky;
+    top: 0;
+    z-index: 80;
+  }
+
+  .rail {
+    bottom: 0;
+    left: 0;
+    position: fixed;
+    top: 0;
+    transform: translateX(-100%);
+    /* CONSOLE_C2 — the mobile drawer slides in 140–160ms. */
+    transition:
+      transform 150ms ease,
+      visibility 150ms;
+    visibility: hidden;
+    width: min(300px, 86vw);
+    z-index: 85;
+  }
+
+  .rail[data-open="true"] {
+    transform: translateX(0);
+    visibility: visible;
+  }
+
+  .shell[data-collapsed="true"] .rail {
+    width: min(300px, 86vw);
+  }
+
+  /* A drawer is never a collapsed icon rail: labels come back. */
+  .shell[data-collapsed="true"] .brand,
+  .shell[data-collapsed="true"] .rowLabel,
+  .shell[data-collapsed="true"] .rowBadge,
+  .shell[data-collapsed="true"] .rowTrailing,
+  .shell[data-collapsed="true"] .rowCount,
+  .shell[data-collapsed="true"] .groupChevron,
+  .shell[data-collapsed="true"] .workspaceName,
+  .shell[data-collapsed="true"] .workspaceChevron,
+  .shell[data-collapsed="true"] .searchLabel,
+  .shell[data-collapsed="true"] .accountText,
+  .shell[data-collapsed="true"] .accountMore {
+    clip-path: none;
+    height: auto;
+    overflow: visible;
+    position: static;
+    width: auto;
+  }
+
+  .shell[data-collapsed="true"] .brandMark,
+  .railToggle {
+    display: none;
+  }
+
+  .shell[data-collapsed="true"] :is(.railItem, .groupButton, .railLink, .workspaceButton, .search, .accountButton) {
+    gap: 10px;
+    justify-content: flex-start;
+    padding: 0 8px;
+    width: 100%;
+  }
+
+  .shell[data-collapsed="true"] .subList {
+    display: flex;
+  }
+
+  .shell[data-collapsed="true"] .brandRow {
+    flex-direction: row;
+    height: 52px;
+    padding: 0 8px 0 12px;
+  }
+
+  .drawerClose {
+    display: inline-flex;
+  }
+
+  .tip {
+    display: none !important;
+  }
+
+  .scrim {
+    display: block;
+  }
+
+  .main {
+    overflow: visible;
+  }
+
+  .canvas {
+    overflow: visible;
+  }
+
+  /* Touch targets (spec §110). */
+  .railItem,
+  .groupButton,
+  .railLink,
+  .flyoutItem,
+  .menuItem {
+    min-height: 44px;
+  }
+
+  .workspaceButton,
+  .search {
+    height: 44px;
+  }
+
+  .paletteRow {
+    min-height: 44px;
+  }
+
+  .paletteHead {
+    display: flex;
+  }
+
+  .paletteScrim {
+    padding: 0;
+    position: fixed;
+  }
+
+  .palette {
+    border-radius: 0;
+    max-height: 100dvh;
+    height: 100dvh;
+    width: 100%;
+  }
+
+  .paletteInput {
+    /* 16px or iOS zooms the whole document on focus. */
+    font-size: 16px;
+  }
+
+  .paletteFootNote {
+    display: none;
+  }
+
+  .immersiveBar {
+    padding: 0 12px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* CONSOLE_C2 — reduced motion removes spatial transitions: no rail slide,
+   * no drawer travel, no tooltip delay, no tonal fades on controls. (EDS
+   * token durations already collapse to ~0 in this mode.) */
+  .rail,
+  .groupChevron,
+  .railItem,
+  .groupButton,
+  .railLink,
+  .workspaceButton,
+  .search,
+  .accountButton,
+  .menuItem,
+  .flyoutItem,
+  .paletteRow,
+  .menu,
+  .flyout,
+  .palette {
+    transition: none;
+  }
+
+  .shell[data-collapsed="true"] .rail :is(.railItem, .groupButton, .railLink, .workspaceButton, .search, .accountButton, .railToggle):hover .tip,
+  .shell[data-collapsed="true"] .rail :is(.railItem, .groupButton, .railLink, .workspaceButton, .search, .accountButton, .railToggle):is(:focus-visible, :focus-within) .tip {
+    transition: none;
+  }
+}

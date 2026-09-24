@@ -1,0 +1,130 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "resemble-ai/chatterboxhd/text-to-speech",
+  "task": "text-to-audio",
+  "source_url": "https://fal.ai/models/resemble-ai/chatterboxhd/text-to-speech",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=resemble-ai%2Fchatterboxhd%2Ftext-to-speech",
+  "retrieved_at": "2026-09-23T14:38:09.348Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "text-to-speech",
+  "bytes_sha256": "0d78cb8c9db1490ee90a8ec17b64f16354b177abcdd55b90ba544f517912597e",
+  "queue_path": "/resemble-ai/chatterboxhd/text-to-speech",
+  "input_name": "ChatterboxhdTextToSpeechInput",
+  "input": {
+    "$refName": "ChatterboxhdTextToSpeechInput",
+    "type": "object",
+    "description": "Input parameters for the TTS request.",
+    "properties": {
+      "text": {
+        "type": "string",
+        "default": "My name is Maximus Decimus Meridius, commander of the Armies of the North, General of the Felix Legions and loyal servant to the true emperor, Marcus Aurelius. Father to a murdered son, husband to a murdered wife. And I will have my vengeance, in this life or the next.",
+        "description": "Text to synthesize into speech."
+      },
+      "exaggeration": {
+        "type": "number",
+        "default": 0.5,
+        "minimum": 0.25,
+        "maximum": 2,
+        "description": "Controls emotion exaggeration. Range typically 0.25 to 2.0."
+      },
+      "high_quality_audio": {
+        "type": "boolean",
+        "default": false,
+        "description": "If True, the generated audio will be upscaled to 48kHz. The generation of the audio will take longer, but the quality will be higher. If False, the generated audio will be 24kHz."
+      },
+      "voice": {
+        "type": "string",
+        "enum": [
+          "Aurora",
+          "Blade",
+          "Britney",
+          "Carl",
+          "Cliff",
+          "Richard",
+          "Rico",
+          "Siobhan",
+          "Vicky"
+        ],
+        "description": "The voice to use for the TTS request. If neither voice nor audio are provided, a random voice will be used."
+      },
+      "audio_url": {
+        "type": "string",
+        "description": "URL to the audio sample to use as a voice prompt for zero-shot TTS voice cloning. Providing a audio sample will override the voice setting. If neither voice nor audio_url are provided, a random voice will be used."
+      },
+      "temperature": {
+        "type": "number",
+        "default": 0.8,
+        "minimum": 0.05,
+        "maximum": 5,
+        "description": "Controls the randomness of generation. Range typically 0.05 to 5."
+      },
+      "seed": {
+        "type": "integer",
+        "default": 0,
+        "minimum": 0,
+        "description": "Useful to control the reproducibility of the generated audio. Assuming all other properties didn't change, a fixed seed should always generate the exact same audio file. Set to 0 for random seed."
+      },
+      "cfg": {
+        "type": "number",
+        "default": 0.5,
+        "minimum": 0,
+        "maximum": 1,
+        "description": "Classifier-free guidance scale (CFG) controls the conditioning factor. Range typically 0.2 to 1.0. For expressive or dramatic speech, try lower cfg values (e.g. ~0.3) and increase exaggeration to around 0.7 or higher. If the reference speaker has a fast speaking style, lowering cfg to around 0.3 can"
+      }
+    }
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs."
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics."
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "ChatterboxhdTextToSpeechInput",
+    "ChatterboxhdTextToSpeechOutput",
+    "Audio"
+  ]
+}

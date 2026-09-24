@@ -1,0 +1,412 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "xai/grok-voice",
+  "task": "speech",
+  "source_url": "https://fal.ai/models/xai/grok-voice",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=xai%2Fgrok-voice",
+  "retrieved_at": "2026-09-23T14:38:20.253Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "speech-to-speech",
+  "bytes_sha256": "1aa0b3790eccfd2cd40af9d344e3804daf16d3d8b1fa54b728d7e8e077fd5d1f",
+  "queue_path": "/xai/grok-voice",
+  "input_name": "GrokVoiceInput",
+  "input": {
+    "$refName": "GrokVoiceInput",
+    "type": "object",
+    "properties": {
+      "audio_url": {
+        "type": "string",
+        "description": "URL of the audio containing the user's speech. The Grok agent listens to it and replies with speech. Most common audio formats are supported; the audio is converted to 16-bit 24 kHz mono PCM before being sent to Grok. Maximum duration 10 minutes, maximum file size 50 MB."
+      },
+      "prompt": {
+        "description": "Optional system instructions describing the agent's persona and conversation context. Uses Grok's default persona when omitted.",
+        "anyOf": [
+          {
+            "type": "string",
+            "maxLength": 20000
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "tools": {
+        "$refName": "GrokToolsConfiguration",
+        "type": "object",
+        "description": "Typed xAI tools supported by this app's convenience configuration.\n\nEvery tool is disabled in the default configuration: the searches must\nbe switched on via their ``enabled`` flags and ``mcp_servers`` starts\nempty. ``file_search`` / collections are intentionally absent and\nunsupported due to Zero D",
+        "properties": {
+          "x_search": {
+            "$refName": "GrokXSearchTool",
+            "type": "object",
+            "description": "Configuration for one xAI x_search tool declaration.",
+            "properties": {
+              "from_date": {
+                "default": null,
+                "description": "Earliest post date, as ISO YYYY-MM-DD.",
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "format": "date"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "enabled": {
+                "type": "boolean",
+                "default": false,
+                "description": "Whether to include x_search in session.tools. Disabled by default; set true to let the agent search X posts."
+              },
+              "enable_video_understanding": {
+                "default": null,
+                "description": "Allow the agent to inspect videos found on X.",
+                "anyOf": [
+                  {
+                    "type": "boolean"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "enable_image_understanding": {
+                "default": null,
+                "description": "Allow the agent to inspect images found on X.",
+                "anyOf": [
+                  {
+                    "type": "boolean"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "excluded_x_handles": {
+                "default": null,
+                "description": "Exclude posts from at most 20 X handles.",
+                "anyOf": [
+                  {
+                    "type": "array",
+                    "minItems": 1,
+                    "maxItems": 20,
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "allowed_x_handles": {
+                "default": null,
+                "description": "Restrict results to posts from at most 20 X handles.",
+                "anyOf": [
+                  {
+                    "type": "array",
+                    "minItems": 1,
+                    "maxItems": 20,
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "to_date": {
+                "default": null,
+                "description": "Latest post date, as ISO YYYY-MM-DD.",
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "format": "date"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              }
+            }
+          },
+          "web_search": {
+            "$refName": "GrokWebSearchTool",
+            "type": "object",
+            "description": "Configuration for one xAI web_search tool declaration.",
+            "properties": {
+              "enabled": {
+                "type": "boolean",
+                "default": false,
+                "description": "Whether to include web_search in session.tools. Disabled by default; set true to let the agent search the web."
+              },
+              "enable_image_understanding": {
+                "default": null,
+                "description": "Allow the agent to inspect images found during web search.",
+                "anyOf": [
+                  {
+                    "type": "boolean"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "location": {
+                "default": null,
+                "description": "Optional location used to localize search results.",
+                "anyOf": [
+                  {
+                    "$refName": "GrokSearchLocation",
+                    "type": "object",
+                    "properties": {
+                      "country": {
+                        "unsupported": "depth-exceeded"
+                      },
+                      "city": {
+                        "unsupported": "depth-exceeded"
+                      },
+                      "timezone": {
+                        "unsupported": "depth-exceeded"
+                      },
+                      "region": {
+                        "unsupported": "depth-exceeded"
+                      }
+                    }
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "excluded_domains": {
+                "default": null,
+                "description": "Exclude results from at most five domains, without protocol or path.",
+                "anyOf": [
+                  {
+                    "type": "array",
+                    "minItems": 1,
+                    "maxItems": 5,
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "allowed_domains": {
+                "default": null,
+                "description": "Restrict results to at most five domains, without protocol or path.",
+                "anyOf": [
+                  {
+                    "type": "array",
+                    "minItems": 1,
+                    "maxItems": 5,
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              }
+            }
+          },
+          "mcp_servers": {
+            "type": "array",
+            "description": "Remote MCP servers that xAI connects to and executes.",
+            "items": {
+              "$refName": "GrokRemoteMCPTool",
+              "type": "object",
+              "description": "A caller-selected remote MCP server that xAI will connect to.\n\nUse at your own risk. The connection is made by xAI's infrastructure,\nnot by fal; choosing this tool explicitly accepts that trust boundary.\nAuthentication and headers are masked in fal error metadata and logs.",
+              "properties": {
+                "server_description": {
+                  "default": null,
+                  "description": "Description of the capabilities exposed by this server.",
+                  "anyOf": [
+                    {
+                      "type": "string",
+                      "maxLength": 2000
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "enabled": {
+                  "type": "boolean",
+                  "default": true,
+                  "description": "False omits this server."
+                },
+                "authorization": {
+                  "default": null,
+                  "description": "Sensitive authorization value forwarded only to xAI.",
+                  "anyOf": [
+                    {
+                      "type": "string",
+                      "format": "password"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "headers": {
+                  "default": null,
+                  "description": "Sensitive MCP request headers forwarded only to xAI.",
+                  "anyOf": [
+                    {
+                      "type": "object"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "allowed_tools": {
+                  "default": null,
+                  "description": "Optional allow-list of tool names exposed from this server.",
+                  "anyOf": [
+                    {
+                      "type": "array",
+                      "minItems": 1,
+                      "items": {
+                        "unsupported": "depth-exceeded"
+                      }
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "server_url": {
+                  "type": "string",
+                  "format": "uri",
+                  "minLength": 1,
+                  "description": "Caller-selected HTTP(S) MCP endpoint. xAI makes the remote connection and supports Streaming HTTP/SSE transports. Use at your own risk; fal does not connect to or SSRF-fetch this URL."
+                },
+                "server_label": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 128,
+                  "description": "Label xAI uses to identify and prefix this server's tools."
+                }
+              },
+              "required": [
+                "server_url",
+                "server_label"
+              ]
+            }
+          }
+        }
+      },
+      "voice": {
+        "description": "Built-in xAI voice for the agent's reply. Uses Grok's default voice when omitted.",
+        "anyOf": [
+          {
+            "type": "string",
+            "enum": [
+              "carina",
+              "zagan",
+              "helix",
+              "orion",
+              "luna",
+              "iris",
+              "altair",
+              "zenith",
+              "perseus",
+              "helios",
+              "lux",
+              "kepler",
+              "rigel",
+              "cosmo",
+              "celeste",
+              "ursa",
+              "sirius",
+              "lumen",
+              "castor",
+              "naksh",
+              "atlas",
+              "aurora",
+              "liora",
+              "ara",
+              "eve",
+              "leo",
+              "rex",
+              "sal"
+            ]
+          },
+          {
+            "type": "null"
+          }
+        ]
+      }
+    },
+    "required": [
+      "audio_url"
+    ]
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs."
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics."
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "GrokVoiceInput",
+    "GrokVoiceOutput",
+    "GrokToolsConfiguration",
+    "File",
+    "GrokXSearchTool",
+    "GrokWebSearchTool",
+    "GrokRemoteMCPTool",
+    "GrokSearchLocation"
+  ]
+}

@@ -1,0 +1,237 @@
+/* DL2-02 canonical V2 semantic tokens — pilot-calibrated light mode.
+ * Single V2 authority: geometry, color, borders, focus, spacing, radius,
+ * and true-elevation shadows. Light values follow the Console pilot:
+ * Canvas #FAFAFA / Primary #FFFFFF / Secondary+siderail #F7F7F7 /
+ * Hover #F2F2F2 / Selected+active #ECECEC / Subtle #E5E5E5 /
+ * Default #DCDCDC / Strong #D2D2D2.
+ */
+[data-ethen-v2] {
+  /* Dark (default) — Canvas #000000 / Surface #080808 / Raised #111111 / Hover #141414 */
+  --v2-canvas: #000000;
+  --v2-surface: #080808;
+  --v2-raised: #111111;
+  --v2-hover: #141414;
+  --v2-active: #1a1a1a;
+  --v2-selected: #1a1a1a;
+  --v2-text-primary: #f5f5f5;
+  --v2-text-secondary: #a3a3a3;
+  /* Dark tertiary used to be #737373 (~4.22:1 on canvas) which fails WCAG AA
+   * at 11–13px. Alias the existing passing secondary token. */
+  --v2-text-tertiary: var(--v2-text-secondary);
+  --v2-text-disabled: #525252;
+  --v2-border-subtle: #242424;
+  --v2-border-default: #333333;
+  --v2-border-strong: #525252;
+  --v2-focus: #7aa2ff;
+  --v2-focus-ring: 0 0 0 2px var(--v2-canvas), 0 0 0 4px var(--v2-focus);
+  --v2-status-success: #22c55e;
+  --v2-status-warning: #f59e0b;
+  --v2-status-danger: #f87171;
+  /* True elevation only — flat surfaces use borders/dividers instead. */
+  --v2-shadow-small: 0 1px 2px rgba(0, 0, 0, 0.24);
+  --v2-shadow-medium: 0 4px 12px rgba(0, 0, 0, 0.32);
+  --v2-shadow-overlay: 0 8px 20px rgba(0, 0, 0, 0.18);
+  --v2-shadow-none: none;
+  --v2-radius-base: 6px;
+  --v2-radius-raised: 12px;
+  --v2-radius-large: 16px;
+  --v2-radius-pill: 999px;
+  --v2-space-1: 4px;
+  --v2-space-2: 8px;
+  --v2-space-3: 12px;
+  --v2-space-4: 16px;
+  --v2-space-5: 20px;
+  --v2-space-6: 24px;
+  --v2-space-8: 32px;
+  --v2-space-10: 40px;
+  --v2-space-12: 48px;
+
+  /* Fonts — Geist Sans for UI, Geist Mono for code (canonical font authority) */
+  --v2-font-sans: var(--font-geist-sans), system-ui, -apple-system, sans-serif;
+  --v2-font-mono: var(--font-code-mono), "JetBrains Mono", "Fira Code", "Cascadia Code", Consolas, monospace;
+
+  /* Typography — canonical V2 hierarchy: 20 / 16 / 14 / 13 / 12 */
+  --v2-type-page-size: 20px;
+  --v2-type-page-weight: 600;
+  --v2-type-page-line: 28px;
+  --v2-type-section-size: 16px;
+  --v2-type-section-weight: 600;
+  --v2-type-section-line: 24px;
+  --v2-type-ui-size: 14px;
+  --v2-type-ui-weight: 400;
+  --v2-type-ui-weight-medium: 500;
+  --v2-type-ui-line: 20px;
+  --v2-type-secondary-size: 13px;
+  --v2-type-secondary-line: 18px;
+  --v2-type-metadata-size: 12px;
+  --v2-type-metadata-line: 16px;
+  --v2-type-code-size: 13px;
+  --v2-type-code-size-large: 14px;
+  --v2-type-code-line: 18px;
+
+  /* Motion — press 100ms / UI 150ms / panel 200ms / page 220ms */
+  --v2-motion-press: 100ms;
+  --v2-motion-ui: 150ms;
+  --v2-motion-panel: 200ms;
+  --v2-motion-page: 220ms;
+
+  /* Easing — canonical curves from Vercel Parity Spec §20 */
+  --v2-ease-default: cubic-bezier(0.25, 0.1, 0.25, 1);
+  --v2-ease-press: cubic-bezier(0.25, 0.1, 0.25, 1);
+  --v2-ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+
+  /* States — focus ring 2px / offset 2px / disabled 0.45 */
+  --v2-focus-width: 2px;
+  --v2-focus-offset: 2px;
+  --v2-disabled-opacity: 0.45;
+
+  /* Accent — resolved through canonical V2 authority: alias --v2-text-primary (matches --accent bridge below) */
+  --v2-accent: var(--v2-text-primary);
+
+  /* Compatibility bridge for V2 production primitives rendered in the lab. */
+  --bg-base: var(--v2-canvas);
+  --bg-surface: var(--v2-surface);
+  --bg-elevated: var(--v2-raised);
+  --bg-inset: var(--v2-surface);
+  --bg-hover: var(--v2-hover);
+  --bg-active: var(--v2-active);
+  --text-primary: var(--v2-text-primary);
+  --text-secondary: var(--v2-text-secondary);
+  --text-tertiary: var(--v2-text-tertiary);
+  --text-muted: var(--v2-text-secondary);
+  --console-text-muted: var(--v2-text-secondary);
+  --console-text-faint: var(--v2-text-secondary);
+  --console-text: var(--v2-text-primary);
+  --border-subtle: var(--v2-border-subtle);
+  --border-default: var(--v2-border-default);
+  --border-strong: var(--v2-border-strong);
+  --accent: var(--v2-text-primary);
+  --accent-fg: var(--v2-canvas);
+  --focus-ring: 0 0 0 2px var(--v2-canvas), 0 0 0 4px var(--v2-focus);
+  --shadow-sm: none;
+  --status-success: var(--v2-status-success);
+  --status-warning: var(--v2-status-warning);
+  --status-danger: var(--v2-status-danger);
+  --console-shell-canvas: var(--v2-canvas);
+  --console-shell-surface: var(--v2-surface);
+  --console-shell-hover: var(--v2-hover);
+  --console-shell-active: var(--v2-active);
+  --console-shell-text-primary: var(--v2-text-primary);
+  --console-shell-text-secondary: var(--v2-text-secondary);
+  --console-shell-text-tertiary: var(--v2-text-tertiary);
+  --console-shell-border: var(--v2-border-subtle);
+  --console-shell-focus: var(--v2-focus);
+
+  /* Production shell aliases — legacy families resolve to V2 (F-07). */
+  --shell-surface-body: var(--v2-canvas);
+  --shell-surface-card: var(--v2-surface);
+  --shell-border: var(--v2-border-subtle);
+  --sidebar-width: 256px;
+  --sidebar-width-collapsed: 56px;
+}
+
+[data-ethen-v2] ::placeholder {
+  opacity: 1;
+  color: var(--v2-text-secondary);
+}
+
+/* Nested unscoped islands must inherit the nearest themed scope. Without
+ * this, an inner data-ethen-v2 re-declares the dark defaults and fails
+ * light-mode contrast on production shells (gateway/research/compute/voice). */
+[data-ethen-v2] [data-ethen-v2]:not([data-v2-theme]) {
+  --v2-canvas: inherit;
+  --v2-surface: inherit;
+  --v2-raised: inherit;
+  --v2-hover: inherit;
+  --v2-active: inherit;
+  --v2-selected: inherit;
+  --v2-text-primary: inherit;
+  --v2-text-secondary: inherit;
+  --v2-text-tertiary: inherit;
+  --v2-text-disabled: inherit;
+  --v2-focus: inherit;
+  --v2-focus-ring: inherit;
+  --v2-border-subtle: inherit;
+  --v2-border-default: inherit;
+  --v2-border-strong: inherit;
+  --v2-status-success: inherit;
+  --v2-status-warning: inherit;
+  --v2-status-danger: inherit;
+  --v2-shadow-small: inherit;
+  --v2-shadow-medium: inherit;
+  --v2-shadow-overlay: inherit;
+  --v2-accent: inherit;
+}
+
+[data-ethen-v2][data-v2-theme="light"] {
+  /* Pilot-calibrated light — Canvas #FAFAFA / Primary #FFFFFF / Secondary #F7F7F7 */
+  --v2-canvas: #fafafa;
+  --v2-surface: #ffffff;
+  --v2-raised: #f7f7f7;
+  --v2-hover: #f2f2f2;
+  --v2-active: #ececec;
+  --v2-selected: #ececec;
+  --v2-text-primary: #1d1d1d;
+  --v2-text-secondary: #4e4e4e;
+  /* Light #737373 is 4.83:1 on white but ~4.45:1 on raised #F7F7F7 — fails
+   * 11–12px AA. Alias the existing passing secondary token. */
+  --v2-text-tertiary: var(--v2-text-secondary);
+  --v2-text-disabled: #a3a3a3;
+  --v2-border-subtle: #e5e5e5;
+  --v2-border-default: #dcdcdc;
+  --v2-border-strong: #d2d2d2;
+  --v2-focus: #336bff;
+  --v2-focus-ring: 0 0 0 2px var(--v2-canvas), 0 0 0 4px var(--v2-focus);
+  --v2-shadow-small: 0 1px 2px rgba(0, 0, 0, 0.06);
+  --v2-shadow-medium: 0 4px 12px rgba(0, 0, 0, 0.08);
+  --v2-shadow-overlay: 0 8px 20px rgba(0, 0, 0, 0.06);
+  /* Warning-on-surface text must meet WCAG AA at 11–12px (chip/label).
+   * Dark keeps #f59e0b (~9:1 on canvas). Light #f59e0b is ~2.0:1 on
+   * surface/8% tint and fails axe; #92400e is ~6.3:1 on that mix. */
+  --v2-status-warning: #92400e;
+  /* Light #f87171 is ~2.3:1 on surface; #b91c1c meets AA on white/raised. */
+  --v2-status-danger: #b91c1c;
+  /* Light #22c55e is ~2.4:1 on 6% tinted surface; #15803d meets AA. */
+  --v2-status-success: #15803d;
+}
+
+/* System mode follows the resolved production bootstrap (`html[data-theme]`),
+ * which app/layout.tsx sets pre-hydration from the unified `ethen-theme`
+ * preference. This keeps the V2 layer on the SAME resolved theme as the rest
+ * of the app, reacts to OS changes via the bootstrap's matchMedia listener
+ * (no reload), and is flash-free: the ancestor attribute is present before
+ * first paint. Explicit `data-v2-theme="light|dark"` scopes are unchanged. */
+html[data-theme="light"] [data-ethen-v2][data-v2-theme="system"] {
+  --v2-canvas: #fafafa;
+  --v2-surface: #ffffff;
+  --v2-raised: #f7f7f7;
+  --v2-hover: #f2f2f2;
+  --v2-active: #ececec;
+  --v2-selected: #ececec;
+  --v2-text-primary: #1d1d1d;
+  --v2-text-secondary: #4e4e4e;
+  --v2-text-tertiary: var(--v2-text-secondary);
+  --v2-text-disabled: #a3a3a3;
+  --v2-border-subtle: #e5e5e5;
+  --v2-border-default: #dcdcdc;
+  --v2-border-strong: #d2d2d2;
+  --v2-focus: #336bff;
+  --v2-focus-ring: 0 0 0 2px var(--v2-canvas), 0 0 0 4px var(--v2-focus);
+  --v2-shadow-small: 0 1px 2px rgba(0, 0, 0, 0.06);
+  --v2-shadow-medium: 0 4px 12px rgba(0, 0, 0, 0.08);
+  --v2-shadow-overlay: 0 8px 20px rgba(0, 0, 0, 0.06);
+  --v2-status-warning: #92400e;
+  --v2-status-danger: #b91c1c;
+  --v2-status-success: #15803d;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-ethen-v2] *,
+  [data-ethen-v2] *::before,
+  [data-ethen-v2] *::after {
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+  }
+}

@@ -1,0 +1,121 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/meshy/v5/retexture",
+  "task": "3d-generation",
+  "source_url": "https://fal.ai/models/fal-ai/meshy/v5/retexture",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fmeshy%2Fv5%2Fretexture",
+  "retrieved_at": "2026-09-23T14:37:09.575Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "3d-to-3d",
+  "bytes_sha256": "b209861d37895cddc9821eda558b3647f90c7ad6d355063997f30ab439c53f33",
+  "queue_path": "/fal-ai/meshy/v5/retexture",
+  "input_name": "MeshyV5RetextureInput",
+  "input": {
+    "$refName": "MeshyV5RetextureInput",
+    "type": "object",
+    "description": "Input for 3D Model Retexturing",
+    "properties": {
+      "enable_safety_checker": {
+        "type": "boolean",
+        "default": true,
+        "description": "If set to true, input data will be checked for safety before processing."
+      },
+      "image_style_url": {
+        "description": "2D image to guide the texturing process. Supports .jpg, .jpeg, and .png formats. Required if text_style_prompt is not provided. If both are provided, image_style_url takes precedence.",
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "model_url": {
+        "type": "string",
+        "description": "URL or base64 data URI of a 3D model to texture. Supports .glb, .gltf, .obj, .fbx, .stl formats. Can be a publicly accessible URL or data URI with MIME type application/octet-stream."
+      },
+      "enable_pbr": {
+        "type": "boolean",
+        "default": false,
+        "description": "Generate PBR Maps (metallic, roughness, normal) in addition to base color."
+      },
+      "enable_original_uv": {
+        "type": "boolean",
+        "default": true,
+        "description": "Use the original UV mapping of the model instead of generating new UVs. If the model has no original UV, output quality may be reduced."
+      },
+      "text_style_prompt": {
+        "description": "Describe your desired texture style using text. Maximum 600 characters. Required if image_style_url is not provided.",
+        "anyOf": [
+          {
+            "type": "string",
+            "maxLength": 600
+          },
+          {
+            "type": "null"
+          }
+        ]
+      }
+    },
+    "required": [
+      "model_url"
+    ]
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs."
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics."
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "MeshyV5RetextureInput",
+    "MeshyV5RetextureOutput",
+    "File",
+    "ModelUrls",
+    "TextureFiles"
+  ]
+}

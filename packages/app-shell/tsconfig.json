@@ -1,0 +1,120 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "lib": [
+      "ES2022",
+      "dom",
+      "dom.iterable"
+    ],
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "noEmit": true,
+    "isolatedModules": true,
+    "jsx": "react-jsx",
+    "paths": {
+      "@/*": [
+        "./*"
+      ],
+      "@ethen/ui": [
+        "../../packages/ui/src/index.ts"
+      ],
+      "@ethen/ui/*": [
+        "../../packages/ui/src/*"
+      ],
+      "@ethen/app-shell": [
+        "../../packages/app-shell/src/index.ts"
+      ],
+      "@ethen/app-shell/*": [
+        "../../packages/app-shell/src/*"
+      ],
+      "@ethen/contracts": [
+        "../../packages/contracts/src/index.ts"
+      ],
+      "@ethen/contracts/*": [
+        "../../packages/contracts/src/*"
+      ],
+      "@ethen/config": [
+        "../../packages/config/src/index.ts"
+      ],
+      "@ethen/config/*": [
+        "../../packages/config/src/*"
+      ],
+      "@ethen/auth": [
+        "../../packages/auth/src/index.ts"
+      ],
+      "@ethen/auth/*": [
+        "../../packages/auth/src/*"
+      ],
+      "@ethen/account": [
+        "../../packages/account/src/index.ts"
+      ],
+      "@ethen/account/*": [
+        "../../packages/account/src/*"
+      ],
+      "@ethen/billing": [
+        "../../packages/billing/src/index.ts"
+      ],
+      "@ethen/billing/*": [
+        "../../packages/billing/src/*"
+      ],
+      "@ethen/usage": [
+        "../../packages/usage/src/index.ts"
+      ],
+      "@ethen/usage/*": [
+        "../../packages/usage/src/*"
+      ],
+      "@ethen/navigation": [
+        "../../packages/navigation/src/index.ts"
+      ],
+      "@ethen/navigation/*": [
+        "../../packages/navigation/src/*"
+      ],
+      "@ethen/security": [
+        "../../packages/security/src/index.ts"
+      ],
+      "@ethen/security/*": [
+        "../../packages/security/src/*"
+      ],
+      "@ethen/database": [
+        "../../packages/database/src/index.ts"
+      ],
+      "@ethen/database/*": [
+        "../../packages/database/src/*"
+      ],
+      "@ethen/ai": [
+        "../../packages/ai/src/index.ts"
+      ],
+      "@ethen/ai/*": [
+        "../../packages/ai/src/*"
+      ],
+      "@ethen/tools": [
+        "../../packages/tools/src/index.ts"
+      ],
+      "@ethen/tools/*": [
+        "../../packages/tools/src/*"
+      ],
+      "@ethen/models": [
+        "../../packages/models/src/index.ts"
+      ],
+      "@ethen/models/*": [
+        "../../packages/models/src/*"
+      ]
+    },
+    "resolveJsonModule": true,
+    "types": [
+      "node"
+    ]
+  },
+  "include": [
+    "src/**/*.ts",
+    "src/**/*.tsx",
+    "src/**/*.json",
+    "src/**/*.d.ts"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
+}

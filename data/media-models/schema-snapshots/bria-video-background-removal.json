@@ -1,0 +1,120 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "bria/video/background-removal",
+  "task": "image-editing",
+  "source_url": "https://fal.ai/models/bria/video/background-removal",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=bria%2Fvideo%2Fbackground-removal",
+  "retrieved_at": "2026-09-20T09:40:00.995Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "video-to-video",
+  "bytes_sha256": "1443520fc87e5b2f682261fcfc2362bcdbfe1bd3fb8af64468828015b053271c",
+  "queue_path": "/bria/video/background-removal",
+  "input_name": "VideoBackgroundRemovalInput",
+  "input": {
+    "$refName": "VideoBackgroundRemovalInput",
+    "type": "object",
+    "properties": {
+      "preserve_audio": {
+        "type": "boolean",
+        "default": true,
+        "description": "If true, audio will be preserved in the output video."
+      },
+      "background_color": {
+        "type": "string",
+        "enum": [
+          "Transparent",
+          "Black",
+          "White",
+          "Gray",
+          "Red",
+          "Green",
+          "Blue",
+          "Yellow",
+          "Cyan",
+          "Magenta",
+          "Orange"
+        ],
+        "default": "Black",
+        "description": "Background color. Options: Transparent, Black, White, Gray, Red, Green, Blue, Yellow, Cyan, Magenta, Orange."
+      },
+      "output_container_and_codec": {
+        "type": "string",
+        "enum": [
+          "mp4_h265",
+          "mp4_h264",
+          "webm_vp9",
+          "mov_h265",
+          "mov_proresks",
+          "mkv_h265",
+          "mkv_h264",
+          "mkv_vp9",
+          "gif"
+        ],
+        "default": "webm_vp9",
+        "description": "Output container and codec. Options: mp4_h265, mp4_h264, webm_vp9, mov_h265, mov_proresks, mkv_h265, mkv_h264, mkv_vp9, gif."
+      },
+      "video_url": {
+        "type": "string",
+        "description": "Input video to remove background from. Size should be less than 4000x4000 and duration less than 30s."
+      }
+    },
+    "required": [
+      "video_url"
+    ]
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs."
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics."
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "VideoBackgroundRemovalInput",
+    "VideoBackgroundRemovalOutput",
+    "Video",
+    "File"
+  ]
+}

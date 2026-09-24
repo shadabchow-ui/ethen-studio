@@ -1,0 +1,179 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/elevenlabs/text-to-dialogue/eleven-v3",
+  "task": "text-to-audio",
+  "source_url": "https://fal.ai/models/fal-ai/elevenlabs/text-to-dialogue/eleven-v3",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Felevenlabs%2Ftext-to-dialogue%2Feleven-v3",
+  "retrieved_at": "2026-09-23T14:36:27.362Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "text-to-audio",
+  "bytes_sha256": "15cfa778d334a338c958d523aeb92477aafce766ee408dba88da59c5930ff812",
+  "queue_path": "/fal-ai/elevenlabs/text-to-dialogue/eleven-v3",
+  "input_name": "ElevenlabsTextToDialogueElevenV3Input",
+  "input": {
+    "$refName": "ElevenlabsTextToDialogueElevenV3Input",
+    "type": "object",
+    "properties": {
+      "language_code": {
+        "description": "Language code (ISO 639-1) used to enforce a language for the model. An error will be returned if language code is not supported by the model.",
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "use_speaker_boost": {
+        "description": "This setting boosts the similarity to the original speaker. Using this setting requires a slightly higher computational load, which in turn increases latency.",
+        "anyOf": [
+          {
+            "type": "boolean"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "stability": {
+        "description": "Determines how stable the voice is and the randomness between each generation. Lower values introduce broader emotional range for the voice. Higher values can result in a monotonous voice with limited emotion. Must be one of 0.0, 0.5, 1.0, else it will be rounded to the nearest value.",
+        "anyOf": [
+          {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 1
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "pronunciation_dictionary_locators": {
+        "type": "array",
+        "default": [],
+        "description": "A list of pronunciation dictionary locators (id, version_id) to be applied to the text. They will be applied in order. You may have up to 3 locators per request",
+        "items": {
+          "$refName": "PronunciationDictionaryLocator",
+          "type": "object",
+          "properties": {
+            "version_id": {
+              "description": "The ID of the version of the pronunciation dictionary. If not provided, the latest version will be used.",
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "pronunciation_dictionary_id": {
+              "description": "The ID of the pronunciation dictionary.",
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            }
+          }
+        }
+      },
+      "seed": {
+        "description": "Random seed for reproducibility.",
+        "anyOf": [
+          {
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "inputs": {
+        "type": "array",
+        "description": "A list of dialogue inputs, each containing text and a voice ID which will be converted into speech.",
+        "items": {
+          "$refName": "DialogueBlock",
+          "type": "object",
+          "properties": {
+            "text": {
+              "type": "string",
+              "description": "The dialogue text"
+            },
+            "voice": {
+              "type": "string",
+              "description": "The name or the ID of the voice to be used for the generation."
+            }
+          },
+          "required": [
+            "text",
+            "voice"
+          ]
+        }
+      }
+    },
+    "required": [
+      "inputs"
+    ]
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs."
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics."
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "ElevenlabsTextToDialogueElevenV3Input",
+    "ElevenlabsTextToDialogueElevenV3Output",
+    "PronunciationDictionaryLocator",
+    "DialogueBlock",
+    "File"
+  ]
+}

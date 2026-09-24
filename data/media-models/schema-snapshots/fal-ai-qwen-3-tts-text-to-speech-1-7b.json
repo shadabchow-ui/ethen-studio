@@ -1,0 +1,273 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/qwen-3-tts/text-to-speech/1.7b",
+  "task": "text-to-audio",
+  "source_url": "https://fal.ai/models/fal-ai/qwen-3-tts/text-to-speech/1.7b",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fqwen-3-tts%2Ftext-to-speech%2F1.7b",
+  "retrieved_at": "2026-09-23T14:37:42.588Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "text-to-speech",
+  "bytes_sha256": "1ceef024534d9c5413e652c77b05c5c7de0ba0f58a986f3ec2e0a0a303199b12",
+  "queue_path": "/fal-ai/qwen-3-tts/text-to-speech/1.7b",
+  "input_name": "Qwen3TtsTextToSpeech17bInput",
+  "input": {
+    "$refName": "Qwen3TtsTextToSpeech17bInput",
+    "type": "object",
+    "properties": {
+      "prompt": {
+        "description": "Optional prompt to guide the style of the generated speech. This prompt will be ignored if a speaker embedding is provided.",
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "text": {
+        "type": "string",
+        "description": "The text to be converted to speech."
+      },
+      "subtalker_temperature": {
+        "default": 0.9,
+        "description": "Temperature for sub-talker sampling.",
+        "anyOf": [
+          {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 1
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "subtalker_top_k": {
+        "default": 50,
+        "description": "Top-k for sub-talker sampling.",
+        "anyOf": [
+          {
+            "type": "integer",
+            "minimum": 0
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "subtalker_dosample": {
+        "default": true,
+        "description": "Sampling switch for the sub-talker.",
+        "anyOf": [
+          {
+            "type": "boolean"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "max_new_tokens": {
+        "default": 200,
+        "description": "Maximum number of new codec tokens to generate.",
+        "anyOf": [
+          {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 8192
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "speaker_voice_embedding_file_url": {
+        "description": "URL to a speaker embedding file in safetensors format, from `fal-ai/qwen-3-tts/clone-voice` endpoint. If provided, the TTS model will use the cloned voice for synthesis instead of the predefined voices.",
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "repetition_penalty": {
+        "default": 1.05,
+        "description": "Penalty to reduce repeated tokens/codes.",
+        "anyOf": [
+          {
+            "type": "number",
+            "minimum": 0
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "subtalker_top_p": {
+        "default": 1,
+        "description": "Top-p for sub-talker sampling.",
+        "anyOf": [
+          {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 1
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "language": {
+        "type": "string",
+        "enum": [
+          "Auto",
+          "English",
+          "Chinese",
+          "Spanish",
+          "French",
+          "German",
+          "Italian",
+          "Japanese",
+          "Korean",
+          "Portuguese",
+          "Russian"
+        ],
+        "default": "Auto",
+        "description": "The language of the voice."
+      },
+      "top_p": {
+        "default": 1,
+        "description": "Top-p sampling parameter.",
+        "anyOf": [
+          {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 1
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "temperature": {
+        "default": 0.9,
+        "description": "Sampling temperature; higher => more random.",
+        "anyOf": [
+          {
+            "type": "number",
+            "maximum": 1
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "reference_text": {
+        "description": "Optional reference text that was used when creating the speaker embedding. Providing this can improve synthesis quality when using a cloned voice.",
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "voice": {
+        "description": "The voice to be used for speech synthesis, will be ignored if a speaker embedding is provided. Check out the **[documentation](https://github.com/QwenLM/Qwen3-TTS/tree/main?tab=readme-ov-file#custom-voice-generate)** for each voice's details and which language they primarily support.",
+        "anyOf": [
+          {
+            "type": "string",
+            "enum": [
+              "Vivian",
+              "Serena",
+              "Uncle_Fu",
+              "Dylan",
+              "Eric",
+              "Ryan",
+              "Aiden",
+              "Ono_Anna",
+              "Sohee"
+            ]
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "top_k": {
+        "default": 50,
+        "description": "Top-k sampling parameter.",
+        "anyOf": [
+          {
+            "type": "integer",
+            "minimum": 0
+          },
+          {
+            "type": "null"
+          }
+        ]
+      }
+    },
+    "required": [
+      "text"
+    ]
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs."
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics."
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "Qwen3TtsTextToSpeech17bInput",
+    "Qwen3TtsTextToSpeech17bOutput",
+    "AudioFile"
+  ]
+}

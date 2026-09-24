@@ -1,0 +1,137 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/minimax-music/v2.5",
+  "task": "music-generation",
+  "source_url": "https://fal.ai/models/fal-ai/minimax-music/v2.5",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fminimax-music%2Fv2.5",
+  "retrieved_at": "2026-09-23T14:37:22.146Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "text-to-audio",
+  "bytes_sha256": "eb89c88478114113c948e7b41ef2240652845e5480bc289d6432277d56f6cdb3",
+  "queue_path": "/fal-ai/minimax-music/v2.5",
+  "input_name": "MinimaxMusicV25Input",
+  "input": {
+    "$refName": "MinimaxMusicV25Input",
+    "type": "object",
+    "properties": {
+      "lyrics": {
+        "type": "string",
+        "default": "",
+        "maxLength": 3500,
+        "description": "Lyrics of the song. Use \\n to separate lines. Supports structure tags: [Intro], [Verse], [Pre Chorus], [Chorus], [Bridge], [Outro], [Interlude], [Hook], [Break], [Solo], [Inst]. Max 3500 characters. Required when is_instrumental is false and lyrics_optimizer is false."
+      },
+      "prompt": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 2000,
+        "description": "A description of the music style, mood, genre, and scenario. Max 2000 characters."
+      },
+      "lyrics_optimizer": {
+        "type": "boolean",
+        "default": false,
+        "description": "When true and lyrics is empty, auto-generates lyrics from the prompt."
+      },
+      "audio_setting": {
+        "$refName": "AudioSetting25",
+        "type": "object",
+        "properties": {
+          "bitrate": {
+            "type": "integer",
+            "enum": [
+              32000,
+              64000,
+              128000,
+              256000
+            ],
+            "default": 256000,
+            "description": "Bitrate of generated audio"
+          },
+          "sample_rate": {
+            "type": "integer",
+            "enum": [
+              16000,
+              24000,
+              32000,
+              44100
+            ],
+            "default": 44100,
+            "description": "Sample rate of generated audio"
+          },
+          "format": {
+            "type": "string",
+            "enum": [
+              "mp3",
+              "wav",
+              "pcm"
+            ],
+            "default": "mp3",
+            "description": "Audio format"
+          }
+        }
+      },
+      "is_instrumental": {
+        "type": "boolean",
+        "default": false,
+        "description": "When true, generates vocal-free instrumental music."
+      }
+    },
+    "required": [
+      "prompt"
+    ]
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs."
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics."
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "MinimaxMusicV25Input",
+    "MinimaxMusicV25Output",
+    "AudioSetting25",
+    "File"
+  ]
+}

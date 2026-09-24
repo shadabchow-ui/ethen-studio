@@ -1,0 +1,137 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "alibaba/happy-horse/image-to-video",
+  "task": "image-to-video",
+  "source_url": "https://fal.ai/models/alibaba/happy-horse/image-to-video",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=alibaba%2Fhappy-horse%2Fimage-to-video",
+  "retrieved_at": "2026-09-20T09:39:44.714Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "image-to-video",
+  "bytes_sha256": "317a1f0f993c2bbc948a0fced14d6ac3ae68d1b9c29943f885c043980be824fa",
+  "queue_path": "/alibaba/happy-horse/image-to-video",
+  "input_name": "HappyHorseImageToVideoInput",
+  "input": {
+    "$refName": "HappyHorseImageToVideoInput",
+    "type": "object",
+    "description": "Input for Happy Horse image-to-video generation (first frame only).",
+    "properties": {
+      "resolution": {
+        "type": "string",
+        "enum": [
+          "720p",
+          "1080p"
+        ],
+        "default": "1080p",
+        "description": "Output video resolution tier."
+      },
+      "image_url": {
+        "type": "string",
+        "description": "URL of the first frame image. Formats: JPEG, JPG, PNG, BMP, WEBP. Dimensions must be at least 300px. Aspect ratio must be between 1:2.5 and 2.5:1. Max 10 MB."
+      },
+      "duration": {
+        "type": "integer",
+        "enum": [
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15
+        ],
+        "default": 5,
+        "description": "Output video duration in seconds (3-15)."
+      },
+      "prompt": {
+        "description": "Optional text prompt guiding the animation. Max 2500 characters.",
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "seed": {
+        "description": "Random seed for reproducibility (0-2147483647).",
+        "anyOf": [
+          {
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "enable_safety_checker": {
+        "type": "boolean",
+        "default": true,
+        "description": "Enable content moderation for input and output. Disabling it requires account authorization; unauthorized requests are always checked."
+      }
+    },
+    "required": [
+      "image_url"
+    ]
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs."
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics."
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "HappyHorseImageToVideoInput",
+    "HappyHorseImageToVideoOutput",
+    "VideoFile"
+  ]
+}

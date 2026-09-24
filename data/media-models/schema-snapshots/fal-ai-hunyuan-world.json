@@ -1,0 +1,85 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/hunyuan_world",
+  "task": "3d-generation",
+  "source_url": "https://fal.ai/models/fal-ai/hunyuan_world",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fhunyuan_world",
+  "retrieved_at": "2026-09-23T14:36:33.518Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "image-to-image",
+  "bytes_sha256": "7e0a8e12c1eb0dd3391c4bdf91c471db7b56bcdee03dc2a3800b7ef31169d038",
+  "queue_path": "/fal-ai/hunyuan_world",
+  "input_name": "Hunyuan_worldInput",
+  "input": {
+    "$refName": "Hunyuan_worldInput",
+    "type": "object",
+    "properties": {
+      "prompt": {
+        "type": "string",
+        "description": "The prompt to use for the panorama generation."
+      },
+      "image_url": {
+        "type": "string",
+        "description": "The URL of the image to convert to a panorama."
+      }
+    },
+    "required": [
+      "image_url",
+      "prompt"
+    ]
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs."
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics."
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "Hunyuan_worldInput",
+    "Hunyuan_worldOutput",
+    "Image"
+  ]
+}

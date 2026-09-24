@@ -1,0 +1,80 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/kling-video/create-voice",
+  "task": "speech",
+  "source_url": "https://fal.ai/models/fal-ai/kling-video/create-voice",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fkling-video%2Fcreate-voice",
+  "retrieved_at": "2026-09-23T14:36:48.260Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "audio-to-audio",
+  "bytes_sha256": "3e1c42b36acdc52d399cd3db784538d6741237c5b6ddc279df9df2bc0ff5b9ec",
+  "queue_path": "/fal-ai/kling-video/create-voice",
+  "input_name": "KlingVideoCreateVoiceInput",
+  "input": {
+    "$refName": "KlingVideoCreateVoiceInput",
+    "type": "object",
+    "description": "Request model for creating a custom voice.",
+    "properties": {
+      "voice_url": {
+        "type": "string",
+        "description": "URL of the voice audio file. Supports .mp3/.wav audio or .mp4/.mov video. Duration must be 5-30 seconds with clean, single-voice audio."
+      }
+    },
+    "required": [
+      "voice_url"
+    ]
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs."
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics."
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "KlingVideoCreateVoiceInput",
+    "KlingVideoCreateVoiceOutput"
+  ]
+}

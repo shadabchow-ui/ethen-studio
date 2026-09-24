@@ -1,0 +1,35 @@
+{
+  "schemaVersion": 1,
+  "name": "Ethen Candidate Motion System",
+  "status": "CANDIDATE",
+  "originMilestone": "D04",
+  "principle": "Restrained motion. Deliberate duration is a consequence instrument, not a default.",
+  "durations": {
+    "instant": 80,
+    "press": 100,
+    "ui": 150,
+    "panel": 200,
+    "page": 220,
+    "deliberate": 320
+  },
+  "carryForwardSource": "styles/ethen-v2/tokens.css (press 100 / ui 150 / panel 200 / page 220)",
+  "added": {
+    "instant": 80,
+    "deliberate": 320
+  },
+  "deliberateRestriction": {
+    "allowedSurfaces": [
+      "approval",
+      "execution",
+      "receipt",
+      "irreversible-action"
+    ],
+    "rule": "deliberate (320ms) is restricted to consequence surfaces: approval, execution, receipt and irreversible action. All other transitions use instant through page."
+  },
+  "reducedMotion": {
+    "strategy": "prefers-reduced-motion collapses deliberate to instant (80ms); all other durations collapse to 0.01ms per the V2 reduced-motion contract."
+  },
+  "prohibitions": [
+    "transition: all"
+  ]
+}

@@ -1,0 +1,131 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "sonilo/v1.1/video-to-music",
+  "task": "music-generation",
+  "source_url": "https://fal.ai/models/sonilo/v1.1/video-to-music",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=sonilo%2Fv1.1%2Fvideo-to-music",
+  "retrieved_at": "2026-09-23T14:38:10.890Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "video-to-audio",
+  "bytes_sha256": "98cc04ea159b691d193fff5174e4483812f047709b9b2ab187d76c4ab96389cf",
+  "queue_path": "/sonilo/v1.1/video-to-music",
+  "input_name": "V11VideoToMusicInput",
+  "input": {
+    "$refName": "V11VideoToMusicInput",
+    "type": "object",
+    "properties": {
+      "start_offset": {
+        "description": "Optional. Start scoring from this offset (seconds) into the video. Requires Start Offset + Duration <= Video Duration.",
+        "anyOf": [
+          {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 600
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "num_samples": {
+        "type": "integer",
+        "default": 1,
+        "minimum": 1,
+        "maximum": 3,
+        "description": "How many distinct music tracks to generate for the video."
+      },
+      "prompt_influence": {
+        "type": "number",
+        "default": 0.5,
+        "minimum": 0,
+        "maximum": 1,
+        "description": "Turn it up to match the text prompt"
+      },
+      "prompt": {
+        "description": "Optional text prompt steering the musical style. If omitted, a prompt is generated automatically from the video.",
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "duration": {
+        "description": "Optional. Length (seconds) of the video segment to score. When set, scores a segment of this length starting at Start Offset (or from the beginning if Start Offset is unset). Defaults (None) to the rest of the video: the whole video when Start Offset is unset, or from Start Offset to the end when it",
+        "anyOf": [
+          {
+            "type": "number",
+            "minimum": 1,
+            "maximum": 600
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "video_url": {
+        "type": "string",
+        "description": "Public http(s) URL of the source video to score."
+      }
+    },
+    "required": [
+      "video_url"
+    ]
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs."
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics."
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "V11VideoToMusicInput",
+    "V11VideoToMusicOutput",
+    "Audio"
+  ]
+}

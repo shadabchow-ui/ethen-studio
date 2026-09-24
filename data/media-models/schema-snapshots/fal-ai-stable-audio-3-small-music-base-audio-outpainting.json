@@ -1,0 +1,163 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/stable-audio-3/small/music/base/audio-outpainting",
+  "task": "music-generation",
+  "source_url": "https://fal.ai/models/fal-ai/stable-audio-3/small/music/base/audio-outpainting",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fstable-audio-3%2Fsmall%2Fmusic%2Fbase%2Faudio-outpainting",
+  "retrieved_at": "2026-09-23T14:37:54.608Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "audio-to-audio",
+  "bytes_sha256": "2f26eddeb69b1ce5ce59417b2c0d607a2210ab53bb056842356678f342209ad7",
+  "queue_path": "/fal-ai/stable-audio-3/small/music/base/audio-outpainting",
+  "input_name": "StableAudio3SmallMusicBaseAudioOutpaintingInput",
+  "input": {
+    "$refName": "StableAudio3SmallMusicBaseAudioOutpaintingInput",
+    "type": "object",
+    "properties": {
+      "extend_seconds_before": {
+        "type": "number",
+        "default": 0,
+        "minimum": 0,
+        "maximum": 120,
+        "description": "Seconds of new audio to generate before the source audio."
+      },
+      "guidance_scale": {
+        "type": "number",
+        "default": 7,
+        "minimum": 0,
+        "maximum": 25,
+        "description": "Classifier-free guidance scale. Higher values follow the prompt more strictly; ~7.0 is a good starting point for base checkpoints."
+      },
+      "enable_prompt_expansion": {
+        "type": "boolean",
+        "default": false,
+        "description": "If True, the prompt will be expanded using an LLM for more detailed and higher quality results."
+      },
+      "output_format": {
+        "type": "string",
+        "enum": [
+          "mp3",
+          "wav",
+          "flac",
+          "ogg",
+          "opus",
+          "m4a",
+          "aac"
+        ],
+        "default": "mp3",
+        "description": "Container format for the generated audio output."
+      },
+      "sync_mode": {
+        "type": "boolean",
+        "default": false,
+        "description": "If True, the audio is returned inline as a data URI and the result is not saved to the request history."
+      },
+      "prompt": {
+        "type": "string",
+        "description": "Text description guiding the extension content."
+      },
+      "negative_prompt": {
+        "type": "string",
+        "default": "",
+        "description": "Text description of qualities to avoid in the output."
+      },
+      "audio_url": {
+        "type": "string",
+        "description": "Source audio to extend."
+      },
+      "num_inference_steps": {
+        "type": "integer",
+        "default": 50,
+        "minimum": 1,
+        "maximum": 100,
+        "description": "Number of sampling steps. Base (non-distilled) checkpoints typically need ~50 for good quality."
+      },
+      "bitrate": {
+        "type": "string",
+        "default": "192k",
+        "description": "Audio bitrate for compressed output formats (e.g., mp3, aac, opus). Format e.g. '192k' or '320k'. Ignored for lossless formats (wav, flac)."
+      },
+      "extend_seconds_after": {
+        "type": "number",
+        "default": 0,
+        "minimum": 0,
+        "maximum": 120,
+        "description": "Seconds of new audio to generate after the source audio."
+      },
+      "seed": {
+        "description": "Random seed for reproducible outputs. Omit for a random seed.",
+        "anyOf": [
+          {
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "enable_safety_checker": {
+        "type": "boolean",
+        "default": true,
+        "description": "Enable NSFW content safety checking."
+      }
+    },
+    "required": [
+      "prompt",
+      "audio_url"
+    ]
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs."
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics."
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "StableAudio3SmallMusicBaseAudioOutpaintingInput",
+    "StableAudio3SmallMusicBaseAudioOutpaintingOutput",
+    "File"
+  ]
+}

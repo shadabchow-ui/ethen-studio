@@ -1,0 +1,154 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/chatterbox/text-to-speech/multilingual",
+  "task": "text-to-audio",
+  "source_url": "https://fal.ai/models/fal-ai/chatterbox/text-to-speech/multilingual",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fchatterbox%2Ftext-to-speech%2Fmultilingual",
+  "retrieved_at": "2026-09-23T14:36:19.388Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "text-to-speech",
+  "bytes_sha256": "ec55f4d49066772f8f1011bd137fdb76d17ca813fc53cdbe455f8d585af00f2c",
+  "queue_path": "/fal-ai/chatterbox/text-to-speech/multilingual",
+  "input_name": "ChatterboxTextToSpeechMultilingualInput",
+  "input": {
+    "$refName": "ChatterboxTextToSpeechMultilingualInput",
+    "type": "object",
+    "properties": {
+      "custom_audio_language": {
+        "description": "If using a custom audio URL, specify the language of the audio here. Ignored if voice is not a custom url.",
+        "anyOf": [
+          {
+            "type": "string",
+            "enum": [
+              "english",
+              "arabic",
+              "danish",
+              "german",
+              "greek",
+              "spanish",
+              "finnish",
+              "french",
+              "hebrew",
+              "hindi",
+              "italian",
+              "japanese",
+              "korean",
+              "malay",
+              "dutch",
+              "norwegian",
+              "polish",
+              "portuguese",
+              "russian",
+              "swedish",
+              "swahili",
+              "turkish",
+              "chinese"
+            ]
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "exaggeration": {
+        "type": "number",
+        "default": 0.5,
+        "minimum": 0.25,
+        "maximum": 2,
+        "description": "Controls speech expressiveness and emotional intensity (0.25-2.0). 0.5 is neutral, higher values increase expressiveness. Extreme values may be unstable."
+      },
+      "cfg_scale": {
+        "type": "number",
+        "default": 0.5,
+        "minimum": 0,
+        "maximum": 1,
+        "description": "Configuration/pace weight controlling generation guidance (0.0-1.0). Use 0.0 for language transfer to mitigate accent inheritance."
+      },
+      "seed": {
+        "description": "Random seed for reproducible results. Set to 0 for random generation, or provide a specific number for consistent outputs.",
+        "anyOf": [
+          {
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "text": {
+        "type": "string",
+        "maxLength": 300,
+        "description": "The text to be converted to speech (maximum 300 characters). Supports 23 languages including English, French, German, Spanish, Italian, Portuguese, Hindi, Arabic, Chinese, Japanese, Korean, and more."
+      },
+      "voice": {
+        "type": "string",
+        "default": "english",
+        "description": "Language code for synthesis. In case using custom please provide audio url and select custom_audio_language."
+      },
+      "temperature": {
+        "type": "number",
+        "default": 0.8,
+        "minimum": 0.05,
+        "maximum": 2,
+        "description": "Controls randomness and variation in generation (0.05-2.0). Higher values create more varied speech patterns."
+      }
+    },
+    "required": [
+      "text"
+    ]
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs."
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics."
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "ChatterboxTextToSpeechMultilingualInput",
+    "ChatterboxTextToSpeechMultilingualOutput",
+    "File"
+  ]
+}

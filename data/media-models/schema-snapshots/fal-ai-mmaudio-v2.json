@@ -1,0 +1,129 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/mmaudio-v2",
+  "task": "video-to-audio",
+  "source_url": "https://fal.ai/models/fal-ai/mmaudio-v2",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fmmaudio-v2",
+  "retrieved_at": "2026-09-23T14:37:38.156Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "video-to-video",
+  "bytes_sha256": "f368db43ca9d26fe928fe07bc468b9aa3e141892116bc1f74e2ff53ae15f05c8",
+  "queue_path": "/fal-ai/mmaudio-v2",
+  "input_name": "MmaudioV2Input",
+  "input": {
+    "$refName": "MmaudioV2Input",
+    "type": "object",
+    "properties": {
+      "prompt": {
+        "type": "string",
+        "description": "The prompt to generate the audio for."
+      },
+      "seed": {
+        "description": "The seed for the random number generator",
+        "anyOf": [
+          {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 65535
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "cfg_strength": {
+        "type": "number",
+        "default": 4.5,
+        "minimum": 0,
+        "maximum": 20,
+        "description": "The strength of Classifier Free Guidance."
+      },
+      "negative_prompt": {
+        "type": "string",
+        "default": "",
+        "description": "The negative prompt to generate the audio for."
+      },
+      "mask_away_clip": {
+        "type": "boolean",
+        "default": false,
+        "description": "Whether to mask away the clip."
+      },
+      "duration": {
+        "type": "number",
+        "default": 8,
+        "minimum": 1,
+        "maximum": 30,
+        "description": "The duration of the audio to generate."
+      },
+      "video_url": {
+        "type": "string",
+        "description": "The URL of the video to generate the audio for."
+      },
+      "num_steps": {
+        "type": "integer",
+        "default": 25,
+        "minimum": 4,
+        "maximum": 50,
+        "description": "The number of steps to generate the audio for."
+      }
+    },
+    "required": [
+      "video_url",
+      "prompt"
+    ]
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs."
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics."
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "MmaudioV2Input",
+    "MmaudioV2Output",
+    "File"
+  ]
+}

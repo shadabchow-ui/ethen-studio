@@ -1,0 +1,181 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "bria/fibo-edit/edit",
+  "task": "image-editing",
+  "source_url": "https://fal.ai/models/bria/fibo-edit/edit",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=bria%2Ffibo-edit%2Fedit",
+  "retrieved_at": "2026-09-20T09:39:58.709Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "image-to-image",
+  "bytes_sha256": "50e12462a7cdda3cf83955f187f075df5ef316e6e4dc371350f27490b5474dc0",
+  "queue_path": "/bria/fibo-edit/edit",
+  "input_name": "FiboEditEditInput",
+  "input": {
+    "$refName": "FiboEditEditInput",
+    "type": "object",
+    "properties": {
+      "mask_url": {
+        "description": "Mask image (file or URL). Optional",
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "guidance_scale": {
+        "default": 5,
+        "description": "Guidance scale for text.",
+        "anyOf": [
+          {
+            "type": "number"
+          },
+          {
+            "type": "integer"
+          }
+        ]
+      },
+      "negative_prompt": {
+        "type": "string",
+        "default": "",
+        "description": "Negative prompt for image generation."
+      },
+      "original_vgl": {
+        "description": "The VGL of the image as it is now. With `new_vgl`, edits by the difference between the two.",
+        "anyOf": [
+          {
+            "$refName": "Vgl",
+            "unsupported": "depth-exceeded"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "new_vgl": {
+        "description": "The VGL of the image as it should end up. Requires `original_vgl`.",
+        "anyOf": [
+          {
+            "$refName": "Vgl",
+            "unsupported": "depth-exceeded"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "instruction": {
+        "description": "Instruction for image editing.",
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "seed": {
+        "type": "integer",
+        "default": 5555,
+        "description": "Random seed for reproducibility."
+      },
+      "sync_mode": {
+        "type": "boolean",
+        "default": false,
+        "description": "If true, returns the image directly in the response (increases latency)."
+      },
+      "image_url": {
+        "description": "Reference image (file or URL).",
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "steps_num": {
+        "type": "integer",
+        "default": 30,
+        "minimum": 20,
+        "maximum": 50,
+        "description": "Number of inference steps."
+      },
+      "vgl": {
+        "description": "A pre-built VGL document, edited from verbatim instead of building one from `instruction`. Send this or `instruction`, not both.",
+        "anyOf": [
+          {
+            "$refName": "Vgl",
+            "unsupported": "depth-exceeded"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      }
+    }
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs."
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics."
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "FiboEditEditInput",
+    "FiboEditEditOutput",
+    "Vgl",
+    "Image",
+    "Aesthetics",
+    "PhotographicCharacteristics",
+    "Lighting",
+    "PromptObject"
+  ]
+}

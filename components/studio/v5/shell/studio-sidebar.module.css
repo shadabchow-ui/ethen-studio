@@ -1,0 +1,288 @@
+/* V5 M1 — Studio sidebar (Owner Lock D). Consumes the Studio charcoal
+ * tokens declared in app/studio/studio-theme.css. */
+
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-height: 0;
+  /* Same sizing contract as the shared rail: the chrome sets the width var. */
+  width: var(--chat-rail-width);
+  background: var(--studio-bg-app);
+  color: var(--studio-text-2);
+  font-size: 13px;
+}
+
+.sidebar[data-variant="drawer"] { width: min(300px, 86vw); }
+.sidebar[data-collapsed="true"] { width: 52px; }
+
+.brandRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  height: 52px;
+  flex: none;
+  padding: 0 10px 0 14px;
+}
+.sidebar[data-collapsed="true"] .brandRow {
+  flex-direction: column;
+  justify-content: center;
+  height: auto;
+  padding: 12px 0 6px;
+}
+
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 32px;
+  border-radius: 8px;
+  color: var(--studio-text-1);
+  text-decoration: none;
+}
+.brand img { display: block; height: 18px; width: auto; max-width: none; }
+.sidebar[data-collapsed="true"] .brand img { height: 24px; width: 24px; object-fit: contain; }
+
+.iconButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  border: 0;
+  border-radius: 8px;
+  background: transparent;
+  color: var(--studio-text-3);
+  cursor: pointer;
+}
+.iconButton,
+.newCreation,
+.searchButton,
+.usageRow,
+.account,
+.groupToggle {
+  transition: background-color var(--studio-motion) var(--studio-ease), color var(--studio-motion) var(--studio-ease);
+}
+.iconButton:hover { background: var(--studio-bg-elevated); color: var(--studio-text-1); }
+
+.actions {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  flex: none;
+  padding: 2px 10px 8px;
+}
+.sidebar[data-collapsed="true"] .actions { padding: 2px 8px 8px; align-items: center; }
+
+.newCreation,
+.searchButton {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  width: 100%;
+  border-radius: 9px;
+  font: inherit;
+  cursor: pointer;
+}
+.newCreation {
+  height: 36px;
+  padding: 0 11px;
+  border: 1px solid var(--studio-border);
+  background: var(--studio-bg-panel);
+  color: var(--studio-text-1);
+  font-weight: 500;
+}
+.newCreation:hover { background: var(--studio-bg-elevated); }
+.searchButton {
+  height: 30px;
+  padding: 0 11px;
+  border: 0;
+  background: transparent;
+  color: var(--studio-text-meta);
+  font-size: 12.5px;
+}
+.searchButton:hover { background: var(--studio-bg-elevated); color: var(--studio-text-1); }
+.kbd {
+  margin-left: auto;
+  padding: 1px 5px;
+  border: 1px solid var(--studio-border);
+  border-radius: 4px;
+  font-family: var(--eds-font-mono, ui-monospace, monospace);
+  font-size: 10px;
+  color: var(--studio-text-meta);
+}
+.sidebar[data-collapsed="true"] .newCreation,
+.sidebar[data-collapsed="true"] .searchButton {
+  width: 36px;
+  justify-content: center;
+  padding: 0;
+}
+.sidebar[data-collapsed="true"] .label,
+.sidebar[data-collapsed="true"] .kbd { display: none; }
+
+/* The nav region scrolls; the footer never scrolls away (Lock D). */
+.scroll {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding: 2px 10px 12px;
+  scrollbar-width: thin;
+  scrollbar-color: var(--studio-border) transparent;
+}
+.sidebar[data-collapsed="true"] .scroll { padding: 2px 8px 12px; }
+
+.nav { display: flex; flex-direction: column; gap: 14px; }
+/* Final polish: Recent (projects, not destinations) sits below a hairline. */
+.nav + .group {
+  margin-top: 14px;
+  padding-top: 12px;
+  border-top: 1px solid var(--studio-border-subtle);
+}
+.group { display: flex; flex-direction: column; }
+.list { display: flex; flex-direction: column; gap: 1px; margin: 0; padding: 0; list-style: none; }
+
+.groupLabel,
+.groupToggle {
+  margin: 0 0 4px;
+  padding: 0 11px;
+  font-size: 10.5px;
+  font-weight: 600;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--studio-text-meta);
+}
+.groupToggle {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  height: 24px;
+  border: 0;
+  border-radius: 6px;
+  background: transparent;
+  cursor: pointer;
+}
+.groupToggle:hover { color: var(--studio-text-2); }
+.chevron { display: inline-flex; transition: transform 120ms ease; }
+.chevron[data-open="true"] { transform: rotate(90deg); }
+
+.row,
+.recentRow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 32px;
+  padding: 0 11px;
+  border-radius: 8px;
+  color: var(--studio-text-2);
+  text-decoration: none;
+  outline: none;
+  cursor: pointer;
+  transition: background-color var(--studio-motion) var(--studio-ease), color var(--studio-motion) var(--studio-ease);
+}
+.row:hover,
+.recentRow:hover { background: var(--studio-bg-elevated); color: var(--studio-text-1); }
+.row[data-active="true"],
+.recentRow[data-active="true"] { background: var(--studio-bg-selected); color: var(--studio-text-1); }
+/* A 2px lead marks the active destination without a heavier fill. */
+.row[data-active="true"] { box-shadow: inset 2px 0 0 var(--studio-text-2); }
+.row[data-active="true"] .icon { opacity: 1; }
+.row[data-disabled="true"] { color: var(--studio-text-4); cursor: not-allowed; }
+.row[data-disabled="true"]:hover { background: transparent; color: var(--studio-text-4); }
+.row:focus-visible,
+.recentRow:focus-visible,
+.newCreation:focus-visible,
+.searchButton:focus-visible,
+.iconButton:focus-visible,
+.groupToggle:focus-visible,
+.usageRow:focus-visible,
+.account:focus-visible,
+.brand:focus-visible {
+  outline: 2px solid var(--studio-focus);
+  outline-offset: 1px;
+}
+.icon { display: inline-flex; flex: none; color: currentColor; opacity: 0.75; }
+.row:hover .icon { opacity: 1; }
+.label { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.nav[data-collapsed="true"] .row { justify-content: center; padding: 0; width: 36px; margin: 0 auto; }
+.nav[data-collapsed="true"] .label { display: none; }
+
+.recentDot { width: 6px; height: 6px; flex: none; border-radius: 2px; background: var(--studio-text-3); }
+.empty { margin: 0; padding: 4px 12px; font-size: 12px; color: var(--studio-text-meta); }
+
+.foot {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  flex: none;
+  padding: 8px 10px 10px;
+  border-top: 1px solid var(--studio-border-subtle);
+}
+.sidebar[data-collapsed="true"] .foot { align-items: center; padding: 8px 6px 10px; }
+
+.usageRow {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  min-height: 30px;
+  padding: 0 11px;
+  border-radius: 8px;
+  color: var(--studio-text-2);
+  font-size: 12px;
+  text-decoration: none;
+}
+.usageRow:hover { background: var(--studio-bg-elevated); color: var(--studio-text-1); }
+.usageDetail { margin-left: auto; font-size: 11px; color: var(--studio-text-meta); }
+.sidebar[data-collapsed="true"] .usageRow { width: 36px; justify-content: center; padding: 0; }
+
+.account {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  min-height: 40px;
+  padding: 4px 8px;
+  border: 0;
+  border-radius: 9px;
+  background: transparent;
+  color: var(--studio-text-1);
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+.account:hover { background: var(--studio-bg-elevated); }
+.sidebar[data-collapsed="true"] .account { width: 40px; justify-content: center; padding: 4px; }
+.avatar {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  flex: none;
+  border-radius: 50%;
+  border: 1px solid var(--studio-border);
+  background: var(--studio-bg-elevated);
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--studio-text-1);
+}
+.accountText { display: flex; flex-direction: column; min-width: 0; }
+.accountName { font-size: 12.5px; color: var(--studio-text-1); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.accountDetail { font-size: 11px; color: var(--studio-text-meta); }
+
+/* Touch pointers get 44px targets (matches min-h-[44px] elsewhere in V5);
+ * fine pointers keep the dense 32px console rows of the approved prototype. */
+@media (pointer: coarse) {
+  .row, .recentRow, .newCreation, .searchButton, .usageRow, .account, .groupToggle { min-height: 44px; }
+  .iconButton { width: 44px; height: 44px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .chevron { transition: none; }
+}
+
+@media (forced-colors: active) {
+  .row[data-active="true"] { outline: 1px solid CanvasText; }
+}

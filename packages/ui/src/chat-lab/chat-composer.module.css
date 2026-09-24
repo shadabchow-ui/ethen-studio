@@ -1,0 +1,479 @@
+.wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.wrap[data-placement="centered"] { max-width: var(--chat-composer-max); }
+.wrap[data-placement="docked"] { max-width: var(--chat-measure); }
+
+/* ── the composer surface ────────────────────────────────────────────────
+ * One contained surface, one hairline, a real focus edge and almost no
+ * shadow. The only element on the page that rises above the canvas. */
+.composer {
+  background: var(--chat-composer);
+  border: 1px solid var(--chat-border-composer);
+  border-radius: var(--chat-radius-composer);
+  box-shadow: var(--chat-composer-shadow);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 12px 12px 10px;
+  transition: border-color var(--chat-motion-press, var(--eds-motion-ui)) ease, box-shadow var(--chat-motion-press, var(--eds-motion-ui)) ease;
+}
+
+/* CHAT_A4.1 — owner requirement: NO blue/purple focus ring on the composer
+ * container, NO glow. Focused and resting share the same neutral warm surface
+ * and the same restrained hairline; only actionable controls (send, triggers,
+ * menu items) carry a visible focus treatment. */
+.composer:focus-within {
+  border-color: var(--chat-border-composer);
+  box-shadow: var(--chat-composer-shadow);
+}
+
+.projectContext {
+  align-items: center;
+  color: var(--chat-text-muted);
+  display: flex;
+  font-size: var(--eds-type-caption-size);
+  gap: 6px;
+  line-height: var(--eds-type-caption-line);
+  margin: 0;
+}
+
+.projectContext strong {
+  color: var(--chat-text-secondary);
+  font-weight: var(--eds-font-weight-medium);
+}
+
+.input {
+  /* CHAT_A4.1 — the textarea is not a form field inside a form field: fully
+   * transparent, borderless, ringless. The composer reads as ONE surface. */
+  background: transparent;
+  border: 0;
+  box-shadow: none;
+  color: var(--chat-text);
+  font-family: var(--eds-font-sans);
+  font-size: 15px;
+  line-height: 24px;
+  outline: none;
+  /* CHAT_A3 — the JS cap tracks the visible viewport (keyboard open); this
+   * backstop holds before first measure and without JS. */
+  max-height: min(320px, 32dvh);
+  min-height: 24px;
+  overflow-y: auto;
+  padding: 2px 2px 0;
+  resize: none;
+  width: 100%;
+}
+
+/* CHAT_A3 — drag cue: a hairline accent edge, never a layout shift. */
+.composer[data-drop="true"] { border-color: var(--chat-accent); }
+
+.input::placeholder { color: var(--chat-text-muted); }
+.input:focus,
+.input:focus-visible {
+  outline: none;
+  box-shadow: none;
+  border: 0;
+}
+
+/* ── attachments ─────────────────────────────────────────────────────────
+ * Hairline tiles inside the composer, scrolling horizontally. Not cards. */
+.attachments {
+  display: flex;
+  gap: 8px;
+  list-style: none;
+  margin: 0;
+  overflow-x: auto;
+  padding: 0 0 2px;
+  scrollbar-width: thin;
+}
+
+.attachment {
+  align-items: center;
+  background: var(--chat-surface-sunken);
+  border: 1px solid var(--chat-border);
+  border-radius: 10px;
+  display: flex;
+  flex: none;
+  gap: 8px;
+  max-width: 240px;
+  min-width: 168px;
+  padding: 7px 8px;
+}
+
+.attachment[data-state="uploading"] { border-style: dashed; }
+.attachment[data-state="failed"] { border-color: var(--chat-danger); }
+
+.attachmentIcon {
+  align-items: center;
+  color: var(--chat-text-secondary);
+  display: inline-flex;
+  flex: none;
+}
+
+.attachment[data-state="failed"] .attachmentIcon { color: var(--chat-danger); }
+
+.attachmentText {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  min-width: 0;
+}
+
+.attachmentName {
+  color: var(--chat-text);
+  font-size: var(--eds-type-ui-sm-size);
+  line-height: 16px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.attachmentMeta {
+  color: var(--chat-text-muted);
+  font-size: var(--eds-type-caption-size);
+  line-height: 15px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.attachment[data-state="failed"] .attachmentMeta { color: var(--chat-danger); }
+
+.attachmentRemove {
+  align-items: center;
+  background: none;
+  border: 0;
+  border-radius: 6px;
+  color: var(--chat-text-muted);
+  cursor: pointer;
+  display: inline-flex;
+  flex: none;
+  height: 22px;
+  justify-content: center;
+  padding: 0;
+  position: relative;
+  transition: background var(--chat-motion-press, var(--eds-motion-ui)) ease, color var(--chat-motion-press, var(--eds-motion-ui)) ease;
+  width: 22px;
+}
+
+.attachmentRemove:hover { background: var(--chat-surface-active); color: var(--chat-text); }
+.attachmentRemove:focus-visible { outline: var(--chat-focus); outline-offset: 1px; }
+
+/* CHAT_A3 — the failed-tile retry is a quiet text control, not a second button row. */
+.attachmentRetry {
+  align-self: flex-start;
+  background: none;
+  border: 0;
+  border-radius: 4px;
+  color: var(--chat-text-secondary);
+  cursor: pointer;
+  font: inherit;
+  font-size: var(--eds-type-caption-size);
+  line-height: 16px;
+  margin-top: 2px;
+  padding: 2px 0;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.attachmentRetry:hover { color: var(--chat-text); }
+.attachmentRetry:focus-visible { outline: var(--chat-focus); outline-offset: 1px; }
+
+/* ── active tool tokens ──────────────────────────────────────────────── */
+.activeTools {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.activeTool {
+  align-items: center;
+  background: var(--chat-accent-wash);
+  border: 1px solid var(--chat-border);
+  border-radius: 6px;
+  color: var(--chat-text);
+  display: inline-flex;
+  font-size: var(--eds-type-caption-size);
+  gap: 4px;
+  line-height: var(--eds-type-caption-line);
+  padding: 2px 3px 2px 8px;
+}
+
+.activeTool button {
+  align-items: center;
+  background: none;
+  border: 0;
+  border-radius: 4px;
+  color: var(--chat-text-secondary);
+  cursor: pointer;
+  display: inline-flex;
+  height: 18px;
+  justify-content: center;
+  padding: 0;
+  width: 18px;
+}
+
+.activeTool button:hover { background: var(--chat-surface-active); color: var(--chat-text); }
+.activeTool button:focus-visible { outline: var(--chat-focus); outline-offset: 1px; }
+
+/* ── footer control row ──────────────────────────────────────────────── */
+.footer {
+  align-items: center;
+  display: flex;
+  gap: 8px;
+  justify-content: space-between;
+}
+
+.footerLeft,
+.footerRight {
+  align-items: center;
+  display: flex;
+  gap: 4px;
+  min-width: 0;
+}
+
+/* CHAT_A3 — one control family: 32px desktop, 8px radius. Labelled triggers
+ * keep the menu trigger's own 8px horizontal padding; icon-only ones stay square. */
+.iconTrigger {
+  justify-content: center;
+  min-height: 32px;
+  padding: 0;
+  width: 32px;
+}
+
+.triggerLabel {
+  font-size: var(--eds-type-ui-sm-size);
+  line-height: 18px;
+}
+
+.modelTrigger { max-width: 100%; min-width: 0; }
+
+.modelName {
+  font-size: var(--eds-type-ui-sm-size);
+  line-height: 18px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.modelLevel {
+  border-left: 1px solid var(--chat-border-strong);
+  color: var(--chat-text-muted);
+  font-size: var(--eds-type-caption-size);
+  line-height: 14px;
+  padding-left: 6px;
+}
+
+.iconButton {
+  align-items: center;
+  background: none;
+  border: 0;
+  border-radius: var(--chat-radius-control);
+  color: var(--chat-text-secondary);
+  cursor: pointer;
+  display: inline-flex;
+  height: 32px;
+  justify-content: center;
+  padding: 0;
+  transition: background var(--chat-motion-press, var(--eds-motion-ui)) ease, color var(--chat-motion-press, var(--eds-motion-ui)) ease;
+  width: 32px;
+}
+
+.iconButton:hover { background: var(--chat-surface-hover); color: var(--chat-text); }
+/* CHAT_A5.1 — unwired controls (voice) stay visible but inert. */
+.iconButton:disabled { cursor: default; opacity: 0.45; }
+.iconButton:disabled:hover { background: none; color: var(--chat-text-secondary); }
+.iconButton:focus-visible { outline: var(--chat-focus); outline-offset: 2px; }
+
+/* Send: a soft square, quiet until there is something to send. The empty
+ * state is a RECESS, not a filled control — a tinted square reads as an
+ * enabled button in light mode and invites a click that does nothing. */
+.send {
+  align-items: center;
+  background: var(--chat-surface-sunken);
+  border: 1px solid var(--chat-border);
+  border-radius: var(--chat-radius-control);
+  color: var(--chat-text-muted);
+  cursor: not-allowed;
+  display: inline-flex;
+  height: 32px;
+  justify-content: center;
+  padding: 0;
+  transition: background var(--chat-motion-press, var(--eds-motion-ui)) ease, color var(--chat-motion-press, var(--eds-motion-ui)) ease;
+  width: 32px;
+}
+
+.send[data-state="ready"] {
+  background: var(--chat-accent);
+  border-color: transparent;
+  color: var(--chat-on-accent);
+  cursor: pointer;
+}
+
+.send[data-state="ready"]:hover { background: var(--chat-accent-strong); }
+
+.send[data-state="generating"] {
+  background: var(--chat-surface-active);
+  border-color: var(--chat-border-strong);
+  color: var(--chat-text);
+  cursor: pointer;
+}
+
+.send:focus-visible { outline: var(--chat-focus); outline-offset: 2px; }
+
+.hint {
+  color: var(--chat-text-muted);
+  font-size: var(--eds-type-caption-size);
+  line-height: var(--eds-type-caption-line);
+  margin: 0;
+  text-align: center;
+}
+
+.hint kbd {
+  background: var(--chat-surface-hover);
+  border: 1px solid var(--chat-border);
+  border-radius: 4px;
+  font-family: var(--eds-font-mono);
+  font-size: 10px;
+  padding: 1px 4px;
+}
+
+/* ── local notice (never a full-page error screen) ───────────────────── */
+.notice {
+  align-items: flex-start;
+  background: var(--chat-overlay);
+  border: 1px solid var(--chat-border-strong);
+  border-radius: var(--chat-radius-menu);
+  display: flex;
+  gap: 12px;
+  justify-content: space-between;
+  padding: 10px 10px 10px 12px;
+}
+
+.notice[data-tone="danger"] { border-left: 2px solid var(--chat-danger); }
+.notice[data-tone="attention"] { border-left: 2px solid var(--chat-attention); }
+
+.noticeText {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.noticeText strong {
+  color: var(--chat-text);
+  font-size: var(--eds-type-ui-sm-size);
+  font-weight: var(--eds-font-weight-medium);
+  line-height: 18px;
+}
+
+.noticeText span {
+  color: var(--chat-text-secondary);
+  font-size: var(--eds-type-caption-size);
+  line-height: 17px;
+}
+
+.noticeActions {
+  align-items: center;
+  display: flex;
+  flex: none;
+  gap: 4px;
+}
+
+.noticeAction {
+  background: none;
+  border: 1px solid var(--chat-border-strong);
+  border-radius: 6px;
+  color: var(--chat-text);
+  cursor: pointer;
+  font: inherit;
+  font-size: var(--eds-type-caption-size);
+  line-height: 16px;
+  padding: 4px 8px;
+}
+
+.noticeAction { transition: background var(--chat-motion-press, var(--eds-motion-ui)) ease; }
+.noticeAction:hover { background: var(--chat-surface-hover); }
+.noticeAction:focus-visible { outline: var(--chat-focus); outline-offset: 2px; }
+
+.noticeDismiss {
+  align-items: center;
+  background: none;
+  border: 0;
+  border-radius: 6px;
+  color: var(--chat-text-muted);
+  cursor: pointer;
+  display: inline-flex;
+  height: 24px;
+  justify-content: center;
+  padding: 0;
+  width: 24px;
+}
+
+.noticeDismiss:hover { background: var(--chat-surface-hover); color: var(--chat-text); }
+.noticeDismiss:focus-visible { outline: var(--chat-focus); outline-offset: 1px; }
+
+/* ── mobile ───────────────────────────────────────────────────────────── */
+@media (max-width: 768px) {
+  .composer {
+    border-radius: 14px;
+    gap: 6px;
+    padding: 10px 10px 8px;
+  }
+
+  /* 16px minimum: anything smaller makes iOS Safari zoom the viewport. */
+  .input {
+    font-size: 16px;
+    line-height: 23px;
+  }
+
+  .footer { gap: 6px; }
+  .footerLeft, .footerRight { gap: 2px; }
+
+  .triggerLabel { display: none; }
+
+  .modelName { max-width: 96px; }
+  .modelLevel { display: none; }
+
+  .attachment { max-width: 200px; min-width: 152px; }
+
+  /* CHAT_A3 — the visual stays 36px; an invisible halo lifts the HIT area to
+   * the 44px floor so the composer geometry never grows for touch. */
+  .iconButton, .send, .iconTrigger { height: 36px; min-height: 36px; position: relative; width: 36px; }
+  .iconButton::after, .send::after, .iconTrigger::after {
+    content: "";
+    inset: -4px;
+    position: absolute;
+  }
+  .modelTrigger { position: relative; }
+  .modelTrigger::after {
+    content: "";
+    inset: -6px -4px;
+    position: absolute;
+  }
+  .attachmentRemove::after {
+    content: "";
+    inset: -11px;
+    position: absolute;
+  }
+  .activeTool button { position: relative; }
+  .activeTool button::after {
+    content: "";
+    inset: -13px -11px;
+    position: absolute;
+  }
+
+  .hint { display: none; }
+}
+
+@media (max-width: 360px) {
+  .modelName { max-width: 72px; }
+}

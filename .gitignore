@@ -1,0 +1,26 @@
+# Next.js regenerates this per build/dev mode (.next/types vs .next/dev/types);
+# the Next.js docs say it should not be tracked. (Studio V5 M1)
+next-env.d.ts
+
+# dependencies
+node_modules/
+packages/*/node_modules/
+
+# next.js
+.next/
+out/
+
+# testing
+coverage/
+test-results/
+playwright-report/
+playwright/.cache/
+
+# misc
+.DS_Store
+*.pem
+.env*.local
+
+# local build/test runtime artifacts (S3)
+tsconfig.tsbuildinfo
+.studio-fixture-store/

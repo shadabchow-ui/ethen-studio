@@ -1,0 +1,108 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/triposr",
+  "task": "3d-generation",
+  "source_url": "https://fal.ai/models/fal-ai/triposr",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Ftriposr",
+  "retrieved_at": "2026-09-23T14:38:00.941Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "image-to-3d",
+  "bytes_sha256": "d37e1c7df7e5617bd955c1c8c97ecc86ca277bfb28bc276eb347c5f1f083af0a",
+  "queue_path": "/fal-ai/triposr",
+  "input_name": "TriposrInput",
+  "input": {
+    "$refName": "TriposrInput",
+    "type": "object",
+    "properties": {
+      "mc_resolution": {
+        "type": "integer",
+        "default": 256,
+        "minimum": 32,
+        "maximum": 1024,
+        "description": "Resolution of the marching cubes. Above 512 is not recommended."
+      },
+      "foreground_ratio": {
+        "type": "number",
+        "default": 0.9,
+        "minimum": 0.5,
+        "maximum": 1,
+        "description": "Ratio of the foreground image to the original image."
+      },
+      "do_remove_background": {
+        "type": "boolean",
+        "default": true,
+        "description": "Whether to remove the background from the input image."
+      },
+      "image_url": {
+        "type": "string",
+        "description": "Path for the image file to be processed."
+      },
+      "output_format": {
+        "type": "string",
+        "enum": [
+          "glb",
+          "obj"
+        ],
+        "default": "glb",
+        "description": "Output format for the 3D model."
+      }
+    },
+    "required": [
+      "image_url"
+    ]
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs."
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics."
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "TriposrInput",
+    "TriposrOutput",
+    "File"
+  ]
+}

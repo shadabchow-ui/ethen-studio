@@ -1,0 +1,95 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/elevenlabs/audio-isolation",
+  "task": "speech",
+  "source_url": "https://fal.ai/models/fal-ai/elevenlabs/audio-isolation",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Felevenlabs%2Faudio-isolation",
+  "retrieved_at": "2026-09-23T14:36:22.548Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "audio-to-audio",
+  "bytes_sha256": "e62c49aba8f7fa413330e85d82f0acae3a2e0340be47232021fbc505ace3a264",
+  "queue_path": "/fal-ai/elevenlabs/audio-isolation",
+  "input_name": "ElevenlabsAudioIsolationInput",
+  "input": {
+    "$refName": "ElevenlabsAudioIsolationInput",
+    "type": "object",
+    "properties": {
+      "audio_url": {
+        "description": "URL of the audio file to isolate voice from",
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "video_url": {
+        "description": "Video file to use for audio isolation. Either `audio_url` or `video_url` must be provided.",
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      }
+    }
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs."
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics."
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "ElevenlabsAudioIsolationInput",
+    "ElevenlabsAudioIsolationOutput",
+    "File"
+  ]
+}

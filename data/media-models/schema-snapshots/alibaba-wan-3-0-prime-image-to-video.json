@@ -1,0 +1,172 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "alibaba/wan-3.0-prime/image-to-video",
+  "task": "image-to-video",
+  "source_url": "https://fal.ai/models/alibaba/wan-3.0-prime/image-to-video",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=alibaba%2Fwan-3.0-prime%2Fimage-to-video",
+  "retrieved_at": "2026-09-20T09:39:48.827Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "image-to-video",
+  "bytes_sha256": "6bdaa98ee887b50a3701d9c6626762e4cb7178c10057c4d158d32ef1033fdf5c",
+  "queue_path": "/alibaba/wan-3.0-prime/image-to-video",
+  "input_name": "Wan30PrimeImageToVideoInput",
+  "input": {
+    "$refName": "Wan30PrimeImageToVideoInput",
+    "type": "object",
+    "properties": {
+      "enable_thinking": {
+        "type": "boolean",
+        "default": false,
+        "description": "Enable enhanced reasoning before generation."
+      },
+      "start_image_url": {
+        "type": "string",
+        "description": "First frame of the generated video."
+      },
+      "end_image_url": {
+        "description": "Last frame of the generated video. Requires start_image_url.",
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "duration": {
+        "default": 5,
+        "description": "Output duration in seconds. Set to null for smart duration, which lets the model pick a length from the prompt and reference media.",
+        "anyOf": [
+          {
+            "type": "integer",
+            "minimum": 2,
+            "maximum": 30
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "audio": {
+        "type": "boolean",
+        "default": true,
+        "description": "Include generated audio."
+      },
+      "seed": {
+        "anyOf": [
+          {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 2147483647
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "prompt": {
+        "description": "Text prompt describing the motion to generate.",
+        "anyOf": [
+          {
+            "type": "string",
+            "maxLength": 20000
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "enable_prompt_expansion": {
+        "type": "boolean",
+        "default": true,
+        "description": "Enable intelligent prompt rewriting. Disabling it can save roughly 20-60 seconds of latency but is likely to degrade generation quality."
+      },
+      "resolution": {
+        "type": "string",
+        "enum": [
+          "480p",
+          "720p",
+          "1080p"
+        ],
+        "default": "1080p",
+        "description": "Output video resolution tier."
+      },
+      "aspect_ratio": {
+        "type": "string",
+        "enum": [
+          "adaptive",
+          "16:9",
+          "4:3",
+          "1:1",
+          "3:4",
+          "9:16"
+        ],
+        "default": "adaptive",
+        "description": "Output aspect ratio, or adaptive selection."
+      },
+      "enable_safety_checker": {
+        "type": "boolean",
+        "default": true,
+        "description": "Enable content moderation for input and output. Disabling it requires account authorization; unauthorized requests are always checked."
+      }
+    },
+    "required": [
+      "start_image_url"
+    ]
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs."
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics."
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "Wan30PrimeImageToVideoInput",
+    "Wan30PrimeImageToVideoOutput",
+    "VideoFile"
+  ]
+}

@@ -1,0 +1,189 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/wan-i2v",
+  "task": "unknown",
+  "source_url": "https://fal.ai/models/fal-ai/wan-i2v",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fwan-i2v",
+  "retrieved_at": "2026-09-20T11:55:06.601Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "image-to-video",
+  "bytes_sha256": "b148e039ffd8bb98291edcdf0c0db49d49f9063839ae1b5a691a9bd82bfa01ea",
+  "queue_path": "/fal-ai/wan-i2v",
+  "input_name": "WanI2vInput",
+  "input": {
+    "$refName": "WanI2vInput",
+    "type": "object",
+    "properties": {
+      "shift": {
+        "type": "number",
+        "default": 5,
+        "minimum": 1,
+        "maximum": 10,
+        "description": "Shift parameter for video generation."
+      },
+      "frames_per_second": {
+        "default": 16,
+        "description": "Frames per second of the generated video. Must be between 5 to 24.",
+        "anyOf": [
+          {
+            "type": "integer",
+            "minimum": 5,
+            "maximum": 24
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "resolution": {
+        "type": "string",
+        "enum": [
+          "480p",
+          "720p"
+        ],
+        "default": "720p",
+        "description": "Resolution of the generated video (480p or 720p). 480p is 0.5 billing units, and 720p is 1 billing unit."
+      },
+      "negative_prompt": {
+        "type": "string",
+        "default": "bright colors, overexposed, static, blurred details, subtitles, style, artwork, painting, picture, still, overall gray, worst quality, low quality, JPEG compression residue, ugly, incomplete, extra fingers, poorly drawn hands, poorly drawn faces, deformed, disfigured, malformed limbs, fused fingers, still picture, cluttered background, three legs, many people in the background, walking backwards",
+        "description": "Negative prompt for video generation."
+      },
+      "aspect_ratio": {
+        "type": "string",
+        "enum": [
+          "auto",
+          "16:9",
+          "9:16",
+          "1:1"
+        ],
+        "default": "auto",
+        "description": "Aspect ratio of the generated video. If 'auto', the aspect ratio will be determined automatically based on the input image."
+      },
+      "enable_safety_checker": {
+        "type": "boolean",
+        "default": false,
+        "description": "If set to true, the safety checker will be enabled. Disabling it requires account authorization; unauthorized requests are always checked."
+      },
+      "prompt": {
+        "type": "string",
+        "description": "The text prompt to guide video generation."
+      },
+      "seed": {
+        "description": "Random seed for reproducibility. If None, a random seed is chosen.",
+        "anyOf": [
+          {
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "image_url": {
+        "type": "string",
+        "description": "URL of the input image. If the input image does not match the chosen aspect ratio, it is resized and center cropped."
+      },
+      "enable_prompt_expansion": {
+        "type": "boolean",
+        "default": false,
+        "description": "Whether to enable prompt expansion."
+      },
+      "num_frames": {
+        "default": 81,
+        "description": "Number of frames to generate. Must be between 81 to 100 (inclusive). If the number of frames is greater than 81, the video will be generated with 1.25x more billing units.",
+        "anyOf": [
+          {
+            "type": "integer",
+            "minimum": 81,
+            "maximum": 100
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "acceleration": {
+        "type": "string",
+        "enum": [
+          "none",
+          "regular"
+        ],
+        "default": "regular",
+        "description": "Acceleration level to use. The more acceleration, the faster the generation, but with lower quality. The recommended value is 'regular'."
+      },
+      "guide_scale": {
+        "type": "number",
+        "default": 5,
+        "minimum": 1,
+        "maximum": 10,
+        "description": "Classifier-free guidance scale. Higher values give better adherence to the prompt but may decrease quality."
+      },
+      "num_inference_steps": {
+        "type": "integer",
+        "default": 30,
+        "minimum": 2,
+        "maximum": 40,
+        "description": "Number of inference steps for sampling. Higher values give better quality but take longer."
+      }
+    },
+    "required": [
+      "prompt",
+      "image_url"
+    ]
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs."
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics."
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "WanI2vInput",
+    "WanI2vOutput",
+    "File"
+  ]
+}

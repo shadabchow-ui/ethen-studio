@@ -1,0 +1,116 @@
+import type { StudioShowcaseSectionDefinition } from "./showcase-types";
+
+export const STUDIO_SHOWCASE_SECTIONS: StudioShowcaseSectionDefinition[] = [
+  {
+    id: "hero-rail",
+    title: "Featured Studio Picks",
+    description: "Premium creative outputs from across Media Studio.",
+    assetSection: "hero",
+    layoutMode: "featuredRail",
+    order: 1,
+  },
+  {
+    id: "mission-card",
+    title: "Start a Studio Project",
+    description: "Guided next-action checklist, not a sales offer.",
+    assetSection: "featured",
+    layoutMode: "compactAppGrid",
+    order: 2,
+  },
+  {
+    id: "quick-launch",
+    title: "Quick Launch Apps",
+    description: "Compact app-launch row for fast entry.",
+    layoutMode: "compactAppGrid",
+    order: 3,
+  },
+  {
+    id: "cinema-showcase",
+    title: "Cinematic Motion",
+    description: "Dense motion gallery from Cinema Studio.",
+    assetSection: "cinema",
+    layoutMode: "mosaic",
+    order: 4,
+  },
+  {
+    id: "viral-presets",
+    title: "Viral Presets",
+    description: "A sample of styles and tags across the Studio library.",
+    layoutMode: "chipCloud",
+    order: 5,
+  },
+  {
+    id: "supercomputer-banner",
+    title: "Supercomputer",
+    description: "One agent layer for your entire creative stack.",
+    assetSection: "supercomputer",
+    layoutMode: "banner",
+    order: 6,
+  },
+  {
+    id: "image-gallery",
+    title: "Image Experiments",
+    description: "Dense still and frame gallery from Create Image.",
+    assetSection: "image",
+    layoutMode: "mosaic",
+    order: 7,
+  },
+  {
+    id: "marketing-banner",
+    title: "Marketing Studio",
+    description: "Turn one product idea into ads and campaign assets.",
+    assetSection: "marketing",
+    layoutMode: "banner",
+    order: 8,
+  },
+  {
+    id: "video-worlds",
+    title: "Video Worlds",
+    description: "A second motion gallery spanning Studio video apps.",
+    assetSection: "video",
+    layoutMode: "mosaic",
+    order: 9,
+  },
+  {
+    id: "canvas-banner",
+    title: "One Canvas. Every Workflow.",
+    description: "Organize assets, prompts, scenes, and projects in one place.",
+    assetSection: "canvas",
+    layoutMode: "banner",
+    order: 10,
+  },
+  {
+    id: "influencer-gallery",
+    title: "Character & Influencer Concepts",
+    description: "Character, fashion, and identity workflows.",
+    assetSection: "influencer",
+    layoutMode: "mosaic",
+    order: 11,
+  },
+  {
+    id: "games-gallery",
+    title: "Game Asset Worlds",
+    description: "Game-looking frames, props, and stylized stills.",
+    assetSection: "games",
+    layoutMode: "mosaic",
+    order: 12,
+  },
+  {
+    id: "explore-apps",
+    title: "Explore More Studio Apps",
+    description: "Internal Studio directory grouped by capability.",
+    layoutMode: "compactAppGrid",
+    order: 13,
+  },
+  {
+    id: "status-strip",
+    title: "Provider Status / Credits Strip",
+    description: "Truthful status of providers, setup, and credits.",
+    layoutMode: "compactAppGrid",
+    order: 14,
+  },
+];
+
+export function getStudioShowcaseSections(): StudioShowcaseSectionDefinition[] {
+  return [...STUDIO_SHOWCASE_SECTIONS].sort((a, b) => a.order - b.order);
+}

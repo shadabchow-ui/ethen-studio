@@ -1,0 +1,189 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/wan/v2.2-14b/speech-to-video",
+  "task": "speech",
+  "source_url": "https://fal.ai/models/fal-ai/wan/v2.2-14b/speech-to-video",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fwan%2Fv2.2-14b%2Fspeech-to-video",
+  "retrieved_at": "2026-09-23T14:38:04.313Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "audio-to-video",
+  "bytes_sha256": "5dddea130ef82fb489754286c4adea55ee8d23867300ec82db26e906c0fbb844",
+  "queue_path": "/fal-ai/wan/v2.2-14b/speech-to-video",
+  "input_name": "WanV2214bSpeechToVideoInput",
+  "input": {
+    "$refName": "WanV2214bSpeechToVideoInput",
+    "type": "object",
+    "properties": {
+      "guidance_scale": {
+        "type": "number",
+        "default": 3.5,
+        "minimum": 1,
+        "maximum": 10,
+        "description": "Classifier-free guidance scale. Higher values give better adherence to the prompt but may decrease quality."
+      },
+      "prompt": {
+        "type": "string",
+        "description": "The text prompt used for video generation."
+      },
+      "num_inference_steps": {
+        "type": "integer",
+        "default": 27,
+        "minimum": 2,
+        "maximum": 40,
+        "description": "Number of inference steps for sampling. Higher values give better quality but take longer."
+      },
+      "audio_url": {
+        "type": "string",
+        "description": "The URL of the audio file."
+      },
+      "frames_per_second": {
+        "default": 16,
+        "description": "Frames per second of the generated video. Must be between 4 to 60. When using interpolation and `adjust_fps_for_interpolation` is set to true (default true,) the final FPS will be multiplied by the number of interpolated frames plus one. For example, if the generated frames per second is 16 and the ",
+        "anyOf": [
+          {
+            "type": "integer",
+            "minimum": 4,
+            "maximum": 60
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "enable_safety_checker": {
+        "type": "boolean",
+        "default": false,
+        "description": "If set to true, input data will be checked for safety before processing. Disabling it requires account authorization; unauthorized requests are always checked."
+      },
+      "seed": {
+        "description": "Random seed for reproducibility. If None, a random seed is chosen.",
+        "anyOf": [
+          {
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "num_frames": {
+        "type": "integer",
+        "default": 80,
+        "minimum": 40,
+        "maximum": 120,
+        "description": "Number of frames to generate. Must be between 40 to 120, (must be multiple of 4)."
+      },
+      "resolution": {
+        "type": "string",
+        "enum": [
+          "480p",
+          "580p",
+          "720p"
+        ],
+        "default": "480p",
+        "description": "Resolution of the generated video (480p, 580p, or 720p)."
+      },
+      "negative_prompt": {
+        "type": "string",
+        "default": "",
+        "description": "Negative prompt for video generation."
+      },
+      "enable_output_safety_checker": {
+        "type": "boolean",
+        "default": false,
+        "description": "If set to true, output video will be checked for safety after generation."
+      },
+      "image_url": {
+        "type": "string",
+        "description": "URL of the input image. If the input image does not match the chosen aspect ratio, it is resized and center cropped."
+      },
+      "video_write_mode": {
+        "type": "string",
+        "enum": [
+          "fast",
+          "balanced",
+          "small"
+        ],
+        "default": "balanced",
+        "description": "The write mode of the output video. Faster write mode means faster results but larger file size, balanced write mode is a good compromise between speed and quality, and small write mode is the slowest but produces the smallest file size."
+      },
+      "shift": {
+        "type": "number",
+        "default": 5,
+        "minimum": 1,
+        "maximum": 10,
+        "description": "Shift value for the video. Must be between 1.0 and 10.0."
+      },
+      "video_quality": {
+        "type": "string",
+        "enum": [
+          "low",
+          "medium",
+          "high",
+          "maximum"
+        ],
+        "default": "high",
+        "description": "The quality of the output video. Higher quality means better visual quality but larger file size."
+      }
+    },
+    "required": [
+      "prompt",
+      "image_url",
+      "audio_url"
+    ]
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs."
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics."
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "WanV2214bSpeechToVideoInput",
+    "WanV2214bSpeechToVideoOutput",
+    "File"
+  ]
+}

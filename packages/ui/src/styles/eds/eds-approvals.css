@@ -1,0 +1,112 @@
+/* EDS approvals canary — D14.
+ * Scoped to [data-eds]. Route-scoped: only loaded on a route that has opted
+ * in through ETHEN_EDS_ROUTES. No :root, no global element selectors, no raw
+ * colour.
+ */
+
+[data-eds] .eds-approvals {
+  display: flex;
+  flex-direction: column;
+  gap: var(--eds-space-spacious);
+  min-width: 0;
+  padding: var(--eds-space-spacious);
+}
+
+/* A block, not a flex row: the EvidenceHost inside is itself a flex
+ * container and must take the full row width. As a flex ITEM it would
+ * shrink-wrap to its content, which is how the Approval Card ended up 517px
+ * wide on a 767px screen instead of owning it. */
+[data-eds] .eds-approvals__entry {
+  display: block;
+  min-width: 0;
+}
+
+[data-eds] .eds-approvals__work {
+  display: flex;
+  flex-direction: column;
+  gap: var(--eds-space-default);
+  min-width: 0;
+}
+
+/* Below 1280 the Evidence affordance sits above the decision rather than
+ * beside it: this route has no Workspace header to host it, and a sibling
+ * column would take width from the decision itself. */
+[data-eds] .eds-approvals__evidence-trigger {
+  display: flex;
+  justify-content: flex-start;
+  min-width: 0;
+}
+
+[data-eds] .eds-approvals__thread {
+  border-top: 1px solid var(--eds-cmp-trust-hairline);
+  padding-top: var(--eds-space-default);
+}
+
+[data-eds] .eds-approvals__detail {
+  border: 1px solid var(--eds-cmp-trust-card-border);
+  border-radius: var(--eds-radius-base);
+  color: var(--eds-cmp-trust-text);
+  display: grid;
+  font-family: var(--eds-type-ui-family);
+  font-size: var(--eds-type-ui-size);
+  gap: var(--eds-space-tight);
+  line-height: var(--eds-type-body-line);
+  min-width: 0;
+  padding: var(--eds-space-default);
+}
+
+[data-eds] .eds-approvals__detail h3 {
+  font-family: var(--eds-type-ui-family) !important;
+  font-size: var(--eds-type-subheading-size);
+  font-weight: 600 !important;
+  letter-spacing: normal;
+  margin: 0;
+  text-transform: none;
+}
+
+[data-eds] .eds-approvals__detail p {
+  color: var(--eds-cmp-trust-text-secondary);
+  margin: 0;
+}
+
+[data-eds] .eds-approvals__detail-close {
+  background: var(--eds-cmp-trust-action-bg);
+  border: 1px solid var(--eds-cmp-trust-action-border);
+  border-radius: var(--eds-radius-base);
+  color: var(--eds-cmp-trust-action-text);
+  cursor: pointer;
+  font-family: var(--eds-type-ui-family);
+  font-size: var(--eds-type-ui-size);
+  justify-self: start;
+  line-height: var(--eds-type-ui-line);
+  min-height: 36px;
+  padding: var(--eds-space-tight) var(--eds-space-default);
+}
+
+[data-eds] .eds-approvals__detail-close:focus-visible {
+  outline: var(--eds-focus-ring);
+}
+
+/* A consequential decision owns the phone screen. */
+@media (max-width: 767px) {
+  [data-eds] .eds-approvals {
+    gap: var(--eds-space-default);
+    padding: 0;
+  }
+
+  [data-eds] .eds-approvals__evidence-trigger,
+  [data-eds] .eds-approvals__thread,
+  [data-eds] .eds-approvals__detail {
+    margin: 0 var(--eds-space-default);
+  }
+}
+
+@media (forced-colors: active) {
+  [data-eds] .eds-approvals__detail {
+    border-color: ButtonBorder;
+  }
+
+  [data-eds] .eds-approvals__thread {
+    border-top-color: ButtonBorder;
+  }
+}

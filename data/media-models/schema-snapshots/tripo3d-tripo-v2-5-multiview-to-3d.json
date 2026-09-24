@@ -1,0 +1,245 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "tripo3d/tripo/v2.5/multiview-to-3d",
+  "task": "3d-generation",
+  "source_url": "https://fal.ai/models/tripo3d/tripo/v2.5/multiview-to-3d",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=tripo3d%2Ftripo%2Fv2.5%2Fmultiview-to-3d",
+  "retrieved_at": "2026-09-23T14:38:18.775Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "image-to-3d",
+  "bytes_sha256": "e89604c637f77b7693521340ede03a7018e2104f774ed69dd327652b52c4d1ee",
+  "queue_path": "/tripo3d/tripo/v2.5/multiview-to-3d",
+  "input_name": "TripoV25MultiviewTo3dInput",
+  "input": {
+    "$refName": "TripoV25MultiviewTo3dInput",
+    "type": "object",
+    "properties": {
+      "front_image_url": {
+        "type": "string",
+        "description": "Front view image of the object."
+      },
+      "left_image_url": {
+        "description": "Left view image of the object.",
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "texture_alignment": {
+        "default": "original_image",
+        "description": "Determines the prioritization of texture alignment in the 3D model. The default value is original_image.",
+        "anyOf": [
+          {
+            "type": "string",
+            "enum": [
+              "original_image",
+              "geometry"
+            ]
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "pbr": {
+        "default": false,
+        "description": "A boolean option to enable pbr. The default value is True, set False to get a model without pbr. If this option is set to True, texture will be ignored and used as True.",
+        "anyOf": [
+          {
+            "type": "boolean"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "texture": {
+        "type": "string",
+        "enum": [
+          "no",
+          "standard",
+          "HD"
+        ],
+        "default": "standard",
+        "description": "An option to enable texturing. Default is 'standard', set 'no' to get a model without any textures, and set 'HD' to get a model with hd quality textures."
+      },
+      "texture_seed": {
+        "description": "This is the random seed for texture generation. Using the same seed will produce identical textures. This parameter is an integer and is randomly chosen if not set. If you want a model with different textures, please use same seed and different texture_seed.",
+        "anyOf": [
+          {
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "back_image_url": {
+        "description": "Back view image of the object.",
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "right_image_url": {
+        "description": "Right view image of the object.",
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "face_limit": {
+        "description": "Limits the number of faces on the output model. If this option is not set, the face limit will be adaptively determined.",
+        "anyOf": [
+          {
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "auto_size": {
+        "default": false,
+        "description": "Automatically scale the model to real-world dimensions, with the unit in meters. The default value is False.",
+        "anyOf": [
+          {
+            "type": "boolean"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "style": {
+        "description": "[DEPRECATED] Defines the artistic style or transformation to be applied to the 3D model, altering its appearance according to preset options (extra $0.05 per generation). Omit this option to keep the original style and apperance.",
+        "anyOf": [
+          {
+            "type": "string",
+            "enum": [
+              "person:person2cartoon",
+              "object:clay",
+              "object:steampunk",
+              "animal:venom",
+              "object:barbie",
+              "object:christmas",
+              "gold",
+              "ancient_bronze"
+            ]
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "quad": {
+        "default": false,
+        "description": "Set True to enable quad mesh output (extra $0.05 per generation). If quad=True and face_limit is not set, the default face_limit will be 10000. Note: Enabling this option will force the output to be an FBX model.",
+        "anyOf": [
+          {
+            "type": "boolean"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "orientation": {
+        "default": "default",
+        "description": "Set orientation=align_image to automatically rotate the model to align the original image. The default value is default.",
+        "anyOf": [
+          {
+            "type": "string",
+            "enum": [
+              "default",
+              "align_image"
+            ]
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "seed": {
+        "description": "This is the random seed for model generation. The seed controls the geometry generation process, ensuring identical models when the same seed is used. This parameter is an integer and is randomly chosen if not set.",
+        "anyOf": [
+          {
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      }
+    },
+    "required": [
+      "front_image_url"
+    ]
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs."
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics."
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "TripoV25MultiviewTo3dInput",
+    "TripoV25MultiviewTo3dOutput",
+    "File"
+  ]
+}

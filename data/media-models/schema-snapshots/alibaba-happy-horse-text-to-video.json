@@ -1,0 +1,139 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "alibaba/happy-horse/text-to-video",
+  "task": "text-to-video",
+  "source_url": "https://fal.ai/models/alibaba/happy-horse/text-to-video",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=alibaba%2Fhappy-horse%2Ftext-to-video",
+  "retrieved_at": "2026-09-20T09:39:45.435Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "text-to-video",
+  "bytes_sha256": "a785317e526124113e157bc4b755dbab663062164a1dd123924c46a6891b0c19",
+  "queue_path": "/alibaba/happy-horse/text-to-video",
+  "input_name": "HappyHorseTextToVideoInput",
+  "input": {
+    "$refName": "HappyHorseTextToVideoInput",
+    "type": "object",
+    "description": "Input for Happy Horse text-to-video generation.",
+    "properties": {
+      "resolution": {
+        "type": "string",
+        "enum": [
+          "720p",
+          "1080p"
+        ],
+        "default": "1080p",
+        "description": "Output video resolution tier."
+      },
+      "duration": {
+        "type": "integer",
+        "enum": [
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15
+        ],
+        "default": 5,
+        "description": "Output video duration in seconds (3-15)."
+      },
+      "prompt": {
+        "type": "string",
+        "minLength": 1,
+        "description": "Text prompt describing the desired video. Max 2500 characters."
+      },
+      "seed": {
+        "description": "Random seed for reproducibility (0-2147483647).",
+        "anyOf": [
+          {
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "aspect_ratio": {
+        "type": "string",
+        "enum": [
+          "16:9",
+          "9:16",
+          "1:1",
+          "4:3",
+          "3:4"
+        ],
+        "default": "16:9",
+        "description": "Aspect ratio of the generated video."
+      },
+      "enable_safety_checker": {
+        "type": "boolean",
+        "default": true,
+        "description": "Enable content moderation for input and output. Disabling it requires account authorization; unauthorized requests are always checked."
+      }
+    },
+    "required": [
+      "prompt"
+    ]
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs."
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics."
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "HappyHorseTextToVideoInput",
+    "HappyHorseTextToVideoOutput",
+    "VideoFile"
+  ]
+}

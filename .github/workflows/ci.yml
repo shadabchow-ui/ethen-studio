@@ -1,0 +1,105 @@
+name: studio-ci
+
+# Studio-only CI (job Phase 15). Gates no-regression vs the S2-validated
+# HEAD baseline — never the full monorepo suite or other Ethen apps.
+#
+# Known inherited state (see docs/SOURCE_PROVENANCE.md and
+# artifacts/repo-separation/INDEPENDENCE_REPORT.md): committed SOURCE_HEAD
+# is internally inconsistent (9 HEAD-absent modules), so typecheck carries
+# 84 inherited errors and the Next build fails on the same 5 missing
+# modules. These gates fail only on NEW errors; the build becomes a hard
+# gate once the missing HEAD modules are committed.
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  studio:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 11.5.3
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+
+      - name: Install
+        run: pnpm install --frozen-lockfile
+
+      - name: Independence smoke (no outside-repo references)
+        run: |
+          set -euo pipefail
+          test -f docs/SOURCE_PROVENANCE.md
+          # Every relative import in tracked sources must resolve inside the repo.
+          node -e '
+            const { execSync } = require("node:child_process");
+            const path = require("node:path");
+            const root = process.cwd();
+            const files = execSync("git ls-files -- \\*.ts \\*.tsx \\*.mjs \\*.cjs", { encoding: "utf8" }).trim().split("\n").filter(Boolean);
+            const re = /(?:from\s*|require\()\s*["'"'"'](\.[^"'"'"']+)["'"'"']/g;
+            let bad = 0;
+            for (const f of files) {
+              const src = require("node:fs").readFileSync(f, "utf8");
+              let m;
+              while ((m = re.exec(src))) {
+                const resolved = path.resolve(path.dirname(path.join(root, f)), m[1]);
+                if (resolved !== root && !resolved.startsWith(root + path.sep)) { console.log(`ESCAPE ${f} -> ${m[1]}`); bad++; }
+              }
+            }
+            if (bad) { console.log(`OUTSIDE_REPO_IMPORTS=${bad}`); process.exit(1); }
+            console.log(`checked ${files.length} files, OUTSIDE_REPO_IMPORTS=0`);
+          '
+          # No absolute local-path dependencies in product sources. (Test files
+          # are excluded: boundary.test.ts legitimately asserts on these patterns.)
+          if grep -rn --include='*.ts' --include='*.tsx' --include='*.mjs' --include='*.cjs' --include='*.json' -E "/Users/|/home/|/private/" app components lib scripts packages data public pnpm-workspace.yaml 2>/dev/null | grep -v node_modules; then
+            echo "ABSOLUTE_LOCAL_PATH_DEPENDENCIES>0"; exit 1
+          fi
+          # No symlinks escaping the repo (pnpm node_modules links excluded).
+          if find app components lib public data scripts tests __tests__ packages docs -type l -not -path '*/node_modules/*' 2>/dev/null | grep .; then
+            echo "OUTSIDE_REPO_SYMLINKS>0"; exit 1
+          fi
+          echo "INDEPENDENCE_SMOKE=PASS"
+
+      - name: Typecheck (no-regression gate, baseline 84 inherited errors)
+        run: |
+          set -euo pipefail
+          set +e
+          pnpm typecheck > /tmp/typecheck.log 2>&1
+          set -e
+          ERRORS=$(grep -c "error TS" /tmp/typecheck.log || true)
+          echo "TYPECHECK_ERRORS=$ERRORS (baseline 84)"
+          tail -5 /tmp/typecheck.log
+          if [ "$ERRORS" -gt 84 ]; then
+            echo "NEW_TYPE_ERRORS>0"; exit 1
+          fi
+
+      - name: Tests (parity gate, no new failures vs HEAD baseline)
+        run: pnpm test:parity
+
+      - name: Catalog projector (byte-identical regeneration)
+        run: |
+          set -euo pipefail
+          sha256sum lib/media/generated/* > /tmp/catalog.before
+          pnpm catalog:project
+          sha256sum -c /tmp/catalog.before
+
+      - name: Build (report-only until HEAD-absent modules land)
+        id: build
+        continue-on-error: true
+        run: pnpm build
+
+      - name: Build verdict
+        run: |
+          if [ "${{ steps.build.outcome }}" = "success" ]; then
+            echo "BUILD=PASS"
+          else
+            echo "BUILD=EXPECTED_FAIL_BASELINE_5_MISSING_MODULES (see INDEPENDENCE_REPORT.md)"
+          fi

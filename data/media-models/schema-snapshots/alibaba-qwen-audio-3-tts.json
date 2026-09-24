@@ -1,0 +1,152 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "alibaba/qwen-audio-3-tts",
+  "task": "text-to-audio",
+  "source_url": "https://fal.ai/models/alibaba/qwen-audio-3-tts",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=alibaba%2Fqwen-audio-3-tts",
+  "retrieved_at": "2026-09-23T14:36:14.004Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "text-to-speech",
+  "bytes_sha256": "56d44c8d26895a931eebf7174b6aac57fa65876f9c45ff9b698fa209d2081373",
+  "queue_path": "/alibaba/qwen-audio-3-tts",
+  "input_name": "QwenAudio3TtsInput",
+  "input": {
+    "$refName": "QwenAudio3TtsInput",
+    "type": "object",
+    "properties": {
+      "language": {
+        "type": "string",
+        "enum": [
+          "Auto",
+          "Chinese",
+          "English",
+          "Spanish",
+          "Russian",
+          "Italian",
+          "French",
+          "Korean",
+          "Japanese",
+          "German",
+          "Portuguese"
+        ],
+        "default": "Auto",
+        "description": "Language of the input text. `Auto` lets the model detect it; setting it explicitly improves pronunciation and intonation."
+      },
+      "text": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 2000,
+        "description": "The text to convert to speech."
+      },
+      "voice": {
+        "type": "string",
+        "enum": [
+          "Cherry",
+          "Serena",
+          "Ethan",
+          "Chelsie",
+          "Momo",
+          "Vivian",
+          "Moon",
+          "Maia",
+          "Kai",
+          "Nofish",
+          "Bella",
+          "Jennifer",
+          "Ryan",
+          "Katerina",
+          "Aiden",
+          "Mia",
+          "Mochi",
+          "Bellona",
+          "Vincent",
+          "Bunny",
+          "Neil",
+          "Elias",
+          "Arthur",
+          "Nini",
+          "Seren",
+          "Pip",
+          "Stella",
+          "Bodega",
+          "Sonrisa",
+          "Alek",
+          "Dolce",
+          "Sohee",
+          "Lenn",
+          "Emilien",
+          "Andre",
+          "Jada",
+          "Dylan",
+          "Li",
+          "Marcus",
+          "Roy",
+          "Peter",
+          "Sunny",
+          "Eric",
+          "Rocky",
+          "Kiki"
+        ],
+        "default": "Cherry",
+        "description": "The voice used for speech synthesis. See the [Qwen-TTS voice list](https://www.alibabacloud.com/help/en/model-studio/qwen-tts-voice-list) for each voice's language and dialect coverage."
+      }
+    },
+    "required": [
+      "text"
+    ]
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs."
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics."
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "QwenAudio3TtsInput",
+    "QwenAudio3TtsOutput",
+    "AudioFile"
+  ]
+}

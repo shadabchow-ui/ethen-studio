@@ -1,0 +1,92 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "bria/upscale/creative",
+  "task": "image-editing",
+  "source_url": "https://fal.ai/models/bria/upscale/creative",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=bria%2Fupscale%2Fcreative",
+  "retrieved_at": "2026-09-20T09:40:00.412Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "image-to-image",
+  "bytes_sha256": "08eecc62cf49088807650ecf06ddacf6b5c58ec230b81c3aab168cc283e0d6e4",
+  "queue_path": "/bria/upscale/creative",
+  "input_name": "UpscaleCreativeInput",
+  "input": {
+    "$refName": "UpscaleCreativeInput",
+    "type": "object",
+    "properties": {
+      "sync_mode": {
+        "type": "boolean",
+        "default": false,
+        "description": "If true, returns the image directly in the response (increases latency)."
+      },
+      "seed": {
+        "type": "integer",
+        "default": 5555,
+        "description": "Random seed for reproducibility."
+      },
+      "preserve_alpha": {
+        "type": "boolean",
+        "default": true,
+        "description": "Preserve alpha channel from input image."
+      },
+      "image_url": {
+        "type": "string",
+        "default": "https://bria-datasets.s3.us-east-1.amazonaws.com/upscale/wild-west.png"
+      }
+    }
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs."
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics."
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "UpscaleCreativeInput",
+    "UpscaleCreativeOutput",
+    "Image"
+  ]
+}

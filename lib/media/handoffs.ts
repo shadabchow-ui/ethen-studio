@@ -1,0 +1,4 @@
+import { createHash } from "node:crypto";
+export type StudioHandoffTarget = "workflow" | "voice";
+export interface StudioAssetHandoff { target: StudioHandoffTarget; organizationId: string; projectId: string; assetId: string; assetVariantHash: string; destination: string; approvalId: string; approvalState: "approved"; evidenceId: string; }
+export function buildStudioAssetHandoff(input: StudioAssetHandoff) { for (const [key, value] of Object.entries(input)) if (!value) throw new Error(`Studio handoff requires ${key}.`); if (!/^[a-f0-9]{64}$/i.test(input.assetVariantHash)) throw new Error("Studio handoff requires an immutable asset hash."); return { ...input, manifestHash: createHash("sha256").update(JSON.stringify(input)).digest("hex"), executionAuthority: input.target === "workflow" ? "workflow" : "voice", execute: false as const }; }

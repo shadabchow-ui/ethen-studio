@@ -1,0 +1,88 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/minimax/voice-design",
+  "task": "speech",
+  "source_url": "https://fal.ai/models/fal-ai/minimax/voice-design",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fminimax%2Fvoice-design",
+  "retrieved_at": "2026-09-23T14:37:37.387Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "text-to-speech",
+  "bytes_sha256": "59b7f2fa56c0f4631bdcbd12b6ca162dad0f8ccbbc31fb2d8a6cdb9d28b0efd6",
+  "queue_path": "/fal-ai/minimax/voice-design",
+  "input_name": "MinimaxVoiceDesignInput",
+  "input": {
+    "$refName": "MinimaxVoiceDesignInput",
+    "type": "object",
+    "properties": {
+      "prompt": {
+        "type": "string",
+        "maxLength": 2000,
+        "description": "Voice description prompt for generating a personalized voice"
+      },
+      "preview_text": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 500,
+        "description": "Text for audio preview. Must be at least 1 character and limited to 500 characters. A fee of $30 per 1M characters will be charged for the generation of the preview audio."
+      }
+    },
+    "required": [
+      "prompt",
+      "preview_text"
+    ]
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs."
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics."
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "MinimaxVoiceDesignInput",
+    "MinimaxVoiceDesignOutput",
+    "File"
+  ]
+}

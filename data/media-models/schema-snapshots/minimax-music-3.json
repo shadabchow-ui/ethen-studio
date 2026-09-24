@@ -1,0 +1,117 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "minimax/music-3",
+  "task": "music-generation",
+  "source_url": "https://fal.ai/models/minimax/music-3",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=minimax%2Fmusic-3",
+  "retrieved_at": "2026-09-23T14:38:07.408Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "text-to-audio",
+  "bytes_sha256": "bc83634e763dcba471074f4f0c2878feef675f976987ceebd6ef6835f5825db3",
+  "queue_path": "/minimax/music-3",
+  "input_name": "Music3Input",
+  "input": {
+    "$refName": "Music3Input",
+    "type": "object",
+    "properties": {
+      "guidance_scale": {
+        "type": "number",
+        "default": 1.7,
+        "minimum": 0,
+        "maximum": 20,
+        "description": "Classifier-free guidance scale of the flow-matching stage."
+      },
+      "prompt": {
+        "type": "string",
+        "description": "Music description: style, mood, vocals, instrumentation and arrangement. For precise control use a Structured Caption with global metadata (genre, BPM, key, emotional progression), vocal details, and a section-by-section arrangement."
+      },
+      "lyrics": {
+        "type": "string",
+        "description": "The lyrics to sing. Structure tags such as [intro], [verse], [pre-chorus], [chorus], [post-chorus], [bridge], [instrumental], [solo] and [outro] must each be on their own line; text on the same line as a leading tag is dropped by the model's input contract."
+      },
+      "seed": {
+        "description": "Random seed for reproducibility. If not provided, a random seed will be used.",
+        "anyOf": [
+          {
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "duration": {
+        "type": "number",
+        "default": 60,
+        "minimum": 1,
+        "maximum": 300,
+        "description": "Upper bound on the generated audio length in seconds. The model may stop earlier; the actual duration is returned in the output."
+      },
+      "num_inference_steps": {
+        "type": "integer",
+        "default": 30,
+        "minimum": 1,
+        "maximum": 100,
+        "description": "Number of flow-matching Euler steps per 8-second denoising chunk. More steps improve quality at the cost of speed."
+      }
+    },
+    "required": [
+      "prompt",
+      "lyrics"
+    ]
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs."
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics."
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "Music3Input",
+    "Music3Output",
+    "File"
+  ]
+}

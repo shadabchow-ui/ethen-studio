@@ -1,0 +1,96 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/kokoro/spanish",
+  "task": "text-to-audio",
+  "source_url": "https://fal.ai/models/fal-ai/kokoro/spanish",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fkokoro%2Fspanish",
+  "retrieved_at": "2026-09-23T14:36:57.875Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "text-to-audio",
+  "bytes_sha256": "f955bb21acbef4af19f077e492be1ed5c2fb0056e58c4fd4cb1c21dae106a807",
+  "queue_path": "/fal-ai/kokoro/spanish",
+  "input_name": "KokoroSpanishInput",
+  "input": {
+    "$refName": "KokoroSpanishInput",
+    "type": "object",
+    "properties": {
+      "prompt": {
+        "type": "string"
+      },
+      "voice": {
+        "type": "string",
+        "enum": [
+          "ef_dora",
+          "em_alex",
+          "em_santa"
+        ],
+        "description": "Voice ID for the desired voice."
+      },
+      "speed": {
+        "type": "number",
+        "default": 1,
+        "minimum": 0.1,
+        "maximum": 5,
+        "description": "Speed of the generated audio. Default is 1.0."
+      }
+    },
+    "required": [
+      "prompt",
+      "voice"
+    ]
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs."
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics."
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "KokoroSpanishInput",
+    "KokoroSpanishOutput",
+    "File"
+  ]
+}

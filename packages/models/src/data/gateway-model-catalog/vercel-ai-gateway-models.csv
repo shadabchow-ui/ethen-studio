@@ -1,0 +1,292 @@
+model_id,provider,model_name,capability_family,context_window,max_output_tokens,latency,throughput,input_price,output_price,cache_read_price,cache_write_price,web_search_price,capabilities,source_files,extraction_confidence,notes
+alibaba/qwen-3-14b,alibaba,qwen-3-14b,,41K,,03s,77tps,$0.12/M,$0.24/M,,,,,Screenshot 2026-06-30 at 11.00.46 PM.png,medium,
+alibaba/qwen-3-235b,alibaba,qwen-3-235b,,262K,,0.4s,78tps,$0.09/M,$0.10/M,,,,,Screenshot 2026-06-30 at 11.00.46 PM.png,medium,
+alibaba/qwen-3-30b,alibaba,qwen-3-30b,,41K,,02s,,$0.12/M,$0.50/M,,,,,Screenshot 2026-06-30 at 11.00.46 PM.png,medium,
+alibaba/qwen-3-32b,alibaba,qwen-3-32b,,,,02s,363tps,$0.10/M,$0.14/M,,,,,Screenshot 2026-06-30 at 11.00.46 PM.png,medium,
+alibaba/qwen-3.6-max-preview,alibaba,qwen-3.6-max-preview,,240K,,14s,,$1.30/M,,,,,,Screenshot 2026-06-30 at 10.59.41 PM.png,medium,
+alibaba/qwen3-235b-a22,alibaba,qwen3-235b-a22,,262K,,03s,128tps,$0.23/M,$230/m,$02/M,,,,Screenshot 2026-06-30 at 11.00.35 PM.png,medium,Model id normalized from OCR-visible text.
+alibaba/qwen3-coder,alibaba,qwen3-coder,code,262K,,0.4s,102tps,$0.22/M,$0.02/M,,,,,Screenshot 2026-06-30 at 11.00.35 PM.png,medium,Model id normalized from OCR-visible text.
+alibaba/qwen3-coder-30b-a3b,alibaba,qwen3-coder-30b-a3b,code,262K,,02s,117tps,$0.15/M,$0.60/M,,,,,Screenshot 2026-06-30 at 11.00.32 PM.png,medium,
+alibaba/qwen3-coder-next,alibaba,qwen3-coder-next,code,256K,,04s,83tps,$0.50/M,$1.20/M,,,,,Screenshot 2026-06-30 at 11.00.35 PM.png,medium,
+alibaba/qwen3-coder-plus,alibaba,qwen3-coder-plus,code,,,08s,49tps,$1.00/M,,,,,,Screenshot 2026-06-30 at 11.00.35 PM.png,medium,
+alibaba/qwen3-embedding-0.6b,alibaba,qwen3-embedding-0.6b,embed,33K,,,,$0.01/M,,,,,,Screenshot 2026-06-30 at 11.00.11 PM.png,high,
+alibaba/qwen3-embedding-4b,alibaba,qwen3-embedding-4b,embed,33K,,,,$0.02/M,,,,,,Screenshot 2026-06-30 at 11.00.39 PM.png,high,
+alibaba/qwen3-embedding-8b,alibaba,qwen3-embedding-8b,embed,33K,,,,$0.05/M,,,,,,Screenshot 2026-06-30 at 11.00.39 PM.png,medium,
+alibaba/qwen3-max,alibaba,qwen3-max,,,,11s,,$1.20/M,$024/M,,,,,Screenshot 2026-06-30 at 11.00.25 PM.png,medium,
+alibaba/qwen3-max-preview,alibaba,qwen3-max-preview,,262K,,14s,,$1.20/M,$0.24/M,,,,,Screenshot 2026-06-30 at 11.00.29 PM.png,medium,
+alibaba/qwen3-max-thinking,alibaba,qwen3-max-thinking,,256K,,,67tps,$1,$024/M,,,,,Screenshot 2026-06-30 at 11.00.00 PM.png,medium,
+alibaba/qwen3-next-80b-,alibaba,qwen3-next-80b-,,262K,,03s,292tps,$0.15/M,$1.20/M,,,,,Screenshot 2026-06-30 at 11.00.29 PM.png,medium,Model id normalized from OCR-visible text.
+alibaba/qwen3-vi-235b-a,alibaba,qwen3-vi-235b-a,,,,05s,53tps,$0.20/M,$0.11/M,,,,,Screenshot 2026-06-30 at 11.00.25 PM.png,medium,Model id normalized from OCR-visible text.
+alibaba/qwen3-vi-instruct,alibaba,qwen3-vi-instruct,,,,05s,52tps,$0.20/M,$0.11/M,,,,,Screenshot 2026-06-30 at 11.00.25 PM.png,medium,Model id normalized from OCR-visible text.
+alibaba/qwen3-vi-thinking,alibaba,qwen3-vi-thinking,,131K,,05s,127tps,$0.40/M,$3.95/M,,,,,Screenshot 2026-06-30 at 11.00.25 PM.png,medium,
+alibaba/qwen3.5-flash,alibaba,qwen3.5-flash,,1M,,15s,230tps,$0.10/M,$00,,,,,Screenshot 2026-06-30 at 10.59.53 PM.png,medium,Model id normalized from OCR-visible text.
+alibaba/qwen3.5-plus,alibaba,qwen3.5-plus,,1M,,15s,110tps,$0.40/M,,,,,,Screenshot 2026-06-30 at 10.59.53 PM.png,medium,
+alibaba/qwen3.6-27b,alibaba,qwen3.6-27b,,256K,,0.9s,137tps,$0.60/M,$3.60/M,,,,,Screenshot 2026-06-30 at 10.59.41 PM.png,medium,
+alibaba/qwen3.6-plus,alibaba,qwen3.6-plus,,,,02s,109tps,$0.50/M,$3.00/M,,,,,Screenshot 2026-06-30 at 10.59.46 PM.png,medium,Model id normalized from OCR-visible text.
+alibaba/qwen37-max,alibaba,qwen37-max,,025M,,29s,56tps,$1.25/M,$375,,,,,Screenshot 2026-06-30 at 10.59.34 PM.png,medium,Model id normalized from OCR-visible text.
+alibaba/qwen37-plus,alibaba,qwen37-plus,,1M,,08s,323tps,$0.32/M,,,,,,Screenshot 2026-06-30 at 10.59.32 PM.png,medium,
+alibaba/wan-v2.5-t2v-preview,alibaba,wan-v2.5-t2v-preview,video,,,,,,,,,,,Screenshot 2026-06-30 at 11.00.25 PM.png,medium,
+alibaba/wan-v2.6-i2v,alibaba,wan-v2.6-i2v,video,,,,,,,,,,,Screenshot 2026-06-30 at 11.00.03 PM.png,medium,
+alibaba/wan-v2.6-i2v-flash,alibaba,wan-v2.6-i2v-flash,video,,,,,,,,,,,Screenshot 2026-06-30 at 11.00.03 PM.png,medium,
+alibaba/wan-v2.6-r2v,alibaba,wan-v2.6-r2v,video,,,,,,,,,,,Screenshot 2026-06-30 at 11.00.03 PM.png,medium,
+alibaba/wan-v2.6-r2v-flash,alibaba,wan-v2.6-r2v-flash,video,,,,,,,,,,,Screenshot 2026-06-30 at 11.00.03 PM.png,medium,
+alibaba/wan-v2.6-t2v,alibaba,wan-v2.6-t2v,video,,,,,,,,,,,Screenshot 2026-06-30 at 11.00.03 PM.png,medium,
+amazon/nova-2-lite,amazon,nova-2-lite,,1M,,04s,232tps,$0.30/M,$0.07/M,,,,,Screenshot 2026-06-30 at 11.00.07 PM.png,medium,
+amazon/nova-lite,amazon,nova-lite,,300K,,04s,140tps,$0.06/M,$0.24/M,,,,,Screenshot 2026-06-30 at 11.00.52 PM.png,medium,
+amazon/nova-micro,amazon,nova-micro,,128K,,04s,,$0.04/M,$0.14/M,,,,,Screenshot 2026-06-30 at 11.00.52 PM.png,medium,
+amazon/nova-pro,amazon,nova-pro,,,,04s,162tps,$0.80/M,$3.20/M,,,,,Screenshot 2026-06-30 at 11.00.52 PM.png,medium,
+amazon/titan-embed-text-v2,amazon,titan-embed-text-v2,embed,,,,,$0.02/M,,,,,,Screenshot 2026-06-30 at 11.01.02 PM.png,high,
+anthropic/claude-3-haiku,anthropic,claude-3-haiku,,200K,,03s,152tps,$0.25/M,,,,,,Screenshot 2026-06-30 at 11.01.02 PM.png,high,
+anthropic/claude-3.5-haiku,anthropic,claude-3.5-haiku,,200K,,,50tps,$0.80/M,,,,,,Screenshot 2026-06-30 at 11.00.52 PM.png,high,
+anthropic/claude-haiku-4.5,anthropic,claude-haiku-4.5,,200K,,04s,131tps,$1.00/M,$5.00/M,,,,,Screenshot 2026-06-30 at 11.00.18 PM.png,high,
+anthropic/claude-opus-4,anthropic,claude-opus-4,,,,14s,46tps,$15.00/M,$7500/m,,,,,Screenshot 2026-06-30 at 11.00.39 PM.png,high,
+anthropic/claude-opus-4.1,anthropic,claude-opus-4.1,,,,13s,,$15.00/M,$7500/m,,,,,Screenshot 2026-06-30 at 11.00.32 PM.png,high,
+anthropic/claude-opus-4.5,anthropic,claude-opus-4.5,,200K,,06s,,$5.00/M,$2500/M,,,,,Screenshot 2026-06-30 at 11.00.11 PM.png,high,
+anthropic/claude-opus-4.6,anthropic,claude-opus-4.6,,1M,,13s,,,,,,,,Screenshot 2026-06-30 at 10.59.56 PM.png,high,
+anthropic/claude-opus-4.7,anthropic,claude-opus-4.7,,1M,,11s,,$26,,,,,,Screenshot 2026-06-30 at 10.59.41 PM.png,high,
+anthropic/claude-opus-4.8,anthropic,claude-opus-4.8,,,,,,$10.00/M,$50.00/M,,,,,Screenshot 2026-06-30 at 10.59.32 PM.png,medium,
+anthropic/claude-sonnet-4,anthropic,claude-sonnet-4,,,,12s,79tps,$3.00/M,$15.00/M,,,,,Screenshot 2026-06-30 at 11.00.39 PM.png,high,
+anthropic/claude-sonnet-4.5,anthropic,claude-sonnet-4.5,,1M,,07s,58tps,$3.00/M,,,,,,Screenshot 2026-06-30 at 11.00.25 PM.png,medium,
+anthropic/claude-sonnet-4.6,anthropic,claude-sonnet-4.6,,1M,,09s,74tps,$3.00/M,$15.00/M,,,,,Screenshot 2026-06-30 at 10.59.53 PM.png,high,
+anthropic/claude-sonnet-5,anthropic,claude-sonnet-5,,1M,,08s,107tps,$2.00/M,$10.00/M,,,,,Screenshot 2026-06-30 at 10.59.32 PM.png,medium,
+arcee-ai/trinity-large-preview,arcee-ai,trinity-large-preview,,131K,,,,$0.25/M,$1.00/M,,,,,Screenshot 2026-06-30 at 10.59.56 PM.png,high,
+arcee-ai/trinity-large-thinking,arcee-ai,trinity-large-thinking,,262K,,03s,,$0.25/M,$0.90/M,,,,,Screenshot 2026-06-30 at 10.59.46 PM.png,high,
+arcee-ai/trinity-mini,arcee-ai,trinity-mini,,131K,,03s,275tps,$0.04/M,$0.15/M,,,,,Screenshot 2026-06-30 at 11.00.11 PM.png,high,
+bfl/flux-2-flex,bfl,flux-2-flex,image,,,,,,,,,,,Screenshot 2026-06-30 at 11.00.11 PM.png,high,
+bfl/flux-2-klein-4b,bfl,flux-2-klein-4b,image,,,,,,,,,,,Screenshot 2026-06-30 at 11.00.00 PM.png,high,
+bfl/flux-2-klein-9b,bfl,flux-2-klein-9b,image,,,,,,,,,,,Screenshot 2026-06-30 at 11.00.00 PM.png,high,
+bfl/flux-2-max,bfl,flux-2-max,image,67K,,,,,,,,,,Screenshot 2026-06-30 at 11.00.03 PM.png,high,
+bfl/flux-2-pro,bfl,flux-2-pro,image,67K,,,,,,,,,,Screenshot 2026-06-30 at 11.00.11 PM.png,high,
+bfl/flux-kontext-pro,bfl,flux-kontext-pro,image,,,,,,,,,,,Screenshot 2026-06-30 at 11.00.39 PM.png,high,
+bfl/flux-pro-1.0-fill,bfl,flux-pro-1.0-fill,image,,,,,,,,,,,Screenshot 2026-06-30 at 11.00.58 PM.png,high,
+bfl/flux-pro-1.1-ultra,bfl,flux-pro-1.1-ultra,image,,,,,,,,,,,Screenshot 2026-06-30 at 11.00.52 PM.png,high,
+bfl/flux-pro-14,bfl,flux-pro-14,image,,,,,,,,,,,Screenshot 2026-06-30 at 11.00.58 PM.png,high,
+bytedance/seed-1.6,bytedance,seed-1.6,,256K,,11s,,$0.25/M,$200/m,,,,,Screenshot 2026-06-30 at 11.00.29 PM.png,medium,
+bytedance/seed-1.8,bytedance,seed-1.8,,,,11s,73tps,$0.25/M,$200/m,,,,,Screenshot 2026-06-30 at 11.00.29 PM.png,high,
+bytedance/seedance-2.0,bytedance,seedance-2.0,video,,,,,,,,,,,Screenshot 2026-06-30 at 10.59.46 PM.png,high,
+bytedance/seedance-2.0-fast,bytedance,seedance-2.0-fast,video,,,,,,,,,,,Screenshot 2026-06-30 at 10.59.46 PM.png,high,
+bytedance/seedance-v1.0-pro,bytedance,seedance-v1.0-pro,video,,,,,,,,,,,Screenshot 2026-06-30 at 11.00.35 PM.png,high,
+bytedance/seedance-v1.0-pro-fast,bytedance,seedance-v1.0-pro-fast,video,,,,,,,,,,,Screenshot 2026-06-30 at 11.00.18 PM.png,high,
+bytedance/seedance-v1.5-pro,bytedance,seedance-v1.5-pro,video,,,,,,,,,,,Screenshot 2026-06-30 at 11.00.03 PM.png,high,
+bytedance/seedream-4.0,bytedance,seedream-4.0,image,,,,,,,,,,,Screenshot 2026-06-30 at 11.00.29 PM.png,medium,
+bytedance/seedream-4.5,bytedance,seedream-4.5,image,,,,,,,,,,,Screenshot 2026-06-30 at 11.00.07 PM.png,high,
+bytedance/seedream-5.0-lite,bytedance,seedream-5.0-lite,image,,,,,,,,,,,Screenshot 2026-06-30 at 10.59.56 PM.png,medium,
+cohere/command-a,cohere,command-a,,256K,,02s,75tps,$2.50/M,$10.00/M,,,,,Screenshot 2026-06-30 at 11.00.48 PM.png,medium,
+cohere/embed-v4.0,cohere,embed-v4.0,embed,128K,,,,$0.12/M,,,,,,Screenshot 2026-06-30 at 11.00.46 PM.png,medium,
+cohere/rerank-v3.5,cohere,rerank-v3.5,rerank,,,,,,,,,,,Screenshot 2026-06-30 at 11.00.52 PM.png,medium,
+cohere/rerank-v4-fast,cohere,rerank-v4-fast,rerank,32K,,,,$2/K,,,,$2/K,,Screenshot 2026-06-30 at 11.00.07 PM.png,medium,
+cohere/rerank-v4-pro,cohere,rerank-v4-pro,rerank,32K,,,,$25/K,,,,$25/K,,Screenshot 2026-06-30 at 11.00.07 PM.png,medium,
+deepseek/deepseek-r1,deepseek,deepseek-r1,,160K,,03s,156tps,$1.35/M,$0.35/M,,,,,Screenshot 2026-06-30 at 11.00.52 PM.png,medium,
+deepseek/deepseek-v3,deepseek,deepseek-v3,,164K,,13s,34tps,$027/M,$0.14/M,,,,,Screenshot 2026-06-30 at 11.00.52 PM.png,medium,Model id normalized from OCR-visible text.
+deepseek/deepseek-v3.1,deepseek,deepseek-v3.1,,164K,,08s,37tps,$0.21/M,$0.13/M,,,,,Screenshot 2026-06-30 at 11.00.29 PM.png,medium,Model id normalized from OCR-visible text.
+deepseek/deepseek-v3.1-terminus,deepseek,deepseek-v3.1-terminus,,131K,,22s,27tps,$0.27/M,$0.14/M,,,,,Screenshot 2026-06-30 at 11.00.29 PM.png,medium,
+deepseek/deepseek-v3.2,deepseek,deepseek-v3.2,,,,,82tps,$0.28/M,,,,,,Screenshot 2026-06-30 at 11.00.07 PM.png,medium,
+deepseek/deepseek-v3.2-thinking,deepseek,deepseek-v3.2-thinking,,164K,,0.9s,60tps,$0.26/M,$0.38/M,,,,,Screenshot 2026-06-30 at 11.00.11 PM.png,medium,
+deepseek/deepseek-v4-flash,deepseek,deepseek-v4-flash,,1M,,13s,126tps,$0.14/M,$00/M,,,,,Screenshot 2026-06-30 at 10.59.41 PM.png,medium,Model id normalized from OCR-visible text.
+deepseek/deepseek-v4-pro,deepseek,deepseek-v4-pro,,1M,,05s,168tps,$0.0/M,,,,,,Screenshot 2026-06-30 at 10.59.41 PM.png,medium,
+google/gemini-2.5-flash,google,gemini-2.5-flash,,1M,,0.4s,194tps,$0.30/M,$2500,,,,,Screenshot 2026-06-30 at 11.00.48 PM.png,high,
+google/gemini-2.5-flash-...-09-2025,google,gemini-2.5-flash-...-09-2025,,,,,,,,,,,,Screenshot 2026-06-30 at 11.00.25 PM.png,low,Model id is visibly ellipsized in the screenshot table.
+google/gemini-2.5-flash-image,google,gemini-2.5-flash-image,image,,,04s,208tps,$0.30/M,$0.03/M,,,,,Screenshot 2026-06-30 at 11.00.29 PM.png,high,
+google/gemini-2.5-flash-lite,google,gemini-2.5-flash-lite,,1M,,02s,243tps,$0.10/M,$001/M,,,,,Screenshot 2026-06-30 at 11.00.35 PM.png,high,
+google/gemini-2.5-pro,google,gemini-2.5-pro,,,,18s,138tps,$1.25/M,$10.00/M,,,,,Screenshot 2026-06-30 at 11.00.48 PM.png,medium,
+google/gemini-3-flash,google,gemini-3-flash,,1M,,,175tps,$0.50/M,$3.00/m,,,,,Screenshot 2026-06-30 at 11.00.03 PM.png,high,
+google/gemini-3-pro-image,google,gemini-3-pro-image,image,66K,,48s,264tps,$2.00/M,,,,,,Screenshot 2026-06-30 at 11.00.29 PM.png,high,
+google/gemini-3-pro-preview,google,gemini-3-pro-preview,,1M,,67s,109tps,$2.00/M,$02/M,,,,,Screenshot 2026-06-30 at 11.00.11 PM.png,high,
+google/gemini-3.1-flash-image,google,gemini-3.1-flash-image,image,,,09s,257tps,$0.50/M,$0.05/M,,,,,Screenshot 2026-06-30 at 10.59.34 PM.png,high,
+google/gemini-3.1-flash-li..-preview,google,gemini-3.1-flash-li..-preview,,1M,,04s,218tps,$0.25/M,$0.03/M,,,,,Screenshot 2026-06-30 at 10.59.53 PM.png,high,
+google/gemini-3.1-flash-lite,google,gemini-3.1-flash-lite,,,,05s,,$0.25/M,$1,$0.03/M,,,,Screenshot 2026-06-30 at 10.59.34 PM.png,high,
+google/gemini-3.1-flash-lite-image,google,gemini-3.1-flash-lite-image,image,66K,,04s,,$0.25/M,,,,,,Screenshot 2026-06-30 at 10.59.32 PM.png,high,Model id normalized from OCR-visible text.
+google/gemini-3.1-pro-preview,google,gemini-3.1-pro-preview,,1M,,47s,115tps,$2.00/M,$12.00/M,,,,,Screenshot 2026-06-30 at 10.59.53 PM.png,high,
+google/gemini-3.5-flash,google,gemini-3.5-flash,,,,23s,183tps,$1.50/M,,,,,,Screenshot 2026-06-30 at 10.59.34 PM.png,high,
+google/gemini-31-flash-i,google,gemini-31-flash-i,,131K,,,258tps,$0.50/M,$3.00/m,,,,,Screenshot 2026-06-30 at 10.59.53 PM.png,high,Model id normalized from OCR-visible text.
+google/gemini-embedding-001,google,gemini-embedding-001,embed,,,,,$0.15/M,,,,,,Screenshot 2026-06-30 at 11.00.39 PM.png,high,
+google/gemma-4-26b-a4b-it,google,gemma-4-26b-a4b-it,,262K,,,83tps,$0.13/M,$001/M,,,,,Screenshot 2026-06-30 at 10.59.46 PM.png,high,
+google/gemma-4-31b-it,google,gemma-4-31b-it,,262K,,,46tps,$0.14/M,$0.40/M,,,,,Screenshot 2026-06-30 at 10.59.46 PM.png,high,
+google/imagen-4.0-fast-,google,imagen-4.0-fast-,image,,,,,,,,,,,Screenshot 2026-06-30 at 11.00.39 PM.png,high,Model id normalized from OCR-visible text.
+google/imagen-4.0-fast-...rate-001,google,imagen-4.0-fast-...rate-001,image,,,,,,,,,,,Screenshot 2026-06-30 at 11.00.39 PM.png,low,Model id is visibly ellipsized in the screenshot table.
+google/imagen-4.0-generate-001,google,imagen-4.0-generate-001,image,,,,,,,,,,,Screenshot 2026-06-30 at 11.00.46 PM.png,high,
+google/imagen-4.0-ultra-,google,imagen-4.0-ultra-,image,,,,,,,,,,,Screenshot 2026-06-30 at 11.00.39 PM.png,high,Model id normalized from OCR-visible text.
+google/imagen-4.0-ultra-...rate-001,google,imagen-4.0-ultra-...rate-001,image,,,,,,,,,,,Screenshot 2026-06-30 at 11.00.39 PM.png,low,Model id is visibly ellipsized in the screenshot table.
+google/text-embedding-005,google,text-embedding-005,embed,,,,,$0.03/M,,,,,,Screenshot 2026-06-30 at 11.00.58 PM.png,high,
+google/text-multilingual-...ding-002,google,text-multilingual-...ding-002,embed,,,,,$0.03/M,,,,,,Screenshot 2026-06-30 at 11.01.06 PM.png,low,Model id is visibly ellipsized in the screenshot table.; Model id normalized from OCR-visible text.
+google/veo-3.0-fast-generate-001,google,veo-3.0-fast-generate-001,video,,,,,,,,,,,Screenshot 2026-06-30 at 11.00.32 PM.png,high,
+google/veo-3.0-generate-001,google,veo-3.0-generate-001,video,,,,,,,,,,,Screenshot 2026-06-30 at 11.00.46 PM.png,high,
+google/veo-3.1-fast-generate-001,google,veo-3.1-fast-generate-001,video,,,,,,,,,,,Screenshot 2026-06-30 at 11.00.18 PM.png,high,Model id normalized from OCR-visible text.
+google/veo-3.1-generate-001,google,veo-3.1-generate-001,video,,,,,,,,,,,Screenshot 2026-06-30 at 11.00.18 PM.png,high,
+inception/mercury-2,inception,mercury-2,,128K,,05s,,$0.25/M,$0.03/M,,,,,Screenshot 2026-06-30 at 10.59.53 PM.png,high,
+inception/mercury-coder-small,inception,mercury-coder-small,code,32K,,0.4s,,$0.25/M,$1.00/M,,,,,Screenshot 2026-06-30 at 11.00.48 PM.png,high,
+interfaze/interfaze-beta,interfaze,interfaze-beta,,1M,,1.0s,159tps,$1.50/M,$3.50/M,,,,,Screenshot 2026-06-30 at 11.00.18 PM.png,medium,
+klingai/kling-v2.5-turbo-i2v,klingai,kling-v2.5-turbo-i2v,video,,,,,,,,,,,Screenshot 2026-06-30 at 11.00.25 PM.png,medium,
+klingai/kling-v2.5-turbo-t2v,klingai,kling-v2.5-turbo-t2v,video,,,,,,,,,,,Screenshot 2026-06-30 at 11.00.25 PM.png,high,
+klingai/kling-v2.6-i2v,klingai,kling-v2.6-i2v,video,,,,,,,,,,,Screenshot 2026-06-30 at 11.00.07 PM.png,high,
+klingai/kling-v2.6-motion-control,klingai,kling-v2.6-motion-control,video,,,,,,,,,,,Screenshot 2026-06-30 at 11.00.03 PM.png,high,
+klingai/kling-v2.6-t2v,klingai,kling-v2.6-t2v,video,,,,,,,,,,,Screenshot 2026-06-30 at 11.00.07 PM.png,medium,
+klingai/kling-v3.0-i2v,klingai,kling-v3.0-i2v,video,,,,,,,,,,,Screenshot 2026-06-30 at 10.59.56 PM.png,high,
+klingai/kling-v3.0-motion-control,klingai,kling-v3.0-motion-control,video,,,,,,,,,,,Screenshot 2026-06-30 at 10.59.53 PM.png,medium,
+klingai/kling-v3.0-t2v,klingai,kling-v3.0-t2v,video,,,,,,,,,,,Screenshot 2026-06-30 at 10.59.56 PM.png,medium,
+kwaipilot/kat-coder-pro-v1,kwaipilot,kat-coder-pro-v1,code,256K,,25s,104tps,$0.30/M,$0.06/M,,,,,Screenshot 2026-06-30 at 11.00.18 PM.png,high,
+kwaipilot/kat-coder-pro-v2,kwaipilot,kat-coder-pro-v2,code,256K,,,,$0.30/M,$120/m,$0.06/M,,,,Screenshot 2026-06-30 at 10.59.46 PM.png,medium,
+meituan/tongcat-flash-chat,meituan,tongcat-flash-chat,,128K,,,,,,,,,,Screenshot 2026-06-30 at 11.00.29 PM.png,medium,
+meituan/tongcat-flash-th,meituan,tongcat-flash-th,,33K,,,,,,,,,,Screenshot 2026-06-30 at 11.00.00 PM.png,medium,Model id normalized from OCR-visible text.
+meta/llama-3.2-11b,meta,llama-3.2-11b,,128K,,02s,83tps,$0.16/M,$0.16/M,,,,,Screenshot 2026-06-30 at 11.00.58 PM.png,medium,
+meta/llama-3.2-1b,meta,llama-3.2-1b,,128K,,02s,88tps,$0.10/M,$0.10/M,,,,,Screenshot 2026-06-30 at 11.00.58 PM.png,medium,
+meta/llama-3.2-3b,meta,llama-3.2-3b,,128K,,02s,53tps,$0.15/M,$0.15/M,,,,,Screenshot 2026-06-30 at 11.00.58 PM.png,medium,
+meta/llama-3.2-90b,meta,llama-3.2-90b,,128K,,03s,63tps,$0.72/M,$0.72/M,,,,,Screenshot 2026-06-30 at 11.00.58 PM.png,high,
+meta/llama-3.3-70b,meta,llama-3.3-70b,,128K,,02s,188tps,$0.59/M,$0.72/M,,,,,Screenshot 2026-06-30 at 11.00.52 PM.png,medium,
+meta/llama-31-70b,meta,llama-31-70b,,131K,,04s,35tps,$0.72/M,$0.72/M,,,,,Screenshot 2026-06-30 at 11.01.02 PM.png,medium,
+meta/llama-31-8b,meta,llama-31-8b,,,,,168tps,$0.02/M,$0.03/M,,,,,Screenshot 2026-06-30 at 11.01.02 PM.png,high,
+meta/llama-4-maverick,meta,llama-4-maverick,,131K,,02s,167tps,$0.24/M,$0.97/M,,,,,Screenshot 2026-06-30 at 11.00.48 PM.png,medium,
+meta/llama-4-scout,meta,llama-4-scout,,131K,,02s,168tps,$0.17/M,$0.66/M,,,,,Screenshot 2026-06-30 at 11.00.48 PM.png,high,
+minimax/minimax-m2,minimax,minimax-m2,,205K,,08s,47tps,$0.30/M,$240/M,,,,,Screenshot 2026-06-30 at 11.00.00 PM.png;Screenshot 2026-06-30 at 11.00.18 PM.png,high,
+minimax/minimax-m21,minimax,minimax-m21,,208K,,04s,149tps,$0.30/M,$120/M,,,,,Screenshot 2026-06-30 at 11.00.00 PM.png,high,
+minimax/minimax-m27,minimax,minimax-m27,,205K,,03s,211tps,$0.15/M,,,,,,Screenshot 2026-06-30 at 10.59.46 PM.png,high,
+minimax/minimax-m3,minimax,minimax-m3,,1M,,12s,186tps,$020/M,$120/M,,,,,Screenshot 2026-06-30 at 10.59.32 PM.png,high,
+mistral/codestral,mistral,codestral,,128K,,03s,135tps,$0.30/M,$0.90/M,,,,,Screenshot 2026-06-30 at 11.01.02 PM.png,medium,
+mistral/codestral-embed,mistral,codestral-embed,,,,,,$0.15/M,,,,,,Screenshot 2026-06-30 at 11.00.39 PM.png,medium,Model id normalized from OCR-visible text.
+mistral/devstral-2,mistral,devstral-2,,256K,,0.4s,64tps,$0.40/M,$2.00/M,,,,,Screenshot 2026-06-30 at 11.00.07 PM.png,medium,Model id normalized from OCR-visible text.
+mistral/devstral-small,mistral,devstral-small,,128K,,04s,55tps,$0.10/M,$0.30/M,,,,,Screenshot 2026-06-30 at 11.00.39 PM.png,medium,Model id normalized from OCR-visible text.
+mistral/devstrat-small-2,mistral,devstrat-small-2,,256K,,04s,75tps,$0.10/M,$0.30/M,,,,,Screenshot 2026-06-30 at 11.00.07 PM.png,medium,Model id normalized from OCR-visible text.
+mistral/magistral-medium,mistral,magistral-medium,,128K,,0.3s,44tps,$2.00/M,$5.00/M,,,,,Screenshot 2026-06-30 at 11.00.35 PM.png,medium,
+mistral/magistrat-small,mistral,magistrat-small,,128K,,04s,86tps,$0.50/M,$1.50/M,,,,,Screenshot 2026-06-30 at 11.00.35 PM.png,medium,Model id normalized from OCR-visible text.
+mistral/ministral-14b,mistral,ministral-14b,,256K,,03s,82tps,$0.20/M,$0.20/M,,,,,Screenshot 2026-06-30 at 11.00.07 PM.png,medium,
+mistral/ministral-3b,mistral,ministral-3b,,128K,,03s,181tps,$0.10/M,$0.10/M,,,,,Screenshot 2026-06-30 at 11.00.58 PM.png,medium,Model id normalized from OCR-visible text.
+mistral/ministral-8b,mistral,ministral-8b,,128K,,03s,109tps,$0.15/M,$0.15/M,,,,,Screenshot 2026-06-30 at 11.00.58 PM.png,medium,Model id normalized from OCR-visible text.
+mistral/mistral-embed,mistral,mistral-embed,,,,,,$0.10/M,,,,,,Screenshot 2026-06-30 at 11.01.06 PM.png,medium,Model id normalized from OCR-visible text.
+mistral/mistral-large-3,mistral,mistral-large-3,,256K,,05s,50tps,$0.50/M,$1.50/M,,,,,Screenshot 2026-06-30 at 11.00.07 PM.png,medium,
+mistral/mistral-medium,mistral,mistral-medium,,128K,,03s,99tps,$0.40/M,$2.00/M,,,,,Screenshot 2026-06-30 at 11.00.46 PM.png,medium,Model id normalized from OCR-visible text.
+mistral/mistral-medium-3.5,mistral,mistral-medium-3.5,,256K,,03s,,$1.50/M,$7.50/M,,,,,Screenshot 2026-06-30 at 10.59.34 PM.png,medium,
+mistral/mistrat-nemo,mistral,mistrat-nemo,,131K,,03s,74tps,$0.15/M,$0.15/M,,,,,Screenshot 2026-06-30 at 11.01.02 PM.png,medium,Model id normalized from OCR-visible text.
+mistral/mistrat-smalt,mistral,mistrat-smalt,,,,03s,172tps,$0.10/M,$0.30/M,,,,,Screenshot 2026-06-30 at 11.00.58 PM.png,medium,Model id normalized from OCR-visible text.
+mistral/pixtral-12b,mistral,pixtral-12b,,,,03s,84tps,$0.15/M,$0.15/M,,,,,Screenshot 2026-06-30 at 11.00.58 PM.png,medium,Model id normalized from OCR-visible text.
+mistral/pixtrat-targe,mistral,pixtrat-targe,,128K,,05s,66tps,$2.00/M,$6.00/M,,,,,Screenshot 2026-06-30 at 11.00.52 PM.png,medium,Model id normalized from OCR-visible text.
+moonshotai/kimi-k2,moonshotai,kimi-k2,,131K,,1.0s,37tps,$0.57/M,$2.30/M,,,,,Screenshot 2026-06-30 at 11.00.35 PM.png,medium,
+moonshotai/kimi-k2-thinking,moonshotai,kimi-k2-thinking,,216K,,06s,23tps,$0.47/M,$0.14/M,,,,,Screenshot 2026-06-30 at 11.00.18 PM.png,medium,
+moonshotai/kimi-k2.5,moonshotai,kimi-k2.5,,,,03s,84tps,$0.60/M,$3.00/m,$0.1/M,,,,Screenshot 2026-06-30 at 10.59.56 PM.png,medium,
+moonshotai/kimi-k2.6,moonshotai,kimi-k2.6,,262K,,02s,129tps,$0.95/M,$4,,,,,Screenshot 2026-06-30 at 10.59.41 PM.png,medium,
+moonshotai/kimi-k2.7-co,moonshotai,kimi-k2.7-co,,262K,,08s,192tps,$1.90/M,$0.38/M,,,,,Screenshot 2026-06-30 at 10.59.32 PM.png,medium,Model id normalized from OCR-visible text.
+moonshotai/kimi-k2.7-code,moonshotai,kimi-k2.7-code,,,,1.0s,66tps,$0.74/M,$0.15/M,,,,,Screenshot 2026-06-30 at 10.59.32 PM.png,medium,Model id normalized from OCR-visible text.
+morph/morph-v3-fast,morph,morph-v3-fast,,82K,,0.3s,5266tps,$0.80/M,$1.20/M,,,,,Screenshot 2026-06-30 at 11.00.35 PM.png,medium,
+morph/morph-v3-large,morph,morph-v3-large,,82K,,0.3s,14tps,$0.90/M,$1.90/M,,,,,Screenshot 2026-06-30 at 11.00.35 PM.png,medium,
+nvidia/nemotron-3-nano-30b-a3b,nvidia,nemotron-3-nano-30b-a3b,,262K,,03s,84tps,$0.05/M,$0.24/M,,,,,Screenshot 2026-06-30 at 11.00.03 PM.png,medium,Model id normalized from OCR-visible text.
+nvidia/nemotron-3-supe,nvidia,nemotron-3-supe,,256K,,12s,286tps,$0.15/M,$0.06/M,,,,,Screenshot 2026-06-30 at 10.59.50 PM.png,medium,Model id normalized from OCR-visible text.
+nvidia/nemotron-3-uttra...50b-a55b,nvidia,nemotron-3-uttra...50b-a55b,,,,02s,152tps,$0.37/M,$0.12/M,,,,,Screenshot 2026-06-30 at 10.59.32 PM.png,low,Model id is visibly ellipsized in the screenshot table.; Model id normalized from OCR-visible text.
+nvidia/nemotron-nano-12b-v2-vt,nvidia,nemotron-nano-12b-v2-vt,,131K,,02s,296tps,$0.20/M,$0.60/M,,,,,Screenshot 2026-06-30 at 11.00.18 PM.png,medium,Model id normalized from OCR-visible text.
+nvidia/nemotron-nano-9b-v2,nvidia,nemotron-nano-9b-v2,,131K,,02s,152tps,$0.06/M,$0.23/M,,,,,Screenshot 2026-06-30 at 11.00.29 PM.png,medium,
+openai/gpt-3.5-turbo,openai,gpt-3.5-turbo,,16K,,1.0s,,$0.50/M,$1.50/M,,,,,Screenshot 2026-06-30 at 11.01.06 PM.png,medium,
+openai/gpt-3.5-turbo-instruct,openai,gpt-3.5-turbo-instruct,,8K,,,,$1.50/M,$2.00/M,,,,,Screenshot 2026-06-30 at 11.01.06 PM.png,medium,
+openai/gpt-4-turbo,openai,gpt-4-turbo,,128K,,,34tps,$10.00/M,$30.00/M,,,,,Screenshot 2026-06-30 at 11.01.02 PM.png,medium,
+openai/gpt-4.1,openai,gpt-4.1,,,,05s,102tps,$2.00/M,$08/M,,,,,Screenshot 2026-06-30 at 11.00.48 PM.png,medium,
+openai/gpt-4.1-mini,openai,gpt-4.1-mini,,,,07s,122tps,$0.40/M,$0.1/M,,,,,Screenshot 2026-06-30 at 11.00.46 PM.png,high,Model id normalized from OCR-visible text.
+openai/gpt-4.1-nano,openai,gpt-4.1-nano,,1M,,,43tps,$0.10/M,$0.03/M,,,,,Screenshot 2026-06-30 at 11.00.46 PM.png,medium,
+openai/gpt-4o,openai,gpt-4o,,128K,,05s,108tps,$2.50/M,$1.26/M,,,,,Screenshot 2026-06-30 at 11.01.02 PM.png,high,
+openai/gpt-4o-mini,openai,gpt-4o-mini,,128K,,06s,60tps,$0.15/M,$0.07/M,,,,,Screenshot 2026-06-30 at 11.01.02 PM.png,medium,
+openai/gpt-4o-mini-search-preview,openai,gpt-4o-mini-search-preview,,128K,,21s,119tps,$0.15/M,$0.60/M,,,,,Screenshot 2026-06-30 at 11.00.48 PM.png,high,
+openai/gpt-4o-mini-transcribe,openai,gpt-4o-mini-transcribe,transcription,,,,,$5.00/M,,,,,,Screenshot 2026-06-30 at 11.01.02 PM.png,medium,Model id normalized from OCR-visible text.
+openai/gpt-4o-transcribe,openai,gpt-4o-transcribe,transcription,,,,,$10.00/M,,,,,,Screenshot 2026-06-30 at 11.01.02 PM.png,medium,
+openai/gpt-5,openai,gpt-5,,400K,,58s,108tps,$1.25/M,$0.13/M,,,,,Screenshot 2026-06-30 at 11.00.32 PM.png,medium,
+openai/gpt-5-chat,openai,gpt-5-chat,,,,03s,87tps,$1.25/M,$0.13/M,,,,,Screenshot 2026-06-30 at 11.00.32 PM.png,medium,
+openai/gpt-5-codex,openai,gpt-5-codex,code,400K,,07s,64tps,$1.25/M,$0.13/M,,,,,Screenshot 2026-06-30 at 11.00.29 PM.png,medium,
+openai/gpt-5-mini,openai,gpt-5-mini,,400K,,44s,135tps,$0.25/M,$003/M,,,,,Screenshot 2026-06-30 at 11.00.32 PM.png,medium,
+openai/gpt-5-nano,openai,gpt-5-nano,,,,48s,164tps,$0.05/M,$0.01/M,,,,,Screenshot 2026-06-30 at 11.00.32 PM.png,medium,Model id normalized from OCR-visible text.
+openai/gpt-5-pro,openai,gpt-5-pro,,400K,,1042s,,$15.00/M,$120.00/M,,,,,Screenshot 2026-06-30 at 11.00.25 PM.png,medium,
+openai/gpt-5.1-codex,openai,gpt-5.1-codex,code,400K,,05s,69tps,$1.25/M,,,,,,Screenshot 2026-06-30 at 11.00.18 PM.png,medium,
+openai/gpt-5.1-codex-max,openai,gpt-5.1-codex-max,code,400K,,22s,,$1.25/M,$0.13/M,,,,,Screenshot 2026-06-30 at 11.00.11 PM.png,medium,
+openai/gpt-5.1-codex-mini,openai,gpt-5.1-codex-mini,code,,,05s,118tps,$0.25/M,$0.03/M,,,,,Screenshot 2026-06-30 at 11.00.11 PM.png,medium,
+openai/gpt-5.1-instant,openai,gpt-5.1-instant,,128K,,06s,118tps,$1.25/M,$0.13/M,,,,,Screenshot 2026-06-30 at 11.00.11 PM.png,medium,Model id normalized from OCR-visible text.
+openai/gpt-5.1-thinking,openai,gpt-5.1-thinking,,400K,,07s,67tps,$1.25/M,$10.00/M,,,,,Screenshot 2026-06-30 at 11.00.11 PM.png,medium,
+openai/gpt-5.2,openai,gpt-5.2,,400K,,05s,65tps,$1.75/M,$0.17/M,,,,,Screenshot 2026-06-30 at 11.00.03 PM.png,medium,
+openai/gpt-5.2-chat,openai,gpt-5.2-chat,,128K,,06s,103tps,$1.75/M,$14.00/M,,,,,Screenshot 2026-06-30 at 11.00.07 PM.png,medium,
+openai/gpt-5.2-codex,openai,gpt-5.2-codex,code,400K,,04s,,$1.75/M,$0.17/M,,,,,Screenshot 2026-06-30 at 11.00.00 PM.png,medium,
+openai/gpt-5.2-pro,openai,gpt-5.2-pro,,400K,,117s,,$21.00/M,$168.00/M,,,,,Screenshot 2026-06-30 at 11.00.07 PM.png,medium,
+openai/gpt-5.3-chat,openai,gpt-5.3-chat,,128K,,15s,,$1.75/M,$0.17/M,,,,,Screenshot 2026-06-30 at 10.59.53 PM.png,medium,
+openai/gpt-5.3-codex,openai,gpt-5.3-codex,code,,,,113tps,$1.75/M,$0.17/M,,,,,Screenshot 2026-06-30 at 10.59.56 PM.png,medium,
+openai/gpt-5.4,openai,gpt-5.4,,14M,,42s,,$250/M,$1,,,,,Screenshot 2026-06-30 at 10.59.50 PM.png,medium,
+openai/gpt-5.4-mini,openai,gpt-5.4-mini,,,,16s,150tps,$0.75/M,,,,,,Screenshot 2026-06-30 at 10.59.46 PM.png,medium,
+openai/gpt-5.4-nano,openai,gpt-5.4-nano,,,,05s,191tps,$0.20/M,$0.02/M,,,,,Screenshot 2026-06-30 at 10.59.50 PM.png,medium,
+openai/gpt-5.4-pro,openai,gpt-5.4-pro,,,,,,$30.00/M,$180.00/M,,,,,Screenshot 2026-06-30 at 10.59.53 PM.png,medium,
+openai/gpt-5.5,openai,gpt-5.5,,1M,,,,$5.00/M,$20.00/m,,,,,Screenshot 2026-06-30 at 10.59.41 PM.png,medium,
+openai/gpt-5.5-pro,openai,gpt-5.5-pro,,1M,,94s,,$30.00/M,$180.00/M,,,,,Screenshot 2026-06-30 at 10.59.41 PM.png,medium,
+openai/gpt-image-1,openai,gpt-image-1,image,,,,,$1.25/M,,,,,,Screenshot 2026-06-30 at 11.00.48 PM.png,medium,
+openai/gpt-image-1-mini,openai,gpt-image-1-mini,image,,,,,$02/M,,,,,,Screenshot 2026-06-30 at 11.00.18 PM.png,medium,
+openai/gpt-image-1.5,openai,gpt-image-1.5,image,,,,,$1.25/M,,,,,,Screenshot 2026-06-30 at 11.00.03 PM.png,medium,Model id normalized from OCR-visible text.
+openai/gpt-image-2,openai,gpt-image-2,image,,,,,$1.25/M,,,,,,Screenshot 2026-06-30 at 10.59.41 PM.png,medium,
+openai/gpt-oss-120b,openai,gpt-oss-120b,,,,02s,477tps,$0.35/M,,,,,,Screenshot 2026-06-30 at 11.00.32 PM.png,medium,
+openai/gpt-oss-20b,openai,gpt-oss-20b,,,,02s,957tps,$0.07/M,$0.04/M,,,,,Screenshot 2026-06-30 at 11.00.32 PM.png,medium,
+openai/gpt-oss-safeguard-20b,openai,gpt-oss-safeguard-20b,,131K,,,,$0.07/M,$0.04/M,,,,,Screenshot 2026-06-30 at 11.00.18 PM.png,medium,
+openai/gpt-realtime-1.5,openai,gpt-realtime-1.5,realtime,,,,,$16.00/M,$0.4/M,,,,,Screenshot 2026-06-30 at 10.59.53 PM.png,medium,
+openai/gpt-realtime-2,openai,gpt-realtime-2,realtime,,,,,$0.4/M,,,,,,Screenshot 2026-06-30 at 10.59.34 PM.png,medium,
+openai/gpt-realtime-mini,openai,gpt-realtime-mini,realtime,,,,,$0.60/M,,,,,,Screenshot 2026-06-30 at 11.00.18 PM.png,medium,
+openai/o1,openai,o1,,,,06s,,$15.00/M,$75/M,,,,,Screenshot 2026-06-30 at 11.00.52 PM.png,medium,Model id normalized from OCR-visible text.
+openai/o3,openai,o3,,200K,,06s,153tps,$2.00/M,$0.5/M,,,,,Screenshot 2026-06-30 at 11.00.46 PM.png,medium,
+openai/o3-deep-research,openai,o3-deep-research,,,,,,$10.00/M,$25/M,,,,,Screenshot 2026-06-30 at 11.00.35 PM.png,medium,
+openai/o3-mini,openai,o3-mini,,,,16s,,$1.10/M,$0.55/M,,,,,Screenshot 2026-06-30 at 11.00.48 PM.png,medium,
+openai/o3-pro,openai,o3-pro,,200K,,,,$20.00/M,$80.00/M,,,,,Screenshot 2026-06-30 at 11.00.39 PM.png,medium,
+openai/o4-mini,openai,o4-mini,,,,18s,167tps,$1.10/M,$0.28/M,,,,,Screenshot 2026-06-30 at 11.00.46 PM.png,medium,
+openai/text-embedding-3-large,openai,text-embedding-3-large,embed,,,,,$0.13/M,,,,,,Screenshot 2026-06-30 at 11.01.06 PM.png,high,
+openai/text-embedding-3-small,openai,text-embedding-3-small,embed,,,,,$0.02/M,,,,,,Screenshot 2026-06-30 at 11.01.06 PM.png,medium,
+openai/text-embedding-ada-002,openai,text-embedding-ada-002,embed,,,,,$0.10/M,,,,,,Screenshot 2026-06-30 at 11.01.06 PM.png,medium,
+openai/tts-1,openai,tts-1,speech,1M,,,,$15.00/1M chars,,,,,,Screenshot 2026-06-30 at 11.01.06 PM.png,medium,
+openai/tts-1-hd,openai,tts-1-hd,speech,1M,,,,$30.00/1M chars,,,,,,Screenshot 2026-06-30 at 11.01.06 PM.png,medium,
+openai/whisper-1,openai,whisper-1,transcription,,,,,$0.36/hour,,,,,,Screenshot 2026-06-30 at 11.01.06 PM.png,medium,
+perplexity/sonar,perplexity,sonar,,127K,,,121tps,$1.00/M,$1.00/M,,,$5/K*,,Screenshot 2026-06-30 at 11.00.48 PM.png,medium,
+perplexity/sonar-pro,perplexity,sonar-pro,,200K,,08s,102tps,$3.00/M,$15.00/M,,,$6/K*,,Screenshot 2026-06-30 at 11.00.48 PM.png,medium,
+perplexity/sonar-reasoning-pro,perplexity,sonar-reasoning-pro,,127K,,7.6s,95tps,$2.00/M,$8.00/M,,,$6/K*,,Screenshot 2026-06-30 at 11.00.48 PM.png,medium,
+prodia/flux-fast-schnell,prodia,flux-fast-schnell,image,,,,,,,,,,,Screenshot 2026-06-30 at 11.00.58 PM.png,high,
+quiverai/arrow-1.1,quiverai,arrow-1.1,,131K,,,,,,,,,,Screenshot 2026-06-30 at 10.59.41 PM.png,high,
+recraft/recraft-v2,recraft,recraft-v2,image,,,,,,,,,,,Screenshot 2026-06-30 at 11.01.06 PM.png,high,
+recraft/recraft-v3,recraft,recraft-v3,image,,,,,,,,,,,Screenshot 2026-06-30 at 11.00.58 PM.png,high,
+recraft/recraft-v4,recraft,recraft-v4,image,,,,,,,,,,,Screenshot 2026-06-30 at 10.59.53 PM.png,high,
+recraft/recraft-v4-pro,recraft,recraft-v4-pro,image,,,,,,,,,,,Screenshot 2026-06-30 at 10.59.53 PM.png,high,
+recraft/recraft-v4.1-pro,recraft,recraft-v4.1-pro,image,,,,,,,,,,,Screenshot 2026-06-30 at 10.59.34 PM.png,high,
+recraft/recraft-v4.1-utility,recraft,recraft-v4.1-utility,image,,,,,,,,,,,Screenshot 2026-06-30 at 10.59.34 PM.png,medium,
+recraft/recraft-v4.1-utility-pro,recraft,recraft-v4.1-utility-pro,image,,,,,,,,,,,Screenshot 2026-06-30 at 10.59.34 PM.png,high,
+recraft/recraft-v41,recraft,recraft-v41,image,,,,,,,,,,,Screenshot 2026-06-30 at 10.59.34 PM.png,high,
+sakana/fugu-ultra,sakana,fugu-ultra,,1M,,11.6s,,$5.00/M,$30.00/M,,,,,Screenshot 2026-06-30 at 10.59.32 PM.png,medium,Model id normalized from OCR-visible text.
+stepfun/step-3.5-flash,stepfun,step-3.5-flash,,262K,,03s,185tps,$0.09/M,$0.30/M,,,,,Screenshot 2026-06-30 at 10.59.56 PM.png,medium,
+stepfun/step-3.7-flash,stepfun,step-3.7-flash,,256K,,19s,160tps,$020/M,$0.04/M,,,,,Screenshot 2026-06-30 at 10.59.34 PM.png,medium,
+voyage/rerank-2.5,voyage,rerank-2.5,rerank,32K,,,,$0.05/M,,,,,,Screenshot 2026-06-30 at 11.00.32 PM.png,medium,
+voyage/rerank-2.5-lite,voyage,rerank-2.5-lite,rerank,,,,,$0.02/M,,,,,,Screenshot 2026-06-30 at 11.00.32 PM.png,medium,
+voyage/voyage-3-large,voyage,voyage-3-large,,,,,,$0.18/M,,,,,,Screenshot 2026-06-30 at 11.00.52 PM.png,medium,
+voyage/voyage-3.5,voyage,voyage-3.5,,,,,,$0.06/M,,,,,,Screenshot 2026-06-30 at 11.00.39 PM.png,medium,
+voyage/voyage-3.5-lite,voyage,voyage-3.5-lite,,,,,,$0.02/M,,,,,,Screenshot 2026-06-30 at 11.00.46 PM.png,medium,
+voyage/voyage-4,voyage,voyage-4,,,,,,$0.06/M,,,,,,Screenshot 2026-06-30 at 11.00.00 PM.png,medium,
+voyage/voyage-4-large,voyage,voyage-4-large,,32K,,,,$0.12/M,,,,,,Screenshot 2026-06-30 at 11.00.00 PM.png,medium,
+voyage/voyage-4-lite,voyage,voyage-4-lite,,32K,,,,$0.02/M,,,,,,Screenshot 2026-06-30 at 11.00.00 PM.png,medium,
+voyage/voyage-code-2,voyage,voyage-code-2,code,,,,,$0.12/M,,,,,,Screenshot 2026-06-30 at 11.01.06 PM.png,medium,
+voyage/voyage-code-3,voyage,voyage-code-3,code,,,,,$0.18/M,,,,,,Screenshot 2026-06-30 at 11.00.52 PM.png,medium,
+voyage/voyage-finance-2,voyage,voyage-finance-2,,,,,,$0.12/M,,,,,,Screenshot 2026-06-30 at 11.01.02 PM.png,medium,
+voyage/voyage-law-2,voyage,voyage-law-2,,,,,,$0.12/M,,,,,,Screenshot 2026-06-30 at 11.01.02 PM.png,medium,
+xai/grok-4.20-multi-agent,xai,grok-4.20-multi-agent,,2M,,13s,,$1.25/M,$02/M,,,,,Screenshot 2026-06-30 at 10.59.50 PM.png,medium,
+xai/grok-4.20-multi-agent-beta,xai,grok-4.20-multi-agent-beta,,2M,,,,$1.25/M,$02/M,,,,,Screenshot 2026-06-30 at 10.59.50 PM.png,medium,
+xai/grok-4.20-non-reasoning,xai,grok-4.20-non-reasoning,,,,03s,197tps,$1.25/M,$2,,,,,Screenshot 2026-06-30 at 10.59.50 PM.png,high,
+xai/grok-4.20-non-reasoning-beta,xai,grok-4.20-non-reasoning-beta,,2M,,,182tps,$1.25/M,$02/M,,,,,Screenshot 2026-06-30 at 10.59.50 PM.png,medium,
+xai/grok-4.20-reasoning,xai,grok-4.20-reasoning,,,,04s,252tps,$1.25/M,$2.50/M,,,,,Screenshot 2026-06-30 at 10.59.50 PM.png,medium,
+xai/grok-4.20-reasoning-beta,xai,grok-4.20-reasoning-beta,,2M,,04s,286tps,$1.25/M,$250,,,,,Screenshot 2026-06-30 at 10.59.50 PM.png,high,
+xai/grok-4.3,xai,grok-4.3,,1M,,1.0s,132tps,$1.25/M,$02/M,,,,,Screenshot 2026-06-30 at 10.59.34 PM.png,high,
+xai/grok-build-0.1,xai,grok-build-0.1,,256K,,05s,159tps,$1.00/M,$200/m,,,,,Screenshot 2026-06-30 at 10.59.34 PM.png,medium,
+xai/grok-imagine-image,xai,grok-imagine-image,image,,,,,,,,,,,Screenshot 2026-06-30 at 10.59.56 PM.png,high,
+xai/grok-imagine-video,xai,grok-imagine-video,video,,,,,,,,,,,Screenshot 2026-06-30 at 10.59.56 PM.png,medium,
+xai/grok-imagine-video-1.5,xai,grok-imagine-video-1.5,video,,,,,$0.01/img,,,,,,Screenshot 2026-06-30 at 10.59.32 PM.png,high,
+xai/grok-imagine-video-1.5-preview,xai,grok-imagine-video-1.5-preview,video,,,,,$0.01/img,,,,,,Screenshot 2026-06-30 at 10.59.32 PM.png,high,
+xai/grok-stt,xai,grok-stt,transcription,,,,,$0.10/hour,,,,,,Screenshot 2026-06-30 at 10.59.50 PM.png,medium,
+xai/grok-tts,xai,grok-tts,speech,1M,,,,$15.00/1M chars,,,,,,Screenshot 2026-06-30 at 10.59.50 PM.png,medium,
+xai/grok-voice-think-fast-1.0,xai,grok-voice-think-fast-1.0,,,,,,$2.00,,,,,,Screenshot 2026-06-30 at 10.59.41 PM.png,medium,
+xiaomi/mimo-v2-flash,xiaomi,mimo-v2-flash,,262K,,,,$0.10/M,$0.01/M,,,,,Screenshot 2026-06-30 at 11.00.03 PM.png,medium,
+xiaomi/mimo-v2-pro,xiaomi,mimo-v2-pro,,1M,,,,$1.00/M,$3.00/M,,,,,Screenshot 2026-06-30 at 10.59.46 PM.png,medium,
+xiaomi/mimo-v2.5,xiaomi,mimo-v2.5,,14M,,07s,183tps,$0.14/M,$0.0/M,,,,,Screenshot 2026-06-30 at 10.59.41 PM.png,medium,
+xiaomi/mimo-v2.5-pro,xiaomi,mimo-v2.5-pro,,1.1M,,41s,107tps,$0.43/M,$0.87/M,,,,,Screenshot 2026-06-30 at 10.59.41 PM.png,medium,
+zai/glm-4.5,zai,glm-4.5,,128K,,08s,87tps,$0.60/M,$2207,$0.21/M,,,,Screenshot 2026-06-30 at 11.00.32 PM.png;Screenshot 2026-06-30 at 11.00.35 PM.png,high,Model id normalized from OCR-visible text.
+zai/glm-4.5-air,zai,glm-4.5-air,,,,08s,66tps,$0.20/M,$0.03/M,,,,,Screenshot 2026-06-30 at 11.00.35 PM.png,high,Model id normalized from OCR-visible text.
+zai/glm-4.5v,zai,glm-4.5v,,66K,,12s,59tps,$0.60/M,$0.1/M,,,,,Screenshot 2026-06-30 at 11.00.32 PM.png,high,Model id normalized from OCR-visible text.
+zai/glm-4.6,zai,glm-4.6,,208K,,04s,119tps,$0.60/M,$2207,,,,,Screenshot 2026-06-30 at 11.00.25 PM.png,high,Model id normalized from OCR-visible text.
+zai/glm-4.6v,zai,glm-4.6v,,128K,,33s,73tps,$0.30/M,$0.90/M,,,,,Screenshot 2026-06-30 at 11.00.25 PM.png,high,Model id normalized from OCR-visible text.
+zai/glm-4.6v-flash,zai,glm-4.6v-flash,,128K,,15s,111tps,,,,,,,Screenshot 2026-06-30 at 11.00.25 PM.png,high,Model id normalized from OCR-visible text.
+zai/glm-4.7,zai,glm-4.7,,205K,,02s,943tps,$2.25/M,$275/m,$225/M,,,,Screenshot 2026-06-30 at 11.00.00 PM.png,high,Model id normalized from OCR-visible text.
+zai/glm-4.7-flash,zai,glm-4.7-flash,,,,,257tps,$0.07/M,$0.01/M,,,,,Screenshot 2026-06-30 at 11.00.00 PM.png,high,Model id normalized from OCR-visible text.
+zai/glm-4.7-flashx,zai,glm-4.7-flashx,,200K,,,168tps,$0.06/M,,,,,,Screenshot 2026-06-30 at 11.00.00 PM.png,high,
+zai/glm-5,zai,glm-5,,,,06s,103tps,$0.80/M,$2,,,,,Screenshot 2026-06-30 at 10.59.56 PM.png,medium,Model id normalized from OCR-visible text.
+zai/glm-5-turbo,zai,glm-5-turbo,,,,47s,48tps,$1.20/M,$024/M,,,,,Screenshot 2026-06-30 at 10.59.50 PM.png,high,Model id normalized from OCR-visible text.
+zai/glm-5.1,zai,glm-5.1,,205K,,0.4s,184tps,$1.30/M,$026/M,,,,,Screenshot 2026-06-30 at 10.59.46 PM.png,high,Model id normalized from OCR-visible text.
+zai/glm-5.2,zai,glm-5.2,,1M,,11s,166tps,$0.95/M,$3.0,,,,,Screenshot 2026-06-30 at 10.59.32 PM.png,high,Model id normalized from OCR-visible text.
+zai/glm-5.2-fast,zai,glm-5.2-fast,,1M,,,149tps,$3.00/M,,,,,,Screenshot 2026-06-30 at 10.59.32 PM.png,medium,
+zai/glm-5v-turbo,zai,glm-5v-turbo,,200K,,1.0s,139tps,$1.20/M,$0.24/M,,,,,Screenshot 2026-06-30 at 10.59.46 PM.png,high,Model id normalized from OCR-visible text.

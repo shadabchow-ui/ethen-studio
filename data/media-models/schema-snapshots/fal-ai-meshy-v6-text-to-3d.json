@@ -1,0 +1,219 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/meshy/v6/text-to-3d",
+  "task": "3d-generation",
+  "source_url": "https://fal.ai/models/fal-ai/meshy/v6/text-to-3d",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fmeshy%2Fv6%2Ftext-to-3d",
+  "retrieved_at": "2026-09-23T14:37:19.310Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "text-to-3d",
+  "bytes_sha256": "1845f85a26fc4cba5e03890053536c0c5d03532c7d5f6bbe7d02b0feec61d458",
+  "queue_path": "/fal-ai/meshy/v6/text-to-3d",
+  "input_name": "MeshyV6TextTo3dInput",
+  "input": {
+    "$refName": "MeshyV6TextTo3dInput",
+    "type": "object",
+    "description": "Input for Text to 3D conversion",
+    "properties": {
+      "enable_safety_checker": {
+        "type": "boolean",
+        "default": true,
+        "description": "If set to true, input data will be checked for safety before processing."
+      },
+      "enable_rigging": {
+        "type": "boolean",
+        "default": false,
+        "description": "Automatically rig the generated model as a humanoid character. Includes basic walking and running animations. Best results with humanoid characters that have clearly defined limbs."
+      },
+      "mode": {
+        "type": "string",
+        "enum": [
+          "preview",
+          "full"
+        ],
+        "default": "full",
+        "description": "Generation mode. 'preview' returns untextured geometry only, 'full' returns textured model (preview + refine)."
+      },
+      "texture_prompt": {
+        "description": "Additional text prompt to guide the texturing process (only used in 'full' mode)",
+        "anyOf": [
+          {
+            "type": "string",
+            "maxLength": 600
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "model_type": {
+        "type": "string",
+        "enum": [
+          "standard",
+          "lowpoly",
+          "smart-topology"
+        ],
+        "default": "standard",
+        "description": "Type of 3D mesh generation. 'standard' produces a regular high-detail mesh; 'lowpoly' produces a low-poly mesh optimized for cleaner polygons; 'smart-topology' uses Meshy-T2 for clean, natively separated parts on the geometry (preview) step. When set to 'lowpoly', the remesh controls (topology, targ"
+      },
+      "animation_action_id": {
+        "type": "integer",
+        "default": 92,
+        "description": "Animation preset ID from Meshy's library. Only used when enable_animation is true; in that case it must be in [0, 696] (``0`` is the \"Idle\" preset) and is otherwise rejected with a 422. See https://docs.meshy.ai/en/api/animation-library for available action IDs."
+      },
+      "should_remesh": {
+        "type": "boolean",
+        "default": true,
+        "description": "Whether to enable the remesh phase. When false, returns unprocessed triangular mesh."
+      },
+      "prompt": {
+        "type": "string",
+        "maxLength": 600,
+        "description": "Describe what kind of object the 3D model is. Maximum 600 characters."
+      },
+      "target_polycount": {
+        "type": "integer",
+        "default": 30000,
+        "minimum": 100,
+        "maximum": 300000,
+        "description": "Target number of polygons in the generated model. When model_type is 'smart-topology' and this is left unset, Meshy's lower smart-topology default (4,000) is used instead; smart topology accepts at most 15,000."
+      },
+      "texture_image_url": {
+        "description": "2D image to guide the texturing process (only used in 'full' mode)",
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "enable_animation": {
+        "type": "boolean",
+        "default": false,
+        "description": "Apply an animation preset to the rigged model. Requires enable_rigging to be true."
+      },
+      "enable_prompt_expansion": {
+        "type": "boolean",
+        "default": false,
+        "description": "Whether to enable prompt expansion. This will use a large language model to expand the prompt with additional details while maintaining the original meaning."
+      },
+      "enable_pbr": {
+        "type": "boolean",
+        "default": false,
+        "description": "Generate PBR Maps (metallic, roughness, normal) in addition to base color."
+      },
+      "topology": {
+        "type": "string",
+        "enum": [
+          "quad",
+          "triangle"
+        ],
+        "default": "triangle",
+        "description": "Specify the topology of the generated model. Quad for smooth surfaces, Triangle for detailed geometry."
+      },
+      "symmetry_mode": {
+        "type": "string",
+        "enum": [
+          "off",
+          "auto",
+          "on"
+        ],
+        "default": "auto",
+        "description": "Controls symmetry behavior during model generation."
+      },
+      "seed": {
+        "description": "Seed for reproducible results. Same prompt and seed usually generate the same result.",
+        "anyOf": [
+          {
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "is_a_t_pose": {
+        "type": "boolean",
+        "default": false,
+        "description": "Deprecated: use pose_mode instead. When true, generates a T-pose model."
+      },
+      "rigging_height_meters": {
+        "type": "number",
+        "default": 1.7,
+        "description": "Approximate height of the character in meters. Only used when enable_rigging is true."
+      },
+      "pose_mode": {
+        "type": "string",
+        "enum": [
+          "a-pose",
+          "t-pose",
+          ""
+        ],
+        "default": "",
+        "description": "Pose mode for the generated model. 'a-pose' generates an A-pose, 't-pose' generates a T-pose, empty string for no specific pose."
+      }
+    },
+    "required": [
+      "prompt"
+    ]
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs."
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics."
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "MeshyV6TextTo3dInput",
+    "MeshyV6TextTo3dOutput",
+    "File",
+    "ModelUrls",
+    "BasicAnimations",
+    "TextureFiles"
+  ]
+}

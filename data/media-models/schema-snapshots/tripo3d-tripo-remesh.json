@@ -1,0 +1,119 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "tripo3d/tripo/remesh",
+  "task": "3d-generation",
+  "source_url": "https://fal.ai/models/tripo3d/tripo/remesh",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=tripo3d%2Ftripo%2Fremesh",
+  "retrieved_at": "2026-09-23T14:38:17.034Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "3d-to-3d",
+  "bytes_sha256": "234fc2bde2a72f21201f3430385944a48880b9a3521716c8e8349ab27529e130",
+  "queue_path": "/tripo3d/tripo/remesh",
+  "input_name": "TripoRemeshInput",
+  "input": {
+    "$refName": "TripoRemeshInput",
+    "type": "object",
+    "description": "Input for the Smart low poly / remesh (``highpoly_to_lowpoly``) task.\n\nRetopologises a high-poly 3D model into a clean, lower-poly mesh. The input\nmodel is imported into Tripo first (``import_model``), then remeshed.",
+    "properties": {
+      "quad": {
+        "type": "boolean",
+        "default": false,
+        "description": "Generate quad (4-sided) mesh topology instead of triangles. Forces FBX output. When enabled and 'face_limit' is unset, 'face_limit' defaults to 10000."
+      },
+      "bake": {
+        "type": "boolean",
+        "default": true,
+        "description": "Bake textures onto the remeshed model during generation."
+      },
+      "mesh_url": {
+        "type": "string",
+        "description": "URL of the input 3D model to remesh. Supported formats: GLB, OBJ, FBX, STL (max 150MB)."
+      },
+      "face_limit": {
+        "description": "Target face count of the remeshed model. Range 500-20000 (500-10000 when 'quad' is true). If unset, the model determines the count adaptively.",
+        "anyOf": [
+          {
+            "type": "integer",
+            "minimum": 500,
+            "maximum": 20000
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "part_names": {
+        "description": "Optional list of part names (as returned by a prior mesh segmentation) to preserve as separate parts while remeshing.",
+        "anyOf": [
+          {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          {
+            "type": "null"
+          }
+        ]
+      }
+    },
+    "required": [
+      "mesh_url"
+    ]
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs."
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics."
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "TripoRemeshInput",
+    "TripoRemeshOutput",
+    "File",
+    "ModelUrls"
+  ]
+}

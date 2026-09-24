@@ -1,0 +1,267 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "async/tts-pro/v1.0",
+  "task": "text-to-audio",
+  "source_url": "https://fal.ai/models/async/tts-pro/v1.0",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=async%2Ftts-pro%2Fv1.0",
+  "retrieved_at": "2026-09-23T14:36:14.872Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "text-to-speech",
+  "bytes_sha256": "80e3a2c3d1b4a110e5738c2d39e832297c9938a9f42c88d0cb1ae763d4c0f50e",
+  "queue_path": "/async/tts-pro/v1.0",
+  "input_name": "TtsProV10Input",
+  "input": {
+    "$refName": "TtsProV10Input",
+    "type": "object",
+    "properties": {
+      "output_format": {
+        "$refName": "OutputFormat",
+        "type": "object",
+        "properties": {
+          "bit_rate": {
+            "description": "Output bit rate. Only used when container is 'mp3'.",
+            "anyOf": [
+              {
+                "type": "integer",
+                "minimum": 32000,
+                "maximum": 320000
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "container": {
+            "type": "string",
+            "enum": [
+              "mp3",
+              "raw"
+            ],
+            "default": "mp3",
+            "description": "Output audio container format."
+          },
+          "sample_rate": {
+            "type": "integer",
+            "default": 44100,
+            "minimum": 8000,
+            "maximum": 48000,
+            "description": "Output sample rate in Hz."
+          },
+          "encoding": {
+            "description": "PCM encoding. Only used when container is 'raw'.",
+            "anyOf": [
+              {
+                "type": "string",
+                "enum": [
+                  "pcm_s16le",
+                  "pcm_f32le",
+                  "pcm_mulaw"
+                ]
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        }
+      },
+      "language": {
+        "description": "Force synthesis in a specific language (ISO 639-1).",
+        "anyOf": [
+          {
+            "type": "string",
+            "enum": [
+              "en",
+              "fr",
+              "es",
+              "de",
+              "it",
+              "pt"
+            ]
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "voice": {
+        "$refName": "Voice",
+        "type": "object",
+        "description": "Voice selection: by `name` from the predefined catalogue, or by raw `id`.\n\nBACKWARD COMPATIBILITY IS THE CONSTRAINT HERE. `{\"voice\": {\"id\": \"<uuid>\"}}` is already in\nproduction, so `id` keeps working untouched and always WINS over `name`. `id` merely became\noptional, which is strictly more permissiv",
+        "properties": {
+          "name": {
+            "type": "string",
+            "enum": [
+              "Jennie",
+              "Stella",
+              "Max",
+              "Hayes",
+              "Elara",
+              "Cleo",
+              "Fisher",
+              "Corin",
+              "Thaddeus",
+              "Lucina",
+              "Acadia",
+              "Huxley",
+              "Winslet",
+              "Jethro",
+              "Elio",
+              "Rupert",
+              "Eira",
+              "Nyra",
+              "Arian",
+              "Lily",
+              "Pierce",
+              "Kaela",
+              "Elowen",
+              "Freya",
+              "Lenny",
+              "Alessa",
+              "Pandora",
+              "Fia",
+              "Abbott",
+              "Kael",
+              "Orla",
+              "Sable",
+              "Marnie",
+              "Sera",
+              "Virel",
+              "Liora",
+              "Riven",
+              "Elys",
+              "Dreena",
+              "Rhea",
+              "Vela",
+              "Nymera",
+              "Isolde",
+              "Lirien",
+              "Zella",
+              "Avenna",
+              "Mirelle",
+              "Calia",
+              "Lunea",
+              "Lucan",
+              "Tarian",
+              "Arlo",
+              "Jovan",
+              "Neron",
+              "Ziven",
+              "Dax",
+              "Orien",
+              "Lior",
+              "Eryx",
+              "Tyren",
+              "Nox",
+              "Elric",
+              "Varian",
+              "Zoran",
+              "Miro",
+              "Dalen",
+              "Ronix",
+              "Jarek",
+              "Nyxie",
+              "Soren",
+              "Viona",
+              "Selene",
+              "Rachiel",
+              "Corbin",
+              "Abigail",
+              "Faith",
+              "Kimberly",
+              "Dave",
+              "Grace",
+              "Alden",
+              "Renly",
+              "Violet",
+              "Joel",
+              "Xavier",
+              "Esmeralda",
+              "Robert",
+              "Lila",
+              "Brooks",
+              "Lennox",
+              "Vanessa",
+              "Simon",
+              "Nyomi",
+              "Jack",
+              "Penelope",
+              "Brayden",
+              "Abel",
+              "Nellie",
+              "Connie",
+              "Andrew",
+              "Lincoln"
+            ],
+            "default": "Jennie",
+            "description": "Predefined voice, chosen by name. Ignored when `id` is set."
+          }
+        }
+      },
+      "transcript": {
+        "type": "string",
+        "description": "Text to convert to speech."
+      }
+    },
+    "required": [
+      "transcript",
+      "voice"
+    ]
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs."
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics."
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "TtsProV10Input",
+    "TtsProV10Output",
+    "OutputFormat",
+    "Voice",
+    "Audio"
+  ]
+}

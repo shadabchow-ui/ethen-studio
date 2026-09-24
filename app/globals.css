@@ -1,0 +1,18 @@
+/*
+ * Deployable stylesheet entry (B1).
+ *
+ * The global layer, theme, shell-compat, V2 rollback tokens and the EDS
+ * global stack are all owned by `@ethen/ui`; this file only imports them and
+ * declares this deployable's own Tailwind source root, because `@source` is
+ * resolved relative to the file that declares it.
+ *
+ * Nothing is redefined here. Adding a rule to this file would create a second
+ * token authority.
+ */
+@import "@ethen/ui/styles/globals.css";
+@import "@ethen/ui/styles/foundation-theme.css";
+@import "@ethen/ui/styles/foundation-shell-compat.css";
+@import "@ethen/ui/styles/ethen-v2/production.css";
+@import "@ethen/ui/styles/eds/eds-global.css";
+
+@source "../";

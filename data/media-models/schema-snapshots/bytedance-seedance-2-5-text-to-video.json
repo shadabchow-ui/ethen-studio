@@ -1,0 +1,164 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "bytedance/seedance-2.5/text-to-video",
+  "task": "text-to-video",
+  "source_url": "https://fal.ai/models/bytedance/seedance-2.5/text-to-video",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=bytedance%2Fseedance-2.5%2Ftext-to-video",
+  "retrieved_at": "2026-09-20T09:40:06.751Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "text-to-video",
+  "bytes_sha256": "c9fda788f90e53b3f555466873acc8af6a814cbd9e893e1936570fb0a157f362",
+  "queue_path": "/bytedance/seedance-2.5/text-to-video",
+  "input_name": "Seedance25TextToVideoInput",
+  "input": {
+    "$refName": "Seedance25TextToVideoInput",
+    "type": "object",
+    "properties": {
+      "prompt": {
+        "type": "string",
+        "description": "The text prompt used to generate the video"
+      },
+      "resolution": {
+        "type": "string",
+        "enum": [
+          "480p",
+          "720p",
+          "1080p"
+        ],
+        "default": "720p",
+        "description": "Video resolution - 480p for faster generation, 720p for balance, 1080p for high quality."
+      },
+      "generate_audio": {
+        "type": "boolean",
+        "default": true,
+        "description": "Whether to generate synchronized audio for the video, including sound effects, ambient sounds, and lip-synced speech. The cost of video generation is the same regardless of whether audio is generated or not."
+      },
+      "bitrate_mode": {
+        "type": "string",
+        "enum": [
+          "standard",
+          "high"
+        ],
+        "default": "standard",
+        "description": "Output bitrate mode. 'high' requests a higher-quality, larger-file encode from the model; 'standard' uses the default bitrate."
+      },
+      "end_user_id": {
+        "description": "The unique user ID of the end user.",
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "duration": {
+        "type": "string",
+        "enum": [
+          "auto",
+          "4",
+          "5",
+          "6",
+          "7",
+          "8",
+          "9",
+          "10",
+          "11",
+          "12",
+          "13",
+          "14",
+          "15",
+          "16",
+          "17",
+          "18",
+          "19",
+          "20",
+          "21",
+          "22",
+          "23",
+          "24",
+          "25",
+          "26",
+          "27",
+          "28",
+          "29",
+          "30"
+        ],
+        "default": "auto",
+        "description": "Duration of the video in seconds. Supports 4 to 30 seconds, or auto to let the model decide based on the prompt."
+      },
+      "aspect_ratio": {
+        "type": "string",
+        "enum": [
+          "auto",
+          "21:9",
+          "16:9",
+          "4:3",
+          "1:1",
+          "3:4",
+          "9:16"
+        ],
+        "default": "auto",
+        "description": "The aspect ratio of the generated video. Use 16:9 for landscape, 9:16 for portrait/vertical, 1:1 for square, 21:9 for ultrawide cinematic, or auto to let the model decide."
+      }
+    },
+    "required": [
+      "prompt"
+    ]
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs."
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics."
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "Seedance25TextToVideoInput",
+    "Seedance25TextToVideoOutput",
+    "File"
+  ]
+}

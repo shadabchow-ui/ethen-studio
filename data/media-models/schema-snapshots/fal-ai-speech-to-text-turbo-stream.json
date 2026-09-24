@@ -1,0 +1,84 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/speech-to-text/turbo/stream",
+  "task": "speech",
+  "source_url": "https://fal.ai/models/fal-ai/speech-to-text/turbo/stream",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fspeech-to-text%2Fturbo%2Fstream",
+  "retrieved_at": "2026-09-23T14:37:48.128Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "speech-to-text",
+  "bytes_sha256": "c417ec35e123c2af815554ba8ad3945e6aa8336fec109e098dcae0e719277fb3",
+  "queue_path": "/fal-ai/speech-to-text/turbo/stream",
+  "input_name": "SpeechToTextTurboStreamInput",
+  "input": {
+    "$refName": "SpeechToTextTurboStreamInput",
+    "type": "object",
+    "properties": {
+      "use_pnc": {
+        "type": "boolean",
+        "default": true,
+        "description": "Whether to use Canary's built-in punctuation & capitalization"
+      },
+      "audio_url": {
+        "type": "string",
+        "description": "Local filesystem path (or remote URL) to a long audio file"
+      }
+    },
+    "required": [
+      "audio_url"
+    ]
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs."
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics."
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "SpeechToTextTurboStreamInput",
+    "SpeechToTextTurboStreamOutput"
+  ]
+}

@@ -1,0 +1,151 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/stable-audio-3/small/sfx/base/text-to-audio",
+  "task": "text-to-audio",
+  "source_url": "https://fal.ai/models/fal-ai/stable-audio-3/small/sfx/base/text-to-audio",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fstable-audio-3%2Fsmall%2Fsfx%2Fbase%2Ftext-to-audio",
+  "retrieved_at": "2026-09-23T14:37:57.830Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "text-to-audio",
+  "bytes_sha256": "7743f1fe986c07939f5eb30d4295e2feafd8255487ce2cd091bd7999d766b5ac",
+  "queue_path": "/fal-ai/stable-audio-3/small/sfx/base/text-to-audio",
+  "input_name": "StableAudio3SmallSfxBaseTextToAudioInput",
+  "input": {
+    "$refName": "StableAudio3SmallSfxBaseTextToAudioInput",
+    "type": "object",
+    "properties": {
+      "sync_mode": {
+        "type": "boolean",
+        "default": false,
+        "description": "If True, the audio is returned inline as a data URI and the result is not saved to the request history."
+      },
+      "enable_prompt_expansion": {
+        "type": "boolean",
+        "default": false,
+        "description": "If True, the prompt will be expanded using an LLM for more detailed and higher quality results."
+      },
+      "output_format": {
+        "type": "string",
+        "enum": [
+          "mp3",
+          "wav",
+          "flac",
+          "ogg",
+          "opus",
+          "m4a",
+          "aac"
+        ],
+        "default": "mp3",
+        "description": "Container format for the generated audio output."
+      },
+      "guidance_scale": {
+        "type": "number",
+        "default": 7,
+        "minimum": 0,
+        "maximum": 25,
+        "description": "Classifier-free guidance scale. Higher values follow the prompt more strictly; ~7.0 is a good starting point for base checkpoints."
+      },
+      "prompt": {
+        "type": "string",
+        "description": "Text description of the audio to generate."
+      },
+      "negative_prompt": {
+        "type": "string",
+        "default": "",
+        "description": "Text description of qualities to avoid in the output."
+      },
+      "bitrate": {
+        "type": "string",
+        "default": "192k",
+        "description": "Audio bitrate for compressed output formats (e.g., mp3, aac, opus). Format e.g. '192k' or '320k'. Ignored for lossless formats (wav, flac)."
+      },
+      "num_inference_steps": {
+        "type": "integer",
+        "default": 50,
+        "minimum": 1,
+        "maximum": 100,
+        "description": "Number of sampling steps. Base (non-distilled) checkpoints typically need ~50 for good quality."
+      },
+      "duration": {
+        "type": "number",
+        "default": 30,
+        "minimum": 1,
+        "maximum": 120,
+        "description": "Duration of the generated audio in seconds."
+      },
+      "seed": {
+        "description": "Random seed for reproducible outputs. Omit for a random seed.",
+        "anyOf": [
+          {
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "enable_safety_checker": {
+        "type": "boolean",
+        "default": true,
+        "description": "Enable NSFW content safety checking."
+      }
+    },
+    "required": [
+      "prompt"
+    ]
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs."
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics."
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "StableAudio3SmallSfxBaseTextToAudioInput",
+    "StableAudio3SmallSfxBaseTextToAudioOutput",
+    "File"
+  ]
+}

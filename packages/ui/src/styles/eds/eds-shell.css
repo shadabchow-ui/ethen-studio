@@ -1,0 +1,470 @@
+/* EDS shell styles — D09 candidate.
+ * Hand-authored against design-system/tokens/eds-components-candidate.json.
+ * Scoped to [data-eds]. Lab only. No :root, no global element selectors.
+ *
+ * Geometry authorities: topbar 56px, sidebar expanded 256px, collapsed rail
+ * 56px, content gutter 24px. Active nav: Lapis wash + 2px structural marker +
+ * weight shift — never a filled pill, never color alone. Focus follows the
+ * single EDS contract (var(--eds-focus-ring), 2px offset, :focus-visible only).
+ * One responsive architecture: expanded sidebar on wide viewports, collapsed
+ * 56px rail on narrow laptop widths, drawer navigation on tablet/phone. The
+ * inline sidebar and the drawer are never presented simultaneously.
+ */
+
+[data-eds] .eds-appshell {
+  background: var(--eds-cmp-shell-bg);
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+[data-eds] .eds-appshell__skip {
+  background: var(--eds-cmp-shell-skip-bg);
+  border-radius: var(--eds-radius-small);
+  color: var(--eds-cmp-shell-skip-text);
+  font-family: var(--eds-type-ui-family);
+  font-size: var(--eds-type-ui-size);
+  left: var(--eds-space-tight);
+  line-height: var(--eds-type-ui-line);
+  padding: var(--eds-space-tight) var(--eds-space-default);
+  position: absolute;
+  top: -100px;
+  z-index: 100;
+}
+
+[data-eds] .eds-appshell__skip:focus-visible {
+  outline: var(--eds-focus-ring);
+  outline-offset: var(--eds-focus-offset);
+  top: var(--eds-space-tight);
+}
+
+[data-eds] .eds-appshell__body {
+  display: flex;
+  flex: 1;
+  min-height: 0;
+}
+
+[data-eds] .eds-appshell__main {
+  flex: 1;
+  min-width: 0;
+  padding: var(--eds-space-spacious);
+}
+
+[data-eds] .eds-appshell__main:focus-visible {
+  outline: var(--eds-focus-ring);
+  outline-offset: calc(-1 * var(--eds-focus-offset));
+}
+
+[data-eds] .eds-appshell__evidence {
+  border-left: 1px solid var(--eds-cmp-shell-border);
+  flex: none;
+  padding: var(--eds-space-default);
+  width: 320px;
+}
+
+/* Topbar — restrained global strip, 56px. */
+
+[data-eds] .eds-topbar {
+  align-items: center;
+  background: var(--eds-cmp-shell-topbar-bg);
+  border-bottom: 1px solid var(--eds-cmp-shell-border);
+  color: var(--eds-cmp-shell-topbar-text);
+  display: flex;
+  gap: var(--eds-space-tight);
+  min-height: 56px;
+  padding: 0 var(--eds-space-default);
+}
+
+[data-eds] .eds-topbar__menu,
+[data-eds] .eds-topbar__launcher {
+  align-items: center;
+  appearance: none;
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: var(--eds-radius-small);
+  color: var(--eds-cmp-shell-topbar-text);
+  cursor: pointer;
+  display: inline-flex;
+  justify-content: center;
+  min-height: var(--eds-layout-control-sm);
+  min-width: var(--eds-layout-control-sm);
+  padding: 0;
+}
+
+[data-eds] .eds-topbar__menu:hover,
+[data-eds] .eds-topbar__launcher:hover {
+  background: var(--eds-cmp-shell-nav-hover);
+}
+
+[data-eds] .eds-topbar__menu:focus-visible,
+[data-eds] .eds-topbar__launcher:focus-visible,
+[data-eds] .eds-topbar__search:focus-visible {
+  outline: var(--eds-focus-ring);
+  outline-offset: var(--eds-focus-offset);
+}
+
+[data-eds] .eds-topbar__menu-icon,
+[data-eds] .eds-topbar__launcher-icon,
+[data-eds] .eds-topbar__search-icon {
+  display: inline-flex;
+}
+
+[data-eds] .eds-topbar__context {
+  color: var(--eds-cmp-shell-topbar-text);
+  font-family: var(--eds-type-ui-family);
+  font-size: var(--eds-type-ui-size);
+  font-weight: var(--eds-font-weight-semibold);
+  line-height: var(--eds-type-ui-line);
+}
+
+[data-eds] .eds-topbar__center {
+  display: flex;
+  flex: 1;
+  justify-content: center;
+}
+
+[data-eds] .eds-topbar__search {
+  align-items: center;
+  appearance: none;
+  background: transparent;
+  border: 1px solid var(--eds-cmp-shell-border);
+  border-radius: var(--eds-radius-small);
+  color: var(--eds-cmp-shell-topbar-text-secondary);
+  cursor: pointer;
+  display: inline-flex;
+  font-family: var(--eds-type-ui-family);
+  font-size: var(--eds-type-ui-size);
+  gap: var(--eds-space-tight);
+  line-height: var(--eds-type-ui-line);
+  min-height: var(--eds-layout-control-sm);
+  padding: 0 var(--eds-space-tight);
+}
+
+[data-eds] .eds-topbar__search-label {
+  flex: 1;
+}
+
+[data-eds] .eds-topbar__search-keys {
+  font-family: var(--eds-font-mono);
+  font-size: var(--eds-type-caption-size);
+}
+
+[data-eds] .eds-topbar__actions {
+  align-items: center;
+  display: flex;
+  gap: var(--eds-space-compact);
+  margin-left: auto;
+}
+
+/* Sidebar — quiet hierarchy, 256px expanded / 56px rail. */
+
+[data-eds] .eds-sidebar {
+  background: var(--eds-cmp-shell-bg);
+  border-right: 1px solid var(--eds-cmp-shell-border);
+  display: flex;
+  flex: none;
+  flex-direction: column;
+  min-height: 0;
+  padding: var(--eds-space-tight);
+  width: 256px;
+}
+
+[data-eds] .eds-sidebar--collapsed {
+  align-items: center;
+  width: 56px;
+}
+
+[data-eds] .eds-sidebar__list {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 2px;
+  list-style: none;
+  margin: 0;
+  overflow-y: auto;
+  padding: 0;
+}
+
+[data-eds] .eds-sidebar__row {
+  align-items: center;
+  border-left: 2px solid transparent;
+  border-radius: var(--eds-radius-small);
+  color: var(--eds-cmp-shell-nav-text);
+  display: flex;
+  font-family: var(--eds-type-ui-family);
+  font-size: var(--eds-type-ui-size);
+  gap: var(--eds-space-tight);
+  line-height: var(--eds-type-ui-line);
+  min-height: var(--eds-layout-control-md);
+  padding: 0 var(--eds-space-tight);
+  position: relative;
+  text-decoration: none;
+}
+
+[data-eds] .eds-sidebar__row:hover {
+  background: var(--eds-cmp-shell-nav-hover);
+}
+
+[data-eds] .eds-sidebar__row:focus-visible,
+[data-eds] .eds-sidebar__collapse:focus-visible,
+[data-eds] .eds-appshell__drawer-close:focus-visible {
+  outline: var(--eds-focus-ring);
+  outline-offset: var(--eds-focus-offset);
+}
+
+[data-eds] .eds-sidebar__row--active {
+  background: var(--eds-cmp-shell-nav-active-wash);
+  border-left-color: var(--eds-cmp-shell-nav-active-marker);
+  color: var(--eds-cmp-shell-nav-active-text);
+  font-weight: var(--eds-font-weight-semibold);
+}
+
+[data-eds] .eds-sidebar__marker {
+  display: none;
+}
+
+[data-eds] .eds-sidebar__icon {
+  display: inline-flex;
+  flex: none;
+}
+
+[data-eds] .eds-sidebar__label {
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+[data-eds] .eds-sidebar__badge {
+  background: var(--eds-cmp-badge-neutral-bg);
+  border: 1px solid var(--eds-cmp-chip-border);
+  border-radius: var(--eds-radius-base);
+  color: var(--eds-cmp-badge-neutral-text);
+  font-family: var(--eds-type-label-family);
+  font-size: var(--eds-type-label-size);
+  font-weight: var(--eds-type-label-weight);
+  line-height: var(--eds-type-label-line);
+  padding: 0 var(--eds-space-compact);
+}
+
+[data-eds] .eds-sidebar__children {
+  list-style: none;
+  margin: 0 0 0 var(--eds-space-default);
+  padding: 0;
+}
+
+[data-eds] .eds-sidebar__collapse {
+  align-items: center;
+  appearance: none;
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: var(--eds-radius-small);
+  color: var(--eds-cmp-shell-nav-text-secondary);
+  cursor: pointer;
+  display: flex;
+  font-family: var(--eds-type-ui-family);
+  font-size: var(--eds-type-ui-size);
+  gap: var(--eds-space-tight);
+  line-height: var(--eds-type-ui-line);
+  min-height: var(--eds-layout-control-sm);
+  padding: 0 var(--eds-space-tight);
+}
+
+[data-eds] .eds-sidebar__collapse:hover {
+  background: var(--eds-cmp-shell-nav-hover);
+}
+
+/* Narrow viewports: inline sidebar yields to the drawer. The inline sidebar
+ * stays visible at wide widths; at or below 900px the hidden-narrow variant
+ * leaves the layout so the drawer is the single navigation presentation. */
+
+@media (max-width: 900px) {
+  [data-eds] .eds-sidebar--hidden-narrow {
+    display: none;
+  }
+
+  [data-eds] .eds-appshell__main {
+    padding: var(--eds-space-default);
+  }
+
+  [data-eds] .eds-appshell__evidence {
+    display: none;
+  }
+}
+
+/* Drawer — overlay navigation reusing useOverlay behavior. */
+
+[data-eds] .eds-appshell__drawer-scrim {
+  background: var(--eds-cmp-shell-drawer-scrim);
+  inset: 0;
+  position: fixed;
+  z-index: 40;
+}
+
+[data-eds] .eds-appshell__drawer {
+  background: var(--eds-cmp-shell-bg);
+  border-right: 1px solid var(--eds-cmp-shell-border);
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  left: 0;
+  max-width: 320px;
+  padding: var(--eds-space-tight);
+  position: absolute;
+  top: 0;
+  width: min(320px, 85vw);
+}
+
+[data-eds] .eds-appshell__drawer .eds-sidebar {
+  border-right: 0;
+  flex: 1;
+  padding: 0;
+  width: auto;
+}
+
+[data-eds] .eds-appshell__drawer-close {
+  align-self: flex-start;
+  appearance: none;
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: var(--eds-radius-small);
+  color: var(--eds-cmp-shell-nav-text-secondary);
+  cursor: pointer;
+  font-family: var(--eds-type-ui-family);
+  font-size: var(--eds-type-ui-size);
+  line-height: var(--eds-type-ui-line);
+  margin-bottom: var(--eds-space-tight);
+  min-height: var(--eds-layout-control-sm);
+  padding: 0 var(--eds-space-tight);
+}
+
+[data-eds] .eds-appshell__drawer-close:hover {
+  background: var(--eds-cmp-shell-nav-hover);
+}
+
+/* Product launcher — dialog over a scrim, honest unavailable group. */
+
+[data-eds] .eds-launcher__scrim {
+  align-items: flex-start;
+  background: var(--eds-cmp-shell-drawer-scrim);
+  display: flex;
+  inset: 0;
+  justify-content: center;
+  padding: var(--eds-space-spacious);
+  position: fixed;
+  z-index: 40;
+}
+
+[data-eds] .eds-launcher {
+  background: var(--eds-cmp-shell-launcher-bg);
+  border: 1px solid var(--eds-cmp-shell-launcher-border);
+  border-radius: var(--eds-radius-raised);
+  box-shadow: var(--eds-elev-overlay-shadow);
+  color: var(--eds-cmp-shell-launcher-text);
+  display: grid;
+  gap: var(--eds-space-default);
+  max-height: calc(100vh - 96px);
+  max-width: 640px;
+  overflow-y: auto;
+  padding: var(--eds-space-default);
+  width: 100%;
+}
+
+[data-eds] .eds-launcher:focus-visible {
+  outline: var(--eds-focus-ring);
+  outline-offset: var(--eds-focus-offset);
+}
+
+[data-eds] .eds-launcher__title {
+  color: var(--eds-cmp-shell-launcher-text);
+  font-family: var(--eds-type-subheading-family);
+  font-size: var(--eds-type-subheading-size);
+  font-weight: var(--eds-type-subheading-weight);
+  line-height: var(--eds-type-subheading-line);
+  margin: 0;
+}
+
+[data-eds] .eds-launcher__group {
+  display: grid;
+  gap: var(--eds-space-tight);
+}
+
+[data-eds] .eds-launcher__group-title {
+  color: var(--eds-cmp-shell-launcher-text-secondary);
+  font-family: var(--eds-type-label-family);
+  font-size: var(--eds-type-label-size);
+  font-weight: var(--eds-type-label-weight);
+  letter-spacing: var(--eds-type-label-tracking);
+  line-height: var(--eds-type-label-line);
+  margin: 0;
+  text-transform: uppercase;
+}
+
+[data-eds] .eds-launcher__list {
+  display: grid;
+  gap: 2px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+[data-eds] .eds-launcher__item {
+  align-items: center;
+  border-radius: var(--eds-radius-small);
+  color: var(--eds-cmp-shell-launcher-text);
+  display: flex;
+  font-family: var(--eds-type-ui-family);
+  font-size: var(--eds-type-ui-size);
+  gap: var(--eds-space-tight);
+  line-height: var(--eds-type-ui-line);
+  min-height: var(--eds-layout-control-md);
+  padding: 0 var(--eds-space-tight);
+  text-decoration: none;
+}
+
+a[data-eds].eds-launcher__item,
+[data-eds] a.eds-launcher__item {
+  cursor: pointer;
+}
+
+[data-eds] a.eds-launcher__item:hover {
+  background: var(--eds-cmp-shell-nav-hover);
+}
+
+[data-eds] a.eds-launcher__item:focus-visible {
+  outline: var(--eds-focus-ring);
+  outline-offset: var(--eds-focus-offset);
+}
+
+[data-eds] .eds-launcher__icon {
+  display: inline-flex;
+  flex: none;
+}
+
+[data-eds] .eds-launcher__name {
+  flex: 1;
+}
+
+[data-eds] .eds-launcher__lifecycle {
+  color: var(--eds-cmp-shell-launcher-text-secondary);
+  font-family: var(--eds-type-caption-family);
+  font-size: var(--eds-type-caption-size);
+  line-height: var(--eds-type-caption-line);
+}
+
+[data-eds] .eds-launcher__item--unavailable {
+  color: var(--eds-cmp-shell-launcher-unavailable-text);
+  cursor: default;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-eds] .eds-topbar__menu,
+  [data-eds] .eds-topbar__launcher,
+  [data-eds] .eds-topbar__search,
+  [data-eds] .eds-sidebar__row,
+  [data-eds] .eds-sidebar__collapse,
+  [data-eds] .eds-appshell__drawer-close,
+  [data-eds] a.eds-launcher__item {
+    transition: none;
+  }
+}

@@ -1,0 +1,80 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/dia-tts",
+  "task": "text-to-audio",
+  "source_url": "https://fal.ai/models/fal-ai/dia-tts",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fdia-tts",
+  "retrieved_at": "2026-09-23T14:36:20.505Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "text-to-speech",
+  "bytes_sha256": "cd7b01545073415d78a20a4754d9056018ba6308de413eee753352fec62e6f4b",
+  "queue_path": "/fal-ai/dia-tts",
+  "input_name": "DiaTtsInput",
+  "input": {
+    "$refName": "DiaTtsInput",
+    "type": "object",
+    "properties": {
+      "text": {
+        "type": "string",
+        "description": "The text to be converted to speech."
+      }
+    },
+    "required": [
+      "text"
+    ]
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs."
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics."
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "DiaTtsInput",
+    "DiaTtsOutput",
+    "File"
+  ]
+}

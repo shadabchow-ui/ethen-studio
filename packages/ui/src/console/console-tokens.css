@@ -1,0 +1,227 @@
+/* CONSOLE_A1 — Ethen Console semantic tokens.
+ *
+ * A LAYER over EDS, never a parallel brand palette. Every value below either
+ * aliases an approved `--eds-*` token or is one deliberate tonal step derived
+ * from the same Ground Lapis / Mineral Paper families, declared here because
+ * EDS carries no token for that step.
+ *
+ * Theme resolution copies the EDS convention verbatim
+ * (styles/eds/candidate-color.css): the scope element carries
+ * `data-eds data-eds-theme`, and `system` defers to `html[data-theme]` stamped
+ * by the production theme bootstrap. The Console cannot drift from EDS theming.
+ *
+ * THE GROUND DECISION
+ * -------------------
+ * The Console has two grounds and they are BOTH approved EDS tokens; which one
+ * is the rail depends only on which recedes in that theme.
+ *
+ *   dark   rail = --eds-canvas (#151513, darker)   canvas = --eds-paper (#1D1D1A)
+ *   light  rail = --eds-paper  (#F4F1EA, tinted)   canvas = --eds-canvas (#FBFAF6)
+ *
+ * The rail is the chassis; the canvas is the worksurface. That is the opposite
+ * assignment from Ethen Chat, where the rail sinks BELOW a #151513 canvas so
+ * the conversation is the only lit thing. The Console needs the inverse: a
+ * worksurface one step up from its frame, with four clean surface steps above
+ * it (canvas → panel → elevated → overlay) because a dense operational page
+ * genuinely stacks that deep and a chat thread does not. Chat and Console are
+ * therefore distinguishable at a glance while sharing one colour authority.
+ *
+ * Deliberately NOT taken from the reference: no pure-black canvas, no clay /
+ * orange accent, no neutral grey ramp. Ethen's ground is warm.
+ */
+
+[data-ethen-console],
+[data-ethen-console][data-eds-theme="dark"] {
+  /* CONSOLE_C4 — restrained overlay shadow: presence without the broad glow. */
+  /* grounds */
+  --console-sidebar: var(--eds-canvas);       /* #151513 — the chassis */
+  --console-canvas: var(--eds-paper);         /* #1D1D1A — the worksurface */
+  --console-panel: var(--eds-card);           /* #262521 — metric strip, cards */
+  --console-elevated: var(--eds-elevated);    /* #2E2D28 — controls, chips */
+  --console-overlay: #2A2925;                 /* menus, palette, dialogs, drawers */
+  --console-sunken: #171715;                  /* code, secret blocks, chart wells */
+
+  /* interaction */
+  --console-hover: #232320;                   /* one step between paper and card */
+  --console-hover-strong: #2B2A26;            /* hover on an already-raised control */
+  --console-active: var(--eds-lapis-wash);    /* #1F1F33 — selected nav, selected row */
+
+  /* rules */
+  --console-border: var(--eds-rule-hair);     /* #2B2A25 — table dividers, hairlines */
+  --console-border-strong: var(--eds-rule);   /* #3D3B34 — controls, overlays */
+  --console-border-control: var(--eds-rule-control);
+
+  /* text */
+  --console-text: var(--eds-ink);
+  --console-text-secondary: var(--eds-text-secondary);
+  --console-text-muted: var(--eds-text-tertiary);
+
+  /* accent + status */
+  --console-accent: var(--eds-lapis);
+  --console-accent-strong: var(--eds-lapis-strong);
+  --console-accent-wash: var(--eds-lapis-wash);
+  --console-on-accent: #14142A;
+  --console-success: #6FA98A;
+  --console-warning: var(--eds-ochre);
+  --console-danger: var(--eds-brick);
+  --console-neutral: var(--eds-slate);
+
+  --console-overlay-shadow: 0 12px 28px rgba(0, 0, 0, 0.4);
+  --console-scrim: rgba(8, 8, 7, 0.62);
+  --console-skeleton: #262521;
+  --console-skeleton-sheen: #2E2D28;
+  --console-chart-grid: #2B2A25;
+}
+
+[data-ethen-console][data-eds-theme="light"],
+html[data-theme="light"] [data-ethen-console][data-eds-theme="system"] {
+  /* Designed, not inverted. The rail is tinted paper, the worksurface is the
+   * lightest ground, and panels are the only true white in the application. */
+  --console-sidebar: var(--eds-paper);        /* #F4F1EA — the chassis */
+  --console-canvas: var(--eds-canvas);        /* #FBFAF6 — the worksurface */
+  --console-panel: var(--eds-card);           /* #FFFFFF */
+  --console-elevated: #FFFFFF;
+  --console-overlay: #FFFFFF;
+  --console-sunken: #F1EDE3;
+
+  --console-hover: #EDE9DE;
+  --console-hover-strong: #E4DFD1;
+  --console-active: var(--eds-lapis-wash);    /* #E9EAF6 */
+
+  --console-border: var(--eds-rule-hair);     /* #E4E0D6 */
+  --console-border-strong: var(--eds-rule);   /* #C9C4B6 */
+  --console-border-control: var(--eds-rule-control);
+
+  --console-text: var(--eds-ink);
+  --console-text-secondary: var(--eds-text-secondary);
+  --console-text-muted: var(--eds-text-tertiary);
+
+  --console-accent: var(--eds-lapis);
+  --console-accent-strong: var(--eds-lapis-strong);
+  --console-accent-wash: var(--eds-lapis-wash);
+  --console-on-accent: #FBFAF6;
+  --console-success: #2F6B4F;
+  --console-warning: var(--eds-ochre);
+  --console-danger: var(--eds-brick);
+  --console-neutral: var(--eds-slate);
+
+  --console-overlay-shadow: 0 12px 32px rgba(32, 35, 31, 0.14);
+  --console-scrim: rgba(32, 35, 31, 0.34);
+  --console-skeleton: #EDE9DE;
+  --console-skeleton-sheen: #F6F3EC;
+  --console-chart-grid: #E4E0D6;
+}
+
+html[data-theme="dark"] [data-ethen-console][data-eds-theme="system"] {
+  --console-sidebar: var(--eds-canvas);
+  --console-canvas: var(--eds-paper);
+  --console-panel: var(--eds-card);
+  --console-elevated: var(--eds-elevated);
+  --console-overlay: #2A2925;
+  --console-sunken: #171715;
+  --console-hover: #232320;
+  --console-hover-strong: #2B2A26;
+  --console-active: var(--eds-lapis-wash);
+  --console-border: var(--eds-rule-hair);
+  --console-border-strong: var(--eds-rule);
+  --console-border-control: var(--eds-rule-control);
+  --console-text: var(--eds-ink);
+  --console-text-secondary: var(--eds-text-secondary);
+  --console-text-muted: var(--eds-text-tertiary);
+  --console-accent: var(--eds-lapis);
+  --console-accent-strong: var(--eds-lapis-strong);
+  --console-accent-wash: var(--eds-lapis-wash);
+  --console-on-accent: #14142A;
+  --console-success: #6FA98A;
+  --console-warning: var(--eds-ochre);
+  --console-danger: var(--eds-brick);
+  --console-neutral: var(--eds-slate);
+  --console-overlay-shadow: 0 12px 28px rgba(0, 0, 0, 0.4);
+  --console-scrim: rgba(8, 8, 7, 0.62);
+  --console-skeleton: #262521;
+  --console-skeleton-sheen: #2E2D28;
+  --console-chart-grid: #2B2A25;
+}
+
+/* Geometry. Restrained by contract (spec §94): no 24px radius on ordinary
+ * surfaces, no pill rows, no giant controls. Console chrome is 32px because
+ * an operating console is read in rows, not in cards. */
+[data-ethen-console] {
+  --console-rail: 256px;
+  --console-rail-collapsed: 52px;
+
+  /* The page-width system (spec §34). Four classes, never one global max. */
+  --console-width-readable: 960px;   /* billing, settings, security */
+  --console-width-standard: 1120px;  /* dashboard, projects, all products */
+  --console-width-wide: 1440px;      /* api keys, members, service accounts */
+  /* console-fluid takes the canvas and is not a token. */
+
+  --console-gutter: 32px;
+  --console-gutter-tight: 20px;
+
+  --console-radius-control: 6px;
+  --console-radius-row: 6px;
+  --console-radius-panel: 10px;
+  --console-radius-menu: 12px;
+  --console-radius-dialog: 14px;
+
+  --console-row: 32px;              /* nav row, control height */
+  --console-table-row: 48px;        /* comfortable */
+  --console-table-row-compact: 40px;
+
+  --console-focus: var(--eds-focus-ring);
+  --console-focus-offset: var(--eds-focus-offset);
+}
+
+/* Forced colors: every surface becomes a system surface and borders carry the
+ * structure, exactly as EDS does globally. */
+@media (forced-colors: active) {
+  [data-ethen-console] {
+    --console-sidebar: Canvas;
+    --console-canvas: Canvas;
+    --console-panel: Canvas;
+    --console-elevated: Canvas;
+    --console-overlay: Canvas;
+    --console-sunken: Canvas;
+    --console-hover: Canvas;
+    --console-hover-strong: Canvas;
+    --console-active: Highlight;
+    --console-border: CanvasText;
+    --console-border-strong: CanvasText;
+    --console-border-control: ButtonText;
+    --console-text: CanvasText;
+    --console-text-secondary: CanvasText;
+    --console-text-muted: GrayText;
+    --console-accent: LinkText;
+    --console-accent-strong: LinkText;
+    --console-accent-wash: Canvas;
+    --console-on-accent: Canvas;
+    --console-success: CanvasText;
+    --console-warning: CanvasText;
+    --console-danger: CanvasText;
+    --console-neutral: CanvasText;
+    --console-overlay-shadow: none;
+    --console-skeleton: Canvas;
+    --console-skeleton-sheen: Canvas;
+    --console-chart-grid: CanvasText;
+  }
+}
+
+/* The globals.css heading enforcer.
+ *
+ * app/globals.css carries a bare `h1, h2, h3 { font-family: var(--font-heading)
+ * !important; font-weight: 600 !important; text-transform: capitalize; }` rule
+ * for the marketing surfaces. Inside an application shell that rule turns
+ * "Good morning, Sha" into "Good Morning, Sha" and "API keys" into "API Keys".
+ *
+ * It is neutralised HERE, in the Console scope only — the same approach the
+ * D16.2 and Chat labs take. Production marketing CSS is not edited: this job
+ * must not change a D18 surface, and a global rule with !important cannot be
+ * unwound by a CSS module either way.
+ */
+[data-ethen-console] :is(h1, h2, h3, h4, h5, h6) {
+  font-family: var(--eds-font-sans) !important;
+  font-weight: 600 !important;
+  text-transform: none !important;
+  word-spacing: normal;
+}

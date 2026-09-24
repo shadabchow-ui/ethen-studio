@@ -1,0 +1,667 @@
+{
+  "schemaVersion": 1,
+  "name": "Ethen Candidate Component Bindings",
+  "status": "CANDIDATE",
+  "originMilestone": "D06",
+  "principle": "Components reference eds.cmp.* only; cmp references eds.sys.* only; sys references an approved eds.* token only. A component touching raw is a build error.",
+  "sys": {
+    "action.brand": {
+      "ref": "eds-lapis",
+      "role": "brand action surface"
+    },
+    "action.brand-strong": {
+      "ref": "eds-lapis-strong",
+      "role": "brand hover, focus ring"
+    },
+    "action.brand-wash": {
+      "ref": "eds-lapis-wash",
+      "role": "selected wash, hover tint"
+    },
+    "action.ink": {
+      "ref": "eds-ink",
+      "role": "ink primary action surface"
+    },
+    "action.on-ink": {
+      "ref": "eds-canvas",
+      "role": "text on ink surfaces in both themes"
+    },
+    "action.on-brand": {
+      "ref": "eds-canvas",
+      "role": "text on brand surfaces in both themes"
+    },
+    "control.bg": {
+      "ref": "eds-card",
+      "role": "control and menu surfaces"
+    },
+    "control.bg-raised": {
+      "ref": "eds-elevated",
+      "role": "raised control surfaces, toast"
+    },
+    "control.bg-sunken": {
+      "ref": "eds-paper",
+      "role": "disabled and sunken surfaces, kbd"
+    },
+    "control.border": {
+      "ref": "eds-rule-control",
+      "role": "every interactive boundary, >=3:1"
+    },
+    "control.border-subtle": {
+      "ref": "eds-rule",
+      "role": "non-interactive container borders"
+    },
+    "control.border-hair": {
+      "ref": "eds-rule-hair",
+      "role": "hairline dividers, chip borders"
+    },
+    "control.text": {
+      "ref": "eds-ink",
+      "role": "control text"
+    },
+    "control.text-secondary": {
+      "ref": "eds-text-secondary",
+      "role": "labels, inactive tabs, kbd"
+    },
+    "control.placeholder": {
+      "ref": "eds-text-tertiary",
+      "role": "placeholder and hint text"
+    },
+    "control.error": {
+      "ref": "eds-brick",
+      "role": "error borders and text"
+    },
+    "status.attention": {
+      "ref": "eds-ochre",
+      "role": "pending, caution"
+    },
+    "status.danger": {
+      "ref": "eds-brick",
+      "role": "destructive, failed"
+    },
+    "status.info": {
+      "ref": "eds-lapis",
+      "role": "informational"
+    },
+    "status.neutral": {
+      "ref": "eds-slate",
+      "role": "reference, neutral system"
+    },
+    "status.verified": {
+      "ref": "eds-ink",
+      "role": "success is ink plus glyph, never green"
+    },
+    "table.header-text": {
+      "ref": "eds-text-tertiary",
+      "role": "table headers, timestamps"
+    },
+    "table.row-border": {
+      "ref": "eds-rule-hair",
+      "role": "row separators"
+    }
+  },
+  "cmp": {
+    "badge.attention-text": {
+      "sys": "status.attention"
+    },
+    "badge.danger-text": {
+      "sys": "status.danger"
+    },
+    "badge.info-bg": {
+      "sys": "action.brand-wash"
+    },
+    "badge.info-text": {
+      "sys": "action.brand"
+    },
+    "badge.neutral-bg": {
+      "sys": "control.bg-sunken"
+    },
+    "badge.neutral-text": {
+      "sys": "control.text-secondary"
+    },
+    "badge.verified-text": {
+      "sys": "status.verified"
+    },
+    "button.brand.bg": {
+      "sys": "action.brand"
+    },
+    "button.brand.bg-hover": {
+      "sys": "action.brand-strong"
+    },
+    "button.brand.text": {
+      "sys": "action.on-brand"
+    },
+    "button.destructive.bg": {
+      "sys": "status.danger"
+    },
+    "button.destructive.text": {
+      "sys": "action.on-brand"
+    },
+    "button.disabled.bg": {
+      "sys": "control.bg-sunken"
+    },
+    "button.disabled.text": {
+      "sys": "control.placeholder"
+    },
+    "button.focus": {
+      "sys": "action.brand-strong"
+    },
+    "button.ghost.bg-hover": {
+      "sys": "action.brand-wash"
+    },
+    "button.ghost.text": {
+      "sys": "control.text-secondary"
+    },
+    "button.ghost.text-hover": {
+      "sys": "control.text"
+    },
+    "button.ink.bg": {
+      "sys": "action.ink"
+    },
+    "button.ink.bg-hover": {
+      "sys": "control.text-secondary"
+    },
+    "button.ink.text": {
+      "sys": "action.on-ink"
+    },
+    "check.box-bg": {
+      "sys": "control.bg"
+    },
+    "check.box-border": {
+      "sys": "control.border"
+    },
+    "check.checked-bg": {
+      "sys": "action.brand"
+    },
+    "check.checked-mark": {
+      "sys": "action.on-brand"
+    },
+    "check.focus": {
+      "sys": "action.brand-strong"
+    },
+    "chip.bg": {
+      "sys": "control.bg-sunken"
+    },
+    "chip.border": {
+      "sys": "control.border-hair"
+    },
+    "chip.text": {
+      "sys": "control.text-secondary"
+    },
+    "composer.bg": {
+      "sys": "control.bg"
+    },
+    "composer.border": {
+      "sys": "control.border"
+    },
+    "composer.drag-border": {
+      "sys": "action.brand-strong"
+    },
+    "composer.drag-wash": {
+      "sys": "action.brand-wash"
+    },
+    "composer.error": {
+      "sys": "control.error"
+    },
+    "composer.focus": {
+      "sys": "action.brand-strong"
+    },
+    "composer.meta": {
+      "sys": "control.text-secondary"
+    },
+    "composer.placeholder": {
+      "sys": "control.placeholder"
+    },
+    "composer.text": {
+      "sys": "control.text"
+    },
+    "conversation.avatar-bg": {
+      "sys": "control.bg-raised"
+    },
+    "conversation.avatar-text": {
+      "sys": "control.text-secondary"
+    },
+    "conversation.bg": {
+      "sys": "control.bg"
+    },
+    "conversation.meta-text": {
+      "sys": "control.text-secondary"
+    },
+    "conversation.rail": {
+      "sys": "control.border"
+    },
+    "conversation.ref-bg": {
+      "sys": "control.bg-raised"
+    },
+    "conversation.ref-border": {
+      "sys": "control.border-subtle"
+    },
+    "conversation.ref-text": {
+      "sys": "control.text"
+    },
+    "conversation.text": {
+      "sys": "control.text"
+    },
+    "conversation.user-bg": {
+      "sys": "control.bg-raised"
+    },
+    "conversation.user-border": {
+      "sys": "control.border-subtle"
+    },
+    "divider.color": {
+      "sys": "control.border-hair"
+    },
+    "evidence.affordance-bg": {
+      "sys": "control.bg-raised"
+    },
+    "evidence.affordance-border": {
+      "sys": "control.border"
+    },
+    "evidence.bg": {
+      "sys": "control.bg"
+    },
+    "evidence.border": {
+      "sys": "control.border-subtle"
+    },
+    "evidence.fail-text": {
+      "sys": "status.danger"
+    },
+    "evidence.meta-text": {
+      "sys": "control.text-secondary"
+    },
+    "evidence.pass-text": {
+      "sys": "status.verified"
+    },
+    "evidence.pending-text": {
+      "sys": "status.attention"
+    },
+    "evidence.title-text": {
+      "sys": "control.text"
+    },
+    "evidence.value-text": {
+      "sys": "control.text"
+    },
+    "field.bg": {
+      "sys": "control.bg"
+    },
+    "field.border": {
+      "sys": "control.border"
+    },
+    "field.disabled-bg": {
+      "sys": "control.bg-sunken"
+    },
+    "field.disabled-text": {
+      "sys": "control.placeholder"
+    },
+    "field.error": {
+      "sys": "control.error"
+    },
+    "field.focus": {
+      "sys": "action.brand-strong"
+    },
+    "field.label": {
+      "sys": "control.text-secondary"
+    },
+    "field.placeholder": {
+      "sys": "control.placeholder"
+    },
+    "field.select-chevron": {
+      "sys": "control.text-secondary"
+    },
+    "field.text": {
+      "sys": "control.text"
+    },
+    "kbd.bg": {
+      "sys": "control.bg-sunken"
+    },
+    "kbd.border": {
+      "sys": "control.border"
+    },
+    "kbd.text": {
+      "sys": "control.text-secondary"
+    },
+    "menu.bg": {
+      "sys": "control.bg"
+    },
+    "menu.border": {
+      "sys": "control.border-subtle"
+    },
+    "menu.danger-text": {
+      "sys": "status.danger"
+    },
+    "menu.item-active-marker": {
+      "sys": "action.brand"
+    },
+    "menu.item-hover": {
+      "sys": "action.brand-wash"
+    },
+    "menu.item-text": {
+      "sys": "control.text"
+    },
+    "overlay.bg": {
+      "sys": "control.bg"
+    },
+    "overlay.border": {
+      "sys": "control.border-subtle"
+    },
+    "overlay.title": {
+      "sys": "control.text"
+    },
+    "segment.active-bg": {
+      "sys": "action.brand-wash"
+    },
+    "segment.active-text": {
+      "sys": "control.text"
+    },
+    "segment.bg": {
+      "sys": "control.bg-sunken"
+    },
+    "segment.text": {
+      "sys": "control.text-secondary"
+    },
+    "selected.marker": {
+      "sys": "action.brand"
+    },
+    "selected.wash": {
+      "sys": "action.brand-wash"
+    },
+    "shell.bg": {
+      "sys": "control.bg"
+    },
+    "shell.border": {
+      "sys": "control.border-subtle"
+    },
+    "shell.drawer-scrim": {
+      "sys": "control.bg"
+    },
+    "shell.launcher-bg": {
+      "sys": "control.bg-raised"
+    },
+    "shell.launcher-border": {
+      "sys": "control.border"
+    },
+    "shell.launcher-text": {
+      "sys": "control.text"
+    },
+    "shell.launcher-text-secondary": {
+      "sys": "control.text-secondary"
+    },
+    "shell.launcher-unavailable-text": {
+      "sys": "control.placeholder"
+    },
+    "shell.nav-active-marker": {
+      "sys": "action.brand-strong"
+    },
+    "shell.nav-active-text": {
+      "sys": "control.text"
+    },
+    "shell.nav-active-wash": {
+      "sys": "action.brand-wash"
+    },
+    "shell.nav-hover": {
+      "sys": "action.brand-wash"
+    },
+    "shell.nav-text": {
+      "sys": "control.text"
+    },
+    "shell.nav-text-secondary": {
+      "sys": "control.text-secondary"
+    },
+    "shell.skip-bg": {
+      "sys": "action.ink"
+    },
+    "shell.skip-text": {
+      "sys": "action.on-ink"
+    },
+    "shell.topbar-bg": {
+      "sys": "control.bg"
+    },
+    "shell.topbar-text": {
+      "sys": "control.text"
+    },
+    "shell.topbar-text-secondary": {
+      "sys": "control.text-secondary"
+    },
+    "skeleton.base": {
+      "sys": "control.bg-sunken"
+    },
+    "skeleton.shimmer": {
+      "sys": "control.border-hair"
+    },
+    "state.action-bg": {
+      "sys": "control.bg"
+    },
+    "state.action-border": {
+      "sys": "control.border"
+    },
+    "state.action-primary-bg": {
+      "sys": "action.ink"
+    },
+    "state.action-primary-text": {
+      "sys": "action.on-ink"
+    },
+    "state.action-text": {
+      "sys": "control.text"
+    },
+    "state.bg": {
+      "sys": "control.bg"
+    },
+    "state.body-text": {
+      "sys": "control.text-secondary"
+    },
+    "state.border": {
+      "sys": "control.border-subtle"
+    },
+    "state.hairline": {
+      "sys": "control.border-hair"
+    },
+    "state.incomplete-text": {
+      "sys": "status.danger"
+    },
+    "state.label-text": {
+      "sys": "control.text-secondary"
+    },
+    "state.meta-text": {
+      "sys": "control.placeholder"
+    },
+    "state.skeleton-bg": {
+      "sys": "control.bg-sunken"
+    },
+    "state.title-text": {
+      "sys": "control.text"
+    },
+    "statusdot.attention": {
+      "sys": "status.attention"
+    },
+    "statusdot.danger": {
+      "sys": "status.danger"
+    },
+    "statusdot.info": {
+      "sys": "status.info"
+    },
+    "statusdot.neutral": {
+      "sys": "status.neutral"
+    },
+    "statusdot.verified": {
+      "sys": "status.verified"
+    },
+    "switch.thumb-off": {
+      "sys": "control.text-secondary"
+    },
+    "switch.thumb-on": {
+      "sys": "action.on-brand"
+    },
+    "switch.track-off": {
+      "sys": "control.bg-sunken"
+    },
+    "switch.track-off-border": {
+      "sys": "control.border"
+    },
+    "switch.track-on": {
+      "sys": "action.brand"
+    },
+    "tab.marker": {
+      "sys": "action.brand"
+    },
+    "tab.text": {
+      "sys": "control.text-secondary"
+    },
+    "tab.text-active": {
+      "sys": "control.text"
+    },
+    "tab.wash": {
+      "sys": "action.brand-wash"
+    },
+    "table.header-text": {
+      "sys": "table.header-text"
+    },
+    "table.row-border": {
+      "sys": "table.row-border"
+    },
+    "table.row-hover": {
+      "sys": "action.brand-wash"
+    },
+    "table.text": {
+      "sys": "control.text"
+    },
+    "timestamp.text": {
+      "sys": "table.header-text"
+    },
+    "toast.attention-mark": {
+      "sys": "status.attention"
+    },
+    "toast.bg": {
+      "sys": "control.bg-raised"
+    },
+    "toast.border": {
+      "sys": "control.border-subtle"
+    },
+    "toast.danger-mark": {
+      "sys": "status.danger"
+    },
+    "toast.info-mark": {
+      "sys": "status.info"
+    },
+    "toast.text": {
+      "sys": "control.text"
+    },
+    "tooltip.bg": {
+      "sys": "action.ink"
+    },
+    "tooltip.text": {
+      "sys": "action.on-ink"
+    },
+    "trust.action-bg": {
+      "sys": "control.bg"
+    },
+    "trust.action-border": {
+      "sys": "control.border"
+    },
+    "trust.action-primary-bg": {
+      "sys": "action.ink"
+    },
+    "trust.action-primary-text": {
+      "sys": "action.on-ink"
+    },
+    "trust.action-text": {
+      "sys": "control.text"
+    },
+    "trust.annotation-bg": {
+      "sys": "control.bg-sunken"
+    },
+    "trust.annotation-border": {
+      "sys": "control.border-hair"
+    },
+    "trust.card-bg": {
+      "sys": "control.bg"
+    },
+    "trust.card-border": {
+      "sys": "control.border"
+    },
+    "trust.dependency-border": {
+      "sys": "control.border-hair"
+    },
+    "trust.dependency-text": {
+      "sys": "control.placeholder"
+    },
+    "trust.field-bg": {
+      "sys": "control.bg-sunken"
+    },
+    "trust.hairline": {
+      "sys": "control.border-hair"
+    },
+    "trust.meta-text": {
+      "sys": "control.placeholder"
+    },
+    "trust.mono-text": {
+      "sys": "control.text"
+    },
+    "trust.pending-text": {
+      "sys": "status.attention"
+    },
+    "trust.risk-rule": {
+      "sys": "status.danger"
+    },
+    "trust.text": {
+      "sys": "control.text"
+    },
+    "trust.text-secondary": {
+      "sys": "control.text-secondary"
+    },
+    "trust.thread-current": {
+      "sys": "status.info"
+    },
+    "trust.thread-line": {
+      "sys": "control.border-hair"
+    },
+    "trust.thread-reached": {
+      "sys": "status.verified"
+    },
+    "trust.thread-unreached": {
+      "sys": "control.placeholder"
+    },
+    "trust.verdict-text": {
+      "sys": "control.text"
+    },
+    "trust.warning-text": {
+      "sys": "status.danger"
+    },
+    "workspace.bg": {
+      "sys": "control.bg"
+    },
+    "workspace.chrome-bg": {
+      "sys": "control.bg-raised"
+    },
+    "workspace.chrome-border": {
+      "sys": "control.border-subtle"
+    },
+    "workspace.chrome-text": {
+      "sys": "control.text"
+    },
+    "workspace.diff-add-text": {
+      "sys": "status.verified"
+    },
+    "workspace.diff-del-text": {
+      "sys": "status.danger"
+    },
+    "workspace.divider": {
+      "sys": "control.border"
+    },
+    "workspace.header-border": {
+      "sys": "control.border-subtle"
+    },
+    "workspace.meta-text": {
+      "sys": "control.text-secondary"
+    },
+    "workspace.stream-text": {
+      "sys": "control.text-secondary"
+    },
+    "workspace.sunken-bg": {
+      "sys": "control.bg-sunken"
+    },
+    "workspace.sunken-text": {
+      "sys": "control.text"
+    },
+    "workspace.title-text": {
+      "sys": "control.text"
+    }
+  }
+}

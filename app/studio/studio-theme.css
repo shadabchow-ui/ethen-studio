@@ -1,0 +1,235 @@
+/*
+ * Ethen Studio V5 M1 — Studio-scoped charcoal console theme + flush frame.
+ *
+ * Owner Locks B/C: Studio is a dark charcoal creative console that fills
+ * the viewport. Everything here is scoped to the Studio deployable and the
+ * `[data-ethen-studio]` chrome root; Chat/Platform tokens are not modified.
+ * Existing token names consumed by Studio surfaces (--bg-*, --text-*,
+ * --border-*, --chat-*, --v2-*) are re-pointed inside the Studio scope so
+ * no second component system is introduced.
+ */
+
+:root {
+  --studio-bg-app: #161616;
+  --studio-bg-canvas: #1a1a1a;
+  --studio-bg-panel: #1f1f1f;
+  --studio-bg-elevated: #262626;
+  --studio-bg-selected: #2e2e2e;
+  --studio-bg-input: #141414;
+  --studio-border-subtle: rgba(255, 255, 255, 0.06);
+  --studio-border: rgba(255, 255, 255, 0.1);
+  --studio-border-strong: rgba(255, 255, 255, 0.16);
+  --studio-text-1: #ededed;
+  --studio-text-2: #a8a8a8;
+  --studio-text-3: #707070;
+  /* M6B: tertiary *text* tier. #8e8e8e holds AA (>=4.5:1) on app, canvas,
+   * panel and elevated; --studio-text-3 stays the glyph/icon tier (>=3:1,
+   * WCAG 1.4.11 non-text) and --studio-text-4 the disabled tier. */
+  --studio-text-meta: #8e8e8e;
+  --studio-text-4: #4f4f4f;
+  --studio-accent: #5b8def;
+  --studio-focus: #5b8def;
+  --studio-primary: #f2f2f2;
+  --studio-primary-fg: #0f0f0f;
+  --studio-motion: 150ms;
+  --studio-ease: cubic-bezier(0.2, 0, 0, 1);
+}
+
+/* The Studio document itself is charcoal: no black or light frame can show
+ * around the application, whatever the stored or OS theme. */
+html,
+body {
+  background: var(--studio-bg-app);
+  color-scheme: dark;
+}
+
+/* Specificity (0,3,0) outranks the chat-token dark/system rules (0,2,0). */
+:root [data-ethen-chat][data-ethen-studio] {
+  --bg-base: var(--studio-bg-canvas);
+  --bg-surface: var(--studio-bg-panel);
+  --bg-elevated: var(--studio-bg-elevated);
+  --bg-inset: var(--studio-bg-input);
+  --border-default: var(--studio-border);
+  --border-subtle: var(--studio-border-subtle);
+  --border-strong: var(--studio-border-strong);
+  --text-primary: var(--studio-text-1);
+  --text-secondary: var(--studio-text-2);
+  --text-tertiary: var(--studio-text-meta);
+  --text-muted: var(--studio-text-meta);
+  --text-disabled: var(--studio-text-4);
+  --accent: var(--studio-primary);
+  --accent-fg: var(--studio-primary-fg);
+  --control-bg: var(--studio-bg-input);
+
+  --chat-canvas: var(--studio-bg-canvas);
+  --chat-sidebar: var(--studio-bg-app);
+  --chat-composer: var(--studio-bg-panel);
+  --chat-overlay: var(--studio-bg-elevated);
+  --chat-popup-surface: var(--studio-bg-elevated);
+  --chat-popup-border: var(--studio-border);
+  --chat-surface-hover: var(--studio-bg-elevated);
+  --chat-surface-active: var(--studio-bg-selected);
+  --chat-surface-sunken: var(--studio-bg-input);
+  --chat-border: var(--studio-border);
+  --chat-border-strong: var(--studio-border-strong);
+  --chat-text: var(--studio-text-1);
+  --chat-text-secondary: var(--studio-text-2);
+  --chat-text-muted: var(--studio-text-meta);
+
+  background: var(--studio-bg-canvas);
+  color: var(--studio-text-1);
+  color-scheme: dark;
+}
+
+/* V2 surfaces derive --bg-/--text-/--border-* from --v2-* on EVERY
+ * [data-ethen-v2] element, and legacy frames re-apply the global `.dark`
+ * palette on nested `.dark` wrappers; the Studio scope re-points both.
+ * (0,3,0) outranks the V2 rules and the global `.dark` block. */
+:root [data-ethen-studio] [data-ethen-v2],
+:root [data-ethen-studio] .dark {
+  --v2-canvas: var(--studio-bg-canvas);
+  --v2-surface: var(--studio-bg-panel);
+  --v2-raised: var(--studio-bg-elevated);
+  --v2-hover: var(--studio-bg-elevated);
+  --v2-active: var(--studio-bg-selected);
+  --v2-border-subtle: var(--studio-border-subtle);
+  --v2-border-default: var(--studio-border);
+  --v2-border-strong: var(--studio-border-strong);
+  --v2-text-primary: var(--studio-text-1);
+  --v2-text-secondary: var(--studio-text-2);
+  --v2-text-tertiary: var(--studio-text-meta);
+
+  --bg-base: var(--studio-bg-canvas);
+  --bg-surface: var(--studio-bg-panel);
+  --bg-elevated: var(--studio-bg-elevated);
+  --bg-inset: var(--studio-bg-input);
+  --bg-hover: var(--studio-bg-elevated);
+  --bg-active: var(--studio-bg-selected);
+  --text-primary: var(--studio-text-1);
+  --text-secondary: var(--studio-text-2);
+  --text-tertiary: var(--studio-text-meta);
+  --text-muted: var(--studio-text-meta);
+  --border-subtle: var(--studio-border-subtle);
+  --border-default: var(--studio-border);
+  --border-strong: var(--studio-border-strong);
+  --accent: var(--studio-primary);
+  --accent-fg: var(--studio-primary-fg);
+}
+
+/* ── Flush frame (Lock B) ─────────────────────────────────────────────── */
+
+/* Rail and workspace meet edge to edge: no 8px gutter showing the root. */
+:root [data-ethen-studio] > div:has(> div > header) {
+  gap: 0;
+}
+
+/* One hairline between the Studio sidebar and the workspace. */
+:root [data-ethen-studio] [data-testid="studio-sidebar"][data-variant="rail"] {
+  border-right: 1px solid var(--studio-border-subtle);
+}
+
+/* The desktop top strip only ever held the mobile drawer button: remove it
+ * where the rail is visible (the chrome shows the rail above 768px). */
+@media (min-width: 769px) {
+  :root [data-ethen-studio] header:has(> button[aria-controls="studio-drawer"]) {
+    display: none;
+  }
+}
+@media (max-width: 768px) {
+  :root [data-ethen-studio] header:has(> button[aria-controls="studio-drawer"]) {
+    min-height: 44px;
+    padding: 0 6px;
+    border-bottom: 1px solid var(--studio-border-subtle);
+    background: var(--studio-bg-app);
+  }
+}
+
+/* StudioShell passthrough is a flush surface, not a floating card: no
+ * border, radius, background plate, 560px floor or overflow clip. */
+:root [data-studio-scroll-root] > [data-ethen-v2]:not([data-variant]) {
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  min-height: 0;
+  overflow: visible;
+}
+
+/* Workspace scroll root paints the canvas tone edge to edge. */
+:root [data-studio-scroll-root] {
+  background: var(--studio-bg-canvas);
+}
+
+/* Legacy smoked panels (retired in M5) hardcode 62% black; inside Studio
+ * they use the charcoal panel tone. */
+:root [data-ethen-studio] .ethen-panel-smoked,
+:root [data-ethen-studio] .ethen-panel-smoked-refined {
+  background: var(--studio-bg-panel);
+  border-color: var(--studio-border);
+}
+
+/* ── M6B polish ───────────────────────────────────────────────────────── */
+
+/* Route focus lands on each page's <h1 tabindex="-1"> so screen readers
+ * announce the destination. Headings are not interactive, so the program-
+ * matic focus must not paint a ring box around the title. */
+:root [data-ethen-studio] h1[tabindex="-1"]:focus,
+:root [data-ethen-studio] [data-studio-scroll-root]:focus {
+  outline: none;
+  box-shadow: none;
+}
+/* The scroll region is keyboard-focusable for arrow scrolling; keep a quiet
+ * inset ring only when it is reached by keyboard. */
+:root [data-ethen-studio] [data-studio-scroll-root]:focus-visible {
+  box-shadow: inset 0 0 0 2px var(--studio-focus);
+}
+
+/* Selected text and scrollbars stay inside the charcoal palette. */
+:root [data-ethen-studio] ::selection {
+  background: color-mix(in srgb, var(--studio-accent) 38%, transparent);
+  color: var(--studio-text-1);
+}
+:root [data-ethen-studio] [data-studio-scroll-root] {
+  scrollbar-width: thin;
+  scrollbar-color: var(--studio-border-strong) transparent;
+}
+
+/* Motion budget: interactive feedback is 150ms; nothing moves for users who
+ * ask for reduced motion. */
+@media (prefers-reduced-motion: reduce) {
+  :root [data-ethen-studio] *,
+  :root [data-ethen-studio] *::before,
+  :root [data-ethen-studio] *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* The shared chrome's sidebar resize handle is keyboard-operable but paints
+ * no ring of its own inside Studio. */
+:root [data-ethen-studio] [aria-label="Resize sidebar"]:focus-visible {
+  outline: 2px solid var(--studio-focus);
+  outline-offset: -2px;
+}
+
+/* The global type layer title-cases every h1–h3 (marketing voice). Studio
+ * is a console: headings keep their authored sentence case, as in the
+ * approved Generator reference. (0,2,0) outranks the bare element rule. */
+:root [data-ethen-studio] :is(h1, h2, h3) {
+  text-transform: none;
+}
+
+/* Settings within Studio renders the shared EDS SettingsShell, whose
+ * [data-eds] root declares the warm EDS palette. Inside Studio it reads
+ * the charcoal tokens instead (shared settings CSS untouched). */
+:root [data-ethen-studio] [data-eds] {
+  --eds-canvas: var(--studio-bg-canvas);
+  --eds-paper: var(--studio-bg-panel);
+  --eds-paper-2: var(--studio-bg-elevated);
+  --eds-ink: var(--studio-text-1);
+  --eds-text-secondary: var(--studio-text-2);
+  --eds-rule-hair: var(--studio-border);
+  --eds-lapis: var(--studio-accent);
+  --eds-lapis-wash: color-mix(in srgb, var(--studio-accent) 22%, transparent);
+}

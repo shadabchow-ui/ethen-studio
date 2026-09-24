@@ -1,0 +1,23 @@
+.railRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 28px;
+}
+
+.railRow > * { flex: none; }
+
+/* A rail only tells the truth at its own height, so the case gives it one. */
+.railCase {
+  border: 1px solid var(--chat-border);
+  border-radius: 12px;
+  height: 620px;
+  overflow: hidden;
+  width: var(--chat-rail-width);
+}
+
+.measure { max-width: var(--chat-measure); }
+
+@media (max-width: 768px) {
+  .railCase { height: 520px; width: 100%; }
+  .railRow { gap: 22px; }
+}

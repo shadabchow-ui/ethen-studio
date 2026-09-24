@@ -1,0 +1,114 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/hunyuan-motion/fast",
+  "task": "3d-generation",
+  "source_url": "https://fal.ai/models/fal-ai/hunyuan-motion/fast",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fhunyuan-motion%2Ffast",
+  "retrieved_at": "2026-09-23T14:36:38.354Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "text-to-3d",
+  "bytes_sha256": "c225896ab25537f7779bb49bee4285654ae10fcfaa3df3f2660e3d907a51d033",
+  "queue_path": "/fal-ai/hunyuan-motion/fast",
+  "input_name": "HunyuanMotionFastInput",
+  "input": {
+    "$refName": "HunyuanMotionFastInput",
+    "type": "object",
+    "properties": {
+      "guidance_scale": {
+        "type": "number",
+        "default": 5,
+        "minimum": 1,
+        "maximum": 10,
+        "description": "Classifier-free guidance scale. Higher = more faithful to prompt."
+      },
+      "prompt": {
+        "type": "string",
+        "description": "Text prompt describing the motion to generate."
+      },
+      "seed": {
+        "description": "Random seed for reproducible generation.",
+        "anyOf": [
+          {
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "output_format": {
+        "type": "string",
+        "enum": [
+          "fbx",
+          "dict"
+        ],
+        "default": "fbx",
+        "description": "Output format: 'fbx' for animation files, 'dict' for raw JSON."
+      },
+      "duration": {
+        "type": "number",
+        "default": 5,
+        "minimum": 0.5,
+        "maximum": 12,
+        "description": "Motion duration in seconds (0.5-12.0)."
+      }
+    },
+    "required": [
+      "prompt"
+    ]
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs."
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics."
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "HunyuanMotionFastInput",
+    "HunyuanMotionFastOutput",
+    "File"
+  ]
+}

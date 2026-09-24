@@ -1,0 +1,137 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/meshy/v5/remesh",
+  "task": "3d-generation",
+  "source_url": "https://fal.ai/models/fal-ai/meshy/v5/remesh",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fmeshy%2Fv5%2Fremesh",
+  "retrieved_at": "2026-09-23T14:37:06.146Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "3d-to-3d",
+  "bytes_sha256": "d0756bc05f833dd862095ea3ebe3cb7becf7ede3f780ba978bafa8f25d8017c9",
+  "queue_path": "/fal-ai/meshy/v5/remesh",
+  "input_name": "MeshyV5RemeshInput",
+  "input": {
+    "$refName": "MeshyV5RemeshInput",
+    "type": "object",
+    "description": "Input for 3D Model Remeshing",
+    "properties": {
+      "resize_height": {
+        "type": "number",
+        "default": 0,
+        "minimum": 0,
+        "description": "Resize the model to a certain height measured in meters. Set to 0 for no resizing."
+      },
+      "origin_at": {
+        "description": "Position of the origin. None means no effect.",
+        "anyOf": [
+          {
+            "type": "string",
+            "enum": [
+              "bottom",
+              "center"
+            ]
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "target_formats": {
+        "type": "array",
+        "default": [
+          "glb"
+        ],
+        "description": "List of target formats for the remeshed model.",
+        "items": {
+          "type": "string",
+          "enum": [
+            "glb",
+            "fbx",
+            "obj",
+            "usdz",
+            "blend",
+            "stl"
+          ]
+        }
+      },
+      "target_polycount": {
+        "type": "integer",
+        "default": 30000,
+        "minimum": 100,
+        "maximum": 300000,
+        "description": "Target number of polygons in the generated model. Actual count may vary based on geometry complexity."
+      },
+      "model_url": {
+        "type": "string",
+        "description": "URL or base64 data URI of a 3D model to remesh. Supports .glb, .gltf, .obj, .fbx, .stl formats. Can be a publicly accessible URL or data URI with MIME type application/octet-stream."
+      },
+      "topology": {
+        "type": "string",
+        "enum": [
+          "quad",
+          "triangle"
+        ],
+        "default": "triangle",
+        "description": "Specify the topology of the generated model. Quad for smooth surfaces, Triangle for detailed geometry."
+      }
+    },
+    "required": [
+      "model_url"
+    ]
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs."
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics."
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "MeshyV5RemeshInput",
+    "MeshyV5RemeshOutput",
+    "File",
+    "ModelUrls"
+  ]
+}

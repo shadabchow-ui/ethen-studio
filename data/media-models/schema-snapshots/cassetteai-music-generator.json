@@ -1,0 +1,87 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "cassetteai/music-generator",
+  "task": "music-generation",
+  "source_url": "https://fal.ai/models/cassetteai/music-generator",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=cassetteai%2Fmusic-generator",
+  "retrieved_at": "2026-09-23T14:36:15.513Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "text-to-audio",
+  "bytes_sha256": "fc30efb4f3a5daec6ee73bcadb72febcfba49ae93f5fa92170575b9222963c86",
+  "queue_path": "/cassetteai/music-generator",
+  "input_name": "MusicGeneratorInput",
+  "input": {
+    "$refName": "MusicGeneratorInput",
+    "type": "object",
+    "properties": {
+      "prompt": {
+        "type": "string",
+        "description": "The prompt to generate music from."
+      },
+      "duration": {
+        "type": "integer",
+        "minimum": 10,
+        "maximum": 180,
+        "description": "The duration of the generated music in seconds."
+      }
+    },
+    "required": [
+      "prompt",
+      "duration"
+    ]
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs."
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics."
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "MusicGeneratorInput",
+    "MusicGeneratorOutput",
+    "File"
+  ]
+}

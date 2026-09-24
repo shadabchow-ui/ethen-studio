@@ -1,0 +1,4717 @@
+@import "tailwindcss";
+
+/*
+ * B1: this stylesheet is the shared global layer, owned by `@ethen/ui`.
+ * Tailwind resolves `@source` relative to this file, so the design system and
+ * the app shell are scanned from here. Each deployable adds its own `@source`
+ * for its own tree in its own entry stylesheet.
+ */
+@source "../";
+@source "../../../app-shell/src";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* ─── Ethen v3 Design Tokens ─────────────────────────────────────────────── */
+
+:root {
+  /* ── CR-SOL-15 Flat Jet-Black Semantic Theme (dark default) ───────────── */
+  /* Canvas / shell / workspace — true jet black */
+  --console-black: #000000;
+  --console-sidebar: #000000;
+  --console-surface: #000000;
+  --console-surface-strong: #080808;
+  --console-surface-hover: #141414;
+  --console-surface-muted: #080808;
+  --console-surface-overlay: #0D0D0D;
+  --console-text-primary: #F5F5F5;
+  --console-text-secondary: #A3A3A3;
+  --console-text-tertiary: #737373;
+  --console-border-subtle: rgba(255, 255, 255, 0.10);
+  --console-border-default: rgba(255, 255, 255, 0.10);
+  --console-border-strong: rgba(255, 255, 255, 0.16);
+  --console-hairline: rgba(255, 255, 255, 0.10);
+  --console-hairline-strong: rgba(255, 255, 255, 0.16);
+  --console-text-muted: #737373;
+  --console-text-metadata: #737373;
+  --console-surface-shell: #000000;
+  --console-surface-card: #080808;
+  --console-surface-card-elevated: #0D0D0D;
+  --console-surface-data: #080808;
+  --console-surface-editor: #080808;
+  --console-focus-ring: 0 0 0 2px #000000, 0 0 0 3px rgba(255, 255, 255, 0.16);
+  --console-touch-target: 36px;
+
+  /* Shell surfaces — flat jet-black theme */
+  --shell-surface-body: #000000;
+  --shell-surface-card: #080808;
+  --shell-border: rgba(255, 255, 255, 0.10);
+
+  /* Backgrounds */
+  --bg-base: #000000;
+  --bg-surface: #080808;
+  --bg-elevated: #0D0D0D;
+  --bg-inset: #080808;
+  --bg-tint: #000000;
+
+  /* Text */
+  --text-primary: #F5F5F5;
+  --text-secondary: #A3A3A3;
+  --text-tertiary: #737373;
+  --text-muted: #737373;
+  --text-disabled: #525252;
+
+  /* Borders */
+  --border-subtle: rgba(255, 255, 255, 0.10);
+  --border-default: rgba(255, 255, 255, 0.10);
+  --border-strong: rgba(255, 255, 255, 0.16);
+
+  /* Primary navigation sidebar — ported verbatim from the frozen DL3 Console
+   * Shell (components/dev/ethen-design-lab-3/ConsoleShell.module.css .root),
+   * a layered-neutral surface distinct from --bg-base/--console-black. Scoped
+   * to its own token namespace rather than redefining --bg-base or the
+   * --v2-raised/--v2-border-subtle tokens shared by many other v2 surfaces,
+   * so this recolor stays limited to the sidebar frame it was requested for. */
+  --sbnav-rail: #050505;
+  --sbnav-line: rgba(255, 255, 255, 0.07);
+  --sbnav-line-soft: rgba(255, 255, 255, 0.05);
+  --sbnav-text: #f0f0f0;
+  --sbnav-text-2: #999999;
+  --sbnav-text-3: #818181;
+  --sbnav-hover: #101010;
+  --sbnav-active: #171717;
+  --sbnav-row-h: 30px;
+  --sbnav-bar-h: 44px;
+
+  /* Accent */
+  --accent: #F5F5F5;
+  --accent-hover: #FFFFFF;
+  --accent-muted: #141414;
+  --accent-fg: #000000;
+
+  /* Status */
+  --status-success: #16a34a;
+  --status-warning: #d97706;
+  --status-danger:  #dc2626;
+
+  /* Layout */
+  --sidebar-width:          256px;
+  --sidebar-width-collapsed: 56px;
+  --artifact-panel-width:   332px;
+  --assistant-rail-width:          380px;
+  --assistant-rail-width-collapsed: 48px;
+  --composer-height:        84px;
+  --density-composer-height: 76px;
+  --density-control-min:     36px;
+  --density-nav-item-h:      34px;
+  --density-section-gap:     0.5rem;
+  --workspace-max-width:    768px;
+  --topbar-height:          48px;
+  --thread-max-width:       860px;
+  --focus-ring:             var(--console-focus-ring);
+
+  /* Console geometry */
+  --console-nav-row-height: 34px;
+  --console-control-height: 36px;
+  --console-button-height-sm: 32px;
+  --console-button-height-md: 34px;
+  --console-button-height-lg: 36px;
+  --console-card-radius-sm: 8px;
+  --console-card-radius-md: 10px;
+
+  /* ── Flat surface hierarchy (replaces glass system) ──────────────────── */
+  /*
+   * CR-SOL-15: Retired glass/liquid-glass system. Replaced with flat
+   * solid surfaces. Token names preserved as compatibility aliases.
+   *   L1  chrome   — persistent shell (sidebar, topbars, composer)
+   *   L2  panel    — transient overlays (cmd palette, drawers)
+   *   L3  elevated — secondary panels (research context, art. side)
+   *   L4  control  — interactive hit areas (nav items, buttons)
+   */
+
+  /* L1 — Chrome tier: persistent shell, flat solid */
+  --glass-chrome-fill:      #000000;
+  --glass-chrome-border:    rgba(255, 255, 255, 0.10);
+  --glass-chrome-highlight: rgba(255, 255, 255, 0.04);
+
+  /* L2 — Panel tier: transient overlays, flat solid */
+  --glass-panel-fill:       #080808;
+  --glass-panel-border:     rgba(255, 255, 255, 0.10);
+  --glass-panel-highlight:  rgba(255, 255, 255, 0.04);
+
+  /* L3 — Elevated tier: secondary persistent panels */
+  --glass-elevated-fill:      #0D0D0D;
+  --glass-elevated-border:    rgba(255, 255, 255, 0.10);
+  --glass-elevated-highlight: rgba(255, 255, 255, 0.04);
+
+  /* L4 — Control tier: interactive hit areas */
+  --glass-control-fill:   #080808;
+  --glass-control-border: rgba(255, 255, 255, 0.10);
+
+  /* Inner highlight — flat solid (was top-edge glow) */
+  --glass-inner-highlight: rgba(255, 255, 255, 0.04);
+
+  /* Specular shine — flat, no gradient */
+  --glass-shine-light: rgba(255, 255, 255, 0.00);
+
+  /* Overlay — modal/drawer backdrop scrim */
+  --glass-overlay: rgba(0, 0, 0, 0.56);
+
+  /* Consolidated panel shadow — flattened (no large glow) */
+  --glass-shadow:
+    0 1px 2px 0 rgba(0, 0, 0, 0.24);
+
+  /* Blur radii — set to zero (flat, no blur) */
+  --glass-blur-low:  0px;
+  --glass-blur-mid:  0px;
+  --glass-blur-high: 0px;
+
+  /* Saturation — neutral */
+  --glass-saturation: 100%;
+
+  /* ── Liquid Glass tokens — flat compatibility aliases ─────────────────── */
+  --ethen-glass-bg-subtle:      #080808;
+  --ethen-glass-bg-standard:    #080808;
+  --ethen-glass-bg-strong:      #0D0D0D;
+
+  --ethen-glass-border:         rgba(255, 255, 255, 0.10);
+  --ethen-glass-border-strong:  rgba(255, 255, 255, 0.16);
+
+  --ethen-glass-highlight:      rgba(255, 255, 255, 0.06);
+  --ethen-glass-highlight-strong: rgba(255, 255, 255, 0.08);
+
+  --ethen-glass-shadow-subtle:  0 1px 2px 0 rgba(0, 0, 0, 0.24);
+  --ethen-glass-shadow-standard: 0 1px 2px 0 rgba(0, 0, 0, 0.24);
+  --ethen-glass-shadow-strong:  0 1px 2px 0 rgba(0, 0, 0, 0.24);
+
+  --ethen-glass-blur-subtle:    0px;
+  --ethen-glass-blur-standard:  0px;
+  --ethen-glass-blur-strong:    0px;
+
+  --ethen-glass-saturation:     1;
+  --ethen-glass-brightness:     1;
+
+  /* ── Extended radius scale ────────────────────────────────────────────── */
+  --radius-2xl: 20px;   /* large panels, hero containers */
+  --radius-3xl: 28px;   /* marketplace cards, modals */
+  --radius-4xl: 32px;   /* hero sections, full-bleed marketplace panels */
+
+  /* ── Elevation scale ──────────────────────────────────────────────────── */
+  --shadow-inner: inset 0 1px 0 rgba(255, 255, 255, 0.04);
+  --shadow-lg:    0 20px 56px -8px rgba(0, 0, 0, 0.6), 0 6px 16px -4px rgba(0, 0, 0, 0.28);
+
+  /* ── Motion foundations ───────────────────────────────────────────────── */
+  --duration-fast:  100ms;   /* color/opacity micro-interactions */
+  --duration-base:  150ms;   /* hover/focus state changes */
+  --duration-slow:  250ms;   /* panel content transitions */
+  --duration-enter: 200ms;   /* panel/overlay enter */
+  --duration-exit:  150ms;   /* panel/overlay exit */
+  --ease-out:       cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out:    cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-spring:    cubic-bezier(0.34, 1.2, 0.64, 1);  /* control press-release */
+
+  /* ── Premium interaction easing ────────────────────────────────────────── */
+  --ease-premium:     cubic-bezier(0.2, 0.8, 0.2, 1);   /* content enter, hover */
+  --ease-press:       cubic-bezier(0.2, 0, 0, 1);        /* tap/click press */
+  --ease-exit:        cubic-bezier(0.4, 0, 1, 1);        /* dismiss/exit */
+  --duration-hover:   140ms;    /* hover state transitions */
+  --duration-press:   100ms;    /* tap/click press feedback */
+  --duration-content: 220ms;    /* panel/content enter */
+  --duration-page:    240ms;    /* page/section transition */
+  --motion-duration-hover: 140ms;  /* alias: hover micro-interaction */
+  --motion-duration-route: 240ms;  /* alias: page/route transition */
+
+  /* ── Console primitives ──────────────────────────────────────────────── */
+  --console-bg: #0a0a0a;
+  --console-surface: #0a0a0a;
+  --console-surface-muted: #151515;
+  --console-surface-strong: #1a1a1a;
+  --console-border: rgba(255, 255, 255, 0.12);
+  --console-border-soft: rgba(255, 255, 255, 0.08);
+  --console-border-strong: rgba(255, 255, 255, 0.18);
+  --console-text: #e6e6e6;
+  --console-text-muted: #8a8a8a;
+  --console-text-faint: #666666;
+  --console-text-dim: #525252;
+  --console-radius-sm: 6px;
+  --console-radius-md: 8px;
+  --console-radius-lg: 10px;
+  --console-shadow: 0 16px 48px rgb(0 0 0 / 0.32);
+
+  /* ── Ethen Token Bridge — structural tokens (Astryx-inspired naming, Ethen-owned values) ──── */
+  --ethen-bg-sidebar:      #0a0a0a;
+  --ethen-bg-surface:      #151515;
+  --ethen-bg-muted:        #1a1a1a;
+
+  --ethen-border:           var(--shell-border);
+  --ethen-border-strong:    rgba(255, 255, 255, 0.16);
+
+  --ethen-hover:            rgba(255, 255, 255, 0.055);
+  --ethen-active:           rgba(255, 255, 255, 0.10);
+
+  --ethen-radius-inner:     6px;
+  --ethen-radius-element:   10px;
+  --ethen-radius-container: 12px;
+  --ethen-radius-page:      var(--radius-3xl);
+
+  --ethen-duration-fast:    125ms;
+  --ethen-duration-medium:  300ms;
+
+  /* ── System Lab token bridge — maps /dev/ethen-system-lab literals to production tokens ──── */
+
+  /* Surfaces */
+  --ethen-surface-root:         #0a0a0a;
+  --ethen-surface-canvas:       var(--bg-surface);
+  --ethen-surface-panel:        var(--ethen-bg-surface);
+  --ethen-surface-panel-raised: var(--bg-elevated);
+  --ethen-surface-active:       var(--bg-elevated);
+
+  /* Borders / hairlines — lab-verified values */
+  --ethen-border-faint:       rgba(255, 255, 255, 0.06);
+  --ethen-divider-faint:      rgba(255, 255, 255, 0.06);
+
+  /* Radii */
+  --ethen-radius-row:         var(--console-radius-md);   /* 8px  — sidebar nav rows, recent items */
+  --ethen-radius-control:     var(--ethen-radius-element); /* 10px — buttons, status banners */
+  --ethen-radius-card:        var(--ethen-radius-container); /* 12px — overview card, panels */
+  --ethen-radius-panel:       var(--radius-2xl);          /* 20px — app-frame, section shells */
+  --ethen-radius-shell:       var(--radius-2xl);          /* 20px — outer workspace frame  */
+  --ethen-radius-composer:    24px;                        /* composer form surface */
+
+  /* Layout */
+  --ethen-gap-xs:             2px;
+  --ethen-gap-sm:             4px;
+  --ethen-gap-md:             8px;
+  --ethen-sidebar-collapsed:  var(--sidebar-width-collapsed); /* 56px */
+  --ethen-sidebar-compact:    72px;                           /* narrow icon rail */
+  --ethen-sidebar-default:    224px;                          /* coding agent workspace sidebar width */
+  --ethen-sidebar-expanded:   var(--sidebar-width);           /* 248px — home/studio sidebar */
+
+  /* Material */
+  --ethen-shadow-panel:       inset 0 1px 0 rgba(255, 255, 255, 0.03);
+  --ethen-shadow-shell:       inset 0 1px 0 rgba(255, 255, 255, 0.04);
+
+  /* ── Workspace System — Resizable Panel Kit ──────────────────── */
+
+  /* Resize handle hit-target size (overridable per-group via inline style) */
+  --ws-handle-size: 32px;
+
+  /* Resize handle line colors (matching lab Section 8 spec) */
+  --ws-handle-line-rest:      rgba(255, 255, 255, 0.08);
+  --ws-handle-line-hover:     rgba(255, 255, 255, 0.14);
+  --ws-handle-line-active:    rgba(255, 255, 255, 0.22);
+  --ws-handle-line-disabled:  rgba(255, 255, 255, 0.035);
+
+  /* Resize handle thumb colors */
+  --ws-handle-thumb-rest:    rgba(255, 255, 255, 0.12);
+  --ws-handle-thumb-hover:   rgba(255, 255, 255, 0.18);
+  --ws-handle-thumb-active:  rgba(255, 255, 255, 0.22);
+
+  /* Panel surfaces */
+  --ws-panel-bg:           var(--bg-surface);       /* 0a0a0a */
+  --ws-panel-bg-sidebar:   var(--ethen-bg-sidebar); /* 121212 */
+  --ws-panel-bg-deep:      var(--ethen-surface-root); /* 050505 */
+
+  /* Collapsed rail */
+  --ws-rail-width:         56px;
+  --ws-rail-icon-size:     32px;
+
+  /* Mobile breakpoint for stacked layout */
+  --ws-mobile-breakpoint:  768px;
+}
+
+/* Light-mode semantic tokens are owned by app/foundation-theme.css (the
+   canonical light authority, loaded after globals.css in app/layout.tsx).
+   The former CR-SOL-15 clean-white :root[data-theme="light"] block was a
+   duplicate competing authority — machine-diffed against foundation-theme.css,
+   every token it defined was redefined there (foundation wins at runtime via
+   load order) except --glass-overlay, which was ported into foundation. Do not
+   reintroduce light-mode token blocks here (enforced by
+   scripts/validate-token-authority.ts). */
+
+/* ─── Premium interaction utility layer ─────────────────────────────────────── */
+/*
+ * Reusable interaction primitives for the Ethen product surface.
+ * Prefer these classes over ad-hoc Tailwind hover/active/focus chains.
+ * All classes respect prefers-reduced-motion and high-contrast modes.
+ */
+
+/* ── Base interactive — fast, cheap-property transitions ────────────────── */
+.ethen-interactive {
+  transition:
+    background-color var(--duration-hover) var(--ease-premium),
+    border-color var(--duration-hover) var(--ease-premium),
+    color var(--duration-hover) var(--ease-premium),
+    opacity var(--duration-hover) var(--ease-premium),
+    transform var(--duration-hover) var(--ease-premium);
+}
+
+/* ── Pressable — tactile scale feedback on click/tap ────────────────────── */
+.ethen-pressable:active {
+  transform: scale(0.98);
+  transition: transform var(--duration-press) var(--ease-press);
+}
+
+/* ── Card interactive — hover lift + border accent ──────────────────────── */
+.ethen-card-interactive {
+  transition:
+    border-color var(--duration-hover) var(--ease-premium),
+    box-shadow var(--duration-hover) var(--ease-premium),
+    transform var(--duration-hover) var(--ease-premium);
+}
+.ethen-card-interactive:hover {
+  border-color: var(--border-default);
+  box-shadow: var(--shadow-md);
+}
+.ethen-card-interactive:active {
+  transform: scale(0.985);
+  transition: transform var(--duration-press) var(--ease-press);
+}
+
+/* ── Focus ring — visible keyboard focus indicator ──────────────────────── */
+.ethen-focus-ring:focus-visible {
+  outline: none;
+  box-shadow: var(--focus-ring);
+}
+
+/* ── Soft enter — subtle fade + slide for content appearance ────────────── */
+@keyframes ethen-soft-enter {
+  from {
+    opacity: 0;
+    transform: translateY(4px) scale(0.995);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+.ethen-soft-enter {
+  animation: ethen-soft-enter var(--duration-content) var(--ease-premium) both;
+}
+
+.console-scrollbar {
+  scrollbar-color: var(--border-default) transparent;
+}
+
+.console-scrollbar::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+.console-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.console-scrollbar::-webkit-scrollbar-thumb {
+  background: var(--border-default);
+  border: 2px solid transparent;
+  border-radius: 999px;
+  background-clip: padding-box;
+}
+
+/* ── Skeleton — premium shimmer for loading states ──────────────────────── */
+@keyframes ethen-shimmer {
+  0%   { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+.ethen-skeleton {
+  border-radius: var(--radius-md);
+  background:
+    linear-gradient(
+      90deg,
+      var(--bg-inset) 0%,
+      var(--bg-elevated) 40%,
+      var(--bg-inset) 80%
+    );
+  background-size: 200% 100%;
+  animation: ethen-shimmer 1.6s var(--ease-in-out) infinite;
+}
+/* Existing skeleton-shimmer class referenced in state-surfaces */
+.skeleton-shimmer {
+  border-radius: var(--radius-full);
+  background:
+    linear-gradient(
+      90deg,
+      var(--bg-inset) 0%,
+      var(--bg-elevated) 40%,
+      var(--bg-inset) 80%
+    );
+  background-size: 200% 100%;
+  animation: ethen-shimmer 1.6s var(--ease-in-out) infinite;
+}
+
+/* ── Studio liquid-glass surface system ───────────────────────────── */
+/*
+ * Premium Apple-style liquid glass translated to a jet-black web console.
+ * Three tiers:
+ *   stage    — highest blur, most translucent — main canvas/composer shell
+ *   panel    — medium blur — sidebar control/inspect/reference panels
+ *   card     — lower blur — result cards, nested content
+ *
+ * Each tier uses:
+ *   - translucent dark fill (not opaque)
+ *   - backdrop-filter blur + subtle saturation
+ *   - inner top highlight (inset shadow)
+ *   - faint rim/edge light (0.5px border + inset)
+ *   - soft layered shadow (close + far)
+ *   - radial glare via multi-stop background
+ *
+ * Inner inset surfaces (inside glass) get no blur — just a subtle fill.
+ */
+
+/* Tier 1 — Stage shell: main canvas, composer dock (crisp jet-black) */
+.studio-stage-glass {
+  background: #050505;
+  border: 1px solid rgba(255,255,255,0.105);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.04),
+    inset 0 -1px 0 rgba(0,0,0,0.9);
+}
+
+/* Tier 2 — Panel: sidebar controls, inspector, reference (crisp jet-black) */
+.studio-jet-panel {
+  background: #0d0d0d;
+  border: 1px solid rgba(255,255,255,0.06);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.03),
+    inset 0 -1px 0 rgba(0,0,0,0.82);
+}
+
+/* Tier 3 — Card: result cards, nested surfaces (crisp jet-black) */
+.studio-jet-card {
+  background: #080808;
+  border: 1px solid rgba(255,255,255,0.047);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.02),
+    inset 0 -1px 0 rgba(0,0,0,0.8);
+}
+
+/* Inset — surfaces inside glass (crisp jet-black, no blur) */
+.studio-glass-inset {
+  background: #040404;
+  border: 1px solid rgba(255,255,255,0.065);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.025),
+    inset 0 -1px 0 rgba(0,0,0,0.8);
+}
+
+/* Workbench background — jet-black, no gradients */
+.studio-workbench-bg {
+  background: #000000;
+}
+
+
+
+/* ── Studio motion utilities ──────────────────────────────────────────── */
+/* Card/item entrance: fade + lift */
+@keyframes studio-fade-enter {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.studio-fade-enter {
+  animation: studio-fade-enter 160ms var(--ease-premium) both;
+}
+
+/* Panel/menu entrance: scale + fade */
+@keyframes studio-scale-enter {
+  from { opacity: 0; transform: scale(0.97) translateY(-2px); }
+  to   { opacity: 1; transform: scale(1) translateY(0); }
+}
+.studio-scale-enter {
+  animation: studio-scale-enter 140ms var(--ease-out) both;
+}
+
+/* Card-press: subtle scale compression */
+.studio-card-press:active {
+  transform: scale(0.985);
+  transition: transform var(--duration-press) var(--ease-press);
+}
+
+/* Scroll area — stable scrolling container */
+.ethen-scroll-area {
+  overflow-y: auto;
+  overflow-x: hidden;
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .ethen-scroll-area {
+    scroll-behavior: smooth;
+  }
+}
+/* Keep scrollbar subtle inside scroll areas */
+.ethen-scroll-area::-webkit-scrollbar {
+  width: 5px;
+}
+.ethen-scroll-area::-webkit-scrollbar-track {
+  background: transparent;
+}
+.ethen-scroll-area::-webkit-scrollbar-thumb {
+  background: var(--border-subtle);
+  border-radius: 9999px;
+}
+.ethen-scroll-area::-webkit-scrollbar-thumb:hover {
+  background: var(--border-default);
+}
+
+/* ─── Dark theme — Flat Jet-Black (CR-SOL-15) ──────────────────────────────── */
+
+.dark {
+  /* Backgrounds — inherit jet-black :root values */
+  --bg-base:     var(--console-black);
+  --bg-surface:  var(--console-surface);
+  --bg-elevated: var(--console-surface-strong);
+  --bg-inset:    var(--console-surface-muted);
+  --bg-tint:     var(--console-sidebar);
+
+  /* Text */
+  --text-primary:   var(--console-text-primary);
+  --text-secondary: var(--console-text-secondary);
+  --text-tertiary:  var(--console-text-tertiary);
+  --text-muted:     #737373;
+  --text-disabled:  #525252;
+
+  /* Borders */
+  --border-subtle:  var(--console-border-subtle);
+  --border-default: var(--console-border-default);
+  --border-strong:  var(--console-border-strong);
+
+  /* Accent */
+  --accent:       #F5F5F5;
+  --accent-hover: #FFFFFF;
+  --accent-muted: var(--console-surface-hover);
+  --accent-fg:    #000000;
+
+  /* Status */
+  --status-success: #22c55e;
+  --status-warning: #f59e0b;
+  --status-danger:  #f87171;
+
+  /* Focus — subtle ring, visible on dark surfaces */
+  --focus-ring: 0 0 0 2px #000000, 0 0 0 3px rgba(255, 255, 255, 0.14);
+
+  /* ── Glass tokens (dark) — flat solid (CR-SOL-15) ────────────────────── */
+  --glass-chrome-fill:      #000000;
+  --glass-chrome-border:    var(--console-border-subtle);
+  --glass-chrome-highlight: rgba(255, 255, 255, 0.04);
+
+  --glass-panel-fill:       #080808;
+  --glass-panel-border:     var(--console-border-default);
+  --glass-panel-highlight:  rgba(255, 255, 255, 0.04);
+
+  --glass-elevated-fill:      #0D0D0D;
+  --glass-elevated-border:    var(--console-border-subtle);
+  --glass-elevated-highlight: rgba(255, 255, 255, 0.04);
+
+  --glass-control-fill:   #080808;
+  --glass-control-border: var(--console-border-default);
+
+  --glass-inner-highlight: rgba(255, 255, 255, 0.04);
+
+  --glass-shine-light: rgba(255, 255, 255, 0.00);
+
+  --glass-overlay: rgba(0, 0, 0, 0.56);
+
+  --glass-shadow:
+    0 1px 2px 0 rgb(0 0 0 / 0.24);
+
+  --glass-blur-low:  0px;
+  --glass-blur-mid:  0px;
+  --glass-blur-high: 0px;
+
+  --glass-saturation: 100%;
+
+  /* ── Liquid Glass tokens (dark) — flat solid ──────────────────────────── */
+  --ethen-glass-bg-subtle:      #080808;
+  --ethen-glass-bg-standard:    #080808;
+  --ethen-glass-bg-strong:      #0D0D0D;
+
+  --ethen-glass-border:         var(--console-border-subtle);
+  --ethen-glass-border-strong:  var(--console-border-strong);
+
+  --ethen-glass-highlight:      rgba(255, 255, 255, 0.06);
+  --ethen-glass-highlight-strong: rgba(255, 255, 255, 0.08);
+
+  --ethen-glass-shadow-subtle:  0 1px 2px 0 rgba(0, 0, 0, 0.24);
+  --ethen-glass-shadow-standard: 0 1px 2px 0 rgba(0, 0, 0, 0.24);
+  --ethen-glass-shadow-strong:  0 1px 2px 0 rgba(0, 0, 0, 0.24);
+
+  --ethen-glass-blur-subtle:    0px;
+  --ethen-glass-blur-standard:  0px;
+  --ethen-glass-blur-strong:    0px;
+
+  --ethen-glass-saturation:     1;
+  --ethen-glass-brightness:     1;
+
+  /* ── Elevation — flattened (CR-SOL-15) ────────────────────────────────── */
+  --shadow-sm:    0 1px 2px 0 rgb(0 0 0 / 0.24);
+  --shadow-md:    0 1px 2px 0 rgb(0 0 0 / 0.24);
+  --shadow-lg:    0 1px 2px 0 rgb(0 0 0 / 0.24);
+  --shadow-panel: 0 0 0 1px var(--border-subtle), 0 1px 2px 0 rgb(0 0 0 / 0.24);
+  --shadow-inner: inset 0 1px 0 rgba(255, 255, 255, 0.04);
+
+  /* ── Legacy Ethen aliases ────────────────────────────────────────────── */
+  --ethen-bg-main:          var(--bg-base);
+  --ethen-bg-card:          var(--bg-elevated);
+  --ethen-bg-panel:         var(--bg-surface);
+  --ethen-bg-sidebar-hover: var(--bg-elevated);
+  --ethen-bg-inset:         var(--bg-inset);
+
+  --ethen-border-subtle:    var(--border-subtle);
+
+  --ethen-text-primary:     var(--text-primary);
+  --ethen-text-secondary:   var(--text-secondary);
+  --ethen-text-muted:       var(--text-muted);
+  --ethen-text-faint:       var(--text-muted);
+
+  --ethen-accent-blue:      var(--accent);
+  --ethen-accent-red:       var(--status-danger);
+
+  --ethen-radius-xs:        6px;
+  --ethen-radius-sm:        10px;
+  --ethen-radius-md:        14px;
+  --ethen-radius-lg:        18px;
+}
+
+.premium-control,
+.premium-icon-button,
+.premium-list-row,
+.premium-disclosure summary {
+  min-height: var(--console-touch-target);
+  transition:
+    border-color var(--duration-base) var(--ease-out),
+    background-color var(--duration-base) var(--ease-out),
+    color var(--duration-base) var(--ease-out),
+    box-shadow var(--duration-base) var(--ease-out),
+    transform var(--duration-base) var(--ease-out),
+    opacity var(--duration-base) var(--ease-out);
+}
+
+.premium-control:hover,
+.premium-list-row:hover,
+.premium-disclosure summary:hover {
+  background-color: color-mix(in srgb, var(--console-surface-card-elevated) 92%, transparent);
+  border-color: var(--console-hairline-strong);
+  color: var(--text-primary);
+}
+
+.premium-control:active,
+.premium-icon-button:active,
+.premium-list-row:active {
+  transform: scale(0.98);
+}
+
+.premium-control:disabled,
+.premium-icon-button:disabled,
+.premium-list-row:disabled {
+  cursor: not-allowed;
+}
+
+.premium-control--compact,
+.premium-icon-button {
+  min-height: var(--console-touch-target);
+}
+
+.premium-icon-button:hover {
+  background-color: var(--bg-elevated);
+  box-shadow: 0 0 0 1px var(--border-subtle);
+}
+
+.premium-icon-button--rail:hover {
+  background-color: var(--bg-elevated);
+  color: var(--text-secondary);
+}
+
+.premium-input:hover {
+  border-color: var(--border-default);
+  background-color: var(--bg-elevated);
+}
+
+.premium-composer-shell {
+  transition:
+    border-color var(--duration-base) var(--ease-out),
+    background-color var(--duration-base) var(--ease-out),
+    box-shadow var(--duration-slow) var(--ease-out),
+    transform var(--duration-base) var(--ease-out);
+}
+
+.premium-composer-shell:focus-within {
+  border-color: var(--border-default);
+  box-shadow:
+    inset 0 1px 0 var(--border-subtle);
+}
+
+.assistant-rail-shell {
+  transition:
+    width 200ms var(--ease-out),
+    border-color var(--duration-base) var(--ease-out),
+    background-color var(--duration-base) var(--ease-out);
+}
+
+.assistant-rail-copy,
+.assistant-rail-content {
+  transition:
+    opacity 180ms var(--ease-out),
+    transform 180ms var(--ease-out);
+}
+
+.assistant-rail-shell[data-collapsed="true"] .assistant-rail-copy,
+.assistant-rail-shell[data-collapsed="true"] .assistant-rail-content {
+  opacity: 0;
+  transform: translateX(8px);
+}
+
+.premium-disclosure[open] summary {
+  border-bottom-color: var(--border-subtle);
+}
+
+.ethen-shell-bg {
+  background-color: var(--bg-base);
+}
+
+.ethen-panel-bg {
+  background-color: var(--bg-surface);
+}
+
+.ethen-composer-bg {
+  background-color: var(--bg-elevated);
+}
+
+.ethen-subtle-border {
+  border-color: var(--border-subtle);
+}
+
+.ethen-console-sidebar {
+  width: var(--sidebar-width);
+  min-width: var(--sidebar-width);
+  background: var(--console-sidebar);
+  border-right: 1px solid var(--console-border-subtle);
+}
+
+.ethen-console-topbar {
+  min-height: var(--topbar-height);
+  background: var(--console-black);
+  border-bottom: 1px solid var(--console-border-subtle);
+}
+
+.ethen-console-scroll {
+  scrollbar-color: var(--console-border-default) transparent;
+  scrollbar-width: thin;
+}
+
+.ethen-console-scroll::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+.ethen-console-scroll::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.ethen-console-scroll::-webkit-scrollbar-thumb {
+  background: var(--console-border-default);
+  border: 2px solid transparent;
+  border-radius: 9999px;
+  background-clip: padding-box;
+}
+
+.ethen-console-card {
+  background: var(--console-surface-card);
+  border: 1px solid var(--console-hairline);
+  border-radius: var(--console-card-radius-sm);
+  box-shadow: var(--shadow-panel);
+}
+
+.ethen-console-card[data-density="comfortable"] {
+  border-radius: var(--console-card-radius-md);
+}
+
+.ethen-console-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: var(--console-control-height);
+  padding: 0 12px;
+  background: var(--console-surface-muted);
+  border: 1px solid var(--console-border-default);
+  border-radius: 6px;
+  color: var(--console-text-primary);
+}
+
+.ethen-console-button[data-size="sm"] {
+  min-height: var(--console-button-height-sm);
+}
+
+.ethen-console-button[data-size="md"] {
+  min-height: var(--console-button-height-md);
+}
+
+.ethen-console-button[data-size="lg"] {
+  min-height: var(--console-button-height-lg);
+}
+
+.ethen-console-input {
+  min-height: var(--console-control-height);
+  background: var(--console-surface-data);
+  border: 1px solid var(--console-hairline);
+  border-radius: 6px;
+  color: var(--console-text-primary);
+}
+
+.ethen-console-table {
+  background: var(--console-surface-data);
+  border: 1px solid var(--console-hairline);
+  border-radius: var(--console-card-radius-md);
+  overflow: hidden;
+}
+
+.ethen-console-table :is(th, td) {
+  min-height: var(--console-nav-row-height);
+  border-bottom: 1px solid var(--console-border-subtle);
+}
+
+.ethen-console-empty {
+  background: var(--console-surface-muted);
+  border: 1px dashed var(--console-hairline-strong);
+  border-radius: var(--console-card-radius-md);
+  color: var(--console-text-secondary);
+}
+
+/* ─── Light agent workspace surface ───────────────────────────────────────── */
+/*
+ * Compatibility wrapper for workspaces that still opt into the legacy
+ * "light" variant. In this repo it now inherits the same dark shell tokens
+ * as the rest of the product so workspace panels stay visually unified.
+ */
+
+.agent-workspace-light {
+  --bg-base:     var(--console-black);
+  --bg-surface:  var(--console-surface);
+  --bg-elevated: var(--console-surface-strong);
+  --bg-inset:    var(--console-surface-muted);
+  --bg-tint:     var(--console-sidebar);
+
+  --text-primary:   var(--console-text-primary);
+  --text-secondary: var(--console-text-secondary);
+  --text-tertiary:  var(--console-text-tertiary);
+  --text-muted:     #525252;
+  --text-disabled:  #3f3f3f;
+
+  --border-subtle:  var(--console-border-subtle);
+  --border-default: var(--console-border-default);
+  --border-strong:  var(--console-border-strong);
+
+  --accent:       #ededed;
+  --accent-hover: #ffffff;
+  --accent-muted: var(--console-surface-hover);
+  --accent-fg:    #0a0a0a;
+
+  --status-success: #22c55e;
+  --status-warning: #f59e0b;
+  --status-danger:  #f87171;
+
+  --focus-ring: 0 0 0 2px var(--bg-base), 0 0 0 3px rgb(245 245 245 / 0.20);
+
+  --shadow-sm:    0 1px 2px 0 rgb(0 0 0 / 0.24), 0 0 0 1px rgb(0 0 0 / 0.16);
+  --shadow-md:    0 4px 8px -2px rgb(0 0 0 / 0.36), 0 2px 4px -2px rgb(0 0 0 / 0.20);
+  --shadow-lg:    0 20px 56px -8px rgb(0 0 0 / 0.60), 0 6px 16px -4px rgb(0 0 0 / 0.28);
+
+  --glass-chrome-fill:      rgb(10 10 10 / 0.92);
+  --glass-chrome-border:    rgb(255 255 255 / 0.060);
+  --glass-chrome-highlight: rgb(255 255 255 / 0.065);
+
+  --glass-panel-fill:       rgb(10 10 10 / 0.84);
+  --glass-panel-border:     rgb(255 255 255 / 0.075);
+  --glass-panel-highlight:  rgb(255 255 255 / 0.08);
+
+  --glass-elevated-fill:      rgb(30 30 31 / 0.90);
+  --glass-elevated-border:    rgb(255 255 255 / 0.055);
+  --glass-elevated-highlight: rgb(255 255 255 / 0.060);
+
+  --glass-control-fill:   rgb(255 255 255 / 0.050);
+  --glass-control-border: rgb(255 255 255 / 0.080);
+
+  --glass-shine-light: rgb(255 255 255 / 0.02);
+
+  --ethen-glass-bg-subtle:      rgba(20, 20, 22, 0.52);
+  --ethen-glass-bg-standard:    rgba(22, 22, 24, 0.68);
+  --ethen-glass-bg-strong:      rgba(26, 26, 28, 0.82);
+
+  --ethen-glass-border:         rgba(255, 255, 255, 0.08);
+  --ethen-glass-border-strong:  rgba(255, 255, 255, 0.14);
+
+  --ethen-glass-highlight:      rgba(255, 255, 255, 0.10);
+  --ethen-glass-highlight-strong: rgba(255, 255, 255, 0.18);
+
+  --ethen-glass-shadow-subtle:  0 8px 24px rgba(0, 0, 0, 0.32);
+  --ethen-glass-shadow-standard: 0 16px 48px rgba(0, 0, 0, 0.40);
+  --ethen-glass-shadow-strong:  0 24px 72px rgba(0, 0, 0, 0.48);
+
+  --ethen-glass-blur-subtle:    8px;
+  --ethen-glass-blur-standard:  16px;
+  --ethen-glass-blur-strong:    24px;
+
+  --ethen-glass-saturation:     1;
+  --ethen-glass-brightness:     1;
+
+  --ethen-bg-main:          var(--bg-base);
+  --ethen-bg-card:          var(--bg-elevated);
+  --ethen-bg-panel:         var(--bg-surface);
+  --ethen-bg-sidebar-hover: var(--bg-elevated);
+  --ethen-bg-inset:         var(--bg-inset);
+
+  --ethen-border-subtle:    var(--border-subtle);
+  --ethen-text-primary:     var(--text-primary);
+  --ethen-text-secondary:   var(--text-secondary);
+  --ethen-text-muted:       var(--text-muted);
+  --ethen-text-faint:       var(--text-muted);
+  --ethen-accent-blue:      var(--accent);
+  --ethen-accent-red:       var(--status-danger);
+  --ethen-radius-xs:        6px;
+  --ethen-radius-sm:        10px;
+  --ethen-radius-md:        14px;
+  --ethen-radius-lg:        18px;
+}
+
+/* ─── IT Service Desk Agent — Monochrome White ─────────────────────────────── */
+/*
+ * Applied to the ServiceDeskAgentWorkspace root inside agent-workspace-light.
+ * Monochrome white enterprise cockpit:
+ *   - Page bg: #F7F8FA
+ *   - Cards/panels: #FFFFFF
+ *   - All accent/states: dark charcoal (#1F2937)
+ *   - Text: #111827 primary / #374151 secondary / #6B7280 muted
+ *   - Borders: #D1D5DB / #E5E7EB
+ *   - No decorative color — severity via words and border weight only
+ */
+
+.agent-workspace-service-desk {
+  --bg-base: #F7F8FA;
+  --bg-surface: #FFFFFF;
+  --bg-elevated: #F9FAFB;
+  --bg-inset: #F3F4F6;
+  --bg-tint: #FFFFFF;
+
+  --text-primary: #111827;
+  --text-secondary: #374151;
+  --text-tertiary: #6B7280;
+  --text-muted: #9CA3AF;
+  --text-disabled: #D1D5DB;
+
+  --border-subtle: #E5E7EB;
+  --border-default: #D1D5DB;
+  --border-strong: #9CA3AF;
+
+  --accent: #1F2937;
+  --accent-hover: #111827;
+  --accent-muted: #F3F4F6;
+  --accent-fg: #FFFFFF;
+
+  --focus-ring: 0 0 0 3px rgb(31 41 55 / 0.16);
+
+  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.08), 0 2px 4px -2px rgb(0 0 0 / 0.06);
+
+  /* Force light canvas — overrides any dark parent background leaking through */
+  background-color: var(--bg-base);
+}
+
+/* ─── Tailwind v4 theme ───────────────────────────────────────────────────── */
+
+@theme inline {
+  /* ── Universal Sans — app/console UI font ──────────────────────── */
+  --font-ui: var(--font-universal-sans);
+  --font-body: var(--font-universal-sans);
+
+  /* ── EDS Sans (Instrument) — general-purpose sans ─────────────────────────── */
+  --font-sans: var(--font-eds-sans);
+  --font-display: var(--font-eds-sans);
+  --font-serif: var(--font-eds-serif);
+  --font-heading: var(--font-eds-sans);
+  --font-reading: var(--font-eds-sans);
+  --font-reading-display: var(--font-eds-sans);
+
+  /* ── EDS Mono (Plex) — technical/UI mono font tokens ─────────────────── */
+  --font-mono: var(--font-eds-mono);
+  --font-label: var(--font-eds-mono);
+  --font-cta: var(--font-eds-mono);
+  --font-jetbrains-mono: var(--font-eds-mono);
+  --font-universal-sans: var(--font-universal-sans);
+
+  --color-bg-base:     var(--bg-base);
+  --color-bg-surface:  var(--bg-surface);
+  --color-bg-elevated: var(--bg-elevated);
+  --color-bg-inset:    var(--bg-inset);
+  --color-bg-tint:     var(--bg-tint);
+
+  --color-text-primary:   var(--text-primary);
+  --color-text-secondary: var(--text-secondary);
+  --color-text-tertiary:  var(--text-tertiary);
+  --color-text-muted:     var(--text-muted);
+  --color-text-disabled:  var(--text-disabled);
+
+  --color-border-subtle:  var(--border-subtle);
+  --color-border-default: var(--border-default);
+  --color-border-strong:  var(--border-strong);
+
+  --color-accent:       var(--accent);
+  --color-accent-hover: var(--accent-hover);
+  --color-accent-muted: var(--accent-muted);
+  --color-accent-fg:    var(--accent-fg);
+
+  --color-status-success: var(--status-success);
+  --color-status-warning: var(--status-warning);
+  --color-status-danger:  var(--status-danger);
+
+  /* Glass tier fills — bg-glass-chrome, bg-glass-panel, etc. */
+  --color-glass-chrome:   var(--glass-chrome-fill);
+  --color-glass-panel:    var(--glass-panel-fill);
+  --color-glass-elevated: var(--glass-elevated-fill);
+  --color-glass-control:  var(--glass-control-fill);
+  --color-glass-overlay:  var(--glass-overlay);
+
+  --radius-sm:   4px;
+  --radius-md:   8px;
+  --radius-lg:   12px;
+  --radius-xl:   16px;
+  --radius-2xl:  20px;
+  --radius-3xl:  28px;
+  --radius-4xl:  32px;
+  --radius-full: 9999px;
+
+  --shadow-sm:    0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --shadow-md:    0 4px 6px -1px rgb(0 0 0 / 0.08), 0 2px 4px -2px rgb(0 0 0 / 0.06);
+  --shadow-lg:    0 16px 48px -8px rgb(0 0 0 / 0.18), 0 6px 16px -4px rgb(0 0 0 / 0.08);
+  --shadow-panel: 0 0 0 1px var(--border-subtle);
+  --shadow-glass: var(--glass-shadow);
+  --shadow-inner: inset 0 1px 0 rgb(255 255 255 / 0.12);
+}
+
+.travel-panel {
+  border: 1px solid var(--console-hairline);
+  background: var(--console-surface-card-elevated);
+  box-shadow: var(--shadow-panel);
+}
+
+.travel-field-shell {
+  border: 1px solid rgb(255 255 255 / 0.1);
+  background:
+    linear-gradient(180deg, rgb(255 255 255 / 0.05), rgb(255 255 255 / 0.02));
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 0.04),
+    0 12px 24px -24px rgb(0 0 0 / 0.9);
+  transition:
+    border-color var(--duration-base) var(--ease-out),
+    background-color var(--duration-base) var(--ease-out),
+    box-shadow var(--duration-base) var(--ease-out);
+}
+
+.travel-field-shell:focus-within {
+  border-color: rgb(255 255 255 / 0.22);
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 0.06),
+    0 0 0 1px rgb(255 255 255 / 0.08),
+    0 18px 32px -28px rgb(255 255 255 / 0.16);
+}
+
+.travel-input,
+.travel-select,
+.travel-textarea {
+  width: 100%;
+  appearance: none;
+  border: 0;
+  outline: none;
+  background: transparent;
+  color: var(--text-primary);
+}
+
+.dark .travel-input,
+.dark .travel-select,
+.dark .travel-textarea {
+  color-scheme: dark;
+}
+
+.travel-input::placeholder,
+.travel-textarea::placeholder {
+  color: var(--text-tertiary);
+}
+
+.travel-input::-webkit-calendar-picker-indicator {
+  filter: invert(1) opacity(0.72);
+  cursor: pointer;
+}
+
+.travel-input::-webkit-inner-spin-button,
+.travel-input::-webkit-outer-spin-button {
+  opacity: 0.55;
+}
+
+.travel-select {
+  padding-right: 1.5rem;
+  background-image:
+    linear-gradient(45deg, transparent 50%, rgb(245 245 245 / 0.78) 50%),
+    linear-gradient(135deg, rgb(245 245 245 / 0.78) 50%, transparent 50%);
+  background-position:
+    calc(100% - 12px) calc(50% - 1px),
+    calc(100% - 8px) calc(50% - 1px);
+  background-size: 4px 4px, 4px 4px;
+  background-repeat: no-repeat;
+}
+
+.travel-textarea {
+  resize: vertical;
+}
+
+.travel-checkbox {
+  accent-color: var(--accent);
+  inline-size: 1rem;
+  block-size: 1rem;
+  border-radius: 0.35rem;
+}
+
+.travel-action-primary,
+.travel-action-secondary,
+.travel-action-ghost {
+  transition:
+    background-color var(--duration-base) var(--ease-out),
+    border-color var(--duration-base) var(--ease-out),
+    color var(--duration-base) var(--ease-out),
+    box-shadow var(--duration-base) var(--ease-out),
+    transform var(--duration-fast) var(--ease-out);
+}
+
+.travel-action-primary:hover,
+.travel-action-secondary:hover,
+.travel-action-ghost:hover {
+  transform: translateY(-1px);
+}
+
+.travel-grid-lines {
+  background-image:
+    linear-gradient(to right, rgb(255 255 255 / 0.035) 1px, transparent 1px),
+    linear-gradient(to bottom, rgb(255 255 255 / 0.03) 1px, transparent 1px);
+  background-size: 24px 24px;
+}
+
+/* ─── Base ────────────────────────────────────────────────────────────────── */
+
+html,
+body {
+  height: 100%;
+  background: var(--bg-base);
+}
+
+body {
+  min-height: 100%;
+  background-color: var(--bg-base);
+  color: var(--text-primary);
+  font-family: var(--font-eds-sans), system-ui, -apple-system, sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: geometricPrecision;
+  font-synthesis: none;
+}
+
+/* Dark body — clean black console canvas, no ambient glow */
+.dark body {
+  background-image: none;
+}
+
+code,
+kbd,
+pre,
+samp {
+  font-family: var(--font-eds-mono), "JetBrains Mono", "Fira Code", "Cascadia Code", Consolas, monospace;
+}
+
+h1,
+h2,
+h3,
+.font-heading,
+[data-font-heading="true"] {
+  font-family: var(--font-eds-sans), system-ui, sans-serif;
+}
+
+.font-display {
+  font-family: var(--font-eds-sans), system-ui, sans-serif;
+}
+
+/* ── Legacy Tiempos class names — map to EDS Sans ──────────────────── */
+/* These class names reference the legacy Tiempos brand but correctly resolve
+   to var(--font-eds-sans) (Instrument Sans), the actual product UI font. */
+.font-tiempos-headline {
+  font-family: var(--font-eds-sans), system-ui, sans-serif;
+}
+
+.font-tiempos-fine {
+  font-family: var(--font-eds-sans), system-ui, -apple-system, sans-serif;
+}
+
+/* ─── Marketing Page Theme Modes ─────────────────────────────────────────── */
+
+:root {
+  /* Default (dark) — homepage, product pages */
+  --theme-bg: #08080a;
+  --theme-surface: #111113;
+  --theme-surface-elevated: #151518;
+  --theme-text: #ffffff;
+  --theme-text-secondary: rgba(255, 255, 255, 0.66);
+  --theme-text-muted: rgba(255, 255, 255, 0.44);
+  --theme-border: rgba(255, 255, 255, 0.18);
+  --theme-border-subtle: rgba(255, 255, 255, 0.08);
+  --theme-accent: #28d17c;
+  --theme-hero-accent: transparent;
+}
+
+/* Cyan/Light mode — Company page */
+.marketing-cyan {
+  --theme-bg: #0a0a0a;
+  --theme-surface: #141414;
+  --theme-surface-elevated: #1e1e1e;
+  --theme-text: #fafafa;
+  --theme-text-secondary: #a3a3a3;
+  --theme-text-muted: #525252;
+  --theme-border: rgba(255, 255, 255, 0.08);
+  --theme-border-subtle: rgba(255, 255, 255, 0.05);
+  --theme-accent: #ebebeb;
+  --theme-hero-accent: linear-gradient(135deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0.01));
+}
+
+/* Teal/Dark mode — Platform/Trust page */
+.marketing-teal {
+  --theme-bg: #0a0a0a;
+  --theme-surface: #141414;
+  --theme-surface-elevated: #1e1e1e;
+  --theme-text: #fafafa;
+  --theme-text-secondary: #a3a3a3;
+  --theme-text-muted: #525252;
+  --theme-border: rgba(255, 255, 255, 0.08);
+  --theme-border-subtle: rgba(255, 255, 255, 0.05);
+  --theme-accent: #ebebeb;
+  --theme-hero-accent: linear-gradient(135deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0.01));
+}
+
+/* Marketing utility classes */
+.marketing-page {
+  background: var(--theme-bg);
+  color: var(--theme-text);
+}
+
+.marketing-section {
+  padding: 96px 24px;
+}
+
+.marketing-container {
+  width: min(100%, 1280px);
+  margin-inline: auto;
+}
+
+.marketing-divider {
+  height: 1px;
+  background: var(--theme-border);
+}
+
+@layer base {
+  button,
+  textarea,
+  input,
+  select {
+    font: inherit;
+    transition:
+      border-color var(--duration-base) var(--ease-in-out),
+      background-color var(--duration-base) var(--ease-in-out),
+      color var(--duration-base) var(--ease-in-out),
+      box-shadow var(--duration-base) var(--ease-in-out),
+      opacity var(--duration-base) var(--ease-in-out),
+      transform var(--duration-base) var(--ease-out);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  button,
+  textarea,
+  input,
+  select {
+    transition: none;
+  }
+
+  .premium-control,
+  .premium-icon-button,
+  .premium-list-row,
+  .premium-composer-shell,
+  .assistant-rail-shell,
+  .assistant-rail-copy,
+  .assistant-rail-content,
+  .premium-disclosure summary {
+    transition: none !important;
+  }
+
+  .premium-control:active,
+  .premium-icon-button:active,
+  .premium-list-row:active {
+    transform: none;
+  }
+
+  .ethen-interactive,
+  .ethen-card-interactive,
+  .glass-control {
+    transition: none !important;
+  }
+  .ethen-pressable:active,
+  .ethen-card-interactive:active,
+  .glass-control:active {
+    transform: none !important;
+  }
+  .ethen-soft-enter,
+  .studio-fade-enter,
+  .studio-scale-enter,
+  .message-fade-in,
+  .animate-slide-in,
+  .animate-slide-right,
+  .animate-drawer-in,
+  .animate-overlay-in,
+  .animate-palette-in,
+  .designer-focus-enter,
+  .designer-generating-spinner {
+    animation: none !important;
+  }
+  .studio-card-press:active {
+    transform: none !important;
+  }
+  .ethen-skeleton,
+  .skeleton-shimmer {
+    animation: none !important;
+    background: var(--bg-elevated);
+  }
+  .ethen-scroll-area {
+    scroll-behavior: auto;
+  }
+}
+
+:focus-visible {
+  outline: none;
+  box-shadow: var(--focus-ring);
+}
+
+/* Chat textarea (react-textarea-autosize, rendered directly with this
+   class — no wrapper element) never shows its own focus ring/border. The
+   rounded composer wrapper's focus-within border is the only focus
+   indicator. Zeroing border (not just border-color) guards against the
+   global :focus-visible box-shadow ring above rendering as a square edge
+   on an element with no border-radius of its own. */
+.chat-input,
+.chat-input:focus,
+.chat-input:focus-visible {
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+/* Ethen Code task composer textarea — same square-edge focus-ring problem
+   as .chat-input above. The rounded composer card's focus-within border is
+   the only focus indicator; the textarea itself never shows its own ring. */
+.ethen-code-textarea,
+.ethen-code-textarea:focus,
+.ethen-code-textarea:focus-visible {
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+::selection {
+  background: color-mix(in srgb, var(--accent) 18%, white);
+}
+
+/* Dark selection — no white mix */
+.dark ::selection {
+  background: rgb(245 245 245 / 0.20);
+}
+
+/* Sidebar logo — reliably white on black sidebar regardless of PNG colors */
+.sidebar-logo {
+  filter: brightness(0) invert(1);
+}
+
+.sidebar-logo-img {
+  filter: brightness(0) invert(1);
+}
+
+/* Topbar logo — invert in light mode for black-on-white visibility */
+:root:not(.dark) .topbar-logo {
+  filter: invert(1);
+}
+
+.text-balance {
+  text-wrap: balance;
+}
+
+.ethen-markdown {
+  display: grid;
+  gap: 0.9rem;
+  font-size: 0.98rem;
+  line-height: 1.75;
+  letter-spacing: -0.01em;
+  color: var(--text-secondary);
+}
+
+.ethen-markdown p,
+.ethen-markdown ul,
+.ethen-markdown h3 {
+  margin: 0;
+}
+
+/* ─── AI prose output (.ethen-prose) ─────────────────────────────────────── */
+/*
+ * Applied via .ethen-prose on the MessagePartPrimitive.Text wrapper in
+ * assistant messages. Provides paragraph, list, heading, and code block
+ * styling without requiring remark/rehype rendering.
+ *
+ * Uses --font-geist-sans (Universal Sans) for long-form AI content.
+ * Code blocks within prose override to monospace via rules below.
+ */
+
+.ethen-prose {
+  font-family: var(--font-eds-sans), system-ui, sans-serif;
+}
+
+.ethen-prose > * + * {
+  margin-top: 0.6em;
+}
+
+.ethen-prose p + p {
+  margin-top: 0.45em;
+}
+
+.ethen-prose p,
+.ethen-prose pre,
+.ethen-prose ul,
+.ethen-prose ol,
+.ethen-prose h1,
+.ethen-prose h2,
+.ethen-prose h3,
+.ethen-prose h4 {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.ethen-prose code:not(pre > code) {
+  font-family: var(--font-eds-mono), "JetBrains Mono", "Fira Code", "Cascadia Code", Consolas, monospace;
+  font-size: 0.84em;
+  padding: 0.15em 0.4em;
+  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: var(--text-primary);
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.ethen-prose .ethen-code-block code:not(pre > code) {
+  background: none;
+  border: none;
+  padding: 0;
+  white-space: pre;
+  word-break: normal;
+}
+
+.ethen-prose pre {
+  font-family: var(--font-eds-mono), "JetBrains Mono", "Fira Code", "Cascadia Code", Consolas, monospace;
+  font-size: 0.82rem;
+  line-height: 1.6;
+  padding: 0.9rem 1rem;
+  border-radius: var(--radius-lg);
+  background: #0a0a0a;
+  border: 1px solid #FFFFFF1A;
+  overflow-x: auto;
+  overflow-y: auto;
+  color: #fafafa;
+  margin: 0.5em 0;
+  max-height: 32rem;
+}
+
+.ethen-prose pre code {
+  background: none;
+  border: none;
+  padding: 0;
+  font-size: inherit;
+  color: inherit;
+}
+
+.ethen-prose ul,
+.ethen-prose ol {
+  padding-left: 1.4em;
+  margin: 0.4em 0;
+}
+
+.ethen-prose li + li {
+  margin-top: 0.25em;
+}
+
+.ethen-prose ul { list-style-type: disc; }
+.ethen-prose ol { list-style-type: decimal; }
+
+.ethen-prose h1,
+.ethen-prose h2,
+.ethen-prose h3,
+.ethen-prose h4 {
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: var(--text-primary);
+  margin: 0.6em 0 0.25em;
+}
+
+.ethen-prose h1 { font-size: 1.15rem; }
+.ethen-prose h2 { font-size: 1.05rem; }
+.ethen-prose h3 { font-size: 0.97rem; }
+.ethen-prose h4 { font-size: 0.93rem; }
+
+.ethen-prose h1:first-child,
+.ethen-prose h2:first-child,
+.ethen-prose h3:first-child {
+  margin-top: 0;
+}
+
+.ethen-prose h1 + p,
+.ethen-prose h2 + p,
+.ethen-prose h3 + p,
+.ethen-prose h4 + p {
+  margin-top: 0.15em;
+}
+
+.ethen-prose strong { font-weight: 600; color: var(--text-primary); }
+.ethen-prose em     { font-style: italic; }
+
+.ethen-prose hr {
+  border: none;
+  border-top: 1px solid var(--border-subtle);
+  margin: 0.8em 0;
+}
+
+.ethen-prose blockquote {
+  border-left: 3px solid var(--border-default);
+  padding-left: 0.9em;
+  margin: 0.5em 0;
+  color: var(--text-secondary);
+  font-style: italic;
+  background: rgba(255, 255, 255, 0.02);
+  padding-top: 0.15em;
+  padding-bottom: 0.15em;
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+}
+
+.ethen-prose a {
+  color: #fafafa;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  text-decoration-color: rgba(255, 255, 255, 0.3);
+  transition: text-decoration-color var(--duration-fast) var(--ease-out);
+}
+
+.ethen-prose a:hover {
+  text-decoration-color: #fafafa;
+}
+
+.ethen-table-wrapper {
+  overflow-x: auto;
+  margin: 0.5em 0;
+}
+
+.ethen-table-wrapper table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  font-size: 0.85rem;
+}
+
+.ethen-table-wrapper th,
+.ethen-table-wrapper td {
+  padding: 0.5rem 0.75rem;
+  text-align: left;
+  border-bottom: 1px solid var(--border-subtle);
+  line-height: 1.5;
+}
+
+.ethen-table-wrapper th {
+  background: var(--bg-elevated);
+  color: var(--text-primary);
+  font-weight: 500;
+  font-size: 0.8rem;
+  letter-spacing: 0.01em;
+}
+
+.ethen-table-wrapper td {
+  color: var(--text-secondary);
+}
+
+.ethen-table-wrapper tr:last-child td {
+  border-bottom: none;
+}
+
+.ethen-code-block {
+  margin: 0.5em 0;
+  border-radius: var(--radius-lg);
+  border: 1px solid #FFFFFF1A;
+  overflow: hidden;
+  background: #080808;
+}
+
+.ethen-code-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.4rem 0.85rem;
+  background: #0a0a0a;
+  border-bottom: 1px solid #FFFFFF0D;
+}
+
+.ethen-code-lang {
+  font-size: 0.65rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #a3a3a3;
+}
+
+.ethen-code-copy {
+  font-size: 0.7rem;
+  color: var(--text-tertiary);
+  background: none;
+  border: none;
+  padding: 0.15rem 0.5rem;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: color var(--duration-fast) var(--ease-out), background-color var(--duration-fast) var(--ease-out);
+}
+
+.ethen-code-copy:hover {
+  color: var(--text-secondary);
+  background: var(--bg-elevated);
+}
+
+.ethen-prose .ethen-code-block pre {
+  margin: 0;
+  border: none;
+  border-radius: 0;
+  background: transparent;
+  color: #fafafa;
+}
+
+/* ─── Typography utility classes ───────────────────────────────────────────── */
+
+.font-ui {
+  font-family: var(--font-eds-sans), system-ui, sans-serif;
+}
+
+.font-display {
+  font-family: var(--font-eds-sans), system-ui, sans-serif;
+}
+
+.font-reading {
+  font-family: var(--font-eds-sans), system-ui, sans-serif;
+}
+
+.font-reading-display {
+  font-family: var(--font-eds-sans), system-ui, sans-serif;
+}
+
+/* ─── AI prose / artifact / long-form reading scoping ────────────────────────
+ * Apply these classes to containers where Universal Sans should render.
+ * Code/terminal within these containers override to monospace.
+ */
+
+.ethen-ai-response,
+.ai-response,
+.artifact-body,
+.document-panel,
+.longform-output,
+.generated-report {
+  font-family: var(--font-eds-sans), system-ui, sans-serif;
+}
+
+.ethen-ai-response strong,
+.ai-response strong,
+.artifact-body strong {
+  font-family: var(--font-eds-sans), system-ui, sans-serif;
+  font-weight: 700;
+}
+
+.ethen-ai-response em,
+.ai-response em,
+.artifact-body em {
+  font-family: var(--font-eds-sans), system-ui, sans-serif;
+  font-style: italic;
+  font-weight: 400;
+}
+
+.artifact-title,
+.artifact-heading,
+.report-title,
+.editorial-title {
+  font-family: var(--font-eds-sans), system-ui, sans-serif;
+}
+
+/* ─── Glass surface utilities ─────────────────────────────────────────────── */
+
+/* Chrome tier: persistent shell — sidebar, topbars, composer (flat, CR-SOL-15) */
+.glass-chrome {
+  background: var(--glass-chrome-fill);
+  box-shadow: inset 0 0.5px 0 var(--glass-chrome-highlight);
+}
+
+/* Panel tier: transient overlays — command palette, drawers, side panels (flat) */
+.glass-panel {
+  background: var(--glass-panel-fill);
+  box-shadow:
+    inset 0 0.5px 0 var(--glass-panel-highlight),
+    0 0 0 1px var(--glass-panel-border),
+    var(--glass-shadow);
+}
+
+/* Elevated tier: secondary persistent panels — research context, artifact side (flat) */
+.glass-elevated {
+  background: var(--glass-elevated-fill);
+  box-shadow:
+    inset 0 0.5px 0 var(--glass-elevated-highlight),
+    0 0 0 1px var(--glass-elevated-border);
+}
+
+/* Card tier: always-visible elevated cards — marketplace, workspace launcher (flat) */
+.glass-card {
+  background: var(--glass-elevated-fill);
+  box-shadow:
+    inset 0 0.5px 0 var(--glass-elevated-highlight),
+    0 0 0 1px var(--glass-elevated-border),
+    var(--shadow-sm);
+}
+
+.glass-card:hover {
+  box-shadow:
+    inset 0 0.5px 0 var(--glass-elevated-highlight),
+    0 0 0 1px var(--glass-elevated-border),
+    var(--shadow-md);
+}
+
+/* Control: interactive surfaces that get calibrated transitions + active press */
+.glass-control {
+  transition:
+    background-color var(--duration-base) var(--ease-out),
+    border-color var(--duration-base) var(--ease-out),
+    color var(--duration-base) var(--ease-out),
+    box-shadow var(--duration-base) var(--ease-out),
+    transform var(--duration-base) var(--ease-out),
+    opacity var(--duration-base) var(--ease-out);
+}
+
+.glass-control:active {
+  transform: scale(0.98);
+}
+
+/* Solid reading surface: AI chat, documents, code — no blur, always readable  */
+.solid-reading-surface {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .glass-chrome,
+  .glass-panel,
+  .glass-elevated,
+  .glass-card {
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
+
+  .glass-control {
+    transition: none;
+  }
+
+  .glass-control:active {
+    transform: none;
+  }
+}
+
+/* ─── Reduced transparency fallback ─────────────────────────────────────── */
+/* When the user requests reduced transparency, glass surfaces become solid. */
+
+@media (prefers-reduced-transparency: reduce) {
+  .glass-chrome,
+  .glass-panel,
+  .glass-elevated,
+  .glass-card {
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
+
+  .glass-chrome            { background: var(--bg-base); }
+  .glass-panel             { background: var(--bg-surface); }
+  .glass-elevated,
+  .glass-card              { background: var(--bg-elevated); }
+}
+
+/* ─── High contrast fallback ─────────────────────────────────────────────── */
+/* Strengthens borders and text contrast. */
+
+@media (prefers-contrast: more) {
+  .glass-chrome,
+  .glass-panel,
+  .glass-elevated,
+  .glass-card {
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
+
+  .glass-chrome {
+    background: var(--bg-base);
+    border-color: var(--border-strong);
+  }
+  .glass-panel {
+    background: var(--bg-surface);
+    border-color: var(--border-strong);
+  }
+  .glass-elevated,
+  .glass-card {
+    background: var(--bg-elevated);
+    border-color: var(--border-strong);
+  }
+  .glass-control {
+    border-color: var(--border-strong);
+  }
+}
+
+/* ── Studio glass accessibility fallbacks ────────────────────────────────── */
+
+@media (prefers-reduced-transparency: reduce) {
+  .studio-stage-glass,
+  .studio-jet-panel,
+  .studio-jet-card,
+  .studio-glass-inset {
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
+
+  .studio-stage-glass { background: rgba(10, 10, 10, 0.96); }
+  .studio-jet-panel   { background: rgba(13, 13, 13, 0.96); }
+  .studio-jet-card    { background: rgba(17, 17, 17, 0.96); }
+  .studio-glass-inset { background: rgba(20, 20, 20, 0.96); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .studio-stage-glass,
+  .studio-jet-panel,
+  .studio-jet-card,
+  .studio-glass-inset {
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    transition: none !important;
+  }
+}
+
+@media (prefers-contrast: more) {
+  .studio-stage-glass,
+  .studio-jet-panel,
+  .studio-jet-card,
+  .studio-glass-inset {
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
+
+  .studio-stage-glass { background: rgba(10, 10, 10, 0.98); border-color: rgba(255, 255, 255, 0.18); }
+  .studio-jet-panel   { background: rgba(13, 13, 13, 0.98); border-color: rgba(255, 255, 255, 0.16); }
+  .studio-jet-card    { background: rgba(17, 17, 17, 0.98); border-color: rgba(255, 255, 255, 0.14); }
+  .studio-glass-inset { background: rgba(20, 20, 20, 0.98); border-color: rgba(255, 255, 255, 0.12); }
+}
+
+/* ─── Global sidebar — jet black for both themes ──────────────────────────── */
+.sidebar-jet-black {
+  background: #000000 !important;
+  border-right-color: rgba(255, 255, 255, 0.08) !important;
+}
+
+.sidebar-jet-black,
+.sidebar-jet-black * {
+  --bg-base:     #000000;
+  --bg-surface:  rgba(255, 255, 255, 0.042);
+  --bg-elevated: rgba(255, 255, 255, 0.055);
+  --bg-inset:    rgba(255, 255, 255, 0.075);
+  --bg-tint:     #000000;
+  --text-primary:   #ffffff;
+  --text-secondary: rgba(255, 255, 255, 0.80);
+  --text-tertiary:  rgba(255, 255, 255, 0.50);
+  --text-muted:     rgba(255, 255, 255, 0.32);
+  --text-disabled:  rgba(255, 255, 255, 0.18);
+  --border-subtle:  rgba(255, 255, 255, 0.08);
+  --border-default: rgba(255, 255, 255, 0.14);
+  --border-strong:  rgba(255, 255, 255, 0.22);
+}
+
+.sidebar-jet-black .glass-chrome {
+  background: #000000 !important;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  box-shadow: none;
+}
+
+.sidebar-jet-black .ethen-glass-subtle {
+  background: rgba(255, 255, 255, 0.085) !important;
+  border-color: rgba(255, 255, 255, 0.08) !important;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
+}
+
+/* Sidebar nav items — premium translucent hover */
+.sidebar-jet-black nav a:hover,
+.sidebar-jet-black nav button:hover,
+.sidebar-jet-black .nav-item-link:hover {
+  background: rgba(255, 255, 255, 0.06) !important;
+  color: #ffffff !important;
+}
+
+/* Sidebar search bar (Find…) — darker translucent */
+.sidebar-jet-black .sidebar-search-btn {
+  background: rgba(255, 255, 255, 0.04) !important;
+  border-color: rgba(255, 255, 255, 0.07) !important;
+  color: rgba(255, 255, 255, 0.50) !important;
+  transition: background 0.15s, border-color 0.15s, color 0.15s;
+}
+.sidebar-jet-black .sidebar-search-btn:hover {
+  background: rgba(255, 255, 255, 0.065) !important;
+  border-color: rgba(255, 255, 255, 0.12) !important;
+  color: #ffffff !important;
+}
+.sidebar-jet-black .sidebar-search-btn:focus-visible {
+  background: rgba(255, 255, 255, 0.075) !important;
+  border-color: rgba(255, 255, 255, 0.16) !important;
+  outline: none;
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.06);
+}
+
+/* Sidebar toggle button — logo/panel icon swap */
+.sidebar-toggle-icon-panel {
+  display: none !important;
+}
+.sidebar-toggle-btn:hover .sidebar-toggle-icon-logo,
+.sidebar-toggle-btn:focus-visible .sidebar-toggle-icon-logo {
+  display: none !important;
+}
+.sidebar-toggle-btn:hover .sidebar-toggle-icon-panel,
+.sidebar-toggle-btn:focus-visible .sidebar-toggle-icon-panel {
+  display: block !important;
+}
+
+/* Sidebar theme toggle — darker translucent */
+.sidebar-jet-black .sidebar-theme-btn {
+  background: rgba(255, 255, 255, 0.04) !important;
+  border-color: rgba(255, 255, 255, 0.07) !important;
+  color: rgba(255, 255, 255, 0.60) !important;
+}
+.sidebar-jet-black .sidebar-theme-btn:hover {
+  background: rgba(255, 255, 255, 0.07) !important;
+  border-color: rgba(255, 255, 255, 0.12) !important;
+  color: #ffffff !important;
+}
+.sidebar-jet-black .sidebar-theme-btn .theme-label {
+  color: #ffffff;
+}
+.sidebar-jet-black .sidebar-theme-btn .theme-switch-label {
+  color: rgba(255, 255, 255, 0.35);
+}
+
+/* Sidebar session links — darker translucent hover */
+.sidebar-jet-black .sidebar-session-link {
+  border-color: transparent;
+}
+.sidebar-jet-black .sidebar-session-link:hover {
+  background: rgba(255, 255, 255, 0.06) !important;
+  border-color: rgba(255, 255, 255, 0.08) !important;
+}
+.sidebar-jet-black .sidebar-session-link.ethen-glass-subtle {
+  background: rgba(255, 255, 255, 0.085) !important;
+  border-color: rgba(255, 255, 255, 0.08) !important;
+}
+
+/* Sidebar agent sections — darker translucent hover */
+.sidebar-jet-black .sidebar-agent-item:hover {
+  background: rgba(255, 255, 255, 0.06) !important;
+  color: #ffffff !important;
+}
+
+/* Force sidebar nav icons to full white */
+.sidebar-jet-black nav a svg,
+.sidebar-jet-black nav button svg,
+.sidebar-jet-black [class*="NavItem"] svg,
+.sidebar-jet-black nav a [fill="currentColor"],
+.sidebar-jet-black nav button [fill="currentColor"],
+.sidebar-jet-black nav a [stroke="currentColor"],
+.sidebar-jet-black nav button [stroke="currentColor"] {
+  opacity: 1 !important;
+}
+
+.sidebar-jet-black .theme-toggle-icon {
+  color: rgba(255, 255, 255, 0.75);
+}
+
+.sidebar-jet-black button:hover {
+  --text-secondary: #ffffff;
+}
+
+.sidebar-jet-black .nav-item-active {
+  background: rgba(255, 255, 255, 0.12) !important;
+  color: #ffffff !important;
+  font-weight: 600;
+}
+
+/* ─── Liquid Glass surface classes ──────────────────────────────────────── */
+/*
+ * Premium selective-glass material for controls, chrome, search, composer,
+ * assistant action cards, tabs, and selected detail surfaces.
+ *
+ * Not for main text areas, dense tables, editor surfaces, or whole-page
+ * backgrounds. Stacking glass inside glass is forbidden.
+ */
+
+.ethen-glass {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  border: 1px solid var(--ethen-glass-border);
+  background: var(--console-surface-shell);
+  box-shadow: var(--ethen-glass-shadow-standard);
+}
+
+@supports ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .ethen-glass {
+    -webkit-backdrop-filter:
+      blur(var(--ethen-glass-blur-standard))
+      saturate(var(--ethen-glass-saturation))
+      brightness(var(--ethen-glass-brightness));
+    backdrop-filter:
+      blur(var(--ethen-glass-blur-standard))
+      saturate(var(--ethen-glass-saturation))
+      brightness(var(--ethen-glass-brightness));
+  }
+}
+
+/* ── Variants ──────────────────────────────────────────────────────────── */
+
+.ethen-glass-subtle {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  border: 1px solid var(--ethen-glass-border);
+  background: color-mix(in srgb, var(--console-surface-shell) 84%, transparent);
+  box-shadow: var(--ethen-glass-shadow-subtle);
+}
+
+@supports ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .ethen-glass-subtle {
+    -webkit-backdrop-filter:
+      blur(var(--ethen-glass-blur-subtle))
+      saturate(var(--ethen-glass-saturation))
+      brightness(var(--ethen-glass-brightness));
+    backdrop-filter:
+      blur(var(--ethen-glass-blur-subtle))
+      saturate(var(--ethen-glass-saturation))
+      brightness(var(--ethen-glass-brightness));
+  }
+}
+
+.ethen-glass-strong {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  border: 1px solid var(--ethen-glass-border-strong);
+  background: rgba(10, 10, 10, 0.92);
+  box-shadow: var(--ethen-glass-shadow-strong);
+}
+
+@supports ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .ethen-glass-strong {
+    -webkit-backdrop-filter:
+      blur(var(--ethen-glass-blur-strong))
+      saturate(var(--ethen-glass-saturation))
+      brightness(var(--ethen-glass-brightness));
+    backdrop-filter:
+      blur(var(--ethen-glass-blur-strong))
+      saturate(var(--ethen-glass-saturation))
+      brightness(var(--ethen-glass-brightness));
+  }
+}
+
+/* Interactive variant — hover lift + border brightening, no blur animation */
+.ethen-glass-interactive {
+  transition:
+    background-color var(--duration-base) var(--ease-out),
+    border-color var(--duration-base) var(--ease-out),
+    box-shadow var(--duration-base) var(--ease-out),
+    transform var(--duration-base) var(--ease-out),
+    opacity var(--duration-base) var(--ease-out);
+}
+
+.ethen-glass-interactive:hover {
+  transform: translateY(-1px);
+  border-color: var(--ethen-glass-border-strong);
+  box-shadow:
+    var(--ethen-glass-shadow-standard),
+    0 0 0 1px var(--ethen-glass-border-strong);
+}
+
+.ethen-glass-interactive:active {
+  transform: translateY(0) scale(0.98);
+}
+
+/* Refracted SVG filter gate — progressive enhancement only */
+.ethen-glass-refracted {
+  filter: url("#ethen-glass-refract");
+}
+
+/* ── Accessibility fallbacks ────────────────────────────────────────────── */
+
+@media (prefers-reduced-transparency: reduce) {
+  .ethen-glass,
+  .ethen-glass-subtle,
+  .ethen-glass-standard,
+  .ethen-glass-strong {
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
+    background: rgba(14, 14, 16, 0.96) !important;
+  }
+
+  .light .ethen-glass,
+  .light .ethen-glass-subtle,
+  .light .ethen-glass-standard,
+  .light .ethen-glass-strong,
+  .agent-workspace-light .ethen-glass,
+  .agent-workspace-light .ethen-glass-subtle,
+  .agent-workspace-light .ethen-glass-standard,
+  .agent-workspace-light .ethen-glass-strong,
+  :root .ethen-glass,
+  :root .ethen-glass-subtle,
+  :root .ethen-glass-standard,
+  :root .ethen-glass-strong {
+    background: rgba(255, 255, 255, 0.96) !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ethen-glass-interactive {
+    transition: none !important;
+  }
+
+  .ethen-glass-interactive:hover {
+    transform: none !important;
+  }
+}
+
+@media (prefers-contrast: more) {
+  .ethen-glass,
+  .ethen-glass-subtle,
+  .ethen-glass-standard,
+  .ethen-glass-strong {
+    border-color: rgba(255, 255, 255, 0.32);
+  }
+
+  .light .ethen-glass,
+  .light .ethen-glass-subtle,
+  .light .ethen-glass-standard,
+  .light .ethen-glass-strong,
+  .agent-workspace-light .ethen-glass,
+  .agent-workspace-light .ethen-glass-subtle,
+  .agent-workspace-light .ethen-glass-standard,
+  .agent-workspace-light .ethen-glass-strong,
+  :root .ethen-glass,
+  :root .ethen-glass-subtle,
+  :root .ethen-glass-standard,
+  :root .ethen-glass-strong {
+    border-color: rgba(0, 0, 0, 0.32);
+  }
+}
+
+/* ─── Windows Forced Colors (high-contrast mode) ──────────────────────── */
+/* Preserve focus, selection, and error/warning indicators without relying on
+   shadows or alpha-only signals. System color keywords ensure compliance. */
+@media (forced-colors: active) {
+  :focus-visible {
+    outline: 2px solid ButtonText;
+    outline-offset: 2px;
+    box-shadow: none;
+  }
+
+  [aria-selected="true"],
+  [aria-current="true"] {
+    outline: 2px solid Highlight;
+    outline-offset: -2px;
+  }
+
+  [aria-disabled="true"],
+  :disabled {
+    opacity: 1;
+    color: GrayText;
+  }
+
+  /* Glass surfaces — forced-colors removes backdrop-filter automatically;
+     add a solid border so element boundaries remain visible */
+  .ethen-glass,
+  .ethen-glass-subtle,
+  .ethen-glass-standard,
+  .ethen-glass-strong,
+  .ethen-panel-smoked,
+  .ethen-panel-glass {
+    border: 1px solid ButtonText;
+    background: Canvas;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
+}
+
+/* ─── Composer utility: suppress individual focus rings on child controls ── */
+/* The composer container uses focus-within border brightening as the only
+   focus indicator. Individual buttons/controls inside must not show their own
+   browser or global focus-visible ring. Keyboard accessibility is preserved
+   via the container's border color change on focus-within. */
+.composer-container :is(button, textarea, input, select, [role="button"], [tabindex]):focus-visible {
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+/* ─── Chatbot workspace animations ────────────────────────────────────────── */
+
+@keyframes message-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.message-fade-in {
+  animation: message-fade-in 0.16s var(--ease-out) both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .message-fade-in {
+    animation: none;
+  }
+}
+
+/* ─── Scrollbar ───────────────────────────────────────────────────────────── */
+
+::-webkit-scrollbar        { width: 6px; height: 6px; }
+::-webkit-scrollbar-track  { background: transparent; }
+::-webkit-scrollbar-thumb  {
+  background: var(--border-default);
+  border-radius: 9999px;
+}
+::-webkit-scrollbar-thumb:hover { background: var(--border-strong); }
+
+/* ─── Workflow Automation Console animations ─────────────────────────────────── */
+
+@keyframes slide-in-left {
+  from { transform: translateX(-100%); }
+  to   { transform: translateX(0); }
+}
+
+.animate-slide-in {
+  animation: slide-in-left 0.2s var(--ease-out) both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-slide-in,
+  .animate-slide-right,
+  .animate-drawer-in {
+    animation: none;
+  }
+}
+
+/* ─── Modal/overlay animations ──────────────────────────────────────────── */
+
+@keyframes overlay-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes modal-in {
+  from {
+    opacity: 0;
+    transform: scale(0.96) translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+.animate-overlay-in {
+  animation: overlay-in 0.15s var(--ease-out) both;
+}
+
+.animate-palette-in {
+  animation: modal-in 0.18s var(--ease-out) both;
+}
+
+/* ── Panel / drawer slide animations ─────────────────────────────────────── */
+
+@keyframes slide-right {
+  from { opacity: 0; transform: translateX(16px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes drawer-in {
+  from { opacity: 0; transform: translateX(-16px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+.animate-slide-right {
+  animation: slide-right 0.2s var(--ease-out) both;
+}
+
+.animate-drawer-in {
+  animation: drawer-in 0.2s var(--ease-out) both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-overlay-in,
+  .animate-palette-in,
+  .animate-slide-right,
+  .animate-drawer-in {
+    animation: none;
+  }
+}
+
+/* ─── Responsive modal fix ──────────────────────────────────────────────── */
+
+@media (max-width: 640px) {
+  .max-md\:flex-col {
+    flex-direction: column;
+  }
+  .max-md\:w-full {
+    width: 100%;
+  }
+  .max-md\:border-r-0 {
+    border-right: none;
+  }
+  .max-md\:border-b {
+    border-bottom: 1px solid var(--border-subtle);
+  }
+  .max-md\:max-h-\[200px\] {
+    max-height: 200px;
+  }
+  .max-md\:flex-row {
+    flex-direction: row;
+  }
+  .max-md\:flex-wrap {
+    flex-wrap: wrap;
+  }
+  .max-md\:gap-1 {
+    gap: 4px;
+  }
+  .max-md\:py-2 {
+    padding-top: 8px;
+    padding-bottom: 8px;
+  }
+  .max-md\:w-auto {
+    width: auto;
+  }
+  .max-md\:px-4 {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+  .max-md\:py-4 {
+    padding-top: 16px;
+    padding-bottom: 16px;
+  }
+}
+
+.coding-console-dark {
+  --bg-base: #151515;
+  --bg-surface: #171717;
+  --bg-elevated: #191919;
+  --bg-inset: #141414;
+  --bg-tint: #202020;
+
+  --text-primary: #f4f4f5;
+  --text-secondary: #a1a1aa;
+  --text-tertiary: #71717a;
+  --text-muted: #565656;
+  --text-disabled: #444444;
+
+  --border-subtle: rgba(255, 255, 255, 0.07);
+  --border-default: rgba(255, 255, 255, 0.10);
+  --border-strong: rgba(255, 255, 255, 0.14);
+
+  --accent: #0a84ff;
+  --accent-hover: #1a94ff;
+  --accent-muted: rgba(10, 132, 255, 0.12);
+  --accent-fg: #ffffff;
+
+  --status-success: #22c55e;
+  --status-warning: #c47c32;
+  --status-danger: #ef4444;
+
+  --glass-chrome-fill: rgba(17, 17, 17, 0.86);
+  --glass-chrome-border: rgba(255, 255, 255, 0.06);
+  --glass-panel-fill: rgba(23, 23, 23, 0.78);
+  --glass-panel-border: rgba(255, 255, 255, 0.07);
+  --glass-elevated-fill: rgba(25, 25, 25, 0.66);
+  --glass-elevated-border: rgba(255, 255, 255, 0.05);
+  --glass-control-fill: rgba(32, 32, 32, 0.56);
+  --glass-control-border: rgba(255, 255, 255, 0.08);
+}
+
+/* ─── Designer generating spinner ────────────────────────────────────────── */
+@keyframes designer-spin {
+  to { transform: rotate(360deg); }
+}
+
+.designer-generating-spinner {
+  animation: designer-spin 0.8s linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .designer-generating-spinner {
+    animation: none;
+  }
+}
+
+.designer-console-dark {
+  --bg-base: #171717;
+  --bg-surface: #1b1b1b;
+  --bg-elevated: #202020;
+  --bg-inset: #141414;
+  --bg-tint: #232323;
+
+  --text-primary: #f1f1f1;
+  --text-secondary: #d2d2d2;
+  --text-tertiary: #b9b9b9;
+  --text-muted: #828282;
+  --text-disabled: #5f5f5f;
+
+  --border-subtle: #2c2c2c;
+  --border-default: #363636;
+  --border-strong: #454545;
+
+  --accent: #147efb;
+  --accent-hover: #2490ff;
+  --accent-muted: rgba(20, 126, 251, 0.14);
+  --accent-fg: #ffffff;
+
+  --status-success: #41d66f;
+  --status-warning: #f2b84b;
+  --status-danger: #f87171;
+
+  --focus-ring: 0 0 0 2px var(--bg-base), 0 0 0 3px rgb(20 126 251 / 0.36);
+  --shadow-sm: 0 8px 30px rgba(0, 0, 0, 0.28);
+  --shadow-md: 0 18px 48px rgba(0, 0, 0, 0.36);
+
+  --glass-chrome-fill: rgba(20, 20, 20, 0.9);
+  --glass-chrome-border: rgba(255, 255, 255, 0.06);
+  --glass-panel-fill: rgba(27, 27, 27, 0.84);
+  --glass-panel-border: rgba(255, 255, 255, 0.07);
+  --glass-elevated-fill: rgba(32, 32, 32, 0.76);
+  --glass-elevated-border: rgba(255, 255, 255, 0.06);
+  --glass-control-fill: rgba(32, 32, 32, 0.82);
+  --glass-control-border: rgba(255, 255, 255, 0.08);
+}
+
+/* ── Designer focus mode: full-screen artifact ────────────────────────────── */
+
+.designer-focus-mode {
+  /* Used when the designer enters focus/fullscreen artifact mode */
+}
+
+.designer-focus-mode .designer-focus-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 40;
+  background: var(--bg-base);
+}
+
+@keyframes designer-focus-in {
+  from { opacity: 0; transform: scale(0.97); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+.designer-focus-enter {
+  animation: designer-focus-in 0.2s ease-out both;
+}
+
+/* ─── LiquidGlassPanel material system ──────────────────────────────────────
+ *
+ * Reusable premium Liquid Glass primitive for Ethen chrome and controls.
+ * Safe to ship: activates only when .lgp-base is applied.
+ *
+ * Variants  : panel | composer | control | floating | header | media
+ * Intensities: low | medium | high   (resolved to CSS vars in LiquidGlassPanel.tsx)
+ * Radii     : md | lg | xl | blob   (resolved to --lgp-radius)
+ *
+ * Pseudo-element stacking:
+ *   ::before  z-index 0 — specular radial glare
+ *   ::after   z-index 1 — inner top-edge inset highlight
+ *   .lgp-content z-index 2 — children wrapper
+ *
+ * Blur is a CSS variable; it is NEVER animated (GPU compositing cost).
+ * ─────────────────────────────────────────────────────────────────────────── */
+
+.lgp-base {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  border-radius: var(--lgp-radius, 16px);
+  border: 1px solid var(--lgp-border, rgba(255, 255, 255, 0.08));
+  background: var(--lgp-fill, rgba(10, 10, 10, 0.88));
+  box-shadow: var(--lgp-shadow, 0 16px 48px rgba(0, 0, 0, 0.4));
+}
+
+@supports ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .lgp-base {
+    -webkit-backdrop-filter:
+      blur(var(--lgp-blur, 16px))
+      saturate(var(--lgp-saturate, 1.18))
+      brightness(var(--lgp-brightness, 1))
+      contrast(var(--lgp-contrast, 1));
+    backdrop-filter:
+      blur(var(--lgp-blur, 16px))
+      saturate(var(--lgp-saturate, 1.18))
+      brightness(var(--lgp-brightness, 1))
+      contrast(var(--lgp-contrast, 1));
+  }
+}
+
+/* ::before — specular radial glare (z-index 0); narrow and top-weighted */
+.lgp-base::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  border-radius: inherit;
+  background: radial-gradient(
+    ellipse at 50% -18%,
+    rgba(255, 255, 255, var(--lgp-glare, 0.045)) 0%,
+    rgba(255, 255, 255, calc(var(--lgp-glare, 0.045) * 0.35)) 24%,
+    transparent 52%
+  );
+}
+
+/* ::after — inner inset edge highlight (z-index 1); thin hairline bevel */
+.lgp-base::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  border-radius: inherit;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, var(--lgp-edge, 0.06)),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.72),
+    inset 0 0 0 0.5px rgba(255, 255, 255, 0.045);
+}
+
+/* Content wrapper — always above pseudo-elements */
+.lgp-content {
+  position: relative;
+  z-index: 2;
+}
+
+/* Interactive state — transitions on cheap properties only; no blur changes */
+.lgp-interactive {
+  cursor: pointer;
+  transition:
+    border-color 140ms cubic-bezier(0.2, 0.8, 0.2, 1),
+    box-shadow   140ms cubic-bezier(0.2, 0.8, 0.2, 1),
+    transform    140ms cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.lgp-interactive:hover {
+  border-color: var(--lgp-border-hover, rgba(255, 255, 255, 0.13));
+  box-shadow:
+    var(--lgp-shadow, 0 16px 48px rgba(0, 0, 0, 0.4)),
+    0 0 0 1px rgba(255, 255, 255, 0.06);
+  transform: translateY(-1px);
+}
+
+.lgp-interactive:active {
+  transform: scale(0.985) translateY(0);
+}
+
+/* ── Accessibility fallbacks ─────────────────────────────────────────────── */
+
+/* Reduced motion — remove transforms and transitions */
+@media (prefers-reduced-motion: reduce) {
+  .lgp-interactive {
+    transition: none !important;
+  }
+  .lgp-interactive:hover,
+  .lgp-interactive:active {
+    transform: none !important;
+  }
+}
+
+/* Reduced transparency — replace glass with opaque dark fill */
+@media (prefers-reduced-transparency: reduce) {
+  .lgp-base {
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
+    background: #0d0d0d !important;
+    border-color: rgba(255, 255, 255, 0.10) !important;
+  }
+}
+
+/* High contrast — strengthen border visibility */
+@media (prefers-contrast: more) {
+  .lgp-base {
+    border-color: rgba(255, 255, 255, 0.28) !important;
+  }
+  .lgp-base::after {
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.18) !important;
+  }
+}
+
+/* ─── Liquid Glass Lab background stage (lab-only, /dev/liquid-glass) ───────
+ * Glass needs a varied backdrop to blur/refract against. This soft color
+ * field is scoped to the lab route only — never used on production pages.
+ * ─────────────────────────────────────────────────────────────────────────── */
+
+.liquid-glass-lab-stage {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+}
+
+.liquid-glass-lab-stage::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at 35% 20%, rgba(255, 255, 255, 0.16), transparent 26%),
+    radial-gradient(circle at 70% 35%, rgba(80, 160, 255, 0.10), transparent 28%),
+    radial-gradient(circle at 52% 70%, rgba(80, 255, 180, 0.07), transparent 26%);
+  filter: blur(28px);
+  opacity: 0.65;
+}
+
+.liquid-glass-lab-stage::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.035), transparent),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.025), transparent 38%);
+  opacity: 0.8;
+}
+
+/* ─── Liquid Glass Lab jet-black refractive stage (lab-only) ────────────────
+ * Neutral black backdrop with subtle white-only refraction — no color bloom.
+ * Used behind smoked-material previews for a premium jet-black Ethen look.
+ * ─────────────────────────────────────────────────────────────────────────── */
+
+.liquid-glass-jet-stage {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  background: #000;
+}
+
+.liquid-glass-jet-stage::before {
+  content: "";
+  position: absolute;
+  inset: -12%;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.035) 0%,
+      rgba(255, 255, 255, 0.012) 18%,
+      transparent 42%
+    ),
+    linear-gradient(
+      112deg,
+      transparent 0%,
+      transparent 42%,
+      rgba(255, 255, 255, 0.028) 49%,
+      transparent 58%,
+      transparent 100%
+    );
+  filter: blur(8px);
+  opacity: 0.28;
+}
+
+.liquid-glass-jet-stage::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background: #000;
+  opacity: 0.72;
+}
+
+/* ─── Opt-in Liquid Glass primitive surface variants ────────────────────────
+ * Shared shell/interior classes for primitive-level opt-in only.
+ * No defaults point at these classes; route adoption must be explicit.
+ * Smoked variants are outer-shell only. Solid variants are readable interiors.
+ * ─────────────────────────────────────────────────────────────────────────── */
+
+.ethen-panel-smoked,
+.ethen-panel-smoked-refined,
+.ethen-panel-smoked-quiet,
+.ethen-panel-solid-dark,
+.ethen-panel-solid-black {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+}
+
+.ethen-panel-smoked {
+  border: 1px solid var(--console-hairline-strong);
+  background: color-mix(in srgb, var(--console-surface-shell) 62%, transparent);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.26),
+    inset 1px 0 0 rgba(255, 255, 255, 0.055),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.92),
+    inset -1px 0 0 rgba(0, 0, 0, 0.60),
+    0 0 0 0.5px rgba(255, 255, 255, 0.08),
+    0 24px 72px rgba(0, 0, 0, 0.62);
+}
+
+.ethen-panel-smoked-refined {
+  border: 1px solid var(--console-hairline);
+  background: color-mix(in srgb, var(--console-surface-shell) 60%, transparent);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.15),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.88),
+    0 0 0 0.5px rgba(255, 255, 255, 0.055),
+    0 20px 60px rgba(0, 0, 0, 0.55);
+}
+
+.ethen-panel-smoked-quiet {
+  border: 1px solid var(--console-hairline);
+  background: color-mix(in srgb, rgba(10, 10, 10, 0.92) 88%, transparent);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.04),
+    0 8px 24px rgba(0, 0, 0, 0.38);
+}
+
+.ethen-panel-solid-dark {
+  border: 1px solid var(--console-hairline);
+  background: var(--console-surface-card-elevated);
+  box-shadow: var(--shadow-sm);
+}
+
+.ethen-panel-solid-black {
+  border: 1px solid var(--console-hairline);
+  background: var(--console-surface-editor);
+  box-shadow: var(--shadow-sm);
+}
+
+@supports ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .ethen-panel-smoked,
+  .ethen-panel-smoked-refined {
+    -webkit-backdrop-filter: blur(22px) saturate(1.35) brightness(0.92) contrast(1.12);
+    backdrop-filter: blur(22px) saturate(1.35) brightness(0.92) contrast(1.12);
+  }
+
+  .ethen-panel-smoked-quiet {
+    -webkit-backdrop-filter: blur(14px) saturate(1.1);
+    backdrop-filter: blur(14px) saturate(1.1);
+  }
+}
+
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .ethen-panel-smoked,
+  .ethen-panel-smoked-refined {
+    background: rgba(6, 6, 6, 0.97);
+  }
+
+  .ethen-panel-smoked-quiet {
+    background: rgba(9, 9, 9, 0.98);
+  }
+}
+
+@media (prefers-reduced-transparency: reduce) {
+  .ethen-panel-smoked,
+  .ethen-panel-smoked-refined,
+  .ethen-panel-smoked-quiet {
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
+    background: rgba(7, 7, 7, 0.98) !important;
+  }
+}
+
+/* ─── AI Gateway smoked panel shells (route-scoped, /ai-gateway only) ────────
+ * Mirrors the 12:59 /dev/liquid-glass smoked direction: jet-black translucent
+ * shell, thin controlled rim, subtle depth. Applied ONLY to outer panel shells
+ * (Get Started, code panel, AI Assistance, usage cards, no-data). Interiors —
+ * code text, data values, prose, rows — stay solid/readable. No backdrop-filter
+ * on interiors, no nested glass rows, no color bloom/gradient.
+ * ─────────────────────────────────────────────────────────────────────────── */
+
+.aiGatewaySmokedPanel {
+  background: var(--console-surface-card-elevated);
+  border: 1px solid var(--console-hairline);
+  box-shadow: var(--shadow-panel);
+}
+
+@supports ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .aiGatewaySmokedPanel {
+    -webkit-backdrop-filter: blur(22px) saturate(1.35) brightness(0.92) contrast(1.12);
+    backdrop-filter: blur(22px) saturate(1.35) brightness(0.92) contrast(1.12);
+  }
+}
+
+/* Secondary control styling for /ai-gateway filter/dropdown buttons.
+ * Non-blur, crisp, quiet — primary CTAs keep their solid treatment. */
+.aiGatewaySmokedControl {
+  border: 1px solid var(--console-hairline);
+  background: var(--console-surface-data);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.035);
+  color: var(--text-primary);
+  transition:
+    border-color 140ms cubic-bezier(0.2, 0.8, 0.2, 1),
+    background-color 140ms cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.aiGatewaySmokedControl:hover {
+  border-color: var(--console-hairline-strong);
+  background: var(--console-surface-card);
+}
+
+/* ─── Ethen white dashboard button system (lab-safe shared utilities) ───────
+ * Rectangular button comparisons for /dev/liquid-glass:
+ * - .ethen-primary-button: clean solid white product button
+ * - .ethen-liquid-white-button: premium reflective white rectangle
+ * - .ethen-optical-white-button: stronger optical edge/refraction comparison
+ * - .ethen-secondary-button: quiet dark secondary comparison
+ * No color bloom, no hero-pill sizing, no heavy blur.
+ * ─────────────────────────────────────────────────────────────────────────── */
+
+.ethen-primary-button,
+.ethen-liquid-white-button,
+.ethen-optical-white-button,
+.ethen-secondary-button {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  height: 36px;
+  padding: 0 14px;
+  border-radius: 8px;
+  font-size: 13px;
+  line-height: 1;
+  letter-spacing: -0.01em;
+  cursor: pointer;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.ethen-primary-button {
+  border: 1px solid rgba(255, 255, 255, 0.88);
+  background: #f5f5f5;
+  color: #050505;
+  font-weight: 520;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.9),
+    0 1px 2px rgba(0, 0, 0, 0.24);
+  transition:
+    background 140ms ease,
+    border-color 140ms ease,
+    box-shadow 140ms ease,
+    transform 140ms ease;
+}
+
+.ethen-primary-button:hover {
+  background: #ffffff;
+  border-color: #ffffff;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 1),
+    0 2px 6px rgba(0, 0, 0, 0.28);
+}
+
+.ethen-primary-button:active {
+  transform: translateY(1px);
+  background: #e8e8e8;
+  box-shadow:
+    inset 0 1px 1px rgba(0, 0, 0, 0.12),
+    0 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+.ethen-primary-button:focus-visible {
+  outline: 2px solid rgba(255, 255, 255, 0.45);
+  outline-offset: 2px;
+}
+
+.ethen-liquid-white-button {
+  isolation: isolate;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.72);
+  color: #050505;
+  font-weight: 560;
+  background:
+    linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.985) 0%,
+      rgba(247, 247, 247, 0.955) 42%,
+      rgba(223, 223, 223, 0.94) 100%
+    );
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 1),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.16),
+    inset 1px 0 0 rgba(255, 255, 255, 0.42),
+    inset -1px 0 0 rgba(0, 0, 0, 0.06),
+    0 0 0 0.5px rgba(255, 255, 255, 0.32),
+    0 2px 6px rgba(0, 0, 0, 0.28);
+  transition:
+    transform 140ms ease,
+    border-color 140ms ease,
+    box-shadow 140ms ease,
+    background 140ms ease;
+}
+
+.ethen-liquid-white-button::before {
+  content: "";
+  position: absolute;
+  inset: 1px 1px auto 1px;
+  height: 48%;
+  z-index: 0;
+  border-radius: 7px 7px 10px 10px;
+  background:
+    linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.92),
+      rgba(255, 255, 255, 0.22) 58%,
+      transparent 100%
+    );
+  opacity: 0.72;
+  pointer-events: none;
+}
+
+.ethen-liquid-white-button::after {
+  content: "";
+  position: absolute;
+  left: 10%;
+  right: 10%;
+  bottom: 3px;
+  height: 34%;
+  z-index: 0;
+  border-radius: 6px;
+  background:
+    linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.68),
+      rgba(255, 255, 255, 0.18) 48%,
+      transparent 100%
+    );
+  filter: blur(5px);
+  opacity: 0.44;
+  pointer-events: none;
+}
+
+.ethen-liquid-white-button > * {
+  position: relative;
+  z-index: 1;
+}
+
+.ethen-liquid-white-button:hover {
+  background:
+    linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 1) 0%,
+      rgba(250, 250, 250, 0.98) 45%,
+      rgba(225, 225, 225, 0.95) 100%
+    );
+  border-color: rgba(255, 255, 255, 0.9);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 1),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.16),
+    inset 1px 0 0 rgba(255, 255, 255, 0.48),
+    inset -1px 0 0 rgba(0, 0, 0, 0.07),
+    0 0 0 0.5px rgba(255, 255, 255, 0.42),
+    0 3px 8px rgba(0, 0, 0, 0.32);
+}
+
+.ethen-liquid-white-button:active {
+  transform: translateY(1px);
+  background:
+    linear-gradient(
+      180deg,
+      rgba(235, 235, 235, 0.98) 0%,
+      rgba(255, 255, 255, 0.95) 100%
+    );
+}
+
+.ethen-liquid-white-button:focus-visible {
+  outline: none;
+  box-shadow: var(--console-focus-ring);
+}
+
+.ethen-optical-white-button {
+  isolation: isolate;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.82);
+  color: #050505;
+  background:
+    linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 1) 0%,
+      rgba(246, 246, 246, 0.98) 38%,
+      rgba(221, 221, 221, 0.96) 100%
+    );
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 1),
+    inset 0 2px 3px rgba(255, 255, 255, 0.74),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.22),
+    inset 1px 0 0 rgba(255, 255, 255, 0.48),
+    inset -1px 0 0 rgba(0, 0, 0, 0.08),
+    0 0 0 0.5px rgba(255, 255, 255, 0.38),
+    0 2px 7px rgba(0, 0, 0, 0.32);
+  font-weight: 570;
+  transition:
+    transform 140ms ease,
+    border-color 140ms ease,
+    box-shadow 140ms ease,
+    background 140ms ease;
+}
+
+.ethen-optical-white-button::before {
+  content: "";
+  position: absolute;
+  inset: 1px 1px auto 1px;
+  height: 54%;
+  z-index: 0;
+  border-radius: 7px 7px 10px 10px;
+  background:
+    linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.98),
+      rgba(255, 255, 255, 0.34) 48%,
+      transparent 100%
+    );
+  opacity: 0.78;
+  pointer-events: none;
+}
+
+.ethen-optical-white-button::after {
+  content: "";
+  position: absolute;
+  top: -40%;
+  bottom: -40%;
+  left: 38%;
+  width: 18px;
+  z-index: 0;
+  transform: rotate(28deg);
+  border-radius: 999px;
+  background:
+    linear-gradient(
+      90deg,
+      transparent 0%,
+      rgba(255, 255, 255, 0.32) 38%,
+      rgba(255, 255, 255, 0.78) 50%,
+      rgba(0, 0, 0, 0.08) 62%,
+      transparent 100%
+    );
+  filter: blur(4px);
+  opacity: 0.42;
+  pointer-events: none;
+}
+
+.ethen-optical-white-button > * {
+  position: relative;
+  z-index: 1;
+}
+
+.ethen-optical-white-button:hover {
+  background:
+    linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 1) 0%,
+      rgba(252, 252, 252, 0.99) 42%,
+      rgba(230, 230, 230, 0.98) 100%
+    );
+  border-color: rgba(255, 255, 255, 0.96);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 1),
+    inset 0 2px 3px rgba(255, 255, 255, 0.82),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.20),
+    inset 1px 0 0 rgba(255, 255, 255, 0.54),
+    inset -1px 0 0 rgba(0, 0, 0, 0.08),
+    0 0 0 0.5px rgba(255, 255, 255, 0.48),
+    0 3px 9px rgba(0, 0, 0, 0.34);
+}
+
+.ethen-optical-white-button:active {
+  transform: translateY(1px);
+  background:
+    linear-gradient(
+      180deg,
+      rgba(232, 232, 232, 0.98) 0%,
+      rgba(255, 255, 255, 0.96) 100%
+    );
+}
+
+.ethen-optical-white-button:focus-visible {
+  outline: 2px solid rgba(255, 255, 255, 0.45);
+  outline-offset: 2px;
+}
+
+.ethen-secondary-button {
+  border: 1px solid rgba(255, 255, 255, 0.11);
+  background:
+    linear-gradient(
+      180deg,
+      rgba(28, 28, 28, 0.96) 0%,
+      rgba(15, 15, 15, 0.96) 100%
+    );
+  color: rgba(255, 255, 255, 0.88);
+  font-weight: 500;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.05),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.48),
+    0 1px 2px rgba(0, 0, 0, 0.28);
+  transition:
+    background 140ms ease,
+    border-color 140ms ease,
+    color 140ms ease,
+    transform 140ms ease;
+}
+
+.ethen-secondary-button:hover {
+  background:
+    linear-gradient(
+      180deg,
+      rgba(34, 34, 34, 0.98) 0%,
+      rgba(18, 18, 18, 0.98) 100%
+    );
+  border-color: rgba(255, 255, 255, 0.16);
+  color: #ffffff;
+}
+
+.ethen-secondary-button:active {
+  transform: translateY(1px);
+  background:
+    linear-gradient(
+      180deg,
+      rgba(18, 18, 18, 0.98) 0%,
+      rgba(10, 10, 10, 0.98) 100%
+    );
+}
+
+/* ─── Code Console — Claude-Code-style surfaces (scoped to /code only) ─────
+ * Approved visual direction: components/dev/EthenComposerDesignLab.tsx
+ * Section 7 (lab reference), ported to production without copying its
+ * static markup. Redeclares the shared bg, text, border, and status tokens
+ * inside .code-console-shell so every descendant that already reads them
+ * (CodeConsoleShell, CodeConsoleSidebar, RunWorkspace, file/editor panels,
+ * etc.) re-themes automatically — no other route is affected.
+ * Selector is self-repeated for specificity (0-2-0) so it reliably beats
+ * the root/dark token declarations regardless of source order. */
+.code-console-shell.code-console-shell {
+  --bg-base: #0d0d0d;
+  --bg-surface: #0d0d0d;
+  --bg-elevated: #1b1b1b;
+  --bg-inset: #1b1b1b;
+  --bg-tint: #0a0a0a;
+  --text-primary: #fafafa;
+  --text-secondary: #a3a3a3;
+  --text-tertiary: #a3a3a3;
+  --text-muted: #525252;
+  --text-disabled: #525252;
+  --border-subtle: rgba(255, 255, 255, 0.1);
+  --border-default: rgba(255, 255, 255, 0.1);
+  --border-strong: rgba(255, 255, 255, 0.16);
+  --status-success: #9fe59b;
+  --status-warning: #fdcf4f;
+  --status-danger: #ffc6c1;
+}
+
+/* Flatten the Liquid Glass composer/control/menu surfaces inside the code
+ * console to the lab's solid #1b1b1b treatment — everything else about
+ * these controls (behavior, layout, a11y) is untouched.
+ * components/composer/ethen-universal-composer.module.css (off-limits — see
+ * job constraints) sets background/backdrop-filter/box-shadow as *literal*
+ * declarations on its own .composerSmoked variant, which bypasses the
+ * --ethen-liquid-* custom-property indirection those variables would
+ * otherwise flow through. Overriding the variables alone doesn't reach it,
+ * so these rules also set the literal properties directly; the triple-class
+ * selector (0-3-0 for the descendant lines) still safely beats that
+ * module's single/double-class rules on specificity, no forced-priority flag needed. */
+.code-console-shell.code-console-shell .ethen-liquid-panel--composer,
+.code-console-shell.code-console-shell .ethen-liquid-panel--composer:hover,
+.code-console-shell.code-console-shell .ethen-liquid-panel--composer:focus-within,
+.code-console-shell.code-console-shell .ethen-liquid-panel--composer[data-menu-open="true"] {
+  --ethen-liquid-blur-current: 0px;
+  --ethen-liquid-border-current: rgba(255, 255, 255, 0.1);
+  --ethen-liquid-background-current: #1b1b1b;
+  --ethen-liquid-shadow-current: none;
+  background: #1b1b1b;
+  border-color: rgba(255, 255, 255, 0.1);
+  box-shadow: none;
+  border-radius: 12px;
+}
+
+.code-console-shell.code-console-shell .ethen-liquid-panel--control,
+.code-console-shell.code-console-shell .ethen-liquid-panel--control:hover,
+.code-console-shell.code-console-shell .ethen-liquid-panel--control:focus-visible,
+.code-console-shell.code-console-shell .ethen-liquid-panel--control[aria-expanded="true"],
+.code-console-shell.code-console-shell .ethen-liquid-panel--control[data-state="open"] {
+  --ethen-liquid-blur-current: 0px;
+  --ethen-liquid-border-current: rgba(255, 255, 255, 0.1);
+  --ethen-liquid-background-current: rgba(255, 255, 255, 0.05);
+  --ethen-liquid-shadow-current: none;
+  background: rgba(255, 255, 255, 0.05);
+  border-color: rgba(255, 255, 255, 0.1);
+  box-shadow: none;
+}
+
+.code-console-shell.code-console-shell .ethen-liquid-panel--floating {
+  --ethen-liquid-blur-current: 0px;
+  --ethen-liquid-border-current: rgba(255, 255, 255, 0.1);
+  --ethen-liquid-background-current: #1b1b1b;
+  --ethen-liquid-shadow-current: 0 4px 12px rgba(0, 0, 0, 0.4);
+  background: #1b1b1b;
+  border-color: rgba(255, 255, 255, 0.1);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+}
+
+/* Note: the composer module's own backdrop-filter (components/composer/
+ * ethen-universal-composer.module.css, off-limits) survives layering here
+ * and isn't worth chasing with a forced-priority override — the background above is now
+ * fully opaque (#1b1b1b), so there's no visible backdrop for the blur to
+ * show through regardless of whether the property itself resolves to none. */
+
+.code-console-shell.code-console-shell .ethen-liquid-panel--composer::before,
+.code-console-shell.code-console-shell .ethen-liquid-panel--composer::after,
+.code-console-shell.code-console-shell .ethen-liquid-panel--control::before,
+.code-console-shell.code-console-shell .ethen-liquid-panel--control::after,
+.code-console-shell.code-console-shell .ethen-liquid-panel--floating::before,
+.code-console-shell.code-console-shell .ethen-liquid-panel--floating::after {
+  display: none;
+}
+
+/* ─── Homepage assistant-ui base shell (scoped to Cortex homepage) ───────── */
+.homepage-shell {
+  /* Ethen homepage non-negotiable main-panel color, flat, no gradient. */
+  background: #0a0a0a;
+}
+
+.homepage-header {
+  position: relative;
+  z-index: 1;
+}
+
+.homepage-header-title {
+  display: inline-flex;
+  align-items: center;
+  min-height: 34px;
+  border: 1px solid #FFFFFF1A;
+  border-radius: 999px;
+  background: transparent;
+  padding: 0 12px;
+  color: var(--text-secondary);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  transition:
+    border-color 140ms ease,
+    background-color 140ms ease,
+    color 140ms ease;
+}
+
+.homepage-header-title:hover {
+  border-color: #FFFFFF1A;
+  background: #FFFFFF0D;
+  color: var(--text-primary);
+}
+
+.homepage-header-title:focus-visible {
+  outline: none;
+  box-shadow: var(--focus-ring);
+}
+
+.homepage-composer-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.homepage-suggestion-chip {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 34px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.025);
+  padding: 0 14px;
+  color: var(--text-secondary);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  transition:
+    transform 140ms ease,
+    border-color 140ms ease,
+    background-color 140ms ease,
+    color 140ms ease;
+}
+
+.homepage-suggestion-chip:hover {
+  transform: translateY(-1px);
+  border-color: rgba(255, 255, 255, 0.13);
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--text-primary);
+}
+
+.homepage-suggestion-chip:focus-visible {
+  outline: none;
+  box-shadow: var(--focus-ring);
+}
+
+/* ─── Homepage assistant-ui Base visual fidelity (empty state) ──────────── */
+
+/* Welcome heading — matches base reference text-2xl font-semibold (24px/600). */
+.home-welcome-heading {
+  margin: 0 0 24px;
+  text-align: center;
+  font-size: 24px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  line-height: 1.3;
+  color: #fafafa;
+}
+
+/* Large premium composer card: enclosed surface for the homepage.
+   Composer surface (#121212) on conversation canvas (#0a0a0a) with a
+   clear border (#FFFFFF1A) and generous padding so textarea + controls
+   read as one cohesive unit. */
+.home-composer-root {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  gap: 8px;
+  border: 1px solid rgba(255,255,255,0.07);
+  border-radius: 24px;
+  background: #121212;
+  padding: 8px;
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.045),
+    0 10px 30px rgba(0,0,0,0.28);
+  transition: border-color 140ms ease;
+}
+
+.home-composer-root:focus-within {
+  border-color: rgba(255,255,255,0.14);
+}
+/* Input: generous minimum height, transparent background so the composer
+   surface shows through, no visible textarea border/outline. */
+.home-composer-input {
+  width: 100%;
+  max-height: 200px;
+  min-height: 40px;
+  resize: none;
+  background: transparent;
+  border: 0;
+  outline: none;
+  padding: 4px 0;
+  color: #fafafa;
+  font-size: 16px;
+  line-height: 1.6;
+}
+.home-composer-input::placeholder {
+  color: rgba(255,255,255,0.42);
+}
+
+/* Prevent the global :focus-visible box-shadow ring from rendering as a
+   square edge on the borderless textarea (same fix as .chat-input). The
+   rounded composer card's focus-within border change is the only indicator. */
+.home-composer-input,
+.home-composer-input:focus,
+.home-composer-input:focus-visible {
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+.home-composer-controls {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+/* Round send/stop icon button — base reference size-7 (28px), rounded-full,
+   primary fill (#fafafa) / primary-foreground (#18181b). */
+.home-composer-send {
+  display: inline-flex;
+  height: 28px;
+  width: 28px;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  background: #fafafa;
+  color: #18181b;
+  cursor: pointer;
+  transition: opacity 140ms ease, background-color 140ms ease;
+}
+.home-composer-send:hover {
+  background: #ffffff;
+}
+.home-composer-send:disabled {
+  cursor: not-allowed;
+}
+
+/* Prompt chip (suggestion pill) displayed below the empty-state composer.
+   Pill shape with a subtle translucent background so it reads as a real
+   clickable chip rather than plain inline text. */
+.home-chip {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #FFFFFF1A;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.04);
+  padding: 6px 14px;
+  color: #fafafa;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1;
+  white-space: nowrap;
+  transition: border-color 140ms ease, background-color 140ms ease, color 140ms ease;
+}
+.home-chip:hover {
+  background: #FFFFFF0D;
+  color: #fafafa;
+}
+.home-chip:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(250, 250, 250, 0.35);
+}
+
+/* ── Homepage composer: scoped control overrides ────────────────────────── */
+
+/* Match action-menu (+) trigger size to the 28px send/voice buttons and
+   remove the premium-icon-button ring — the composer card's focus-within
+   border change is the only ambient focus signal we want. */
+.home-composer-root .premium-icon-button {
+  height: 28px !important;
+  min-height: 28px !important;
+  width: 28px !important;
+}
+
+/* ─── Source chips (homepage assistant messages) ─────────────────────────── */
+
+.source-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  border: 1px solid #FFFFFF1A;
+  border-radius: 999px;
+  background: #121212;
+  padding: 3px 10px;
+  font-size: 11px;
+  line-height: 1.3;
+  white-space: nowrap;
+  text-decoration: none;
+  transition: border-color 140ms ease, background-color 140ms ease;
+  cursor: pointer;
+  max-width: 280px;
+}
+.source-chip:hover {
+  background: #FFFFFF0D;
+  border-color: #FFFFFF29;
+}
+.source-chip-index {
+  color: #a3a3a3;
+  font-size: 10px;
+  font-weight: 500;
+  flex-shrink: 0;
+}
+.source-chip-label {
+  color: #fafafa;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  min-width: 0;
+}
+.source-chip-domain {
+  color: #525252;
+  font-size: 10px;
+  flex-shrink: 0;
+}
+.source-chip-more {
+  color: #a3a3a3;
+  cursor: default;
+  background: transparent;
+}
+.source-chip-more:hover {
+  background: transparent;
+  border-color: #FFFFFF1A;
+}
+.home-composer-root .premium-icon-button:hover {
+  box-shadow: none;
+  background: rgba(255, 255, 255, 0.05);
+}
+
+/* CortexModeSelector pill: outer div gets className="home-mode-chip"; we
+   style the direct child trigger button to look like a flat chip. */
+.home-mode-chip > button {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  border: 1px solid #FFFFFF1A;
+  border-radius: 999px;
+  background: transparent;
+  padding: 4px 12px;
+  color: #a3a3a3;
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1.4;
+  white-space: nowrap;
+  transition: border-color 140ms ease, background-color 140ms ease, color 140ms ease;
+}
+.home-mode-chip > button:hover {
+  background: #FFFFFF0D;
+  border-color: #FFFFFF29;
+  color: #fafafa;
+}
+.home-mode-chip > button:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(250, 250, 250, 0.35);
+}
+
+
+
+.ethen-threadlist-item:hover,
+.ethen-threadlist-item:focus-visible {
+  border-color: var(--border-subtle);
+}
+
+.ethen-threadlist-skeleton {
+  border: 1px solid var(--border-subtle);
+  background:
+    linear-gradient(
+      90deg,
+      rgba(255, 255, 255, 0.02) 0%,
+      rgba(255, 255, 255, 0.05) 50%,
+      rgba(255, 255, 255, 0.02) 100%
+    );
+  background-size: 200% 100%;
+  animation: ethen-threadlist-pulse 1.4s ease-in-out infinite;
+}
+
+@keyframes ethen-threadlist-pulse {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+.artifact-frame {
+  position: relative;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.04),
+    0 18px 40px -24px rgba(0, 0, 0, 0.45);
+}
+
+.artifact-frame::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.035), transparent 28%),
+    radial-gradient(circle at top right, rgba(255, 255, 255, 0.045), transparent 30%);
+  opacity: 0.9;
+}
+
+.artifact-frame__header {
+  position: relative;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.03), transparent),
+    var(--bg-surface);
+}
+
+/* ── Density: compact mode ──────────────────────────────────────────── */
+
+[data-density="compact"] .run-timeline-item {
+  padding-top: 0.25rem;
+  padding-bottom: 0.25rem;
+}
+
+[data-density="compact"] .details-panel {
+  --section-padding: 0.5rem;
+}
+
+/* ── Tool display: product vs technical labels ──────────────────────── */
+
+[data-tool-display="technical"] .tool-call-product-label {
+  display: none;
+}
+
+[data-tool-display="product"] .tool-call-technical-label {
+  display: none;
+}
+
+/* ── Repo-Wide Light Mode Overrides ──────────────────────────────────────── */
+:root[data-theme="light"]:not(.dark) .bg-black,
+:root[data-theme="light"]:not(.dark) .bg-\[\#000000\],
+:root[data-theme="light"]:not(.dark) .bg-\[\#050505\] {
+  background-color: var(--bg-base) !important;
+}
+
+:root[data-theme="light"]:not(.dark) .bg-\[\#0a0a0a\] {
+  background-color: var(--bg-surface) !important;
+}
+
+:root[data-theme="light"]:not(.dark) .bg-\[\#080808\],
+:root[data-theme="light"]:not(.dark) .bg-\[\#111111\],
+:root[data-theme="light"]:not(.dark) .bg-\[\#121212\],
+:root[data-theme="light"]:not(.dark) .bg-\[\#171717\],
+:root[data-theme="light"]:not(.dark) .bg-\[\#181818\] {
+  background-color: var(--bg-elevated) !important;
+}
+
+:root[data-theme="light"]:not(.dark) .text-white,
+:root[data-theme="light"]:not(.dark) .text-\[\#ededed\] {
+  color: var(--text-primary) !important;
+}
+
+:root[data-theme="light"]:not(.dark) .text-\[\#a1a1a1\] {
+  color: var(--text-secondary) !important;
+}
+
+:root[data-theme="light"]:not(.dark) .text-\[\#737373\] {
+  color: var(--text-tertiary) !important;
+}
+
+:root[data-theme="light"]:not(.dark) [class*="border-[rgba(255,255,255"],
+:root[data-theme="light"]:not(.dark) [class*="border-white"] {
+  border-color: var(--border-default) !important;
+}
+
+:root[data-theme="light"]:not(.dark) [class*="hover:bg-[rgba(255,255,255"]:hover,
+:root[data-theme="light"]:not(.dark) [class*="hover:bg-white"]:hover {
+  background-color: rgba(0, 0, 0, 0.05) !important;
+}
+
+:root[data-theme="light"]:not(.dark) [class*="text-[rgba(255,255,255"] {
+  color: var(--text-secondary) !important;
+}
+
+:root[data-theme="light"]:not(.dark) [class*="text-[rgba(255,255,255,0.8"] {
+  color: var(--text-primary) !important;
+}
+
+:root[data-theme="light"]:not(.dark) [class*="text-[rgba(255,255,255,0.9"] {
+  color: var(--text-primary) !important;
+}
+
+:root[data-theme="light"]:not(.dark) [class*="ring-[rgba(255,255,255"] {
+  --tw-ring-color: var(--border-strong) !important;
+}
+
+/* MarketingShell now uses the shared EDS canvas and chrome in both themes.
+ * Keep its legacy utility variables aligned with the resolved EDS palette so
+ * preserved controls (for example the contact form) inherit the same theme. */
+:root[data-theme="light"]:not(.dark) .marketing-shell {
+  --bg-base: var(--eds-canvas);
+  --bg-surface: var(--eds-paper);
+  --bg-elevated: var(--eds-card);
+  --text-primary: var(--eds-ink);
+  --text-secondary: var(--eds-text-secondary);
+  --text-tertiary: var(--eds-text-tertiary);
+  background-color: var(--eds-canvas) !important;
+  color: var(--eds-ink) !important;
+}
+:root[data-theme="light"]:not(.dark) .marketing-shell.bg-\[\#0a0a0a\],
+:root[data-theme="light"]:not(.dark) .marketing-shell .bg-\[\#0a0a0a\] {
+  background-color: #0a0a0a !important;
+}
+:root[data-theme="light"]:not(.dark) .marketing-shell .text-white,
+:root[data-theme="light"]:not(.dark) .marketing-shell .text-\[\#fafafa\],
+:root[data-theme="light"]:not(.dark) .marketing-shell .text-\[\#F3F4F6\],
+:root[data-theme="light"]:not(.dark) .marketing-shell .upcube-wordmark-text {
+  color: #fafafa !important;
+}
+:root[data-theme="light"]:not(.dark) .marketing-shell .text-\[\#a3a3a3\] {
+  color: #a3a3a3 !important;
+}
+
+/* ── Editorial marketing utility classes ─────────────────────────────────── */
+
+/* Thin editorial divider line — dark mode default */
+.editorial-divider-dark {
+  border-top: 1px solid rgba(255, 255, 255, 0.10);
+}
+
+/* Thin editorial divider line — light mode */
+.editorial-divider-light {
+  border-top: 1px solid rgba(0, 0, 0, 0.10);
+}
+
+/* Full-width editorial section container */
+.editorial-section {
+  max-width: 1280px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+@media (min-width: 640px) {
+  .editorial-section {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+}
+
+/* Soft enter animation for editorial elements */
+.editorial-soft-enter {
+  animation: editorial-fade-in 0.4s ease-out both;
+}
+
+@keyframes editorial-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ─── Upcube Marketing Theme Tokens ───────────────────────────────────────── */
+/*
+ * Marketing-specific font family, typography, and color tokens.
+ * These are additive — they do NOT override any console tokens.
+ * Only pages in the (marketing) route group should reference these.
+ */
+
+/* ── Marketing palette (dark flagship) ──────────────────────────────── */
+:root {
+  --upcube-black: #000000;
+  --upcube-bg: #08080a;
+  --upcube-panel: #111113;
+  --upcube-panel-2: #151518;
+  --upcube-border: rgba(255, 255, 255, 0.18);
+  --upcube-border-strong: rgba(255, 255, 255, 0.34);
+  --upcube-text: #ffffff;
+  --upcube-text-secondary: rgba(255, 255, 255, 0.66);
+  --upcube-text-muted: rgba(255, 255, 255, 0.44);
+  --upcube-white: #ffffff;
+  --upcube-positive: #28d17c;
+  --upcube-warning: #ffc98a;
+  --upcube-info: #88b7ff;
+
+  /* ── Editorial spacing tokens ───────────────────────────────── */
+  --upcube-section-gap: 96px;
+  --upcube-section-gap-sm: 48px;
+  --upcube-card-gap: 24px;
+  --upcube-content-max: 1280px;
+
+  /* ── Thin divider token ──────────────────────────────────────── */
+  --upcube-divider: 1px solid rgba(255, 255, 255, 0.08);
+  --upcube-divider-strong: 1px solid rgba(255, 255, 255, 0.14);
+
+  /* ── Typography scale tokens ─────────────────────────────────── */
+  --upcube-hero-size: clamp(48px, 6vw, 73px);
+  --upcube-hero-lh: 1.0;
+  --upcube-section-title-size: clamp(40px, 4vw, 56px);
+  --upcube-section-title-lh: 1.08;
+  --upcube-quote-size: clamp(42px, 5vw, 60px);
+  --upcube-quote-lh: 1.08;
+  --upcube-cta-size: clamp(48px, 6vw, 73px);
+  --upcube-cta-lh: 1.1;
+  --upcube-subhead-size: 18px;
+  --upcube-subhead-lh: 1.4;
+  --upcube-body-size: 15px;
+  --upcube-body-lh: 1.45;
+  --upcube-nav-size: 14px;
+  --upcube-nav-lh: 22px;
+  --upcube-mono-size: 13px;
+  --upcube-mono-lh: 1.55;
+}
+
+/* ── Page color theme tokens ──────────────────────────────────────────── */
+
+/* Black flagship (homepage, ethen pages) */
+.market-page-black {
+  --page-bg: #08080a;
+  --page-text: #ffffff;
+  --page-text-secondary: rgba(255, 255, 255, 0.66);
+  --page-border: rgba(255, 255, 255, 0.08);
+}
+
+/* White enterprise/docs/legal pages */
+.market-page-white {
+  --page-bg: #ffffff;
+  --page-text: #0d0d0d;
+  --page-text-secondary: rgba(0, 0, 0, 0.55);
+  --page-border: rgba(0, 0, 0, 0.08);
+}
+
+/* Teal trust pages */
+.market-page-teal {
+  --page-bg: #051412;
+  --page-text: #d1fae5;
+  --page-text-secondary: rgba(209, 250, 229, 0.66);
+  --page-border: rgba(209, 250, 229, 0.08);
+  --page-accent: #28d17c;
+}
+
+/* Cyan company pages */
+.market-page-cyan {
+  --page-bg: #0a0e1a;
+  --page-text: #e0f2fe;
+  --page-text-secondary: rgba(224, 242, 254, 0.66);
+  --page-border: rgba(224, 242, 254, 0.08);
+  --page-accent: #88b7ff;
+}
+
+/* Cream/research pages */
+.market-page-cream {
+  --page-bg: #faf9ed;
+  --page-text: #292524;
+  --page-text-secondary: rgba(41, 37, 36, 0.55);
+  --page-border: rgba(41, 37, 36, 0.08);
+  --page-accent: #d97706;
+}
+
+/* Red/blog-style pages (future use) */
+.market-page-red {
+  --page-bg: #130a0a;
+  --page-text: #fce4e4;
+  --page-text-secondary: rgba(252, 228, 228, 0.66);
+  --page-border: rgba(252, 228, 228, 0.08);
+  --page-accent: #f87171;
+}
+
+/* ── Marketing utility classes ──────────────────────────────────────────── */
+
+/* Thin editorial divider */
+.market-divider {
+  border: none;
+  height: 1px;
+  background: var(--page-border, rgba(255, 255, 255, 0.08));
+  margin: 0;
+}
+
+.market-divider-strong {
+  border: none;
+  height: 1px;
+  background: rgba(255, 255, 255, 0.14);
+  margin: 0;
+}
+
+/* Editorial section spacing — applies page-bg + text */
+.market-section {
+  padding-top: var(--upcube-section-gap);
+  padding-bottom: var(--upcube-section-gap);
+}
+
+.market-section-sm {
+  padding-top: var(--upcube-section-gap-sm);
+  padding-bottom: var(--upcube-section-gap-sm);
+}
+
+/* Content-width constraint (matches marketing layout max-w-6xl) */
+.market-container {
+  max-width: var(--upcube-content-max);
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+}
+
+@media (min-width: 640px) {
+  .market-container {
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
+}
+
+/* ── Font family utility classes ────────────────────────────────────────── */
+
+.font-sohne {
+  font-family: var(--font-eds-sans), system-ui, sans-serif;
+}
+
+.font-signifier {
+  font-family: var(--font-eds-sans), system-ui, sans-serif;
+}
+
+.font-jetbrains-mono {
+  font-family: var(--font-jetbrains-mono);
+}
+
+.font-universal-sans {
+  font-family: var(--font-universal-sans);
+}
+
+/* ── x.ai-style marketing typography utilities ───────────────────────────── */
+
+/* Hero headline — Universal Sans, large, weight 450, tight negative tracking */
+.market-hero-x {
+  font-family: var(--font-marketing-sans), var(--font-universal-sans), sans-serif;
+  font-weight: 500;
+  font-size: 32px;
+  line-height: 1.08;
+  letter-spacing: -0.03em;
+}
+
+/* Section heading — Universal Sans, medium, weight 450 */
+.market-section-x {
+  font-family: var(--font-marketing-sans), var(--font-universal-sans), sans-serif;
+  font-weight: 500;
+  font-size: 28px;
+  line-height: 1.12;
+  letter-spacing: -0.025em;
+}
+
+/* Body copy — Universal Sans, 16px */
+.market-body-x {
+  font-family: var(--font-marketing-sans), var(--font-universal-sans), sans-serif;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+/* Eyebrow / technical label — EDS Mono, uppercase, 12px */
+.market-eyebrow-x {
+  font-family: var(--font-eds-mono);
+  font-weight: 500;
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+/* CTA text — EDS Mono, 13px */
+.market-cta-x {
+  font-family: var(--font-eds-mono);
+  font-weight: 500;
+  font-size: 13px;
+  letter-spacing: 0.03em;
+}
+
+/* Small technical label / counter — EDS Mono, uppercase */
+.market-label-x {
+  font-family: var(--font-eds-mono);
+  font-weight: 500;
+  font-size: 10px;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+/* Subhead body — Universal Sans, 15px */
+.market-subhead-x {
+  font-family: var(--font-marketing-sans), var(--font-universal-sans), sans-serif;
+  font-weight: 400;
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+@media (min-width: 640px) {
+  .market-hero-x { font-size: 40px; }
+}
+
+@media (min-width: 1024px) {
+  .market-hero-x { font-size: 46px; }
+  .market-section-x { font-size: 34px; }
+}
+
+/* The asset has generous transparent artwork margins. This viewport exposes a
+   * 96px visual wordmark while preserving the source aspect ratio. */
+.upcube-wordmark-text {
+  display: inline-block;
+  font-weight: 500;
+  letter-spacing: -0.035em;
+  line-height: 1;
+  text-transform: none;
+  white-space: nowrap;
+}
+
+.marketing-shell .market-hero-x,
+.marketing-shell .market-section-x {
+  font-weight: 500 !important;
+}
+
+/* Homepage copy is intentionally restrained: scale belongs to the hero and
+   * section headings, while prose retains a single readable body size. */
+.marketing-shell main section h2 {
+  font-family: var(--font-marketing-sans), var(--font-universal-sans), sans-serif !important;
+  font-size: 28px !important;
+  font-weight: 500 !important;
+  line-height: 1.12 !important;
+  letter-spacing: -0.03em !important;
+  text-transform: none !important;
+}
+
+.marketing-shell main section h3,
+.marketing-shell main section h4 {
+  font-family: var(--font-marketing-sans), var(--font-universal-sans), sans-serif !important;
+  font-size: 14px !important;
+  font-weight: 500 !important;
+  line-height: 1.35 !important;
+  text-transform: none !important;
+}
+
+.marketing-shell main section p,
+.marketing-shell main section li {
+  font-size: 14px !important;
+  line-height: 1.6 !important;
+}
+
+@media (min-width: 1024px) {
+  .marketing-shell main section h2 { font-size: 34px !important; }
+}
+
+.marketing-shell main > section:not(:first-child) {
+  padding-top: 3rem !important;
+  padding-bottom: 3rem !important;
+}
+
+@media (min-width: 640px) {
+  .marketing-shell main > section:not(:first-child) {
+    padding-top: 4rem !important;
+    padding-bottom: 4rem !important;
+  }
+}
+
+/* ── Typography preset classes for marketing content ─────────────────────── */
+
+/* Hero display — EDS Sans regular, large */
+.market-hero {
+  font-family: var(--font-eds-sans), system-ui, sans-serif;
+  font-weight: 400;
+  font-size: var(--upcube-hero-size);
+  line-height: var(--upcube-hero-lh);
+  letter-spacing: -0.02em;
+}
+
+/* Section title — EDS Sans regular, editorial */
+.market-section-title {
+  font-family: var(--font-eds-sans), system-ui, sans-serif;
+  font-weight: 400;
+  font-size: var(--upcube-section-title-size);
+  line-height: var(--upcube-section-title-lh);
+  letter-spacing: -0.01em;
+}
+
+/* Quote text — EDS Sans regular, large */
+.market-quote {
+  font-family: var(--font-eds-sans), system-ui, sans-serif;
+  font-weight: 400;
+  font-size: var(--upcube-quote-size);
+  line-height: var(--upcube-quote-lh);
+}
+
+/* Final CTA — EDS Sans regular, hero scale */
+.market-cta {
+  font-family: var(--font-eds-sans), system-ui, sans-serif;
+  font-weight: 400;
+  font-size: var(--upcube-cta-size);
+  line-height: var(--upcube-cta-lh);
+  letter-spacing: -0.02em;
+}
+
+/* Hero subhead — EDS Sans regular */
+.market-subhead {
+  font-family: var(--font-eds-sans), system-ui, sans-serif;
+  font-weight: 400;
+  font-size: var(--upcube-subhead-size);
+  line-height: var(--upcube-subhead-lh);
+}
+
+/* Card title — EDS Sans medium */
+.market-card-title {
+  font-family: var(--font-eds-sans), system-ui, sans-serif;
+  font-weight: 500;
+  font-size: 28px;
+  line-height: 1.2;
+}
+
+/* Module/product card title — EDS Sans medium */
+.market-module-title {
+  font-family: var(--font-eds-sans), system-ui, sans-serif;
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 1.25;
+}
+
+/* Body text — EDS Sans regular */
+.market-body {
+  font-family: var(--font-eds-sans), system-ui, sans-serif;
+  font-weight: 400;
+  font-size: var(--upcube-body-size);
+  line-height: var(--upcube-body-lh);
+}
+
+/* Nav link — EDS Sans regular/medium */
+.market-nav {
+  font-family: var(--font-eds-sans), system-ui, sans-serif;
+  font-weight: 400;
+  font-size: var(--upcube-nav-size);
+  line-height: var(--upcube-nav-lh);
+}
+
+/* Code/API snippet — JetBrains Mono regular */
+.market-mono {
+  font-family: var(--font-jetbrains-mono);
+  font-weight: 400;
+  font-size: var(--upcube-mono-size);
+  line-height: var(--upcube-mono-lh);
+}
+
+/* ── Stripe motif — bottom gradient stripe for editorial footer ────────── */
+.market-stripe {
+  position: relative;
+}
+
+.market-stripe::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 6px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.04) 15%,
+    rgba(255, 255, 255, 0.08) 30%,
+    rgba(255, 255, 255, 0.04) 50%,
+    transparent 70%,
+    rgba(255, 255, 255, 0.06) 85%,
+    transparent 100%
+  );
+  pointer-events: none;
+}
+
+/* ── Marketing Typography ────────────────────────────────────────────── */
+
+.marketing-site,
+.marketing-shell {
+  font-family: var(--font-eds-sans), system-ui, sans-serif;
+  font-weight: 400;
+}
+
+.marketing-site h1,
+.marketing-site h2,
+.marketing-site h3,
+.marketing-heading,
+.marketing-title,
+.marketing-hero-title,
+.marketing-section-title {
+  font-family: var(--font-eds-sans), system-ui, sans-serif;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+
+.marketing-site nav,
+.marketing-site header,
+.marketing-site footer,
+.marketing-site p,
+.marketing-site li,
+.marketing-site a,
+.marketing-site button {
+  font-family: var(--font-eds-sans), system-ui, sans-serif;
+  font-weight: 400;
+}
+
+.marketing-site .font-display,
+.marketing-shell .font-display {
+  font-family: var(--font-eds-sans), system-ui, sans-serif !important;
+  font-weight: 600 !important;
+}
+
+.marketing-site .font-sans,
+.marketing-shell .font-sans {
+  font-family: var(--font-eds-sans), system-ui, sans-serif !important;
+  font-weight: 400 !important;
+}
+
+/* ── Marketing Scale System (1.25x UI equivalent) ────────────────────── */
+
+.marketing-shell {
+  --marketing-scale: 1.25;
+  --marketing-nav-font: 16.5px;
+  --marketing-btn-height: 48px;
+  --marketing-composer-min-h: 110px;
+}
+
+/* Header & Nav */
+.marketing-shell header {
+  padding-top: 1.25rem !important;
+  padding-bottom: 1.25rem !important;
+}
+.marketing-shell header nav a {
+  font-size: var(--marketing-nav-font) !important;
+  padding: 0.5rem 1.25rem !important;
+}
+.marketing-shell header .flex.items-center.gap-4 > a {
+  font-size: 15px !important;
+  padding: 0.625rem 1.25rem !important;
+  height: var(--marketing-btn-height) !important;
+}
+.marketing-shell header img {
+  width: 40px !important;
+  height: 40px !important;
+}
+
+/* Hero Title and Text */
+.marketing-shell .font-sohne.text-5xl {
+  font-size: clamp(3.5rem, 6vw, 5.5rem) !important;
+  line-height: 1.05 !important;
+  margin-bottom: 2rem !important;
+}
+.marketing-shell .max-w-4xl p.text-lg {
+  font-size: 1.35rem !important;
+  line-height: 1.6 !important;
+  max-width: 760px !important;
+  margin-bottom: 4rem !important;
+}
+
+/* Composer Container */
+.marketing-shell .composer-container {
+  min-height: var(--marketing-composer-min-h) !important;
+  border-radius: 24px !important;
+}
+.marketing-shell .composer-container textarea {
+  font-size: 17.5px !important;
+  line-height: 1.5 !important;
+  padding: 24px !important;
+  padding-left: 24px !important;
+}
+.marketing-shell .composer-container textarea::placeholder {
+  font-size: 17.5px !important;
+}
+.marketing-shell .composer-container .text-\[11px\] {
+  font-size: 13.5px !important;
+}
+.marketing-shell .composer-container .text-xs {
+  font-size: 14.5px !important;
+}
+.marketing-shell .composer-container svg {
+  width: 1.25em !important;
+  height: 1.25em !important;
+}
+.marketing-shell .composer-container button,
+.marketing-shell .composer-container [role="button"] {
+  padding-top: 8px !important;
+  padding-bottom: 8px !important;
+  padding-left: 12px !important;
+  padding-right: 12px !important;
+}
+.marketing-shell .composer-container .h-8.w-8 {
+  height: 40px !important;
+  width: 40px !important;
+}
+
+/* ── Marketing Heading Enforcer (Universal Sans Semibold) ──────────────── */
+.marketing-shell h1,
+.marketing-shell h2,
+.marketing-shell h3,
+.marketing-site h1,
+.marketing-site h2,
+.marketing-site h3,
+.marketing-heading,
+.marketing-title,
+.marketing-hero-title,
+.marketing-section-title,
+.marketing-page-title,
+.marketing-subheading,
+.marketing-kicker-title {
+  font-family: var(--font-eds-sans), system-ui, sans-serif !important;
+  font-weight: 600 !important;
+  text-transform: capitalize !important;
+}
+
+/* ── x.ai typography override — allow Universal Sans on class-targeted headings ── */
+.marketing-shell .market-hero-x,
+.marketing-shell .market-section-x,
+.marketing-shell .market-body-x,
+.marketing-shell .market-subhead-x {
+  font-family: var(--font-universal-sans) !important;
+  text-transform: none !important;
+}
+
+.marketing-shell .market-eyebrow-x,
+.marketing-shell .market-cta-x,
+.marketing-shell .market-label-x {
+  font-family: var(--font-eds-mono) !important;
+  text-transform: uppercase !important;
+}
+
+/* ── Marketing Body Enforcer (Universal Sans) ────────────── */
+.marketing-shell,
+.marketing-site {
+  font-family: var(--font-eds-sans), system-ui, sans-serif;
+  font-weight: 400;
+}
+
+.marketing-shell nav,
+.marketing-shell header,
+.marketing-shell footer,
+.marketing-shell p,
+.marketing-shell li,
+.marketing-shell a,
+.marketing-shell button,
+.marketing-site nav,
+.marketing-site header,
+.marketing-site footer,
+.marketing-site p,
+.marketing-site li,
+.marketing-site a,
+.marketing-site button,
+.marketing-menu,
+.marketing-menu-item,
+.marketing-dropdown,
+.marketing-dropdown-item {
+  font-family: var(--font-eds-sans), system-ui, sans-serif;
+  font-weight: 400;
+}
+
+/* ── Repo-Wide Typography System ────── */
+:root {
+  /* Universal Sans — primary Ethen font family (EDS authority, J07R).
+     Instrument Sans globally; Newsreader for serif; Plex Mono for code.
+     The compat aliases --font-geist-sans/--font-code-mono resolve to the
+     same EDS stacks (see packages/ui/src/styles/eds/eds-global.css). */
+  --font-universal-sans: var(--font-eds-sans);
+  --font-sans: var(--font-universal-sans);
+  --font-body: var(--font-universal-sans);
+  --font-ui: var(--font-universal-sans);
+  --font-heading: var(--font-universal-sans);
+  --font-display: var(--font-universal-sans);
+  --font-reading: var(--font-universal-sans);
+  --font-serif: var(--font-eds-serif);
+  --font-menu: var(--font-body);
+  /* EDS Mono — technical / code / label font */
+  --font-mono: var(--font-eds-mono);
+  --font-label: var(--font-eds-mono);
+  --font-cta: var(--font-eds-mono);
+}
+
+@theme inline {
+  --font-sans: var(--font-universal-sans);
+  --font-body: var(--font-universal-sans);
+  --font-ui: var(--font-universal-sans);
+  --font-menu: var(--font-universal-sans);
+  --font-heading: var(--font-universal-sans);
+  --font-display: var(--font-universal-sans);
+  --font-serif: var(--font-eds-serif);
+  --font-mono: var(--font-eds-mono);
+  --font-label: var(--font-eds-mono);
+  --font-cta: var(--font-eds-mono);
+}
+
+/* ── x.ai-inspired text tokens ──────────────────────────────────────────── */
+/* x.ai display scale */
+.display-xl {
+  font-size: 96px;
+  line-height: 96px;
+  letter-spacing: -2.4px;
+}
+.display-lg {
+  font-size: 72px;
+  line-height: 72px;
+  letter-spacing: -1.8px;
+}
+.display-md {
+  font-size: 48px;
+  line-height: 48px;
+  letter-spacing: -1.2px;
+}
+.display-sm {
+  font-size: 32px;
+  line-height: 36px;
+  letter-spacing: -0.6px;
+}
+
+/* x.ai body scale */
+.body-lg {
+  font-size: 18px;
+  line-height: 28px;
+}
+.body-md {
+  font-size: 16px;
+  line-height: 24px;
+}
+.body-sm {
+  font-size: 14px;
+  line-height: 20px;
+}
+
+/* x.ai mono scale */
+.mono-md {
+  font-family: var(--font-mono);
+  font-size: 14px;
+  line-height: 20px;
+  letter-spacing: 1.4px;
+}
+.mono-sm {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  line-height: 16px;
+  letter-spacing: 1.2px;
+}
+
+/* ── x.ai-inspired near-black palette ──────────────────────────────────── */
+:root {
+  --x-canvas:        #0a0a0a;
+  --x-canvas-soft:   #1a1c20;
+  --x-canvas-card:   #191919;
+  --x-hairline:      #212327;
+  --x-ink:           #ffffff;
+  --x-body:          #dadbdf;
+  --x-muted:         #7d8187;
+}
+
+body,
+p,
+li,
+textarea,
+input,
+select {
+  font-family: var(--font-body);
+  font-weight: 400;
+  line-height: 1.45;
+}
+
+.text-body,
+.card-description,
+.description,
+.muted-copy,
+.prose-body {
+  font-family: var(--font-body);
+  font-weight: 400;
+  line-height: 1.45;
+}
+
+button,
+nav,
+aside,
+[role="menu"],
+[role="menuitem"],
+.dropdown,
+.dropdown-item,
+.menu,
+.menu-item,
+.sidebar,
+.badge,
+.chip,
+label,
+.form-label,
+.composer-label,
+.model-picker {
+  font-family: var(--font-ui);
+  font-weight: 500;
+  line-height: 1.35;
+}
+
+nav a,
+.sidebar a,
+.sidebar button,
+.menu-item,
+.dropdown-item {
+  line-height: 20px;
+}
+
+h1,
+h2,
+h3,
+.heading-1,
+.heading-2,
+.heading-3,
+.page-title,
+.section-title,
+.display-title,
+.marketing-heading,
+.marketing-title,
+.marketing-hero-title,
+.marketing-section-title,
+.marketing-page-title,
+.marketing-subheading,
+.card-title,
+.modal-title,
+.dialog-title,
+.settings-section-title {
+  font-family: var(--font-heading) !important;
+  font-weight: 600 !important;
+  line-height: 1.08;
+  letter-spacing: -0.015em;
+  text-transform: capitalize;
+  word-spacing: 0.02em;
+}
+
+textarea,
+.composer textarea,
+.composer input {
+  font-family: var(--font-body);
+  font-weight: 400;
+  line-height: 1.45;
+}
+
+.model-picker,
+.composer-tool-label {
+  font-family: var(--font-ui);
+  font-weight: 500;
+  line-height: 20px;
+}
+
+code,
+pre,
+kbd,
+samp,
+.terminal,
+.log-output,
+.diff-view,
+.file-path,
+[data-code],
+[data-terminal] {
+  font-family: var(--font-mono) !important;
+  font-weight: 400;
+  line-height: 1.5;
+}
+
+.ethen-prose code,
+.ethen-prose pre,
+.markdown code,
+.markdown pre {
+  font-family: var(--font-mono) !important;
+}
+
+/* ── Premium Marketing Template Typography Override ─────────────────── */
+/* Override the serif heading enforcer for marketing pages.
+   All template-rendered marketing pages use Universal Sans (cleaner, smaller, less bold). */
+.marketing-site .marketing-template-content h1,
+.marketing-site .marketing-template-content h2,
+.marketing-site .marketing-template-content h3,
+.marketing-template-content h1,
+.marketing-template-content h2,
+.marketing-template-content h3,
+.marketing-template-content .font-display {
+  font-family: var(--font-eds-sans), system-ui, sans-serif !important;
+  font-weight: 600 !important;
+  letter-spacing: -0.02em !important;
+  text-transform: none !important;
+}
+
+.marketing-template-content p,
+.marketing-template-content li,
+.marketing-template-content a,
+.marketing-template-content button,
+.marketing-template-content nav {
+  font-family: var(--font-eds-sans), system-ui, sans-serif !important;
+  font-weight: 400 !important;
+}
+
+.marketing-template-content .font-mono,
+.marketing-template-content code,
+.marketing-template-content pre {
+  font-family: var(--font-jetbrains-mono) !important;
+}
+
+/* Keep the approved marketing scale isolated from global application heading
+   * presets, which otherwise force 600-weight display type. */
+.marketing-shell h1.market-hero-x,
+.marketing-shell main section h2,
+.marketing-shell main section h3,
+.marketing-shell main section h4 {
+  font-family: var(--font-marketing-sans), var(--font-universal-sans), sans-serif !important;
+  font-weight: 500 !important;
+  text-transform: none !important;
+}
+
+/* Compact homepage recovery: override the abandoned scale experiment without
+   * affecting application-shell controls outside marketing. */
+.marketing-shell {
+  --marketing-scale: 1;
+  --marketing-nav-font: 13px;
+  --marketing-btn-height: 34px;
+  --marketing-composer-min-h: 0;
+}
+
+.marketing-shell header {
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+}
+
+.marketing-shell header nav a {
+  font-size: 13px !important;
+  padding: 0.375rem 0.625rem !important;
+}
+
+.marketing-shell header .flex.items-center.gap-4 > a {
+  height: 34px !important;
+  padding: 0 0.75rem !important;
+  font-size: 12px !important;
+}
+
+.marketing-shell header img.upcube-wordmark-image {
+  width: 160px !important;
+  height: auto !important;
+}
+
+.marketing-shell .composer-container {
+  min-height: 0 !important;
+  border-radius: 14px !important;
+}
+
+.marketing-shell .composer-container textarea {
+  min-height: 36px !important;
+  padding: 0.625rem 0.75rem !important;
+  font-size: 14px !important;
+}
+
+.marketing-shell .composer-container textarea::placeholder {
+  font-size: 14px !important;
+}
+
+.marketing-shell .composer-container .text-\[11px\],
+.marketing-shell .composer-container .text-xs {
+  font-size: 12px !important;
+}
+
+.marketing-shell .composer-container .h-8.w-8 {
+  width: 28px !important;
+  height: 28px !important;
+}
+
+/* Keep compact desktop controls dense while giving primary controls a reliable
+   target size on touch hardware. Components opt in with this class so media
+   canvases and intentionally tiny editor affordances are unaffected. */
+@media (pointer: coarse) {
+  .ethen-touch-target {
+    min-width: 44px;
+    min-height: 44px;
+  }
+}

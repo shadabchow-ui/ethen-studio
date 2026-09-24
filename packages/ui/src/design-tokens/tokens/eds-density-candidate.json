@@ -1,0 +1,135 @@
+{
+  "schemaVersion": 1,
+  "name": "Ethen Candidate Density System",
+  "status": "CANDIDATE",
+  "originMilestone": "D07",
+  "principle": "Reading, Work and Operational are three density resolutions of ONE EDS component set. Density changes rhythm (type tier, measure, gaps, padding, row and control height) through eds.cmp-compatible bindings and scoped token resolutions. It never changes palette, radius, motion, focus, variant identity, behavior, keyboard model, semantics, or icon language, and it never forks a primitive.",
+  "attribute": "data-eds-density",
+  "modes": {
+    "reading": {
+      "bodyTier": "body",
+      "metadataTier": "caption",
+      "measure": "68ch",
+      "sectionGap": {
+        "token": "eds-space-page"
+      },
+      "blockGap": {
+        "token": "eds-space-comfortable"
+      },
+      "controlHeight": {
+        "token": "eds-layout-control-md"
+      },
+      "rowHeight": {
+        "token": "eds-layout-control-md"
+      },
+      "fieldGap": {
+        "token": "eds-space-default"
+      },
+      "cellPaddingBlock": {
+        "token": "eds-space-default"
+      }
+    },
+    "work": {
+      "bodyTier": "ui",
+      "metadataTier": "caption",
+      "measure": "80ch",
+      "sectionGap": {
+        "px": 40
+      },
+      "blockGap": {
+        "token": "eds-space-default"
+      },
+      "controlHeight": {
+        "token": "eds-layout-control-md"
+      },
+      "rowHeight": {
+        "token": "eds-layout-control-md"
+      },
+      "fieldGap": {
+        "token": "eds-space-tight"
+      },
+      "cellPaddingBlock": {
+        "token": "eds-space-tight"
+      }
+    },
+    "operational": {
+      "bodyTier": "ui-sm",
+      "metadataTier": "mono-meta",
+      "measure": "100%",
+      "sectionGap": {
+        "token": "eds-space-comfortable"
+      },
+      "blockGap": {
+        "px": 12
+      },
+      "controlHeight": {
+        "token": "eds-layout-control-sm"
+      },
+      "rowHeight": {
+        "token": "eds-layout-control-sm"
+      },
+      "fieldGap": {
+        "token": "eds-space-tight"
+      },
+      "cellPaddingBlock": {
+        "token": "eds-space-compact"
+      }
+    }
+  },
+  "tokenResolutions": {
+    "reading": {},
+    "work": {},
+    "operational": {
+      "--eds-layout-control-md": {
+        "token": "eds-layout-control-sm"
+      }
+    }
+  },
+  "coarsePointerRelaxation": {
+    "operational": {
+      "--eds-layout-control-md": {
+        "token": "eds-layout-control-md"
+      }
+    }
+  },
+  "rhythm": [
+    {
+      "selector": ".eds-table__cell",
+      "declarations": {
+        "height": {
+          "role": "rowHeight"
+        },
+        "padding-top": {
+          "role": "cellPaddingBlock"
+        },
+        "padding-bottom": {
+          "role": "cellPaddingBlock"
+        }
+      }
+    },
+    {
+      "selector": ".eds-field",
+      "declarations": {
+        "gap": {
+          "role": "fieldGap"
+        }
+      }
+    }
+  ],
+  "invariants": {
+    "allowedDeclarationProperties": [
+      "height",
+      "padding-top",
+      "padding-bottom",
+      "gap"
+    ],
+    "resolvableBaseTokens": [
+      "--eds-layout-control-md"
+    ],
+    "measures": [
+      "68ch",
+      "80ch",
+      "100%"
+    ]
+  }
+}

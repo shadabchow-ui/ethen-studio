@@ -1,0 +1,24 @@
+/**
+ * D15-J03 — flagship EDS surface bundle.
+ *
+ * One import per migrated flagship route. Every sheet below is scoped to
+ * [data-eds] with no :root rules and no global element selectors, so V2
+ * pages sharing the document are unaffected. The route provides the scope
+ * itself (see EdsScope): tokens resolve from [data-eds] /
+ * [data-eds-theme="dark"] ancestors only.
+ */
+@import "../../../../styles/eds/candidate-color.css";
+@import "../../../../styles/eds/candidate-typography.css";
+@import "../../../../styles/eds/eds-geometry.css";
+@import "../../../../styles/eds/eds-density.css";
+@import "../../../../styles/eds/eds-motion.css";
+@import "../../../../styles/eds/eds-components.css";
+@import "../../../../styles/eds/eds-shell.css";
+@import "../../../../styles/eds/eds-conversation-workspace.css";
+@import "../../../../styles/eds/eds-states.css";
+@import "../../../../styles/eds/eds-trust.css";
+@import "../../../../styles/eds/eds-evidence-rail.css";
+@import "../../../../styles/eds/eds-approvals.css";
+@import "../composer/eds-composer.css";
+@import "../primitives/eds-primitives.css";
+@import "../qualification/qualification.css";

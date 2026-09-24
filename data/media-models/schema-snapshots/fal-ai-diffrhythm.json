@@ -1,0 +1,122 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/diffrhythm",
+  "task": "music-generation",
+  "source_url": "https://fal.ai/models/fal-ai/diffrhythm",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fdiffrhythm",
+  "retrieved_at": "2026-09-23T14:36:21.832Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "text-to-audio",
+  "bytes_sha256": "7dca4ac4ab92d83042f766b5d14691b4807f6ec784156ee8bd59106f577bc3e6",
+  "queue_path": "/fal-ai/diffrhythm",
+  "input_name": "DiffrhythmInput",
+  "input": {
+    "$refName": "DiffrhythmInput",
+    "type": "object",
+    "properties": {
+      "scheduler": {
+        "type": "string",
+        "enum": [
+          "euler",
+          "midpoint",
+          "rk4",
+          "implicit_adams"
+        ],
+        "default": "euler",
+        "description": "The scheduler to use for the music generation."
+      },
+      "num_inference_steps": {
+        "type": "integer",
+        "default": 32,
+        "minimum": 10,
+        "maximum": 100,
+        "description": "The number of inference steps to use for the music generation."
+      },
+      "style_prompt": {
+        "type": "string",
+        "description": "The style prompt to use for the music generation."
+      },
+      "music_duration": {
+        "type": "string",
+        "enum": [
+          "95s",
+          "285s"
+        ],
+        "default": "95s",
+        "description": "The duration of the music to generate."
+      },
+      "lyrics": {
+        "type": "string",
+        "description": "The prompt to generate the song from. Must have two sections. Sections start with either [chorus] or a [verse]."
+      },
+      "reference_audio_url": {
+        "type": "string",
+        "description": "The URL of the reference audio to use for the music generation."
+      },
+      "cfg_strength": {
+        "type": "number",
+        "default": 4,
+        "minimum": 1,
+        "maximum": 10,
+        "description": "The CFG strength to use for the music generation."
+      }
+    },
+    "required": [
+      "lyrics"
+    ]
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs."
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics."
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "DiffrhythmInput",
+    "DiffrhythmOutput",
+    "File"
+  ]
+}

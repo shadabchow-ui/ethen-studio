@@ -1,0 +1,62 @@
+{
+  "name": "@ethen/studio-core",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "main": "./src/index.ts",
+  "types": "./src/index.ts",
+  "exports": {
+    ".": "./src/index.ts",
+    "./client": "./src/client/index.ts",
+    "./contracts": "./src/contracts/index.ts",
+    "./contracts/*": "./src/contracts/*.ts",
+    "./server/ports": "./src/server/ports/index.ts",
+    "./server/ports/*": "./src/server/ports/*.ts",
+    "./server/data": "./src/server/data/index.ts",
+    "./server/data/*": "./src/server/data/*.ts",
+    "./server/policy": "./src/server/policy/index.ts",
+    "./server/policy/*": "./src/server/policy/*.ts",
+    "./server/economics": "./src/server/economics/index.ts",
+    "./server/economics/*": "./src/server/economics/*.ts",
+    "./server/runtime": "./src/server/runtime/index.ts",
+    "./server/runtime/*": "./src/server/runtime/*.ts",
+    "./catalog": "./src/catalog/index.ts",
+    "./catalog/*": "./src/catalog/*.ts",
+    "./server/providers": "./src/server/providers/index.ts",
+    "./server/providers/*": "./src/server/providers/*.ts",
+    "./server/media": "./src/server/media/index.ts",
+    "./server/media/*": "./src/server/media/*.ts",
+    "./server/fixture": "./src/server/fixture/index.ts",
+    "./server/fixture/*": "./src/server/fixture/*.ts",
+    "./server/identity": "./src/server/identity/index.ts",
+    "./server/identity/*": "./src/server/identity/*.ts",
+    "./server/audio": "./src/server/audio/index.ts",
+    "./server/audio/*": "./src/server/audio/*.ts",
+    "./server/workflow": "./src/server/workflow/index.ts",
+    "./server/workflow/*": "./src/server/workflow/*.ts",
+    "./server/workbench": "./src/server/workbench/index.ts",
+    "./server/workbench/*": "./src/server/workbench/*.ts",
+    "./server/composites": "./src/server/composites/index.ts",
+    "./server/composites/*": "./src/server/composites/*.ts",
+    "./server/realtime": "./src/server/realtime/index.ts",
+    "./server/realtime/*": "./src/server/realtime/*.ts",
+    "./server/agent": "./src/server/agent/index.ts",
+    "./server/agent/*": "./src/server/agent/*.ts",
+    "./server/collaboration": "./src/server/collaboration/index.ts",
+    "./server/collaboration/*": "./src/server/collaboration/*.ts",
+    "./server/gateway": "./src/server/gateway/index.ts",
+    "./server/gateway/*": "./src/server/gateway/*.ts",
+    "./server/cutover": "./src/server/cutover/index.ts",
+    "./server/cutover/*": "./src/server/cutover/*.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "server-only": "^0.0.1"
+  },
+  "devDependencies": {
+    "@types/node": "^22.20.1",
+    "typescript": "^5"
+  }
+}

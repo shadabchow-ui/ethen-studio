@@ -1,0 +1,119 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "bria/fibo-edit/edit/structured_instruction",
+  "task": "image-editing",
+  "source_url": "https://fal.ai/models/bria/fibo-edit/edit/structured_instruction",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=bria%2Ffibo-edit%2Fedit%2Fstructured_instruction",
+  "retrieved_at": "2026-09-20T09:39:59.274Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "text-to-json",
+  "bytes_sha256": "4d06b1b10b04c69c15fa527af4f497d32d3c8f8c9d6883242620562b67ecb5fa",
+  "queue_path": "/bria/fibo-edit/edit/structured_instruction",
+  "input_name": "FiboEditEditStructured_instructionInput",
+  "input": {
+    "$refName": "FiboEditEditStructured_instructionInput",
+    "type": "object",
+    "properties": {
+      "mask_url": {
+        "description": "Reference image mask (file or URL). Optional.",
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "instruction": {
+        "description": "Instruction for image editing.",
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "seed": {
+        "type": "integer",
+        "default": 5555,
+        "description": "Random seed for reproducibility."
+      },
+      "sync_mode": {
+        "type": "boolean",
+        "default": false,
+        "description": "If true, returns the image directly in the response (increases latency)."
+      },
+      "image_url": {
+        "description": "Reference image (file or URL).",
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      }
+    }
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs."
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics."
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "FiboEditEditStructured_instructionInput",
+    "FiboEditEditStructured_instructionOutput",
+    "Aesthetics",
+    "PhotographicCharacteristics",
+    "Lighting",
+    "PromptObject"
+  ]
+}

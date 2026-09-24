@@ -1,0 +1,49 @@
+{
+  "schemaVersion": 1,
+  "name": "Mineral Paper + Ground Lapis",
+  "status": "CANDIDATE",
+  "originMilestone": "D02",
+  "themes": {
+    "light": {
+      "canvas": "#FBFAF6",
+      "paper": "#F4F1EA",
+      "card": "#FFFFFF",
+      "ink": "#20231F",
+      "text-secondary": "#525751",
+      "text-tertiary": "#5F645E",
+      "rule-hair": "#E4E0D6",
+      "rule": "#C9C4B6",
+      "rule-control": "#8A8574",
+      "lapis": "#313690",
+      "lapis-strong": "#252974",
+      "lapis-wash": "#E9EAF6",
+      "ochre": "#8C5414",
+      "brick": "#A94E42",
+      "slate": "#5E666E"
+    },
+    "dark": {
+      "canvas": "#151513",
+      "paper": "#1D1D1A",
+      "card": "#262521",
+      "elevated": "#2E2D28",
+      "ink": "#F3F1EC",
+      "text-secondary": "#C6C3BA",
+      "text-tertiary": "#9C9991",
+      "rule-hair": "#2B2A25",
+      "rule": "#3D3B34",
+      "rule-control": "#7C796E",
+      "lapis": "#9497DB",
+      "lapis-strong": "#ABAEE3",
+      "lapis-wash": "#1F1F33",
+      "ochre": "#D9A05B",
+      "brick": "#E08A7C",
+      "slate": "#9BA1A6"
+    }
+  },
+  "aliases": {
+    "light": {
+      "elevated": "card"
+    },
+    "dark": {}
+  }
+}

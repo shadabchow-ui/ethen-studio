@@ -1,0 +1,178 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "tripo3d/h3.1/multiview-to-3d",
+  "task": "3d-generation",
+  "source_url": "https://fal.ai/models/tripo3d/h3.1/multiview-to-3d",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=tripo3d%2Fh3.1%2Fmultiview-to-3d",
+  "retrieved_at": "2026-09-23T14:38:13.100Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "image-to-3d",
+  "bytes_sha256": "a4ac91b74ee12ec3de957ddd628741f88b9048787a1fa5b05530ac19b67d381c",
+  "queue_path": "/tripo3d/h3.1/multiview-to-3d",
+  "input_name": "H31MultiviewTo3dInput",
+  "input": {
+    "$refName": "H31MultiviewTo3dInput",
+    "type": "object",
+    "description": "Input for Multiview to 3D generation using full-featured models (H3.1, v2.5).\n\nProvide 2-4 images of the same object from different angles.\nImages should be in order: [front, left, back, right].\nFront view is required; others are optional.\nNote: P1 is not available for multiview-to-3d.",
+    "properties": {
+      "auto_size": {
+        "type": "boolean",
+        "default": false,
+        "description": "Auto-scale the model to real-world dimensions (meters)."
+      },
+      "texture_quality": {
+        "type": "string",
+        "enum": [
+          "standard",
+          "detailed"
+        ],
+        "default": "standard",
+        "description": "Quality level for textures."
+      },
+      "orientation": {
+        "type": "string",
+        "enum": [
+          "default",
+          "align_image"
+        ],
+        "default": "default",
+        "description": "Model orientation."
+      },
+      "face_limit": {
+        "description": "Target number of faces for the generated mesh. If not set, the model adaptively determines the count.",
+        "anyOf": [
+          {
+            "type": "integer",
+            "minimum": 1000,
+            "maximum": 2000000
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "texture_seed": {
+        "description": "Seed for texture generation reproducibility.",
+        "anyOf": [
+          {
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "texture": {
+        "type": "boolean",
+        "default": true,
+        "description": "Whether to generate textures for the model."
+      },
+      "quad": {
+        "type": "boolean",
+        "default": false,
+        "description": "Generate quad (4-sided) mesh topology instead of triangles. When Tripo emits FBX bytes for quad output, the returned model file is FBX."
+      },
+      "image_urls": {
+        "type": "array",
+        "minItems": 2,
+        "maxItems": 4,
+        "description": "2 to 4 image URLs of the same object from different angles. Order: [front, left, back, right]. Front view is required.",
+        "items": {
+          "type": "string"
+        }
+      },
+      "pbr": {
+        "type": "boolean",
+        "default": true,
+        "description": "Whether to generate PBR (Physically Based Rendering) materials. If true, texture is also enabled."
+      },
+      "model_seed": {
+        "description": "Seed for geometry generation reproducibility.",
+        "anyOf": [
+          {
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "texture_alignment": {
+        "type": "string",
+        "enum": [
+          "original_image",
+          "geometry"
+        ],
+        "default": "original_image",
+        "description": "How textures are aligned."
+      },
+      "geometry_quality": {
+        "type": "string",
+        "enum": [
+          "standard",
+          "detailed"
+        ],
+        "default": "standard",
+        "description": "Quality level for geometry."
+      }
+    },
+    "required": [
+      "image_urls"
+    ]
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs."
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics."
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "H31MultiviewTo3dInput",
+    "H31MultiviewTo3dOutput",
+    "File",
+    "ModelUrls"
+  ]
+}

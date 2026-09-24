@@ -1,0 +1,162 @@
+/* CHAT_A1 — Ethen Chat semantic tokens.
+ *
+ * A LAYER over EDS, never a parallel brand system. Every value below either
+ * aliases an approved `--eds-*` token or is one deliberate tonal step derived
+ * from the same Ground Lapis / Mineral Paper families, declared here because
+ * EDS has no token for that step (a rail that RECEDES below the canvas has no
+ * EDS equivalent — EDS surfaces only ever rise).
+ *
+ * Theme resolution copies the EDS convention verbatim
+ * (styles/eds/candidate-color.css): the scope element carries
+ * `data-eds data-eds-theme`, and `system` defers to `html[data-theme]` stamped
+ * by the production theme bootstrap. So Chat cannot drift from EDS theming.
+ *
+ * Deliberate dark decision: the sidebar sits BELOW the canvas, not above it.
+ * The conversation is the lit stage; the rail is the room around it. That is
+ * the inverse of the usual elevated-navigation convention and of the supplied
+ * reference, and it is the reason the Chat canvas reads as the subject.
+ */
+
+[data-ethen-chat],
+[data-ethen-chat][data-eds-theme="dark"] {
+  /* surfaces — dark (Ground Lapis) */
+  --chat-canvas: var(--eds-canvas);          /* #151513 */
+  --chat-sidebar: #101010;                   /* one step BELOW canvas, still warm */
+  --chat-composer: #201F1C;                  /* neutral warm charcoal, not olive */
+  --chat-overlay: var(--eds-card);           /* menus, palette, artifact chrome */
+  --chat-surface-hover: #1C1B18;
+  --chat-surface-active: #262521;
+  --chat-surface-sunken: #131311;            /* code blocks, attachment tiles */
+
+  /* rules */
+  --chat-border: var(--eds-rule-hair);       /* #2B2A25 */
+  --chat-border-strong: var(--eds-rule);     /* #3D3B34 */
+  --chat-border-composer: #403E36;           /* A4.1: one hair clearer, still quiet */
+
+  /* text */
+  --chat-text: var(--eds-ink);
+  --chat-text-secondary: var(--eds-text-secondary);
+  --chat-text-muted: var(--eds-text-tertiary);
+
+  /* accent + status */
+  --chat-accent: var(--eds-lapis);
+  --chat-accent-strong: var(--eds-lapis-strong);
+  --chat-accent-wash: var(--eds-lapis-wash);
+  --chat-on-accent: #14142A;
+  --chat-attention: var(--eds-ochre);
+  --chat-danger: var(--eds-brick);
+
+  --chat-overlay-shadow: 0 12px 28px rgba(0, 0, 0, 0.38);
+  --chat-composer-shadow: 0 1px 2px rgba(0, 0, 0, 0.32);
+  --chat-scrim: rgba(8, 8, 7, 0.62);
+}
+
+[data-ethen-chat][data-eds-theme="light"],
+html[data-theme="light"] [data-ethen-chat][data-eds-theme="system"] {
+  /* surfaces — light (Mineral Paper). Designed, not inverted: the rail is
+   * tinted paper, the composer is the only true white card on the page. */
+  --chat-canvas: var(--eds-canvas);          /* #FBFAF6 */
+  --chat-sidebar: #F2EFE7;
+  --chat-composer: var(--eds-card);          /* #FFFFFF */
+  --chat-overlay: var(--eds-card);
+  --chat-surface-hover: #EAE6DB;
+  --chat-surface-active: #E1DCCD;
+  --chat-surface-sunken: #F4F1EA;
+
+  --chat-border: var(--eds-rule-hair);       /* #E4E0D6 */
+  --chat-border-strong: var(--eds-rule);     /* #C9C4B6 */
+  --chat-border-composer: #D8D3C4;
+
+  --chat-text: var(--eds-ink);
+  --chat-text-secondary: var(--eds-text-secondary);
+  --chat-text-muted: var(--eds-text-tertiary);
+
+  --chat-accent: var(--eds-lapis);
+  --chat-accent-strong: var(--eds-lapis-strong);
+  --chat-accent-wash: var(--eds-lapis-wash);
+  --chat-on-accent: #FBFAF6;
+  --chat-attention: var(--eds-ochre);
+  --chat-danger: var(--eds-brick);
+
+  --chat-overlay-shadow: 0 12px 32px rgba(32, 35, 31, 0.14);
+  --chat-composer-shadow: 0 1px 2px rgba(32, 35, 31, 0.06);
+  --chat-scrim: rgba(32, 35, 31, 0.34);
+}
+
+html[data-theme="dark"] [data-ethen-chat][data-eds-theme="system"] {
+  --chat-canvas: var(--eds-canvas);
+  --chat-sidebar: #101010;
+  --chat-composer: #201F1C;
+  --chat-overlay: var(--eds-card);
+  --chat-surface-hover: #1C1B18;
+  --chat-surface-active: #262521;
+  --chat-surface-sunken: #131311;
+  --chat-border: var(--eds-rule-hair);
+  --chat-border-strong: var(--eds-rule);
+  --chat-border-composer: #403E36;
+  --chat-text: var(--eds-ink);
+  --chat-text-secondary: var(--eds-text-secondary);
+  --chat-text-muted: var(--eds-text-tertiary);
+  --chat-accent: var(--eds-lapis);
+  --chat-accent-strong: var(--eds-lapis-strong);
+  --chat-accent-wash: var(--eds-lapis-wash);
+  --chat-on-accent: #14142A;
+  --chat-attention: var(--eds-ochre);
+  --chat-danger: var(--eds-brick);
+  --chat-overlay-shadow: 0 12px 28px rgba(0, 0, 0, 0.38);
+  --chat-composer-shadow: 0 1px 2px rgba(0, 0, 0, 0.32);
+  --chat-scrim: rgba(8, 8, 7, 0.62);
+}
+
+/* Geometry — restrained by contract (spec §28). No 24px+ radius on ordinary
+ * controls, no pill UI unless the object is genuinely a pill. */
+[data-ethen-chat] {
+  --chat-rail-width: 272px;
+  --chat-composer-max: 680px;
+  --chat-measure: 720px;
+  --chat-radius-control: 8px;
+  --chat-radius-menu: 12px;
+  --chat-radius-composer: 16px;
+  --chat-radius-message: 14px;
+  --chat-row-height: 32px;
+  --chat-focus: 2px solid var(--chat-accent-strong);
+  /* CHAT_A3 — interaction feel: hover/press settle in one quick tonal step
+   * (60–80ms), never a slow fade. EDS motion stays untouched; Chat scopes it. */
+  --chat-motion-press: 70ms;
+  /* CHAT_A4 — panel reveals stay at or under 160ms, no slide drama. */
+  --chat-motion-panel: 160ms;
+  /* CHAT_A4 — one intentional layer scale. Anchored menus portal ABOVE the
+   * drawer so rail-row menus survive, but BELOW the palette so the modal
+   * layer always wins. Inline (non-portaled) menus keep the local 40. */
+  --chat-z-menu: 40;
+  --chat-z-drawer: 50;
+  --chat-z-menu-portal: 55;
+  --chat-z-palette: 60;
+  --chat-z-skip: 80;
+}
+
+/* Forced colors: keep every surface a system surface and let borders carry
+ * the structure, exactly as EDS does globally. */
+@media (forced-colors: active) {
+  [data-ethen-chat] {
+    --chat-canvas: Canvas;
+    --chat-sidebar: Canvas;
+    --chat-composer: Canvas;
+    --chat-overlay: Canvas;
+    --chat-surface-hover: Canvas;
+    --chat-surface-active: Highlight;
+    --chat-surface-sunken: Canvas;
+    --chat-border: CanvasText;
+    --chat-border-strong: CanvasText;
+    --chat-border-composer: CanvasText;
+    --chat-text: CanvasText;
+    --chat-text-secondary: CanvasText;
+    --chat-text-muted: GrayText;
+    --chat-accent: LinkText;
+    --chat-accent-strong: LinkText;
+    --chat-accent-wash: Canvas;
+    --chat-on-accent: Canvas;
+    --chat-overlay-shadow: none;
+    --chat-composer-shadow: none;
+  }
+}

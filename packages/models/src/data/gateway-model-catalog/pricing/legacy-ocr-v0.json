@@ -1,0 +1,7 @@
+{
+  "version": "legacy-ocr-v0",
+  "status": "audit_only",
+  "billable": false,
+  "source": "../vercel-ai-gateway-models.csv",
+  "reason": "Undated screenshot/OCR-derived values are retained for historical audit only and are never billing authority."
+}

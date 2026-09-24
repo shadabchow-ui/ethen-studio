@@ -1,0 +1,110 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/elevenlabs/speech-to-text/scribe-v2",
+  "task": "speech",
+  "source_url": "https://fal.ai/models/fal-ai/elevenlabs/speech-to-text/scribe-v2",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Felevenlabs%2Fspeech-to-text%2Fscribe-v2",
+  "retrieved_at": "2026-09-23T14:36:26.543Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "speech-to-text",
+  "bytes_sha256": "d3915d2da17119516c2e6d65a7f1bbeeb03058da7d1c99bdee092fea86790cbb",
+  "queue_path": "/fal-ai/elevenlabs/speech-to-text/scribe-v2",
+  "input_name": "ElevenlabsSpeechToTextScribeV2Input",
+  "input": {
+    "$refName": "ElevenlabsSpeechToTextScribeV2Input",
+    "type": "object",
+    "properties": {
+      "language_code": {
+        "description": "Language code of the audio",
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "tag_audio_events": {
+        "type": "boolean",
+        "default": true,
+        "description": "Tag audio events like laughter, applause, etc."
+      },
+      "audio_url": {
+        "type": "string",
+        "description": "URL of the audio file to transcribe"
+      },
+      "diarize": {
+        "type": "boolean",
+        "default": true,
+        "description": "Whether to annotate who is speaking"
+      },
+      "keyterms": {
+        "type": "array",
+        "default": [],
+        "maxItems": 100,
+        "description": "Words or sentences to bias the model towards transcribing. Up to 100 keyterms, max 50 characters each. Adds 30% premium over base transcription price.",
+        "items": {
+          "type": "string"
+        }
+      }
+    },
+    "required": [
+      "audio_url"
+    ]
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs."
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics."
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "ElevenlabsSpeechToTextScribeV2Input",
+    "ElevenlabsSpeechToTextScribeV2Output",
+    "TranscriptionWord"
+  ]
+}

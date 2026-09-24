@@ -1,0 +1,71 @@
+/*
+ * FOUNDATION-01 — Shell compatibility bridge.
+ *
+ * These selectors are intentionally narrow. They neutralize legacy Tailwind
+ * literals in the shared desktop/mobile shell while the shell components are
+ * migrated fully to semantic tokens. Product-specific dark editors and media
+ * canvases are not targeted here.
+ */
+
+:root[data-theme="light"]:not(.dark) aside[class~="bg-[#050505]"] {
+  background: #ffffff !important;
+  color: var(--text-primary) !important;
+  border-color: var(--border-subtle) !important;
+}
+
+:root[data-theme="light"]:not(.dark) aside[class~="bg-[#050505]"] [class*="text-white"] {
+  color: var(--text-primary) !important;
+}
+
+:root[data-theme="light"]:not(.dark) aside[class~="bg-[#050505]"] [class*="border-white"] {
+  border-color: var(--border-subtle) !important;
+}
+
+:root[data-theme="light"]:not(.dark) aside[class~="bg-[#050505]"] [class*="bg-white"] {
+  background-color: var(--bg-inset) !important;
+}
+
+:root[data-theme="light"]:not(.dark) aside[class~="bg-[#050505]"] [class*="bg-[#181818]"] {
+  background-color: var(--bg-inset) !important;
+}
+
+:root[data-theme="light"]:not(.dark) aside[class~="bg-[#050505]"] [class*="shadow-black"] {
+  box-shadow: none !important;
+}
+
+:root[data-theme="light"]:not(.dark) [role="dialog"][aria-label="Navigation drawer"] > div[class*="shell-surface-card"] {
+  background: #ffffff !important;
+  border-color: var(--border-subtle) !important;
+  box-shadow: 4px 0 18px rgba(0, 0, 0, 0.08) !important;
+}
+
+:root[data-theme="light"]:not(.dark) [role="dialog"][aria-label="Navigation drawer"] button[aria-label="Close navigation"] {
+  background: #ffffff !important;
+  color: var(--text-secondary) !important;
+  border-color: var(--border-default) !important;
+}
+
+:root[data-theme="light"]:not(.dark) [role="dialog"][aria-label="Navigation drawer"] button[aria-label="Close navigation"]:hover {
+  background: var(--bg-inset) !important;
+  color: var(--text-primary) !important;
+}
+
+:root[data-theme="light"]:not(.dark) button[aria-label="Open navigation"] {
+  background: #ffffff !important;
+  color: var(--text-secondary) !important;
+  border-color: var(--border-default) !important;
+}
+
+:root[data-theme="light"]:not(.dark) button[aria-label="Open navigation"]:hover {
+  background: var(--bg-inset) !important;
+  color: var(--text-primary) !important;
+}
+
+:root[data-theme="light"]:not(.dark) [role="separator"][aria-label="Resize sidebar"] > div {
+  background: transparent;
+}
+
+:root[data-theme="light"]:not(.dark) [role="separator"][aria-label="Resize sidebar"]:hover > div,
+:root[data-theme="light"]:not(.dark) [role="separator"][aria-label="Resize sidebar"]:focus-visible > div {
+  background: rgba(0, 0, 0, 0.05) !important;
+}

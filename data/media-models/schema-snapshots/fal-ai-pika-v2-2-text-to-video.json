@@ -1,0 +1,128 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/pika/v2.2/text-to-video",
+  "task": "text-to-video",
+  "source_url": "https://fal.ai/models/fal-ai/pika/v2.2/text-to-video",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fpika%2Fv2.2%2Ftext-to-video",
+  "retrieved_at": "2026-09-20T09:40:06.151Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "text-to-video",
+  "bytes_sha256": "67786c4e07ed997d1d4acae736fb2559e9342f17da926b2142c8c5d5af90aef4",
+  "queue_path": "/fal-ai/pika/v2.2/text-to-video",
+  "input_name": "PikaV22TextToVideoInput",
+  "input": {
+    "$refName": "PikaV22TextToVideoInput",
+    "type": "object",
+    "description": "Request model for Pika 2.2 text-to-video generation",
+    "properties": {
+      "seed": {
+        "description": "The seed for the random number generator",
+        "anyOf": [
+          {
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "prompt": {
+        "type": "string"
+      },
+      "aspect_ratio": {
+        "type": "string",
+        "enum": [
+          "16:9",
+          "9:16",
+          "1:1",
+          "4:5",
+          "5:4",
+          "3:2",
+          "2:3"
+        ],
+        "default": "16:9",
+        "description": "The aspect ratio of the generated video"
+      },
+      "negative_prompt": {
+        "type": "string",
+        "default": "ugly, bad, terrible",
+        "description": "A negative prompt to guide the model"
+      },
+      "duration": {
+        "type": "integer",
+        "enum": [
+          5,
+          10
+        ],
+        "default": 5,
+        "description": "The duration of the generated video in seconds"
+      },
+      "resolution": {
+        "type": "string",
+        "enum": [
+          "1080p",
+          "720p"
+        ],
+        "default": "720p",
+        "description": "The resolution of the generated video"
+      }
+    },
+    "required": [
+      "prompt"
+    ]
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs."
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics."
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "PikaV22TextToVideoInput",
+    "PikaV22TextToVideoOutput",
+    "File"
+  ]
+}

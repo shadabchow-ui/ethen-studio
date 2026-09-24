@@ -1,0 +1,111 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/kokoro/american-english",
+  "task": "text-to-audio",
+  "source_url": "https://fal.ai/models/fal-ai/kokoro/american-english",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fkokoro%2Famerican-english",
+  "retrieved_at": "2026-09-23T14:36:49.986Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "text-to-audio",
+  "bytes_sha256": "3b67337b840241116157a02775f5f4fe8450611dee07e7a748c4a2e9f5acd121",
+  "queue_path": "/fal-ai/kokoro/american-english",
+  "input_name": "KokoroAmericanEnglishInput",
+  "input": {
+    "$refName": "KokoroAmericanEnglishInput",
+    "type": "object",
+    "properties": {
+      "prompt": {
+        "type": "string",
+        "default": ""
+      },
+      "voice": {
+        "type": "string",
+        "enum": [
+          "af_heart",
+          "af_alloy",
+          "af_aoede",
+          "af_bella",
+          "af_jessica",
+          "af_kore",
+          "af_nicole",
+          "af_nova",
+          "af_river",
+          "af_sarah",
+          "af_sky",
+          "am_adam",
+          "am_echo",
+          "am_eric",
+          "am_fenrir",
+          "am_liam",
+          "am_michael",
+          "am_onyx",
+          "am_puck",
+          "am_santa"
+        ],
+        "default": "af_heart",
+        "description": "Voice ID for the desired voice."
+      },
+      "speed": {
+        "type": "number",
+        "default": 1,
+        "minimum": 0.1,
+        "maximum": 5,
+        "description": "Speed of the generated audio. Default is 1.0."
+      }
+    }
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs."
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics."
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "KokoroAmericanEnglishInput",
+    "KokoroAmericanEnglishOutput",
+    "File"
+  ]
+}

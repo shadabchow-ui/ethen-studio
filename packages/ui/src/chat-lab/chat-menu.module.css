@@ -1,0 +1,171 @@
+.root {
+  display: inline-flex;
+  position: relative;
+}
+
+.trigger {
+  align-items: center;
+  background: none;
+  border: 1px solid transparent;
+  border-radius: var(--chat-radius-control);
+  color: var(--chat-text-secondary);
+  cursor: pointer;
+  display: inline-flex;
+  font: inherit;
+  gap: 6px;
+  min-height: 32px;
+  padding: 0 8px;
+  transition: background var(--chat-motion-press, var(--eds-motion-ui)) ease, color var(--chat-motion-press, var(--eds-motion-ui)) ease;
+}
+
+.trigger:hover {
+  background: var(--chat-surface-hover);
+  color: var(--chat-text);
+}
+
+.trigger:focus-visible {
+  outline: var(--chat-focus);
+  outline-offset: 2px;
+}
+
+.trigger[aria-expanded="true"] {
+  background: var(--chat-surface-active);
+  color: var(--chat-text);
+}
+
+.menu {
+  /* Opaque by token scope: the portal stays inside [data-ethen-chat] so
+   * --chat-overlay always resolves to a solid warm-charcoal surface. */
+  background: var(--chat-overlay);
+  border: 1px solid var(--chat-border-strong);
+  border-radius: var(--chat-radius-menu);
+  box-shadow: var(--chat-overlay-shadow);
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  max-height: min(60vh, 420px);
+  max-width: min(320px, calc(100vw - 24px));
+  min-width: 280px;
+  overflow-y: auto;
+  padding: 6px;
+  position: absolute;
+  z-index: var(--chat-z-menu);
+  animation: menuIn var(--chat-motion-press, var(--eds-motion-ui)) ease-out;
+}
+
+/* CHAT_A3 — portaled menus escape scroll containers: fixed against the
+ * trigger rect, coordinates set inline by the placer. Layer 55: above the
+ * drawer, below the palette — see the scale in chat-tokens.css. */
+.portal {
+  margin: 0;
+  position: fixed;
+  z-index: var(--chat-z-menu-portal);
+}
+
+.menu[data-placement="top"] { bottom: calc(100% + 8px); }
+.menu[data-placement="bottom"] { top: calc(100% + 8px); }
+.menu[data-align="start"] { left: 0; }
+.menu[data-align="end"] { right: 0; }
+.portal[data-placement="top"],
+.portal[data-placement="bottom"] { top: auto; bottom: auto; left: auto; right: auto; }
+
+@keyframes menuIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .menu { animation: none; }
+}
+
+.group {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+
+.group + .group {
+  border-top: 1px solid var(--chat-border);
+  margin-top: 4px;
+  padding-top: 4px;
+}
+
+.groupLabel {
+  color: var(--chat-text-muted);
+  font-size: var(--eds-type-label-size);
+  letter-spacing: var(--eds-type-label-tracking);
+  line-height: var(--eds-type-label-line);
+  margin: 0;
+  padding: 5px 8px 3px;
+  text-transform: uppercase;
+}
+
+.item {
+  align-items: center;
+  background: none;
+  border: 0;
+  border-radius: 6px;
+  color: var(--chat-text);
+  cursor: pointer;
+  display: flex;
+  font: inherit;
+  gap: 10px;
+  justify-content: space-between;
+  min-height: 32px;
+  padding: 4px 8px;
+  text-align: left;
+  transition: background var(--chat-motion-press, var(--eds-motion-ui)) ease;
+  width: 100%;
+}
+
+.item:hover:not(:disabled) { background: var(--chat-surface-hover); }
+.item:focus-visible { outline: var(--chat-focus); outline-offset: -2px; }
+.item[data-selected="true"] { background: var(--chat-accent-wash); }
+/* Selection reads in text weight as well as wash + check — never check alone. */
+.item[data-selected="true"] .itemLabel { font-weight: var(--eds-font-weight-medium); }
+.item[data-tone="danger"] { color: var(--chat-danger); }
+.item:disabled { color: var(--chat-text-muted); cursor: default; }
+
+.itemText {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  min-width: 0;
+}
+
+.itemLabel {
+  font-size: var(--eds-type-ui-size);
+  line-height: 18px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.itemDetail {
+  color: var(--chat-text-muted);
+  font-size: var(--eds-type-caption-size);
+  line-height: var(--eds-type-caption-line);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.itemCheck {
+  color: var(--chat-accent);
+  display: inline-flex;
+  flex: none;
+}
+
+.footer {
+  border-top: 1px solid var(--chat-border);
+  color: var(--chat-text-muted);
+  font-size: var(--eds-type-caption-size);
+  line-height: var(--eds-type-caption-line);
+  margin-top: 4px;
+  padding: 6px 8px 3px;
+}
+
+@media (max-width: 768px) {
+  /* Thumb-sized rows at phone widths; the glyph stays the same. */
+  .item { min-height: 44px; }
+}

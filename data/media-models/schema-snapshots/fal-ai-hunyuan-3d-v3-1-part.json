@@ -1,0 +1,80 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/hunyuan-3d/v3.1/part",
+  "task": "3d-generation",
+  "source_url": "https://fal.ai/models/fal-ai/hunyuan-3d/v3.1/part",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fhunyuan-3d%2Fv3.1%2Fpart",
+  "retrieved_at": "2026-09-23T14:36:34.427Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "3d-to-3d",
+  "bytes_sha256": "c6de5d555bd4583074459794a01998f979b0340ae1a39a43a194e16cdb843e8a",
+  "queue_path": "/fal-ai/hunyuan-3d/v3.1/part",
+  "input_name": "Hunyuan3dV31PartInput",
+  "input": {
+    "$refName": "Hunyuan3dV31PartInput",
+    "type": "object",
+    "properties": {
+      "input_file_url": {
+        "type": "string",
+        "description": "URL of FBX file to split into parts. ONLY FBX format supported. Max size: 100MB, face count ≤30,000. Recommended: AIGC-generated models."
+      }
+    },
+    "required": [
+      "input_file_url"
+    ]
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs."
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics."
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "Hunyuan3dV31PartInput",
+    "Hunyuan3dV31PartOutput",
+    "File"
+  ]
+}

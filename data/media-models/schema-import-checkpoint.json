@@ -1,0 +1,817 @@
+{
+  "version": 1,
+  "updated_at": "2026-09-23T14:38:21.813Z",
+  "done": {
+    "alibaba/happy-horse/image-to-video": {
+      "status": "supported",
+      "snapshot": "data/media-models/schema-snapshots/alibaba-happy-horse-image-to-video.json",
+      "at": "2026-09-20T09:39:44.714Z"
+    },
+    "alibaba/happy-horse/text-to-video": {
+      "status": "supported",
+      "snapshot": "data/media-models/schema-snapshots/alibaba-happy-horse-text-to-video.json",
+      "at": "2026-09-20T09:39:45.435Z"
+    },
+    "alibaba/happy-horse/v1.1/image-to-video": {
+      "status": "supported",
+      "snapshot": "data/media-models/schema-snapshots/alibaba-happy-horse-v1-1-image-to-video.json",
+      "at": "2026-09-20T09:39:46.155Z"
+    },
+    "alibaba/happy-horse/v1.1/text-to-video": {
+      "status": "supported",
+      "snapshot": "data/media-models/schema-snapshots/alibaba-happy-horse-v1-1-text-to-video.json",
+      "at": "2026-09-20T09:39:46.942Z"
+    },
+    "alibaba/qwen-image-3/edit": {
+      "status": "supported",
+      "snapshot": "data/media-models/schema-snapshots/alibaba-qwen-image-3-edit.json",
+      "at": "2026-09-20T09:39:47.693Z"
+    },
+    "alibaba/qwen-image-3/text-to-image": {
+      "status": "supported",
+      "snapshot": "data/media-models/schema-snapshots/alibaba-qwen-image-3-text-to-image.json",
+      "at": "2026-09-20T09:39:48.252Z"
+    },
+    "alibaba/wan-3.0-prime/image-to-video": {
+      "status": "supported",
+      "snapshot": "data/media-models/schema-snapshots/alibaba-wan-3-0-prime-image-to-video.json",
+      "at": "2026-09-20T09:39:48.827Z"
+    },
+    "alibaba/wan-3.0-prime/text-to-video": {
+      "status": "supported",
+      "snapshot": "data/media-models/schema-snapshots/alibaba-wan-3-0-prime-text-to-video.json",
+      "at": "2026-09-20T09:39:49.563Z"
+    },
+    "alibaba/wan-3.0/image-to-video": {
+      "status": "supported",
+      "snapshot": "data/media-models/schema-snapshots/alibaba-wan-3-0-image-to-video.json",
+      "at": "2026-09-20T09:39:50.430Z"
+    },
+    "alibaba/wan-3.0/text-to-video": {
+      "status": "supported",
+      "snapshot": "data/media-models/schema-snapshots/alibaba-wan-3-0-text-to-video.json",
+      "at": "2026-09-20T09:39:51.367Z"
+    },
+    "argil/avatars/text-to-video": {
+      "status": "supported",
+      "snapshot": "data/media-models/schema-snapshots/argil-avatars-text-to-video.json",
+      "at": "2026-09-20T09:39:51.900Z"
+    },
+    "blackforestlabs/flux-3/image-to-video": {
+      "status": "supported",
+      "snapshot": "data/media-models/schema-snapshots/blackforestlabs-flux-3-image-to-video.json",
+      "at": "2026-09-20T09:39:52.578Z"
+    },
+    "blackforestlabs/flux-3/image-to-video/draft": {
+      "status": "supported",
+      "snapshot": "data/media-models/schema-snapshots/blackforestlabs-flux-3-image-to-video-draft.json",
+      "at": "2026-09-20T09:39:53.136Z"
+    },
+    "blackforestlabs/flux-3/text-to-video": {
+      "status": "supported",
+      "snapshot": "data/media-models/schema-snapshots/blackforestlabs-flux-3-text-to-video.json",
+      "at": "2026-09-20T09:39:53.756Z"
+    },
+    "blackforestlabs/flux-3/text-to-video/draft": {
+      "status": "supported",
+      "snapshot": "data/media-models/schema-snapshots/blackforestlabs-flux-3-text-to-video-draft.json",
+      "at": "2026-09-20T09:39:54.427Z"
+    },
+    "bria/bria_video_eraser/erase/keypoints": {
+      "status": "supported",
+      "snapshot": "data/media-models/schema-snapshots/bria-bria-video-eraser-erase-keypoints.json",
+      "at": "2026-09-20T09:39:55.033Z"
+    },
+    "bria/bria_video_eraser/erase/mask": {
+      "status": "supported",
+      "snapshot": "data/media-models/schema-snapshots/bria-bria-video-eraser-erase-mask.json",
+      "at": "2026-09-20T09:39:56.182Z"
+    },
+    "bria/bria_video_eraser/erase/prompt": {
+      "status": "supported",
+      "snapshot": "data/media-models/schema-snapshots/bria-bria-video-eraser-erase-prompt.json",
+      "at": "2026-09-20T09:39:56.700Z"
+    },
+    "bria/fibo-edit-1.5/edit": {
+      "status": "supported",
+      "snapshot": "data/media-models/schema-snapshots/bria-fibo-edit-1-5-edit.json",
+      "at": "2026-09-20T09:39:57.714Z"
+    },
+    "bria/fibo-edit/edit": {
+      "status": "supported",
+      "snapshot": "data/media-models/schema-snapshots/bria-fibo-edit-edit.json",
+      "at": "2026-09-20T09:39:58.709Z"
+    },
+    "bria/fibo-edit/edit/structured_instruction": {
+      "status": "supported",
+      "snapshot": "data/media-models/schema-snapshots/bria-fibo-edit-edit-structured-instruction.json",
+      "at": "2026-09-20T09:39:59.274Z"
+    },
+    "bria/fibo-gen-1.5/text-to-image": {
+      "status": "supported",
+      "snapshot": "data/media-models/schema-snapshots/bria-fibo-gen-1-5-text-to-image.json",
+      "at": "2026-09-20T09:39:59.806Z"
+    },
+    "bria/upscale/creative": {
+      "status": "supported",
+      "snapshot": "data/media-models/schema-snapshots/bria-upscale-creative.json",
+      "at": "2026-09-20T09:40:00.412Z"
+    },
+    "bria/video/background-removal": {
+      "status": "supported",
+      "snapshot": "data/media-models/schema-snapshots/bria-video-background-removal.json",
+      "at": "2026-09-20T09:40:00.995Z"
+    },
+    "fal-ai/veo3.1": {
+      "status": "supported",
+      "snapshot": "data/media-models/schema-snapshots/fal-ai-veo3-1.json",
+      "at": "2026-09-20T09:40:01.708Z"
+    },
+    "fal-ai/kling-video/v3/standard/text-to-video": {
+      "status": "supported",
+      "snapshot": "data/media-models/schema-snapshots/fal-ai-kling-video-v3-standard-text-to-video.json",
+      "at": "2026-09-20T09:40:02.468Z"
+    },
+    "minimax/h3/text-to-video": {
+      "status": "supported",
+      "snapshot": "data/media-models/schema-snapshots/minimax-h3-text-to-video.json",
+      "at": "2026-09-20T09:40:03.282Z"
+    },
+    "wan/v2.6/text-to-video": {
+      "status": "supported",
+      "snapshot": "data/media-models/schema-snapshots/wan-v2-6-text-to-video.json",
+      "at": "2026-09-20T09:40:04.107Z"
+    },
+    "fal-ai/luma-dream-machine/ray-2": {
+      "status": "supported",
+      "snapshot": "data/media-models/schema-snapshots/fal-ai-luma-dream-machine-ray-2.json",
+      "at": "2026-09-20T09:40:04.924Z"
+    },
+    "fal-ai/pika/v2.2/text-to-video": {
+      "status": "supported",
+      "snapshot": "data/media-models/schema-snapshots/fal-ai-pika-v2-2-text-to-video.json",
+      "at": "2026-09-20T09:40:06.151Z"
+    },
+    "bytedance/seedance-2.5/text-to-video": {
+      "status": "supported",
+      "snapshot": "data/media-models/schema-snapshots/bytedance-seedance-2-5-text-to-video.json",
+      "at": "2026-09-20T09:40:06.751Z"
+    },
+    "fal-ai/flux/dev": {
+      "status": "supported",
+      "snapshot": "data/media-models/schema-snapshots/fal-ai-flux-dev.json",
+      "at": "2026-09-20T09:53:36.229Z"
+    },
+    "fal-ai/wan-i2v": {
+      "status": "supported",
+      "snapshot": "data/media-models/schema-snapshots/fal-ai-wan-i2v.json",
+      "at": "2026-09-20T11:55:06.601Z"
+    },
+    "fal-ai/chatterbox/speech-to-speech": {
+      "status": "supported",
+      "snapshot": "data/media-models/schema-snapshots/fal-ai-chatterbox-speech-to-speech.json",
+      "at": "2026-09-23T14:36:08.430Z"
+    },
+    "alibaba/qwen-audio-3-tts": {
+      "status": "supported",
+      "snapshot": "data/media-models/schema-snapshots/alibaba-qwen-audio-3-tts.json",
+      "at": "2026-09-23T14:36:14.004Z"
+    },
+    "async/tts-pro/v1.0": {
+      "status": "supported",
+      "snapshot": "data/media-models/schema-snapshots/async-tts-pro-v1-0.json",
+      "at": "2026-09-23T14:36:14.872Z"
+    },
+    "cassetteai/music-generator": {
+      "status": "supported",
+      "snapshot": "data/media-models/schema-snapshots/cassetteai-music-generator.json",
+      "at": "2026-09-23T14:36:15.513Z"
+    },
+    "elevenlabs/music/v2": {
+      "status": "supported",
+      "snapshot": "data/media-models/schema-snapshots/elevenlabs-music-v2.json",
+      "at": "2026-09-23T14:36:16.431Z"
+    },
+    "elevenlabs/music/v2.5": {
+      "status": "supported",
+      "snapshot": "data/media-models/schema-snapshots/elevenlabs-music-v2-5.json",
+      "at": "2026-09-23T14:36:17.197Z"
+    },
+    "fal-ai/bytedance/seed-speech/tts/v2": {
+      "status": "supported",
+      "snapshot": "data/media-models/schema-snapshots/fal-ai-bytedance-seed-speech-tts-v2.json",
+      "at": "2026-09-23T14:36:17.943Z"
+    },
+    "fal-ai/chatterbox/text-to-speech": {
+      "status": "supported",
+      "snapshot": "data/media-models/schema-snapshots/fal-ai-chatterbox-text-to-speech.json",
+      "at": "2026-09-23T14:36:18.760Z"
+    },
+    "fal-ai/chatterbox/text-to-speech/multilingual": {
+      "status": "supported",
+      "snapshot": "data/media-models/schema-snapshots/fal-ai-chatterbox-text-to-speech-multilingual.json",
+      "at": "2026-09-23T14:36:19.388Z"
+    },
+    "fal-ai/dia-tts": {
+      "status": "supported",
+      "snapshot": "data/media-models/schema-snapshots/fal-ai-dia-tts.json",
+      "at": "2026-09-23T14:36:20.505Z"
+    },
+    "fal-ai/dia-tts/voice-clone": {
+      "status": "supported",
+      "snapshot": "data/media-models/schema-snapshots/fal-ai-dia-tts-voice-clone.json",
+      "at": "2026-09-23T14:36:21.136Z"
+    },
+    "fal-ai/diffrhythm": {
+      "status": "supported",
+      "snapshot": "data/media-models/schema-snapshots/fal-ai-diffrhythm.json",
+      "at": "2026-09-23T14:36:21.832Z"
+    },
+    "fal-ai/elevenlabs/audio-isolation": {
+      "status": "supported",
+      "snapshot": "data/media-models/schema-snapshots/fal-ai-elevenlabs-audio-isolation.json",
+      "at": "2026-09-23T14:36:22.548Z"
+    },
+    "fal-ai/elevenlabs/dubbing": {
+      "status": "supported",
+      "snapshot": "data/media-models/schema-snapshots/fal-ai-elevenlabs-dubbing.json",
+      "at": "2026-09-23T14:36:23.369Z"
+    },
+    "fal-ai/elevenlabs/forced-alignment": {
+      "status": "supported",
+      "snapshot": "data/media-models/schema-snapshots/fal-ai-elevenlabs-forced-alignment.json",
+      "at": "2026-09-23T14:36:24.084Z"
+    },
+    "fal-ai/elevenlabs/music": {
+      "status": "supported",
+      "snapshot": "data/media-models/schema-snapshots/fal-ai-elevenlabs-music.json",
+      "at": "2026-09-23T14:36:25.108Z"
+    },
+    "fal-ai/elevenlabs/speech-to-text": {
+      "status": "supported",
+      "snapshot": "data/media-models/schema-snapshots/fal-ai-elevenlabs-speech-to-text.json",
+      "at": "2026-09-23T14:36:25.816Z"
+    },
+    "fal-ai/elevenlabs/speech-to-text/scribe-v2": {
+      "status": "supported",
+      "snapshot": "data/media-models/schema-snapshots/fal-ai-elevenlabs-speech-to-text-scribe-v2.json",
+      "at": "2026-09-23T14:36:26.543Z"
+    },
+    "fal-ai/elevenlabs/text-to-dialogue/eleven-v3": {
+      "status": "supported",
+      "snapshot": "data/media-models/schema-snapshots/fal-ai-elevenlabs-text-to-dialogue-eleven-v3.json",
+      "at": "2026-09-23T14:36:27.362Z"
+    },
+    "fal-ai/elevenlabs/tts/eleven-v3": {
+      "status": "supported",
+      "snapshot": "data/media-models/schema-snapshots/fal-ai-elevenlabs-tts-eleven-v3.json",
+      "at": "2026-09-23T14:36:28.385Z"
+    },
+    "fal-ai/elevenlabs/tts/multilingual-v2": {
+      "status": "supported",
+      "snapshot": "data/media-models/schema-snapshots/fal-ai-elevenlabs-tts-multilingual-v2.json",
+      "at": "2026-09-23T14:36:29.102Z"
+    },
+    "fal-ai/elevenlabs/tts/turbo-v2.5": {
+      "status": "supported",
+      "snapshot": "data/media-models/schema-snapshots/fal-ai-elevenlabs-tts-turbo-v2-5.json",
+      "at": "2026-09-23T14:36:29.778Z"
+    },
+    "fal-ai/elevenlabs/voice-changer": {
+      "status": "supported",
+      "snapshot": "data/media-models/schema-snapshots/fal-ai-elevenlabs-voice-changer.json",
+      "at": "2026-09-23T14:36:30.862Z"
+    },
+    "fal-ai/f5-tts": {
+      "status": "supported",
+      "snapshot": "data/media-models/schema-snapshots/fal-ai-f5-tts.json",
+      "at": "2026-09-23T14:36:31.478Z"
+    },
+    "fal-ai/gemini-3.1-flash-tts": {
+      "status": "supported",
+      "snapshot": "data/media-models/schema-snapshots/fal-ai-gemini-3-1-flash-tts.json",
+      "at": "2026-09-23T14:36:32.173Z"
+    },
+    "fal-ai/gemini-tts": {
+      "status": "supported",
+      "snapshot": "data/media-models/schema-snapshots/fal-ai-gemini-tts.json",
+      "at": "2026-09-23T14:36:32.893Z"
+    },
+    "fal-ai/hunyuan_world": {
+      "status": "supported",
+      "snapshot": "data/media-models/schema-snapshots/fal-ai-hunyuan-world.json",
+      "at": "2026-09-23T14:36:33.518Z"
+    },
+    "fal-ai/hunyuan-3d/v3.1/part": {
+      "status": "supported",
+      "snapshot": "data/media-models/schema-snapshots/fal-ai-hunyuan-3d-v3-1-part.json",
+      "at": "2026-09-23T14:36:34.427Z"
+    },
+    "fal-ai/hunyuan-3d/v3.1/pro/text-to-3d": {
+      "status": "supported",
+      "snapshot": "data/media-models/schema-snapshots/fal-ai-hunyuan-3d-v3-1-pro-text-to-3d.json",
+      "at": "2026-09-23T14:36:35.246Z"
+    },
+    "fal-ai/hunyuan-3d/v3.1/rapid/text-to-3d": {
+      "status": "supported",
+      "snapshot": "data/media-models/schema-snapshots/fal-ai-hunyuan-3d-v3-1-rapid-text-to-3d.json",
+      "at": "2026-09-23T14:36:36.093Z"
+    },
+    "fal-ai/hunyuan-3d/v3.1/smart-topology": {
+      "status": "supported",
+      "snapshot": "data/media-models/schema-snapshots/fal-ai-hunyuan-3d-v3-1-smart-topology.json",
+      "at": "2026-09-23T14:36:36.988Z"
+    },
+    "fal-ai/hunyuan-motion": {
+      "status": "supported",
+      "snapshot": "data/media-models/schema-snapshots/fal-ai-hunyuan-motion.json",
+      "at": "2026-09-23T14:36:37.705Z"
+    },
+    "fal-ai/hunyuan-motion/fast": {
+      "status": "supported",
+      "snapshot": "data/media-models/schema-snapshots/fal-ai-hunyuan-motion-fast.json",
+      "at": "2026-09-23T14:36:38.354Z"
+    },
+    "fal-ai/hunyuan3d-v3/sketch-to-3d": {
+      "status": "supported",
+      "snapshot": "data/media-models/schema-snapshots/fal-ai-hunyuan3d-v3-sketch-to-3d.json",
+      "at": "2026-09-23T14:36:39.117Z"
+    },
+    "fal-ai/hunyuan3d-v3/text-to-3d": {
+      "status": "supported",
+      "snapshot": "data/media-models/schema-snapshots/fal-ai-hunyuan3d-v3-text-to-3d.json",
+      "at": "2026-09-23T14:36:39.873Z"
+    },
+    "fal-ai/hunyuan3d/v2": {
+      "status": "supported",
+      "snapshot": "data/media-models/schema-snapshots/fal-ai-hunyuan3d-v2.json",
+      "at": "2026-09-23T14:36:40.675Z"
+    },
+    "fal-ai/hunyuan3d/v2/mini": {
+      "status": "supported",
+      "snapshot": "data/media-models/schema-snapshots/fal-ai-hunyuan3d-v2-mini.json",
+      "at": "2026-09-23T14:36:41.595Z"
+    },
+    "fal-ai/hunyuan3d/v2/mini/turbo": {
+      "status": "supported",
+      "snapshot": "data/media-models/schema-snapshots/fal-ai-hunyuan3d-v2-mini-turbo.json",
+      "at": "2026-09-23T14:36:42.312Z"
+    },
+    "fal-ai/hunyuan3d/v2/multi-view": {
+      "status": "supported",
+      "snapshot": "data/media-models/schema-snapshots/fal-ai-hunyuan3d-v2-multi-view.json",
+      "at": "2026-09-23T14:36:42.936Z"
+    },
+    "fal-ai/hunyuan3d/v2/multi-view/turbo": {
+      "status": "supported",
+      "snapshot": "data/media-models/schema-snapshots/fal-ai-hunyuan3d-v2-multi-view-turbo.json",
+      "at": "2026-09-23T14:36:43.536Z"
+    },
+    "fal-ai/hunyuan3d/v2/turbo": {
+      "status": "supported",
+      "snapshot": "data/media-models/schema-snapshots/fal-ai-hunyuan3d-v2-turbo.json",
+      "at": "2026-09-23T14:36:44.279Z"
+    },
+    "fal-ai/hyper3d/rodin/v2.5/text-to-3d": {
+      "status": "supported",
+      "snapshot": "data/media-models/schema-snapshots/fal-ai-hyper3d-rodin-v2-5-text-to-3d.json",
+      "at": "2026-09-23T14:36:45.133Z"
+    },
+    "fal-ai/hyper3d/rodin/v2.5/text-to-3d/fast": {
+      "status": "supported",
+      "snapshot": "data/media-models/schema-snapshots/fal-ai-hyper3d-rodin-v2-5-text-to-3d-fast.json",
+      "at": "2026-09-23T14:36:45.896Z"
+    },
+    "fal-ai/index-tts-2/text-to-speech": {
+      "status": "supported",
+      "snapshot": "data/media-models/schema-snapshots/fal-ai-index-tts-2-text-to-speech.json",
+      "at": "2026-09-23T14:36:46.566Z"
+    },
+    "fal-ai/inworld-tts": {
+      "status": "supported",
+      "snapshot": "data/media-models/schema-snapshots/fal-ai-inworld-tts.json",
+      "at": "2026-09-23T14:36:47.433Z"
+    },
+    "fal-ai/kling-video/create-voice": {
+      "status": "supported",
+      "snapshot": "data/media-models/schema-snapshots/fal-ai-kling-video-create-voice.json",
+      "at": "2026-09-23T14:36:48.260Z"
+    },
+    "fal-ai/kling-video/v1/tts": {
+      "status": "supported",
+      "snapshot": "data/media-models/schema-snapshots/fal-ai-kling-video-v1-tts.json",
+      "at": "2026-09-23T14:36:48.951Z"
+    },
+    "fal-ai/kokoro/american-english": {
+      "status": "supported",
+      "snapshot": "data/media-models/schema-snapshots/fal-ai-kokoro-american-english.json",
+      "at": "2026-09-23T14:36:49.986Z"
+    },
+    "fal-ai/kokoro/brazilian-portuguese": {
+      "status": "supported",
+      "snapshot": "data/media-models/schema-snapshots/fal-ai-kokoro-brazilian-portuguese.json",
+      "at": "2026-09-23T14:36:50.645Z"
+    },
+    "fal-ai/kokoro/british-english": {
+      "status": "supported",
+      "snapshot": "data/media-models/schema-snapshots/fal-ai-kokoro-british-english.json",
+      "at": "2026-09-23T14:36:51.322Z"
+    },
+    "fal-ai/kokoro/french": {
+      "status": "supported",
+      "snapshot": "data/media-models/schema-snapshots/fal-ai-kokoro-french.json",
+      "at": "2026-09-23T14:36:51.981Z"
+    },
+    "fal-ai/kokoro/hindi": {
+      "status": "supported",
+      "snapshot": "data/media-models/schema-snapshots/fal-ai-kokoro-hindi.json",
+      "at": "2026-09-23T14:36:52.678Z"
+    },
+    "fal-ai/kokoro/italian": {
+      "status": "supported",
+      "snapshot": "data/media-models/schema-snapshots/fal-ai-kokoro-italian.json",
+      "at": "2026-09-23T14:36:53.399Z"
+    },
+    "fal-ai/kokoro/japanese": {
+      "status": "supported",
+      "snapshot": "data/media-models/schema-snapshots/fal-ai-kokoro-japanese.json",
+      "at": "2026-09-23T14:36:54.191Z"
+    },
+    "fal-ai/kokoro/mandarin-chinese": {
+      "status": "supported",
+      "snapshot": "data/media-models/schema-snapshots/fal-ai-kokoro-mandarin-chinese.json",
+      "at": "2026-09-23T14:36:54.846Z"
+    },
+    "fal-ai/kokoro/spanish": {
+      "status": "supported",
+      "snapshot": "data/media-models/schema-snapshots/fal-ai-kokoro-spanish.json",
+      "at": "2026-09-23T14:36:57.875Z"
+    },
+    "fal-ai/ltx-2.3-quality/text-to-audio": {
+      "status": "supported",
+      "snapshot": "data/media-models/schema-snapshots/fal-ai-ltx-2-3-quality-text-to-audio.json",
+      "at": "2026-09-23T14:37:03.144Z"
+    },
+    "fal-ai/meshy/rigging": {
+      "status": "supported",
+      "snapshot": "data/media-models/schema-snapshots/fal-ai-meshy-rigging.json",
+      "at": "2026-09-23T14:37:03.859Z"
+    },
+    "fal-ai/meshy/rigging/multi-animation": {
+      "status": "supported",
+      "snapshot": "data/media-models/schema-snapshots/fal-ai-meshy-rigging-multi-animation.json",
+      "at": "2026-09-23T14:37:05.419Z"
+    },
+    "fal-ai/meshy/v5/remesh": {
+      "status": "supported",
+      "snapshot": "data/media-models/schema-snapshots/fal-ai-meshy-v5-remesh.json",
+      "at": "2026-09-23T14:37:06.146Z"
+    },
+    "fal-ai/meshy/v5/retexture": {
+      "status": "supported",
+      "snapshot": "data/media-models/schema-snapshots/fal-ai-meshy-v5-retexture.json",
+      "at": "2026-09-23T14:37:09.575Z"
+    },
+    "fal-ai/meshy/v6-preview/text-to-3d": {
+      "status": "supported",
+      "snapshot": "data/media-models/schema-snapshots/fal-ai-meshy-v6-preview-text-to-3d.json",
+      "at": "2026-09-23T14:37:15.489Z"
+    },
+    "fal-ai/meshy/v6/text-to-3d": {
+      "status": "supported",
+      "snapshot": "data/media-models/schema-snapshots/fal-ai-meshy-v6-text-to-3d.json",
+      "at": "2026-09-23T14:37:19.310Z"
+    },
+    "fal-ai/minimax-music": {
+      "status": "supported",
+      "snapshot": "data/media-models/schema-snapshots/fal-ai-minimax-music.json",
+      "at": "2026-09-23T14:37:19.943Z"
+    },
+    "fal-ai/minimax-music/v1.5": {
+      "status": "supported",
+      "snapshot": "data/media-models/schema-snapshots/fal-ai-minimax-music-v1-5.json",
+      "at": "2026-09-23T14:37:20.581Z"
+    },
+    "fal-ai/minimax-music/v2": {
+      "status": "supported",
+      "snapshot": "data/media-models/schema-snapshots/fal-ai-minimax-music-v2.json",
+      "at": "2026-09-23T14:37:21.228Z"
+    },
+    "fal-ai/minimax-music/v2.5": {
+      "status": "supported",
+      "snapshot": "data/media-models/schema-snapshots/fal-ai-minimax-music-v2-5.json",
+      "at": "2026-09-23T14:37:22.146Z"
+    },
+    "fal-ai/minimax-music/v2.6": {
+      "status": "supported",
+      "snapshot": "data/media-models/schema-snapshots/fal-ai-minimax-music-v2-6.json",
+      "at": "2026-09-23T14:37:22.812Z"
+    },
+    "fal-ai/minimax/preview/speech-2.5-hd": {
+      "status": "supported",
+      "snapshot": "data/media-models/schema-snapshots/fal-ai-minimax-preview-speech-2-5-hd.json",
+      "at": "2026-09-23T14:37:23.866Z"
+    },
+    "fal-ai/minimax/preview/speech-2.5-turbo": {
+      "status": "supported",
+      "snapshot": "data/media-models/schema-snapshots/fal-ai-minimax-preview-speech-2-5-turbo.json",
+      "at": "2026-09-23T14:37:24.609Z"
+    },
+    "fal-ai/minimax/speech-02-hd": {
+      "status": "supported",
+      "snapshot": "data/media-models/schema-snapshots/fal-ai-minimax-speech-02-hd.json",
+      "at": "2026-09-23T14:37:27.983Z"
+    },
+    "fal-ai/minimax/speech-02-turbo": {
+      "status": "supported",
+      "snapshot": "data/media-models/schema-snapshots/fal-ai-minimax-speech-02-turbo.json",
+      "at": "2026-09-23T14:37:28.668Z"
+    },
+    "fal-ai/minimax/speech-2.6-hd": {
+      "status": "supported",
+      "snapshot": "data/media-models/schema-snapshots/fal-ai-minimax-speech-2-6-hd.json",
+      "at": "2026-09-23T14:37:29.417Z"
+    },
+    "fal-ai/minimax/speech-2.6-turbo": {
+      "status": "supported",
+      "snapshot": "data/media-models/schema-snapshots/fal-ai-minimax-speech-2-6-turbo.json",
+      "at": "2026-09-23T14:37:30.170Z"
+    },
+    "fal-ai/minimax/speech-2.8-hd": {
+      "status": "supported",
+      "snapshot": "data/media-models/schema-snapshots/fal-ai-minimax-speech-2-8-hd.json",
+      "at": "2026-09-23T14:37:31.589Z"
+    },
+    "fal-ai/minimax/speech-2.8-turbo": {
+      "status": "supported",
+      "snapshot": "data/media-models/schema-snapshots/fal-ai-minimax-speech-2-8-turbo.json",
+      "at": "2026-09-23T14:37:32.612Z"
+    },
+    "fal-ai/minimax/voice-clone": {
+      "status": "supported",
+      "snapshot": "data/media-models/schema-snapshots/fal-ai-minimax-voice-clone.json",
+      "at": "2026-09-23T14:37:33.833Z"
+    },
+    "fal-ai/minimax/voice-design": {
+      "status": "supported",
+      "snapshot": "data/media-models/schema-snapshots/fal-ai-minimax-voice-design.json",
+      "at": "2026-09-23T14:37:37.387Z"
+    },
+    "fal-ai/mmaudio-v2": {
+      "status": "supported",
+      "snapshot": "data/media-models/schema-snapshots/fal-ai-mmaudio-v2.json",
+      "at": "2026-09-23T14:37:38.156Z"
+    },
+    "fal-ai/mmaudio-v2/text-to-audio": {
+      "status": "supported",
+      "snapshot": "data/media-models/schema-snapshots/fal-ai-mmaudio-v2-text-to-audio.json",
+      "at": "2026-09-23T14:37:38.787Z"
+    },
+    "fal-ai/orpheus-tts": {
+      "status": "supported",
+      "snapshot": "data/media-models/schema-snapshots/fal-ai-orpheus-tts.json",
+      "at": "2026-09-23T14:37:39.390Z"
+    },
+    "fal-ai/qwen-3-tts/clone-voice/0.6b": {
+      "status": "supported",
+      "snapshot": "data/media-models/schema-snapshots/fal-ai-qwen-3-tts-clone-voice-0-6b.json",
+      "at": "2026-09-23T14:37:40.033Z"
+    },
+    "fal-ai/qwen-3-tts/clone-voice/1.7b": {
+      "status": "supported",
+      "snapshot": "data/media-models/schema-snapshots/fal-ai-qwen-3-tts-clone-voice-1-7b.json",
+      "at": "2026-09-23T14:37:40.655Z"
+    },
+    "fal-ai/qwen-3-tts/text-to-speech/0.6b": {
+      "status": "supported",
+      "snapshot": "data/media-models/schema-snapshots/fal-ai-qwen-3-tts-text-to-speech-0-6b.json",
+      "at": "2026-09-23T14:37:41.907Z"
+    },
+    "fal-ai/qwen-3-tts/text-to-speech/1.7b": {
+      "status": "supported",
+      "snapshot": "data/media-models/schema-snapshots/fal-ai-qwen-3-tts-text-to-speech-1-7b.json",
+      "at": "2026-09-23T14:37:42.588Z"
+    },
+    "fal-ai/qwen-3-tts/voice-design/1.7b": {
+      "status": "supported",
+      "snapshot": "data/media-models/schema-snapshots/fal-ai-qwen-3-tts-voice-design-1-7b.json",
+      "at": "2026-09-23T14:37:43.270Z"
+    },
+    "fal-ai/sam-3/3d-align": {
+      "status": "supported",
+      "snapshot": "data/media-models/schema-snapshots/fal-ai-sam-3-3d-align.json",
+      "at": "2026-09-23T14:37:43.928Z"
+    },
+    "fal-ai/sam-3/3d-body": {
+      "status": "supported",
+      "snapshot": "data/media-models/schema-snapshots/fal-ai-sam-3-3d-body.json",
+      "at": "2026-09-23T14:37:44.564Z"
+    },
+    "fal-ai/sam-3/3d-objects": {
+      "status": "supported",
+      "snapshot": "data/media-models/schema-snapshots/fal-ai-sam-3-3d-objects.json",
+      "at": "2026-09-23T14:37:45.248Z"
+    },
+    "fal-ai/speech-to-text": {
+      "status": "supported",
+      "snapshot": "data/media-models/schema-snapshots/fal-ai-speech-to-text.json",
+      "at": "2026-09-23T14:37:45.884Z"
+    },
+    "fal-ai/speech-to-text/stream": {
+      "status": "supported",
+      "snapshot": "data/media-models/schema-snapshots/fal-ai-speech-to-text-stream.json",
+      "at": "2026-09-23T14:37:46.505Z"
+    },
+    "fal-ai/speech-to-text/turbo": {
+      "status": "supported",
+      "snapshot": "data/media-models/schema-snapshots/fal-ai-speech-to-text-turbo.json",
+      "at": "2026-09-23T14:37:47.131Z"
+    },
+    "fal-ai/speech-to-text/turbo/stream": {
+      "status": "supported",
+      "snapshot": "data/media-models/schema-snapshots/fal-ai-speech-to-text-turbo-stream.json",
+      "at": "2026-09-23T14:37:48.128Z"
+    },
+    "fal-ai/stable-audio-25/text-to-audio": {
+      "status": "supported",
+      "snapshot": "data/media-models/schema-snapshots/fal-ai-stable-audio-25-text-to-audio.json",
+      "at": "2026-09-23T14:37:48.759Z"
+    },
+    "fal-ai/stable-audio-3/medium/base/text-to-audio": {
+      "status": "supported",
+      "snapshot": "data/media-models/schema-snapshots/fal-ai-stable-audio-3-medium-base-text-to-audio.json",
+      "at": "2026-09-23T14:37:49.652Z"
+    },
+    "fal-ai/stable-audio-3/medium/text-to-audio": {
+      "status": "supported",
+      "snapshot": "data/media-models/schema-snapshots/fal-ai-stable-audio-3-medium-text-to-audio.json",
+      "at": "2026-09-23T14:37:50.455Z"
+    },
+    "fal-ai/stable-audio-3/small/music/audio-inpainting": {
+      "status": "supported",
+      "snapshot": "data/media-models/schema-snapshots/fal-ai-stable-audio-3-small-music-audio-inpainting.json",
+      "at": "2026-09-23T14:37:51.286Z"
+    },
+    "fal-ai/stable-audio-3/small/music/audio-outpainting": {
+      "status": "supported",
+      "snapshot": "data/media-models/schema-snapshots/fal-ai-stable-audio-3-small-music-audio-outpainting.json",
+      "at": "2026-09-23T14:37:52.074Z"
+    },
+    "fal-ai/stable-audio-3/small/music/audio-to-audio": {
+      "status": "supported",
+      "snapshot": "data/media-models/schema-snapshots/fal-ai-stable-audio-3-small-music-audio-to-audio.json",
+      "at": "2026-09-23T14:37:52.840Z"
+    },
+    "fal-ai/stable-audio-3/small/music/base/audio-inpainting": {
+      "status": "supported",
+      "snapshot": "data/media-models/schema-snapshots/fal-ai-stable-audio-3-small-music-base-audio-inpainting.json",
+      "at": "2026-09-23T14:37:53.623Z"
+    },
+    "fal-ai/stable-audio-3/small/music/base/audio-outpainting": {
+      "status": "supported",
+      "snapshot": "data/media-models/schema-snapshots/fal-ai-stable-audio-3-small-music-base-audio-outpainting.json",
+      "at": "2026-09-23T14:37:54.608Z"
+    },
+    "fal-ai/stable-audio-3/small/music/base/audio-to-audio": {
+      "status": "supported",
+      "snapshot": "data/media-models/schema-snapshots/fal-ai-stable-audio-3-small-music-base-audio-to-audio.json",
+      "at": "2026-09-23T14:37:55.334Z"
+    },
+    "fal-ai/stable-audio-3/small/music/base/text-to-audio": {
+      "status": "supported",
+      "snapshot": "data/media-models/schema-snapshots/fal-ai-stable-audio-3-small-music-base-text-to-audio.json",
+      "at": "2026-09-23T14:37:56.413Z"
+    },
+    "fal-ai/stable-audio-3/small/music/text-to-audio": {
+      "status": "supported",
+      "snapshot": "data/media-models/schema-snapshots/fal-ai-stable-audio-3-small-music-text-to-audio.json",
+      "at": "2026-09-23T14:37:57.144Z"
+    },
+    "fal-ai/stable-audio-3/small/sfx/base/text-to-audio": {
+      "status": "supported",
+      "snapshot": "data/media-models/schema-snapshots/fal-ai-stable-audio-3-small-sfx-base-text-to-audio.json",
+      "at": "2026-09-23T14:37:57.830Z"
+    },
+    "fal-ai/stable-audio-3/small/sfx/text-to-audio": {
+      "status": "supported",
+      "snapshot": "data/media-models/schema-snapshots/fal-ai-stable-audio-3-small-sfx-text-to-audio.json",
+      "at": "2026-09-23T14:37:58.651Z"
+    },
+    "fal-ai/tada/1b/text-to-speech": {
+      "status": "supported",
+      "snapshot": "data/media-models/schema-snapshots/fal-ai-tada-1b-text-to-speech.json",
+      "at": "2026-09-23T14:37:59.540Z"
+    },
+    "fal-ai/tada/3b/text-to-speech": {
+      "status": "supported",
+      "snapshot": "data/media-models/schema-snapshots/fal-ai-tada-3b-text-to-speech.json",
+      "at": "2026-09-23T14:38:00.153Z"
+    },
+    "fal-ai/triposr": {
+      "status": "supported",
+      "snapshot": "data/media-models/schema-snapshots/fal-ai-triposr.json",
+      "at": "2026-09-23T14:38:00.941Z"
+    },
+    "fal-ai/wan/v2.2-14b/speech-to-video": {
+      "status": "supported",
+      "snapshot": "data/media-models/schema-snapshots/fal-ai-wan-v2-2-14b-speech-to-video.json",
+      "at": "2026-09-23T14:38:04.313Z"
+    },
+    "hitem3d/hi3d/multi-view-to-3d": {
+      "status": "supported",
+      "snapshot": "data/media-models/schema-snapshots/hitem3d-hi3d-multi-view-to-3d.json",
+      "at": "2026-09-23T14:38:05.054Z"
+    },
+    "hitem3d/hi3d/v3.0/multi-view-to-3d": {
+      "status": "supported",
+      "snapshot": "data/media-models/schema-snapshots/hitem3d-hi3d-v3-0-multi-view-to-3d.json",
+      "at": "2026-09-23T14:38:05.872Z"
+    },
+    "meshy/v7/text-to-3d": {
+      "status": "supported",
+      "snapshot": "data/media-models/schema-snapshots/meshy-v7-text-to-3d.json",
+      "at": "2026-09-23T14:38:06.645Z"
+    },
+    "minimax/music-3": {
+      "status": "supported",
+      "snapshot": "data/media-models/schema-snapshots/minimax-music-3.json",
+      "at": "2026-09-23T14:38:07.408Z"
+    },
+    "mirelo-ai/sfx1.6/text-to-audio": {
+      "status": "supported",
+      "snapshot": "data/media-models/schema-snapshots/mirelo-ai-sfx1-6-text-to-audio.json",
+      "at": "2026-09-23T14:38:08.125Z"
+    },
+    "resemble-ai/chatterboxhd/speech-to-speech": {
+      "status": "supported",
+      "snapshot": "data/media-models/schema-snapshots/resemble-ai-chatterboxhd-speech-to-speech.json",
+      "at": "2026-09-23T14:38:08.744Z"
+    },
+    "resemble-ai/chatterboxhd/text-to-speech": {
+      "status": "supported",
+      "snapshot": "data/media-models/schema-snapshots/resemble-ai-chatterboxhd-text-to-speech.json",
+      "at": "2026-09-23T14:38:09.348Z"
+    },
+    "sonilo/v1.1/text-to-music": {
+      "status": "supported",
+      "snapshot": "data/media-models/schema-snapshots/sonilo-v1-1-text-to-music.json",
+      "at": "2026-09-23T14:38:10.174Z"
+    },
+    "sonilo/v1.1/video-to-music": {
+      "status": "supported",
+      "snapshot": "data/media-models/schema-snapshots/sonilo-v1-1-video-to-music.json",
+      "at": "2026-09-23T14:38:10.890Z"
+    },
+    "tripo3d/h3.1/multiview-to-3d": {
+      "status": "supported",
+      "snapshot": "data/media-models/schema-snapshots/tripo3d-h3-1-multiview-to-3d.json",
+      "at": "2026-09-23T14:38:13.100Z"
+    },
+    "tripo3d/h3.1/text-to-3d": {
+      "status": "supported",
+      "snapshot": "data/media-models/schema-snapshots/tripo3d-h3-1-text-to-3d.json",
+      "at": "2026-09-23T14:38:13.758Z"
+    },
+    "tripo3d/p1/text-to-3d": {
+      "status": "supported",
+      "snapshot": "data/media-models/schema-snapshots/tripo3d-p1-text-to-3d.json",
+      "at": "2026-09-23T14:38:14.474Z"
+    },
+    "tripo3d/tripo/remesh": {
+      "status": "supported",
+      "snapshot": "data/media-models/schema-snapshots/tripo3d-tripo-remesh.json",
+      "at": "2026-09-23T14:38:17.034Z"
+    },
+    "tripo3d/tripo/segment": {
+      "status": "supported",
+      "snapshot": "data/media-models/schema-snapshots/tripo3d-tripo-segment.json",
+      "at": "2026-09-23T14:38:17.956Z"
+    },
+    "tripo3d/tripo/v2.5/multiview-to-3d": {
+      "status": "supported",
+      "snapshot": "data/media-models/schema-snapshots/tripo3d-tripo-v2-5-multiview-to-3d.json",
+      "at": "2026-09-23T14:38:18.775Z"
+    },
+    "tripo3d/triposplat": {
+      "status": "supported",
+      "snapshot": "data/media-models/schema-snapshots/tripo3d-triposplat.json",
+      "at": "2026-09-23T14:38:19.426Z"
+    },
+    "xai/grok-voice": {
+      "status": "supported",
+      "snapshot": "data/media-models/schema-snapshots/xai-grok-voice.json",
+      "at": "2026-09-23T14:38:20.253Z"
+    },
+    "xai/grok-voice/realtime": {
+      "status": "supported",
+      "snapshot": "data/media-models/schema-snapshots/xai-grok-voice-realtime.json",
+      "at": "2026-09-23T14:38:21.011Z"
+    },
+    "xai/tts/v1": {
+      "status": "supported",
+      "snapshot": "data/media-models/schema-snapshots/xai-tts-v1.json",
+      "at": "2026-09-23T14:38:21.812Z"
+    }
+  },
+  "stats": {}
+}

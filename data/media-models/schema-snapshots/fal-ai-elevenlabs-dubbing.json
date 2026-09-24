@@ -1,0 +1,131 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/elevenlabs/dubbing",
+  "task": "speech",
+  "source_url": "https://fal.ai/models/fal-ai/elevenlabs/dubbing",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Felevenlabs%2Fdubbing",
+  "retrieved_at": "2026-09-23T14:36:23.369Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "audio-to-video",
+  "bytes_sha256": "4836851d619c84f45ca5adb59d2c792e906816a83bd9fd8652ed8629f3a4b396",
+  "queue_path": "/fal-ai/elevenlabs/dubbing",
+  "input_name": "ElevenlabsDubbingInput",
+  "input": {
+    "$refName": "ElevenlabsDubbingInput",
+    "type": "object",
+    "properties": {
+      "source_lang": {
+        "description": "Source language code. If not provided, will be auto-detected.",
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "target_lang": {
+        "type": "string",
+        "description": "Target language code for dubbing (ISO 639-1)"
+      },
+      "audio_url": {
+        "description": "URL of the audio file to dub. Either audio_url or video_url must be provided.",
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "num_speakers": {
+        "description": "Number of speakers in the audio. If not provided, will be auto-detected.",
+        "anyOf": [
+          {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 50
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "highest_resolution": {
+        "type": "boolean",
+        "default": true,
+        "description": "Whether to use the highest resolution for dubbing."
+      },
+      "video_url": {
+        "description": "URL of the video file to dub. Either audio_url or video_url must be provided. If both are provided, video_url takes priority.",
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      }
+    },
+    "required": [
+      "target_lang"
+    ]
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs."
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics."
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "ElevenlabsDubbingInput",
+    "ElevenlabsDubbingOutput",
+    "File"
+  ]
+}

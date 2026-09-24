@@ -1,0 +1,149 @@
+/* EDS state surfaces — D13.
+ * Scoped to [data-eds]. No :root, no global element selectors, no raw colour.
+ *
+ * Severity is carried by the label WORD, never by a coloured card: the same
+ * surface shape serves empty, blocked, failure and expired, so the product
+ * has one recovery language instead of eleven.
+ */
+
+[data-eds] .eds-state {
+  background: var(--eds-cmp-state-bg);
+  border: 1px solid var(--eds-cmp-state-border);
+  border-radius: var(--eds-radius-base);
+  color: var(--eds-cmp-state-title-text);
+  display: flex;
+  flex-direction: column;
+  gap: var(--eds-space-tight);
+  max-width: 56ch;
+  min-width: 0;
+  padding: var(--eds-space-spacious);
+}
+
+[data-eds] .eds-state__label {
+  color: var(--eds-cmp-state-label-text);
+  font-family: var(--eds-type-ui-family);
+  font-size: var(--eds-type-caption-size);
+  letter-spacing: 0.04em;
+  line-height: var(--eds-type-caption-line);
+  margin: 0;
+  text-transform: uppercase;
+}
+
+/* Scope defence — app/globals.css sets font-family and weight on bare
+ * headings with !important. See the note in eds-trust.css. */
+[data-eds] .eds-state__title {
+  color: var(--eds-cmp-state-title-text);
+  font-family: var(--eds-type-ui-family) !important;
+  font-size: var(--eds-type-subheading-size);
+  font-weight: 600 !important;
+  letter-spacing: normal;
+  line-height: var(--eds-type-subheading-line);
+  margin: 0;
+  text-transform: none;
+}
+
+[data-eds] .eds-state__body {
+  color: var(--eds-cmp-state-body-text);
+  font-family: var(--eds-type-ui-family);
+  font-size: var(--eds-type-ui-size);
+  line-height: var(--eds-type-body-line);
+  margin: 0;
+}
+
+/* The third clause: what state you are in now. Set apart because it is the
+ * sentence a reader is actually looking for after something goes wrong. */
+[data-eds] .eds-state__unchanged {
+  border-left: 2px solid var(--eds-cmp-state-hairline);
+  color: var(--eds-cmp-state-body-text);
+  font-family: var(--eds-type-ui-family);
+  font-size: var(--eds-type-ui-size);
+  line-height: var(--eds-type-body-line);
+  margin: 0;
+  padding-left: var(--eds-space-default);
+}
+
+[data-eds] .eds-state__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--eds-space-tight);
+  margin-top: var(--eds-space-tight);
+}
+
+[data-eds] .eds-state__action {
+  background: var(--eds-cmp-state-action-bg);
+  border: 1px solid var(--eds-cmp-state-action-border);
+  border-radius: var(--eds-radius-base);
+  color: var(--eds-cmp-state-action-text);
+  cursor: pointer;
+  font-family: var(--eds-type-ui-family);
+  font-size: var(--eds-type-ui-size);
+  line-height: var(--eds-type-ui-line);
+  min-height: 36px;
+  padding: var(--eds-space-tight) var(--eds-space-default);
+}
+
+[data-eds] .eds-state__action--primary {
+  background: var(--eds-cmp-state-action-primary-bg);
+  border-color: var(--eds-cmp-state-action-primary-bg);
+  color: var(--eds-cmp-state-action-primary-text);
+}
+
+[data-eds] .eds-state__action:focus-visible {
+  outline: var(--eds-focus-ring);
+}
+
+[data-eds] .eds-state__incomplete {
+  color: var(--eds-cmp-state-incomplete-text);
+  font-family: var(--eds-font-mono);
+  font-size: var(--eds-type-code-size);
+  line-height: var(--eds-type-code-line);
+  margin: 0;
+}
+
+/* A skeleton in the shape of the content, never a spinner. */
+[data-eds] .eds-state-skeleton {
+  display: flex;
+  flex-direction: column;
+  gap: var(--eds-space-tight);
+  min-width: 0;
+  padding: var(--eds-space-default);
+}
+
+[data-eds] .eds-state-skeleton__label {
+  color: var(--eds-cmp-state-meta-text);
+  font-family: var(--eds-type-ui-family);
+  font-size: var(--eds-type-caption-size);
+  line-height: var(--eds-type-caption-line);
+}
+
+[data-eds] .eds-state-skeleton__lines {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+[data-eds] .eds-state-skeleton__line {
+  background: var(--eds-cmp-state-skeleton-bg);
+  border-radius: var(--eds-radius-small);
+  display: block;
+  height: 12px;
+}
+
+[data-eds] .eds-state-skeleton[data-skeleton-shape="document"] .eds-state-skeleton__line:nth-child(1) { width: 100%; }
+[data-eds] .eds-state-skeleton[data-skeleton-shape="document"] .eds-state-skeleton__line:nth-child(2) { width: 92%; }
+[data-eds] .eds-state-skeleton[data-skeleton-shape="document"] .eds-state-skeleton__line:nth-child(3) { width: 64%; }
+[data-eds] .eds-state-skeleton[data-skeleton-shape="data"] .eds-state-skeleton__line { width: 100%; height: 28px; }
+[data-eds] .eds-state-skeleton[data-skeleton-shape="workspace"] .eds-state-skeleton__line:nth-child(1) { width: 40%; height: 20px; }
+[data-eds] .eds-state-skeleton[data-skeleton-shape="workspace"] .eds-state-skeleton__line:nth-child(2) { width: 100%; height: 120px; }
+[data-eds] .eds-state-skeleton[data-skeleton-shape="workspace"] .eds-state-skeleton__line:nth-child(3) { width: 100%; height: 40px; }
+
+@media (forced-colors: active) {
+  [data-eds] .eds-state { border-color: ButtonBorder; }
+  [data-eds] .eds-state__unchanged { border-left-color: ButtonBorder; }
+  [data-eds] .eds-state-skeleton__line { background: GrayText; forced-color-adjust: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-eds] .eds-state *,
+  [data-eds] .eds-state-skeleton * { animation: none; }
+}

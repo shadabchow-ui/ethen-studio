@@ -1,0 +1,105 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "resemble-ai/chatterboxhd/speech-to-speech",
+  "task": "speech",
+  "source_url": "https://fal.ai/models/resemble-ai/chatterboxhd/speech-to-speech",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=resemble-ai%2Fchatterboxhd%2Fspeech-to-speech",
+  "retrieved_at": "2026-09-23T14:38:08.744Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "speech-to-speech",
+  "bytes_sha256": "62a85c1860fdc6b1c70a78fe02771ce53efcc934f6e4f6d8079de0576bd6d538",
+  "queue_path": "/resemble-ai/chatterboxhd/speech-to-speech",
+  "input_name": "ChatterboxhdSpeechToSpeechInput",
+  "input": {
+    "$refName": "ChatterboxhdSpeechToSpeechInput",
+    "type": "object",
+    "description": "Input parameters for the speech-to-speech request.",
+    "properties": {
+      "high_quality_audio": {
+        "type": "boolean",
+        "default": false,
+        "description": "If True, the generated audio will be upscaled to 48kHz. The generation of the audio will take longer, but the quality will be higher. If False, the generated audio will be 24kHz."
+      },
+      "target_voice_audio_url": {
+        "type": "string",
+        "description": "URL to the audio file which represents the voice of the output audio. If provided, this will override the target_voice setting. If neither target_voice nor target_voice_audio_url are provided, the default target voice will be used."
+      },
+      "source_audio_url": {
+        "type": "string",
+        "description": "URL to the source audio file to be voice-converted."
+      },
+      "target_voice": {
+        "type": "string",
+        "enum": [
+          "Aurora",
+          "Blade",
+          "Britney",
+          "Carl",
+          "Cliff",
+          "Richard",
+          "Rico",
+          "Siobhan",
+          "Vicky"
+        ],
+        "description": "The voice to use for the speech-to-speech request. If neither target_voice nor target_voice_audio_url are provided, a random target voice will be used."
+      }
+    },
+    "required": [
+      "source_audio_url"
+    ]
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs."
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics."
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "ChatterboxhdSpeechToSpeechInput",
+    "ChatterboxhdSpeechToSpeechOutput",
+    "Audio"
+  ]
+}

@@ -1,0 +1,156 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/kling-video/v3/standard/text-to-video",
+  "task": "text-to-video",
+  "source_url": "https://fal.ai/models/fal-ai/kling-video/v3/standard/text-to-video",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fkling-video%2Fv3%2Fstandard%2Ftext-to-video",
+  "retrieved_at": "2026-09-20T09:40:02.468Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "text-to-video",
+  "bytes_sha256": "f9435c36e44068b3bad07159d38e6baa9b188ddf3bea07ecb636332e1050e9bd",
+  "queue_path": "/fal-ai/kling-video/v3/standard/text-to-video",
+  "input_name": "KlingVideoV3StandardTextToVideoInput",
+  "input": {
+    "$refName": "KlingVideoV3StandardTextToVideoInput",
+    "type": "object",
+    "properties": {
+      "prompt": {
+        "description": "Text prompt for video generation. Either prompt or multi_prompt must be provided, but not both.",
+        "anyOf": [
+          {
+            "type": "string",
+            "maxLength": 2500
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "aspect_ratio": {
+        "type": "string",
+        "enum": [
+          "16:9",
+          "9:16",
+          "1:1"
+        ],
+        "default": "16:9",
+        "description": "The aspect ratio of the generated video frame"
+      },
+      "negative_prompt": {
+        "type": "string",
+        "default": "blur, distort, and low quality",
+        "maxLength": 2500
+      },
+      "duration": {
+        "type": "string",
+        "enum": [
+          "3",
+          "4",
+          "5",
+          "6",
+          "7",
+          "8",
+          "9",
+          "10",
+          "11",
+          "12",
+          "13",
+          "14",
+          "15"
+        ],
+        "default": "5",
+        "description": "The duration of the generated video in seconds"
+      },
+      "multi_prompt": {
+        "description": "List of prompts for multi-shot video generation. If provided, overrides the single prompt and divides the video into multiple shots with specified prompts and durations.",
+        "anyOf": [
+          {
+            "type": "array",
+            "items": {
+              "unsupported": "depth-exceeded"
+            }
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "shot_type": {
+        "type": "string",
+        "enum": [
+          "customize",
+          "intelligent"
+        ],
+        "default": "customize",
+        "description": "The type of multi-shot video generation. 'intelligent' lets the model automatically determine shot structure."
+      },
+      "cfg_scale": {
+        "type": "number",
+        "default": 0.5,
+        "minimum": 0,
+        "maximum": 1,
+        "description": "The CFG (Classifier Free Guidance) scale is a measure of how close you want\n            the model to stick to your prompt."
+      },
+      "generate_audio": {
+        "type": "boolean",
+        "default": true,
+        "description": "Whether to generate native audio for the video. Supports Chinese and English voice output. Other languages are automatically translated to English. For English speech, use lowercase letters; for acronyms or proper nouns, use uppercase."
+      }
+    }
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs."
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics."
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "KlingVideoV3StandardTextToVideoInput",
+    "KlingVideoV3StandardTextToVideoOutput",
+    "KlingV3MultiPromptElement",
+    "File"
+  ]
+}

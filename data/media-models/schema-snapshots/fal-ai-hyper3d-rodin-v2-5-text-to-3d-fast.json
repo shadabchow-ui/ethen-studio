@@ -1,0 +1,225 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/hyper3d/rodin/v2.5/text-to-3d/fast",
+  "task": "3d-generation",
+  "source_url": "https://fal.ai/models/fal-ai/hyper3d/rodin/v2.5/text-to-3d/fast",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fhyper3d%2Frodin%2Fv2.5%2Ftext-to-3d%2Ffast",
+  "retrieved_at": "2026-09-23T14:36:45.896Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "text-to-3d",
+  "bytes_sha256": "9d6522936aedad3565676bb94bd6c84bc5839d7ea7164bbc34cca1f6a3205dc5",
+  "queue_path": "/fal-ai/hyper3d/rodin/v2.5/text-to-3d/fast",
+  "input_name": "Hyper3dRodinV25TextTo3dFastInput",
+  "input": {
+    "$refName": "Hyper3dRodinV25TextTo3dFastInput",
+    "type": "object",
+    "properties": {
+      "seed": {
+        "description": "Seed value for randomization, ranging from 0 to 65535. Optional.",
+        "anyOf": [
+          {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 65535
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "prompt": {
+        "type": "string",
+        "maxLength": 1024,
+        "description": "A textual prompt to guide model generation. Required for Text-to-3D mode."
+      },
+      "bbox_condition": {
+        "description": "This is a controlnet that controls the maximum sized of the generated model.",
+        "anyOf": [
+          {
+            "$refName": "RodinGen25BbboxField",
+            "type": "object",
+            "properties": {
+              "height": {
+                "type": "integer",
+                "default": 0,
+                "minimum": 1,
+                "maximum": 2048,
+                "description": "Height (y axis) dimension for the bounding box constraint."
+              },
+              "width": {
+                "type": "integer",
+                "default": 0,
+                "minimum": 1,
+                "maximum": 2048,
+                "description": "Width (x axis) dimension for the bounding box constraint."
+              },
+              "length": {
+                "type": "integer",
+                "default": 0,
+                "minimum": 1,
+                "maximum": 2048,
+                "description": "Length (z axis) dimension for the bounding box constraint."
+              }
+            }
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "texture_delight": {
+        "type": "boolean",
+        "default": false,
+        "description": "Removes baked lighting/highlights from the generated textures."
+      },
+      "material": {
+        "type": "string",
+        "enum": [
+          "PBR",
+          "Shaded",
+          "All",
+          "None"
+        ],
+        "default": "Shaded",
+        "description": "Material type. PBR: physically-based materials with realistic lighting. Shaded: baked lighting with no PBR maps. All: both PBR and Shaded variants. None: geometry only with no textures."
+      },
+      "geometry_file_format": {
+        "type": "string",
+        "enum": [
+          "glb",
+          "usdz",
+          "fbx",
+          "obj",
+          "stl"
+        ],
+        "default": "glb",
+        "description": "Format of the geometry file. Possible values: glb, usdz, fbx, obj, stl. Default is glb."
+      },
+      "enable_creative_mode": {
+        "type": "boolean",
+        "default": false,
+        "description": "If enabled, the generation will have enhanced generative robustness while ensuring output consistency. This corresponds to `geometry_instruct_mode` being equal to `creative` on the Hyper3D API."
+      },
+      "is_micro": {
+        "type": "boolean",
+        "default": false,
+        "description": "Generate finer micro-scale geometric detail. Only effective with `tier=\"Gen-2.5-Extreme-High\"`."
+      },
+      "hd_texture": {
+        "type": "boolean",
+        "default": false,
+        "description": "Enables enhanced texture post-processing for higher visual fidelity."
+      },
+      "texture_mode": {
+        "description": "Texture generation quality. When unset, the API picks a default appropriate for the tier.",
+        "anyOf": [
+          {
+            "type": "string",
+            "enum": [
+              "legacy",
+              "extreme-low",
+              "low",
+              "medium",
+              "high"
+            ]
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "quality_mesh_option": {
+        "type": "string",
+        "enum": [
+          "Auto",
+          "1K Quad",
+          "4K Quad",
+          "8K Quad",
+          "18K Quad",
+          "20K Quad",
+          "2K Triangle",
+          "4K Triangle",
+          "8K Triangle",
+          "10K Triangle",
+          "20K Triangle"
+        ],
+        "default": "Auto",
+        "description": "Combined quality and mesh type selection. Quad = smooth surfaces, Triangle = detailed geometry. Maps to `mesh_mode` (Quad/Raw) and `quality_override` (face count) on the Hyper3D API. Valid face counts depend on the selected tier. Up to 1M Triangle is supported for tiers Minimum, Extreme-Low, Low. Fo"
+      },
+      "TAPose": {
+        "type": "boolean",
+        "default": false,
+        "description": "Generate characters in T-pose or A-pose format, making them easier to rig and animate in 3D software."
+      },
+      "tier": {
+        "type": "string",
+        "enum": [
+          "Gen-2.5-Minimum",
+          "Gen-2.5-Extreme-Low",
+          "Gen-2.5-Low"
+        ],
+        "default": "Gen-2.5-Extreme-Low",
+        "description": "Generation tier. See more info in the [documentation](https://developer.hyper3d.ai/api-specification/rodin-gen2.5#use-gen-2.5-generation-with-following-gen-2.5-tiers). Selecting Gen-2.5-Minimum will automatically configure to a minimum mode, where 50K Triangle is selected, taking priority over quali"
+      }
+    },
+    "required": [
+      "prompt"
+    ]
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs."
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics."
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "Hyper3dRodinV25TextTo3dFastInput",
+    "Hyper3dRodinV25TextTo3dFastOutput",
+    "RodinGen25BbboxField",
+    "Image",
+    "File"
+  ]
+}

@@ -1,0 +1,874 @@
+{
+  "rules": [
+    {
+      "id": "EDS-001",
+      "title": "Experimental specimens remain Lab-only",
+      "rationale": "Unreviewed EDS work must not become a production dependency.",
+      "severity": "error",
+      "validator": "scripts/validate-eds-lab.ts#experimental-import-boundary",
+      "status": "Approved",
+      "originMilestone": "D01",
+      "approvedAtSha": "42096ae2fd716a67cd503106d5216d10f2d05e5f"
+    },
+    {
+      "id": "EDS-002",
+      "title": "Candidate specimens cannot enter production routes",
+      "rationale": "Candidate work needs review in the Lab before a product route can consume it.",
+      "severity": "error",
+      "validator": "scripts/validate-eds-lab.ts#candidate-production-boundary",
+      "status": "Approved",
+      "originMilestone": "D01",
+      "approvedAtSha": "42096ae2fd716a67cd503106d5216d10f2d05e5f"
+    },
+    {
+      "id": "EDS-003",
+      "title": "Archived studies are inert",
+      "rationale": "Retired Labs remain history, never an active implementation source.",
+      "severity": "error",
+      "validator": "scripts/validate-eds-lab.ts#archive-import-boundary",
+      "status": "Approved",
+      "originMilestone": "D01",
+      "approvedAtSha": "42096ae2fd716a67cd503106d5216d10f2d05e5f"
+    },
+    {
+      "id": "EDS-004",
+      "title": "Approved error rules require enforcement provenance",
+      "rationale": "An error-level rule is only authoritative when the enforcing assertion and approval SHA are recorded.",
+      "severity": "error",
+      "validator": "scripts/validate-eds-rules.ts#approved-error-metadata",
+      "status": "Approved",
+      "originMilestone": "D01",
+      "approvedAtSha": "42096ae2fd716a67cd503106d5216d10f2d05e5f"
+    },
+    {
+      "id": "EDS-005",
+      "title": "Candidate colors derive from one canonical palette",
+      "rationale": "Machine-readable JSON must remain the only hand-authored authority for D02 palette values.",
+      "severity": "warning",
+      "validator": "scripts/validate-eds-colors.ts#canonical-palette-authority",
+      "status": "Approved",
+      "originMilestone": "D02",
+      "approvedAtSha": "f9e12184b8c2f4049e3274eefb5a43025cf17335"
+    },
+    {
+      "id": "EDS-006",
+      "title": "Ground Lapis is structural identity, not the universal primary action",
+      "rationale": "Scarce use keeps Ground Lapis distinctive while Ink retains action authority.",
+      "severity": "warning",
+      "validator": "scripts/validate-eds-colors.ts#lapis-scarcity-contract",
+      "status": "Approved",
+      "originMilestone": "D02",
+      "approvedAtSha": "f9e12184b8c2f4049e3274eefb5a43025cf17335"
+    },
+    {
+      "id": "EDS-007",
+      "title": "Success semantics do not depend on green",
+      "rationale": "Verified and successful states use Ink plus explicit glyphs and language.",
+      "severity": "warning",
+      "validator": "scripts/validate-eds-colors.ts#no-green-success",
+      "status": "Approved",
+      "originMilestone": "D02",
+      "approvedAtSha": "f9e12184b8c2f4049e3274eefb5a43025cf17335"
+    },
+    {
+      "id": "EDS-008",
+      "title": "Selected states use three signals",
+      "rationale": "Selection combines Lapis Wash, a 2px structural marker, and weight change so meaning never depends on color alone.",
+      "severity": "warning",
+      "validator": "scripts/validate-eds-colors.ts#selected-state-structure",
+      "status": "Approved",
+      "originMilestone": "D02",
+      "approvedAtSha": "f9e12184b8c2f4049e3274eefb5a43025cf17335"
+    },
+    {
+      "id": "EDS-009",
+      "title": "Instrument Sans is the default operational and UI register",
+      "rationale": "Primary product interface typography across navigation, buttons, forms, and conversation must use Instrument Sans.",
+      "severity": "warning",
+      "validator": "scripts/validate-eds-typography.ts#instrument-sans-ui-authority",
+      "status": "Approved",
+      "originMilestone": "D03",
+      "approvedAtSha": "9d9d87054d6373352e65497a683a25fa1cc90e91"
+    },
+    {
+      "id": "EDS-010",
+      "title": "Newsreader is restricted to approved narrative and editorial contexts",
+      "rationale": "Serif is a register, not a brand; Newsreader must never appear in buttons, forms, navigation, tables, or operational controls.",
+      "severity": "warning",
+      "validator": "scripts/validate-eds-typography.ts#newsreader-narrative-boundary",
+      "status": "Approved",
+      "originMilestone": "D03",
+      "approvedAtSha": "9d9d87054d6373352e65497a683a25fa1cc90e91"
+    },
+    {
+      "id": "EDS-011",
+      "title": "IBM Plex Mono is restricted to code, provenance, and structured technical metadata",
+      "rationale": "Mono indicates exact character structure and provenance, not generic developer-tool aesthetic.",
+      "severity": "warning",
+      "validator": "scripts/validate-eds-typography.ts#ibm-plex-mono-provenance-boundary",
+      "status": "Approved",
+      "originMilestone": "D03",
+      "approvedAtSha": "9d9d87054d6373352e65497a683a25fa1cc90e91"
+    },
+    {
+      "id": "EDS-012",
+      "title": "Typography tokens derive from one canonical candidate authority",
+      "rationale": "Machine-readable JSON must remain the only hand-authored authority for D03 typography scale and font specifications.",
+      "severity": "warning",
+      "validator": "scripts/validate-eds-typography.ts#canonical-typography-authority",
+      "status": "Approved",
+      "originMilestone": "D03",
+      "approvedAtSha": "9d9d87054d6373352e65497a683a25fa1cc90e91"
+    },
+    {
+      "id": "EDS-013",
+      "title": "Pill 999 is restricted to true pills, avatars, switches and removable tags",
+      "rationale": "Per §12.1 only avatars, role=switch, toggle tracks, removable tags with a dismiss control, and status-dot circles may use 999; roughly 5% of current rounded-full uses are legitimate and everything else resolves to the 6/8/12/16 ladder.",
+      "severity": "warning",
+      "validator": null,
+      "status": "Candidate",
+      "originMilestone": "D04",
+      "approvedAtSha": null
+    },
+    {
+      "id": "EDS-014",
+      "title": "Radii resolve to the 6 / 8 / 12 / 16 ladder",
+      "rationale": "V2 radii carried forward with radius 8 added; no off-ladder radius may appear in EDS surfaces.",
+      "severity": "warning",
+      "validator": "scripts/validate-eds-tokens.ts#radius-ladder",
+      "status": "Candidate",
+      "originMilestone": "D04",
+      "approvedAtSha": null
+    },
+    {
+      "id": "EDS-015",
+      "title": "Deliberate 320ms motion is restricted to consequence surfaces",
+      "rationale": "The deliberate duration is a consequence instrument for approval, execution, receipt and irreversible action; all other transitions use instant through page, and deliberate collapses to instant under prefers-reduced-motion.",
+      "severity": "warning",
+      "validator": "scripts/validate-eds-tokens.ts#deliberate-motion-restriction",
+      "status": "Candidate",
+      "originMilestone": "D04",
+      "approvedAtSha": null
+    },
+    {
+      "id": "EDS-016",
+      "title": "No transition: all in EDS surfaces",
+      "rationale": "Blanket transitions animate unintended properties and break reduced-motion guarantees; every transition names its properties explicitly.",
+      "severity": "warning",
+      "validator": "scripts/validate-eds-tokens.ts#no-transition-all",
+      "status": "Candidate",
+      "originMilestone": "D04",
+      "approvedAtSha": null
+    },
+    {
+      "id": "EDS-017",
+      "title": "Canonical typed EDS icon registry is authoritative",
+      "rationale": "NAV_ICONS typed Record<IconName, ReactNode> plus getNavIcon(name: IconName) is the single icon authority; a union member without an implementation and an unknown name at a typed call site both fail typecheck.",
+      "severity": "warning",
+      "validator": "scripts/validate-eds-icons.ts#canonical-registry",
+      "status": "Approved",
+      "originMilestone": "D05",
+      "approvedAtSha": "84380331cc17c53d32bac803a29bd91032f51fc0"
+    },
+    {
+      "id": "EDS-018",
+      "title": "Duplicate local EDS/NavItem icon registries are prohibited",
+      "rationale": "Local ICONS maps and generic Record<string, ...> registries fork icon authority and hide unknown names; NavItem and Lab consume the canonical registry directly.",
+      "severity": "warning",
+      "validator": "scripts/validate-eds-icons.ts#no-duplicate-registry",
+      "status": "Approved",
+      "originMilestone": "D05",
+      "approvedAtSha": "84380331cc17c53d32bac803a29bd91032f51fc0"
+    },
+    {
+      "id": "EDS-019",
+      "title": "Silent fallback for unknown EDS icons is prohibited",
+      "rationale": "An unknown requested icon must never silently render a bullet or dot; the typed union rejects it at compile time, and any runtime path must show explicit deterministic missing-icon behavior.",
+      "severity": "warning",
+      "validator": "scripts/validate-eds-icons.ts#no-silent-fallback",
+      "status": "Approved",
+      "originMilestone": "D05",
+      "approvedAtSha": "84380331cc17c53d32bac803a29bd91032f51fc0"
+    },
+    {
+      "id": "EDS-020",
+      "title": "Meaningful icons require accessible context",
+      "rationale": "Decorative icons stay aria-hidden; a meaningful icon carries role=img with a label and an icon-only control carries an explicit accessible name, so shape or color alone never carries critical meaning.",
+      "severity": "warning",
+      "validator": "scripts/validate-eds-icons.ts#icon-a11y-contract",
+      "status": "Approved",
+      "originMilestone": "D05",
+      "approvedAtSha": "84380331cc17c53d32bac803a29bd91032f51fc0"
+    },
+    {
+      "id": "EDS-021",
+      "title": "EDS primitives resolve through eds.cmp.* component bindings",
+      "rationale": "Primitive implementations must not bypass component authority by directly consuming semantic or raw token tiers.",
+      "severity": "warning",
+      "validator": "scripts/validate-eds-primitives.ts#component-binding-tier",
+      "status": "Candidate",
+      "originMilestone": "D06",
+      "approvedAtSha": null
+    },
+    {
+      "id": "EDS-022",
+      "title": "EDS primitive implementations contain no raw palette authority",
+      "rationale": "Primitive styling must remain portable across theme and future token changes by consuming canonical EDS bindings rather than hard-coded palette utilities or values.",
+      "severity": "warning",
+      "validator": "scripts/validate-eds-primitives.ts#raw-palette-boundary",
+      "status": "Candidate",
+      "originMilestone": "D06",
+      "approvedAtSha": null
+    },
+    {
+      "id": "EDS-023",
+      "title": "Interactive primitive boundaries use approved control-boundary authority",
+      "rationale": "Interactive boundaries must remain visibly distinguishable in Light, Dark and accessibility modes and preserve the approved >=3:1 boundary contract.",
+      "severity": "warning",
+      "validator": "scripts/validate-eds-primitives.ts#interactive-boundary-contract",
+      "status": "Candidate",
+      "originMilestone": "D06",
+      "approvedAtSha": null
+    },
+    {
+      "id": "EDS-024",
+      "title": "Generated Ethen Design Skill sections remain synchronized with canonical EDS authorities",
+      "rationale": "An agent-facing design skill that drifts from the token and component authorities creates a competing design system.",
+      "severity": "warning",
+      "validator": "scripts/validate-eds-design-skill.ts#generated-authority-sync",
+      "status": "Candidate",
+      "originMilestone": "D06",
+      "approvedAtSha": null
+    },
+    {
+      "id": "EDS-025",
+      "title": "Density changes rhythm, not design identity",
+      "rationale": "Reading, Work and Operational are resolutions of one component system; density may vary approved type, spacing and sizing roles only, never palette, radius, motion, focus, or semantics.",
+      "severity": "warning",
+      "validator": "scripts/validate-eds-density.ts#density-invariance",
+      "status": "Candidate",
+      "originMilestone": "D07",
+      "approvedAtSha": null
+    },
+    {
+      "id": "EDS-026",
+      "title": "One component set serves every density",
+      "rationale": "Density-scoped resolution must never become a density-specific primitive family; a second Button or Table per density is a fork of the design system.",
+      "severity": "warning",
+      "validator": "scripts/validate-eds-density.ts#no-density-forks",
+      "status": "Candidate",
+      "originMilestone": "D07",
+      "approvedAtSha": null
+    },
+    {
+      "id": "EDS-027",
+      "title": "Operational density preserves accessibility",
+      "rationale": "Dense surfaces carry the highest a11y risk; operational controls must keep minimum target sizing with coarse-pointer relaxation and leave focus, field, and announcement contracts intact.",
+      "severity": "warning",
+      "validator": "scripts/validate-eds-density.ts#operational-a11y-floor",
+      "status": "Candidate",
+      "originMilestone": "D07",
+      "approvedAtSha": null
+    },
+    {
+      "id": "EDS-028",
+      "title": "Density is surface-declared",
+      "rationale": "Density belongs to the containing surface via data-eds-density; a user-configurable compact-mode architecture would fragment the system into preference-driven variants.",
+      "severity": "warning",
+      "validator": "scripts/validate-eds-density.ts#surface-declared-density",
+      "status": "Candidate",
+      "originMilestone": "D07",
+      "approvedAtSha": null
+    },
+    {
+      "id": "EDS-029",
+      "title": "One canonical Composer serves every product surface",
+      "rationale": "Dozens of product composers forked the interaction model; the EDS replacement must remain a single implementation with variants as configuration, never product-specific siblings.",
+      "severity": "warning",
+      "validator": "scripts/validate-eds-composer.ts#one-canonical-composer",
+      "status": "Approved",
+      "originMilestone": "D08",
+      "approvedAtSha": "2ebd5e05add52a72d672ec3fdb1bf5c29daac992"
+    },
+    {
+      "id": "EDS-030",
+      "title": "Composer remains geometrically stable while streaming",
+      "rationale": "Send becomes stop in one fixed slot; streaming must never move, pulse, lift, or rescale the composition surface.",
+      "severity": "warning",
+      "validator": "scripts/validate-eds-composer.ts#static-streaming",
+      "status": "Approved",
+      "originMilestone": "D08",
+      "approvedAtSha": "2ebd5e05add52a72d672ec3fdb1bf5c29daac992"
+    },
+    {
+      "id": "EDS-031",
+      "title": "Composer input uses the Instrument Sans body register",
+      "rationale": "Message composition is operational input, not narrative output or provenance metadata; Newsreader and mono registers are forbidden in the Composer.",
+      "severity": "warning",
+      "validator": "scripts/validate-eds-composer.ts#input-register",
+      "status": "Approved",
+      "originMilestone": "D08",
+      "approvedAtSha": "2ebd5e05add52a72d672ec3fdb1bf5c29daac992"
+    },
+    {
+      "id": "EDS-032",
+      "title": "Composer attachments and tools stay consolidated",
+      "rationale": "One attachment affordance and one collapsed Tools entry keep the Composer quiet; permanent per-type buttons and cockpits do not belong in composition chrome.",
+      "severity": "warning",
+      "validator": "scripts/validate-eds-composer.ts#attachment-tools",
+      "status": "Approved",
+      "originMilestone": "D08",
+      "approvedAtSha": "2ebd5e05add52a72d672ec3fdb1bf5c29daac992"
+    },
+    {
+      "id": "EDS-033",
+      "title": "Autonomy does not live in the Composer",
+      "rationale": "Authority and autonomy belong to approval and policy surfaces; message composition must not carry autonomy selectors.",
+      "severity": "warning",
+      "validator": "scripts/validate-eds-composer.ts#no-autonomy",
+      "status": "Approved",
+      "originMilestone": "D08",
+      "approvedAtSha": "2ebd5e05add52a72d672ec3fdb1bf5c29daac992"
+    },
+    {
+      "id": "EDS-034",
+      "title": "Composer variant and density are independent dimensions",
+      "rationale": "Prose, work, and inline describe composition mode; reading, work, and operational describe surface rhythm. Coupling them recreates the fork problem density solved.",
+      "severity": "warning",
+      "validator": "scripts/validate-eds-composer.ts#variant-density-independence",
+      "status": "Approved",
+      "originMilestone": "D08",
+      "approvedAtSha": "2ebd5e05add52a72d672ec3fdb1bf5c29daac992"
+    },
+    {
+      "id": "EDS-035",
+      "title": "One canonical AppShell serves every product surface",
+      "rationale": "Product-specific, device-specific, and density-specific shell forks recreate the 102-shell sprawl; one composable shell with slots covers every surface.",
+      "severity": "warning",
+      "validator": "scripts/validate-eds-shell.ts#one-canonical-shell",
+      "status": "Approved",
+      "originMilestone": "D09",
+      "approvedAtSha": "d01c4633511d46a51ca691326f66cbf89d73d5b9"
+    },
+    {
+      "id": "EDS-036",
+      "title": "No product identity inside generic EDS shell code",
+      "rationale": "Product names, routes, and groupings are V7-owned and actively moving; the generic shell must receive product truth through props projected from the portfolio authority.",
+      "severity": "warning",
+      "validator": "scripts/validate-eds-shell.ts#product-name-purity",
+      "status": "Approved",
+      "originMilestone": "D09",
+      "approvedAtSha": "d01c4633511d46a51ca691326f66cbf89d73d5b9"
+    },
+    {
+      "id": "EDS-037",
+      "title": "Portfolio authority owns product truth and lifecycle",
+      "rationale": "Launcher grouping, availability, and lifecycle labels must follow lib/portfolio/registry.ts at read time; unavailable products stay visibly in-development.",
+      "severity": "warning",
+      "validator": "scripts/validate-eds-shell.ts#lifecycle-truth",
+      "status": "Approved",
+      "originMilestone": "D09",
+      "approvedAtSha": "d01c4633511d46a51ca691326f66cbf89d73d5b9"
+    },
+    {
+      "id": "EDS-038",
+      "title": "Active nav uses wash plus marker plus emphasis",
+      "rationale": "Selected navigation needs three redundant signals so meaning survives forced colors and never rides on color alone; filled pills and green treatments are out.",
+      "severity": "warning",
+      "validator": "scripts/validate-eds-shell.ts#active-state-contract",
+      "status": "Approved",
+      "originMilestone": "D09",
+      "approvedAtSha": "d01c4633511d46a51ca691326f66cbf89d73d5b9"
+    },
+    {
+      "id": "EDS-039",
+      "title": "One responsive shell architecture with landmarks and skip navigation",
+      "rationale": "Inline sidebar yields to the drawer at narrow widths, never simultaneously; banner, navigation, main, and complementary landmarks plus a working skip link hold across every width.",
+      "severity": "warning",
+      "validator": "scripts/validate-eds-shell.ts#sidebar-drawer-exclusivity",
+      "status": "Approved",
+      "originMilestone": "D09",
+      "approvedAtSha": "d01c4633511d46a51ca691326f66cbf89d73d5b9"
+    },
+    {
+      "id": "EDS-040",
+      "title": "Shell overlays reuse the shared focus contract",
+      "rationale": "Launcher and drawer enter at the first meaningful control and restore to the actual trigger on close via useOverlay; sentinels, shared refs, and second focus managers are out.",
+      "severity": "warning",
+      "validator": "scripts/validate-eds-shell.ts#focus-contract",
+      "status": "Approved",
+      "originMilestone": "D09",
+      "approvedAtSha": "d01c4633511d46a51ca691326f66cbf89d73d5b9"
+    },
+    {
+      "id": "EDS-041",
+      "title": "One canonical ConversationFrame in prose and work registers",
+      "rationale": "Product-, device-, or register-specific conversation forks recreate the shell sprawl; one frame with prose/work variants covers every surface.",
+      "severity": "warning",
+      "validator": "scripts/validate-eds-conversation-workspace.ts#one-conversation-frame",
+      "status": "Candidate",
+      "originMilestone": "D10",
+      "approvedAtSha": null
+    },
+    {
+      "id": "EDS-042",
+      "title": "Message hierarchy comes from spacing, type, surface, rail, and metadata",
+      "rationale": "Alternating bubble soup destroys scanability; the 24px avatar, thin rail, 720px measure, and below-content metadata carry hierarchy instead.",
+      "severity": "warning",
+      "validator": "scripts/validate-eds-conversation-workspace.ts#one-message-anatomy",
+      "status": "Candidate",
+      "originMilestone": "D10",
+      "approvedAtSha": null
+    },
+    {
+      "id": "EDS-043",
+      "title": "One canonical WorkspacePattern in conversation, artifact, split, and full modes",
+      "rationale": "Desktop/mobile/product workspace forks reset state on switch; one pattern with four modes preserves conversation, draft, artifact, and version.",
+      "severity": "warning",
+      "validator": "scripts/validate-eds-conversation-workspace.ts#one-workspace-pattern",
+      "status": "Candidate",
+      "originMilestone": "D10",
+      "approvedAtSha": null
+    },
+    {
+      "id": "EDS-044",
+      "title": "Artifacts are persistent surfaces over the canonical ArtifactRecord and ArtifactVersion contracts",
+      "rationale": "Parallel Lab artifact models drift from proof authority; fixture values over the real lib/platform/proof/contract.ts types keep lineage truthful.",
+      "severity": "warning",
+      "validator": "scripts/validate-eds-conversation-workspace.ts#real-artifact-contracts",
+      "status": "Candidate",
+      "originMilestone": "D10",
+      "approvedAtSha": null
+    },
+    {
+      "id": "EDS-045",
+      "title": "Workspace chrome stays stable while artifact content streams",
+      "rationale": "Reshuffling title, tabs, version, diff, or fullscreen controls on every update breaks spatial memory; only the content region changes.",
+      "severity": "warning",
+      "validator": "scripts/validate-eds-conversation-workspace.ts#artifact-tabs",
+      "status": "Candidate",
+      "originMilestone": "D10",
+      "approvedAtSha": null
+    },
+    {
+      "id": "EDS-046",
+      "title": "Split uses a fixed-pixel conversation column with a keyboard-resizable persisted divider",
+      "rationale": "Percentage conversation sizing becomes unreadably wide; the 340/380/420 family with a 1px visual rule, ~16px hit area, arrows, and local persistence keeps measure optimal.",
+      "severity": "warning",
+      "validator": "scripts/validate-eds-conversation-workspace.ts#split-contract",
+      "status": "Candidate",
+      "originMilestone": "D10",
+      "approvedAtSha": null
+    },
+    {
+      "id": "EDS-047",
+      "title": "Full-screen artifact is a mode with Escape restoration, never a route",
+      "rationale": "A fullscreen route remounts the tree and loses draft and version; mode=full preserves state and Escape restores the actual previous mode.",
+      "severity": "warning",
+      "validator": "scripts/validate-eds-conversation-workspace.ts#one-workspace-pattern",
+      "status": "Candidate",
+      "originMilestone": "D10",
+      "approvedAtSha": null
+    },
+    {
+      "id": "EDS-048",
+      "title": "Intent, work, and evidence are explicit structural regions",
+      "rationale": "Mixing provenance into chat or burying it behind arbitrary inspectors hides authority; Ethen surfaces separate intent, durable work, and evidence regions.",
+      "severity": "warning",
+      "validator": "scripts/validate-eds-evidence-rail.ts#intent-work-evidence",
+      "status": "Candidate",
+      "originMilestone": "D11",
+      "approvedAtSha": null
+    },
+    {
+      "id": "EDS-049",
+      "title": "One canonical EvidenceRail in six fixed sections",
+      "rationale": "Product- or device-specific evidence rails fork provenance semantics; one rail with Authority, Checks, Sources, Policy, Cost, and Receipt covers every study.",
+      "severity": "warning",
+      "validator": "scripts/validate-eds-evidence-rail.ts#one-evidence-rail",
+      "status": "Candidate",
+      "originMilestone": "D11",
+      "approvedAtSha": null
+    },
+    {
+      "id": "EDS-050",
+      "title": "Evidence sections may be omitted but never reordered",
+      "rationale": "Reordered provenance sections retrain reader expectations per surface; omission preserves the canonical Authority-first contract.",
+      "severity": "warning",
+      "validator": "scripts/validate-eds-evidence-rail.ts#fixed-section-order",
+      "status": "Candidate",
+      "originMilestone": "D11",
+      "approvedAtSha": null
+    },
+    {
+      "id": "EDS-051",
+      "title": "Evidence values are mono provenance; checks never use green success",
+      "rationale": "Mono means exact technical value; green-default checks certify without reading. Pass is Ink plus glyph and text, failure is Brick plus glyph and text.",
+      "severity": "warning",
+      "validator": "scripts/validate-eds-evidence-rail.ts#mono-provenance",
+      "status": "Candidate",
+      "originMilestone": "D11",
+      "approvedAtSha": null
+    },
+    {
+      "id": "EDS-052",
+      "title": "Evidence detail opens in the workspace, never a modal or route",
+      "rationale": "A detail modal owns an alternate content universe; the rail summarizes and the D10 workspace presents, preserving state.",
+      "severity": "warning",
+      "validator": "scripts/validate-eds-evidence-rail.ts#detail-in-workspace",
+      "status": "Candidate",
+      "originMilestone": "D11",
+      "approvedAtSha": null
+    },
+    {
+      "id": "EDS-053",
+      "title": "Never fabricate evidence; missing outcome stays a visible V7 dependency",
+      "rationale": "Invented cost, outcome, or policy data certifies what cannot be proved; absent sections are omitted and outcome renders as DEPENDS ON: V7.",
+      "severity": "warning",
+      "validator": "scripts/validate-eds-evidence-rail.ts#no-fabricated-evidence",
+      "status": "Candidate",
+      "originMilestone": "D11",
+      "approvedAtSha": null
+    },
+    {
+      "id": "EDS-054",
+      "title": "Evidence never takes horizontal space from Work below the rail breakpoint",
+      "rationale": "Below 1280 the Evidence affordance is a Workspace-header control, not a second column. A trigger rendered as a sibling of Work compresses the work surface at exactly the widths where it is scarcest.",
+      "severity": "warning",
+      "validator": "scripts/validate-eds-runtime.ts#WORKSPACE_NOT_COMPRESSED",
+      "status": "Candidate",
+      "originMilestone": "D11",
+      "approvedAtSha": null
+    },
+    {
+      "id": "EDS-055",
+      "title": "The declared Evidence presentation must be the presentation being painted",
+      "rationale": "A DOM that declares overlay while CSS paints a sheet makes the data model a fiction. Presentation is resolved from the same media queries the stylesheet uses and published to the DOM, and the runtime gate measures the painted chrome against the claim.",
+      "severity": "warning",
+      "validator": "scripts/validate-eds-runtime.ts#PRESENTATION_TRUTH",
+      "status": "Candidate",
+      "originMilestone": "D11",
+      "approvedAtSha": null
+    },
+    {
+      "id": "EDS-056",
+      "title": "No overlay state survives an incompatible breakpoint transition",
+      "rationale": "A scrim, focus trap, body-scroll lock, or aria-expanded trigger left behind by a resize is an invisible open state the user cannot dismiss.",
+      "severity": "warning",
+      "validator": "scripts/validate-eds-runtime.ts#NO_STALE_OVERLAY_STATE",
+      "status": "Candidate",
+      "originMilestone": "D11",
+      "approvedAtSha": null
+    },
+    {
+      "id": "EDS-057",
+      "title": "Responsive and overflow claims require browser measurement",
+      "rationale": "Text matching cannot establish painted geometry. Any assertion about breakpoint behaviour, horizontal overflow, focus, or review viewport must be measured in a real browser; static validators state structure only.",
+      "severity": "warning",
+      "validator": "scripts/validate-eds-runtime.ts#RUNTIME_GATE",
+      "status": "Candidate",
+      "originMilestone": "D11",
+      "approvedAtSha": null
+    },
+    {
+      "id": "EDS-058",
+      "title": "A Lab specimen's declared review width is a real viewport",
+      "rationale": "A width-constrained div does not change how viewport media queries resolve, so a 390px label on a 1440px window is a lie about the thing under review. Declared widths are real document viewports; only display may be scaled.",
+      "severity": "warning",
+      "validator": "scripts/validate-eds-evidence-rail.ts#LAB_REAL_VIEWPORT_GEOMETRY",
+      "status": "Candidate",
+      "originMilestone": "D11",
+      "approvedAtSha": null
+    },
+    {
+      "id": "EDS-059",
+      "title": "A Detail action must reveal its Workspace destination",
+      "rationale": "Opening a destination behind a still-active Evidence overlay makes a working control look broken. Activating Detail dismisses the covering Evidence surface and restores focus sensibly.",
+      "severity": "warning",
+      "validator": "scripts/validate-eds-runtime.ts#DETAIL_DESTINATION_NOT_COVERED",
+      "status": "Candidate",
+      "originMilestone": "D11",
+      "approvedAtSha": null
+    },
+    {
+      "id": "EDS-060",
+      "title": "Repeated controls carry contextually distinct accessible names",
+      "rationale": "Five controls all named \"Detail\" are indistinguishable in a screen-reader element list. The visible label may stay restrained while the accessible name names its section.",
+      "severity": "warning",
+      "validator": "scripts/validate-eds-evidence-rail.ts#DETAIL_NAMES_CONTEXTUAL",
+      "status": "Candidate",
+      "originMilestone": "D11",
+      "approvedAtSha": null
+    },
+    {
+      "id": "EDS-061",
+      "title": "Signature components never fabricate a backend capability",
+      "rationale": "Cost, authority, standing grants and attenuation are absent from the approval contract, so they are absent from the Approval Card. An unavailable capability renders as a marked, inert dependency target, never as a control that would do nothing.",
+      "severity": "warning",
+      "validator": "scripts/validate-eds-trust.ts#NO_FABRICATED_CAPABILITY",
+      "status": "Candidate",
+      "originMilestone": "D12",
+      "approvedAtSha": null
+    },
+    {
+      "id": "EDS-062",
+      "title": "A consequential decision is never dismissible by accident",
+      "rationale": "Below 768 the Approval Card is a full-screen surface with square corners and no scrim: a swipe-away bottom sheet invites dismissing a decision the reader has not made.",
+      "severity": "warning",
+      "validator": "scripts/validate-eds-runtime.ts#APPROVAL_NOT_DISMISSIBLE_SHEET",
+      "status": "Candidate",
+      "originMilestone": "D12",
+      "approvedAtSha": null
+    },
+    {
+      "id": "EDS-063",
+      "title": "Risk and verdict never depend on colour",
+      "rationale": "Risk renders as a word from the real label map; the Brick rule is aria-hidden decoration. Review verdicts are equally weighted and selection carries a glyph and a weight change. Everything survives forced-colors.",
+      "severity": "warning",
+      "validator": "scripts/validate-eds-runtime.ts#FORCED_COLORS_RISK_IS_A_WORD",
+      "status": "Candidate",
+      "originMilestone": "D12",
+      "approvedAtSha": null
+    },
+    {
+      "id": "EDS-064",
+      "title": "An irreversible action requires an exact typed confirmation",
+      "rationale": "The Reversible line is replaced by a Brick warning and Approve stays unavailable until the confirmation phrase matches exactly. The field is labelled and its state is announced.",
+      "severity": "warning",
+      "validator": "scripts/validate-eds-runtime.ts#TYPED_CONFIRMATION_GATES_APPROVE",
+      "status": "Candidate",
+      "originMilestone": "D12",
+      "approvedAtSha": null
+    },
+    {
+      "id": "EDS-065",
+      "title": "The Thread cannot report a stage the platform cannot record",
+      "rationale": "Outcome, Judgement and Ground truth have no record type. The component forces them unreached whatever a caller passes, so an honest gap stays visible instead of being drawn as progress.",
+      "severity": "warning",
+      "validator": "scripts/validate-eds-runtime.ts#THREAD_UNSUPPORTED_STAGES_UNREACHED",
+      "status": "Candidate",
+      "originMilestone": "D12",
+      "approvedAtSha": null
+    },
+    {
+      "id": "EDS-066",
+      "title": "Verification is real or it is absent",
+      "rationale": "Verify receipt runs the production verifyAuditChain(); the control is not rendered when no verifier exists, and a tampered-chain specimen proves the verifier can fail.",
+      "severity": "warning",
+      "validator": "scripts/validate-eds-runtime.ts#RECEIPT_VERIFY_RUNS_REAL_CHAIN",
+      "status": "Candidate",
+      "originMilestone": "D12",
+      "approvedAtSha": null
+    },
+    {
+      "id": "EDS-067",
+      "title": "Serif is reserved for the verdict line and the receipt headline",
+      "rationale": "Serif is the system's one raised voice. app/globals.css sets font-family on bare headings with !important, so EDS-scoped headings defend their register explicitly and the runtime gate measures the resolved family.",
+      "severity": "warning",
+      "validator": "scripts/validate-eds-runtime.ts#VERDICT_RESOLVES_SERIF",
+      "status": "Candidate",
+      "originMilestone": "D12",
+      "approvedAtSha": null
+    },
+    {
+      "id": "EDS-068",
+      "title": "EDS copy renders exactly as written",
+      "rationale": "Product chrome capitalizes bare headings. EDS surfaces render the author's casing, because generated title-case turns written copy into a machine artefact.",
+      "severity": "warning",
+      "validator": "scripts/validate-eds-runtime.ts#COPY_NOT_RECASED",
+      "status": "Candidate",
+      "originMilestone": "D12",
+      "approvedAtSha": null
+    },
+    {
+      "id": "EDS-069",
+      "title": "Capability statements read from the real capability gate",
+      "rationale": "The Autonomy Sentence renders FounderCapabilityGate values and grants nothing. A second permission system in the design layer would be a second source of truth about what the agent may do.",
+      "severity": "warning",
+      "validator": "scripts/validate-eds-trust.ts#AUTONOMY_READS_REAL_GATE",
+      "status": "Candidate",
+      "originMilestone": "D12",
+      "approvedAtSha": null
+    },
+    {
+      "id": "EDS-070",
+      "title": "Lab fixtures compile against production contracts",
+      "rationale": "Fixtures are typed values over PlatformApprovalEntry, ApprovalProposal, AuditLogEntry and FounderCapabilityGate. A widened Lab-local interface would let a field the backend lacks appear as though it existed.",
+      "severity": "warning",
+      "validator": "scripts/validate-eds-trust.ts#REAL_CONTRACT_IMPORT",
+      "status": "Candidate",
+      "originMilestone": "D12",
+      "approvedAtSha": null
+    },
+    {
+      "id": "EDS-071",
+      "title": "Every interrupted state names what was left untouched",
+      "rationale": "A failure that says only what stopped forces the reader to go and check what state they are in. The four clauses are what stopped, why, what state you are in now, and what you can do; the third is the one products skip and the one people need.",
+      "severity": "warning",
+      "validator": "scripts/validate-eds-states.ts#STATE_UNCHANGED_REQUIRED",
+      "status": "Candidate",
+      "originMilestone": "D13",
+      "approvedAtSha": null
+    },
+    {
+      "id": "EDS-072",
+      "title": "Ethen speaks in the first person about its own actions",
+      "rationale": "Machine voice at the moment of failure is where trust is lost. Never a bare adjective for a state, no praise, no apology theatre; buttons name the outcome, not the mechanism.",
+      "severity": "warning",
+      "validator": "scripts/validate-eds-states.ts#ETHEN_VOICE",
+      "status": "Candidate",
+      "originMilestone": "D13",
+      "approvedAtSha": null
+    },
+    {
+      "id": "EDS-073",
+      "title": "A skeleton is the shape of the content, never a spinner",
+      "rationale": "A spinner tells the reader to wait; a skeleton tells them what is coming. Where a skeleton fits, a spinner is a refusal to say anything.",
+      "severity": "warning",
+      "validator": "scripts/validate-eds-states.ts#SKELETON_NOT_SPINNER",
+      "status": "Candidate",
+      "originMilestone": "D13",
+      "approvedAtSha": null
+    },
+    {
+      "id": "EDS-074",
+      "title": "A declared review width is a real viewport, everywhere in the Lab",
+      "rationale": "Extends EDS-058 from the Evidence Rail to every certified layout: responsive review runs in real document viewports, and display may be scaled but the viewport never is.",
+      "severity": "warning",
+      "validator": "scripts/validate-eds-freeze.ts#RUNTIME_GATE_WIDTH",
+      "status": "Candidate",
+      "originMilestone": "D13",
+      "approvedAtSha": null
+    },
+    {
+      "id": "EDS-075",
+      "title": "Accessibility is measured, never linted",
+      "rationale": "Keyboard reachability, focus visibility, dialog trap and restore, forced-colors, reduced motion, contrast ratios and 200% zoom are established against a live browser. A lint pass is not an accessibility result.",
+      "severity": "warning",
+      "validator": "scripts/validate-eds-a11y.ts#KEYBOARD_REACHABLE",
+      "status": "Candidate",
+      "originMilestone": "D13",
+      "approvedAtSha": null
+    },
+    {
+      "id": "EDS-076",
+      "title": "EDS baselines never touch V2 baselines",
+      "rationale": "Proving that the design programme changed nothing in production depends on the V2 snapshot directories staying exactly as they are. EDS baselines live in their own directory and the EDS specs target Lab routes only.",
+      "severity": "warning",
+      "validator": "scripts/validate-eds-freeze.ts#EDS_BASELINES_ISOLATED",
+      "status": "Candidate",
+      "originMilestone": "D13",
+      "approvedAtSha": null
+    },
+    {
+      "id": "EDS-077",
+      "title": "Every cmp binding resolves through a sys role",
+      "rationale": "A component binding wired straight to a raw value is how a token system quietly becomes a pile of hex codes. The three tiers hold or they are decoration.",
+      "severity": "warning",
+      "validator": "scripts/validate-eds-freeze.ts#TOKEN_CMP_BINDS_SYS_ONLY",
+      "status": "Candidate",
+      "originMilestone": "D13",
+      "approvedAtSha": null
+    },
+    {
+      "id": "EDS-078",
+      "title": "Density changes scale, never structure",
+      "rationale": "A density mode that adds or removes a component's structure is a second component wearing the same name. Density is one component set at three resolutions.",
+      "severity": "warning",
+      "validator": "scripts/validate-eds-freeze.ts#DENSITY_INVARIANT_STRUCTURE",
+      "status": "Candidate",
+      "originMilestone": "D13",
+      "approvedAtSha": null
+    },
+    {
+      "id": "EDS-079",
+      "title": "No second pill family",
+      "rationale": "The D06 chip is the one approved lozenge. One pill becomes a badge system becomes a UI of lozenges; circular controls are circles and are unaffected.",
+      "severity": "warning",
+      "validator": "scripts/validate-eds-freeze.ts#RADIUS_NO_PILL_PROLIFERATION",
+      "status": "Candidate",
+      "originMilestone": "D13",
+      "approvedAtSha": null
+    },
+    {
+      "id": "EDS-080",
+      "title": "Layout spacing comes from the scale",
+      "rationale": "A hand-picked layout value looks fine once and is unmaintainable at three densities. Optical values inside a control are permitted; layout values are not.",
+      "severity": "warning",
+      "validator": "scripts/validate-eds-freeze.ts#SPACING_ON_SCALE",
+      "status": "Candidate",
+      "originMilestone": "D13",
+      "approvedAtSha": null
+    },
+    {
+      "id": "EDS-081",
+      "title": "A retired study is absorbed, not merely deleted",
+      "rationale": "The archive reaches zero only after each study is mapped to the Lab section that now carries it and that mapping is recorded. Deleting evidence before verifying absorption loses the coverage with the code.",
+      "severity": "warning",
+      "validator": "scripts/validate-eds-freeze.ts#LAB_ARCHIVE_ZERO",
+      "status": "Candidate",
+      "originMilestone": "D13",
+      "approvedAtSha": null
+    },
+    {
+      "id": "EDS-082",
+      "title": "EDS reaches a production route only through the route-scoped allow-list",
+      "rationale": "ETHEN_EDS_ROUTES names routes; it is not a switch. Default empty means the design system reaches nothing by default, the blast radius is one route at a time, and rollback is removing a name rather than reverting code.",
+      "severity": "warning",
+      "validator": "scripts/validate-eds-canary.ts#FLAG_NOT_A_BOOLEAN",
+      "status": "Candidate",
+      "originMilestone": "D14",
+      "approvedAtSha": null
+    },
+    {
+      "id": "EDS-083",
+      "title": "A migrated route keeps its previous path intact",
+      "rationale": "The canary is only reversible because the old path was never removed. The route chooses between two paths on the server; the previous one still renders unchanged whenever the flag is off.",
+      "severity": "warning",
+      "validator": "scripts/validate-eds-canary.ts#V2_PATH_PRESERVED",
+      "status": "Candidate",
+      "originMilestone": "D14",
+      "approvedAtSha": null
+    },
+    {
+      "id": "EDS-084",
+      "title": "A canary changes presentation, never data",
+      "rationale": "Both paths use the same controller, the same endpoints and the same parameters. If the two paths differed in what they fetched, the comparison the canary exists to make would prove nothing.",
+      "severity": "warning",
+      "validator": "scripts/validate-eds-canary.ts#CANARY_SAME_DATA_PATH",
+      "status": "Candidate",
+      "originMilestone": "D14",
+      "approvedAtSha": null
+    },
+    {
+      "id": "EDS-085",
+      "title": "A production surface renders real data, never fixtures",
+      "rationale": "Lab fixtures make a surface look finished before it is. The production route binds to the live API; the Lab reviews the same component with typed values, which is a different thing.",
+      "severity": "warning",
+      "validator": "scripts/validate-eds-canary.ts#CANARY_NO_FIXTURES",
+      "status": "Candidate",
+      "originMilestone": "D14",
+      "approvedAtSha": null
+    },
+    {
+      "id": "EDS-086",
+      "title": "Failure copy on a production surface comes from the canonical voice table",
+      "rationale": "The moment a decision fails is where trust is decided. The sentence is looked up, not improvised, so unreviewed copy cannot reach a person at that moment.",
+      "severity": "warning",
+      "validator": "scripts/validate-eds-canary.ts#CANARY_VOICE_FROM_TABLE",
+      "status": "Candidate",
+      "originMilestone": "D14",
+      "approvedAtSha": null
+    },
+    {
+      "id": "EDS-087",
+      "title": "The EDS stylesheet import boundary is a closed list",
+      "rationale": "From D01 the Lab layout was the only permitted importer, which is what made zero production impact checkable. D14 widens it by exactly one flag-gated canary entry; every other import still fails.",
+      "severity": "warning",
+      "validator": "scripts/eds-import-boundary.ts#importBoundaryHolds",
+      "status": "Candidate",
+      "originMilestone": "D14",
+      "approvedAtSha": null
+    }
+  ]
+}

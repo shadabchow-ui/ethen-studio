@@ -1,0 +1,107 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/hunyuan-3d/v3.1/smart-topology",
+  "task": "3d-generation",
+  "source_url": "https://fal.ai/models/fal-ai/hunyuan-3d/v3.1/smart-topology",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fhunyuan-3d%2Fv3.1%2Fsmart-topology",
+  "retrieved_at": "2026-09-23T14:36:36.988Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "3d-to-3d",
+  "bytes_sha256": "24bd43bd59d902a9ec9f5b1ed190ecf32dcdf578460b1cad76b6618297bebcf4",
+  "queue_path": "/fal-ai/hunyuan-3d/v3.1/smart-topology",
+  "input_name": "Hunyuan3dV31SmartTopologyInput",
+  "input": {
+    "$refName": "Hunyuan3dV31SmartTopologyInput",
+    "type": "object",
+    "properties": {
+      "face_level": {
+        "type": "string",
+        "enum": [
+          "high",
+          "medium",
+          "low"
+        ],
+        "default": "medium",
+        "description": "Target polygon density. high: more detail/polygons, medium: balanced, low: fewer polygons."
+      },
+      "input_file_url": {
+        "type": "string",
+        "default": "https://v3b.fal.media/files/b/0a8c09c0/VYDiCTcDGK55qY2-idGbX_model.glb",
+        "description": "URL of GLB or OBJ file to optimize topology. Max size: 200MB."
+      },
+      "polygon_type": {
+        "type": "string",
+        "enum": [
+          "triangle",
+          "quadrilateral"
+        ],
+        "default": "triangle",
+        "description": "Output polygon type. triangle: triangular faces only. quadrilateral: mixed quad and triangle faces."
+      },
+      "input_file_type": {
+        "type": "string",
+        "enum": [
+          "glb",
+          "obj"
+        ],
+        "default": "glb",
+        "description": "Input 3D file format."
+      }
+    }
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs."
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics."
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "Hunyuan3dV31SmartTopologyInput",
+    "Hunyuan3dV31SmartTopologyOutput",
+    "File",
+    "ModelUrls"
+  ]
+}

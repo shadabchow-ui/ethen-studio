@@ -1,0 +1,155 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/veo3.1",
+  "task": "unknown",
+  "source_url": "https://fal.ai/models/fal-ai/veo3.1",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fveo3.1",
+  "retrieved_at": "2026-09-20T09:40:01.708Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "text-to-video",
+  "bytes_sha256": "8b5e3abb6dc9f40e96fdc72e2b1d3f8036cfc2fff5038078f68b45ce7ec6df6b",
+  "queue_path": "/fal-ai/veo3.1",
+  "input_name": "Veo31Input",
+  "input": {
+    "$refName": "Veo31Input",
+    "type": "object",
+    "properties": {
+      "negative_prompt": {
+        "description": "A negative prompt to guide the video generation.",
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "duration": {
+        "type": "string",
+        "enum": [
+          "4s",
+          "6s",
+          "8s"
+        ],
+        "default": "8s",
+        "description": "The duration of the generated video."
+      },
+      "prompt": {
+        "type": "string",
+        "maxLength": 20000,
+        "description": "The text prompt describing the video you want to generate"
+      },
+      "resolution": {
+        "type": "string",
+        "enum": [
+          "720p",
+          "1080p",
+          "4k"
+        ],
+        "default": "720p",
+        "description": "The resolution of the generated video."
+      },
+      "auto_fix": {
+        "type": "boolean",
+        "default": true,
+        "description": "Whether to automatically attempt to fix prompts that fail content policy or other validation checks by rewriting them."
+      },
+      "seed": {
+        "description": "The seed for the random number generator.",
+        "anyOf": [
+          {
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "generate_audio": {
+        "type": "boolean",
+        "default": true,
+        "description": "Whether to generate audio for the video."
+      },
+      "aspect_ratio": {
+        "type": "string",
+        "enum": [
+          "16:9",
+          "9:16"
+        ],
+        "default": "16:9",
+        "description": "Aspect ratio of the generated video"
+      },
+      "safety_tolerance": {
+        "type": "string",
+        "enum": [
+          "1",
+          "2",
+          "3",
+          "4",
+          "5",
+          "6"
+        ],
+        "default": "4",
+        "description": "The safety tolerance level for content moderation. 1 is the most strict (blocks most content), 6 is the least strict."
+      }
+    },
+    "required": [
+      "prompt"
+    ]
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs."
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics."
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "Veo31Input",
+    "Veo31Output",
+    "File"
+  ]
+}

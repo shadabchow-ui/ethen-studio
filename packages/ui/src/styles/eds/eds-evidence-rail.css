@@ -1,0 +1,312 @@
+/* EDS evidence rail styles — D11 canonical (G7 remediation).
+ * Hand-authored against design-system/tokens/eds-components-candidate.json.
+ * Scoped to [data-eds]. Lab only. No :root, no global element selectors.
+ *
+ * Architecture: one canonical EvidenceRail (Authority, Checks, Sources,
+ * Policy, Cost, Receipt in fixed order; an empty section is omitted and the
+ * survivors keep their order), wired through one EvidenceHost.
+ *
+ *   >=1600      persistent rail, 404px third column
+ *   1280-1599   persistent rail, 320px third column
+ *   1024-1279   overlay over the Workspace, from the header affordance
+ *   <1024       bottom sheet, from the same header affordance
+ *
+ * Below 1280 the host renders NO second column: the work surface owns 100%
+ * of the row and the affordance sits in the Workspace header, so Evidence
+ * can never compress Work. The breakpoints here are the same numbers
+ * evidence-presentation.ts resolves, which is what keeps
+ * data-evidence-presentation truthful.
+ *
+ * Values are mono provenance; checks are Ink plus glyph and text, never
+ * green; failure is Brick plus glyph and text.
+ */
+
+[data-eds] .eds-evidence {
+  background: var(--eds-cmp-evidence-bg);
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  min-width: 0;
+  overflow-y: auto;
+}
+
+/* Only the persistent rail carries the seam against Work. */
+[data-eds] .eds-evidence--rail {
+  border-left: 1px solid var(--eds-cmp-evidence-border);
+}
+
+[data-eds] .eds-evidence__section {
+  border-bottom: 1px solid var(--eds-cmp-evidence-border);
+  padding: var(--eds-space-default) var(--eds-space-spacious);
+}
+
+[data-eds] .eds-evidence__section-head {
+  align-items: baseline;
+  display: flex;
+  justify-content: space-between;
+  gap: var(--eds-space-default);
+}
+
+/* SCOPE DEFENCE — app/globals.css sets font-family and font-weight on bare
+ * h1/h2/h3 with `!important`, reaching inside [data-eds]. The rail renders the
+ * canonical section names in the EDS register, spelled exactly as the contract
+ * spells them. See the note in eds-trust.css. */
+[data-eds] .eds-evidence__section-title {
+  font-family: var(--eds-type-ui-family) !important;
+  font-weight: 600 !important;
+  letter-spacing: normal;
+  text-transform: none;
+  color: var(--eds-cmp-evidence-title-text);
+  font-family: var(--eds-type-ui-family);
+  font-size: var(--eds-type-ui-size);
+  font-weight: 600;
+  line-height: var(--eds-type-ui-line);
+  margin: 0;
+}
+
+[data-eds] .eds-evidence__count {
+  color: var(--eds-cmp-evidence-meta-text);
+  font-weight: 400;
+}
+
+[data-eds] .eds-evidence__detail {
+  background: none;
+  border: none;
+  color: var(--eds-cmp-evidence-meta-text);
+  cursor: pointer;
+  font-family: var(--eds-type-ui-family);
+  font-size: var(--eds-type-caption-size);
+  line-height: var(--eds-type-caption-line);
+  padding: 0;
+}
+
+[data-eds] .eds-evidence__detail:focus-visible {
+  outline: var(--eds-focus-ring);
+}
+
+[data-eds] .eds-evidence__lines {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-top: var(--eds-space-default);
+}
+
+[data-eds] .eds-evidence__line {
+  color: var(--eds-cmp-evidence-value-text);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 6px;
+  font-family: var(--eds-type-ui-family);
+  font-size: var(--eds-type-ui-size);
+  line-height: var(--eds-type-ui-line);
+  margin: 0;
+  max-width: 60ch;
+}
+
+[data-eds] .eds-evidence__mono {
+  color: var(--eds-cmp-evidence-value-text);
+  font-family: var(--eds-font-mono);
+  font-size: var(--eds-type-code-size);
+  line-height: var(--eds-type-code-line);
+  overflow-wrap: anywhere;
+}
+
+[data-eds] .eds-evidence__check-glyph {
+  flex: none;
+  font-family: var(--eds-type-ui-family);
+  font-weight: 600;
+}
+
+[data-eds] .eds-evidence__check-glyph--pass {
+  color: var(--eds-cmp-evidence-pass-text);
+}
+
+[data-eds] .eds-evidence__check-glyph--fail {
+  color: var(--eds-cmp-evidence-fail-text);
+}
+
+[data-eds] .eds-evidence__check-glyph--pending {
+  color: var(--eds-cmp-evidence-pending-text);
+}
+
+[data-eds] .eds-evidence__check-label {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 6px;
+}
+
+[data-eds] .eds-evidence__check-state {
+  color: var(--eds-cmp-evidence-meta-text);
+  font-size: var(--eds-type-caption-size);
+  line-height: var(--eds-type-caption-line);
+}
+
+[data-eds] .eds-evidence__freshness {
+  color: var(--eds-cmp-evidence-meta-text);
+  font-size: var(--eds-type-caption-size);
+  line-height: var(--eds-type-caption-line);
+}
+
+/* Persistent workspace affordance. Lives in the Workspace header below 1280;
+ * a control, never a layout column. */
+[data-eds] .eds-evidence__affordance {
+  align-items: baseline;
+  background: var(--eds-cmp-evidence-affordance-bg);
+  border: 1px solid var(--eds-cmp-evidence-affordance-border);
+  border-radius: var(--eds-radius-base);
+  color: var(--eds-cmp-evidence-title-text);
+  cursor: pointer;
+  display: inline-flex;
+  font-family: var(--eds-type-ui-family);
+  font-size: var(--eds-type-ui-size);
+  gap: var(--eds-space-default);
+  line-height: var(--eds-type-ui-line);
+  padding: 6px 10px;
+  /* A button centres its text by default. At phone widths the summary wraps to
+   * two lines and the centring turns a provenance line into a ragged block. */
+  text-align: left;
+}
+
+[data-eds] .eds-evidence__affordance:focus-visible {
+  outline: var(--eds-focus-ring);
+}
+
+[data-eds] .eds-evidence__affordance-summary {
+  color: var(--eds-cmp-evidence-meta-text);
+  font-size: var(--eds-type-caption-size);
+  line-height: var(--eds-type-caption-line);
+}
+
+[data-eds] .eds-evidence__scrim {
+  background: var(--eds-cmp-shell-drawer-scrim);
+  display: flex;
+  inset: 0;
+  position: fixed;
+  z-index: 60;
+}
+
+[data-eds] .eds-evidence__close {
+  background: none;
+  border: none;
+  border-top: 1px solid var(--eds-cmp-evidence-border);
+  color: var(--eds-cmp-evidence-meta-text);
+  cursor: pointer;
+  flex: none;
+  font-family: var(--eds-type-ui-family);
+  font-size: var(--eds-type-ui-size);
+  line-height: var(--eds-type-ui-line);
+  padding: var(--eds-space-default);
+}
+
+[data-eds] .eds-evidence__close:focus-visible {
+  outline: var(--eds-focus-ring);
+}
+
+/* EvidenceHost: one rail, three presentations.
+ *
+ * The host is the Workspace row. Its ONLY children are the work surface and,
+ * at >=1280 only, the persistent rail. There is no third child at any width,
+ * which is the structural reason the affordance cannot steal Work width. */
+[data-eds] .eds-evidence-host {
+  display: flex;
+  min-height: 0;
+  min-width: 0;
+}
+
+[data-eds] .eds-evidence-host__work {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+/* Persistent rail: 320px at 1280-1599, 404px at >=1600. Rendered only when
+ * the host has resolved the `rail` presentation, so these widths describe a
+ * column that is genuinely on screen. */
+[data-eds] .eds-evidence-host__rail {
+  display: flex;
+  flex: none;
+  min-height: 0;
+  min-width: 0;
+  width: 320px;
+}
+
+[data-eds] .eds-evidence-host__rail .eds-evidence {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+@media (min-width: 1600px) {
+  [data-eds] .eds-evidence-host__rail {
+    width: 404px;
+  }
+}
+
+/* Overlay chrome (1024-1279): right-side panel over the Workspace. */
+[data-eds] .eds-evidence-host__dialog[data-evidence-presentation="overlay"] {
+  background: var(--eds-cmp-evidence-bg);
+  border: 1px solid var(--eds-cmp-evidence-border);
+  bottom: var(--eds-space-spacious);
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  overflow-y: auto;
+  position: fixed;
+  right: var(--eds-space-spacious);
+  top: var(--eds-space-spacious);
+  width: min(404px, calc(100vw - 48px));
+  z-index: 61;
+}
+
+/* Sheet chrome (<1024): bottom sheet. */
+[data-eds] .eds-evidence-host__dialog[data-evidence-presentation="sheet"] {
+  background: var(--eds-cmp-evidence-bg);
+  border: 1px solid var(--eds-cmp-evidence-border);
+  border-radius: var(--eds-radius-base) var(--eds-radius-base) 0 0;
+  bottom: 0;
+  display: flex;
+  flex-direction: column;
+  left: 0;
+  max-height: 84vh;
+  min-width: 0;
+  overflow-y: auto;
+  position: fixed;
+  right: 0;
+  z-index: 61;
+}
+
+[data-eds] .eds-evidence-host__dialog .eds-evidence {
+  flex: 1 1 auto;
+}
+
+@media (forced-colors: active) {
+  [data-eds] .eds-evidence--rail {
+    border-left-color: ButtonBorder;
+  }
+
+  [data-eds] .eds-evidence-host__dialog {
+    border-color: ButtonBorder;
+  }
+
+  [data-eds] .eds-evidence__section {
+    border-bottom-color: ButtonBorder;
+  }
+
+  [data-eds] .eds-evidence__check-glyph--pass,
+  [data-eds] .eds-evidence__check-glyph--fail,
+  [data-eds] .eds-evidence__check-glyph--pending {
+    color: ButtonText;
+  }
+
+  [data-eds] .eds-evidence__scrim {
+    background: transparent;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-eds] .eds-evidence *,
+  [data-eds] .eds-evidence__scrim,
+  [data-eds] .eds-evidence-host__dialog {
+    animation: none;
+    transition-duration: 80ms;
+  }
+}

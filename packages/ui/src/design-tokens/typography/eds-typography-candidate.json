@@ -1,0 +1,256 @@
+{
+  "schemaVersion": 1,
+  "name": "Ethen Candidate Typography System",
+  "status": "CANDIDATE",
+  "originMilestone": "D03",
+  "principle": "Serif is a register, not a brand.",
+  "families": {
+    "sans": {
+      "name": "Instrument Sans",
+      "role": "primary-ui",
+      "description": "Primary product interface typography across navigation, inputs, controls, cards, and conversation.",
+      "variable": "--font-eds-sans",
+      "fallback": "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif",
+      "files": [
+        "app/fonts/eds/instrument-sans/InstrumentSans-Variable.ttf"
+      ],
+      "license": "OFL-1.1",
+      "licensePath": "app/fonts/eds/instrument-sans/OFL.txt",
+      "availableWeights": [
+        400,
+        500,
+        600,
+        700
+      ]
+    },
+    "serif": {
+      "name": "Newsreader",
+      "role": "narrative-register",
+      "description": "Restricted narrative and editorial register for research summaries, founder briefings, insights, and receipt certificates.",
+      "variable": "--font-eds-serif",
+      "fallback": "Georgia, Cambria, 'Times New Roman', serif",
+      "files": [
+        "app/fonts/eds/newsreader/Newsreader-Variable.ttf",
+        "app/fonts/eds/newsreader/Newsreader-Italic-Variable.ttf"
+      ],
+      "license": "OFL-1.1",
+      "licensePath": "app/fonts/eds/newsreader/OFL.txt",
+      "availableWeights": [
+        400,
+        500,
+        600,
+        700
+      ]
+    },
+    "mono": {
+      "name": "IBM Plex Mono",
+      "role": "code-provenance",
+      "description": "Exact character structure for code, SHAs, identifiers, receipts, technical measurements, and provenance metadata.",
+      "variable": "--font-eds-mono",
+      "fallback": "'SF Mono', Menlo, Monaco, Consolas, monospace",
+      "files": [
+        "app/fonts/eds/ibm-plex-mono/IBMPlexMono-Regular.ttf",
+        "app/fonts/eds/ibm-plex-mono/IBMPlexMono-Medium.ttf",
+        "app/fonts/eds/ibm-plex-mono/IBMPlexMono-SemiBold.ttf"
+      ],
+      "license": "OFL-1.1",
+      "licensePath": "app/fonts/eds/ibm-plex-mono/OFL.txt",
+      "availableWeights": [
+        400,
+        500,
+        600
+      ]
+    }
+  },
+  "scale": {
+    "display": {
+      "family": "serif",
+      "fontSize": 40,
+      "lineHeight": 46,
+      "weight": 400,
+      "tracking": "-0.01em",
+      "role": "narrative-display"
+    },
+    "title-1": {
+      "family": "sans",
+      "fontSize": 28,
+      "lineHeight": 34,
+      "weight": 600,
+      "tracking": "-0.005em",
+      "role": "major-section-title"
+    },
+    "title-2": {
+      "family": "sans",
+      "fontSize": 22,
+      "lineHeight": 28,
+      "weight": 600,
+      "tracking": "0",
+      "role": "card-modal-title"
+    },
+    "heading": {
+      "family": "sans",
+      "fontSize": 20,
+      "lineHeight": 28,
+      "weight": 600,
+      "tracking": "0",
+      "role": "section-heading"
+    },
+    "subheading": {
+      "family": "sans",
+      "fontSize": 16,
+      "lineHeight": 24,
+      "weight": 500,
+      "tracking": "0",
+      "role": "subsection-heading"
+    },
+    "body": {
+      "family": "sans",
+      "fontSize": 15,
+      "lineHeight": 23,
+      "weight": 400,
+      "tracking": "0",
+      "role": "standard-reading-body"
+    },
+    "ui": {
+      "family": "sans",
+      "fontSize": 14,
+      "lineHeight": 20,
+      "weight": 400,
+      "tracking": "0",
+      "role": "primary-controls-inputs"
+    },
+    "ui-sm": {
+      "family": "sans",
+      "fontSize": 13,
+      "lineHeight": 18,
+      "weight": 500,
+      "tracking": "0.005em",
+      "role": "compact-controls-buttons"
+    },
+    "caption": {
+      "family": "sans",
+      "fontSize": 12,
+      "lineHeight": 16,
+      "weight": 400,
+      "tracking": "0.01em",
+      "role": "captions-helper-text"
+    },
+    "label": {
+      "family": "sans",
+      "fontSize": 11,
+      "lineHeight": 14,
+      "weight": 500,
+      "tracking": "0.02em",
+      "role": "micro-badges-meta-tags"
+    },
+    "code": {
+      "family": "mono",
+      "fontSize": 13,
+      "lineHeight": 20,
+      "weight": 400,
+      "tracking": "0",
+      "role": "inline-and-block-code"
+    },
+    "mono-meta": {
+      "family": "mono",
+      "fontSize": 12,
+      "lineHeight": 16,
+      "weight": 400,
+      "tracking": "0",
+      "role": "ids-timestamps-hashes"
+    },
+    "mono-micro": {
+      "family": "mono",
+      "fontSize": 11,
+      "lineHeight": 15,
+      "weight": 400,
+      "tracking": "0.01em",
+      "role": "dense-receipt-metrics"
+    }
+  },
+  "registers": {
+    "narrative": {
+      "name": "Narrative",
+      "allowedSurfaces": [
+        "Research summaries",
+        "Founder briefings",
+        "Learnings and insight narratives",
+        "Receipt verdicts",
+        "Editorial documentation",
+        "Marketing overviews"
+      ],
+      "allowedFamilies": [
+        "serif",
+        "sans",
+        "mono"
+      ],
+      "serifAllowed": true,
+      "measure": "68ch"
+    },
+    "work": {
+      "name": "Work",
+      "allowedSurfaces": [
+        "Ethen core conversational UI",
+        "Computer & Bot tools",
+        "Designer workspace",
+        "Workflow agent",
+        "Active conversation"
+      ],
+      "allowedFamilies": [
+        "sans",
+        "mono"
+      ],
+      "serifAllowed": false,
+      "measure": "unconstrained"
+    },
+    "operational": {
+      "name": "Operational",
+      "allowedSurfaces": [
+        "Code execution",
+        "Sentinel monitors",
+        "Gateway routing",
+        "Compute & GPU clusters",
+        "Local Models",
+        "Model Intelligence",
+        "Execution logs",
+        "Evidence telemetry"
+      ],
+      "allowedFamilies": [
+        "sans",
+        "mono"
+      ],
+      "serifAllowed": false,
+      "measure": "dense"
+    }
+  },
+  "boundaries": {
+    "serifDisallowed": [
+      "navigation",
+      "buttons",
+      "forms",
+      "inputs",
+      "settings",
+      "dense-tables",
+      "chips",
+      "tabs",
+      "toolbars",
+      "code",
+      "terminal",
+      "logs",
+      "technical-dashboards",
+      "operational-controls"
+    ],
+    "monoDisallowed": [
+      "standard-body-copy",
+      "buttons",
+      "general-navigation",
+      "general-headings",
+      "general-labels"
+    ]
+  },
+  "fallback": {
+    "primaryScript": "Latin / Latin Extended",
+    "unsupportedScriptStrategy": "Cascades to platform system fonts (-apple-system, BlinkMacSystemFont, Segoe UI, Roboto for sans; Georgia/Cambria for serif; SF Mono/Menlo/Consolas for mono)",
+    "metricsCompensation": "Standard CSS font-display: swap with system fallback metrics preservation"
+  }
+}

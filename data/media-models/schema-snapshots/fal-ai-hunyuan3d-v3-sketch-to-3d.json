@@ -1,0 +1,99 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/hunyuan3d-v3/sketch-to-3d",
+  "task": "3d-generation",
+  "source_url": "https://fal.ai/models/fal-ai/hunyuan3d-v3/sketch-to-3d",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fhunyuan3d-v3%2Fsketch-to-3d",
+  "retrieved_at": "2026-09-23T14:36:39.117Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "image-to-3d",
+  "bytes_sha256": "43c4ff166021bdada9321b6b8a6634823ca85600274f760f519d5822eba9b2fe",
+  "queue_path": "/fal-ai/hunyuan3d-v3/sketch-to-3d",
+  "input_name": "Hunyuan3dV3SketchTo3dInput",
+  "input": {
+    "$refName": "Hunyuan3dV3SketchTo3dInput",
+    "type": "object",
+    "properties": {
+      "prompt": {
+        "type": "string",
+        "maxLength": 1024,
+        "description": "Text prompt describing the 3D content attributes such as color, category, and material."
+      },
+      "input_image_url": {
+        "type": "string",
+        "description": "URL of sketch or line art image to transform into a 3D model. Image resolution must be between 128x128 and 5000x5000 pixels."
+      },
+      "enable_pbr": {
+        "type": "boolean",
+        "default": false,
+        "description": "Whether to enable PBR material generation."
+      },
+      "face_count": {
+        "type": "integer",
+        "default": 500000,
+        "minimum": 40000,
+        "maximum": 1500000,
+        "description": "Target face count. Range: 40000-1500000"
+      }
+    },
+    "required": [
+      "input_image_url",
+      "prompt"
+    ]
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs."
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics."
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "Hunyuan3dV3SketchTo3dInput",
+    "Hunyuan3dV3SketchTo3dOutput",
+    "File",
+    "ModelUrls"
+  ]
+}

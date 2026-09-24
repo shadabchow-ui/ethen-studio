@@ -1,0 +1,195 @@
+/* CONSOLE_A1 — chart styling.
+ *
+ * Thin lines, a quiet grid, one accent and low-saturation everything else.
+ * No neon, no rainbow series, no gradient fills beyond a single low-opacity
+ * wash under the trend (spec §89 — charts must read without glare).
+ */
+
+.srOnly {
+  border: 0;
+  clip-path: inset(50%);
+  height: 1px;
+  overflow: hidden;
+  position: absolute;
+  white-space: nowrap;
+  width: 1px;
+}
+
+.figure {
+  display: grid;
+  grid-template-areas:
+    "chart scale"
+    "ticks .";
+  grid-template-columns: minmax(0, 1fr) auto;
+  margin: 0;
+}
+
+.svg {
+  grid-area: chart;
+  width: 100%;
+}
+
+.grid {
+  stroke: var(--console-chart-grid);
+  stroke-width: 1;
+}
+
+.axis {
+  stroke: var(--console-border-strong);
+  stroke-width: 1;
+}
+
+.line {
+  fill: none;
+  stroke: var(--console-accent);
+  stroke-width: 1.5;
+  stroke-linecap: butt;
+  stroke-linejoin: miter;
+}
+
+.area {
+  fill: var(--console-accent);
+  opacity: 0.1;
+  stroke: none;
+}
+
+.bar {
+  fill: var(--console-accent);
+  opacity: 0.72;
+}
+
+.figure[data-tone="neutral"] .line {
+  stroke: var(--console-neutral);
+}
+
+.figure[data-tone="neutral"] .area,
+.figure[data-tone="neutral"] .bar {
+  fill: var(--console-neutral);
+}
+
+.scale {
+  color: var(--console-text-muted);
+  display: flex;
+  flex-direction: column;
+  font-size: 11px;
+  font-variant-numeric: tabular-nums;
+  grid-area: scale;
+  justify-content: space-between;
+  padding: 6px 0 22px 12px;
+  text-align: right;
+}
+
+/* CONSOLE_C4 — tick labels sit on the same coordinates as the plot: each
+ * label is absolutely positioned at its point's fraction of the plot width,
+ * clamped at the edges so first/last labels never overflow. */
+.ticks {
+  color: var(--console-text-muted);
+  font-size: 11px;
+  grid-area: ticks;
+  height: 16px;
+  margin-top: -14px;
+  position: relative;
+}
+
+.ticks span {
+  position: absolute;
+  top: 0;
+  transform: translateX(-50%);
+  white-space: nowrap;
+}
+
+.ticks span[data-edge="start"] {
+  transform: none;
+}
+
+.ticks span[data-edge="end"] {
+  transform: translateX(-100%);
+}
+
+/* CONSOLE_C4 — local value inspection: a quiet readout plus a plot marker.
+ * Bars brighten when selected; nothing communicates through colour alone
+ * (the readout and the screen-reader table carry the values). */
+.readout {
+  color: var(--console-text-muted);
+  font-size: 12px;
+  font-variant-numeric: tabular-nums;
+  grid-column: 1 / -1;
+  margin: 8px 0 0;
+  min-height: 17px;
+}
+
+.svg:focus-visible {
+  outline: var(--console-focus);
+  outline-offset: 2px;
+}
+
+.point {
+  fill: var(--console-accent);
+}
+
+.inspector {
+  fill: none;
+  stroke: var(--console-accent-strong, var(--console-accent));
+  stroke-width: 1.5;
+}
+
+.bar[data-selected="true"] {
+  opacity: 1;
+}
+
+.noData {
+  align-items: center;
+  border: 1px dashed var(--console-border-strong);
+  border-radius: var(--console-radius-panel);
+  color: var(--console-text-muted);
+  display: flex;
+  font-size: 13px;
+  grid-column: 1 / -1;
+  justify-content: center;
+  min-height: 120px;
+}
+
+/* --------------------------------------------------------------- progress */
+
+.progress {
+  width: 100%;
+}
+
+.progressTrack {
+  background: var(--console-elevated);
+  border-radius: 999px;
+  height: 4px;
+  overflow: hidden;
+  width: 100%;
+}
+
+.progressFill {
+  background: var(--console-accent);
+  display: block;
+  height: 100%;
+}
+
+.progressDetail {
+  color: var(--console-text-muted);
+  font-size: 12px;
+  font-variant-numeric: tabular-nums;
+  margin: 6px 0 0;
+}
+
+@media (max-width: 767px) {
+  .scale {
+    display: none;
+  }
+
+  .figure {
+    grid-template-areas:
+      "chart"
+      "ticks";
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .ticks span:nth-child(2),
+  .ticks span:nth-child(3) {
+    display: none;
+  }
+}

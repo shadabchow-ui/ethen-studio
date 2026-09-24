@@ -1,0 +1,136 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "bria/fibo-gen-1.5/text-to-image",
+  "task": "text-to-image",
+  "source_url": "https://fal.ai/models/bria/fibo-gen-1.5/text-to-image",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=bria%2Ffibo-gen-1.5%2Ftext-to-image",
+  "retrieved_at": "2026-09-20T09:39:59.806Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "text-to-image",
+  "bytes_sha256": "3eba89f42296ad32c7f141ac39d25133688247f8a59114a40e9ee77d9b5134c9",
+  "queue_path": "/bria/fibo-gen-1.5/text-to-image",
+  "input_name": "FiboGen15TextToImageInput",
+  "input": {
+    "$refName": "FiboGen15TextToImageInput",
+    "type": "object",
+    "properties": {
+      "seed": {
+        "type": "integer",
+        "default": 5555,
+        "description": "Random seed for reproducibility."
+      },
+      "sync_mode": {
+        "type": "boolean",
+        "default": false,
+        "description": "If true, returns the image directly in the response (increases latency)."
+      },
+      "structured_prompt": {
+        "description": "The structured prompt to generate an image from.",
+        "anyOf": [
+          {
+            "$refName": "StructuredPrompt",
+            "unsupported": "depth-exceeded"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "aspect_ratio": {
+        "type": "string",
+        "enum": [
+          "1:1",
+          "2:3",
+          "3:2",
+          "3:4",
+          "4:3",
+          "4:5",
+          "5:4",
+          "9:16",
+          "16:9"
+        ],
+        "default": "1:1",
+        "description": "Aspect ratio. Options: 1:1, 2:3, 3:2, 3:4, 4:3, 4:5, 5:4, 9:16, 16:9"
+      },
+      "prompt": {
+        "description": "Prompt for image generation.",
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "resolution": {
+        "type": "string",
+        "enum": [
+          "1MP",
+          "4MP"
+        ],
+        "default": "1MP",
+        "description": "Output image resolution"
+      }
+    }
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs."
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics."
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "FiboGen15TextToImageInput",
+    "FiboGen15TextToImageOutput",
+    "StructuredPrompt",
+    "Image",
+    "Lighting",
+    "Aesthetics",
+    "PromptObject",
+    "PhotographicCharacteristics"
+  ]
+}

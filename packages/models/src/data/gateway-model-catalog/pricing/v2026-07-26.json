@@ -1,0 +1,57 @@
+{
+  "version": "2026-07-26",
+  "retrievedAt": "2026-07-26T00:00:00.000Z",
+  "expiresAt": "2026-08-25T00:00:00.000Z",
+  "currency": "USD",
+  "unit": "per-token",
+  "records": [
+    {
+      "id": "openai-gpt-4o-standard-2026-07-26",
+      "modelId": "openai/gpt-4o",
+      "sourceType": "official_provider",
+      "sourceUrl": "https://developers.openai.com/api/docs/models/gpt-4o",
+      "inputUsdPerMillionTokens": 2.5,
+      "outputUsdPerMillionTokens": 10
+    },
+    {
+      "id": "openai-gpt-4o-mini-standard-2026-07-26",
+      "modelId": "openai/gpt-4o-mini",
+      "sourceType": "official_provider",
+      "sourceUrl": "https://developers.openai.com/api/docs/models/gpt-4o-mini",
+      "inputUsdPerMillionTokens": 0.15,
+      "outputUsdPerMillionTokens": 0.6
+    },
+    {
+      "id": "openai-o3-standard-2026-07-26",
+      "modelId": "openai/o3",
+      "sourceType": "official_provider",
+      "sourceUrl": "https://developers.openai.com/api/docs/models/o3",
+      "inputUsdPerMillionTokens": 2,
+      "outputUsdPerMillionTokens": 8
+    },
+    {
+      "id": "openai-o4-mini-standard-2026-07-26",
+      "modelId": "openai/o4-mini",
+      "sourceType": "official_provider",
+      "sourceUrl": "https://developers.openai.com/api/docs/models/o4-mini",
+      "inputUsdPerMillionTokens": 1.1,
+      "outputUsdPerMillionTokens": 4.4
+    },
+    {
+      "id": "anthropic-claude-sonnet-4-standard-2026-07-26",
+      "modelId": "anthropic/claude-sonnet-4-20250514",
+      "sourceType": "official_provider",
+      "sourceUrl": "https://www-cdn.anthropic.com/files/4zrzovbb/website/3684c2faafb97418665782cea0001f439f74b1d2.pdf",
+      "inputUsdPerMillionTokens": 3,
+      "outputUsdPerMillionTokens": 15
+    },
+    {
+      "id": "anthropic-claude-haiku-4-5-standard-2026-07-26",
+      "modelId": "anthropic/claude-haiku-4-5-20251001",
+      "sourceType": "official_provider",
+      "sourceUrl": "https://www-cdn.anthropic.com/files/4zrzovbb/website/3684c2faafb97418665782cea0001f439f74b1d2.pdf",
+      "inputUsdPerMillionTokens": 1,
+      "outputUsdPerMillionTokens": 5
+    }
+  ]
+}

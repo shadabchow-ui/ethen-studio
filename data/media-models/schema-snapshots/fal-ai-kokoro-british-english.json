@@ -1,0 +1,101 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/kokoro/british-english",
+  "task": "text-to-audio",
+  "source_url": "https://fal.ai/models/fal-ai/kokoro/british-english",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fkokoro%2Fbritish-english",
+  "retrieved_at": "2026-09-23T14:36:51.322Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "text-to-audio",
+  "bytes_sha256": "f42bb9e96253c1e7cab1fd1cfd0042a6d10b404ec5c5f24b615a3cb0fab8f8c1",
+  "queue_path": "/fal-ai/kokoro/british-english",
+  "input_name": "KokoroBritishEnglishInput",
+  "input": {
+    "$refName": "KokoroBritishEnglishInput",
+    "type": "object",
+    "properties": {
+      "prompt": {
+        "type": "string"
+      },
+      "voice": {
+        "type": "string",
+        "enum": [
+          "bf_alice",
+          "bf_emma",
+          "bf_isabella",
+          "bf_lily",
+          "bm_daniel",
+          "bm_fable",
+          "bm_george",
+          "bm_lewis"
+        ],
+        "description": "Voice ID for the desired voice."
+      },
+      "speed": {
+        "type": "number",
+        "default": 1,
+        "minimum": 0.1,
+        "maximum": 5,
+        "description": "Speed of the generated audio. Default is 1.0."
+      }
+    },
+    "required": [
+      "prompt",
+      "voice"
+    ]
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs."
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics."
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "KokoroBritishEnglishInput",
+    "KokoroBritishEnglishOutput",
+    "File"
+  ]
+}

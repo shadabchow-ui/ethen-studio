@@ -1,0 +1,114 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "bria/bria_video_eraser/erase/prompt",
+  "task": "image-editing",
+  "source_url": "https://fal.ai/models/bria/bria_video_eraser/erase/prompt",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=bria%2Fbria_video_eraser%2Ferase%2Fprompt",
+  "retrieved_at": "2026-09-20T09:39:56.700Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "video-to-video",
+  "bytes_sha256": "d419c0516553269039f8b3be2626674261c0b3eacec82efef7ec010a2051d8a1",
+  "queue_path": "/bria/bria_video_eraser/erase/prompt",
+  "input_name": "Bria_video_eraserErasePromptInput",
+  "input": {
+    "$refName": "Bria_video_eraserErasePromptInput",
+    "type": "object",
+    "properties": {
+      "video_url": {
+        "type": "string",
+        "description": "Input video to erase object from. duration must be less than 5s."
+      },
+      "output_container_and_codec": {
+        "type": "string",
+        "enum": [
+          "mp4_h265",
+          "mp4_h264",
+          "webm_vp9",
+          "gif",
+          "mov_h264",
+          "mov_h265",
+          "mov_proresks",
+          "mkv_h264",
+          "mkv_h265",
+          "mkv_vp9",
+          "mkv_mpeg4"
+        ],
+        "default": "mp4_h264",
+        "description": "Output container and codec. Options: mp4_h265, mp4_h264, webm_vp9, gif, mov_h264, mov_h265, mov_proresks, mkv_h264, mkv_h265, mkv_vp9, mkv_mpeg4."
+      },
+      "prompt": {
+        "type": "string",
+        "description": "Input prompt to detect object to erase"
+      },
+      "auto_trim": {
+        "type": "boolean",
+        "default": true,
+        "description": "auto trim the video, to working duration ( 5s )"
+      },
+      "preserve_audio": {
+        "type": "boolean",
+        "default": true,
+        "description": "If true, audio will be preserved in the output video."
+      }
+    },
+    "required": [
+      "prompt",
+      "video_url"
+    ]
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs."
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics."
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "Bria_video_eraserErasePromptInput",
+    "Bria_video_eraserErasePromptOutput",
+    "Video",
+    "File"
+  ]
+}

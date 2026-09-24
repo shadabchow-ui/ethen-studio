@@ -1,0 +1,84 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/speech-to-text",
+  "task": "speech",
+  "source_url": "https://fal.ai/models/fal-ai/speech-to-text",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fspeech-to-text",
+  "retrieved_at": "2026-09-23T14:37:45.884Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "speech-to-text",
+  "bytes_sha256": "6165e1dfd4946dd4d2e6688ddda490c5f04ba120af29e16dd97ec4703f35cd64",
+  "queue_path": "/fal-ai/speech-to-text",
+  "input_name": "SpeechToTextInput",
+  "input": {
+    "$refName": "SpeechToTextInput",
+    "type": "object",
+    "properties": {
+      "use_pnc": {
+        "type": "boolean",
+        "default": true,
+        "description": "Whether to use Canary's built-in punctuation & capitalization"
+      },
+      "audio_url": {
+        "type": "string",
+        "description": "Local filesystem path (or remote URL) to a long audio file"
+      }
+    },
+    "required": [
+      "audio_url"
+    ]
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs."
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics."
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "SpeechToTextInput",
+    "SpeechToTextOutput"
+  ]
+}

@@ -1,0 +1,214 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/inworld-tts",
+  "task": "text-to-audio",
+  "source_url": "https://fal.ai/models/fal-ai/inworld-tts",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Finworld-tts",
+  "retrieved_at": "2026-09-23T14:36:47.433Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "text-to-speech",
+  "bytes_sha256": "916e857c18b546aba8439e703c12718f2abacef3ea643a5c5eff282cecbc6f5b",
+  "queue_path": "/fal-ai/inworld-tts",
+  "input_name": "InworldTtsInput",
+  "input": {
+    "$refName": "InworldTtsInput",
+    "type": "object",
+    "properties": {
+      "sample_rate_hertz": {
+        "type": "integer",
+        "enum": [
+          8000,
+          16000,
+          24000,
+          32000,
+          40000,
+          48000
+        ],
+        "default": 48000,
+        "description": "The sample rate in Hz for the output audio."
+      },
+      "text": {
+        "type": "string",
+        "maxLength": 2000,
+        "description": "The text to synthesize into speech. Maximum 2000 characters."
+      },
+      "voice": {
+        "type": "string",
+        "enum": [
+          "Loretta (en)",
+          "Darlene (en)",
+          "Marlene (en)",
+          "Hank (en)",
+          "Evelyn (en)",
+          "Celeste (en)",
+          "Pippa (en)",
+          "Tessa (en)",
+          "Liam (en)",
+          "Callum (en)",
+          "Hamish (en)",
+          "Abby (en)",
+          "Graham (en)",
+          "Rupert (en)",
+          "Mortimer (en)",
+          "Snik (en)",
+          "Anjali (en)",
+          "Saanvi (en)",
+          "Arjun (en)",
+          "Claire (en)",
+          "Oliver (en)",
+          "Simon (en)",
+          "Elliot (en)",
+          "James (en)",
+          "Serena (en)",
+          "Gareth (en)",
+          "Vinny (en)",
+          "Lauren (en)",
+          "Jessica (en)",
+          "Ethan (en)",
+          "Tyler (en)",
+          "Jason (en)",
+          "Chloe (en)",
+          "Veronica (en)",
+          "Victoria (en)",
+          "Miranda (en)",
+          "Sebastian (en)",
+          "Victor (en)",
+          "Malcolm (en)",
+          "Kayla (en)",
+          "Nate (en)",
+          "Jake (en)",
+          "Brian (en)",
+          "Amina (en)",
+          "Kelsey (en)",
+          "Derek (en)",
+          "Grant (en)",
+          "Evan (en)",
+          "Alex (en)",
+          "Ashley (en)",
+          "Craig (en)",
+          "Deborah (en)",
+          "Dennis (en)",
+          "Edward (en)",
+          "Elizabeth (en)",
+          "Hades (en)",
+          "Julia (en)",
+          "Pixie (en)",
+          "Mark (en)",
+          "Olivia (en)",
+          "Priya (en)",
+          "Ronald (en)",
+          "Sarah (en)",
+          "Shaun (en)",
+          "Theodore (en)",
+          "Timothy (en)",
+          "Wendy (en)",
+          "Dominus (en)",
+          "Hana (en)",
+          "Clive (en)",
+          "Carter (en)",
+          "Blake (en)",
+          "Luna (en)",
+          "Yichen (zh)",
+          "Xiaoyin (zh)",
+          "Xinyi (zh)",
+          "Jing (zh)",
+          "Erik (nl)",
+          "Katrien (nl)",
+          "Lennart (nl)",
+          "Lore (nl)",
+          "Alain (fr)",
+          "Hélène (fr)",
+          "Mathieu (fr)",
+          "Étienne (fr)",
+          "Johanna (de)",
+          "Josef (de)",
+          "Gianni (it)",
+          "Orietta (it)",
+          "Asuka (ja)",
+          "Satoshi (ja)",
+          "Hyunwoo (ko)",
+          "Minji (ko)",
+          "Seojun (ko)",
+          "Yoona (ko)",
+          "Szymon (pl)",
+          "Wojciech (pl)",
+          "Heitor (pt)",
+          "Maitê (pt)",
+          "Diego (es)",
+          "Lupita (es)",
+          "Miguel (es)",
+          "Rafael (es)",
+          "Svetlana (ru)",
+          "Elena (ru)",
+          "Dmitry (ru)",
+          "Nikolai (ru)",
+          "Riya (hi)",
+          "Manoj (hi)",
+          "Yael (he)",
+          "Oren (he)",
+          "Nour (ar)",
+          "Omar (ar)"
+        ],
+        "default": "Craig (en)",
+        "description": "The voice to use for synthesis."
+      }
+    },
+    "required": [
+      "text"
+    ]
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs."
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics."
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "InworldTtsInput",
+    "InworldTtsOutput",
+    "File"
+  ]
+}

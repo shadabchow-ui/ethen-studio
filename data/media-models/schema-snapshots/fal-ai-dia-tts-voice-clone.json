@@ -1,0 +1,80 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/dia-tts/voice-clone",
+  "task": "text-to-audio",
+  "source_url": "https://fal.ai/models/fal-ai/dia-tts/voice-clone",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fdia-tts%2Fvoice-clone",
+  "retrieved_at": "2026-09-23T14:36:21.136Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "audio-to-audio",
+  "bytes_sha256": "03b3cb1034b39ba67df45febd7b7bb5e1c3bc7d6f7f6c88df3927c31040834c6",
+  "queue_path": "/fal-ai/dia-tts/voice-clone",
+  "input_name": "DiaTtsVoiceCloneInput",
+  "input": {
+    "$refName": "DiaTtsVoiceCloneInput",
+    "type": "object",
+    "properties": {
+      "text": {
+        "type": "string",
+        "description": "The text to be converted to speech."
+      }
+    },
+    "required": [
+      "text"
+    ]
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs."
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics."
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "DiaTtsVoiceCloneInput",
+    "DiaTtsVoiceCloneOutput",
+    "File"
+  ]
+}
