@@ -36,7 +36,10 @@ export type ChatIconName =
   | "globe"
   | "sources"
   | "remove"
-  | "back";
+  | "back"
+  | "sun"
+  | "moon"
+  | "monitor";
 
 const PATHS: Record<ChatIconName, React.ReactNode> = {
   // send — a plumb arrow, not a paper plane
@@ -65,6 +68,12 @@ const PATHS: Record<ChatIconName, React.ReactNode> = {
   sources: <><circle cx="10.5" cy="10.5" r="5" /><path d="m14.5 14.5 4.5 4.5" /><path d="M4 18h6" /><path d="M4 21h10" /></>,
   remove: <><path d="m6.5 6.5 11 11" /><path d="m17.5 6.5-11 11" /></>,
   back: <><path d="M20 12H4" /><path d="m10.5 5.5-6.5 6.5 6.5 6.5" /></>,
+  // sun — a dial face with eight calibration ticks
+  sun: <><circle cx="12" cy="12" r="4" /><path d="M12 3.5V6" /><path d="M12 18v2.5" /><path d="M3.5 12H6" /><path d="M18 12h2.5" /><path d="M6 6l1.8 1.8" /><path d="M16.2 16.2 18 18" /><path d="M18 6l-1.8 1.8" /><path d="M7.8 16.2 6 18" /></>,
+  // moon — a crescent gauge
+  moon: <><path d="M19.5 13.5A7.5 7.5 0 1 1 10.5 4.5a6 6 0 0 0 9 9Z" /></>,
+  // monitor — a bench display on a stand
+  monitor: <><rect x="3.5" y="4.5" width="17" height="11.5" /><path d="M12 16v3" /><path d="M8.5 19.5h7" /></>,
 };
 
 export function ChatIcon({

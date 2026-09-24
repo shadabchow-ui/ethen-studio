@@ -16,19 +16,41 @@ import { Icon } from "../icons";
 import { SEARCH_RESULTS, type SearchResult } from "./chat-fixtures";
 import styles from "./search-palette.module.css";
 
-const GROUP_ORDER: readonly SearchResult["group"][] = ["Chats", "Projects", "Artifacts", "Ethen Platform"];
+/**
+ * S3.5 Studio-required surface: action rows for live product surfaces.
+ * Beta capabilities render visibly disabled with a subdued badge.
+ */
+export type PaletteAction = Readonly<{
+  id: string;
+  label: string;
+  beta?: boolean;
+}>;
+
+const GROUP_ORDER: readonly SearchResult["group"][] = ["Chats", "Projects", "Artifacts", "Ethen Platform", "Studio"];
 
 export function SearchPalette({
   open,
   onClose,
   initialQuery = "",
   onActivate,
+  results: liveResults,
+  live = false,
+  actions,
+  onAction,
 }: {
   open: boolean;
   onClose: () => void;
   initialQuery?: string;
   /** CHAT_A3 — Enter/click activation of the highlighted result (defaults to close). */
   onActivate?: (result: SearchResult) => void;
+  /** S3.5 — live results (real product items). Absent keeps the lab fixtures. */
+  results?: readonly SearchResult[];
+  /** S3.5 — live product surface: honest disabled reasons, no fixture copy. */
+  live?: boolean;
+  /** S3.5 — action rows (e.g. Studio commands). Absent renders no action group. */
+  actions?: readonly PaletteAction[];
+  /** S3.5 — action handler. Absent closes without acting. */
+  onAction?: (action: PaletteAction) => void;
 }) {
   const [query, setQuery] = React.useState(initialQuery);
   const [activeIndex, setActiveIndex] = React.useState(0);
@@ -36,14 +58,24 @@ export function SearchPalette({
   const dialogRef = React.useRef<HTMLDivElement | null>(null);
   const optionRefs = React.useRef(new Map<string, HTMLButtonElement>());
 
+  const source = liveResults ?? SEARCH_RESULTS;
   const results = React.useMemo(() => {
     const needle = query.trim().toLowerCase();
-    if (!needle) return SEARCH_RESULTS;
-    return SEARCH_RESULTS.filter(
+    if (!needle) return [...source];
+    return source.filter(
       (result) =>
         result.title.toLowerCase().includes(needle) || result.detail.toLowerCase().includes(needle),
     );
-  }, [query]);
+  }, [query, source]);
+
+  const activateAction = React.useCallback(
+    (action: PaletteAction) => {
+      if (action.beta === true) return;
+      onAction?.(action);
+      onClose();
+    },
+    [onAction, onClose],
+  );
 
   React.useEffect(() => {
     if (!open) return;
@@ -162,7 +194,7 @@ export function SearchPalette({
         </div>
 
         <div className={styles.results} id="chat-palette-results" role="listbox" aria-label="Results">
-          {grouped.length === 0 ? (
+          {grouped.length === 0 && (actions ?? []).length === 0 ? (
             <p className={styles.empty}>Nothing matches “{query}”.</p>
           ) : (
             grouped.map((entry) => (
@@ -187,7 +219,7 @@ export function SearchPalette({
                           className={styles.result}
                           data-active={active ? "true" : undefined}
                           disabled={item.disabled}
-                          title={item.disabled ? "Not available in this lab preview" : undefined}
+                          title={item.disabled ? (live ? "Not available yet" : "Not available in this lab preview") : undefined}
                           onMouseEnter={() => {
                             if (!item.disabled) setActiveIndex(index);
                           }}
@@ -203,6 +235,37 @@ export function SearchPalette({
               </div>
             ))
           )}
+          {(actions ?? []).length > 0 ? (
+            <div className={styles.group} role="presentation">
+              <p className={styles.groupLabel}>Actions</p>
+              <ul>
+                {(actions ?? []).map((action) => (
+                  <li key={action.id}>
+                    <button
+                      type="button"
+                      role="option"
+                      id={`chat-palette-action-${action.id}`}
+                      aria-selected={false}
+                      aria-disabled={action.beta === true ? true : undefined}
+                      className={styles.result}
+                      disabled={action.beta === true}
+                      title={
+                        action.beta === true
+                          ? live
+                            ? `${action.label} is not available yet`
+                            : "Not available in this lab preview"
+                          : undefined
+                      }
+                      onClick={() => activateAction(action)}
+                    >
+                      <span className={styles.resultTitle}>{action.label}</span>
+                      {action.beta === true ? <span className={styles.resultDetail}>Beta</span> : null}
+                    </button>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ) : null}
         </div>
 
         <div className={styles.footer}>
@@ -213,7 +276,7 @@ export function SearchPalette({
           <span>
             <kbd>↵</kbd> open
           </span>
-          <span className={styles.footerNote}>Design lab — results are fixtures</span>
+          <span className={styles.footerNote}>{live ? "Live results" : "Design lab — results are fixtures"}</span>
         </div>
       </div>
     </div>

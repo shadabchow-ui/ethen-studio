@@ -7,6 +7,7 @@ import {
   resolvePublicLink,
 } from "@ethen/studio-core/server/collaboration";
 import { linkByTokenHash } from "../../../../_lib/supabase-collaboration";
+import { getAssetDetail } from "../../../../_lib/supabase-data";
 
 export const dynamic = "force-dynamic";
 
@@ -32,6 +33,20 @@ export async function GET(
     });
     if (!resolution.ok) return studioError("NOT_FOUND", "Review link was not found.");
     const link = resolution.link;
+    // M5: resolve shared assets to summaries (title/kind/hash, never bytes
+    // or signed URLs) so the public gallery renders without a session.
+    const assets: Array<{ assetId: string; title: string; kind: string; contentHash: string | null; signedUrl: null }> = [];
+    for (const assetId of link.assetIds) {
+      const detail = await getAssetDetail(found.scope, assetId).catch(() => null);
+      if (!detail) continue;
+      assets.push({
+        assetId,
+        title: detail.filename,
+        kind: detail.kind,
+        contentHash: detail.versions[0]?.sha256 ?? null,
+        signedUrl: null,
+      });
+    }
     return studioSuccess({
       link: {
         assetIds: link.assetIds,

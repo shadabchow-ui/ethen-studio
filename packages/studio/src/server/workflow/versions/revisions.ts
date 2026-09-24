@@ -76,6 +76,17 @@ export class MemoryWorkflowVersionStore {
     return [...(this.revisions.get(graphId) ?? [])];
   }
 
+  /** Index every known graph by its head revision (M5 Canvas index, local lane). */
+  listGraphs(): Array<{ graphId: string; headRevision: number; nodeCount: number; updatedAt: string }> {
+    const graphs: Array<{ graphId: string; headRevision: number; nodeCount: number; updatedAt: string }> = [];
+    for (const [graphId, list] of this.revisions) {
+      const head = list[list.length - 1];
+      if (!head) continue;
+      graphs.push({ graphId, headRevision: head.revision, nodeCount: head.nodeCount, updatedAt: head.createdAt });
+    }
+    return graphs.sort((a, b) => (a.updatedAt < b.updatedAt ? 1 : a.updatedAt > b.updatedAt ? -1 : 0));
+  }
+
   /**
    * Compile a stored revision and pin the immutable DAG. Recompiling the
    * same revision returns the same DAG (hash-addressed, idempotent).

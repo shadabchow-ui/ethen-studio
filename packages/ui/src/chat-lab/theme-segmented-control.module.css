@@ -1,0 +1,27 @@
+.group {
+  align-items: center;
+  background: var(--chat-surface-sunken);
+  border: 1px solid var(--chat-border);
+  border-radius: 10px;
+  display: inline-flex;
+  gap: 2px;
+  padding: 2px;
+}
+
+.option {
+  align-items: center;
+  background: none;
+  border: 0;
+  border-radius: 8px;
+  color: var(--chat-text-muted);
+  cursor: pointer;
+  display: inline-flex;
+  height: 32px;
+  justify-content: center;
+  padding: 0;
+  width: 40px;
+}
+
+.option:hover { background: var(--chat-surface-hover); color: var(--chat-text-secondary); }
+.option:focus-visible { outline: var(--chat-focus); outline-offset: -2px; }
+.option[data-selected="true"] { background: var(--chat-surface-active); color: var(--chat-text); }

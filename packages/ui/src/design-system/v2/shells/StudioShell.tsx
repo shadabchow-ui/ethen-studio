@@ -25,8 +25,11 @@ export type StudioSettingGroup = {
 };
 
 export interface StudioWorkbenchProps {
-  variant: StudioVariant;
+  /** Required for the generator workbench; inert (defaults to "image") in children-passthrough mode. */
+  variant?: StudioVariant;
   appTitle?: string;
+  /** Pass 3: route template stamped on the visible app label as `data-iex-route` (RUM destination identity). */
+  routeMarker?: string;
   activeMode?: string;
   modes?: string[];
   status?: { label: string; tone?: "neutral" | "success" | "warning" | "info" | "danger" };
@@ -43,7 +46,28 @@ export interface StudioWorkbenchProps {
   className?: string;
   onModeChange?: (mode: string) => void;
   children?: React.ReactNode;
+  /**
+   * Job 12 production guard. `"preview"` (default) preserves the long-standing
+   * lab/specimen defaults below. `"live"` disables every static demo default:
+   * absent slots render honest empty states instead of placeholder rows, so
+   * production Studio paths can never silently render fake history,
+   * references, stage content, or generation metadata.
+   */
+  dataSource?: "preview" | "live";
 }
+
+/**
+ * Static demo markers. The Job 12 regression gate fails if any of these
+ * strings render while `dataSource="live"`.
+ */
+export const STUDIO_SHELL_DEMO_MARKERS = [
+  "Previous render — variant B",
+  "Reference pack — product front",
+  "Draft — launch hero",
+  "Reference image · product-front.jpg",
+  "Brand kit · typography rule",
+  "Queued · ~12s · 1024×1024",
+] as const;
 
 const VARIANT_TITLES: Record<StudioVariant, string> = {
   image: "Image Generator",
@@ -101,8 +125,9 @@ export function StudioShell(props: StudioWorkbenchProps) {
 }
 
 export function StudioWorkbench({
-  variant,
+  variant = "image",
   appTitle,
+  routeMarker,
   activeMode,
   modes,
   status = { label: "Ready", tone: "success" },
@@ -110,7 +135,7 @@ export function StudioWorkbench({
   inspectorSlot,
   preview,
   generationState = "idle",
-  generationMeta = "Queued · ~12s · 1024×1024",
+  generationMeta,
   history,
   historySlot,
   references,
@@ -119,7 +144,9 @@ export function StudioWorkbench({
   className,
   onModeChange,
   children,
+  dataSource = "preview",
 }: StudioWorkbenchProps & { children?: React.ReactNode }) {
+  const live = dataSource === "live";
   if (children) {
     return (
       <div className={cn(styles.studioWorkbench, className)} data-ethen-v2>
@@ -132,15 +159,18 @@ export function StudioWorkbench({
   const title = appTitle ?? VARIANT_TITLES[variant];
   const modeOptions = modes ?? VARIANT_MODES[variant];
   const active = activeMode ?? modeOptions[0];
-  const defaultInspector: StudioSettingGroup[] = inspector ?? [
+  // Preview mode preserves the long-standing lab defaults. Live mode renders
+  // honest empty states so production paths can never show static demo rows.
+  const defaultInspector: StudioSettingGroup[] = inspector ?? (live ? [] : [
     { title: "Output", rows: [{ label: "Aspect", value: "16:9" }, { label: "Resolution", value: "1024×1024" }, { label: "Quality", value: "High" }] },
     { title: "Generation", rows: [{ label: "Model", value: variant === "video" ? "Video core · scene route" : "Image core · quality route" }, { label: "Seed", value: "Random" }] },
-  ];
-  const defaultHistory = history ?? [
+  ]);
+  const defaultHistory = history ?? (live ? [] : [
     { title: "Previous render — variant B", meta: "2 min ago · 1024×1024" },
     { title: "Reference pack — product front", meta: "18 min ago · 4 assets" },
     { title: "Draft — launch hero", meta: "1h ago · queued" },
-  ];
+  ]);
+  const meta = generationMeta ?? (live ? "" : "Queued · ~12s · 1024×1024");
 
   const segmented = modeOptions.map((m) => ({ id: m, label: m }));
 
@@ -148,7 +178,7 @@ export function StudioWorkbench({
     <div className={cn(styles.studioWorkbench, className)} data-variant={variant} data-ethen-v2>
       <div className={styles.studioWorkbenchTopbar}>
         <div className={styles.studioWorkbenchTitleRow}>
-          <span className={styles.studioWorkbenchAppLabel}>Studio / {title}</span>
+          <span className={styles.studioWorkbenchAppLabel} data-iex-route={routeMarker}>Studio / {title}</span>
           <V2Badge tone={status.tone ?? "neutral"} size="sm">{status.label}</V2Badge>
         </div>
         <div className={styles.studioWorkbenchNav}>
@@ -178,27 +208,41 @@ export function StudioWorkbench({
                   </div>
                 </div>
               ))}
+              {live && defaultHistory.length === 0 ? (
+                <p className={styles.studioHistoryMeta}>No history yet.</p>
+              ) : null}
             </div>
           )}
           <div className={styles.studioPanelDivider} />
           <div className={styles.studioPanelHead}>
             <h3 className={styles.studioPanelTitle}>References & assets</h3>
           </div>
-          {references ?? (
+          {references ?? (live ? (
+            <div className={styles.studioReferenceList}>
+              <div className={styles.studioReferenceRow}>No references attached.</div>
+            </div>
+          ) : (
             <div className={styles.studioReferenceList}>
               <div className={styles.studioReferenceRow}>Reference image · product-front.jpg <span className={styles.studioReferenceMeta}>— 2.1 MB</span></div>
               <div className={styles.studioReferenceRow}>Brand kit · typography rule <span className={styles.studioReferenceMeta}>— enforced</span></div>
               <button type="button" className={styles.studioReferenceAction}>Add asset</button>
             </div>
-          )}
+          ))}
         </aside>
 
         <div className={styles.studioWorkbenchMain}>
-          {preview ?? <DefaultStage variant={variant} state={generationState} />}
+          {preview ?? (live ? (
+            <div className={styles.studioStagePreview} aria-label={`${title} preview stage`}>
+              <p className={styles.studioStageEyebrow}>{title} · central stage</p>
+              <div className={styles.studioStageCanvas}>
+                <span className={styles.studioStageCanvasLabel}>Nothing rendered yet.</span>
+              </div>
+            </div>
+          ) : <DefaultStage variant={variant} state={generationState} />)}
 
           <div className={styles.studioGenerationRow} data-state={generationState} role="status" aria-live="polite">
             <span className={styles.studioGenerationState}><span className={styles.studioGenerationDot} aria-hidden />{generationState}</span>
-            <span className={styles.studioGenerationMeta}>{generationMeta}</span>
+            <span className={styles.studioGenerationMeta}>{meta}</span>
             <span className={styles.studioGenerationActions}>
               {resultActions ?? (
                 <>

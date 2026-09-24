@@ -1,14 +1,12 @@
 name: studio-ci
 
-# Studio-only CI (job Phase 15). Gates no-regression vs the S2-validated
+# Studio-only CI (job Phase 15). Gates no-regression vs the S3.5-validated
 # HEAD baseline — never the full monorepo suite or other Ethen apps.
 #
-# Known inherited state (see docs/SOURCE_PROVENANCE.md and
-# artifacts/repo-separation/INDEPENDENCE_REPORT.md): committed SOURCE_HEAD
-# is internally inconsistent (9 HEAD-absent modules), so typecheck carries
-# 84 inherited errors and the Next build fails on the same 5 missing
-# modules. These gates fail only on NEW errors; the build becomes a hard
-# gate once the missing HEAD modules are committed.
+# S3.5 closed the source-integrity gap (see docs/SOURCE_PROVENANCE.md):
+# typecheck is clean (0 errors) and the Next build is a hard gate. Tests
+# still gate on parity vs tests/baseline.head.json (5 pre-existing
+# failures, signature-verified; see the S3.5 closure report).
 
 on:
   push:
@@ -68,16 +66,16 @@ jobs:
           fi
           echo "INDEPENDENCE_SMOKE=PASS"
 
-      - name: Typecheck (no-regression gate, baseline 84 inherited errors)
+      - name: Typecheck (clean, S3.5 baseline 0 errors)
         run: |
           set -euo pipefail
           set +e
           pnpm typecheck > /tmp/typecheck.log 2>&1
           set -e
           ERRORS=$(grep -c "error TS" /tmp/typecheck.log || true)
-          echo "TYPECHECK_ERRORS=$ERRORS (baseline 84)"
+          echo "TYPECHECK_ERRORS=$ERRORS (baseline 0)"
           tail -5 /tmp/typecheck.log
-          if [ "$ERRORS" -gt 84 ]; then
+          if [ "$ERRORS" -gt 0 ]; then
             echo "NEW_TYPE_ERRORS>0"; exit 1
           fi
 
@@ -91,15 +89,5 @@ jobs:
           pnpm catalog:project
           sha256sum -c /tmp/catalog.before
 
-      - name: Build (report-only until HEAD-absent modules land)
-        id: build
-        continue-on-error: true
+      - name: Build (hard gate since S3.5 closure)
         run: pnpm build
-
-      - name: Build verdict
-        run: |
-          if [ "${{ steps.build.outcome }}" = "success" ]; then
-            echo "BUILD=PASS"
-          else
-            echo "BUILD=EXPECTED_FAIL_BASELINE_5_MISSING_MODULES (see INDEPENDENCE_REPORT.md)"
-          fi

@@ -403,7 +403,7 @@ so the surfaced element is the same one in both themes.
 export type SearchResult = Readonly<{
   id: string;
   title: string;
-  group: "Chats" | "Projects" | "Artifacts" | "Ethen Platform";
+  group: "Chats" | "Projects" | "Artifacts" | "Ethen Platform" | "Studio";
   detail: string;
   /** CHAT_A5.1 — local chat id opened on activation (Chats group only). */
   chatId?: string;

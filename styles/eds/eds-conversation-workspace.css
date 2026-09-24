@@ -1,0 +1,493 @@
+/* EDS conversation + workspace styles — D10 candidate.
+ * Hand-authored against design-system/tokens/eds-components-candidate.json.
+ * Scoped to [data-eds]. Lab only. No :root, no global element selectors.
+ *
+ * Architecture: one ConversationFrame (prose/work registers), one Message
+ * anatomy (24px avatar, thin rail, 720px measure, metadata below), one
+ * WorkspacePattern (conversation/artifact/split/full modes). Split uses a
+ * fixed-pixel conversation column (340/380/420); the workspace absorbs the
+ * remainder. Below 1024 the Conversation/Work switch owns visibility; below
+ * 768 the phone renders a single stream and artifacts open full-screen.
+ */
+
+[data-eds] .eds-conversation {
+  background: var(--eds-cmp-conversation-bg);
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  min-width: 0;
+}
+
+[data-eds] .eds-conversation__messages {
+  display: flex;
+  flex-direction: column;
+  gap: var(--eds-space-spacious);
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  padding: var(--eds-space-spacious);
+}
+
+[data-eds] .eds-conversation__composer {
+  border-top: 1px solid var(--eds-cmp-workspace-header-border);
+  padding: var(--eds-space-default);
+}
+
+[data-eds] .eds-message {
+  display: grid;
+  grid-template-columns: 24px 2px minmax(0, 1fr);
+  column-gap: var(--eds-space-default);
+  max-width: 720px;
+}
+
+[data-eds] .eds-message__avatar {
+  align-items: center;
+  background: var(--eds-cmp-conversation-avatar-bg);
+  border-radius: 999px;
+  color: var(--eds-cmp-conversation-avatar-text);
+  display: inline-flex;
+  font-family: var(--eds-type-ui-family);
+  font-size: var(--eds-type-caption-size);
+  height: 24px;
+  justify-content: center;
+  line-height: 1;
+  width: 24px;
+}
+
+[data-eds] .eds-message__rail {
+  background: var(--eds-cmp-conversation-rail);
+  border-radius: var(--eds-radius-small);
+  min-height: 100%;
+  width: 2px;
+}
+
+[data-eds] .eds-message__body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--eds-space-tight);
+  min-width: 0;
+}
+
+[data-eds] .eds-message__sender {
+  color: var(--eds-cmp-conversation-meta-text);
+  font-family: var(--eds-type-ui-family);
+  font-size: var(--eds-type-caption-size);
+  line-height: var(--eds-type-caption-line);
+  margin: 0;
+}
+
+[data-eds] .eds-message--user .eds-message__content {
+  background: var(--eds-cmp-conversation-user-bg);
+  border: 1px solid var(--eds-cmp-conversation-user-border);
+  border-radius: var(--eds-radius-small);
+  padding: var(--eds-space-default);
+}
+
+[data-eds] .eds-message__content {
+  color: var(--eds-cmp-conversation-text);
+  font-family: var(--eds-type-body-family);
+  font-size: var(--eds-type-body-size);
+  line-height: var(--eds-type-body-line);
+  max-width: 720px;
+}
+
+[data-eds] .eds-message__artifact {
+  background: var(--eds-cmp-conversation-ref-bg);
+  border: 1px solid var(--eds-cmp-conversation-ref-border);
+  border-radius: var(--eds-radius-small);
+  color: var(--eds-cmp-conversation-ref-text);
+  font-family: var(--eds-type-ui-family);
+  font-size: var(--eds-type-ui-size);
+  line-height: var(--eds-type-ui-line);
+  padding: var(--eds-space-tight) var(--eds-space-default);
+}
+
+[data-eds] .eds-message__meta {
+  align-items: baseline;
+  color: var(--eds-cmp-conversation-meta-text);
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--eds-space-tight);
+  font-family: var(--eds-font-mono);
+  font-size: var(--eds-type-caption-size);
+  line-height: var(--eds-type-caption-line);
+}
+
+[data-eds] .eds-message__retry {
+  background: transparent;
+  border: 1px solid var(--eds-cmp-conversation-user-border);
+  border-radius: var(--eds-radius-small);
+  color: var(--eds-cmp-conversation-text);
+  font-family: var(--eds-type-ui-family);
+  font-size: var(--eds-type-caption-size);
+  min-height: 28px;
+  padding: 2px var(--eds-space-tight);
+}
+
+[data-eds] .eds-message__retry:focus-visible {
+  outline: var(--eds-focus-ring);
+  outline-offset: var(--eds-focus-offset);
+}
+
+[data-eds] .eds-workspace {
+  background: var(--eds-cmp-workspace-bg);
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  min-width: 0;
+}
+
+[data-eds] .eds-workspace__switch {
+  border-bottom: 1px solid var(--eds-cmp-workspace-header-border);
+  display: none;
+  gap: var(--eds-space-tight);
+  padding: var(--eds-space-tight) var(--eds-space-default);
+}
+
+[data-eds] .eds-workspace__switch-tab {
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: var(--eds-radius-small);
+  color: var(--eds-cmp-workspace-meta-text);
+  font-family: var(--eds-type-ui-family);
+  font-size: var(--eds-type-ui-size);
+  line-height: var(--eds-type-ui-line);
+  min-height: 32px;
+  padding: 4px var(--eds-space-default);
+}
+
+[data-eds] .eds-workspace__switch-tab--selected {
+  background: var(--eds-cmp-workspace-chrome-bg);
+  border-color: var(--eds-cmp-workspace-chrome-border);
+  color: var(--eds-cmp-workspace-chrome-text);
+}
+
+[data-eds] .eds-workspace__switch-tab:focus-visible {
+  outline: var(--eds-focus-ring);
+  outline-offset: var(--eds-focus-offset);
+}
+
+[data-eds] .eds-workspace__split {
+  display: flex;
+  flex: 1;
+  min-height: 0;
+}
+
+[data-eds] .eds-workspace__stack {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  min-height: 0;
+}
+
+[data-eds] .eds-workspace__conversation {
+  border-right: 1px solid var(--eds-cmp-workspace-divider);
+  display: flex;
+  flex: none;
+  flex-direction: column;
+  min-height: 0;
+  min-width: 0;
+}
+
+[data-eds] .eds-workspace__divider {
+  cursor: col-resize;
+  flex: none;
+  position: relative;
+  width: 16px;
+}
+
+[data-eds] .eds-workspace__divider::before {
+  background: var(--eds-cmp-workspace-divider);
+  content: "";
+  display: block;
+  height: 100%;
+  margin: 0 auto;
+  width: 1px;
+}
+
+[data-eds] .eds-workspace__divider:focus-visible {
+  outline: var(--eds-focus-ring);
+  outline-offset: calc(-1 * var(--eds-focus-offset));
+}
+
+[data-eds] .eds-workspace__pane {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  min-height: 0;
+  min-width: 0;
+}
+
+[data-eds] .eds-workspace__header {
+  align-items: baseline;
+  background: var(--eds-cmp-workspace-chrome-bg);
+  border-bottom: 1px solid var(--eds-cmp-workspace-header-border);
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--eds-space-tight) var(--eds-space-default);
+  justify-content: space-between;
+  padding: var(--eds-space-default) var(--eds-space-spacious);
+}
+
+[data-eds] .eds-workspace__kind {
+  color: var(--eds-cmp-workspace-meta-text);
+  font-family: var(--eds-type-ui-family);
+  font-size: var(--eds-type-caption-size);
+  line-height: var(--eds-type-caption-line);
+  margin: 0;
+}
+
+[data-eds] .eds-workspace__title {
+  color: var(--eds-cmp-workspace-title-text);
+  font-family: var(--eds-type-heading-family);
+  font-size: var(--eds-type-heading-size);
+  line-height: var(--eds-type-heading-line);
+  margin: 0;
+}
+
+[data-eds] .eds-workspace__controls {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--eds-space-tight);
+}
+
+/* D11 — the Workspace header owns the persistent Evidence affordance below
+ * 1280, so the Evidence trigger is never a sibling column of Work. */
+[data-eds] .eds-workspace__header-slot {
+  display: inline-flex;
+  margin-right: var(--eds-space-tight);
+  min-width: 0;
+}
+
+[data-eds] .eds-workspace__version {
+  color: var(--eds-cmp-workspace-meta-text);
+  font-family: var(--eds-font-mono);
+  font-size: var(--eds-type-caption-size);
+  line-height: var(--eds-type-caption-line);
+  margin: 0;
+}
+
+[data-eds] .eds-workspace__control {
+  background: transparent;
+  border: 1px solid var(--eds-cmp-workspace-chrome-border);
+  border-radius: var(--eds-radius-small);
+  color: var(--eds-cmp-workspace-chrome-text);
+  font-family: var(--eds-type-ui-family);
+  font-size: var(--eds-type-ui-size);
+  line-height: var(--eds-type-ui-line);
+  min-height: 32px;
+  padding: 4px var(--eds-space-default);
+}
+
+[data-eds] .eds-workspace__control:focus-visible {
+  outline: var(--eds-focus-ring);
+  outline-offset: var(--eds-focus-offset);
+}
+
+[data-eds] .eds-workspace__tabs {
+  align-items: center;
+  border-bottom: 1px solid var(--eds-cmp-workspace-header-border);
+  display: flex;
+  gap: 2px;
+  overflow-x: auto;
+  padding: 0 var(--eds-space-default);
+}
+
+[data-eds] .eds-workspace__tab {
+  align-items: center;
+  background: transparent;
+  border: 1px solid transparent;
+  border-bottom: none;
+  border-radius: var(--eds-radius-small) var(--eds-radius-small) 0 0;
+  color: var(--eds-cmp-workspace-meta-text);
+  display: inline-flex;
+  flex: none;
+  gap: var(--eds-space-tight);
+  font-family: var(--eds-type-ui-family);
+  font-size: var(--eds-type-ui-size);
+  line-height: var(--eds-type-ui-line);
+  max-width: 200px;
+  min-height: 36px;
+  padding: 6px var(--eds-space-default);
+}
+
+[data-eds] .eds-workspace__tab-label {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+[data-eds] .eds-workspace__tab--selected {
+  background: var(--eds-cmp-workspace-chrome-bg);
+  border-color: var(--eds-cmp-workspace-chrome-border);
+  color: var(--eds-cmp-workspace-chrome-text);
+}
+
+[data-eds] .eds-workspace__tab:focus-visible {
+  outline: var(--eds-focus-ring);
+  outline-offset: calc(-1 * var(--eds-focus-offset));
+}
+
+[data-eds] .eds-workspace__tab-stream {
+  color: var(--eds-cmp-workspace-stream-text);
+  font-family: var(--eds-font-mono);
+  font-size: var(--eds-type-caption-size);
+}
+
+[data-eds] .eds-workspace__panel {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  padding: var(--eds-space-spacious);
+}
+
+[data-eds] .eds-workspace__panel:focus-visible {
+  outline: var(--eds-focus-ring);
+  outline-offset: calc(-1 * var(--eds-focus-offset));
+}
+
+[data-eds] .eds-workspace__empty {
+  color: var(--eds-cmp-workspace-meta-text);
+  font-family: var(--eds-type-ui-family);
+  font-size: var(--eds-type-ui-size);
+  line-height: var(--eds-type-ui-line);
+}
+
+[data-eds] .eds-workspace__evidence {
+  border-top: 1px solid var(--eds-cmp-workspace-header-border);
+  padding: var(--eds-space-default) var(--eds-space-spacious);
+}
+
+[data-eds] .eds-artifact__body {
+  color: var(--eds-cmp-workspace-chrome-text);
+  font-family: var(--eds-type-body-family);
+  font-size: var(--eds-type-body-size);
+  line-height: var(--eds-type-body-line);
+  max-width: 720px;
+}
+
+[data-eds] .eds-artifact__summary {
+  color: var(--eds-cmp-workspace-meta-text);
+  font-family: var(--eds-type-ui-family);
+  font-size: var(--eds-type-ui-size);
+  line-height: var(--eds-type-ui-line);
+}
+
+[data-eds] .eds-artifact__meta {
+  display: grid;
+  gap: var(--eds-space-tight);
+  margin: var(--eds-space-default) 0 0;
+  padding: 0;
+}
+
+[data-eds] .eds-artifact__meta-row {
+  display: flex;
+  gap: var(--eds-space-default);
+}
+
+[data-eds] .eds-artifact__meta-term {
+  color: var(--eds-cmp-workspace-meta-text);
+  font-family: var(--eds-type-ui-family);
+  font-size: var(--eds-type-caption-size);
+  min-width: 64px;
+}
+
+[data-eds] .eds-artifact__meta-value {
+  color: var(--eds-cmp-workspace-chrome-text);
+  font-family: var(--eds-font-mono);
+  font-size: var(--eds-type-caption-size);
+  margin: 0;
+}
+
+[data-eds] .eds-artifact__code {
+  background: var(--eds-cmp-workspace-sunken-bg);
+  border-radius: var(--eds-radius-small);
+  color: var(--eds-cmp-workspace-sunken-text);
+  font-family: var(--eds-font-mono);
+  font-size: var(--eds-type-code-size);
+  line-height: var(--eds-type-code-line);
+  overflow-x: auto;
+  padding: var(--eds-space-default);
+}
+
+[data-eds] .eds-artifact__terminal {
+  background: var(--eds-cmp-workspace-sunken-bg);
+  border-radius: var(--eds-radius-small);
+  color: var(--eds-cmp-workspace-sunken-text);
+  font-family: var(--eds-font-mono);
+  font-size: var(--eds-type-code-size);
+  line-height: var(--eds-type-code-line);
+  overflow-x: auto;
+  padding: var(--eds-space-default);
+  white-space: pre-wrap;
+}
+
+[data-eds] .eds-artifact__diff-add {
+  color: var(--eds-cmp-workspace-diff-add-text);
+}
+
+[data-eds] .eds-artifact__diff-del {
+  color: var(--eds-cmp-workspace-diff-del-text);
+}
+
+@media (max-width: 1023px) {
+  [data-eds] .eds-workspace__switch {
+    display: flex;
+  }
+
+  [data-eds] .eds-workspace__split {
+    flex-direction: column;
+  }
+
+  [data-eds] .eds-workspace__conversation {
+    border-right: none;
+    border-bottom: 1px solid var(--eds-cmp-workspace-divider);
+    width: auto;
+  }
+
+  [data-eds] .eds-workspace__divider {
+    display: none;
+  }
+}
+
+@media (max-width: 767px) {
+  [data-eds] .eds-conversation__messages {
+    padding: var(--eds-space-default);
+  }
+
+  [data-eds] .eds-conversation__composer {
+    position: sticky;
+    bottom: 0;
+  }
+
+  [data-eds] .eds-message {
+    max-width: none;
+  }
+}
+
+@media (forced-colors: active) {
+  [data-eds] .eds-workspace__divider::before {
+    background: ButtonBorder;
+  }
+
+  [data-eds] .eds-workspace__divider:focus-visible {
+    outline: 2px solid Highlight;
+  }
+
+  [data-eds] .eds-message__rail {
+    background: ButtonBorder;
+  }
+
+  [data-eds] .eds-workspace__tab--selected {
+    border-color: ButtonBorder;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-eds] .eds-workspace *,
+  [data-eds] .eds-conversation * {
+    animation: none;
+    transition-duration: 80ms;
+  }
+}

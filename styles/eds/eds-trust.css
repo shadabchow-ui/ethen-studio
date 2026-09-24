@@ -1,0 +1,1016 @@
+/* EDS trust component styles — D12 signature components.
+ * Hand-authored against design-system/tokens/eds-components-candidate.json.
+ * Scoped to [data-eds]. Lab only until a route opts in. No :root, no global
+ * element selectors, no raw colour literals — every value resolves through an
+ * approved --eds-cmp-trust-* binding.
+ *
+ * Semantic laws this file must not break:
+ *   verified   = Ink + glyph + text        (never green)
+ *   failure    = Brick + glyph + text      (never colour alone)
+ *   mono       = provenance / machine fact
+ *   serif      = the verdict line, and nothing else
+ */
+
+/* SCOPE DEFENCE.
+ *
+ * app/globals.css carries a bare-element rule —
+ *   h1, h2, h3, … { font-family: var(--font-heading) !important;
+ *                   font-weight: 600 !important;
+ *                   letter-spacing: -0.015em; text-transform: capitalize; }
+ * — which reaches inside [data-eds] and overrides the design system's own
+ * type. It is why the serif verdict silently rendered in the product's sans.
+ *
+ * `!important` is the only thing that wins against `!important` in a
+ * stylesheet this milestone does not own (globals.css is out of scope for
+ * D11–D14 and belongs to D16's token promotion). These declarations are a
+ * deliberate, narrow defence of EDS typography on EDS-scoped classes — not a
+ * habit. The runtime gate asserts the resolved family, so this cannot
+ * silently regress.
+ *
+ * EDS copy is written, not generated: the reader must see the exact words the
+ * author chose. "Delete the snap-checkout-2026-08 GPU snapshot" is not
+ * "Delete The Snap-Checkout-2026-08 GPU Snapshot". */
+[data-eds] .eds-approval__title,
+[data-eds] .eds-approval__verdict,
+[data-eds] .eds-receipt__headline,
+[data-eds] .eds-review__title,
+[data-eds] .eds-insight__narrative,
+[data-eds] .eds-thread__stage {
+  letter-spacing: normal;
+  text-transform: none;
+}
+
+[data-eds] .eds-approval__title {
+  font-family: var(--eds-type-ui-family) !important;
+  font-weight: 600 !important;
+  line-height: var(--eds-type-subheading-line);
+}
+
+[data-eds] .eds-approval__verdict {
+  font-family: var(--eds-font-serif) !important;
+  font-weight: 400 !important;
+  line-height: var(--eds-type-heading-line);
+}
+
+[data-eds] .eds-receipt__headline {
+  font-family: var(--eds-font-serif) !important;
+  font-weight: 500 !important;
+  line-height: var(--eds-type-heading-line);
+}
+
+[data-eds] .eds-review__title {
+  font-family: var(--eds-type-ui-family) !important;
+  font-weight: 600 !important;
+  line-height: var(--eds-type-subheading-line);
+}
+
+/* ─── Dependency markers ─────────────────────────────────────────────────
+ * A capability that does not exist yet. Never a control: no pointer cursor,
+ * no focus ring, nothing that invites a click that would do nothing. */
+
+[data-eds] .eds-trust__dependency {
+  align-items: baseline;
+  border: 1px dashed var(--eds-cmp-trust-dependency-border);
+  border-radius: var(--eds-radius-base);
+  color: var(--eds-cmp-trust-dependency-text);
+  display: inline-flex;
+  font-family: var(--eds-type-ui-family);
+  font-size: var(--eds-type-caption-size);
+  gap: var(--eds-space-tight);
+  line-height: var(--eds-type-caption-line);
+  padding: 4px 8px;
+}
+
+[data-eds] .eds-trust__dependency-tag {
+  color: var(--eds-cmp-trust-dependency-text);
+  font-family: var(--eds-font-mono);
+  font-size: var(--eds-type-code-size);
+  letter-spacing: 0.02em;
+}
+
+[data-eds] .eds-trust__dependency-note {
+  border-top: 1px solid var(--eds-cmp-trust-hairline);
+  color: var(--eds-cmp-trust-dependency-text);
+  font-family: var(--eds-type-ui-family);
+  font-size: var(--eds-type-caption-size);
+  line-height: var(--eds-type-caption-line);
+  margin: 0;
+  padding-top: var(--eds-space-tight);
+}
+
+/* ─── Approval Card ──────────────────────────────────────────────────────
+ * Radius 12, rule-control border, no shadow, no coloured header band. */
+
+[data-eds] .eds-approval {
+  background: var(--eds-cmp-trust-card-bg);
+  border: 1px solid var(--eds-cmp-trust-card-border);
+  border-radius: 12px;
+  color: var(--eds-cmp-trust-text);
+  display: flex;
+  flex-direction: column;
+  gap: var(--eds-space-default);
+  max-width: 68ch;
+  padding: var(--eds-space-spacious);
+  position: relative;
+}
+
+/* The leading rule for consequential risk. Decorative: the risk WORD carries
+ * the meaning, so removing all colour loses nothing. */
+[data-eds] .eds-approval__risk-rule {
+  background: var(--eds-cmp-trust-risk-rule);
+  border-radius: 12px 0 0 12px;
+  bottom: 0;
+  left: 0;
+  position: absolute;
+  top: 0;
+  width: 3px;
+}
+
+[data-eds] .eds-approval__head {
+  align-items: baseline;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--eds-space-default);
+  justify-content: space-between;
+}
+
+[data-eds] .eds-approval__title {
+  color: var(--eds-cmp-trust-text);
+  font-family: var(--eds-type-ui-family);
+  font-size: var(--eds-type-subheading-size);
+  font-weight: 600;
+  line-height: var(--eds-type-subheading-line);
+  margin: 0;
+}
+
+[data-eds] .eds-approval__risk {
+  align-items: baseline;
+  display: inline-flex;
+  gap: var(--eds-space-tight);
+  margin: 0;
+}
+
+[data-eds] .eds-approval__risk-label {
+  color: var(--eds-cmp-trust-meta-text);
+  font-family: var(--eds-type-ui-family);
+  font-size: var(--eds-type-caption-size);
+  line-height: var(--eds-type-caption-line);
+}
+
+/* Risk is a word. Not a pill, not a dot, not a colour. */
+[data-eds] .eds-approval__risk-word {
+  color: var(--eds-cmp-trust-text);
+  font-family: var(--eds-type-ui-family);
+  font-size: var(--eds-type-ui-size);
+  font-weight: 600;
+  line-height: var(--eds-type-ui-line);
+}
+
+/* The one raised voice in the card. */
+[data-eds] .eds-approval__verdict {
+  color: var(--eds-cmp-trust-verdict-text);
+  font-family: var(--eds-font-serif);
+  font-size: var(--eds-type-heading-size);
+  line-height: var(--eds-type-heading-line);
+  margin: 0;
+}
+
+[data-eds] .eds-approval__rationale {
+  color: var(--eds-cmp-trust-text-secondary);
+  font-family: var(--eds-type-ui-family);
+  font-size: var(--eds-type-ui-size);
+  line-height: var(--eds-type-body-line);
+  margin: 0;
+}
+
+[data-eds] .eds-approval__facts {
+  border-top: 1px solid var(--eds-cmp-trust-hairline);
+  display: grid;
+  gap: 0;
+  margin: 0;
+}
+
+[data-eds] .eds-approval__fact {
+  border-bottom: 1px solid var(--eds-cmp-trust-hairline);
+  display: grid;
+  gap: var(--eds-space-default);
+  grid-template-columns: minmax(0, 12ch) minmax(0, 1fr);
+  padding: 6px 0;
+}
+
+[data-eds] .eds-approval__term {
+  color: var(--eds-cmp-trust-meta-text);
+  font-family: var(--eds-type-ui-family);
+  font-size: var(--eds-type-caption-size);
+  line-height: var(--eds-type-ui-line);
+}
+
+[data-eds] .eds-approval__value {
+  color: var(--eds-cmp-trust-text);
+  font-family: var(--eds-type-ui-family);
+  font-size: var(--eds-type-ui-size);
+  line-height: var(--eds-type-ui-line);
+  margin: 0;
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+[data-eds] .eds-approval__value--mono {
+  color: var(--eds-cmp-trust-mono-text);
+  font-family: var(--eds-font-mono);
+  font-size: var(--eds-type-code-size);
+  line-height: var(--eds-type-code-line);
+  overflow-wrap: anywhere;
+}
+
+[data-eds] .eds-approval__reversible {
+  color: var(--eds-cmp-trust-text-secondary);
+  font-family: var(--eds-type-ui-family);
+  font-size: var(--eds-type-ui-size);
+  line-height: var(--eds-type-ui-line);
+  margin: 0;
+}
+
+[data-eds] .eds-approval__reversible-label {
+  color: var(--eds-cmp-trust-meta-text);
+  font-size: var(--eds-type-caption-size);
+}
+
+/* Irreversible: a Brick warning line, with the rule as decoration only. */
+[data-eds] .eds-approval__irreversible {
+  align-items: baseline;
+  color: var(--eds-cmp-trust-warning-text);
+  display: flex;
+  font-family: var(--eds-type-ui-family);
+  font-size: var(--eds-type-ui-size);
+  font-weight: 600;
+  gap: var(--eds-space-tight);
+  line-height: var(--eds-type-ui-line);
+  margin: 0;
+}
+
+[data-eds] .eds-approval__irreversible-rule {
+  background: var(--eds-cmp-trust-risk-rule);
+  flex: none;
+  height: 1em;
+  width: 2px;
+}
+
+[data-eds] .eds-approval__expiry {
+  color: var(--eds-cmp-trust-meta-text);
+  font-family: var(--eds-type-ui-family);
+  font-size: var(--eds-type-caption-size);
+  line-height: var(--eds-type-caption-line);
+  margin: 0;
+}
+
+[data-eds] .eds-approval__disclosure {
+  align-self: flex-start;
+  background: none;
+  border: none;
+  color: var(--eds-cmp-trust-text-secondary);
+  cursor: pointer;
+  font-family: var(--eds-type-ui-family);
+  font-size: var(--eds-type-ui-size);
+  line-height: var(--eds-type-ui-line);
+  padding: 0;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+[data-eds] .eds-approval__disclosure:focus-visible {
+  outline: var(--eds-focus-ring);
+}
+
+/* Consequence should not feel instant. */
+[data-eds] .eds-approval__details-body {
+  border-left: 1px solid var(--eds-cmp-trust-hairline);
+  color: var(--eds-cmp-trust-text-secondary);
+  font-family: var(--eds-type-ui-family);
+  font-size: var(--eds-type-ui-size);
+  line-height: var(--eds-type-body-line);
+  margin-top: var(--eds-space-tight);
+  padding-left: var(--eds-space-default);
+  transition-duration: var(--eds-motion-deliberate);
+  transition-property: opacity;
+}
+
+[data-eds] .eds-approval__confirm {
+  border-top: 1px solid var(--eds-cmp-trust-hairline);
+  display: grid;
+  gap: var(--eds-space-tight);
+  padding-top: var(--eds-space-default);
+}
+
+[data-eds] .eds-approval__confirm-label {
+  color: var(--eds-cmp-trust-text);
+  font-family: var(--eds-type-ui-family);
+  font-size: var(--eds-type-ui-size);
+  line-height: var(--eds-type-ui-line);
+}
+
+[data-eds] .eds-approval__confirm-input {
+  background: var(--eds-cmp-trust-field-bg);
+  border: 1px solid var(--eds-cmp-trust-card-border);
+  border-radius: var(--eds-radius-base);
+  color: var(--eds-cmp-trust-text);
+  font-family: var(--eds-font-mono);
+  font-size: var(--eds-type-code-size);
+  line-height: var(--eds-type-code-line);
+  max-width: 32ch;
+  min-height: 36px;
+  padding: 6px 10px;
+}
+
+[data-eds] .eds-approval__confirm-input:focus-visible {
+  outline: var(--eds-focus-ring);
+}
+
+[data-eds] .eds-approval__confirm-help {
+  color: var(--eds-cmp-trust-meta-text);
+  font-family: var(--eds-type-ui-family);
+  font-size: var(--eds-type-caption-size);
+  line-height: var(--eds-type-caption-line);
+  margin: 0;
+}
+
+[data-eds] .eds-approval__actions {
+  align-items: center;
+  border-top: 1px solid var(--eds-cmp-trust-hairline);
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--eds-space-default);
+  padding-top: var(--eds-space-default);
+}
+
+[data-eds] .eds-approval__action {
+  border-radius: var(--eds-radius-base);
+  cursor: pointer;
+  font-family: var(--eds-type-ui-family);
+  font-size: var(--eds-type-ui-size);
+  line-height: var(--eds-type-ui-line);
+  min-height: 36px;
+  padding: var(--eds-space-tight) var(--eds-space-default);
+}
+
+/* Leftmost, quiet, and NOT red: refusing is a legitimate answer, not an
+ * error state. */
+[data-eds] .eds-approval__action--deny {
+  background: var(--eds-cmp-trust-action-bg);
+  border: 1px solid var(--eds-cmp-trust-action-border);
+  color: var(--eds-cmp-trust-action-text);
+}
+
+[data-eds] .eds-approval__action--approve {
+  background: var(--eds-cmp-trust-action-primary-bg);
+  border: 1px solid var(--eds-cmp-trust-action-primary-bg);
+  color: var(--eds-cmp-trust-action-primary-text);
+}
+
+[data-eds] .eds-approval__action:focus-visible {
+  outline: var(--eds-focus-ring);
+}
+
+[data-eds] .eds-approval__action:disabled {
+  cursor: not-allowed;
+  opacity: 0.55;
+}
+
+[data-eds] .eds-approval__unavailable {
+  color: var(--eds-cmp-trust-meta-text);
+  font-family: var(--eds-type-ui-family);
+  font-size: var(--eds-type-ui-size);
+  line-height: var(--eds-type-ui-line);
+  margin: 0;
+}
+
+[data-eds] .eds-approval__future {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: var(--eds-space-tight);
+  margin-left: auto;
+}
+
+/* Below 768 a consequential decision is a full-screen surface, not a
+ * casually dismissible bottom sheet. There is no swipe affordance and no
+ * scrim to tap away: the reader leaves by deciding. */
+@media (max-width: 767px) {
+  [data-eds] .eds-approval {
+    border-left: none;
+    border-radius: 0;
+    border-right: none;
+    max-width: none;
+    min-height: 100%;
+  }
+
+  [data-eds] .eds-approval__actions {
+    flex-direction: column-reverse;
+    align-items: stretch;
+  }
+
+  [data-eds] .eds-approval__action {
+    width: 100%;
+  }
+
+  [data-eds] .eds-approval__future {
+    margin-left: 0;
+  }
+}
+
+/* ─── Ethen Thread ───────────────────────────────────────────────────────
+ * reached = Ink · current = Lapis · unreached = dotted and outlined. */
+
+[data-eds] .eds-thread {
+  color: var(--eds-cmp-trust-text);
+  display: block;
+  min-width: 0;
+}
+
+[data-eds] .eds-thread__summary {
+  color: var(--eds-cmp-trust-meta-text);
+  font-family: var(--eds-type-ui-family);
+  font-size: var(--eds-type-caption-size);
+  line-height: var(--eds-type-caption-line);
+  margin: 0 0 var(--eds-space-tight);
+}
+
+[data-eds] .eds-thread__nodes {
+  display: flex;
+  list-style: none;
+  margin: 0;
+  min-width: 0;
+  padding: 0;
+}
+
+[data-eds] .eds-thread--vertical .eds-thread__nodes {
+  flex-direction: column;
+}
+
+[data-eds] .eds-thread--horizontal .eds-thread__nodes {
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: var(--eds-space-default);
+}
+
+[data-eds] .eds-thread__node {
+  display: flex;
+  gap: var(--eds-space-default);
+  min-width: 0;
+}
+
+[data-eds] .eds-thread--vertical .eds-thread__node {
+  padding-bottom: var(--eds-space-default);
+}
+
+[data-eds] .eds-thread--vertical .eds-thread__node:last-child {
+  padding-bottom: 0;
+}
+
+[data-eds] .eds-thread--horizontal .eds-thread__node {
+  align-items: center;
+  flex-direction: row;
+}
+
+[data-eds] .eds-thread__marker {
+  align-items: center;
+  display: flex;
+  flex: none;
+  flex-direction: column;
+}
+
+/* `display: contents` lifts the dot and the line into the node's own flex row
+ * so `order` can put the connector AFTER the label. Without this the marker is
+ * a self-contained `dot line` pair and the thread reads as a dash prefixed to
+ * every stage instead of one line running through them. */
+[data-eds] .eds-thread--horizontal .eds-thread__marker {
+  display: contents;
+  flex-direction: row;
+}
+
+[data-eds] .eds-thread--horizontal .eds-thread__body {
+  order: 1;
+}
+
+[data-eds] .eds-thread--horizontal .eds-thread__line {
+  order: 2;
+}
+
+[data-eds] .eds-thread__dot {
+  border-radius: 50%;
+  flex: none;
+  height: 9px;
+  width: 9px;
+}
+
+[data-eds] .eds-thread__line {
+  flex: 1 1 auto;
+}
+
+[data-eds] .eds-thread--vertical .eds-thread__line {
+  min-height: 14px;
+  width: 0;
+}
+
+[data-eds] .eds-thread--horizontal .eds-thread__line {
+  height: 0;
+  min-width: 20px;
+}
+
+[data-eds] .eds-thread__node:last-child .eds-thread__line {
+  display: none;
+}
+
+/* Reached: filled Ink. */
+[data-eds] .eds-thread__node[data-thread-state="reached"] .eds-thread__dot {
+  background: var(--eds-cmp-trust-thread-reached);
+  border: 1px solid var(--eds-cmp-trust-thread-reached);
+}
+
+/* Current: filled Lapis. */
+[data-eds] .eds-thread__node[data-thread-state="current"] .eds-thread__dot {
+  background: var(--eds-cmp-trust-thread-current);
+  border: 1px solid var(--eds-cmp-trust-thread-current);
+}
+
+/* Unreached: outlined, never filled — the stage has not happened. */
+[data-eds] .eds-thread__node[data-thread-state="unreached"] .eds-thread__dot {
+  background: transparent;
+  border: 1px solid var(--eds-cmp-trust-thread-unreached);
+}
+
+[data-eds] .eds-thread__node[data-thread-state="reached"] .eds-thread__line,
+[data-eds] .eds-thread__node[data-thread-state="current"] .eds-thread__line {
+  border-left: 1px solid var(--eds-cmp-trust-thread-line);
+}
+
+[data-eds] .eds-thread--horizontal .eds-thread__node[data-thread-state="reached"] .eds-thread__line,
+[data-eds] .eds-thread--horizontal .eds-thread__node[data-thread-state="current"] .eds-thread__line {
+  border-left: none;
+  border-top: 1px solid var(--eds-cmp-trust-thread-line);
+}
+
+/* Dotted connector into a stage that has not happened. */
+[data-eds] .eds-thread__node[data-thread-state="unreached"] .eds-thread__line {
+  border-left: 1px dotted var(--eds-cmp-trust-thread-unreached);
+}
+
+[data-eds] .eds-thread--horizontal .eds-thread__node[data-thread-state="unreached"] .eds-thread__line {
+  border-left: none;
+  border-top: 1px dotted var(--eds-cmp-trust-thread-unreached);
+}
+
+[data-eds] .eds-thread__body {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--eds-space-tight);
+  align-items: baseline;
+  min-width: 0;
+}
+
+[data-eds] .eds-thread__stage {
+  color: var(--eds-cmp-trust-text);
+  font-family: var(--eds-type-ui-family);
+  font-size: var(--eds-type-ui-size);
+  line-height: var(--eds-type-ui-line);
+}
+
+[data-eds] .eds-thread__node[data-thread-state="unreached"] .eds-thread__stage {
+  color: var(--eds-cmp-trust-thread-unreached);
+}
+
+[data-eds] .eds-thread__state {
+  color: var(--eds-cmp-trust-meta-text);
+  font-family: var(--eds-type-ui-family);
+  font-size: var(--eds-type-caption-size);
+  line-height: var(--eds-type-caption-line);
+}
+
+[data-eds] .eds-thread__detail {
+  color: var(--eds-cmp-trust-text-secondary);
+  font-family: var(--eds-font-mono);
+  font-size: var(--eds-type-code-size);
+  line-height: var(--eds-type-code-line);
+  overflow-wrap: anywhere;
+}
+
+/* ─── Ledger Receipt ─────────────────────────────────────────────────────
+ * A certificate: one column, hairlines, serif headline. */
+
+[data-eds] .eds-receipt {
+  background: var(--eds-cmp-trust-card-bg);
+  border: 1px solid var(--eds-cmp-trust-card-border);
+  border-radius: 12px;
+  color: var(--eds-cmp-trust-text);
+  display: flex;
+  flex-direction: column;
+  gap: var(--eds-space-default);
+  max-width: 64ch;
+  padding: var(--eds-space-spacious);
+}
+
+[data-eds] .eds-receipt__headline {
+  color: var(--eds-cmp-trust-text);
+  font-family: var(--eds-font-serif);
+  font-size: var(--eds-type-heading-size);
+  font-weight: 500;
+  line-height: var(--eds-type-heading-line);
+  margin: 0;
+}
+
+[data-eds] .eds-receipt__summary {
+  color: var(--eds-cmp-trust-text-secondary);
+  font-family: var(--eds-type-ui-family);
+  font-size: var(--eds-type-ui-size);
+  line-height: var(--eds-type-body-line);
+  margin: var(--eds-space-tight) 0 0;
+}
+
+[data-eds] .eds-receipt__rows {
+  border-top: 1px solid var(--eds-cmp-trust-hairline);
+  display: grid;
+  margin: 0;
+}
+
+[data-eds] .eds-receipt__row {
+  border-bottom: 1px solid var(--eds-cmp-trust-hairline);
+  display: grid;
+  gap: var(--eds-space-default);
+  grid-template-columns: minmax(0, 14ch) minmax(0, 1fr);
+  padding: 6px 0;
+}
+
+/* The following section already draws this boundary; two rules for one edge
+ * read as a stray hairline. */
+[data-eds] .eds-receipt__row:last-child {
+  border-bottom: 0;
+}
+
+[data-eds] .eds-receipt__term {
+  color: var(--eds-cmp-trust-meta-text);
+  font-family: var(--eds-type-ui-family);
+  font-size: var(--eds-type-caption-size);
+  line-height: var(--eds-type-ui-line);
+}
+
+[data-eds] .eds-receipt__value {
+  color: var(--eds-cmp-trust-text);
+  font-family: var(--eds-type-ui-family);
+  font-size: var(--eds-type-ui-size);
+  line-height: var(--eds-type-ui-line);
+  margin: 0;
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+[data-eds] .eds-receipt__value--mono {
+  color: var(--eds-cmp-trust-mono-text);
+  font-family: var(--eds-font-mono);
+  font-size: var(--eds-type-code-size);
+  line-height: var(--eds-type-code-line);
+}
+
+[data-eds] .eds-receipt__thread {
+  border-top: 1px solid var(--eds-cmp-trust-hairline);
+  padding-top: var(--eds-space-default);
+}
+
+[data-eds] .eds-receipt__verify {
+  align-items: baseline;
+  border-top: 1px solid var(--eds-cmp-trust-hairline);
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--eds-space-default);
+  padding-top: var(--eds-space-default);
+}
+
+[data-eds] .eds-receipt__verify-action {
+  background: var(--eds-cmp-trust-action-bg);
+  border: 1px solid var(--eds-cmp-trust-action-border);
+  border-radius: var(--eds-radius-base);
+  color: var(--eds-cmp-trust-action-text);
+  cursor: pointer;
+  font-family: var(--eds-type-ui-family);
+  font-size: var(--eds-type-ui-size);
+  line-height: var(--eds-type-ui-line);
+  min-height: 36px;
+  padding: var(--eds-space-tight) var(--eds-space-default);
+}
+
+[data-eds] .eds-receipt__verify-action:focus-visible {
+  outline: var(--eds-focus-ring);
+}
+
+[data-eds] .eds-receipt__verify-result {
+  color: var(--eds-cmp-trust-text-secondary);
+  font-family: var(--eds-type-ui-family);
+  font-size: var(--eds-type-caption-size);
+  line-height: var(--eds-type-caption-line);
+  margin: 0;
+}
+
+[data-eds] .eds-receipt__verify-result[data-verification="invalid"] {
+  color: var(--eds-cmp-trust-warning-text);
+  font-weight: 600;
+}
+
+/* ─── Review Card ────────────────────────────────────────────────────────
+ * Artifact is the page; judgement is the margin. */
+
+[data-eds] .eds-review {
+  background: var(--eds-cmp-trust-card-bg);
+  border: 1px solid var(--eds-cmp-trust-card-border);
+  border-radius: 12px;
+  color: var(--eds-cmp-trust-text);
+  display: flex;
+  flex-direction: column;
+  gap: var(--eds-space-default);
+  min-width: 0;
+  padding: var(--eds-space-spacious);
+}
+
+[data-eds] .eds-review__title {
+  color: var(--eds-cmp-trust-text);
+  font-family: var(--eds-type-ui-family);
+  font-size: var(--eds-type-subheading-size);
+  font-weight: 600;
+  line-height: var(--eds-type-subheading-line);
+  margin: 0;
+}
+
+[data-eds] .eds-review__body {
+  display: grid;
+  gap: var(--eds-space-spacious);
+  grid-template-columns: minmax(0, 1fr) minmax(0, 22ch);
+  min-width: 0;
+}
+
+[data-eds] .eds-review__artifact {
+  color: var(--eds-cmp-trust-text);
+  font-family: var(--eds-type-ui-family);
+  font-size: var(--eds-type-ui-size);
+  line-height: var(--eds-type-body-line);
+  min-width: 0;
+}
+
+[data-eds] .eds-review__margin {
+  border-left: 1px solid var(--eds-cmp-trust-hairline);
+  display: flex;
+  flex-direction: column;
+  gap: var(--eds-space-default);
+  min-width: 0;
+  padding-left: var(--eds-space-default);
+}
+
+[data-eds] .eds-review__annotations {
+  display: flex;
+  flex-direction: column;
+  gap: var(--eds-space-tight);
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+[data-eds] .eds-review__annotation {
+  background: var(--eds-cmp-trust-annotation-bg);
+  border: 1px solid var(--eds-cmp-trust-annotation-border);
+  border-radius: var(--eds-radius-base);
+  display: grid;
+  gap: 2px;
+  padding: 6px 8px;
+}
+
+[data-eds] .eds-review__anchor {
+  color: var(--eds-cmp-trust-meta-text);
+  font-family: var(--eds-font-mono);
+  font-size: var(--eds-type-code-size);
+  line-height: var(--eds-type-code-line);
+}
+
+[data-eds] .eds-review__note {
+  color: var(--eds-cmp-trust-text);
+  font-family: var(--eds-type-ui-family);
+  font-size: var(--eds-type-caption-size);
+  line-height: var(--eds-type-body-line);
+}
+
+[data-eds] .eds-review__no-annotations {
+  color: var(--eds-cmp-trust-meta-text);
+  font-family: var(--eds-type-ui-family);
+  font-size: var(--eds-type-caption-size);
+  line-height: var(--eds-type-caption-line);
+  margin: 0;
+}
+
+[data-eds] .eds-review__verdict {
+  display: flex;
+  flex-direction: column;
+  gap: var(--eds-space-tight);
+}
+
+/* Both verdicts are neutral: same weight, same border, same background.
+ * Neither answer is styled as the preferred one. */
+[data-eds] .eds-review__verdict-option {
+  align-items: center;
+  background: var(--eds-cmp-trust-action-bg);
+  border: 1px solid var(--eds-cmp-trust-action-border);
+  border-radius: var(--eds-radius-base);
+  color: var(--eds-cmp-trust-action-text);
+  cursor: pointer;
+  display: flex;
+  font-family: var(--eds-type-ui-family);
+  font-size: var(--eds-type-ui-size);
+  gap: var(--eds-space-tight);
+  line-height: var(--eds-type-ui-line);
+  min-height: 36px;
+  padding: 6px 10px;
+  text-align: left;
+}
+
+[data-eds] .eds-review__verdict-option:focus-visible {
+  outline: var(--eds-focus-ring);
+}
+
+/* Selection is a glyph and a border weight, not a hue. */
+[data-eds] .eds-review__verdict-option[data-selected="true"] {
+  border-color: var(--eds-cmp-trust-text);
+  font-weight: 600;
+}
+
+@media (max-width: 767px) {
+  [data-eds] .eds-review__body {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  [data-eds] .eds-review__margin {
+    border-left: none;
+    border-top: 1px solid var(--eds-cmp-trust-hairline);
+    padding-left: 0;
+    padding-top: var(--eds-space-default);
+  }
+}
+
+/* ─── Learning Insight ───────────────────────────────────────────────────
+ * Narrative first, evidence in provenance register, chart last. */
+
+[data-eds] .eds-insight {
+  background: var(--eds-cmp-trust-card-bg);
+  border: 1px solid var(--eds-cmp-trust-card-border);
+  border-radius: 12px;
+  color: var(--eds-cmp-trust-text);
+  display: flex;
+  flex-direction: column;
+  gap: var(--eds-space-tight);
+  max-width: 56ch;
+  padding: var(--eds-space-spacious);
+}
+
+[data-eds] .eds-insight__narrative {
+  color: var(--eds-cmp-trust-text);
+  font-family: var(--eds-type-ui-family);
+  font-size: var(--eds-type-ui-size);
+  line-height: var(--eds-type-body-line);
+  margin: 0;
+}
+
+[data-eds] .eds-insight__evidence {
+  color: var(--eds-cmp-trust-meta-text);
+  font-family: var(--eds-type-ui-family);
+  font-size: var(--eds-type-caption-size);
+  line-height: var(--eds-type-caption-line);
+  margin: 0;
+}
+
+[data-eds] .eds-insight__mono {
+  color: var(--eds-cmp-trust-mono-text);
+  font-family: var(--eds-font-mono);
+  font-size: var(--eds-type-code-size);
+}
+
+[data-eds] .eds-insight__basis {
+  color: var(--eds-cmp-trust-meta-text);
+}
+
+[data-eds] .eds-insight__chart {
+  border-top: 1px solid var(--eds-cmp-trust-hairline);
+  margin-top: var(--eds-space-tight);
+  min-width: 0;
+  padding-top: var(--eds-space-tight);
+}
+
+/* ─── Autonomy Sentence ──────────────────────────────────────────────────── */
+
+[data-eds] .eds-autonomy {
+  display: flex;
+  flex-direction: column;
+  gap: var(--eds-space-tight);
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+[data-eds] .eds-autonomy__row {
+  align-items: baseline;
+  border-bottom: 1px solid var(--eds-cmp-trust-hairline);
+  color: var(--eds-cmp-trust-text);
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--eds-space-tight);
+  padding-bottom: var(--eds-space-tight);
+}
+
+[data-eds] .eds-autonomy__glyph {
+  /* The mark is geometry, not an emoji. Pinning the family and asking for the
+   * text presentation stops a platform emoji font claiming the codepoint and
+   * painting a colour glyph that ignores currentColor, dark mode and
+   * forced-colors. */
+  color: inherit;
+  flex: none;
+  font-family: var(--eds-type-ui-family);
+  font-variant-emoji: text;
+}
+
+[data-eds] .eds-autonomy__sentence {
+  font-family: var(--eds-type-ui-family);
+  font-size: var(--eds-type-ui-size);
+  line-height: var(--eds-type-ui-line);
+}
+
+[data-eds] .eds-autonomy__row[data-enabled="false"] .eds-autonomy__sentence {
+  font-weight: 600;
+}
+
+[data-eds] .eds-autonomy__reason,
+[data-eds] .eds-autonomy__source {
+  color: var(--eds-cmp-trust-meta-text);
+  font-family: var(--eds-type-ui-family);
+  font-size: var(--eds-type-caption-size);
+  line-height: var(--eds-type-caption-line);
+}
+
+[data-eds] .eds-autonomy__source {
+  font-family: var(--eds-font-mono);
+  font-size: var(--eds-type-code-size);
+  margin-left: auto;
+}
+
+/* ─── Forced colors ──────────────────────────────────────────────────────
+ * Every state above is already carried by a word or a glyph, so forced
+ * colors only needs to keep the structural lines visible. */
+
+@media (forced-colors: active) {
+  [data-eds] .eds-approval,
+  [data-eds] .eds-receipt,
+  [data-eds] .eds-review,
+  [data-eds] .eds-insight {
+    border-color: ButtonBorder;
+  }
+
+  [data-eds] .eds-approval__fact,
+  [data-eds] .eds-receipt__row,
+  [data-eds] .eds-autonomy__row {
+    border-bottom-color: ButtonBorder;
+  }
+
+  [data-eds] .eds-approval__risk-rule,
+  [data-eds] .eds-approval__irreversible-rule {
+    background: Highlight;
+    forced-color-adjust: none;
+  }
+
+  [data-eds] .eds-thread__node[data-thread-state="reached"] .eds-thread__dot,
+  [data-eds] .eds-thread__node[data-thread-state="current"] .eds-thread__dot {
+    background: ButtonText;
+    border-color: ButtonText;
+    forced-color-adjust: none;
+  }
+
+  [data-eds] .eds-thread__node[data-thread-state="unreached"] .eds-thread__dot {
+    background: Canvas;
+    border-color: GrayText;
+    forced-color-adjust: none;
+  }
+
+  [data-eds] .eds-review__verdict-option[data-selected="true"] {
+    border-color: Highlight;
+  }
+
+  [data-eds] .eds-trust__dependency {
+    border-color: GrayText;
+  }
+}
+
+/* ─── Reduced motion ─────────────────────────────────────────────────────
+ * The Thread is drawn, never animated, so there is nothing to suppress
+ * there. The deliberate disclosure collapses to effectively instant. */
+
+@media (prefers-reduced-motion: reduce) {
+  /* --eds-motion-deliberate already collapses at the token tier (D04); this
+   * only silences any animation. */
+  [data-eds] .eds-approval *,
+  [data-eds] .eds-receipt *,
+  [data-eds] .eds-review *,
+  [data-eds] .eds-insight *,
+  [data-eds] .eds-thread * {
+    animation: none;
+  }
+}

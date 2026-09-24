@@ -37,6 +37,26 @@ export type {
   SerializedMessage,
 } from "./slots";
 
+export {
+  registerStudioWorkspaceSlots,
+  resolveStudioWorkspaceSlot,
+  isStudioWorkspaceComplete,
+  missingStudioWorkspaceSlots,
+} from "./studio/studio-workspace-slots";
+export type {
+  StudioWorkspaceSlots,
+  StudioWorkspaceSlotKey,
+  StudioAssetPanelSlotProps,
+  StudioJobPanelSlotProps,
+  StudioPreviewStageSlotProps,
+  StudioReviewPanelSlotProps,
+  StudioCanvasToolbarSlotProps,
+  StudioHistoryPanelSlotProps,
+  StudioInspectorPanelSlotProps,
+  StudioComposerSlotProps,
+  StudioResultActionsSlotProps,
+} from "./studio/studio-workspace-slots";
+
 // B1 — shared document + auth foundation.
 export { EthenDocument } from "./document";
 export type { EthenDocumentProps } from "./document";

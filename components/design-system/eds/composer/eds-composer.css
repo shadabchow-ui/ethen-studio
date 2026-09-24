@@ -1,0 +1,349 @@
+/* EDS Composer styles — D08 candidate.
+ * Hand-authored against design-system/tokens/eds-components-candidate.json.
+ * Scoped to [data-eds]. Lab only. No :root, no global element selectors.
+ *
+ * One implementation serves prose, work, and inline variants; density arrives from
+ * the ancestor data-eds-density scope through --eds-den-* roles. The Composer stays
+ * geometrically stable while streaming: send and stop share one fixed slot, and no
+ * animation, pulse, glow, lift, or transition: all appears in this file.
+ */
+
+[data-eds] .eds-composer {
+  background: var(--eds-cmp-composer-bg);
+  border: 1px solid var(--eds-cmp-composer-border);
+  border-radius: var(--eds-radius-raised);
+  display: grid;
+  gap: var(--eds-space-tight);
+  padding: var(--eds-space-tight) var(--eds-space-tight) calc(var(--eds-space-tight) + env(safe-area-inset-bottom, 0px));
+  position: relative;
+  transition: border-color var(--eds-motion-ui), background-color var(--eds-motion-ui);
+  width: 100%;
+}
+
+[data-eds] .eds-composer--prose {
+  max-width: 100%;
+}
+
+[data-eds] .eds-composer:focus-within {
+  border-color: var(--eds-cmp-composer-focus);
+}
+
+[data-eds] .eds-composer--drag {
+  background: var(--eds-cmp-composer-drag-wash);
+  border-color: var(--eds-cmp-composer-drag-border);
+}
+
+[data-eds] .eds-composer__model {
+  color: var(--eds-cmp-composer-meta);
+  display: flex;
+  font-family: var(--eds-type-caption-family);
+  font-size: var(--eds-type-caption-size);
+  line-height: var(--eds-type-caption-line);
+}
+
+[data-eds] .eds-composer__input {
+  appearance: none;
+  background: transparent;
+  border: 0;
+  color: var(--eds-cmp-composer-text);
+  display: block;
+  font-family: var(--eds-den-body-family, var(--eds-type-body-family));
+  font-size: var(--eds-den-body-size, var(--eds-type-body-size));
+  font-weight: var(--eds-den-body-weight, var(--eds-type-body-weight));
+  letter-spacing: var(--eds-den-body-tracking, var(--eds-type-body-tracking));
+  line-height: var(--eds-den-body-line, var(--eds-type-body-line));
+  margin: 0;
+  overflow-y: auto;
+  padding: var(--eds-space-compact) var(--eds-space-tight);
+  resize: none;
+  width: 100%;
+}
+
+[data-eds] .eds-composer__input::placeholder {
+  color: var(--eds-cmp-composer-placeholder);
+}
+
+[data-eds] .eds-composer__input:focus {
+  outline: none;
+}
+
+[data-eds] .eds-composer__input:disabled {
+  color: var(--eds-cmp-field-disabled-text);
+  cursor: not-allowed;
+}
+
+[data-eds] .eds-composer--prose .eds-composer__input {
+  max-height: 40vh;
+  min-height: 92px;
+}
+
+[data-eds] .eds-composer--work .eds-composer__input {
+  max-height: 30vh;
+  min-height: 64px;
+}
+
+[data-eds] .eds-composer--inline .eds-composer__input {
+  max-height: 160px;
+  min-height: max(40px, var(--eds-den-control-height, 40px));
+}
+
+[data-eds] .eds-composer__attachments {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--eds-space-compact);
+  list-style: none;
+  margin: 0;
+  padding: 0 var(--eds-space-tight);
+}
+
+[data-eds] .eds-composer__attachment {
+  margin: 0;
+  max-width: 100%;
+}
+
+[data-eds] .eds-composer__detail {
+  color: var(--eds-cmp-composer-meta);
+}
+
+[data-eds] .eds-composer__error {
+  align-items: baseline;
+  color: var(--eds-cmp-composer-error);
+  display: flex;
+  flex-wrap: wrap;
+  font-family: var(--eds-type-caption-family);
+  font-size: var(--eds-type-caption-size);
+  gap: var(--eds-space-tight);
+  line-height: var(--eds-type-caption-line);
+  margin: 0;
+  padding: 0 var(--eds-space-tight);
+}
+
+[data-eds] .eds-composer__retry {
+  appearance: none;
+  background: transparent;
+  border: 0;
+  border-radius: var(--eds-radius-base);
+  color: inherit;
+  cursor: pointer;
+  font: inherit;
+  padding: 0;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+[data-eds] .eds-composer__retry:focus-visible {
+  outline: var(--eds-focus-ring);
+  outline-offset: 1px;
+}
+
+[data-eds] .eds-composer__toolbar {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--eds-space-tight);
+}
+
+[data-eds] .eds-composer__tools {
+  align-items: center;
+  display: flex;
+  gap: var(--eds-space-compact);
+}
+
+[data-eds] .eds-composer__icon-button {
+  align-items: center;
+  appearance: none;
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: var(--eds-radius-small);
+  color: var(--eds-cmp-button-ghost-text);
+  cursor: pointer;
+  display: inline-flex;
+  justify-content: center;
+  min-height: var(--eds-layout-control-md);
+  min-width: var(--eds-layout-control-md);
+  padding: 0;
+  transition: background-color var(--eds-motion-ui), color var(--eds-motion-ui);
+}
+
+[data-eds] .eds-composer__icon-button:hover {
+  background: var(--eds-cmp-button-ghost-bg-hover);
+  color: var(--eds-cmp-button-ghost-text-hover);
+}
+
+[data-eds] .eds-composer__icon-button:focus-visible {
+  outline: var(--eds-focus-ring);
+  outline-offset: var(--eds-focus-offset);
+}
+
+[data-eds] .eds-composer__icon-button:disabled {
+  color: var(--eds-cmp-button-disabled-text);
+  cursor: not-allowed;
+}
+
+[data-eds] .eds-composer__tools-button {
+  align-items: center;
+  appearance: none;
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: var(--eds-radius-small);
+  color: var(--eds-cmp-button-ghost-text);
+  cursor: pointer;
+  display: inline-flex;
+  font-family: var(--eds-type-ui-sm-family);
+  font-size: var(--eds-type-ui-sm-size);
+  font-weight: var(--eds-type-ui-sm-weight);
+  gap: var(--eds-space-compact);
+  letter-spacing: var(--eds-type-ui-sm-tracking);
+  line-height: var(--eds-type-ui-sm-line);
+  min-height: var(--eds-layout-control-md);
+  padding: 0 var(--eds-space-tight);
+  transition: background-color var(--eds-motion-ui), color var(--eds-motion-ui);
+}
+
+[data-eds] .eds-composer__tools-button:hover {
+  background: var(--eds-cmp-button-ghost-bg-hover);
+  color: var(--eds-cmp-button-ghost-text-hover);
+}
+
+[data-eds] .eds-composer__tools-button:focus-visible {
+  outline: var(--eds-focus-ring);
+  outline-offset: var(--eds-focus-offset);
+}
+
+[data-eds] .eds-composer__tools-button:disabled {
+  color: var(--eds-cmp-button-disabled-text);
+  cursor: not-allowed;
+}
+
+[data-eds] .eds-composer__tools-button--active {
+  color: var(--eds-cmp-button-ghost-text-hover);
+}
+
+[data-eds] .eds-composer__tools-count {
+  font-weight: var(--eds-font-weight-semibold);
+}
+
+[data-eds] .eds-composer__tools-chevron {
+  display: inline-flex;
+}
+
+[data-eds] .eds-composer__hint {
+  color: var(--eds-cmp-composer-meta);
+  flex: 1 1 auto;
+  font-family: var(--eds-type-caption-family);
+  font-size: var(--eds-type-caption-size);
+  line-height: var(--eds-type-caption-line);
+  min-width: 120px;
+}
+
+[data-eds] .eds-composer__send {
+  align-items: center;
+  appearance: none;
+  background: var(--eds-cmp-button-ink-bg);
+  border: 1px solid var(--eds-cmp-button-ink-bg);
+  border-radius: var(--eds-radius-small);
+  color: var(--eds-cmp-button-ink-text);
+  cursor: pointer;
+  display: inline-flex;
+  flex: none;
+  height: var(--eds-layout-control-md);
+  justify-content: center;
+  padding: 0;
+  transition: background-color var(--eds-motion-ui), border-color var(--eds-motion-ui);
+  width: var(--eds-layout-control-md);
+}
+
+[data-eds] .eds-composer__send:hover {
+  background: var(--eds-cmp-button-ink-bg-hover);
+  border-color: var(--eds-cmp-button-ink-bg-hover);
+}
+
+[data-eds] .eds-composer__send:focus-visible {
+  outline: var(--eds-focus-ring);
+  outline-offset: var(--eds-focus-offset);
+}
+
+[data-eds] .eds-composer__send:disabled {
+  background: var(--eds-cmp-button-disabled-bg);
+  border-color: var(--eds-cmp-button-disabled-bg);
+  color: var(--eds-cmp-button-disabled-text);
+  cursor: not-allowed;
+}
+
+[data-eds] .eds-composer__send--stop {
+  background: var(--eds-cmp-button-destructive-bg);
+  border-color: var(--eds-cmp-button-destructive-bg);
+  color: var(--eds-cmp-button-destructive-text);
+}
+
+[data-eds] .eds-composer__send-glyph {
+  font-size: 16px;
+  line-height: 1;
+}
+
+[data-eds] .eds-composer__menu-anchor {
+  position: relative;
+}
+
+[data-eds] .eds-composer__menu-layer {
+  left: 0;
+  position: absolute;
+  top: calc(100% + 8px);
+  z-index: 50;
+}
+
+[data-eds] .eds-composer__menu-backdrop {
+  inset: 0;
+  position: fixed;
+}
+
+[data-eds] .eds-composer__drop-hint {
+  align-items: center;
+  background: transparent;
+  color: var(--eds-cmp-composer-text);
+  display: none;
+  font-family: var(--eds-type-ui-family);
+  font-size: var(--eds-type-ui-size);
+  inset: 0;
+  justify-content: center;
+  line-height: var(--eds-type-ui-line);
+  pointer-events: none;
+  position: absolute;
+}
+
+[data-eds] .eds-composer--drag .eds-composer__drop-hint {
+  display: flex;
+}
+
+[data-eds] .eds-composer__sr {
+  border: 0;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  white-space: nowrap;
+  width: 1px;
+}
+
+@media (max-width: 480px) {
+  [data-eds] .eds-composer__model {
+    display: none;
+  }
+
+  [data-eds] .eds-composer__hint {
+    flex-basis: 100%;
+    order: 5;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-eds] .eds-composer,
+  [data-eds] .eds-composer__icon-button,
+  [data-eds] .eds-composer__tools-button,
+  [data-eds] .eds-composer__send {
+    transition: none;
+  }
+}

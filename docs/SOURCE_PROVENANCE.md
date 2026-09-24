@@ -3,7 +3,7 @@
 ```text
 SOURCE_MONOREPO=/Users/sha/Documents/ethen/ethenv5
 SOURCE_BRANCH=ethen/studio-v5-final
-SOURCE_HEAD=cf3aabdb43137f904dfcf5b1d297e9d77834bbb8
+SOURCE_HEAD=b6fc3b9ca81d97b50c15e5e6120582a3f2349948
 SOURCE_APP_PATH=apps/studio
 EXTRACTION_DATE=2026-09-24
 EXTRACTION_METHOD=git archive of SOURCE_HEAD into an isolated snapshot,
@@ -11,6 +11,28 @@ EXTRACTION_METHOD=git archive of SOURCE_HEAD into an isolated snapshot,
 TARGET_REPO=shadabchow-ui/ethen-studio
 TARGET_BRANCH=main
 ```
+
+## S3.5 source closure repair (2026-09-24)
+
+Previous `SOURCE_HEAD=cf3aabdb4` was internally inconsistent: 9 Studio
+dependency modules (plus their transitive closure) existed only as
+uncommitted monorepo files. S3.5 committed the required-only closure on
+`ethen/studio-v5-final` (`b03ab7dc` + `b6fc3b9c`) and re-vendored this repo
+from the new HEAD:
+
+- 24 previously uncommitted modules (RUM, a11y, settings authority,
+  chat-lab chrome/prefs/greeting/launcher/segmented control, Canvas
+  viewport, user-settings store)
+- 8 required-only tracked updates (navigation/app-shell barrels, theme
+  icons, StudioShell Job-12 surface, search-palette Studio props,
+  SearchResult Studio group, workflow listGraphs, review-asset block)
+- 15 committed CSS files the S2 extraction missed (root `styles/eds/*`
+  + eds composer/primitives/qualification sheets backing the vendored
+  `flagship-surface.css`)
+
+Result: typecheck 84 → 0 errors, `next build` PASS, tests 22/27 with
+zero new failures (5 remaining failures are pre-existing and
+signature-verified, not closure issues).
 
 Monorepo history was intentionally not imported: the standalone repo is a
 clean snapshot plus this provenance record.
@@ -61,10 +83,12 @@ clean snapshot plus this provenance record.
 
 ## Known HEAD-inherited state (not introduced by extraction)
 
-Committed SOURCE_HEAD is internally inconsistent for Studio: `apps/studio`
-at HEAD imports 9 package modules that were never committed on this branch
-(they exist only as uncommitted working-tree files). The standalone repo
-faithfully reproduces HEAD behavior, including its 84 type errors, 5
-webpack module errors, and 5 failing suites — with zero NEW failures.
-See `artifacts/repo-separation/STANDALONE_CERTIFICATION.md` and the
-promotion blocker in `docs/PRODUCTION_AUTHORITY.md`.
+Resolved by the S3.5 closure above: the previous SOURCE_HEAD's 9 missing
+modules, 84 type errors, and 5 webpack module errors are gone. 5 test
+suites still fail with pre-existing, signature-verified causes unrelated
+to source closure (media tool registry count, rec02f mock-completion,
+stu-31 registry promotion pinned against sol05, stu-34 stale API needles,
+sidebar Chat brand assets). The S2 certification
+(`artifacts/repo-separation/STANDALONE_CERTIFICATION.md`) describes the
+pre-S3.5 state; the promotion blocker in `docs/PRODUCTION_AUTHORITY.md`
+is cleared for the source-integrity item (S4 deployment gates still apply).

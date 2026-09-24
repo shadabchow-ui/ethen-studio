@@ -9,3 +9,4 @@ export const EXTRACTION_STATUS = "extracted" as const;
 
 export * from "./navigation-contexts";
 export * from "./navigation";
+export * from "./studio";
