@@ -4,7 +4,7 @@ import { dirname, join } from "node:path";
 import { test } from "node:test";
 import { fileURLToPath } from "node:url";
 import { DISCOVERY_MEDIA, DISCOVERY_SECTION_SIZE } from "../../studio-v5/discovery-media";
-import { sectionItems, showcaseFeed } from "../../studio-v5/showcase-feed";
+import { sectionItems, showcaseById, showcaseFeed } from "../../studio-v5/showcase-feed";
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..", "..", "..");
 
@@ -51,6 +51,16 @@ test("no homepage rail renders placeholders", () => {
     for (const item of rail.filter((i) => i.placeholder)) offenders.push(`${section}:${item.id}`);
   }
   assert.deepEqual(offenders, [], `rails still hold placeholders: ${offenders.join(", ")}`);
+});
+
+test("feature-card key art resolves to real media", () => {
+  // StudioHome looks these ids up directly (keyArt); a placeholder id here
+  // renders a placeholder card even when every rail is fully real.
+  for (const id of ["still-hero", "still-product", "still-portrait", "video-17", "video-19"]) {
+    const item = showcaseById(id);
+    assert.ok(item, `key art ${id} is missing from the feed`);
+    assert.equal(item.placeholder, false, `key art ${id} is a placeholder`);
+  }
 });
 
 test("final (non-placeholder) local media files exist", () => {

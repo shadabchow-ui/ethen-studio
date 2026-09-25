@@ -84,6 +84,26 @@ records, no new bytes):
 
 `INTENTIONAL_REAL_VIDEO_REUSE=0` (retags are curation, not duplicate records).
 
+## Key-art fix (post-promotion catch)
+
+Production census found two rendered placeholder tiles outside the section
+rails: the "What's new" feature cards look up `video-17` (Creative Agent) and
+`video-19` (Animate image) by id, and `keyArt` returns placeholders as-is.
+Fixed with two additional unique stills (no duplication):
+
+| Still | Source (vendored; SSD ejected mid-job) | Geometry |
+|-------|----------------------------------------|----------|
+| keyart-agent-01.webp | cinema-fantasy-01.mp4 @ t=5s | 1280x548 (21:9) |
+| keyart-animate-01.webp | marketing-beauty-01.mp4 @ t=4s | 720x720 (1:1) |
+
+Entries keep ids `video-17` / `video-19` (component lookup) as
+`type: "image"` + `sourceType: "owner-showcase"`. The Canvas card lookup
+(`image-21`, id retired with the pi block) falls back to designed motif art,
+which is intentional product art, not a placeholder.
+
+Note: `/Volumes/ssd` ejected during this pass; all batch sources were already
+vendored and the key-art frames were extracted from repo-vendored reels.
+
 ## Derivatives
 
 - Videos: MP4 H.264, 8s head trim, muted, +faststart, ≤1280px long edge,

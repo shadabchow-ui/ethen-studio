@@ -176,9 +176,11 @@ export const DISCOVERY_MEDIA: readonly DiscoveryMediaItem[] = [
   pv(14, "9:16", ["home-video", "flagship-cinema"], { categories: ["animation", "experimental"] }),
   pv(15, "16:9", ["spotlight-marketing"], { categories: ["3d", "experimental"] }),
   pv(16, "4:5", ["spotlight-influencer"], { categories: ["fashion", "animation"] }),
-  pv(17, "21:9", ["flagship-cinema"], { categories: ["cinematic", "experimental"] }),
+  // Key art for the "Creative Agent" feature card (StudioHome keyArt lookup by id).
+  { id: "video-17", type: "image", src: "/studio-v5/showcase/owner-batch-02/images/keyart-agent-01.webp", width: 1280, height: 548, aspectRatio: "21:9", sections: ["flagship-cinema"], title: "Fantasy runner key art", categories: ["cinematic", "experimental"], placeholder: false, sourceType: "owner-showcase" },
   pv(18, "9:16", ["specialized-product", "spotlight-marketing"], { categories: ["advertising", "animation"] }),
-  pv(19, "1:1", ["feature-rail"], { categories: ["3d", "animation"], appId: "image-to-video", workflow: "image-to-video" }),
+  // Key art for the "Animate image" feature card (StudioHome keyArt lookup by id).
+  { id: "video-19", type: "image", src: "/studio-v5/showcase/owner-batch-02/images/keyart-animate-01.webp", width: 720, height: 720, aspectRatio: "1:1", sections: ["feature-rail"], title: "Headphone model key art", categories: ["3d", "animation"], placeholder: false, sourceType: "owner-showcase", appId: "image-to-video", workflow: "image-to-video" },
   pv(20, "3:2", ["flagship-cinema"], { categories: ["3d", "experimental"] }),
 
   // ── Image slots (26) ────────────────────────────────────────────────────
