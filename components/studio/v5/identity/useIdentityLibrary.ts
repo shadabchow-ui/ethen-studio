@@ -9,6 +9,7 @@
  * state.
  */
 import { useCallback, useEffect, useMemo, useState } from "react";
+import { useAuthActionGate } from "@/components/studio/auth/studio-auth-action";
 import type { StudioDataState } from "../shell/types";
 import { parseIdentitiesResponse } from "./identity-api-client";
 import type { IdentityLibraryTab, IdentityListItem } from "./types";
@@ -37,7 +38,7 @@ export function useIdentityLibrary(query: IdentityLibraryQuery): {
   identities: IdentityListItem[];
   missingFavoriteIds: string[];
   reload: () => void;
-  toggleFavorite: (identityId: string, favorite: boolean) => Promise<boolean>;
+  toggleFavorite: (identityId: string, favorite: boolean) => void;
   recordViewed: (identityId: string) => void;
 } {
   const [state, setState] = useState<StudioDataState>("loading");
@@ -75,7 +76,10 @@ export function useIdentityLibrary(query: IdentityLibraryQuery): {
 
   const reload = useCallback(() => setNonce((value) => value + 1), []);
 
-  const toggleFavorite = useCallback(
+  // S4C: anonymous favorite toggle opens the Clerk modal and sends NO
+  // request; the intended toggle is dropped (user re-taps after sign-in).
+  const authGate = useAuthActionGate();
+  const runToggleFavorite = useCallback(
     async (identityId: string, favorite: boolean): Promise<boolean> => {
       if (!projectId) return false;
       try {
@@ -93,6 +97,12 @@ export function useIdentityLibrary(query: IdentityLibraryQuery): {
       }
     },
     [projectId],
+  );
+  const toggleFavorite = useCallback(
+    (identityId: string, favorite: boolean): void => {
+      authGate.runAuthed(() => void runToggleFavorite(identityId, favorite), "identity-favorite");
+    },
+    [authGate, runToggleFavorite],
   );
 
   const recordViewed = useCallback(

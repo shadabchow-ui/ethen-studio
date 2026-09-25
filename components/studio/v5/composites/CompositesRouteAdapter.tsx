@@ -37,13 +37,14 @@ export function CompositesRouteAdapter({ kind, projectId }: { kind: CompositeKin
   const [reloadToken, setReloadToken] = useState(0);
 
   useEffect(() => {
-    if (!projectId) return;
     let cancelled = false;
     void (async () => {
       try {
+        // S4C: templates are public release content (fetched with or
+        // without a project); campaigns stay project-scoped and authed.
         const [loadedTemplates, loadedCampaigns] = await Promise.all([
           fetchTemplates(projectId, kind),
-          fetchCampaigns(projectId, kind),
+          projectId ? fetchCampaigns(projectId, kind) : Promise.resolve([] as CampaignView[]),
         ]);
         if (cancelled) return;
         setTemplates(loadedTemplates);

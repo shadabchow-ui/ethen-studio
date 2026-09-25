@@ -4,6 +4,7 @@ import { useCallback, useEffect, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useStudioIdentity } from "../../studio-project-scope";
+import { useAuthActionGate } from "@/components/studio/auth/studio-auth-action";
 import type { StudioDataState, StudioProjectSummary } from "./types";
 import { parseProjectsResponse, type ParsedProjects } from "./project-context-model";
 import { STUDIO_FOCUS_RING_CLASS } from "./tokens";
@@ -103,7 +104,10 @@ export function StudioProjectContextBar({ testId }: { testId?: string }) {
     [router, selectProject],
   );
 
-  const onNew = useCallback(async () => {
+  // S4C: anonymous New opens the Clerk modal instead of firing the
+  // authenticated project-creation POST.
+  const authGate = useAuthActionGate();
+  const runNew = useCallback(async () => {
     if (creating) return;
     setCreating(true);
     setNotice(null);
@@ -123,6 +127,16 @@ export function StudioProjectContextBar({ testId }: { testId?: string }) {
       setCreating(false);
     }
   }, [creating, identity.projectId, router, selectProject]);
+  const onNew = useCallback(() => {
+    // Navigation to an existing project's Create surface is public (the
+    // page renders signed-out; Generate itself is pre-gated). Only project
+    // CREATION requires the modal.
+    if (identity.projectId) {
+      router.push(`/studio/projects/${encodeURIComponent(identity.projectId)}/create/image`);
+      return;
+    }
+    authGate.runAuthed(() => void runNew(), "project-new");
+  }, [authGate, runNew, identity.projectId, router]);
 
   const selected = projects.find((project) => project.id === identity.projectId) ?? null;
 

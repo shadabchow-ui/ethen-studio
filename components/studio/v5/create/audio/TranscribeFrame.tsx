@@ -9,6 +9,7 @@
 "use client";
 
 import * as React from "react";
+import { translateStudioAuthFailure } from "@/components/studio/auth/studio-auth-action";
 import { StudioEmptyState, StudioErrorState } from "../../shell/states";
 import { STUDIO_FOCUS_RING_CLASS } from "../../shell/tokens";
 import { EstimateBar } from "../EstimateBar";
@@ -111,6 +112,9 @@ export function TranscribeFrame({ tool, projectId }: { tool: AudioToolDefinition
           },
         );
         const parsed = parseTranscriptEdit((await response.json().catch(() => null)) as unknown);
+        // S4C: an expired session mid-save opens the modal instead of a
+        // dead error (anonymous users never reach here: Start is pre-gated).
+        if (response.status === 401) translateStudioAuthFailure(response.status, null, "transcript-save");
         if (parsed.error) {
           setSaveError(parsed.error.message);
         } else {

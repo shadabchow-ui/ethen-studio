@@ -4,36 +4,42 @@ import { resolveAccessState, wantsBrowserDocument } from "@ethen/contracts/platf
 import { renderAccessStateDocument } from "@ethen/contracts/platform/access-state-document";
 import { buildStandaloneCsp } from "@ethen/security/standalone-edge";
 import {
-  evaluateStudioStandaloneAccess,
+  evaluateStudioApiAccess,
+  evaluateStudioPageAccess,
   isAuthEntryPath,
+  isPublicAnonymousApiRead,
   isPublicStudioPath,
+  isStudioWorkbenchApi,
 } from "./lib/studio-access-guard";
 
 /**
- * Ethen Studio — standalone private-alpha edge gate (Final Closure).
+ * Ethen Studio — standalone edge gate (S4C auth-on-action).
  *
- * The standalone `apps/studio` deployable previously shipped with NO
- * proxy/middleware, so a non-enrolled browser received HTTP 200 with
- * Studio navigation on `/studio` (Job 13C Blocker C). This proxy is the
- * smallest canonical fix:
+ * Public UI + authenticated actions (owner decision S4C):
  *
- * - Workbench pages (`/studio`, `/studio/*`) and workbench APIs
- *   (`/api/studio/v1/*`) require: authenticated Clerk session + enrollment
- *   (operator allowlists `ETHEN_STUDIO_ENROLLED_ORG_IDS` /
- *   `ETHEN_STUDIO_ENROLLED_USER_IDS`, mirroring `ETHEN_ADMIN_ALLOWLIST`)
- *   + readiness (`ETHEN_STUDIO_PRIVATE_ALPHA` + `*_READY`) + kill switch.
- *   Decision order mirrors `lib/portfolio/studio-private-alpha.ts`.
- * - Public review/delivery stay token-governed: `/studio/review/*`,
- *   `GET /api/studio/v1/collaboration/public/reviews/<token>`,
- *   `GET /api/studio/v1/health`, `/`, and auth entries pass through
- *   with no session.
+ * - Pages (`/studio`, `/studio/*`) render for everyone, including
+ *   signed-out visitors. Only the incident kill switch can block a page
+ *   render. Auth/enrollment/readiness no longer gate page entry.
+ * - Workbench APIs (`/api/studio/v1/*`) require: kill switch off +
+ *   authenticated Clerk session + lane readiness
+ *   (`ETHEN_STUDIO_PRIVATE_ALPHA` + `*_READY`). Global enrollment was
+ *   removed: ordinary authenticated access must NOT require manual
+ *   user-ID enrollment. `isStudioEnrolled` stays available for future
+ *   per-capability alpha scoping; no capability currently requires it.
+ * - Intentionally-public reads pass through with no session: `/`,
+ *   auth entries, `/studio/review/*`, `GET /health`, token review APIs,
+ *   and project-less `GET /api/studio/v1/catalog` +
+ *   `GET /api/studio/v1/composites/templates` (their handlers serve only
+ *   non-user release content on the anonymous branch; project-scoped
+ *   branches still require session + membership downstream).
  * - Denials use the canonical governance presentation
  *   (`resolveAccessState` + `renderAccessStateDocument`, productId
- *   `studio`): browser documents keep the HTTP status (401/403/503),
- *   API callers receive JSON. No CSS-only hiding, no client-only redirect.
+ *   `studio`): browser documents keep the HTTP status (401/503), API
+ *   callers receive JSON. Frontend auth-action gates translate API 401s
+ *   into the Clerk sign-in modal. No CSS-only hiding, no client-only
+ *   redirect.
  *
- * No second entitlement database, no hardcoded user IDs. Enrollment values
- * live in deployment env, never in code.
+ * No second entitlement database, no hardcoded user IDs.
  */
 
 const clerkConfigured = Boolean(
@@ -182,14 +188,26 @@ export async function runStudioProxy(
     actorId = resolveDevBypassActorId();
   }
 
-  const decision = evaluateStudioStandaloneAccess({
+  // S4C public-read allowlist: project-less catalog/templates GETs serve
+  // release content (generated registry / frozen templates) with no user
+  // data. The route handlers enforce session + membership whenever a
+  // projectId IS present, so allowing the path here is safe.
+  if (isPublicAnonymousApiRead(pathname, method, Boolean(request.nextUrl.searchParams.get("projectId")))) {
+    return next();
+  }
+
+  const accessInput = {
     pathname,
     method,
     actorId,
     organizationId,
     host: request.nextUrl.hostname,
     env: process.env,
-  });
+  };
+  // Pages render publicly (kill switch only); APIs require session.
+  const decision = isStudioWorkbenchApi(pathname)
+    ? evaluateStudioApiAccess(accessInput)
+    : evaluateStudioPageAccess(accessInput);
   if (decision.allowed) return next();
   return deny(decision.status, decision.code, decision.error);
 }

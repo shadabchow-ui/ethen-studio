@@ -11,8 +11,10 @@ async function readJson(path: string): Promise<unknown> {
 
 /**
  * STUDIO_08 — catalog projection hook over the V1 catalog adapter.
- * Requires a project scope; without one the state is empty (select a
- * project), never a fabricated catalog.
+ * S4C: without a project scope the hook serves the PUBLIC catalog
+ * (project-less adapter branch: generated registry, no user data) so
+ * anonymous visitors browse Models/pickers; project-scoped reads stay
+ * authenticated downstream.
  */
 export function useCatalogProjection(projectId: string | null): {
   state: StudioDataState;
@@ -24,11 +26,13 @@ export function useCatalogProjection(projectId: string | null): {
   const [nonce, setNonce] = useState(0);
 
   useEffect(() => {
-    if (!projectId) return;
     let cancelled = false;
     void (async () => {
       try {
-        const parsed = parseCatalogResponse(await readJson(`/api/studio/v1/catalog?projectId=${encodeURIComponent(projectId)}`));
+        const path = projectId
+          ? `/api/studio/v1/catalog?projectId=${encodeURIComponent(projectId)}`
+          : "/api/studio/v1/catalog";
+        const parsed = parseCatalogResponse(await readJson(path));
         if (cancelled) return;
         setProjection(parsed.projection);
         setState(parsed.state);
@@ -44,8 +48,5 @@ export function useCatalogProjection(projectId: string | null): {
   }, [projectId, nonce]);
 
   const retry = useCallback(() => setNonce((value) => value + 1), []);
-  // Without a project scope the catalog is empty by derivation, never
-  // fetched and never fabricated.
-  if (!projectId) return { state: "empty" as StudioDataState, projection: null, retry };
   return { state, projection, retry };
 }

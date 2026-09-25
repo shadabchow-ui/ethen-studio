@@ -7,6 +7,7 @@
 "use client";
 
 import { useCallback, useEffect, useState } from "react";
+import { useAuthActionGate } from "@/components/studio/auth/studio-auth-action";
 import type { AgentApprovalView, AgentEventView, AgentPatchView, AgentPlanView, AgentRunView, AgentUiState } from "./types";
 import { AgentWorkspace, agentFailureMessage } from "./AgentWorkspace";
 import { STUDIO_PAGE_CLASS } from "../shell/tokens";
@@ -102,7 +103,10 @@ export function AgentRouteAdapter({ projectId }: { projectId: string | null }) {
     }
   }, [projectId, selected]);
 
-  const createRun = useCallback(
+  // S4C: anonymous run creation opens the Clerk modal and sends NO
+  // request (remaining agent mutations translate 401s via the client).
+  const authGate = useAuthActionGate();
+  const runCreateRun = useCallback(
     async (title: string, brief: string) => {
       if (!projectId) return;
       setBusy("create");
@@ -120,6 +124,12 @@ export function AgentRouteAdapter({ projectId }: { projectId: string | null }) {
       }
     },
     [projectId, selectRun],
+  );
+  const createRun = useCallback(
+    (title: string, brief: string) => {
+      authGate.runAuthed(() => void runCreateRun(title, brief), "agent-run-create");
+    },
+    [authGate, runCreateRun],
   );
 
   const submitPlan = useCallback(

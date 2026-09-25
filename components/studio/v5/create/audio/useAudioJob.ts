@@ -11,6 +11,7 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
+import { useAuthActionGate } from "@/components/studio/auth/studio-auth-action";
 import {
   isTerminalJobStatus,
   parseAdmittedJob,
@@ -34,7 +35,17 @@ async function postJson(path: string, body: unknown): Promise<unknown> {
     body: JSON.stringify(body),
     cache: "no-store",
   });
-  return (await response.json().catch(() => null)) as unknown;
+  const parsed = (await response.json().catch(() => null)) as unknown;
+  // S4C: pre-gated callers never reach this signed-out, but an expired
+  // session mid-journey still opens the modal instead of a dead error.
+  if (response.status === 401) {
+    const { translateStudioAuthFailure } = await import("@/components/studio/auth/studio-auth-action");
+    const root = parsed !== null && typeof parsed === "object" && !Array.isArray(parsed) ? (parsed as Record<string, unknown>) : null;
+    const error = root !== null && typeof root["error"] === "object" && root["error"] !== null ? (root["error"] as Record<string, unknown>) : null;
+    const code = typeof error?.["code"] === "string" ? (error["code"] as string) : typeof root?.["code"] === "string" ? (root["code"] as string) : null;
+    translateStudioAuthFailure(response.status, code, "audio-start");
+  }
+  return parsed;
 }
 
 async function getJson(path: string): Promise<unknown> {
@@ -313,7 +324,10 @@ export function useAudioJob(input: UseAudioJobInput): UseAudioJobResult {
     [tool, modelSelection, capIcu, pollIntervalMs, attempts, jobs, refresh],
   );
 
-  const start = useCallback(() => {
+  // S4C auth-on-action: anonymous Start opens the Clerk modal and sends
+  // NO request; stage parameters stay in caller state for retry.
+  const authGate = useAuthActionGate();
+  const runStart = useCallback(() => {
     if (!projectId) {
       setError({ code: "SETUP_REQUIRED", message: "Select a project before starting.", retryable: false });
       return;
@@ -345,7 +359,11 @@ export function useAudioJob(input: UseAudioJobInput): UseAudioJobResult {
     })();
   }, [projectId, tool, sourceLanguage, targetLanguage, phase, runStages]);
 
-  const retryStage = useCallback(
+  const start = useCallback(() => {
+    authGate.runAuthed(runStart, "audio-start");
+  }, [authGate, runStart]);
+
+  const runRetryStage = useCallback(
     (stage: AudioStageId) => {
       if (!projectId || !project) return;
       if (phase === "creating" || phase === "estimating" || phase === "admitting" || phase === "running") return;
@@ -355,6 +373,13 @@ export function useAudioJob(input: UseAudioJobInput): UseAudioJobResult {
       void runStages(project, stage, projectId);
     },
     [projectId, project, phase, runStages],
+  );
+
+  const retryStage = useCallback(
+    (stage: AudioStageId) => {
+      authGate.runAuthed(() => runRetryStage(stage), "audio-retry");
+    },
+    [authGate, runRetryStage],
   );
 
   const reset = useCallback(() => {

@@ -58,7 +58,11 @@ export function parseCatalogResponse(body: unknown): ParsedCatalog {
     const error = asRecord(envelope.error);
     const code = typeof error.code === "string" ? error.code : "UNKNOWN";
     if (code === "SETUP_REQUIRED") return { state: "setup", projection: null };
-    if (code === "FORBIDDEN" || code === "UNAUTHORIZED") return { state: "permission", projection: null };
+    // S4C: unauthenticated project-scoped reads land on the signed-out
+    // state (project-less reads serve the public catalog instead).
+    if (code === "FORBIDDEN" || code === "UNAUTHORIZED" || code === "AUTHENTICATION_REQUIRED" || code === "unauthenticated") {
+      return { state: "permission", projection: null };
+    }
     return { state: "error", projection: null };
   }
   const data = asRecord(envelope.data !== undefined ? envelope.data : envelope);

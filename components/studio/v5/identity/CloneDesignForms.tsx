@@ -9,6 +9,7 @@
  * without consent evidence is denied, never silently queued.
  */
 import { useState } from "react";
+import { useAuthActionGate } from "@/components/studio/auth/studio-auth-action";
 import { StudioInspectorDrawer } from "../shell/InspectorDrawer";
 import { STUDIO_FOCUS_RING_CLASS } from "../shell/tokens";
 import type { IdentityCreationDraft, IdentityCreationFlow } from "./types";
@@ -63,7 +64,10 @@ export function CloneDesignForms({
     setDraft((current) => ({ ...current, ...patch }));
   };
 
-  const submit = async (): Promise<void> => {
+  // S4C: anonymous voice-clone submit opens the Clerk modal and sends NO
+  // request; the draft stays in component state for retry after sign-in.
+  const authGate = useAuthActionGate();
+  const runSubmit = async (): Promise<void> => {
     if (!projectId || submitting) return;
     setSubmitting(true);
     setError(null);
@@ -110,6 +114,10 @@ export function CloneDesignForms({
     } finally {
       setSubmitting(false);
     }
+  };
+
+  const submit = (): void => {
+    authGate.runAuthed(() => void runSubmit(), "voice-clone");
   };
 
   return (

@@ -11,6 +11,7 @@ import type {
   RealtimeSessionView,
   RealtimeToolView,
 } from "./types";
+import { translateStudioAuthFailure } from "@/components/studio/auth/studio-auth-action";
 
 export class RealtimeApiError extends Error {
   readonly code: string;
@@ -37,7 +38,12 @@ async function request<T>(input: RequestInfo, init?: RequestInit): Promise<T> {
   });
   const envelope = (await response.json()) as ApiEnvelope<T>;
   if (!envelope.ok || envelope.data === undefined) {
-    throw new RealtimeApiError(envelope.error?.code ?? "INTERNAL_ERROR", envelope.error?.message ?? "Realtime request failed.", envelope.error?.details?.dependency ?? null);
+    const code = envelope.error?.code ?? "INTERNAL_ERROR";
+    // S4C: mutation 401s open the Clerk modal; reads fail to signed-out
+    // states instead (never auto-modal on background fetches).
+    const method = (init?.method ?? "GET").toString().toUpperCase();
+    if (method !== "GET" && method !== "HEAD") translateStudioAuthFailure(response.status, code, "realtime");
+    throw new RealtimeApiError(code, envelope.error?.message ?? "Realtime request failed.", envelope.error?.details?.dependency ?? null);
   }
   return envelope.data;
 }

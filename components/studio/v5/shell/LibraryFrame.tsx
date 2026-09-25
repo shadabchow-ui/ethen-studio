@@ -1,9 +1,33 @@
 "use client";
 
 import Link from "next/link";
+import { useAuth } from "@clerk/nextjs";
 import type { StudioLibraryFrameProps } from "./types";
 import { STUDIO_FOCUS_RING_CLASS } from "./tokens";
 import { StudioEmptyState, StudioErrorState } from "./states";
+import { isStudioClerkConfigured, requestStudioSignIn } from "@/components/studio/auth/studio-auth-action";
+
+/**
+ * S4C — signed-out affordance for permission states. Mounted only when
+ * Clerk is configured (exactly when a ClerkProvider exists), so the auth
+ * hook is always legal. Signed-in-but-forbidden viewers see the plain
+ * permission copy with no button (signing in again would not help).
+ */
+function PermissionSignInButton() {
+  const { isSignedIn } = useAuth();
+  if (isSignedIn !== false) return null;
+  return (
+    <div className="mt-4 flex justify-center">
+      <button
+        type="button"
+        onClick={() => requestStudioSignIn({ action: "library-permission" })}
+        className={`inline-flex min-h-[44px] items-center rounded-[10px] bg-[var(--bg-elevated)] px-4 py-2.5 text-[12.5px] font-medium text-[var(--text-primary)] transition hover:bg-[var(--studio-bg-selected)] ${STUDIO_FOCUS_RING_CLASS}`}
+      >
+        Sign in
+      </button>
+    </div>
+  );
+}
 
 /**
  * STUDIO_08 — shared library frame (authority §17 Library archetype):
@@ -118,8 +142,14 @@ export function StudioLibraryFrame({
         </p>
       ) : null}
       {state === "empty" && emptyProps ? <StudioEmptyState {...emptyProps} /> : null}
-      {(state === "error" || state === "setup" || state === "permission") && errorProps ? (
+      {(state === "error" || state === "setup") && errorProps ? (
         <StudioErrorState {...errorProps} onRetry={state === "error" ? (onRetry ?? errorProps.onRetry) : undefined} retryLabel={state === "error" ? errorProps.retryLabel : undefined} />
+      ) : null}
+      {state === "permission" && errorProps ? (
+        <>
+          <StudioErrorState {...errorProps} />
+          {isStudioClerkConfigured() ? <PermissionSignInButton /> : null}
+        </>
       ) : null}
       {state === "ready" ? children : null}
     </section>

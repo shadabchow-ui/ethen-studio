@@ -13,6 +13,7 @@ import type {
   WorkbenchRevisionView,
   WorkbenchTrackView,
 } from "./types";
+import { translateStudioAuthFailure } from "@/components/studio/auth/studio-auth-action";
 
 export class WorkbenchApiError extends Error {
   readonly status: number;
@@ -38,9 +39,14 @@ async function request<T>(path: string, init?: RequestInit): Promise<T> {
     error?: { code?: string; message?: string; details?: { dependency?: string } };
   } | null;
   if (!response.ok || !body?.ok) {
+    const code = body?.error?.code ?? "REQUEST_FAILED";
+    // S4C: mutation 401s open the Clerk modal; reads fail to signed-out
+    // states instead (never auto-modal on background fetches).
+    const method = (init?.method ?? "GET").toString().toUpperCase();
+    if (method !== "GET" && method !== "HEAD") translateStudioAuthFailure(response.status, code, "workbench");
     throw new WorkbenchApiError(
       response.status,
-      body?.error?.code ?? "REQUEST_FAILED",
+      code,
       body?.error?.message ?? `Request failed (${response.status}).`,
       body?.error?.details?.dependency ?? null,
     );

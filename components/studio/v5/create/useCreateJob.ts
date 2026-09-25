@@ -11,6 +11,7 @@
 "use client";
 
 import { useCallback, useEffect, useMemo, useReducer, useRef, useState } from "react";
+import { useAuthActionGate } from "@/components/studio/auth/studio-auth-action";
 import type { CreateToolDefinition } from "./types";
 import { toolTaskName } from "./tool-definitions";
 import { buildAdmitBody, buildEstimateBody, buildResolveBody } from "./composer-request";
@@ -70,7 +71,17 @@ async function postJson(path: string, body: unknown): Promise<unknown> {
     body: JSON.stringify(body),
     cache: "no-store",
   });
-  return (await response.json().catch(() => null)) as unknown;
+  const parsed = (await response.json().catch(() => null)) as unknown;
+  // S4C: pre-gated callers never reach this signed-out, but an expired
+  // session mid-journey still opens the modal instead of a dead error.
+  if (response.status === 401) {
+    const { translateStudioAuthFailure } = await import("@/components/studio/auth/studio-auth-action");
+    const root = parsed !== null && typeof parsed === "object" && !Array.isArray(parsed) ? (parsed as Record<string, unknown>) : null;
+    const error = root !== null && typeof root["error"] === "object" && root["error"] !== null ? (root["error"] as Record<string, unknown>) : null;
+    const code = typeof error?.["code"] === "string" ? (error["code"] as string) : typeof root?.["code"] === "string" ? (root["code"] as string) : null;
+    translateStudioAuthFailure(response.status, code, "create-generate");
+  }
+  return parsed;
 }
 
 async function getJson(path: string): Promise<unknown> {
@@ -92,6 +103,10 @@ export function useCreateJob(input: UseCreateJobInput): UseCreateJobResult {
   const pollTimer = useRef<number | null>(null);
 
   const task = toolTaskName(tool);
+  // S4C auth-on-action: anonymous Generate opens the Clerk modal and sends
+  // NO request; caller-owned draft state is untouched so the user retries
+  // from the identical prepared state after signing in.
+  const authGate = useAuthActionGate();
 
   const stopPolling = useCallback(() => {
     if (pollTimer.current !== null) {
@@ -169,7 +184,7 @@ export function useCreateJob(input: UseCreateJobInput): UseCreateJobResult {
     [pollIntervalMs, stopPolling],
   );
 
-  const generate = useCallback(() => {
+  const runGenerate = useCallback(() => {
     if (!projectId) {
       setError({ code: "SETUP_REQUIRED", message: "Select a project before generating.", retryable: false });
       return;
@@ -278,6 +293,10 @@ export function useCreateJob(input: UseCreateJobInput): UseCreateJobResult {
       }
     })();
   }, [projectId, task, phase, modelSelection, parameters, capIcu, quote, stopPolling, pollJob, tool.id]);
+
+  const generate = useCallback(() => {
+    authGate.runAuthed(runGenerate, "create-generate");
+  }, [authGate, runGenerate]);
 
   const retry = useCallback(() => {
     // Error retry resumes polling when a job exists, else restarts the journey.

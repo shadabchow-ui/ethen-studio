@@ -5,6 +5,7 @@
  */
 
 import type { CampaignView, ReviewView, TemplateView, VariantView } from "./types";
+import { translateStudioAuthFailure } from "@/components/studio/auth/studio-auth-action";
 
 export class CompositesApiError extends Error {
   readonly status: number;
@@ -30,9 +31,14 @@ async function request<T>(path: string, init?: RequestInit): Promise<T> {
     error?: { code?: string; message?: string; details?: { dependency?: string } };
   } | null;
   if (!response.ok || !body?.ok) {
+    const code = body?.error?.code ?? "REQUEST_FAILED";
+    // S4C: mutation 401s open the Clerk modal; reads fail to signed-out
+    // states instead (never auto-modal on background fetches).
+    const method = (init?.method ?? "GET").toString().toUpperCase();
+    if (method !== "GET" && method !== "HEAD") translateStudioAuthFailure(response.status, code, "composites");
     throw new CompositesApiError(
       response.status,
-      body?.error?.code ?? "REQUEST_FAILED",
+      code,
       body?.error?.message ?? `Request failed (${response.status}).`,
       body?.error?.details?.dependency ?? null,
     );
@@ -61,10 +67,12 @@ export interface FanoutResponse {
   jobTreeId: string;
 }
 
-export async function fetchTemplates(projectId: string, kind: string): Promise<TemplateView[]> {
-  const data = await request<TemplateListResponse>(
-    `/api/studio/v1/composites/templates?projectId=${encodeURIComponent(projectId)}&kind=${encodeURIComponent(kind)}`,
-  );
+export async function fetchTemplates(projectId: string | null, kind: string): Promise<TemplateView[]> {
+  // S4C: project-less reads serve the public frozen-template list.
+  const path = projectId
+    ? `/api/studio/v1/composites/templates?projectId=${encodeURIComponent(projectId)}&kind=${encodeURIComponent(kind)}`
+    : `/api/studio/v1/composites/templates?kind=${encodeURIComponent(kind)}`;
+  const data = await request<TemplateListResponse>(path);
   return data.templates;
 }
 

@@ -9,9 +9,11 @@
  * the dark console (Lock C); the flush-frame overrides live in the
  * Studio-scoped `app/studio/studio-theme.css` (Lock B).
  *
- * Access boundaries preserved: nav entries are derived enrolled-only by the
- * server layout; session + project-membership guards stay at routes/APIs and
- * the studio-access-guard middleware. Public review never renders here.
+ * Access boundaries (S4C auth-on-action): pages render publicly
+ * (signed-out included); session + project-membership guards stay at the
+ * API routes and the studio-access-guard proxy, and submit paths pre-gate
+ * through the Studio auth-action provider (Clerk modal, drafts
+ * preserved). Public review never renders here.
  */
 
 import * as React from "react";
@@ -22,6 +24,7 @@ import type { SearchResult } from "@ethen/ui/chat-lab/chat-fixtures";
 import { useAsyncData, type AccountInfo } from "@ethen/ui/settings/settings-data";
 import type { StudioNavEntry, StudioPaletteEntry } from "@ethen/navigation";
 import { StudioSidebar } from "./v5/shell/StudioSidebar";
+import { StudioAuthActionProvider, requestStudioSignIn } from "./auth/studio-auth-action";
 
 const STUDIO_ACTIONS: readonly PaletteAction[] = [
   { id: "new-studio-project", label: "New Studio project", beta: true },
@@ -161,10 +164,12 @@ export function StudioWorkbenchChrome({
     [router],
   );
 
+  // S4C: modal-first sign-in (Studio stays visible, drafts preserved);
+  // the auth-action provider falls back to /sign-in navigation when the
+  // Clerk modal API is unavailable.
   const handleSignIn = React.useCallback(() => {
-    const returnPath = pathname ?? "/studio";
-    router.push(`/sign-in?redirect_url=${encodeURIComponent(returnPath)}`);
-  }, [router, pathname]);
+    requestStudioSignIn({ action: "chrome-sign-in" });
+  }, []);
 
   const handleSignOut = React.useCallback(async () => {
     setSignedOutFlip(true);
@@ -256,7 +261,7 @@ export function StudioWorkbenchChrome({
       mainId="studio-main"
       mainLabel="Studio workspace"
     >
-      {children}
+      <StudioAuthActionProvider>{children}</StudioAuthActionProvider>
     </SharedChatChrome>
   );
 }

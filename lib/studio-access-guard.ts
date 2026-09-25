@@ -157,6 +157,21 @@ export function isStudioWorkbenchApi(pathname: string): boolean {
   return pathname.startsWith("/api/studio/v1/");
 }
 
+/**
+ * S4C public-read allowlist (auth-on-action).
+ *
+ * Project-less catalog/templates GETs serve release content only (generated
+ * registry / frozen templates — no user data) and bypass the API session
+ * gate. Everything else under `/api/studio/v1/` still requires a session.
+ * The route handlers re-enforce session + membership whenever a projectId
+ * IS present, so this predicate must stay in lockstep with them.
+ */
+export function isPublicAnonymousApiRead(pathname: string, method: string, hasProjectId: boolean): boolean {
+  if (method.toUpperCase() !== "GET") return false;
+  if (hasProjectId) return false;
+  return pathname === "/api/studio/v1/catalog" || pathname === "/api/studio/v1/composites/templates";
+}
+
 export function classifyStudioRoute(
   pathname: string,
   method = "GET",
@@ -215,7 +230,7 @@ export function isStudioEnrolled(
   return false;
 }
 
-export function evaluateStudioStandaloneAccess(input: {
+export interface StudioAccessInput {
   pathname: string;
   method?: string;
   actorId: string | null;
@@ -223,7 +238,90 @@ export function evaluateStudioStandaloneAccess(input: {
   /** Request host (hostname[:port]) — required for the loopback bypass. */
   host?: string | null;
   env?: StudioAccessEnvironment;
-}): StudioAccessDecision {
+}
+
+/**
+ * S4C — public page boundary (auth-on-action).
+ *
+ * Studio pages render for everyone, including signed-out visitors: only the
+ * incident kill switch can block a page render. Auth, enrollment, and lane
+ * readiness moved to the API boundary (`evaluateStudioApiAccess`) and to
+ * in-product auth-action gates (Clerk modal on Generate/submit). Personal
+ * data stays protected because user-scoped APIs still require a session —
+ * pages render shells + signed-out states, never private records.
+ */
+export function evaluateStudioPageAccess(input: StudioAccessInput): StudioAccessDecision {
+  const env = input.env ?? process.env;
+  const routeClass = classifyStudioRoute(input.pathname, input.method ?? "GET");
+  if (env.ETHEN_STUDIO_KILL_SWITCH === "true") {
+    return {
+      allowed: false,
+      status: 503,
+      code: "STUDIO_DISABLED",
+      error: "Studio is unavailable.",
+      routeClass,
+    };
+  }
+  return { allowed: true, routeClass };
+}
+
+/**
+ * S4C — API boundary (authenticated actions).
+ *
+ * Mutations and user-scoped reads require: kill switch off, an
+ * authenticated actor, and lane readiness. Global enrollment was removed
+ * per owner decision (S4C §8): ordinary authenticated access must NOT
+ * require manual user-ID enrollment. `isStudioEnrolled` is retained for
+ * future per-capability alpha scoping — no capability currently requires
+ * it. Intentionally-public reads (health, token reviews, project-less
+ * catalog/templates) bypass this via the proxy allowlist, and their route
+ * handlers serve only non-user data on the anonymous branch.
+ */
+export function evaluateStudioApiAccess(input: StudioAccessInput): StudioAccessDecision {
+  const env = input.env ?? process.env;
+  const routeClass = classifyStudioRoute(input.pathname, input.method ?? "GET");
+  if (env.ETHEN_STUDIO_KILL_SWITCH === "true") {
+    return {
+      allowed: false,
+      status: 503,
+      code: "STUDIO_DISABLED",
+      error: "Studio is unavailable.",
+      routeClass,
+    };
+  }
+  if (isLocalAuthBypassActive({ host: input.host }, env)) {
+    return { allowed: true, routeClass };
+  }
+  if (!input.actorId) {
+    return {
+      allowed: false,
+      status: 401,
+      code: "AUTHENTICATION_REQUIRED",
+      error: "Studio requires authentication.",
+      routeClass,
+    };
+  }
+  if (STUDIO_READINESS_KEYS.some((key) => env[key] !== "true")) {
+    return {
+      allowed: false,
+      status: 503,
+      code: "STUDIO_NOT_READY",
+      error: "Studio is unavailable.",
+      routeClass,
+    };
+  }
+  return { allowed: true, routeClass };
+}
+
+/**
+ * Pre-S4C combined evaluator (page wall + global enrollment).
+ *
+ * @deprecated S4C split this into `evaluateStudioPageAccess` (public pages)
+ * and `evaluateStudioApiAccess` (authenticated actions, no global
+ * enrollment). Retained for tests auditing the legacy shape; the proxy no
+ * longer calls it.
+ */
+export function evaluateStudioStandaloneAccess(input: StudioAccessInput): StudioAccessDecision {
   const method = input.method ?? "GET";
   const env = input.env ?? process.env;
   const routeClass = classifyStudioRoute(input.pathname, method);

@@ -35,18 +35,24 @@ function asString(value: unknown): string | null {
  */
 export async function GET(request: NextRequest): Promise<Response> {
   try {
-    const session = await requireUserSession();
-    if (session.response) return session.response;
     const projectId = asString(request.nextUrl.searchParams.get("projectId"));
-    if (!projectId) return studioError("VALIDATION_ERROR", "projectId is required.");
-    const authorization = await requireProject({ api: true, projectId });
-    if (authorization.response) return authorization.response;
-    const resolved = await resolveProjectScope(projectId);
-    if (!resolved) return studioError("SETUP_REQUIRED", "Project has no Studio data scope yet.");
     const kind = asString(request.nextUrl.searchParams.get("kind"));
     if (kind && kind !== "marketing" && kind !== "influencer") {
       return studioError("VALIDATION_ERROR", "kind must be marketing or influencer.");
     }
+    // S4C public templates: release-frozen global rows (no user scoping in
+    // the table) are browsable with no session when no project is given.
+    // The proxy allowlists exactly this branch; project-scoped reads below
+    // still require session + membership.
+    if (!projectId) {
+      return studioSuccess({ templates: await listTemplates(kind) });
+    }
+    const session = await requireUserSession();
+    if (session.response) return session.response;
+    const authorization = await requireProject({ api: true, projectId });
+    if (authorization.response) return authorization.response;
+    const resolved = await resolveProjectScope(projectId);
+    if (!resolved) return studioError("SETUP_REQUIRED", "Project has no Studio data scope yet.");
     if (await isStudioFixtureLane()) {
       return studioSuccess({
         templates: fixtureListTemplates(localStores().composites, kind as "marketing" | "influencer" | null),

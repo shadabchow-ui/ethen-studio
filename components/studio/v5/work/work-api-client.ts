@@ -6,6 +6,7 @@
  * never empty success, and malformed rows are skipped, never crashing.
  */
 import type { StudioDataState } from "../shell/types";
+import { translateStudioAuthFailure } from "@/components/studio/auth/studio-auth-action-core";
 import type {
   WorkAssetView,
   WorkCommentView,
@@ -53,7 +54,17 @@ function asStringArray(value: unknown): readonly string[] {
 
 export function workStateForErrorCode(code: string | null): StudioDataState {
   if (code === "SETUP_REQUIRED") return "setup";
-  if (code === "UNAUTHORIZED" || code === "FORBIDDEN") return "permission";
+  // S4C: unauthenticated reads land on the signed-out ("permission") state,
+  // which renders a Clerk sign-in affordance instead of raw auth errors.
+  if (
+    code === "UNAUTHORIZED" ||
+    code === "FORBIDDEN" ||
+    code === "AUTHENTICATION_REQUIRED" ||
+    code === "unauthenticated" ||
+    code === "signed_out"
+  ) {
+    return "permission";
+  }
   return "error";
 }
 
@@ -80,7 +91,7 @@ function dependencyOf(envelope: unknown): string | null {
   return dependency;
 }
 
-async function readEnvelope(response: Response, fallback: string): Promise<Json> {
+async function readEnvelope(response: Response, fallback: string, action?: string): Promise<Json> {
   let envelope: unknown = null;
   try {
     envelope = (await response.json()) as unknown;
@@ -90,6 +101,9 @@ async function readEnvelope(response: Response, fallback: string): Promise<Json>
   const root = asRecord(envelope);
   if (!response.ok || !root || root["ok"] !== true) {
     const code = errorCodeOf(envelope);
+    // S4C: only user-initiated mutations (action set) open the Clerk modal;
+    // background reads fail to signed-out states without auto-modal.
+    if (action) translateStudioAuthFailure(response.status, code, action);
     throw new WorkApiError(workStateForErrorCode(code), messageOf(envelope, fallback), code, dependencyOf(envelope));
   }
   return asRecord(root["data"]) ?? {};
@@ -240,7 +254,7 @@ export async function createWorkReview(input: {
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(input),
   });
-  const data = await readEnvelope(response, "Review creation failed.");
+  const data = await readEnvelope(response, "Review creation failed.", "review-create");
   const review = parseReview(data["review"]);
   if (!review) throw new WorkApiError("error", "Review creation failed.");
   return review;
@@ -261,7 +275,7 @@ export async function decideWorkReview(input: {
       body: JSON.stringify(input),
     },
   );
-  const data = await readEnvelope(response, "Review decision failed.");
+  const data = await readEnvelope(response, "Review decision failed.", "review-decide");
   const review = parseReview(data["review"]);
   if (!review) throw new WorkApiError("error", "Review decision failed.");
   return review;
@@ -281,7 +295,7 @@ export async function postWorkComment(input: {
       body: JSON.stringify(input),
     },
   );
-  const data = await readEnvelope(response, "Comment failed.");
+  const data = await readEnvelope(response, "Comment failed.", "review-comment");
   const comment = parseComment(data["comment"]);
   if (!comment) throw new WorkApiError("error", "Comment failed.");
   return comment;
@@ -328,7 +342,7 @@ export async function createReviewLink(input: {
       body: JSON.stringify(input),
     },
   );
-  const data = await readEnvelope(response, "Link creation failed.");
+  const data = await readEnvelope(response, "Link creation failed.", "review-link-create");
   const link = parseLink(data["link"]);
   const token = asString(data["token"], "");
   if (!link || !token) throw new WorkApiError("error", "Link creation failed.");
@@ -341,7 +355,7 @@ export async function revokeReviewLink(projectId: string, linkId: string): Promi
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ projectId }),
   });
-  await readEnvelope(response, "Revocation failed.");
+  await readEnvelope(response, "Revocation failed.", "review-link-revoke");
 }
 
 function parseJob(row: unknown): WorkJobView | null {
@@ -417,7 +431,7 @@ export async function cancelWorkJob(projectId: string, jobId: string): Promise<v
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ projectId }),
   });
-  await readEnvelope(response, "Cancellation failed.");
+  await readEnvelope(response, "Cancellation failed.", "job-cancel");
 }
 
 function parseNotification(row: unknown): WorkNotificationView | null {
@@ -460,7 +474,7 @@ export async function markWorkNotificationRead(projectId: string, notificationId
       body: JSON.stringify({ projectId }),
     },
   );
-  await readEnvelope(response, "Mark-read failed.");
+  await readEnvelope(response, "Mark-read failed.", "notification-read");
 }
 
 /** Human message for a work API failure (permission/setup stay distinct). */

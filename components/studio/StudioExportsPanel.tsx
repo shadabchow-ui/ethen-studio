@@ -1,6 +1,7 @@
 "use client";
 
 import { useActiveProjectState } from "./studio-project-scope";
+import { translateStudioAuthFailure } from "./auth/studio-auth-action";
 import { useCallback, useEffect, useState } from "react";
 import Link from "next/link";
 import { StudioPageFrame } from "./StudioPageFrame";
@@ -60,9 +61,15 @@ interface ApiFailure {
   error?: { code?: string; message?: string; details?: { dependency?: string } } | string;
 }
 
-async function api(path: string, init?: RequestInit): Promise<ApiFailure> {
+async function api(path: string, init?: RequestInit, action?: string): Promise<ApiFailure> {
   const response = await fetch(path, init);
-  return (await response.json()) as ApiFailure;
+  const body = (await response.json()) as ApiFailure;
+  // S4C: user-initiated mutations (action set) open the Clerk modal on 401.
+  if (action && !body.ok) {
+    const code = typeof body.error === "object" ? body.error?.code : null;
+    translateStudioAuthFailure(response.status, code ?? null, action);
+  }
+  return body;
 }
 
 function setupDependencyOf(body: ApiFailure | null): string | null {
@@ -196,7 +203,7 @@ export function StudioExportsPanel({ fixedProjectId, routeMarker }: { fixedProje
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ projectId, preset, title: title.trim(), idempotencyKey: idempotencyKey(), inputs }),
-      }).catch(() => ({ ok: false as const, error: "request failed" }));
+      }, "export-create").catch(() => ({ ok: false as const, error: "request failed" }));
       if (!body.ok) {
         setFeedback(errorMessage(body, "Export failed."));
         return;
@@ -225,7 +232,7 @@ export function StudioExportsPanel({ fixedProjectId, routeMarker }: { fixedProje
           idempotencyKey: idempotencyKey(),
           pinnedAssets: pins.map((pin) => ({ assetId: pin.assetId, version: pin.version, contentHash: pin.contentHash })),
         }),
-      }).catch(() => ({ ok: false as const, error: "request failed" }));
+      }, "export-review-create").catch(() => ({ ok: false as const, error: "request failed" }));
       if (!review.ok) {
         setFeedback(errorMessage(review, "Review creation failed."));
         return;
@@ -240,7 +247,7 @@ export function StudioExportsPanel({ fixedProjectId, routeMarker }: { fixedProje
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ projectId, idempotencyKey: idempotencyKey(), assetIds: selected, ttlMs, note: reviewNote.trim() }),
-      }).catch(() => ({ ok: false as const, error: "request failed" }));
+      }, "export-review-link").catch(() => ({ ok: false as const, error: "request failed" }));
       if (!link.ok) {
         setFeedback(errorMessage(link, "Review link failed."));
         return;
@@ -266,7 +273,7 @@ export function StudioExportsPanel({ fixedProjectId, routeMarker }: { fixedProje
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ projectId }),
-      }).catch(() => ({ ok: false as const, error: "request failed" }));
+      }, "export-link-revoke").catch(() => ({ ok: false as const, error: "request failed" }));
       if (!body.ok) setFeedback(errorMessage(body, "Revoke failed."));
       await refresh(projectId);
     } finally {

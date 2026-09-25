@@ -30,29 +30,38 @@ export const dynamic = "force-dynamic";
  * `projectCatalog` function; counts are derived live from the projection.
  * A fetch failure is an error, never an empty catalog.
  */
+async function projectPublicCatalog(taskFilter: TaskName | null) {
+  const source = await listLocalCatalogSource();
+  return projectCatalog(source, new Map(), await listLocalPrices(), new Set(), {
+    catalogVersion: getLocalCatalogVersion(),
+    taskFilter,
+  });
+}
+
 export async function GET(request: NextRequest): Promise<Response> {
   try {
-    const session = await requireUserSession();
-    if (session.response) return session.response;
     const projectId = request.nextUrl.searchParams.get("projectId");
-    if (!projectId) return studioError("VALIDATION_ERROR", "projectId is required.");
-    const authorization = await requireProject({ api: true, projectId });
-    if (authorization.response) return authorization.response;
     const taskParam = request.nextUrl.searchParams.get("task");
     if (taskParam !== null && !isTaskName(taskParam)) {
       return studioError("VALIDATION_ERROR", `task is unknown: ${taskParam}.`);
     }
     const taskFilter = taskParam as TaskName | null;
+    // S4C public catalog: without a project scope, serve the checked-in
+    // generated registry (release metadata, no user data) with no session.
+    // The proxy allowlists exactly this branch; project-scoped reads below
+    // still require session + membership.
+    if (!projectId) {
+      return studioSuccess({ catalog: await projectPublicCatalog(taskFilter) });
+    }
+    const session = await requireUserSession();
+    if (session.response) return session.response;
+    const authorization = await requireProject({ api: true, projectId });
+    if (authorization.response) return authorization.response;
     // The explicit loopback-only bypass has no Supabase service client. Give
     // it the checked-in generated registry through the same projection;
     // never promote catalog membership to executable availability.
     if (await isStudioLocalRequest()) {
-      const source = await listLocalCatalogSource();
-      const projection = projectCatalog(source, new Map(), await listLocalPrices(), new Set(), {
-        catalogVersion: getLocalCatalogVersion(),
-        taskFilter,
-      });
-      return studioSuccess({ catalog: projection });
+      return studioSuccess({ catalog: await projectPublicCatalog(taskFilter) });
     }
     const resolved = await resolveProjectScope(projectId);
     if (!resolved) return studioError("SETUP_REQUIRED", "Project has no Studio data scope yet.");
