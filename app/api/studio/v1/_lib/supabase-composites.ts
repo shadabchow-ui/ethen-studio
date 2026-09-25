@@ -8,6 +8,7 @@ import "server-only";
  */
 import { requireServiceClient, type ResolvedScope } from "./supabase-data";
 import { CompositeError } from "@ethen/studio-core/server/composites";
+import { StudioSetupError, isSupabaseCredentialFault } from "@/lib/media/studio-setup";
 
 type Row = Record<string, unknown>;
 
@@ -83,7 +84,12 @@ export async function listTemplates(kind: string | null): Promise<TemplateRow[]>
     .order("version", { ascending: true });
   if (kind) query = query.eq("kind", kind);
   const { data, error } = await query;
-  if (error) throw new CompositeError("INTERNAL", `Template list is unavailable: ${error.message}`);
+  if (error) {
+    // S4C: a rotated/mismatched service key is a setup condition (503),
+    // not a code crash (500) — the public templates read stays honest.
+    if (isSupabaseCredentialFault(error.message)) throw new StudioSetupError("supabase");
+    throw new CompositeError("INTERNAL", `Template list is unavailable: ${error.message}`);
+  }
   return ((data ?? []) as Row[]).map(toTemplateRow);
 }
 

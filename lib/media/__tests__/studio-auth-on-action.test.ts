@@ -16,6 +16,7 @@ import {
 } from "../../../components/studio/auth/studio-auth-action-core";
 import { workStateForErrorCode } from "../../../components/studio/v5/work/work-api-client";
 import { parseCatalogResponse } from "../../../components/studio/v5/discovery/catalog-client";
+import { isSupabaseCredentialFault } from "../studio-setup";
 
 const READY_ENV: Record<string, string> = {};
 for (const key of STUDIO_READINESS_KEYS) READY_ENV[key] = "true";
@@ -188,4 +189,13 @@ test("S4C catalog reads map auth denials to the signed-out state", () => {
   assert.equal(parseCatalogResponse({ ok: false, error: { code: "AUTHENTICATION_REQUIRED" } }).state, "permission");
   assert.equal(parseCatalogResponse({ ok: false, error: { code: "unauthenticated" } }).state, "permission");
   assert.equal(parseCatalogResponse({ ok: false, error: { code: "SETUP_REQUIRED" } }).state, "setup");
+});
+
+test("S4C credential faults classify as setup conditions, not crashes", () => {
+  assert.equal(isSupabaseCredentialFault("Invalid API key"), true);
+  assert.equal(isSupabaseCredentialFault("invalid api key "), true);
+  assert.equal(isSupabaseCredentialFault("Template list is unavailable: Invalid API key"), true);
+  assert.equal(isSupabaseCredentialFault("relation does not exist"), false);
+  assert.equal(isSupabaseCredentialFault(""), false);
+  assert.equal(isSupabaseCredentialFault(null), false);
 });
