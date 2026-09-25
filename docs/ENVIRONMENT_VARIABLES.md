@@ -93,8 +93,30 @@ TEMPORAL_ADDRESS / TEMPORAL_NAMESPACE / STUDIO_WORKFLOW_QUEUE / STUDIO_ACTIVITY_
   TEMPORAL_* name is read by code in this repo.
 ```
 
-## Vercel comparison
+## Vercel comparison (S4B: provisioned 2026-09-25)
 
-S3-owned: compare REQUIRED_PRODUCTION against the Vercel project env and
-preserve existing secrets. Do not copy secret values into git. No
-production env changes were made during separation (LOCAL WORK ONLY).
+Project `ethen-studio`, scopes Production + Preview unless noted:
+
+```text
+NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY   Production(live)+Preview(test)
+CLERK_SECRET_KEY                    Production+Preview (shared Ethen server key)
+NEXT_PUBLIC_SUPABASE_URL            Production(prod)+Preview(staging)
+NEXT_PUBLIC_SUPABASE_ANON_KEY       Production(prod)+Preview(staging)
+SUPABASE_SERVICE_ROLE_KEY           Production+Preview (shared Ethen key)
+FAL_KEY                             Production+Preview (sole Ethen FAL value)
+OPENAI_API_KEY (optional)           Production+Preview (supports OPENAI_READY)
+ETHEN_STUDIO_PRIVATE_ALPHA          "true" (certified runtime shape)
+ETHEN_STUDIO_STORAGE_READY          "true"
+ETHEN_STUDIO_WORKER_READY           "true"
+ETHEN_STUDIO_POLICY_READY           "true"
+ETHEN_STUDIO_OPENAI_READY           "true"
+ETHEN_STUDIO_FAL_READY              "true"
+ETHEN_STUDIO_KILL_SWITCH            "false" (code-defined inactive; flip to "true" for incidents)
+ETHEN_STUDIO_ENROLLED_ORG_IDS       operator-managed post-deploy (empty = locked)
+ETHEN_STUDIO_ENROLLED_USER_IDS      operator-managed post-deploy (empty = locked)
+```
+
+Names only; never commit values. Clerk/Supabase values are the shared
+Ethen-wide production values (identical on chat-core/platform-core prod);
+Preview uses the Ethen test/staging counterparts. Enrollment allowlists
+stay empty until the owner enrolls after first sign-in (fail-closed).

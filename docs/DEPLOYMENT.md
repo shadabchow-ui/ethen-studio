@@ -61,17 +61,16 @@ pnpm catalog:project   # data/media-models/* -> lib/media/generated/*.json
 Deterministic: verified byte-identical output (491 records, 1499
 endpoints). Never hand-edit `lib/media/generated/*`.
 
-## Vercel (S3-owned)
+## Vercel (S4B: production LIVE at studio.upcube.ai)
 
-- Framework: Next.js. Root directory: repo root. Build command:
-  `pnpm install --frozen-lockfile && pnpm build` (or the Vercel pnpm
-  defaults with `pnpm build`).
+- Project: `ethen-studio` (`prj_AAknemmdyqxQuYzMsO8l6HpLY73O`).
+  Framework: Next.js. Root directory: repo root. Node: 22.x. Build:
+  `pnpm install` (frozen lockfile) + `pnpm build` (`next build --webpack`).
+- Production branch: `main` (Git integration auto-deploys pushes).
+  Production domain: `studio.upcube.ai`
+  (`CNAME studio -> b5dade66bbadf334.vercel-dns-017.com`, DNS-only).
 - Required env: see REQUIRED_PRODUCTION in
-  `docs/ENVIRONMENT_VARIABLES.md`. Preserve existing project secrets;
-  never commit values.
-- `ALLOW_DOMAIN_CHANGES=NO`: reuse the proven Studio project/domain.
-- Do not bind `studio.upcube.ai` (or any domain) without recorded
-  authority evidence.
-- Promotion gates (all S3): STANDALONE_INSTALL=PASS,
-  STANDALONE_BUILD=PASS, NEW_TYPE_ERRORS=0, NEW_TEST_FAILURES=0,
-  PREVIEW_PARITY=PASS, ROLLBACK_READY=YES.
+  `docs/ENVIRONMENT_VARIABLES.md`. Names only here; never commit values.
+- Do not bind any other Ethen domain to this project
+  (`chat/platform/upcube.ai` belong to other products).
+- Rollback: previous READY deployment on this project.

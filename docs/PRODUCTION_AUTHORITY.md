@@ -1,62 +1,45 @@
 # Production authority
 
-S2 scope: standalone-repo facts are recorded here; live production
-discovery (domain → Vercel → project → deployment → repo) is S1/S3-owned
-and was out of scope for local separation work.
-
-## Standalone-repo facts (proven locally)
+Last updated: 2026-09-25 (S4B — production LIVE).
 
 ```text
-PRODUCTION_SOURCE_REPO (intended)=shadabchow-ui/ethen-studio
-MONOREPO_REQUIRED_FOR_INSTALL=NO   (fresh-clone pnpm install --frozen-lockfile: PASS)
-MONOREPO_REQUIRED_FOR_BUILD=NO     (fresh-clone build behaves identically to HEAD)
+PRODUCTION_DOMAIN=studio.upcube.ai
+PRODUCTION_PROVIDER=Vercel
+VERCEL_ACCOUNT_OR_TEAM=shadabchow-1091s-projects
+VERCEL_PROJECT=ethen-studio
+VERCEL_PROJECT_ID=prj_AAknemmdyqxQuYzMsO8l6HpLY73O
+PRODUCTION_SOURCE_REPO=shadabchow-ui/ethen-studio
+PRODUCTION_DEPLOYMENT_BRANCH=main (productionBranch)
+DOMAIN_AUTHORITY=PASS (owner-authorized + DNS-verified CNAME)
+TLS=PASS
+PREVIOUS_PRODUCTION=NONE (first production)
+```
+
+## Standalone independence (proven)
+
+```text
+MONOREPO_REQUIRED_FOR_INSTALL=NO
+MONOREPO_REQUIRED_FOR_BUILD=NO
+MONOREPO_REQUIRED_FOR_DEPLOY=NO
 OUTSIDE_REPO_IMPORTS=0
 OUTSIDE_REPO_SYMLINKS=0
 ABSOLUTE_LOCAL_PATH_DEPENDENCIES=0
 ```
 
-## Promotion blocker (must clear before S3 cutover)
+## Rollback
 
-Committed SOURCE_HEAD (`cf3aabdb4`) is internally inconsistent for Studio:
-`apps/studio` at HEAD imports 9 package modules that were never committed
-on branch `ethen/studio-v5-final` (they exist only as uncommitted
-working-tree files / other branches). Consequence: typecheck (84 errors),
-build (5 missing modules), 5 suites, and all page renders fail identically
-in the monorepo at HEAD and in this standalone repo (zero NEW failures —
-see `artifacts/repo-separation/STANDALONE_CERTIFICATION.md`).
+First production has no predecessor. Rollback target after cutover is the
+previous READY deployment on project `ethen-studio`. Rollback on P0/P1
+regression, auth failure, Studio load failure, catalog failure, Create
+failure, Assets/History regression, Canvas/Workflow regression, critical
+API failure, asset failure, 5xx loop, or major parity regression.
 
-```text
-PROMOTION_BLOCKER=HEAD_INCONSISTENCY
-MISSING_AT_HEAD=
-  @ethen/app-shell/instant-rum/next
-  @ethen/app-shell/latest-request-gate
-  @ethen/app-shell/a11y/next
-  @ethen/contracts/rum/route-identity
-  @ethen/database/user-settings
-  @ethen/ui/settings/index
-  @ethen/ui/settings/settings-data
-  @ethen/ui/chat-lab/shared-chat-chrome
-  @ethen/ui/design-system/v2/canvas/CanvasViewport
-```
+## Enrollment (operator-managed)
 
-To unblock: commit the missing modules (from the working tree after
-review, or re-authored) plus the type-level fixes that make HEAD Studio
-self-consistent (the live working tree already contains such a state;
-verify with `pnpm typecheck`, `pnpm test`, `pnpm build` there first),
-then re-run extraction from the new SOURCE_HEAD.
+Private alpha is fail-closed: empty `ETHEN_STUDIO_ENROLLED_ORG_IDS` /
+`ETHEN_STUDIO_ENROLLED_USER_IDS` admit nobody. The operator enrolls Clerk
+org/user IDs via project env after first sign-in, then redeploys. No user
+IDs are hardcoded in code.
 
-## Live production fields (S1/S3-owned)
-
-```text
-LIVE_DOMAIN=TBD (S1)
-PRODUCTION_PROVIDER=Vercel (per job config; S1 to prove)
-VERCEL_TEAM=TBD (S1)
-VERCEL_PROJECT=TBD (S1)
-CURRENT_PRODUCTION_DEPLOYMENT=TBD (S1)
-ROLLBACK_DEPLOYMENT=TBD (S3, before cutover)
-PRODUCTION_CUTOVER=NOT_STARTED
-PRODUCTION_RECERTIFICATION=NOT_STARTED
-DOMAIN_AUTHORITY=NOT_STARTED
-```
-
-No GitHub/Vercel writes were made during separation (LOCAL WORK ONLY).
+Legacy monorepo source `apps/studio` is FROZEN (see `FROZEN.md` there).
+Never deploy Studio from the monorepo.
