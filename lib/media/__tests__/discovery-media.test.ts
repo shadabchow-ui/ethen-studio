@@ -4,6 +4,7 @@ import { dirname, join } from "node:path";
 import { test } from "node:test";
 import { fileURLToPath } from "node:url";
 import { DISCOVERY_MEDIA } from "../../studio-v5/discovery-media";
+import { sectionItems, showcaseFeed } from "../../studio-v5/showcase-feed";
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..", "..", "..");
 
@@ -33,6 +34,13 @@ test("licensed showcase entries carry dimensions, duration and title", () => {
     assert.ok(m.durationSeconds && m.durationSeconds > 0, `${m.id} is missing durationSeconds`);
     assert.ok(m.title && m.title.length > 0, `${m.id} is missing a title`);
   }
+});
+
+test("home-video rail is fully real media", () => {
+  const rail = sectionItems(showcaseFeed(), "home-video");
+  assert.ok(rail.length > 0, "home-video rail is empty");
+  const placeholders = rail.filter((i) => i.placeholder).map((i) => i.id);
+  assert.deepEqual(placeholders, [], `home-video rail still holds placeholders: ${placeholders.join(", ")}`);
 });
 
 test("final (non-placeholder) local media files exist", () => {
