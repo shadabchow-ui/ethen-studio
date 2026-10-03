@@ -11,14 +11,18 @@ export const dynamic = "force-dynamic";
  * bound facade table: a path appears only when a handler is bound, and
  * no catalog endpoint is promised executable.
  */
+export const STUDIO_MEDIA_API_TITLE = "Studio Media API";
+
+/** Relabel the vendored gateway document without touching its paths. */
+export function withStudioMediaApiTitle<T extends { info: Record<string, unknown> }>(document: T): T {
+  return { ...document, info: { ...document.info, title: STUDIO_MEDIA_API_TITLE } };
+}
+
 export async function GET(): Promise<Response> {
   try {
     const tenant = await requireSessionTenant();
     if ("response" in tenant) return tenant.response;
-    const document = buildOpenApiDocument();
-    return studioSuccess({
-      openapi: { ...document, info: { ...document.info, title: "Studio Media API" } },
-    });
+    return studioSuccess({ openapi: withStudioMediaApiTitle(buildOpenApiDocument()) });
   } catch (error) {
     return gatewayFailure(error);
   }
