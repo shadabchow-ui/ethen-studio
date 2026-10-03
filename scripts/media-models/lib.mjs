@@ -607,12 +607,12 @@ export function runChecks(ctx) {
   // ctx: {sourceRows,endpoints,families,dossiers,candidates,tierCQueue,manifest,rerunBytes,byteFiles}
   const results = [];
   const check = (name, ok, detail = "") => results.push({ name, status: ok ? "PASS" : "FAIL", detail });
-  check("source_rows_1499", ctx.sourceRows.length === 1499, `rows=${ctx.sourceRows.length}`);
-  check("endpoints_1499_unique", ctx.endpoints.length === 1499 && new Set(ctx.endpoints.map((e) => e.endpoint_id)).size === 1499, `endpoints=${ctx.endpoints.length}`);
+  check("source_rows_match", ctx.sourceRows.length === ctx.endpoints.length, `rows=${ctx.sourceRows.length} endpoints=${ctx.endpoints.length}`);
+  check("endpoints_unique", new Set(ctx.endpoints.map((e) => e.endpoint_id)).size === ctx.endpoints.length, `endpoints=${ctx.endpoints.length}`);
   check("endpoint_url_identity", ctx.endpoints.every((e) => e.url.startsWith("https://fal.ai/models/")), "");
   const memberSets = ctx.families.map((f) => f.member_endpoint_ids);
   const allMembers = memberSets.flat();
-  check("membership_exact", allMembers.length === 1499 && new Set(allMembers).size === 1499, `mapped=${allMembers.length}`);
+  check("membership_exact", allMembers.length === ctx.endpoints.length && new Set(allMembers).size === ctx.endpoints.length, `mapped=${allMembers.length} endpoints=${ctx.endpoints.length}`);
   check("routes_unique", new Set(ctx.families.map((f) => f.route)).size === ctx.families.length, `families=${ctx.families.length}`);
   check("family_ids_unique", new Set(ctx.families.map((f) => f.family_id)).size === ctx.families.length, "");
   check("dossier_per_family", ctx.dossiers.length === ctx.families.length && ctx.dossiers.every((d) => ctx.families.some((f) => f.family_id === d.record_id)), "");

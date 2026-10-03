@@ -39,11 +39,23 @@ export interface EndpointCapabilities {
   mediaClass: string | null;
 }
 
+export interface EndpointLicense {
+  /** License identifier (SPDX id or source-tagged id, never guessed). */
+  id: string;
+  upstream: string;
+}
+
+export type EndpointOpenness = "open-weights" | "mixed" | "unknown";
+
 export interface StudioEndpoint {
   endpointId: string;
   familyId: string | null;
   task: string;
   developer: string;
+  /** Open-weight license provenance; null when unverified (never guessed). */
+  license: EndpointLicense | null;
+  /** Family openness rollup; endpoint license above is authoritative. */
+  openness: EndpointOpenness;
   developerClues: readonly string[];
   disposition: EndpointDisposition;
   dispositionReason: string | null;
@@ -126,11 +138,17 @@ export function normalizePricing(row: EndpointSourceRow): EndpointPricing {
   };
 }
 
+export interface EndpointExtras {
+  license?: { id?: unknown; upstream?: unknown } | null;
+  openness?: unknown;
+}
+
 export function normalizeEndpointRow(
   row: EndpointSourceRow,
   familyId: string | null,
   snapshot: SchemaSnapshotRef | null,
   snapshotReason: string | null,
+  extras?: EndpointExtras,
 ): StudioEndpoint {
   const disposition = normalizeDisposition(row.disposition);
   const pricing = normalizePricing(row);
@@ -146,11 +164,19 @@ export function normalizeEndpointRow(
   if (disposition === "excluded") reasons.push(row.disposition_reason ?? "excluded by source disposition");
   if (!schemaSupported) reasons.push(snapshotReason ?? "schema unavailable: no verified input schema");
   if (pricing.status === "unknown") reasons.push("pricing unknown: excluded from cost ranking");
+  const licenseId = extras?.license?.id;
+  const licenseUpstream = extras?.license?.upstream;
+  const openness: EndpointOpenness =
+    extras?.openness === "open-weights" || extras?.openness === "mixed" ? extras.openness : "unknown";
   return {
     endpointId: row.endpoint_id,
     familyId,
     task: row.task ?? "unknown",
     developer: row.developer ?? "unknown",
+    license: typeof licenseId === "string" && typeof licenseUpstream === "string"
+      ? { id: licenseId, upstream: licenseUpstream }
+      : null,
+    openness,
     developerClues: (row.developer_clues ?? []).map((c) => `${c.kind ?? "clue"}:${c.value ?? ""}`),
     disposition,
     dispositionReason: row.disposition_reason ?? null,
