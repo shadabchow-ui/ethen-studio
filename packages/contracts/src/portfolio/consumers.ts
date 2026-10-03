@@ -36,6 +36,7 @@ const FLAGSHIP_ICON_BY_ID: Readonly<Record<string, string>> = {
   gateway: "permissions",
   "model-intelligence": "models",
   "gpu-compute": "terminal",
+  ibot: "grid",
 };
 
 const FLAGSHIP_REGISTRY_IDS = new Set(

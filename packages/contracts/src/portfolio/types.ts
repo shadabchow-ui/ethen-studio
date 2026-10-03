@@ -7,6 +7,12 @@
  */
 
 /** Explicit lifecycle vocabulary (GPT Sol portfolio + reconciled plan). */
+/**
+ * MUSE-010 (portfolio contract v1): the flagship runtime map uses the v1
+ * vocabulary - live|private-alpha|beta|preview|coming|internal. The legacy
+ * literals stay in the union because the portfolio registry still uses
+ * them; nothing new should adopt them.
+ */
 export const PRODUCT_LIFECYCLES = [
   "available",
   "beta",
@@ -16,6 +22,9 @@ export const PRODUCT_LIFECYCLES = [
   "setup-required",
   "unavailable",
   "retired",
+  "live",
+  "coming",
+  "internal",
 ] as const;
 
 export type ProductLifecycle = (typeof PRODUCT_LIFECYCLES)[number];
@@ -28,6 +37,7 @@ export type ProductLifecycle = (typeof PRODUCT_LIFECYCLES)[number];
  * Private lifecycle states are intentional enrollment gating, not GA claims.
  */
 export const LIFECYCLE_CLAIM_STRENGTH: Record<ProductLifecycle, number> = {
+  live: 6,
   available: 5,
   beta: 4,
   preview: 3,
@@ -35,6 +45,8 @@ export const LIFECYCLE_CLAIM_STRENGTH: Record<ProductLifecycle, number> = {
   "private-beta": 2,
   "private-alpha": 2,
   unavailable: 1,
+  coming: 1,
+  internal: 1,
   retired: 0,
 };
 

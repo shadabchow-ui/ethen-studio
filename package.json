@@ -12,6 +12,7 @@
     "start": "next start -p 3015",
     "typecheck": "tsc --noEmit",
     "check:shared-drift": "node scripts/check-shared-drift.ts",
+    "check:portfolio-pin": "node scripts/check-portfolio-drift.mjs",
     "test": "node scripts/run-studio-tests.mjs",
     "test:parity": "node scripts/run-studio-tests.mjs --parity",
     "test:sidebar-logo": "node --import tsx __tests__/sidebar-collapsed-logo.test.ts",
