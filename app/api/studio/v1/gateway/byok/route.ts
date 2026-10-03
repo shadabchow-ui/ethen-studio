@@ -6,7 +6,7 @@ import { SupabaseGatewayStore } from "../../_lib/supabase-gateway";
 export const dynamic = "force-dynamic";
 
 /**
- * STUDIO_19 — V1 gateway BYOK adapter. GET lists vault-reference
+ * STUDIO_19 — Studio Media API BYOK adapter. GET lists vault-reference
  * metadata; POST registers an opaque vault pointer (provider +
  * vaultKeyId + label). Plaintext credentials are never accepted,
  * stored, logged, or returned.

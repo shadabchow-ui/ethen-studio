@@ -46,7 +46,7 @@ function runtimeStatus(error: RuntimeError): { code: Parameters<typeof studioErr
 }
 
 /**
- * STUDIO_19 — V1 gateway job admission facade. Authenticates a scoped
+ * STUDIO_19 — Studio Media API job admission facade. Authenticates a scoped
  * API key, then admits through the identical kernel path the UI uses
  * (j05 `studio_v5_admit_job`: job + quota + reservation + outbox in
  * one transaction). Same key + same hash replays; changed payload

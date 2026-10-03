@@ -147,7 +147,7 @@ export function GatewaySettings() {
         setLoading(false);
       } catch {
         if (cancelled) return;
-        setError("Gateway settings are unreachable. Check your connection and retry.");
+        setError("Studio Media API settings are unreachable. Check your connection and retry.");
         setLoading(false);
       }
     })();
@@ -339,7 +339,7 @@ export function GatewaySettings() {
       <div>
         <h2 className="text-lg font-semibold text-[var(--text-primary)]">API keys and webhooks</h2>
         <p className="text-sm text-[var(--text-secondary)]">
-          Scoped keys for the V1 gateway, BYOK vault references, and signed webhook deliveries.
+          Scoped keys for the Studio Media API, BYOK vault references, and signed webhook deliveries.
         </p>
       </div>
 
@@ -375,7 +375,7 @@ export function GatewaySettings() {
         <div data-testid="gateway-empty" className={cardClass}>
           <h3 className="text-base font-semibold">No API keys yet</h3>
           <p className="text-sm text-[var(--text-secondary)]">
-            Mint a scoped key to call the V1 gateway, or register a webhook below.
+            Mint a scoped key to call the Studio Media API, or register a webhook below.
           </p>
         </div>
       ) : null}
