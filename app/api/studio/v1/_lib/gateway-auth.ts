@@ -23,7 +23,7 @@ import { resolveActorTenant, resolveProjectScope, type ResolvedScope } from "./s
 import { SupabaseGatewayStore } from "./supabase-gateway";
 
 export function gatewayFailure(error: unknown): Response {
-  const setup = setupRequiredResponse(error, "The API gateway needs the Studio data service.");
+  const setup = setupRequiredResponse(error, "The Studio Media API needs the Studio data service.");
   if (setup) return setup;
   if (error instanceof GatewayError) {
     const code = gatewayStatusCode(error.code);
