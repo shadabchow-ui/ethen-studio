@@ -6,7 +6,7 @@ import { SupabaseGatewayStore } from "../../../../_lib/supabase-gateway";
 export const dynamic = "force-dynamic";
 
 /**
- * STUDIO_19 — V1 gateway key rotation. Mints a successor linked to the
+ * STUDIO_19 — Studio Media API key rotation. Mints a successor linked to the
  * old key, revokes the old key, and reveals the new secret once. The
  * old secret stops working immediately.
  */

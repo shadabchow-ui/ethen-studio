@@ -6,7 +6,7 @@ import { SupabaseGatewayStore } from "../../../../_lib/supabase-gateway";
 export const dynamic = "force-dynamic";
 
 /**
- * STUDIO_19 — V1 gateway manual redelivery. Only dead-letter
+ * STUDIO_19 — Studio Media API manual redelivery. Only dead-letter
  * deliveries can be reset to pending; redelivery re-sends the signed
  * envelope and never re-runs the originating job.
  */

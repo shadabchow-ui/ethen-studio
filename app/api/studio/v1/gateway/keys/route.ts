@@ -22,7 +22,7 @@ function asStringArray(value: unknown): string[] | null {
 }
 
 /**
- * STUDIO_19 — V1 gateway key management. GET lists key metadata for the
+ * STUDIO_19 — Studio Media API key management. GET lists key metadata for the
  * caller's tenant (never secrets). POST mints a scoped key and reveals
  * the secret exactly once in the creation response.
  */

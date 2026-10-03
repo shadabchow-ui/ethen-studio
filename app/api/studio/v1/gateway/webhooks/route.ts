@@ -6,7 +6,7 @@ import { SupabaseGatewayStore } from "../../_lib/supabase-gateway";
 export const dynamic = "force-dynamic";
 
 /**
- * STUDIO_19 — V1 gateway webhook subscriptions. GET lists the tenant's
+ * STUDIO_19 — Studio Media API webhook subscriptions. GET lists the tenant's
  * subscriptions; POST registers an SSRF-safe HTTPS destination for
  * job/event deliveries and reveals the signing secret once.
  */
