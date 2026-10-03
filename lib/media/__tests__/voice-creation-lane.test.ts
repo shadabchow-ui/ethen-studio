@@ -2,6 +2,8 @@ import assert from "node:assert/strict";
 import { test } from "node:test";
 import { NextRequest } from "next/server";
 import { buildOpenApiDocument } from "@ethen/studio-core/server/gateway";
+import { buildScope } from "@ethen/studio-core/contracts";
+import type { FixtureScope } from "../../../app/api/studio/v1/_lib/realtime-lane";
 import { localStores, resetLocalStores } from "../../../app/api/studio/v1/_lib/local-lane";
 import {
   fixtureCountActiveSessions,
@@ -31,13 +33,13 @@ import {
 
 // Dev bypass + mock project auth (per-file process; no suite crosstalk).
 process.env.ETHEN_DEV_AUTH_BYPASS = "1";
-process.env.NODE_ENV = "development";
+(process.env as Record<string, string | undefined>).NODE_ENV = "development";
 process.env.NEXT_PUBLIC_ETHEN_MOCK_MODE = "true";
 
-const SCOPE = {
-  scope: { tenantId: "t-voice", workspaceId: "w-voice", projectId: "p-voice" },
+const SCOPE: FixtureScope = {
+  scope: buildScope("t-voice", "w-voice", "p-voice"),
   projectId: "p-voice",
-} as never;
+};
 
 function postRequest(path: string, body: unknown): NextRequest {
   return new NextRequest(`http://localhost${path}`, {
