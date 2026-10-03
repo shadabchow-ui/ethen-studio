@@ -11,6 +11,7 @@
     "build": "next build --webpack",
     "start": "next start -p 3015",
     "typecheck": "tsc --noEmit",
+    "check:shared-drift": "node scripts/check-shared-drift.ts",
     "test": "node scripts/run-studio-tests.mjs",
     "test:parity": "node scripts/run-studio-tests.mjs --parity",
     "test:sidebar-logo": "node --import tsx __tests__/sidebar-collapsed-logo.test.ts",
