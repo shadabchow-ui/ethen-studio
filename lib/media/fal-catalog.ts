@@ -87,6 +87,7 @@ type GeneratedEndpoint = {
   developer_clues?: string[];
   page_url?: string | null;
   row_sha256?: string | null;
+  license?: { id?: string; upstream?: string } | null;
   pricing?: { status?: string; sentences?: string[]; raw_hash?: string | null };
   schema?: { status?: string; snapshot?: string | null; verified_at?: string | null; reason?: string | null };
   capabilities?: { required_inputs?: string[] | null; supported_inputs?: string[] | null };
@@ -99,6 +100,7 @@ export function getRegistryEndpoints(): StudioEndpoint[] {
   if (registryCache) return registryCache;
   const records = catalogJson.records as unknown as {
     family_id: string;
+    openness?: string;
     endpoints: GeneratedEndpoint[];
   }[];
   registryCache = records.flatMap((record) =>
@@ -139,6 +141,7 @@ export function getRegistryEndpoints(): StudioEndpoint[] {
             }
           : null,
         endpoint.schema?.status === "supported" ? null : (endpoint.schema?.reason ?? "not yet imported"),
+        { license: endpoint.license ?? null, openness: record.openness ?? "unknown" },
       ),
     ),
   );

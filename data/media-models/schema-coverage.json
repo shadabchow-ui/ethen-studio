@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-09-23T14:38:22.215Z",
-  "endpoints_total": 1499,
-  "attempted": 162,
-  "supported": 162,
+  "generated_at": "2026-10-03T04:46:17Z",
+  "endpoints_total": 1500,
+  "attempted": 163,
+  "supported": 163,
   "failed": 0,
   "by_reason": {
-    "supported": 162
+    "supported": 163
   },
   "this_run": [
     {
@@ -647,6 +647,11 @@
       "endpoint_id": "xai/tts/v1",
       "status": "supported",
       "snapshot": "data/media-models/schema-snapshots/xai-tts-v1.json"
+    },
+    {
+      "endpoint_id": "fal-ai/marigold-v2",
+      "status": "supported",
+      "snapshot": "data/media-models/schema-snapshots/fal-ai-marigold-v2.json"
     }
   ]
 }
