@@ -1,0 +1,51 @@
+# Migration rehearsal log (MUSE-004, 2026-10-03)
+
+## Method
+
+Live PG17 apply was attempted and sandbox-blocked (evidence below), so
+the rehearsal ran statically at full depth instead:
+
+1. Parsed all 19 Studio migration files with the real PostgreSQL
+   grammar (libpg_query via pglast 8.4): **19/19 files, 0 syntax
+   errors, 726 top-level statements.**
+2. Per-statement idempotency audit: IF (NOT) EXISTS / OR REPLACE /
+   DROP-then-create pairing / guarded DO blocks / ON CONFLICT. 677
+   statements proven replay-safe by rule; 49 flagged and each confirmed
+   by reading the surrounding code (all are `CREATE POLICY` without a
+   preceding drop — first apply succeeds, replay aborts).
+3. Prereq extraction from the in-file `STUDIO_V5_*_PREREQ` gates plus a
+   full non-`studio_v5` reference scan: hard deps are `public.projects`,
+   `public.tenants`, `public.project_members`,
+   `public.is_project_member(uuid)`, roles `authenticated/service_role`,
+   extension `pgcrypto`, and 15 legacy backfill-source tables.
+4. Backfill review: every apply-time `perform studio_v5_j*_backfill()`
+   is resumable (legacy-map PK skips + `ON CONFLICT DO NOTHING`;
+   j13 is validation-only) and writes only `studio_v5_*` tables.
+5. Authoritative DDL for every prereq/legacy object was read in the
+   monolith migrations and encoded as `seed.sql` (27 statements, parses
+   clean); `apply.sh` reproduces the intended live run for MUSE-009/CI.
+
+## Live-server attempts (all blocked by the sandbox, none by the repo)
+
+- `initdb` (Homebrew PG 17.11): fails — the sandbox blocks directory-
+  service user lookup (`could not look up effective user ID`).
+- Booting a byte-copy of the initialized PG17 data dir from /tmp over a
+  unix socket (no TCP): postmaster dies on `shmat: Operation not
+  permitted` — the sandbox denies SysV shared memory.
+- Docker: not installed. `require_escalated` shell: denied (no human
+  approver in this session). Loopback TCP listen: EPERM.
+- No production/staging database was touched (forbidden in this job).
+
+## Results
+
+```text
+SYNTAX=19/19 PASS (libpg_query)
+STATEMENTS=726 (677 replay-safe, 49 non-idempotent CREATE POLICY in j04/j05/j06/j07/m2)
+TABLES=95 FUNCTIONS=101 POLICIES=55+loop INDEXES=94 TRIGGERS=33 VIEWS=5
+PREREQS_DOCUMENTED=21 objects
+LIVE_APPLY=BLOCKED_EXTERNAL (sandbox; MUSE-009 must run apply.sh on disposable PG17)
+TIER3_TESTS=N/A (no Tier-3 suite exists in this repo)
+```
+
+Manifest: `docs/db/STUDIO_MIGRATION_MANIFEST.md`.
+Reproduce: `seed.sql` + `apply.sh` in this directory.
