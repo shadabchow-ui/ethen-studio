@@ -1,10 +1,13 @@
 /**
  * Authoritative Product Ownership Manifest and Deployment Target Boundary.
  *
- * Implements the 5/9 flagship split between Ethen Chat and Ethen Platform:
- * - Ethen Chat (5 flagships): research, voice, studio, designer, founder
- * - Ethen Platform (9 flagships): ethen-auto (console), code, computer-use,
- *   automation, sentinel, local-models, model-intelligence, gateway, gpu-compute
+ * Deployment-target boundary (chat|platform) for request-edge routing.
+ * Flagship OWNERSHIP (owning repo) lives in flagship-map.ts v1 and is no
+ * longer a 5/9 split: chat owns ethen-auto/research/designer, platform owns
+ * computer-use/sentinel/automation/gateway/gpu-compute, and studio, code,
+ * local-models, model-intelligence, founder, ibot are owned by ethen-studio,
+ * code, web, ethen-founder, ibot. The static route-prefix lists below are
+ * the deployment boundary and are unchanged by the v1 ownership rewrite.
  *
  * Provides typed deployment-target boundary evaluation, enforcing fail-closed
  * routing at the request edge and build-time scoping during target builds.

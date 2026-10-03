@@ -17,6 +17,8 @@ export function lifecycleToHeroStatus(
   switch (lifecycle) {
     case "available":
       return "Live";
+    case "live":
+      return "Live";
     case "private-alpha":
       return "Private Alpha";
     case "private-beta":
@@ -25,6 +27,8 @@ export function lifecycleToHeroStatus(
       return "Setup Required";
     case "beta":
     case "preview":
+    case "coming":
+    case "internal":
     case "unavailable":
     case "retired":
     default:
@@ -47,6 +51,7 @@ export function lifecycleToNavBadge(
       return undefined;
     case "retired":
     case "unavailable":
+    case "coming":
       return "soon";
     default:
       return undefined;
@@ -79,7 +84,12 @@ export function isVisibleOnSurface(
   entry: PortfolioEntry,
   surface: DiscoverySurface,
 ): boolean {
-  if (entry.lifecycle === "retired" || entry.lifecycle === "unavailable") {
+  if (
+    entry.lifecycle === "retired" ||
+    entry.lifecycle === "unavailable" ||
+    entry.lifecycle === "coming" ||
+    entry.lifecycle === "internal"
+  ) {
     return false;
   }
   return entry.visibility[surface] === true;
