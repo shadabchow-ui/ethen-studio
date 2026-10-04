@@ -1,0 +1,103 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "bria/extract-object",
+  "task": "unknown",
+  "source_url": "https://fal.ai/models/bria/extract-object",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=bria%2Fextract-object",
+  "retrieved_at": "2026-10-04T19:41:37.190Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "image-to-image",
+  "bytes_sha256": "45a27e1b6c83470e8cf9f6e01438adf327a668f00928e15d34722c42f4a178c9",
+  "queue_path": "/bria/extract-object",
+  "input_name": "ExtractObjectInput",
+  "input": {
+    "$refName": "ExtractObjectInput",
+    "type": "object",
+    "properties": {
+      "remove_background": {
+        "type": "boolean",
+        "default": false,
+        "description": "When True, refine the cutout alpha with background removal (RMBG). When False (default), use the SAM segmentation mask as the cutout's alpha -- faster, with no salient-object matting (helpful when RMBG over-trims text, logos, or graphics)."
+      },
+      "sync_mode": {
+        "type": "boolean",
+        "default": false,
+        "description": "\n            If true, the function waits for the image to be generated and uploaded\n            before returning, so the image is returned directly (base64) instead of\n            via the CDN. Increases latency.\n        "
+      },
+      "image_url": {
+        "type": "string",
+        "examples": [
+          "https://bria-datasets.s3.amazonaws.com/object-extraction/tools_construction_flatlay.jpg"
+        ],
+        "default": "https://bria-datasets.s3.amazonaws.com/object-extraction/tools_construction_flatlay.jpg",
+        "description": "Source image as a public URL or raw base64-encoded image bytes (no data-URI prefix)."
+      },
+      "autocrop": {
+        "type": "boolean",
+        "default": false,
+        "description": "Tighten the output canvas to the extracted object."
+      },
+      "prompt": {
+        "type": "string",
+        "default": "yellow hammer",
+        "description": "Natural-language description of the object to act on, e.g. 'the red car'."
+      }
+    }
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "ExtractObjectInput",
+    "ExtractObjectOutput",
+    "Image"
+  ]
+}

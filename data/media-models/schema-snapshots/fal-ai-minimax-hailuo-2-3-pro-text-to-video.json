@@ -1,0 +1,92 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/minimax/hailuo-2.3/pro/text-to-video",
+  "task": "text-to-video",
+  "source_url": "https://fal.ai/models/fal-ai/minimax/hailuo-2.3/pro/text-to-video",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fminimax%2Fhailuo-2.3%2Fpro%2Ftext-to-video",
+  "retrieved_at": "2026-10-04T19:49:16.474Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "text-to-video",
+  "bytes_sha256": "100730fd2bc12e27c10aa3f09f3d9c4c6e73f3688763b4114000888cf7780730",
+  "queue_path": "/fal-ai/minimax/hailuo-2.3/pro/text-to-video",
+  "input_name": "MinimaxHailuo23ProTextToVideoInput",
+  "input": {
+    "$refName": "MinimaxHailuo23ProTextToVideoInput",
+    "required": [
+      "prompt"
+    ],
+    "type": "object",
+    "properties": {
+      "prompt_optimizer": {
+        "description": "Whether to use the model's prompt optimizer",
+        "type": "boolean",
+        "default": true
+      },
+      "prompt": {
+        "description": "Text prompt for video generation",
+        "type": "string",
+        "maxLength": 2000,
+        "examples": [
+          "The camera follows the snowboarder as they carve down the mountain through deep powder, each turn sending up huge rooster tails of snow. They navigate between trees, floating through the powder with smooth, flowing movements. The rider launches off a natural jump, grabbing the board mid-air before landing softly in deep snow and continuing down. Powder sprays continuously as they link turns together. The atmosphere is exhilarating and free. Audio: Board cutting through snow, powder spraying, wind rushing, the rider's excited shouts, and the soft thuds of landing in deep snow."
+        ],
+        "minLength": 1
+      }
+    }
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "MinimaxHailuo23ProTextToVideoInput",
+    "MinimaxHailuo23ProTextToVideoOutput",
+    "File"
+  ]
+}

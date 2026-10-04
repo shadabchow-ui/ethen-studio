@@ -1,0 +1,185 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/vecglypher",
+  "task": "unknown",
+  "source_url": "https://fal.ai/models/fal-ai/vecglypher",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fvecglypher",
+  "retrieved_at": "2026-10-04T19:52:05.185Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "text-to-image",
+  "bytes_sha256": "1f988e8edb5960ad47354010121898ffcb4fc570092ac4b60dbb76a26af80e11",
+  "queue_path": "/fal-ai/vecglypher",
+  "input_name": "VecglypherInput",
+  "input": {
+    "$refName": "VecglypherInput",
+    "type": "object",
+    "properties": {
+      "prompt": {
+        "examples": [
+          "g"
+        ],
+        "type": "string",
+        "description": "The target text to generate as vector glyphs. Each character is rendered as a separate SVG path element."
+      },
+      "output_size": {
+        "default": 512,
+        "minimum": 64,
+        "type": "integer",
+        "maximum": 4096,
+        "description": "Maximum dimension (width or height) of the output SVG in pixels. The aspect ratio is preserved."
+      },
+      "fill_color": {
+        "default": "black",
+        "examples": [
+          "black",
+          "#FF5733",
+          "rgb(255,87,51)",
+          "none"
+        ],
+        "type": "string",
+        "description": "Fill color for the generated glyphs. Accepts any valid SVG/CSS color value."
+      },
+      "stroke_color": {
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "examples": [
+          "black",
+          "#333333",
+          "none"
+        ],
+        "description": "Optional stroke (outline) color for the generated glyphs. When set, adds an outline around each glyph path."
+      },
+      "repetition_penalty": {
+        "default": 1,
+        "minimum": 0,
+        "type": "number",
+        "maximum": 2,
+        "description": "Repetition penalty to reduce repeated SVG path segments."
+      },
+      "temperature": {
+        "default": 0.1,
+        "minimum": 0,
+        "type": "number",
+        "maximum": 2,
+        "description": "Sampling temperature. Lower values produce more deterministic output."
+      },
+      "top_p": {
+        "default": 0.95,
+        "minimum": 0,
+        "type": "number",
+        "maximum": 1,
+        "description": "Top-p (nucleus) sampling parameter."
+      },
+      "top_k": {
+        "default": 5,
+        "minimum": -1,
+        "type": "integer",
+        "maximum": 100,
+        "description": "Top-k sampling parameter."
+      },
+      "style_description": {
+        "default": "italic style, 400 weight, serif, text, elegant",
+        "type": "string",
+        "description": "Font style description using typography terms such as weight (100-900), style (italic, oblique), category (serif, sans-serif, display, handwriting, monospace), and characteristics (geometric, humanist, condensed, rounded).",
+        "examples": [
+          "italic style, 400 weight, serif, text, elegant"
+        ]
+      },
+      "max_tokens": {
+        "default": 8192,
+        "minimum": 256,
+        "type": "integer",
+        "maximum": 16384,
+        "description": "Maximum tokens to generate. Increase for longer text."
+      },
+      "enable_safety_checker": {
+        "default": true,
+        "type": "boolean",
+        "description": "Enable input safety checking."
+      },
+      "stroke_width": {
+        "default": 1,
+        "minimum": 0.1,
+        "type": "number",
+        "maximum": 50,
+        "description": "Stroke width in SVG units. Only applies when stroke_color is set."
+      },
+      "seed": {
+        "anyOf": [
+          {
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "Random seed for reproducibility."
+      }
+    },
+    "required": [
+      "prompt"
+    ]
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "VecglypherInput",
+    "VecglypherOutput",
+    "File"
+  ]
+}

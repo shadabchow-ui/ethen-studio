@@ -1,0 +1,127 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/ovi",
+  "task": "unknown",
+  "source_url": "https://fal.ai/models/fal-ai/ovi",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fovi",
+  "retrieved_at": "2026-10-04T19:49:44.688Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "text-to-video",
+  "bytes_sha256": "84d32b04893c98e2d75d9a101528807c62079e67c6e10dee7d5cb7ca2d380e29",
+  "queue_path": "/fal-ai/ovi",
+  "input_name": "OviInput",
+  "input": {
+    "$refName": "OviInput",
+    "properties": {
+      "num_inference_steps": {
+        "description": "The number of inference steps.",
+        "type": "integer",
+        "default": 30,
+        "minimum": 1,
+        "maximum": 50
+      },
+      "negative_prompt": {
+        "type": "string",
+        "default": "jitter, bad hands, blur, distortion",
+        "description": "Negative prompt for video generation."
+      },
+      "audio_negative_prompt": {
+        "type": "string",
+        "default": "robotic, muffled, echo, distorted",
+        "description": "Negative prompt for audio generation."
+      },
+      "resolution": {
+        "type": "string",
+        "default": "992x512",
+        "enum": [
+          "512x992",
+          "992x512",
+          "960x512",
+          "512x960",
+          "720x720",
+          "448x1120",
+          "1120x448"
+        ],
+        "description": "Resolution of the generated video in W:H format. One of (512x992, 992x512, 960x512, 512x960, 720x720, or 448x1120)."
+      },
+      "prompt": {
+        "type": "string",
+        "examples": [
+          "A close-up of someone's face as they pet a cat, their hands stroking the soft fur in the foreground. Their affectionate expression shows as the cat purrs contentedly in their lap. They say, <S>This little guy has been with me for eight years now. He knows exactly when I need comfort. Animals are pretty amazing that way.<E>.<AUDCAP>Affectionate voice with cat purring and gentle petting sounds<ENDAUDCAP>"
+        ],
+        "description": "The text prompt to guide video generation."
+      },
+      "seed": {
+        "anyOf": [
+          {
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "Random seed for reproducibility. If None, a random seed is chosen."
+      }
+    },
+    "type": "object",
+    "required": [
+      "prompt"
+    ]
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "OviInput",
+    "OviOutput",
+    "File"
+  ]
+}

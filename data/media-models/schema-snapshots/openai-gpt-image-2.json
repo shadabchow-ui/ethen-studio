@@ -1,0 +1,172 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "openai/gpt-image-2",
+  "task": "image-generation",
+  "source_url": "https://fal.ai/models/openai/gpt-image-2",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=openai%2Fgpt-image-2",
+  "retrieved_at": "2026-10-04T19:54:39.045Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "text-to-image",
+  "bytes_sha256": "eb2c829ae2d9ed0b6ec0c50a53728ec0b8a149089f336ba07b66d44bb2e6f95a",
+  "queue_path": "/openai/gpt-image-2",
+  "input_name": "GptImage2Input",
+  "input": {
+    "$refName": "GptImage2Input",
+    "required": [
+      "prompt"
+    ],
+    "type": "object",
+    "properties": {
+      "image_size": {
+        "description": "The size of the generated image. Supports preset names, explicit {width, height}, or 'auto' to let the model pick the best size. Concrete sizes must have both dimensions as multiples of 16, max edge 3840px, aspect ratio <= 3:1, total pixels between 655,360 and 8,294,400.",
+        "anyOf": [
+          {
+            "$refName": "ImageSize",
+            "type": "object",
+            "properties": {
+              "height": {
+                "maximum": 14142,
+                "description": "The height of the generated image.",
+                "type": "integer",
+                "default": 512,
+                "exclusiveMinimum": 0
+              },
+              "width": {
+                "maximum": 14142,
+                "description": "The width of the generated image.",
+                "type": "integer",
+                "default": 512,
+                "exclusiveMinimum": 0
+              }
+            }
+          },
+          {
+            "enum": [
+              "square_hd",
+              "square",
+              "portrait_4_3",
+              "portrait_16_9",
+              "landscape_4_3",
+              "landscape_16_9",
+              "auto"
+            ],
+            "type": "string"
+          }
+        ],
+        "default": "landscape_4_3"
+      },
+      "output_format": {
+        "description": "Output format for the images",
+        "enum": [
+          "jpeg",
+          "png",
+          "webp"
+        ],
+        "type": "string",
+        "default": "png"
+      },
+      "num_images": {
+        "maximum": 4,
+        "description": "Number of images to generate",
+        "type": "integer",
+        "default": 1,
+        "examples": [
+          1
+        ],
+        "minimum": 1
+      },
+      "quality": {
+        "description": "Quality for the generated image. Use 'auto' to let the model pick the best quality for the prompt.",
+        "enum": [
+          "auto",
+          "low",
+          "medium",
+          "high"
+        ],
+        "type": "string",
+        "default": "high"
+      },
+      "background": {
+        "description": "Background for the generated image",
+        "enum": [
+          "auto",
+          "transparent",
+          "opaque"
+        ],
+        "type": "string",
+        "default": "auto"
+      },
+      "sync_mode": {
+        "description": "If `True`, the media will be returned as a data URI and the output data won't be available in the request history.",
+        "type": "boolean",
+        "default": false
+      },
+      "prompt": {
+        "description": "The prompt for image generation",
+        "type": "string",
+        "maxLength": 32000,
+        "examples": [
+          "create a realistic image taken with iphone at these coordinates 41°43′32″N 49°56′49″W 15 April 1912"
+        ],
+        "minLength": 2
+      }
+    }
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "GptImage2Input",
+    "GptImage2Output",
+    "ImageSize",
+    "ImageFile"
+  ]
+}

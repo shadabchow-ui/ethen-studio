@@ -1,0 +1,165 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/image-apps-v2/outpaint",
+  "task": "image-editing",
+  "source_url": "https://fal.ai/models/fal-ai/image-apps-v2/outpaint",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fimage-apps-v2%2Foutpaint",
+  "retrieved_at": "2026-10-04T19:46:09.031Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "image-to-image",
+  "bytes_sha256": "f5fdad218d6a1ccaf27a7b95a4278c338f2238cd0274f85c3b2b703c96301bef",
+  "queue_path": "/fal-ai/image-apps-v2/outpaint",
+  "input_name": "ImageAppsV2OutpaintInput",
+  "input": {
+    "$refName": "ImageAppsV2OutpaintInput",
+    "type": "object",
+    "properties": {
+      "seed": {
+        "description": "The same seed and the same prompt given to the same version of the model will output the same image every time.",
+        "anyOf": [
+          {
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "image_url": {
+        "type": "string",
+        "examples": [
+          "https://v3.fal.media/files/koala/oei_-iPIYFnhdB8SxojND_qwen-edit-res.png"
+        ],
+        "description": "Image URL to outpaint"
+      },
+      "expand_bottom": {
+        "minimum": 0,
+        "type": "integer",
+        "maximum": 700,
+        "description": "Number of pixels to add as black margin on the bottom side (0-700).",
+        "default": 0
+      },
+      "zoom_out_percentage": {
+        "minimum": 0,
+        "type": "number",
+        "maximum": 90,
+        "description": "Percentage to zoom out the image. If set, the image will be scaled down by this percentage and black margins will be added to maintain original size. Example: 50 means the image will be 50% of original size with black margins filling the rest.",
+        "default": 20
+      },
+      "enable_safety_checker": {
+        "type": "boolean",
+        "description": "If set to true, the safety checker will be enabled.",
+        "default": true
+      },
+      "num_images": {
+        "minimum": 1,
+        "type": "integer",
+        "maximum": 4,
+        "description": "Number of images to generate.",
+        "default": 1
+      },
+      "sync_mode": {
+        "type": "boolean",
+        "description": "If True, the function will wait for the image to be generated and uploaded before returning the response. If False, the function will return immediately and the image will be generated asynchronously.",
+        "default": false
+      },
+      "expand_right": {
+        "minimum": 0,
+        "type": "integer",
+        "maximum": 700,
+        "description": "Number of pixels to add as black margin on the right side (0-700).",
+        "default": 0
+      },
+      "expand_left": {
+        "minimum": 0,
+        "type": "integer",
+        "maximum": 700,
+        "description": "Number of pixels to add as black margin on the left side (0-700).",
+        "default": 0
+      },
+      "prompt": {
+        "maxLength": 500,
+        "type": "string",
+        "description": "Optional prompt to guide the outpainting. If provided, it will be appended to the base outpaint instruction. Example: 'with a beautiful sunset in the background'",
+        "default": ""
+      },
+      "output_format": {
+        "enum": [
+          "png",
+          "jpeg",
+          "jpg",
+          "webp"
+        ],
+        "type": "string",
+        "description": "The format of the output image.",
+        "default": "png"
+      },
+      "expand_top": {
+        "minimum": 0,
+        "type": "integer",
+        "maximum": 700,
+        "description": "Number of pixels to add as black margin on the top side (0-700).",
+        "default": 0
+      }
+    },
+    "required": [
+      "image_url"
+    ]
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "ImageAppsV2OutpaintInput",
+    "ImageAppsV2OutpaintOutput",
+    "Image"
+  ]
+}

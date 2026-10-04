@@ -1,0 +1,90 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/bria/background/remove",
+  "task": "unknown",
+  "source_url": "https://fal.ai/models/fal-ai/bria/background/remove",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fbria%2Fbackground%2Fremove",
+  "retrieved_at": "2026-10-04T19:42:44.375Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "image-to-image",
+  "bytes_sha256": "92e915cc60e06601b6ce0d4225916d8f1ae81f002b28bd9c27d75f70ad31c557",
+  "queue_path": "/fal-ai/bria/background/remove",
+  "input_name": "BriaBackgroundRemoveInput",
+  "input": {
+    "$refName": "BriaBackgroundRemoveInput",
+    "required": [
+      "image_url"
+    ],
+    "properties": {
+      "image_url": {
+        "examples": [
+          "https://fal.media/files/panda/K5Rndvzmn1j-OI1VZXDVd.jpeg"
+        ],
+        "description": "Input Image to erase from",
+        "type": "string"
+      },
+      "sync_mode": {
+        "default": false,
+        "description": "If `True`, the media will be returned as a data URI and the output data won't be available in the request history.",
+        "type": "boolean"
+      }
+    },
+    "type": "object"
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "BriaBackgroundRemoveInput",
+    "BriaBackgroundRemoveOutput",
+    "Image"
+  ]
+}

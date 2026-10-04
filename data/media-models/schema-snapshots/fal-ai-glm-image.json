@@ -1,0 +1,183 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/glm-image",
+  "task": "image-generation",
+  "source_url": "https://fal.ai/models/fal-ai/glm-image",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fglm-image",
+  "retrieved_at": "2026-10-04T19:45:18.904Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "text-to-image",
+  "bytes_sha256": "d4f3bf2a0f1c95aa50672ede4bb39da1302bf833efff792cfc30bfc08f719322",
+  "queue_path": "/fal-ai/glm-image",
+  "input_name": "GlmImageInput",
+  "input": {
+    "$refName": "GlmImageInput",
+    "type": "object",
+    "properties": {
+      "seed": {
+        "description": "Random seed for reproducibility. The same seed with the same prompt will produce the same image.",
+        "anyOf": [
+          {
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "num_inference_steps": {
+        "minimum": 10,
+        "type": "integer",
+        "maximum": 100,
+        "description": "Number of diffusion denoising steps. More steps generally produce higher quality images.",
+        "default": 30
+      },
+      "output_format": {
+        "enum": [
+          "jpeg",
+          "png"
+        ],
+        "type": "string",
+        "description": "Output image format.",
+        "default": "jpeg"
+      },
+      "enable_safety_checker": {
+        "type": "boolean",
+        "description": "Enable NSFW safety checking on the generated images. Disabling it requires account authorization; unauthorized requests are always checked, and images flagged as unsafe are returned as black images.",
+        "default": true
+      },
+      "num_images": {
+        "minimum": 1,
+        "type": "integer",
+        "maximum": 4,
+        "description": "Number of images to generate.",
+        "default": 1
+      },
+      "guidance_scale": {
+        "minimum": 1,
+        "type": "number",
+        "maximum": 10,
+        "description": "Classifier-free guidance scale. Higher values make the model follow the prompt more closely.",
+        "default": 1.5
+      },
+      "sync_mode": {
+        "type": "boolean",
+        "description": "If True, the image will be returned as a base64 data URI instead of a URL.",
+        "default": false
+      },
+      "image_size": {
+        "default": "square_hd",
+        "description": "Output image size.",
+        "anyOf": [
+          {
+            "$refName": "ImageSize",
+            "type": "object",
+            "properties": {
+              "width": {
+                "exclusiveMinimum": 0,
+                "type": "integer",
+                "maximum": 14142,
+                "description": "The width of the generated image.",
+                "default": 512
+              },
+              "height": {
+                "exclusiveMinimum": 0,
+                "type": "integer",
+                "maximum": 14142,
+                "description": "The height of the generated image.",
+                "default": 512
+              }
+            }
+          },
+          {
+            "enum": [
+              "square_hd",
+              "square",
+              "portrait_4_3",
+              "portrait_16_9",
+              "landscape_4_3",
+              "landscape_16_9",
+              "portrait_3_2",
+              "landscape_3_2",
+              "portrait_hd",
+              "landscape_hd"
+            ],
+            "type": "string"
+          }
+        ]
+      },
+      "prompt": {
+        "type": "string",
+        "examples": [
+          "An elegant close-up photograph of hands holding a beautifully illustrated watercolor menu card. The hands have natural sun-kissed skin with a delicate gold ring, gripping the menu gently and refined.\n\nThe menu is a work of art—hand-painted watercolor illustration on textured cream watercolor paper with soft deckled edges:\n\n- Top: \"AZURE\" painted in flowing navy blue watercolor calligraphy with organic brushstroke texture and slight color bleeding\n- Watercolor illustration border: delicate tropical elements painted in soft washes—translucent turquoise waves flowing along the edges, loose coral and pink hibiscus flowers in the corners, gentle green palm leaf strokes, and small golden paint splatters suggesting sunlight\n- Center menu items in elegant hand-lettered watercolor script with slight variations in ink density:\n\n  \"Tuna Tartare — 24\"\n  \"Sea Bass — 32\"\n  \"Mango Pavlova — 14\"\n\n- Bottom: \"Koh Samui\" in small watercolor lettering with a tiny painted wave\n\nThe watercolor has beautiful organic qualities—soft color gradients, natural paper texture visible through transparent washes, slight bleeding at edges of brushstrokes, layered translucent blues and greens creating depth. The paint has a luminous, fresh quality with white paper showing through in places.\n\nBackground: dreamy out-of-focus turquoise ocean with sparkling bokeh lights reflecting off water, creating soft circular light spots in aqua and gold tones. The blurred background complements the watercolor aesthetic perfectly.\n\nLighting: warm natural golden hour sunlight from upper left, illuminating the watercolor pigments and making them glow. The light catches the textured watercolor paper beautifully, showing subtle shadows in the paint layers and paper grain.\n\nPhotography style: shot on 85mm f/1.4, shallow depth of field with only the menu in sharp focus. High-end editorial aesthetic that celebrates the handmade, artistic quality of the watercolor. Color palette: cream paper, translucent turquoise and teal watercolors, soft coral pink, navy blue, gentle greens, golden accents, warm skin tones.\n\nThe overall mood is artistic, luxurious, handcrafted—like a boutique resort that values artistry and craftsmanship. The watercolor style feels fresh, organic, and elevated."
+        ],
+        "description": "Text prompt for image generation."
+      },
+      "enable_prompt_expansion": {
+        "type": "boolean",
+        "description": "If True, the prompt will be enhanced using an LLM for more detailed and higher quality results.",
+        "default": false
+      }
+    },
+    "required": [
+      "prompt"
+    ]
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "GlmImageInput",
+    "GlmImageOutput",
+    "ImageSize",
+    "Image"
+  ]
+}

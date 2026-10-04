@@ -1,0 +1,104 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "xai/grok-imagine-video/edit-video",
+  "task": "video-editing",
+  "source_url": "https://fal.ai/models/xai/grok-imagine-video/edit-video",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=xai%2Fgrok-imagine-video%2Fedit-video",
+  "retrieved_at": "2026-10-04T19:55:42.737Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "video-to-video",
+  "bytes_sha256": "8b8ed47dbfcd10c73fcaebac7033f9af004a0767fca54e7cdf34fd173c32fc09",
+  "queue_path": "/xai/grok-imagine-video/edit-video",
+  "input_name": "GrokImagineVideoEditVideoInput",
+  "input": {
+    "$refName": "GrokImagineVideoEditVideoInput",
+    "properties": {
+      "video_url": {
+        "description": "URL of the input video to edit. The video will be resized to a maximum area of 854x480 pixels and truncated to 8 seconds.",
+        "type": "string",
+        "examples": [
+          "https://v3b.fal.media/files/b/0a8b9112/V5Z_NIPE3ppMDWivNo6_q_video_019.mp4"
+        ]
+      },
+      "resolution": {
+        "description": "Resolution of the output video.",
+        "enum": [
+          "auto",
+          "480p",
+          "720p"
+        ],
+        "default": "auto",
+        "type": "string"
+      },
+      "prompt": {
+        "maxLength": 4096,
+        "description": "Text description of the desired edit.",
+        "type": "string",
+        "examples": [
+          "Colorize the video"
+        ]
+      }
+    },
+    "required": [
+      "prompt",
+      "video_url"
+    ],
+    "type": "object"
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "GrokImagineVideoEditVideoInput",
+    "GrokImagineVideoEditVideoOutput",
+    "VideoFile"
+  ]
+}

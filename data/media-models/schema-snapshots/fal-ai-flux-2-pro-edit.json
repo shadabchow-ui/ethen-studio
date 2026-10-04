@@ -1,0 +1,179 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/flux-2-pro/edit",
+  "task": "image-editing",
+  "source_url": "https://fal.ai/models/fal-ai/flux-2-pro/edit",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fflux-2-pro%2Fedit",
+  "retrieved_at": "2026-10-04T19:44:15.660Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "image-to-image",
+  "bytes_sha256": "7ff4340a6a38a23d3fffdb1582d95255ad72016ce21f1a2a32f1193abc6d8055",
+  "queue_path": "/fal-ai/flux-2-pro/edit",
+  "input_name": "Flux2ProEditInput",
+  "input": {
+    "$refName": "Flux2ProEditInput",
+    "type": "object",
+    "properties": {
+      "prompt": {
+        "examples": [
+          "Place realistic flames emerging from the top of the coffee cup, dancing above the rim"
+        ],
+        "type": "string",
+        "description": "The prompt to generate an image from."
+      },
+      "sync_mode": {
+        "default": false,
+        "type": "boolean",
+        "description": "If `True`, the media will be returned as a data URI and the output data won't be available in the request history."
+      },
+      "image_size": {
+        "default": "auto",
+        "description": "The size of the generated image. If `auto`, the size will be determined by the model.",
+        "anyOf": [
+          {
+            "$refName": "ImageSize",
+            "type": "object",
+            "properties": {
+              "width": {
+                "default": 512,
+                "maximum": 14142,
+                "exclusiveMinimum": 0,
+                "type": "integer",
+                "description": "The width of the generated image."
+              },
+              "height": {
+                "default": 512,
+                "maximum": 14142,
+                "exclusiveMinimum": 0,
+                "type": "integer",
+                "description": "The height of the generated image."
+              }
+            }
+          },
+          {
+            "type": "string",
+            "enum": [
+              "auto",
+              "square_hd",
+              "square",
+              "portrait_4_3",
+              "portrait_16_9",
+              "landscape_4_3",
+              "landscape_16_9"
+            ]
+          }
+        ]
+      },
+      "output_format": {
+        "default": "jpeg",
+        "type": "string",
+        "description": "The format of the generated image.",
+        "enum": [
+          "jpeg",
+          "png"
+        ]
+      },
+      "image_urls": {
+        "examples": [
+          [
+            "https://storage.googleapis.com/falserverless/example_inputs/flux2_pro_edit_input.png"
+          ]
+        ],
+        "items": {
+          "type": "string"
+        },
+        "type": "array",
+        "description": "List of URLs of input images for editing"
+      },
+      "enable_safety_checker": {
+        "default": true,
+        "type": "boolean",
+        "description": "Whether to enable the safety checker. Disabling it requires account authorization; unauthorized requests are always checked."
+      },
+      "safety_tolerance": {
+        "default": "2",
+        "type": "string",
+        "description": "The safety tolerance level for the generated image. 1 being the most strict and 5 being the most permissive.",
+        "enum": [
+          "1",
+          "2",
+          "3",
+          "4",
+          "5"
+        ]
+      },
+      "seed": {
+        "anyOf": [
+          {
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "The seed to use for the generation."
+      }
+    },
+    "required": [
+      "prompt",
+      "image_urls"
+    ]
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "Flux2ProEditInput",
+    "Flux2ProEditOutput",
+    "ImageSize",
+    "ImageFile"
+  ]
+}

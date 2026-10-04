@@ -1,0 +1,168 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/image2svg",
+  "task": "unknown",
+  "source_url": "https://fal.ai/models/fal-ai/image2svg",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fimage2svg",
+  "retrieved_at": "2026-10-04T19:46:35.756Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "image-to-image",
+  "bytes_sha256": "c019ad511ea63c103ac57e50b10ed0cbe645b1be57bd1a30fe6389e68df38399",
+  "queue_path": "/fal-ai/image2svg",
+  "input_name": "Image2svgInput",
+  "input": {
+    "$refName": "Image2svgInput",
+    "properties": {
+      "hierarchical": {
+        "default": "stacked",
+        "type": "string",
+        "description": "Hierarchical mode: stacked or cutout",
+        "enum": [
+          "stacked",
+          "cutout"
+        ]
+      },
+      "path_precision": {
+        "minimum": 1,
+        "type": "integer",
+        "description": "Decimal precision for path coordinates",
+        "maximum": 10,
+        "default": 3
+      },
+      "length_threshold": {
+        "minimum": 0,
+        "type": "number",
+        "description": "Length threshold for curves/lines",
+        "maximum": 10,
+        "default": 4
+      },
+      "filter_speckle": {
+        "minimum": 0,
+        "type": "integer",
+        "description": "Filter out small speckles and noise",
+        "maximum": 20,
+        "default": 4
+      },
+      "mode": {
+        "default": "spline",
+        "type": "string",
+        "description": "Mode: spline (curved) or polygon (straight lines)",
+        "enum": [
+          "spline",
+          "polygon"
+        ]
+      },
+      "layer_difference": {
+        "minimum": 1,
+        "type": "integer",
+        "description": "Layer difference threshold for hierarchical mode",
+        "maximum": 32,
+        "default": 16
+      },
+      "splice_threshold": {
+        "minimum": 0,
+        "type": "integer",
+        "description": "Splice threshold for joining paths",
+        "maximum": 90,
+        "default": 45
+      },
+      "max_iterations": {
+        "minimum": 1,
+        "type": "integer",
+        "description": "Maximum number of iterations for optimization",
+        "maximum": 20,
+        "default": 10
+      },
+      "color_precision": {
+        "minimum": 1,
+        "type": "integer",
+        "description": "Color quantization level",
+        "maximum": 10,
+        "default": 6
+      },
+      "image_url": {
+        "examples": [
+          "https://v3.fal.media/files/kangaroo/EfqY747bBKy1Ynrgbk5ba_04pwiD1LTsnMZuyEyw757_8f986248a89845d3ba90c23b14089f10.jpg"
+        ],
+        "type": "string",
+        "description": "The image to convert to SVG"
+      },
+      "corner_threshold": {
+        "minimum": 0,
+        "type": "integer",
+        "description": "Corner detection threshold in degrees",
+        "maximum": 180,
+        "default": 60
+      },
+      "colormode": {
+        "default": "color",
+        "type": "string",
+        "description": "Choose between color or binary (black and white) output",
+        "enum": [
+          "color",
+          "binary"
+        ]
+      }
+    },
+    "type": "object",
+    "required": [
+      "image_url"
+    ]
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "Image2svgInput",
+    "Image2svgOutput",
+    "File"
+  ]
+}

@@ -1,0 +1,127 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/latentsync",
+  "task": "unknown",
+  "source_url": "https://fal.ai/models/fal-ai/latentsync",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Flatentsync",
+  "retrieved_at": "2026-10-04T19:47:26.728Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "video-to-video",
+  "bytes_sha256": "b61d7eeb32a2bc9c7c3b5f726504dd4877e89054249b125364fa5467f63cabdc",
+  "queue_path": "/fal-ai/latentsync",
+  "input_name": "LatentsyncInput",
+  "input": {
+    "$refName": "LatentsyncInput",
+    "properties": {
+      "guidance_scale": {
+        "minimum": 1,
+        "type": "number",
+        "default": 1,
+        "maximum": 2,
+        "description": "Guidance scale for the model inference",
+        "step": 0.1
+      },
+      "video_url": {
+        "type": "string",
+        "description": "The URL of the video to generate the lip sync for.",
+        "examples": [
+          "https://fal.media/files/koala/8teUPbRRMtAUTORDvqy0l.mp4"
+        ]
+      },
+      "seed": {
+        "anyOf": [
+          {
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "Random seed for generation. If None, a random seed will be used."
+      },
+      "audio_url": {
+        "type": "string",
+        "description": "The URL of the audio to generate the lip sync for.",
+        "examples": [
+          "https://fal.media/files/lion/vyFWygmZsIZlUO4s0nr2n.wav"
+        ]
+      },
+      "loop_mode": {
+        "anyOf": [
+          {
+            "type": "string",
+            "enum": [
+              "pingpong",
+              "loop"
+            ]
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "Video loop mode when audio is longer than video. Options: pingpong, loop"
+      }
+    },
+    "required": [
+      "video_url",
+      "audio_url"
+    ],
+    "type": "object"
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "LatentsyncInput",
+    "LatentsyncOutput",
+    "File"
+  ]
+}

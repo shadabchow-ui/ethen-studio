@@ -1,0 +1,88 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/florence-2-large/object-detection",
+  "task": "unknown",
+  "source_url": "https://fal.ai/models/fal-ai/florence-2-large/object-detection",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fflorence-2-large%2Fobject-detection",
+  "retrieved_at": "2026-10-04T19:43:53.607Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "image-to-image",
+  "bytes_sha256": "17f86351e07a9e3e52da22b00fbae4375570274594644806748edae2d6b69696",
+  "queue_path": "/fal-ai/florence-2-large/object-detection",
+  "input_name": "Florence2LargeObjectDetectionInput",
+  "input": {
+    "$refName": "Florence2LargeObjectDetectionInput",
+    "properties": {
+      "image_url": {
+        "description": "The URL of the image to be processed.",
+        "type": "string",
+        "examples": [
+          "https://huggingface.co/datasets/huggingface/documentation-images/resolve/main/transformers/tasks/car.jpg",
+          "http://ecx.images-amazon.com/images/I/51UUzBDAMsL.jpg"
+        ]
+      }
+    },
+    "type": "object",
+    "required": [
+      "image_url"
+    ]
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "Florence2LargeObjectDetectionInput",
+    "Florence2LargeObjectDetectionOutput",
+    "BoundingBoxes",
+    "Image",
+    "BoundingBox"
+  ]
+}

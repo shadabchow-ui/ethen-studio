@@ -1,0 +1,176 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/krea-2/turbo",
+  "task": "unknown",
+  "source_url": "https://fal.ai/models/fal-ai/krea-2/turbo",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fkrea-2%2Fturbo",
+  "retrieved_at": "2026-10-04T19:47:24.247Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "text-to-image",
+  "bytes_sha256": "88b66c964f603bb5d2fc54ceac98adafa8c67307e8c5563905a66a59a759c706",
+  "queue_path": "/fal-ai/krea-2/turbo",
+  "input_name": "Krea2TurboInput",
+  "input": {
+    "$refName": "Krea2TurboInput",
+    "required": [
+      "prompt"
+    ],
+    "type": "object",
+    "properties": {
+      "num_images": {
+        "minimum": 1,
+        "description": "The number of images to generate.",
+        "maximum": 4,
+        "type": "integer",
+        "default": 1
+      },
+      "acceleration": {
+        "description": "The acceleration level to use for the image generation.",
+        "default": "none",
+        "enum": [
+          "none",
+          "regular"
+        ],
+        "type": "string"
+      },
+      "prompt": {
+        "maxLength": 5000,
+        "description": "Base text description of the image to generate.",
+        "examples": [
+          "a vintage travel poster for Mars"
+        ],
+        "minLength": 1,
+        "type": "string"
+      },
+      "sync_mode": {
+        "description": "If `True`, the media will be returned as a data URI and the output data won't be available in the request history.",
+        "default": false,
+        "type": "boolean"
+      },
+      "enable_safety_checker": {
+        "description": "If true, the output safety checker is enabled. Disabling it requires account authorization; unauthorized requests are always checked, and images flagged as unsafe are returned as black images.",
+        "default": true,
+        "type": "boolean"
+      },
+      "output_format": {
+        "description": "The format of the generated image. Default value: \"png\".",
+        "default": "png",
+        "enum": [
+          "jpeg",
+          "png"
+        ],
+        "type": "string"
+      },
+      "seed": {
+        "anyOf": [
+          {
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "Random seed for reproducible generation. Image *i* uses `seed + i`."
+      },
+      "enable_prompt_expansion": {
+        "description": "If true, the prompt is expanded with an LLM into a more detailed image-generation prompt for higher quality results. On failure, the original prompt is used unchanged.",
+        "default": false,
+        "type": "boolean"
+      },
+      "image_size": {
+        "anyOf": [
+          {
+            "$refName": "ImageSize",
+            "type": "object",
+            "properties": {
+              "height": {
+                "type": "integer",
+                "description": "The height of the generated image.",
+                "maximum": 14142,
+                "default": 512,
+                "exclusiveMinimum": 0
+              },
+              "width": {
+                "type": "integer",
+                "description": "The width of the generated image.",
+                "maximum": 14142,
+                "default": 512,
+                "exclusiveMinimum": 0
+              }
+            }
+          },
+          {
+            "type": "string",
+            "enum": [
+              "square_hd",
+              "square",
+              "portrait_4_3",
+              "portrait_16_9",
+              "landscape_4_3",
+              "landscape_16_9"
+            ]
+          }
+        ],
+        "description": "The size of the generated image.",
+        "default": "square_hd"
+      }
+    }
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "Krea2TurboInput",
+    "Krea2TurboOutput",
+    "ImageSize",
+    "ImageFile"
+  ]
+}

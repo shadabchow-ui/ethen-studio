@@ -1,0 +1,165 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/longcat-single-avatar/image-audio-to-video",
+  "task": "video-editing",
+  "source_url": "https://fal.ai/models/fal-ai/longcat-single-avatar/image-audio-to-video",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Flongcat-single-avatar%2Fimage-audio-to-video",
+  "retrieved_at": "2026-10-04T19:47:33.823Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "audio-to-video",
+  "bytes_sha256": "61635173728060490736193478db4ee58da817b36f172c65e331b498aa743868",
+  "queue_path": "/fal-ai/longcat-single-avatar/image-audio-to-video",
+  "input_name": "LongcatSingleAvatarImageAudioToVideoInput",
+  "input": {
+    "$refName": "LongcatSingleAvatarImageAudioToVideoInput",
+    "type": "object",
+    "properties": {
+      "seed": {
+        "description": "The seed for the random number generator.",
+        "anyOf": [
+          {
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "image_url": {
+        "type": "string",
+        "examples": [
+          "https://raw.githubusercontent.com/meituan-longcat/LongCat-Video/refs/heads/main/assets/avatar/single/man.png"
+        ],
+        "description": "The URL of the image to animate."
+      },
+      "text_guidance_scale": {
+        "minimum": 1,
+        "type": "number",
+        "maximum": 10,
+        "description": "The text guidance scale for classifier-free guidance.",
+        "default": 4
+      },
+      "audio_guidance_scale": {
+        "minimum": 1,
+        "type": "number",
+        "maximum": 10,
+        "description": "The audio guidance scale. Higher values may lead to exaggerated mouth movements.",
+        "default": 4
+      },
+      "num_inference_steps": {
+        "minimum": 10,
+        "type": "integer",
+        "maximum": 100,
+        "description": "The number of inference steps to use.",
+        "default": 50
+      },
+      "enable_prompt_expansion": {
+        "type": "boolean",
+        "description": "Whether to enable prompt expansion using an LLM to enhance the prompt for better video quality.",
+        "default": false
+      },
+      "enable_safety_checker": {
+        "type": "boolean",
+        "description": "Whether to enable safety checker. Disabling it requires account authorization; unauthorized requests are always checked.",
+        "default": true
+      },
+      "audio_url": {
+        "type": "string",
+        "examples": [
+          "https://raw.githubusercontent.com/meituan-longcat/LongCat-Video/refs/heads/main/assets/avatar/single/man.mp3"
+        ],
+        "description": "The URL of the audio file to drive the avatar."
+      },
+      "negative_prompt": {
+        "type": "string",
+        "description": "The negative prompt to avoid in the video generation.",
+        "default": "Close-up, Bright tones, overexposed, static, blurred details, subtitles, style, works, paintings, images, static, overall gray, worst quality, low quality, JPEG compression residue, ugly, incomplete, extra fingers, poorly drawn hands, poorly drawn faces, deformed, disfigured, misshapen limbs, fused fingers, still picture, messy background, three legs, many people in the background, walking backwards"
+      },
+      "num_segments": {
+        "minimum": 1,
+        "type": "integer",
+        "maximum": 10,
+        "description": "Number of video segments to generate. Each segment adds ~5 seconds of video. First segment is ~5.8s, additional segments are 5s each.",
+        "default": 1
+      },
+      "prompt": {
+        "type": "string",
+        "examples": [
+          "A western man stands on stage under dramatic lighting, holding a microphone close to their mouth. Wearing a vibrant red jacket with gold embroidery, the singer is speaking while smoke swirls around them, creating a dynamic and atmospheric scene."
+        ],
+        "description": "The prompt to guide the video generation.",
+        "default": "A person is talking naturally with natural expressions and movements."
+      },
+      "resolution": {
+        "enum": [
+          "480p",
+          "720p"
+        ],
+        "type": "string",
+        "description": "Resolution of the generated video (480p or 720p). Billing is per video-second (16 frames): 480p is 1 unit per second and 720p is 4 units per second.",
+        "default": "480p"
+      }
+    },
+    "description": "Request model for image+audio to video generation.",
+    "required": [
+      "image_url",
+      "audio_url"
+    ]
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "LongcatSingleAvatarImageAudioToVideoInput",
+    "LongcatSingleAvatarImageAudioToVideoOutput",
+    "File"
+  ]
+}

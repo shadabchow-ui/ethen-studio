@@ -1,0 +1,137 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "hitem3d/hi3d/texture",
+  "task": "unknown",
+  "source_url": "https://fal.ai/models/hitem3d/hi3d/texture",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=hitem3d%2Fhi3d%2Ftexture",
+  "retrieved_at": "2026-10-04T19:53:41.884Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "3d-to-3d",
+  "bytes_sha256": "2bb32280a96f43e01cde635ceb66ae557acca8eedfa7f8c48dc87480c3691d59",
+  "queue_path": "/hitem3d/hi3d/texture",
+  "input_name": "Hi3dTextureInput",
+  "input": {
+    "$refName": "Hi3dTextureInput",
+    "type": "object",
+    "properties": {
+      "model": {
+        "default": "hitem3dv1.5",
+        "type": "string",
+        "description": "Model version used for texturing. Only v1.5 models support the staged texture task.",
+        "enum": [
+          "hitem3dv1.5",
+          "scene-portraitv1.5"
+        ]
+      },
+      "export_format": {
+        "default": "glb",
+        "type": "string",
+        "description": "File format of the generated model.",
+        "enum": [
+          "glb",
+          "obj",
+          "stl",
+          "fbx",
+          "usdz"
+        ]
+      },
+      "image_url": {
+        "examples": [
+          "https://storage.googleapis.com/falserverless/example_inputs/dog.png"
+        ],
+        "type": "string",
+        "description": "URL of the reference image used to texture the model. PNG, JPEG and WebP formats are supported, up to 20MB."
+      },
+      "resolution": {
+        "anyOf": [
+          {
+            "type": "string",
+            "enum": [
+              "512",
+              "1024",
+              "1536",
+              "1536pro"
+            ]
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "Texture generation resolution. hitem3dv1.5 accepts 512, 1024, 1536 and 1536pro; scene-portraitv1.5 accepts 1536. Defaults to the model's recommended resolution."
+      },
+      "enable_safety_checker": {
+        "default": true,
+        "type": "boolean",
+        "description": "If set to true, input images are checked for safety before processing."
+      },
+      "mesh_url": {
+        "examples": [
+          "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Models/master/2.0/DamagedHelmet/glTF-Binary/DamagedHelmet.glb"
+        ],
+        "type": "string",
+        "description": "URL of the geometry model to texture. Only GLB format is supported (e.g. the geometry output of the image-to-3d endpoint with enable_texture=false)."
+      }
+    },
+    "required": [
+      "image_url",
+      "mesh_url"
+    ],
+    "description": "Input for the staged texture task (texture an existing geometry mesh)."
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "Hi3dTextureInput",
+    "Hi3dTextureOutput",
+    "File"
+  ]
+}

@@ -1,0 +1,213 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/ace-step",
+  "task": "unknown",
+  "source_url": "https://fal.ai/models/fal-ai/ace-step",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Face-step",
+  "retrieved_at": "2026-10-04T19:42:24.993Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "text-to-audio",
+  "bytes_sha256": "885fa7c8ec43d7a477c86b69b265462ab24cab623e148a2b887bc75424ace0b2",
+  "queue_path": "/fal-ai/ace-step",
+  "input_name": "AceStepInput",
+  "input": {
+    "$refName": "AceStepInput",
+    "properties": {
+      "guidance_interval": {
+        "examples": [
+          0.5
+        ],
+        "description": "Guidance interval for the generation. 0.5 means only apply guidance in the middle steps (0.25 * infer_steps to 0.75 * infer_steps)",
+        "maximum": 1,
+        "default": 0.5,
+        "type": "number",
+        "minimum": 0
+      },
+      "lyric_guidance_scale": {
+        "examples": [
+          1.5
+        ],
+        "description": "Lyric guidance scale for the generation.",
+        "maximum": 10,
+        "default": 1.5,
+        "type": "number",
+        "minimum": 0
+      },
+      "guidance_interval_decay": {
+        "examples": [
+          0
+        ],
+        "description": "Guidance interval decay for the generation. Guidance scale will decay from guidance_scale to min_guidance_scale in the interval. 0.0 means no decay.",
+        "maximum": 1,
+        "default": 0,
+        "type": "number",
+        "minimum": 0
+      },
+      "minimum_guidance_scale": {
+        "examples": [
+          3
+        ],
+        "description": "Minimum guidance scale for the generation after the decay.",
+        "maximum": 200,
+        "default": 3,
+        "type": "number",
+        "minimum": 0
+      },
+      "seed": {
+        "description": "Random seed for reproducibility. If not provided, a random seed will be used.",
+        "anyOf": [
+          {
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "duration": {
+        "description": "The duration of the generated audio in seconds.",
+        "minimum": 5,
+        "maximum": 240,
+        "default": 60,
+        "type": "number"
+      },
+      "tags": {
+        "examples": [
+          "lofi, hiphop, drum and bass, trap, chill"
+        ],
+        "type": "string",
+        "description": "Comma-separated list of genre tags to control the style of the generated audio. Can also be supplied as `prompt`."
+      },
+      "granularity_scale": {
+        "examples": [
+          10
+        ],
+        "description": "Granularity scale for the generation process. Higher values can reduce artifacts.",
+        "maximum": 100,
+        "default": 10,
+        "type": "integer",
+        "minimum": -100
+      },
+      "scheduler": {
+        "examples": [
+          "euler"
+        ],
+        "enum": [
+          "euler",
+          "heun"
+        ],
+        "default": "euler",
+        "type": "string",
+        "description": "Scheduler to use for the generation process."
+      },
+      "number_of_steps": {
+        "examples": [
+          27
+        ],
+        "description": "Number of steps to generate the audio.",
+        "maximum": 60,
+        "default": 27,
+        "type": "integer",
+        "minimum": 3
+      },
+      "guidance_scale": {
+        "examples": [
+          15
+        ],
+        "description": "Guidance scale for the generation.",
+        "maximum": 200,
+        "default": 15,
+        "type": "number",
+        "minimum": 0
+      },
+      "tag_guidance_scale": {
+        "examples": [
+          5
+        ],
+        "description": "Tag guidance scale for the generation.",
+        "maximum": 10,
+        "default": 5,
+        "type": "number",
+        "minimum": 0
+      },
+      "lyrics": {
+        "description": "Lyrics to be sung in the audio. If not provided or if [inst] or [instrumental] is the content of this field, no lyrics will be sung. Use control structures like [verse], [chorus] and [bridge] to control the structure of the song.",
+        "default": "",
+        "type": "string"
+      },
+      "guidance_type": {
+        "examples": [
+          "apg"
+        ],
+        "enum": [
+          "cfg",
+          "apg",
+          "cfg_star"
+        ],
+        "default": "apg",
+        "type": "string",
+        "description": "Type of CFG to use for the generation process."
+      }
+    },
+    "required": [
+      "tags"
+    ],
+    "type": "object"
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "AceStepInput",
+    "AceStepOutput",
+    "File"
+  ]
+}

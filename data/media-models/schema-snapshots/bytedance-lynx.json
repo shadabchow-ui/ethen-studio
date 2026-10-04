@@ -1,0 +1,178 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "bytedance/lynx",
+  "task": "unknown",
+  "source_url": "https://fal.ai/models/bytedance/lynx",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=bytedance%2Flynx",
+  "retrieved_at": "2026-10-04T19:41:56.246Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "image-to-video",
+  "bytes_sha256": "1a98fd307864fc24ce97bc4059f05c00f0e5126b05d8dccf6527e93ef661faf8",
+  "queue_path": "/bytedance/lynx",
+  "input_name": "LynxInput",
+  "input": {
+    "$refName": "LynxInput",
+    "properties": {
+      "ip_scale": {
+        "maximum": 2,
+        "type": "number",
+        "default": 1,
+        "minimum": 0,
+        "description": "Identity preservation scale. Controls how closely the generated video preserves the subject's identity from the reference image."
+      },
+      "num_inference_steps": {
+        "maximum": 75,
+        "type": "integer",
+        "default": 50,
+        "minimum": 1,
+        "description": "Number of inference steps for sampling. Higher values give better quality but take longer."
+      },
+      "aspect_ratio": {
+        "type": "string",
+        "default": "16:9",
+        "enum": [
+          "16:9",
+          "9:16",
+          "1:1"
+        ],
+        "description": "Aspect ratio of the generated video (16:9, 9:16, or 1:1)"
+      },
+      "image_url": {
+        "type": "string",
+        "examples": [
+          "https://storage.googleapis.com/falserverless/example_inputs/lynx/example_in.png"
+        ],
+        "description": "The URL of the subject image to be used for video generation"
+      },
+      "frames_per_second": {
+        "maximum": 30,
+        "type": "integer",
+        "default": 16,
+        "minimum": 5,
+        "description": "Frames per second of the generated video. Must be between 5 to 30."
+      },
+      "guidance_scale_2": {
+        "maximum": 10,
+        "type": "number",
+        "default": 2,
+        "minimum": 0,
+        "description": "Image guidance scale. Controls how closely the generated video follows the reference image. Higher values increase adherence to the reference image but may decrease quality."
+      },
+      "resolution": {
+        "type": "string",
+        "default": "720p",
+        "enum": [
+          "480p",
+          "580p",
+          "720p"
+        ],
+        "description": "Resolution of the generated video (480p, 580p, or 720p)"
+      },
+      "prompt": {
+        "type": "string",
+        "examples": [
+          "A person carves a pumpkin on a porch in the evening. The camera captures their upper body as they draw a face with a marker, carefully cut along the lines, then lift the lid with both hands. Their face lights up with excitement as they peek inside"
+        ],
+        "description": "Text prompt to guide video generation"
+      },
+      "guidance_scale": {
+        "maximum": 20,
+        "type": "number",
+        "default": 5,
+        "minimum": 1,
+        "description": "Classifier-free guidance scale. Higher values give better adherence to the prompt but may decrease quality."
+      },
+      "negative_prompt": {
+        "type": "string",
+        "default": "Bright tones, overexposed, blurred background, static, subtitles, style, works, paintings, images, overall gray, worst quality, low quality, JPEG compression residue, ugly, incomplete, extra fingers, poorly drawn hands, poorly drawn faces, deformed, disfigured, misshapen limbs, fused fingers, still picture, messy background, three legs, many people in the background, walking backwards",
+        "description": "Negative prompt to guide what should not appear in the generated video"
+      },
+      "seed": {
+        "anyOf": [
+          {
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "Random seed for reproducibility. If None, a random seed is chosen."
+      },
+      "num_frames": {
+        "maximum": 81,
+        "type": "integer",
+        "default": 81,
+        "minimum": 9,
+        "description": "Number of frames in the generated video. Must be between 9 to 100."
+      },
+      "strength": {
+        "maximum": 2,
+        "type": "number",
+        "default": 1,
+        "minimum": 0,
+        "description": "Reference image scale. Controls the influence of the reference image on the generated video."
+      }
+    },
+    "required": [
+      "image_url",
+      "prompt"
+    ],
+    "type": "object"
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "LynxInput",
+    "LynxOutput",
+    "VideoFile"
+  ]
+}

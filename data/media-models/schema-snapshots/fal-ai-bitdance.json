@@ -1,0 +1,174 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/bitdance",
+  "task": "unknown",
+  "source_url": "https://fal.ai/models/fal-ai/bitdance",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fbitdance",
+  "retrieved_at": "2026-10-04T19:42:42.275Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "text-to-image",
+  "bytes_sha256": "038c88841ae52852f8065bd1e0a859f4ebaf436b0ec9d93c644a4f3c6127a3c5",
+  "queue_path": "/fal-ai/bitdance",
+  "input_name": "BitdanceInput",
+  "input": {
+    "$refName": "BitdanceInput",
+    "properties": {
+      "num_inference_steps": {
+        "maximum": 100,
+        "type": "integer",
+        "default": 25,
+        "minimum": 10,
+        "description": "Number of diffusion sampling steps per decoding step. Higher values (e.g. 50) improve quality at the cost of speed."
+      },
+      "prompt": {
+        "type": "string",
+        "description": "Text prompt for image generation.",
+        "examples": [
+          "A close-up portrait of a cat wearing a tiny top hat, cinematic photography style"
+        ]
+      },
+      "num_images": {
+        "maximum": 4,
+        "type": "integer",
+        "default": 1,
+        "minimum": 1,
+        "description": "Number of images to generate."
+      },
+      "guidance_scale": {
+        "maximum": 15,
+        "type": "number",
+        "default": 7.5,
+        "minimum": 1,
+        "description": "Classifier-free guidance scale. Higher values follow the prompt more closely."
+      },
+      "enable_safety_checker": {
+        "type": "boolean",
+        "default": true,
+        "description": "If set to true, the safety checker will be enabled. Disabling it requires account authorization; unauthorized requests are always checked, and images flagged as unsafe are returned as black images."
+      },
+      "seed": {
+        "anyOf": [
+          {
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "Random seed for reproducibility. The same seed and prompt will produce the same image."
+      },
+      "output_format": {
+        "type": "string",
+        "default": "jpeg",
+        "enum": [
+          "jpeg",
+          "png"
+        ],
+        "description": "The format of the generated image."
+      },
+      "image_size": {
+        "anyOf": [
+          {
+            "$refName": "ImageSize",
+            "properties": {
+              "height": {
+                "maximum": 14142,
+                "type": "integer",
+                "default": 512,
+                "exclusiveMinimum": 0,
+                "description": "The height of the generated image."
+              },
+              "width": {
+                "maximum": 14142,
+                "type": "integer",
+                "default": 512,
+                "exclusiveMinimum": 0,
+                "description": "The width of the generated image."
+              }
+            },
+            "type": "object"
+          },
+          {
+            "type": "string",
+            "enum": [
+              "square_hd",
+              "square",
+              "portrait_4_3",
+              "portrait_16_9",
+              "landscape_4_3",
+              "landscape_16_9"
+            ]
+          }
+        ],
+        "default": "square_hd",
+        "description": "The size of the generated image. Will be snapped to the nearest supported resolution."
+      },
+      "sync_mode": {
+        "type": "boolean",
+        "default": false,
+        "description": "If true, the media will be returned as a data URI."
+      }
+    },
+    "type": "object",
+    "required": [
+      "prompt"
+    ]
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "BitdanceInput",
+    "BitdanceOutput",
+    "ImageSize",
+    "Image"
+  ]
+}

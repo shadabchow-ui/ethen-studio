@@ -1,0 +1,168 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/chrono-edit-lora-gallery/upscaler",
+  "task": "unknown",
+  "source_url": "https://fal.ai/models/fal-ai/chrono-edit-lora-gallery/upscaler",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fchrono-edit-lora-gallery%2Fupscaler",
+  "retrieved_at": "2026-10-04T19:43:03.425Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "image-to-image",
+  "bytes_sha256": "ad1cf1f1f004d31e0a05dc818fd63ad030cc3db1dee5c3d085d09d0f4e6bb467",
+  "queue_path": "/fal-ai/chrono-edit-lora-gallery/upscaler",
+  "input_name": "ChronoEditLoraGalleryUpscalerInput",
+  "input": {
+    "$refName": "ChronoEditLoraGalleryUpscalerInput",
+    "description": "Input for upscaler mode",
+    "properties": {
+      "num_inference_steps": {
+        "minimum": 2,
+        "description": "Number of inference steps for the upscaling pass.",
+        "default": 30,
+        "maximum": 50,
+        "type": "integer"
+      },
+      "sync_mode": {
+        "description": "Whether to return the image in sync mode.",
+        "default": false,
+        "type": "boolean"
+      },
+      "image_url": {
+        "description": "The image to upscale.",
+        "type": "string"
+      },
+      "upscale_factor": {
+        "minimum": 1,
+        "description": "Target scale factor for the output resolution.",
+        "default": 2,
+        "maximum": 4,
+        "type": "number"
+      },
+      "lora_scale": {
+        "minimum": 0,
+        "description": "The scale factor for the LoRA adapter.",
+        "default": 1,
+        "maximum": 2,
+        "type": "number"
+      },
+      "seed": {
+        "description": "The seed for the inference.",
+        "anyOf": [
+          {
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "enable_safety_checker": {
+        "description": "Whether to enable the safety checker. Disabling it requires account authorization; unauthorized requests are always checked.",
+        "default": true,
+        "type": "boolean"
+      },
+      "output_format": {
+        "enum": [
+          "jpeg",
+          "png",
+          "webp"
+        ],
+        "description": "The format of the output image.",
+        "default": "jpeg",
+        "type": "string"
+      },
+      "loras": {
+        "description": "Optional additional LoRAs to merge (max 3).",
+        "default": [],
+        "items": {
+          "$refName": "ChronoLoraWeight",
+          "properties": {
+            "path": {
+              "description": "URL or path to the LoRA weights (Safetensors).",
+              "type": "string"
+            },
+            "scale": {
+              "minimum": 0,
+              "description": "Scale factor controlling LoRA strength.",
+              "default": 1,
+              "maximum": 4,
+              "type": "number"
+            }
+          },
+          "required": [
+            "path"
+          ],
+          "type": "object"
+        },
+        "type": "array"
+      },
+      "guidance_scale": {
+        "minimum": 0,
+        "description": "The guidance scale for the inference.",
+        "default": 1,
+        "maximum": 10,
+        "type": "number"
+      }
+    },
+    "required": [
+      "image_url"
+    ],
+    "type": "object"
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "ChronoEditLoraGalleryUpscalerInput",
+    "ChronoEditLoraGalleryUpscalerOutput",
+    "ChronoLoraWeight",
+    "ImageFile"
+  ]
+}

@@ -1,0 +1,153 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/maya/stream",
+  "task": "unknown",
+  "source_url": "https://fal.ai/models/fal-ai/maya/stream",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fmaya%2Fstream",
+  "retrieved_at": "2026-10-04T19:49:07.095Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "text-to-speech",
+  "bytes_sha256": "a9476eadfa9e2516c19ab0d7fd2723b0dbe0d1627481e2632c95bdcd61f23e8b",
+  "queue_path": "/fal-ai/maya/stream",
+  "input_name": "MayaStreamInput",
+  "input": {
+    "$refName": "MayaStreamInput",
+    "description": "Input schema for Maya-1-Voice streaming TTS generation",
+    "required": [
+      "text",
+      "prompt"
+    ],
+    "type": "object",
+    "properties": {
+      "max_tokens": {
+        "description": "Maximum number of SNAC tokens to generate (7 tokens per frame). Controls maximum audio length.",
+        "maximum": 4000,
+        "type": "integer",
+        "default": 2000,
+        "minimum": 28
+      },
+      "sample_rate": {
+        "description": "Output audio sample rate. 48 kHz uses upsampling for higher quality audio, 24 kHz is native SNAC output (faster, lower latency).",
+        "enum": [
+          "48 kHz",
+          "24 kHz"
+        ],
+        "type": "string",
+        "default": "24 kHz",
+        "examples": [
+          "48 kHz",
+          "24 kHz"
+        ]
+      },
+      "repetition_penalty": {
+        "description": "Penalty for repeating tokens. Higher values reduce repetition artifacts.",
+        "maximum": 2,
+        "type": "number",
+        "default": 1.1,
+        "minimum": 1
+      },
+      "output_format": {
+        "description": "Output audio format. 'mp3' for browser-playable audio, 'wav' for uncompressed audio, 'pcm' for raw PCM (lowest latency, requires client-side decoding).",
+        "enum": [
+          "mp3",
+          "wav",
+          "pcm"
+        ],
+        "type": "string",
+        "default": "mp3",
+        "examples": [
+          "mp3",
+          "wav",
+          "pcm"
+        ]
+      },
+      "prompt": {
+        "description": "Description of the voice/character. Includes attributes like age, accent, pitch, timbre, pacing, tone, and intensity. See examples for format.",
+        "type": "string",
+        "maxLength": 500,
+        "examples": [
+          "Realistic male voice in the 30s age with american accent. Normal pitch, warm timbre, conversational pacing, neutral tone delivery at med intensity.",
+          "Creative, dark_villain character. Male voice in their 40s with british accent. Low pitch, gravelly timbre, slow pacing, angry tone at high intensity."
+        ]
+      },
+      "text": {
+        "description": "The text to synthesize into speech. You can embed emotion tags anywhere in the text using the format <emotion_name>. Available emotions: laugh, laugh_harder, sigh, chuckle, gasp, angry, excited, whisper, cry, scream, sing, snort, exhale, gulp, giggle, sarcastic, curious. Example: 'Hello world! <excited> This is amazing!' or 'I can't believe this <sigh> happened again.'",
+        "type": "string",
+        "maxLength": 5000,
+        "examples": [
+          "Hello world! This is a test of the Maya-1-Voice text-to-speech system.",
+          "The darkness isn't coming... <angry> it's already here!"
+        ]
+      },
+      "top_p": {
+        "description": "Nucleus sampling parameter. Controls diversity of token selection.",
+        "maximum": 1,
+        "type": "number",
+        "default": 0.9,
+        "minimum": 0
+      },
+      "temperature": {
+        "description": "Sampling temperature. Lower values (0.2-0.5) produce more stable/consistent audio. Higher values add variation.",
+        "maximum": 2,
+        "type": "number",
+        "default": 0.4,
+        "minimum": 0
+      }
+    }
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "MayaStreamInput",
+    "MayaStreamOutput"
+  ]
+}

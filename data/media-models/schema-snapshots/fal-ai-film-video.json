@@ -1,0 +1,146 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/film/video",
+  "task": "video-editing",
+  "source_url": "https://fal.ai/models/fal-ai/film/video",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Ffilm%2Fvideo",
+  "retrieved_at": "2026-10-04T19:43:46.445Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "video-to-video",
+  "bytes_sha256": "18d50a8aad740fb2ae38dd8f9fcec756fb4082242aac642160feeb0004c3c76a",
+  "queue_path": "/fal-ai/film/video",
+  "input_name": "FilmVideoInput",
+  "input": {
+    "$refName": "FilmVideoInput",
+    "required": [
+      "video_url"
+    ],
+    "type": "object",
+    "properties": {
+      "loop": {
+        "description": "If True, the final frame will be looped back to the first frame to create a seamless loop. If False, the final frame will not loop back.",
+        "type": "boolean",
+        "default": false
+      },
+      "fps": {
+        "description": "Frames per second for the output video. Only applicable if use_calculated_fps is False.",
+        "maximum": 60,
+        "type": "integer",
+        "minimum": 1,
+        "default": 8
+      },
+      "video_url": {
+        "description": "The URL of the video to use for interpolation.",
+        "type": "string",
+        "examples": [
+          "https://storage.googleapis.com/falserverless/example_inputs/interpolation-video-input.mp4"
+        ]
+      },
+      "use_scene_detection": {
+        "description": "If True, the input video will be split into scenes before interpolation. This removes smear frames between scenes, but can result in false positives if the scene detection is not accurate. If False, the entire video will be treated as a single scene.",
+        "type": "boolean",
+        "default": false
+      },
+      "video_write_mode": {
+        "description": "The write mode of the output video. Only applicable if output_type is 'video'.",
+        "enum": [
+          "fast",
+          "balanced",
+          "small"
+        ],
+        "type": "string",
+        "default": "balanced",
+        "examples": [
+          "balanced"
+        ]
+      },
+      "sync_mode": {
+        "description": "If `True`, the media will be returned as a data URI and the output data won't be available in the request history.",
+        "type": "boolean",
+        "default": false
+      },
+      "use_calculated_fps": {
+        "description": "If True, the function will use the calculated FPS of the input video multiplied by the number of frames to determine the output FPS. If False, the passed FPS will be used.",
+        "type": "boolean",
+        "default": true
+      },
+      "video_quality": {
+        "description": "The quality of the output video. Only applicable if output_type is 'video'.",
+        "enum": [
+          "low",
+          "medium",
+          "high",
+          "maximum"
+        ],
+        "type": "string",
+        "default": "high",
+        "examples": [
+          "high"
+        ]
+      },
+      "num_frames": {
+        "description": "The number of frames to generate between the input video frames.",
+        "maximum": 4,
+        "type": "integer",
+        "minimum": 1,
+        "default": 1
+      }
+    }
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "FilmVideoInput",
+    "FilmVideoOutput",
+    "VideoFile"
+  ]
+}

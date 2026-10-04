@@ -1,0 +1,93 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/got-ocr/v2",
+  "task": "unknown",
+  "source_url": "https://fal.ai/models/fal-ai/got-ocr/v2",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fgot-ocr%2Fv2",
+  "retrieved_at": "2026-10-04T19:45:20.242Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "vision",
+  "bytes_sha256": "1596ac1019a970ab8436b316127573146de7702562c6756975a841c889aac8af",
+  "queue_path": "/fal-ai/got-ocr/v2",
+  "input_name": "GotOcrV2Input",
+  "input": {
+    "$refName": "GotOcrV2Input",
+    "properties": {
+      "multi_page": {
+        "description": "Use provided images to generate a single output.",
+        "default": false,
+        "type": "boolean"
+      },
+      "input_image_urls": {
+        "description": "URL of images.",
+        "default": [],
+        "items": {
+          "type": "string"
+        },
+        "type": "array",
+        "examples": []
+      },
+      "do_format": {
+        "description": "Generate the output in formatted mode.",
+        "default": false,
+        "type": "boolean"
+      }
+    },
+    "type": "object"
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "GotOcrV2Input",
+    "GotOcrV2Output"
+  ]
+}

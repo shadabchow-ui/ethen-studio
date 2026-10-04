@@ -1,0 +1,142 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/gpt-image-1.5",
+  "task": "image-generation",
+  "source_url": "https://fal.ai/models/fal-ai/gpt-image-1.5",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fgpt-image-1.5",
+  "retrieved_at": "2026-10-04T19:45:21.979Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "text-to-image",
+  "bytes_sha256": "d1429e1180f42992fad8fc02107c909e99019409dde9dae62642498de2762803",
+  "queue_path": "/fal-ai/gpt-image-1.5",
+  "input_name": "GptImage15Input",
+  "input": {
+    "$refName": "GptImage15Input",
+    "properties": {
+      "prompt": {
+        "maxLength": 32000,
+        "examples": [
+          "create a realistic image taken with iphone at these coordinates 41°43′32″N 49°56′49″W 15 April 1912"
+        ],
+        "description": "The prompt for image generation",
+        "minLength": 2,
+        "type": "string"
+      },
+      "background": {
+        "default": "auto",
+        "enum": [
+          "auto",
+          "transparent",
+          "opaque"
+        ],
+        "description": "Background for the generated image",
+        "type": "string"
+      },
+      "image_size": {
+        "default": "1024x1024",
+        "enum": [
+          "1024x1024",
+          "1536x1024",
+          "1024x1536"
+        ],
+        "description": "Aspect ratio for the generated image",
+        "type": "string"
+      },
+      "num_images": {
+        "default": 1,
+        "maximum": 4,
+        "examples": [
+          1
+        ],
+        "description": "Number of images to generate",
+        "minimum": 1,
+        "type": "integer"
+      },
+      "quality": {
+        "default": "high",
+        "enum": [
+          "low",
+          "medium",
+          "high"
+        ],
+        "description": "Quality for the generated image",
+        "type": "string"
+      },
+      "sync_mode": {
+        "default": false,
+        "description": "If `True`, the media will be returned as a data URI and the output data won't be available in the request history.",
+        "type": "boolean"
+      },
+      "output_format": {
+        "default": "png",
+        "enum": [
+          "jpeg",
+          "png",
+          "webp"
+        ],
+        "description": "Output format for the images",
+        "type": "string"
+      }
+    },
+    "required": [
+      "prompt"
+    ],
+    "type": "object"
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "GptImage15Input",
+    "GptImage15Output",
+    "ImageFile"
+  ]
+}

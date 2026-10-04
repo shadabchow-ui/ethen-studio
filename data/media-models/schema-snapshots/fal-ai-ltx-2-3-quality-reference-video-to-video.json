@@ -1,0 +1,286 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/ltx-2.3-quality/reference-video-to-video",
+  "task": "video-to-video",
+  "source_url": "https://fal.ai/models/fal-ai/ltx-2.3-quality/reference-video-to-video",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fltx-2.3-quality%2Freference-video-to-video",
+  "retrieved_at": "2026-10-04T19:48:21.562Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "video-to-video",
+  "bytes_sha256": "2efc036ed39a6b4ea03f66c0f30c455feff1110ee671d0498468fa426f48716b",
+  "queue_path": "/fal-ai/ltx-2.3-quality/reference-video-to-video",
+  "input_name": "Ltx23QualityReferenceVideoToVideoInput",
+  "input": {
+    "$refName": "Ltx23QualityReferenceVideoToVideoInput",
+    "type": "object",
+    "properties": {
+      "seed": {
+        "description": "Random seed for reproducibility. If None, a random seed is chosen.",
+        "anyOf": [
+          {
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "image_url": {
+        "description": "Optional reference image for style/character anchoring. This is the FIRST-frame keyframe.",
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "video_quality": {
+        "enum": [
+          "low",
+          "medium",
+          "high",
+          "maximum"
+        ],
+        "type": "string",
+        "description": "The quality preset of the generated video.",
+        "default": "high"
+      },
+      "num_inference_steps": {
+        "minimum": 8,
+        "type": "integer",
+        "description": "Number of inference steps. Defaults to 15 and can be increased up to 30.",
+        "maximum": 30,
+        "default": 15
+      },
+      "guidance_scale": {
+        "minimum": 1,
+        "type": "number",
+        "description": "Classifier-free guidance scale. The default is tuned for fast, high-quality generation.",
+        "maximum": 20,
+        "default": 1
+      },
+      "enable_safety_checker": {
+        "type": "boolean",
+        "description": "Whether to enable the safety checker.",
+        "default": true
+      },
+      "video_strength": {
+        "minimum": 0,
+        "type": "number",
+        "description": "Video conditioning strength. Lower values give the model more freedom to change the reference video motion/structure.",
+        "maximum": 1,
+        "default": 0.6
+      },
+      "preserve_original_video": {
+        "type": "boolean",
+        "description": "True video-to-video: the base video_url is used as the generation's starting point, while control_video_url still drives the structure. The amount of the original preserved is controlled by `strength` (denoise): lower `strength` keeps more of the original video's pixels. Requires skip_control_preprocess, video_url and control_video_url. Default off leaves the standard control path unchanged.",
+        "default": false
+      },
+      "enable_prompt_expansion": {
+        "type": "boolean",
+        "description": "Whether to enable prompt expansion.",
+        "default": true
+      },
+      "mid_image_url": {
+        "description": "Optional middle-frame keyframe image. When set, the look/appearance is anchored to this image around the middle of the clip (in addition to image_url at the start), so the appearance follows a moving camera instead of drifting. Requires image_url.",
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "end_image_url": {
+        "description": "Optional last-frame keyframe image. When set, the look/appearance is anchored to this image at the end of the clip. Useful for shots where the camera travels to a different place than the start image. Requires image_url.",
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "control_video_url": {
+        "description": "Optional pre-computed control video (e.g. an already-rendered depth / edge / pose composite). When provided together with skip_control_preprocess, the built-in control estimation is skipped and this video is used directly as the control signal, resampled to the output resolution and frame count.",
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "video_write_mode": {
+        "enum": [
+          "fast",
+          "balanced",
+          "small"
+        ],
+        "type": "string",
+        "description": "The write mode of the generated video.",
+        "default": "balanced"
+      },
+      "frames_per_second": {
+        "minimum": 1,
+        "type": "number",
+        "description": "Frames per second of the generated video.",
+        "maximum": 60,
+        "default": 24
+      },
+      "strength": {
+        "minimum": 0,
+        "type": "number",
+        "description": "Sampler denoise strength for reference-video-to-video. With preserve_original_video on, this is the video-to-video amount: lower values keep more of the original video's pixels (e.g. 0.5 = keep ~50%), 1.0 fully regenerates. Without preserve_original_video it only trims the denoise schedule.",
+        "maximum": 1,
+        "default": 1
+      },
+      "sync_mode": {
+        "type": "boolean",
+        "description": "If True, the media is returned as a data URI inline in the response. Useful for short-lived requests and tests.",
+        "default": false
+      },
+      "generate_audio": {
+        "type": "boolean",
+        "description": "Whether to include audio in the returned video. When disabled, the final MP4 is returned without an audio track.",
+        "default": true
+      },
+      "video_url": {
+        "type": "string",
+        "examples": [
+          "https://v3b.fal.media/files/b/0a8824b1/sdm0KfmenrlywesfzY1Y1_if6euPp1.mp4"
+        ],
+        "description": "The URL of the reference video that supplies motion/structure."
+      },
+      "num_frames": {
+        "minimum": 9,
+        "type": "integer",
+        "description": "The number of output frames to generate. This IC-LoRA endpoint caps the resolution x frames volume for stability (~150 frames at 720p-class; more at smaller sizes). A request above the budget returns a 422 — reduce num_frames or use a smaller resolution.",
+        "maximum": 481,
+        "default": 121
+      },
+      "skip_control_preprocess": {
+        "type": "boolean",
+        "description": "Skip the built-in control estimation (depth / edge / pose) and use control_video_url directly as the control signal. Requires control_video_url; ignored if it is not set. With resolution='auto', the output follows the source video size/aspect up to the LTX limits. Explicit resolutions are honored and 64-aligned so the RGB video and control video stay matched.",
+        "default": false
+      },
+      "negative_prompt": {
+        "type": "string",
+        "description": "The negative prompt to steer generation away from.",
+        "default": "color distortion, overexposure, static, blurry details, subtitles, style, artwork, painting, frame, still, dim overall tone, worst quality, low quality, JPEG compression artifacts, ugly, mutilated, extra fingers, poorly drawn hands, poorly drawn face, deformed, disfigured, malformed limbs, fused fingers, motionless frame, cluttered background, three legs, crowded background, walking backwards"
+      },
+      "resolution": {
+        "default": "auto",
+        "description": "The size of the generated video. In direct-control mode (skip_control_preprocess with control_video_url), 'auto' follows the source video size/aspect up to the LTX limits and explicit sizes are honored with 64px alignment. In the built-in control estimation mode, the output stays near the official control workflow size. Higher resolutions reduce the maximum stable frame count; lower resolutions can run longer.",
+        "anyOf": [
+          {
+            "$refName": "ImageSize",
+            "type": "object",
+            "properties": {
+              "width": {
+                "exclusiveMinimum": 0,
+                "type": "integer",
+                "description": "The width of the generated image.",
+                "maximum": 14142,
+                "default": 512
+              },
+              "height": {
+                "exclusiveMinimum": 0,
+                "type": "integer",
+                "description": "The height of the generated image.",
+                "maximum": 14142,
+                "default": 512
+              }
+            }
+          },
+          {
+            "enum": [
+              "auto",
+              "square_hd",
+              "square",
+              "portrait_4_3",
+              "portrait_16_9",
+              "landscape_4_3",
+              "landscape_16_9"
+            ],
+            "type": "string"
+          }
+        ]
+      },
+      "prompt": {
+        "type": "string",
+        "examples": [
+          "A dancer in a flowing red dress against a black backdrop, studio lighting, cinematic."
+        ],
+        "description": "The prompt to guide generation."
+      }
+    },
+    "description": "Reference-video-to-video: a control video drives motion/structure.",
+    "required": [
+      "prompt",
+      "video_url"
+    ]
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "Ltx23QualityReferenceVideoToVideoInput",
+    "Ltx23QualityReferenceVideoToVideoOutput",
+    "ImageSize",
+    "File"
+  ]
+}

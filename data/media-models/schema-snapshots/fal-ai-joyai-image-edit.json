@@ -1,0 +1,142 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/joyai-image-edit",
+  "task": "image-generation",
+  "source_url": "https://fal.ai/models/fal-ai/joyai-image-edit",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fjoyai-image-edit",
+  "retrieved_at": "2026-10-04T19:46:42.650Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "image-to-image",
+  "bytes_sha256": "892339d29ee6b9cf477d1b12d6d7847214cabe320d0982c1aa0abc37879e9a98",
+  "queue_path": "/fal-ai/joyai-image-edit",
+  "input_name": "JoyaiImageEditInput",
+  "input": {
+    "$refName": "JoyaiImageEditInput",
+    "properties": {
+      "guidance_scale": {
+        "default": 5,
+        "maximum": 15,
+        "description": "Controls how closely the output follows the edit instruction.",
+        "minimum": 1,
+        "type": "number"
+      },
+      "num_inference_steps": {
+        "default": 30,
+        "maximum": 50,
+        "description": "Number of denoising steps.",
+        "minimum": 1,
+        "type": "integer"
+      },
+      "negative_prompt": {
+        "default": "",
+        "description": "Text describing what should not appear in the output image.",
+        "type": "string"
+      },
+      "image_url": {
+        "description": "URL of the input image to edit.",
+        "examples": [
+          "https://storage.googleapis.com/falserverless/example_inputs/dog.png"
+        ],
+        "type": "string"
+      },
+      "output_format": {
+        "default": "jpeg",
+        "description": "Output image format.",
+        "enum": [
+          "jpeg",
+          "png"
+        ],
+        "type": "string"
+      },
+      "enable_safety_checker": {
+        "default": true,
+        "description": "Enable safety checking on input and output.",
+        "type": "boolean"
+      },
+      "prompt": {
+        "description": "The edit instruction describing what changes to make to the image.",
+        "examples": [
+          "Add a red hat to the dog"
+        ],
+        "type": "string"
+      },
+      "sync_mode": {
+        "default": false,
+        "description": "If True, return image as data URI.",
+        "type": "boolean"
+      },
+      "seed": {
+        "anyOf": [
+          {
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "Random seed for reproducibility."
+      }
+    },
+    "required": [
+      "prompt",
+      "image_url"
+    ],
+    "type": "object"
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "JoyaiImageEditInput",
+    "JoyaiImageEditOutput",
+    "Image"
+  ]
+}

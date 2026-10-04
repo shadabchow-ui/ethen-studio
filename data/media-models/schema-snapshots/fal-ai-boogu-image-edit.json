@@ -1,0 +1,211 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/boogu-image/edit",
+  "task": "image-editing",
+  "source_url": "https://fal.ai/models/fal-ai/boogu-image/edit",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fboogu-image%2Fedit",
+  "retrieved_at": "2026-10-04T19:42:43.892Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "image-to-image",
+  "bytes_sha256": "cb08725147ac2eeba2eba2c8131cb548db0173d276a620ff46ba08d06cfe65ad",
+  "queue_path": "/fal-ai/boogu-image/edit",
+  "input_name": "BooguImageEditInput",
+  "input": {
+    "$refName": "BooguImageEditInput",
+    "required": [
+      "prompt",
+      "image_url"
+    ],
+    "type": "object",
+    "properties": {
+      "cfg_range_end": {
+        "description": "End of the timestep fraction over which CFG is applied.",
+        "maximum": 1,
+        "type": "number",
+        "default": 1,
+        "minimum": 0
+      },
+      "image_size": {
+        "description": "The output size. If omitted, the edited image follows the input image aspect ratio while respecting the model's 2K native limit.",
+        "anyOf": [
+          {
+            "$refName": "ImageSize",
+            "type": "object",
+            "properties": {
+              "height": {
+                "description": "The height of the generated image.",
+                "maximum": 14142,
+                "type": "integer",
+                "default": 512,
+                "exclusiveMinimum": 0
+              },
+              "width": {
+                "description": "The width of the generated image.",
+                "maximum": 14142,
+                "type": "integer",
+                "default": 512,
+                "exclusiveMinimum": 0
+              }
+            }
+          },
+          {
+            "enum": [
+              "square_hd",
+              "square",
+              "portrait_4_3",
+              "portrait_16_9",
+              "landscape_4_3",
+              "landscape_16_9"
+            ],
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "output_format": {
+        "description": "The format of the generated image.",
+        "enum": [
+          "jpeg",
+          "png"
+        ],
+        "type": "string",
+        "default": "jpeg"
+      },
+      "num_images": {
+        "description": "The number of edited images to generate.",
+        "maximum": 4,
+        "type": "integer",
+        "default": 1,
+        "minimum": 1
+      },
+      "seed": {
+        "description": "The same seed, prompt, and input image given to the same version of the model will output the same image every time.",
+        "anyOf": [
+          {
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "cfg_range_start": {
+        "description": "Start of the timestep fraction over which CFG is applied.",
+        "maximum": 1,
+        "type": "number",
+        "default": 0,
+        "minimum": 0
+      },
+      "sync_mode": {
+        "description": "If true, the media is returned as a data URI and the output is not available in the request history.",
+        "type": "boolean",
+        "default": false
+      },
+      "num_inference_steps": {
+        "description": "The number of denoising steps to perform.",
+        "maximum": 50,
+        "type": "integer",
+        "default": 30,
+        "minimum": 20
+      },
+      "image_guidance_scale": {
+        "description": "Reference-image guidance strength. A value of 1.0 disables image CFG; higher values preserve the input image more strongly.",
+        "maximum": 8,
+        "type": "number",
+        "default": 1,
+        "minimum": 1
+      },
+      "image_url": {
+        "description": "URL of the input image to edit.",
+        "type": "string",
+        "examples": [
+          "https://storage.googleapis.com/falserverless/example_inputs/flux2_dev_edit_input.png"
+        ]
+      },
+      "enable_safety_checker": {
+        "description": "If true, the safety checker is run on the input and output images. Disabling it requires account authorization; unauthorized requests are always checked, and images flagged as unsafe are returned as black images.",
+        "type": "boolean",
+        "default": true
+      },
+      "negative_prompt": {
+        "description": "Describes what should NOT appear in the edited image. Used for classifier-free guidance; leave empty to disable text negative guidance.",
+        "type": "string",
+        "default": ""
+      },
+      "guidance_scale": {
+        "description": "Controls how closely the edit follows the text instruction. Higher values stick more closely to the prompt.",
+        "maximum": 8,
+        "type": "number",
+        "default": 4,
+        "minimum": 1
+      },
+      "prompt": {
+        "description": "The edit instruction describing how to transform the input image. Boogu-Image supports English and Chinese instructions.",
+        "type": "string",
+        "examples": [
+          "Change the background to a sunny garden while preserving the person.",
+          "帮我在这幅画右下角加上三个带叶子的柿子。"
+        ]
+      }
+    }
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "BooguImageEditInput",
+    "BooguImageEditOutput",
+    "ImageSize",
+    "Image"
+  ]
+}

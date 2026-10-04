@@ -1,0 +1,150 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/pixverse/v6/extend",
+  "task": "unknown",
+  "source_url": "https://fal.ai/models/fal-ai/pixverse/v6/extend",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fpixverse%2Fv6%2Fextend",
+  "retrieved_at": "2026-10-04T19:50:23.034Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "video-to-video",
+  "bytes_sha256": "c1b908b99e3631e12937749dc169f2338d8f7701788a416adac3526c51b5f2eb",
+  "queue_path": "/fal-ai/pixverse/v6/extend",
+  "input_name": "PixverseV6ExtendInput",
+  "input": {
+    "$refName": "PixverseV6ExtendInput",
+    "properties": {
+      "generate_audio_switch": {
+        "default": false,
+        "description": "Enable audio generation (BGM, SFX, dialogue).",
+        "type": "boolean"
+      },
+      "resolution": {
+        "enum": [
+          "360p",
+          "540p",
+          "720p",
+          "1080p"
+        ],
+        "default": "720p",
+        "description": "The resolution of the generated video",
+        "type": "string"
+      },
+      "prompt": {
+        "examples": [
+          "A kid is talking into camera"
+        ],
+        "type": "string",
+        "description": "Prompt describing how to extend the video. Limited to 2048 UTF-8 encoded bytes. Because the limit counts bytes rather than characters, emoji and non-Latin or accented characters (which use multiple bytes each) can push a visually short prompt over the cap."
+      },
+      "seed": {
+        "description": "Random seed for generation",
+        "anyOf": [
+          {
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "style": {
+        "description": "The style of the extended video",
+        "anyOf": [
+          {
+            "enum": [
+              "anime",
+              "3d_animation",
+              "clay",
+              "comic",
+              "cyberpunk"
+            ],
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "duration": {
+        "type": "integer",
+        "maximum": 15,
+        "default": 5,
+        "description": "The duration of the generated video in seconds. v6 supports values from 1 to 15 seconds",
+        "minimum": 1
+      },
+      "negative_prompt": {
+        "default": "",
+        "description": "Negative prompt to be used for the generation. Limited to 2048 UTF-8 encoded bytes. Because the limit counts bytes rather than characters, emoji and non-Latin or accented characters (which use multiple bytes each) can push a visually short prompt over the cap.",
+        "type": "string"
+      },
+      "video_url": {
+        "examples": [
+          "https://v3.fal.media/files/rabbit/88-jI3VWXU4Q8kSNrWo3c_output.mp4"
+        ],
+        "type": "string",
+        "description": "URL of the input video to extend"
+      }
+    },
+    "required": [
+      "video_url",
+      "prompt"
+    ],
+    "type": "object"
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "PixverseV6ExtendInput",
+    "PixverseV6ExtendOutput",
+    "File"
+  ]
+}

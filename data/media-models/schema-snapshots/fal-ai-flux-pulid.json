@@ -1,0 +1,205 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/flux-pulid",
+  "task": "unknown",
+  "source_url": "https://fal.ai/models/fal-ai/flux-pulid",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fflux-pulid",
+  "retrieved_at": "2026-10-04T19:45:00.803Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "image-to-image",
+  "bytes_sha256": "4fe3fd05c76ebbf54ae6a42bbd7f9e5064c70c0ee7d63b2191379db0a82cfeb3",
+  "queue_path": "/fal-ai/flux-pulid",
+  "input_name": "FluxPulidInput",
+  "input": {
+    "$refName": "FluxPulidInput",
+    "properties": {
+      "sync_mode": {
+        "description": "If `True`, the media will be returned as a data URI and the output data won't be available in the request history.",
+        "type": "boolean",
+        "default": false
+      },
+      "negative_prompt": {
+        "description": "The prompt to generate an image from.",
+        "type": "string",
+        "examples": [
+          "bad quality, worst quality, text, signature, watermark, extra limbs"
+        ],
+        "default": ""
+      },
+      "enable_safety_checker": {
+        "description": "If set to true, the safety checker will be enabled. Disabling it requires account authorization; unauthorized requests are always checked, and images flagged as unsafe are returned as black images.",
+        "type": "boolean",
+        "default": true
+      },
+      "image_size": {
+        "description": "The size of the generated image.",
+        "default": "landscape_4_3",
+        "anyOf": [
+          {
+            "$refName": "ImageSize",
+            "type": "object",
+            "properties": {
+              "height": {
+                "description": "The height of the generated image.",
+                "maximum": 14142,
+                "type": "integer",
+                "exclusiveMinimum": 0,
+                "default": 512
+              },
+              "width": {
+                "description": "The width of the generated image.",
+                "maximum": 14142,
+                "type": "integer",
+                "exclusiveMinimum": 0,
+                "default": 512
+              }
+            }
+          },
+          {
+            "type": "string",
+            "enum": [
+              "square_hd",
+              "square",
+              "portrait_4_3",
+              "portrait_16_9",
+              "landscape_4_3",
+              "landscape_16_9"
+            ]
+          }
+        ]
+      },
+      "reference_image_url": {
+        "description": "URL of image to use for inpainting.",
+        "type": "string",
+        "examples": [
+          "https://storage.googleapis.com/falserverless/gallery/example_inputs_liuyifei.png"
+        ]
+      },
+      "id_weight": {
+        "description": "The weight of the ID loss.",
+        "maximum": 1,
+        "type": "number",
+        "minimum": 0,
+        "default": 1
+      },
+      "num_inference_steps": {
+        "description": "The number of inference steps to perform.",
+        "maximum": 50,
+        "type": "integer",
+        "minimum": 1,
+        "default": 20
+      },
+      "start_step": {
+        "description": "The number of steps to start the CFG from.",
+        "maximum": 50,
+        "type": "integer",
+        "minimum": 0,
+        "default": 0
+      },
+      "guidance_scale": {
+        "description": "\n            The CFG (Classifier Free Guidance) scale is a measure of how close you want\n            the model to stick to your prompt when looking for a related image to show you.\n        ",
+        "maximum": 20,
+        "type": "number",
+        "minimum": 0,
+        "default": 4
+      },
+      "seed": {
+        "description": "\n            The same seed and the same prompt given to the same version of the model\n            will output the same image every time.\n        ",
+        "anyOf": [
+          {
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "prompt": {
+        "description": "The prompt to generate an image from.",
+        "type": "string",
+        "examples": [
+          "a woman holding sign with glowing green text 'PuLID for FLUX'"
+        ]
+      },
+      "true_cfg": {
+        "description": "The weight of the CFG loss.",
+        "maximum": 10,
+        "type": "number",
+        "minimum": 1,
+        "default": 1
+      },
+      "max_sequence_length": {
+        "description": "The maximum sequence length for the model.",
+        "type": "string",
+        "default": "128",
+        "enum": [
+          "128",
+          "256",
+          "512"
+        ]
+      }
+    },
+    "type": "object",
+    "required": [
+      "prompt",
+      "reference_image_url"
+    ]
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "FluxPulidInput",
+    "FluxPulidOutput",
+    "ImageSize",
+    "Image"
+  ]
+}

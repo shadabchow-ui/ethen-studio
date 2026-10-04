@@ -1,0 +1,156 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "luma/agent/uni-1/v1/text-to-image",
+  "task": "text-to-image",
+  "source_url": "https://fal.ai/models/luma/agent/uni-1/v1/text-to-image",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=luma%2Fagent%2Funi-1%2Fv1%2Ftext-to-image",
+  "retrieved_at": "2026-10-04T19:54:05.819Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "text-to-image",
+  "bytes_sha256": "b846ac6c4a4687219072ef6fb5b3ebb60e08179fb6580049053270e0caf4c631",
+  "queue_path": "/luma/agent/uni-1/v1/text-to-image",
+  "input_name": "AgentUni1V1TextToImageInput",
+  "input": {
+    "$refName": "AgentUni1V1TextToImageInput",
+    "properties": {
+      "prompt": {
+        "maxLength": 6000,
+        "examples": [
+          "A manga panel of a stoic samurai overlooking a neon cyberpunk city at dusk."
+        ],
+        "description": "Text prompt describing the image to generate.",
+        "minLength": 1,
+        "type": "string"
+      },
+      "reference_image_urls": {
+        "anyOf": [
+          {
+            "maxItems": 9,
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "Optional list of reference image URLs used to guide the generation."
+      },
+      "aspect_ratio": {
+        "anyOf": [
+          {
+            "enum": [
+              "3:1",
+              "2:1",
+              "16:9",
+              "3:2",
+              "1:1",
+              "2:3",
+              "9:16",
+              "1:2",
+              "1:3"
+            ],
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "Aspect ratio of the generated image.",
+        "examples": [
+          "16:9"
+        ]
+      },
+      "enable_web_search": {
+        "type": "boolean",
+        "description": "When true, the model may consult the web for references.",
+        "default": false
+      },
+      "style": {
+        "type": "string",
+        "enum": [
+          "auto",
+          "manga"
+        ],
+        "description": "Visual style of the generated image.",
+        "default": "auto"
+      },
+      "output_format": {
+        "anyOf": [
+          {
+            "enum": [
+              "png",
+              "jpeg"
+            ],
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "Encoding format of the generated image."
+      }
+    },
+    "required": [
+      "prompt"
+    ],
+    "type": "object"
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "AgentUni1V1TextToImageInput",
+    "AgentUni1V1TextToImageOutput",
+    "File"
+  ]
+}

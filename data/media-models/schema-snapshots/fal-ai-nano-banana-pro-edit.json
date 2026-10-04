@@ -1,0 +1,198 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/nano-banana-pro/edit",
+  "task": "image-editing",
+  "source_url": "https://fal.ai/models/fal-ai/nano-banana-pro/edit",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fnano-banana-pro%2Fedit",
+  "retrieved_at": "2026-10-04T19:49:36.475Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "image-to-image",
+  "bytes_sha256": "827474b79b22d386a2bd75ff13b2c565ce03fb0a4cdaad7240da96a57d4b977f",
+  "queue_path": "/fal-ai/nano-banana-pro/edit",
+  "input_name": "NanoBananaProEditInput",
+  "input": {
+    "$refName": "NanoBananaProEditInput",
+    "type": "object",
+    "properties": {
+      "prompt": {
+        "examples": [
+          "make a photo of the man driving the car down the california coastline"
+        ],
+        "type": "string",
+        "description": "The prompt for image editing.",
+        "maxLength": 50000,
+        "minLength": 3
+      },
+      "sync_mode": {
+        "default": false,
+        "type": "boolean",
+        "description": "If `True`, the media will be returned as a data URI and the output data won't be available in the request history."
+      },
+      "system_prompt": {
+        "default": "",
+        "type": "string",
+        "description": "Optional system instruction that steers the model's persona and output style across the request. Leave blank to omit; when provided, it is sent as the system instruction to Gemini (or as a system message on OpenAI-compatible providers).",
+        "maxLength": 50000
+      },
+      "output_format": {
+        "default": "png",
+        "type": "string",
+        "description": "The format of the generated image.",
+        "enum": [
+          "jpeg",
+          "png",
+          "webp"
+        ]
+      },
+      "aspect_ratio": {
+        "default": "auto",
+        "description": "The aspect ratio of the generated image.",
+        "anyOf": [
+          {
+            "type": "string",
+            "enum": [
+              "auto",
+              "21:9",
+              "16:9",
+              "3:2",
+              "4:3",
+              "5:4",
+              "1:1",
+              "4:5",
+              "3:4",
+              "2:3",
+              "9:16"
+            ]
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "enable_web_search": {
+        "default": false,
+        "type": "boolean",
+        "description": "Enable web search for the image generation task. This will allow the model to use the latest information from the web to generate the image."
+      },
+      "safety_tolerance": {
+        "default": "4",
+        "type": "string",
+        "description": "The safety tolerance level for content moderation. 1 is the most strict (blocks most content), 6 is the least strict.",
+        "enum": [
+          "1",
+          "2",
+          "3",
+          "4",
+          "5",
+          "6"
+        ]
+      },
+      "image_urls": {
+        "examples": [
+          [
+            "https://storage.googleapis.com/falserverless/example_inputs/nano-banana-edit-input.png",
+            "https://storage.googleapis.com/falserverless/example_inputs/nano-banana-edit-input-2.png"
+          ]
+        ],
+        "items": {
+          "type": "string"
+        },
+        "type": "array",
+        "description": "The URLs of the images to use for image-to-image generation or image editing."
+      },
+      "resolution": {
+        "default": "1K",
+        "type": "string",
+        "description": "The resolution of the image to generate.",
+        "enum": [
+          "1K",
+          "2K",
+          "4K"
+        ]
+      },
+      "num_images": {
+        "default": 1,
+        "minimum": 1,
+        "type": "integer",
+        "maximum": 4,
+        "description": "The number of images to generate."
+      },
+      "seed": {
+        "anyOf": [
+          {
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "The seed for the random number generator."
+      },
+      "limit_generations": {
+        "default": true,
+        "type": "boolean",
+        "description": "Experimental parameter to limit the number of generations from each round of prompting to 1. Set to `True` to to disregard any instructions in the prompt regarding the number of images to generate."
+      }
+    },
+    "required": [
+      "prompt",
+      "image_urls"
+    ]
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "NanoBananaProEditInput",
+    "NanoBananaProEditOutput",
+    "ImageFile"
+  ]
+}

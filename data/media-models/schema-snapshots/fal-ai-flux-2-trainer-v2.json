@@ -1,0 +1,116 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/flux-2-trainer-v2",
+  "task": "unknown",
+  "source_url": "https://fal.ai/models/fal-ai/flux-2-trainer-v2",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fflux-2-trainer-v2",
+  "retrieved_at": "2026-10-04T19:44:17.135Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "training",
+  "bytes_sha256": "2f4c44407d678ff49195807a067034c122a563ada4f1b3138d6285b5c295de54",
+  "queue_path": "/fal-ai/flux-2-trainer-v2",
+  "input_name": "Flux2TrainerV2Input",
+  "input": {
+    "$refName": "Flux2TrainerV2Input",
+    "properties": {
+      "learning_rate": {
+        "type": "number",
+        "default": 0.00005,
+        "description": "Learning rate applied to trainable parameters."
+      },
+      "image_data_url": {
+        "type": "string",
+        "description": "\n    URL to zip archive with images of a consistent style. Try to use at least 10 images, although more is better.\n\n    The zip can also contain a text file for each image. The text file should be named:\n    ROOT.txt\n    For example:\n    photo.txt\n\n    This text file can be used to specify the edit instructions for the image pair.\n\n    If no text file is provided, the default_caption will be used.\n\n    If no default_caption is provided, the training will fail.\n    "
+      },
+      "output_lora_format": {
+        "type": "string",
+        "default": "fal",
+        "enum": [
+          "fal",
+          "comfy"
+        ],
+        "description": "Dictates the naming scheme for the output weights"
+      },
+      "steps": {
+        "minimum": 100,
+        "maximum": 20000,
+        "multipleOf": 100,
+        "default": 1000,
+        "type": "integer",
+        "description": "Total number of training steps."
+      },
+      "default_caption": {
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "Default caption to use when caption files are missing. If None, missing captions will cause an error."
+      }
+    },
+    "required": [
+      "image_data_url"
+    ],
+    "type": "object",
+    "description": "V2 input with multi-resolution bucketing."
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "Flux2TrainerV2Input",
+    "Flux2TrainerV2Output",
+    "File"
+  ]
+}

@@ -1,0 +1,129 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/ltx-2.3/extend-video",
+  "task": "video-editing",
+  "source_url": "https://fal.ai/models/fal-ai/ltx-2.3/extend-video",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fltx-2.3%2Fextend-video",
+  "retrieved_at": "2026-10-04T19:48:26.798Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "video-to-video",
+  "bytes_sha256": "dc1f0dde6a334778c3a22ecd9c24d448ba1594531f7d947606db6c5dc75d11e4",
+  "queue_path": "/fal-ai/ltx-2.3/extend-video",
+  "input_name": "Ltx23ExtendVideoInput",
+  "input": {
+    "$refName": "Ltx23ExtendVideoInput",
+    "required": [
+      "video_url"
+    ],
+    "type": "object",
+    "properties": {
+      "duration": {
+        "minimum": 2,
+        "default": 5,
+        "description": "Duration in seconds to extend the video. Minimum 2 seconds, maximum 20 seconds.",
+        "maximum": 20,
+        "type": "number"
+      },
+      "video_url": {
+        "description": "The URL of the video to extend",
+        "examples": [
+          "https://v3b.fal.media/files/b/0a90e01f/SWYdQyTBCPWYOLgfg5Jw2_004_video.mp4"
+        ],
+        "type": "string"
+      },
+      "mode": {
+        "description": "Where to extend the video: 'end' extends at the end, 'start' extends at the beginning.",
+        "default": "end",
+        "type": "string",
+        "enum": [
+          "start",
+          "end"
+        ]
+      },
+      "context": {
+        "anyOf": [
+          {
+            "minimum": 1,
+            "maximum": 20,
+            "type": "number"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "Number of seconds from the input video to use as context for the extension (minimum 1 second, maximum 20 seconds). If not provided, defaults to maximize available context within the 505 frame limit."
+      },
+      "prompt": {
+        "anyOf": [
+          {
+            "maxLength": 5000,
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "Description of what should happen in the extended portion of the video.",
+        "examples": [
+          "Continue the motion smoothly"
+        ]
+      }
+    }
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "Ltx23ExtendVideoInput",
+    "Ltx23ExtendVideoOutput",
+    "VideoFile"
+  ]
+}

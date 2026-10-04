@@ -1,0 +1,156 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/image-editing/reframe",
+  "task": "image-generation",
+  "source_url": "https://fal.ai/models/fal-ai/image-editing/reframe",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fimage-editing%2Freframe",
+  "retrieved_at": "2026-10-04T19:46:24.092Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "image-to-image",
+  "bytes_sha256": "062873caebe792d9d66ff70ecf11434745e17d108382c4f1e6f41838cfd3546e",
+  "queue_path": "/fal-ai/image-editing/reframe",
+  "input_name": "ImageEditingReframeInput",
+  "input": {
+    "$refName": "ImageEditingReframeInput",
+    "type": "object",
+    "properties": {
+      "num_inference_steps": {
+        "minimum": 1,
+        "type": "integer",
+        "description": "Number of inference steps for sampling.",
+        "maximum": 50,
+        "default": 30
+      },
+      "image_url": {
+        "type": "string",
+        "examples": [
+          "https://v3.fal.media/files/elephant/7ekErKT--mhgKJ5kgtvU__image.webp"
+        ],
+        "description": "URL of the old or damaged photo to restore."
+      },
+      "seed": {
+        "description": "The same seed and the same prompt given to the same version of the model will output the same image every time.",
+        "anyOf": [
+          {
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "guidance_scale": {
+        "minimum": 0,
+        "type": "number",
+        "description": "The CFG (Classifier Free Guidance) scale is a measure of how close you want the model to stick to your prompt when looking for a related image to show you.",
+        "maximum": 20,
+        "default": 3.5
+      },
+      "output_format": {
+        "enum": [
+          "jpeg",
+          "png"
+        ],
+        "type": "string",
+        "description": "The format of the generated image.",
+        "default": "jpeg"
+      },
+      "aspect_ratio": {
+        "enum": [
+          "21:9",
+          "16:9",
+          "4:3",
+          "3:2",
+          "1:1",
+          "2:3",
+          "3:4",
+          "9:16",
+          "9:21"
+        ],
+        "type": "string",
+        "examples": [
+          "16:9"
+        ],
+        "description": "The desired aspect ratio for the reframed image.",
+        "default": "16:9"
+      },
+      "sync_mode": {
+        "type": "boolean",
+        "description": "If `True`, the media will be returned as a data URI and the output data won't be available in the request history.",
+        "default": false
+      },
+      "safety_tolerance": {
+        "enum": [
+          "1",
+          "2",
+          "3",
+          "4",
+          "5",
+          "6"
+        ],
+        "type": "string",
+        "description": "The safety tolerance level for the generated image. 1 being the most strict and 6 being the most permissive.",
+        "default": "2"
+      }
+    },
+    "required": [
+      "image_url"
+    ]
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "ImageEditingReframeInput",
+    "ImageEditingReframeOutput",
+    "Image"
+  ]
+}

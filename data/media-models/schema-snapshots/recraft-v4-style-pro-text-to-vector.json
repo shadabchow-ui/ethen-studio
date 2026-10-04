@@ -1,0 +1,242 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "recraft/v4/style/pro/text-to-vector",
+  "task": "unknown",
+  "source_url": "https://fal.ai/models/recraft/v4/style/pro/text-to-vector",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=recraft%2Fv4%2Fstyle%2Fpro%2Ftext-to-vector",
+  "retrieved_at": "2026-10-04T19:54:55.154Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "text-to-image",
+  "bytes_sha256": "556a39e015c81f7dc52ecce7fd1d8c5f263f4f393c047a87c5669e31d400bda8",
+  "queue_path": "/recraft/v4/style/pro/text-to-vector",
+  "input_name": "V4StyleProTextToVectorInput",
+  "input": {
+    "$refName": "V4StyleProTextToVectorInput",
+    "properties": {
+      "background_color": {
+        "anyOf": [
+          {
+            "$refName": "RGBColor",
+            "properties": {
+              "r": {
+                "description": "Red color value",
+                "type": "integer",
+                "minimum": 0,
+                "default": 0,
+                "maximum": 255
+              },
+              "b": {
+                "description": "Blue color value",
+                "type": "integer",
+                "minimum": 0,
+                "default": 0,
+                "maximum": 255
+              },
+              "g": {
+                "description": "Green color value",
+                "type": "integer",
+                "minimum": 0,
+                "default": 0,
+                "maximum": 255
+              }
+            },
+            "type": "object"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "The preferable background color of the generated images."
+      },
+      "style_id": {
+        "description": "The ID of an existing V4 custom style.",
+        "anyOf": [
+          {
+            "type": "string",
+            "format": "uuid4"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "enable_safety_checker": {
+        "description": "If set to true, the safety checker will be enabled. Disabling it requires account authorization; unauthorized requests are always checked.",
+        "type": "boolean",
+        "default": true
+      },
+      "image_urls": {
+        "description": "The URLs of the style reference images. Supports PNG, JPG, and WEBP; provide between 1 and 10 images.",
+        "anyOf": [
+          {
+            "maxItems": 10,
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "minItems": 1
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "style_match": {
+        "description": "Override how closely the generation follows the custom style.",
+        "anyOf": [
+          {
+            "type": "string",
+            "enum": [
+              "precise",
+              "flexible"
+            ]
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "colors": {
+        "description": "An array of preferable colors",
+        "type": "array",
+        "items": {
+          "$refName": "RGBColor",
+          "properties": {
+            "r": {
+              "description": "Red color value",
+              "type": "integer",
+              "minimum": 0,
+              "default": 0,
+              "maximum": 255
+            },
+            "b": {
+              "description": "Blue color value",
+              "type": "integer",
+              "minimum": 0,
+              "default": 0,
+              "maximum": 255
+            },
+            "g": {
+              "description": "Green color value",
+              "type": "integer",
+              "minimum": 0,
+              "default": 0,
+              "maximum": 255
+            }
+          },
+          "type": "object"
+        },
+        "default": []
+      },
+      "prompt": {
+        "type": "string",
+        "examples": [
+          "a cute character panda with cool clothes, 3d flat color, design"
+        ],
+        "maxLength": 10000,
+        "minLength": 1
+      },
+      "image_size": {
+        "examples": [
+          "landscape_16_9"
+        ],
+        "default": "square_hd",
+        "anyOf": [
+          {
+            "$refName": "ImageSize",
+            "properties": {
+              "height": {
+                "description": "The height of the generated image.",
+                "type": "integer",
+                "exclusiveMinimum": 0,
+                "default": 512,
+                "maximum": 14142
+              },
+              "width": {
+                "description": "The width of the generated image.",
+                "type": "integer",
+                "exclusiveMinimum": 0,
+                "default": 512,
+                "maximum": 14142
+              }
+            },
+            "type": "object"
+          },
+          {
+            "type": "string",
+            "enum": [
+              "square_hd",
+              "square",
+              "portrait_4_3",
+              "portrait_16_9",
+              "landscape_4_3",
+              "landscape_16_9"
+            ]
+          }
+        ]
+      }
+    },
+    "type": "object",
+    "required": [
+      "prompt"
+    ]
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "V4StyleProTextToVectorInput",
+    "V4StyleProTextToVectorOutput",
+    "RGBColor",
+    "ImageSize",
+    "File"
+  ]
+}

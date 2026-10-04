@@ -1,0 +1,214 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/image2pixel",
+  "task": "unknown",
+  "source_url": "https://fal.ai/models/fal-ai/image2pixel",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fimage2pixel",
+  "retrieved_at": "2026-10-04T19:46:35.293Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "image-to-image",
+  "bytes_sha256": "2ec0c82279e6efa23f9c3e8fec39e3c5103d2fc47ede600034fc0efef2bddbcf",
+  "queue_path": "/fal-ai/image2pixel",
+  "input_name": "Image2pixelInput",
+  "input": {
+    "$refName": "Image2pixelInput",
+    "properties": {
+      "cleanup_jaggy": {
+        "default": false,
+        "description": "Remove isolated diagonal pixels (jaggy edge cleanup).",
+        "type": "boolean"
+      },
+      "image_url": {
+        "description": "The image URL to process into improved pixel art",
+        "examples": [
+          "https://storage.googleapis.com/falserverless/example_inputs/image2pixel-input.jpg"
+        ],
+        "type": "string"
+      },
+      "downscale_method": {
+        "default": "dominant",
+        "enum": [
+          "dominant",
+          "median",
+          "mode",
+          "mean",
+          "content-adaptive"
+        ],
+        "description": "Downscaling method to produce the pixel-art output.",
+        "type": "string"
+      },
+      "detect_method": {
+        "default": "auto",
+        "enum": [
+          "auto",
+          "runs",
+          "edge"
+        ],
+        "description": "Scale detection method to use.",
+        "type": "string"
+      },
+      "scale": {
+        "anyOf": [
+          {
+            "maximum": 64,
+            "minimum": 1,
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "Force a specific pixel scale. If None, auto-detect."
+      },
+      "auto_color_detect": {
+        "default": false,
+        "description": "Enable automatic detection of optimal number of colors.",
+        "type": "boolean"
+      },
+      "cleanup_morph": {
+        "default": false,
+        "description": "Apply morphological operations to remove noise.",
+        "type": "boolean"
+      },
+      "sync_mode": {
+        "default": false,
+        "description": "If `True`, the media will be returned as a data URI and the output data won't be available in the request history.",
+        "type": "boolean"
+      },
+      "fixed_palette": {
+        "anyOf": [
+          {
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "Optional fixed color palette as hex strings (e.g., ['#000000', '#ffffff'])."
+      },
+      "background_tolerance": {
+        "default": 0,
+        "description": "Background tolerance (0-255).",
+        "maximum": 255,
+        "minimum": 0,
+        "type": "integer"
+      },
+      "snap_grid": {
+        "default": true,
+        "description": "Align output to the pixel grid.",
+        "type": "boolean"
+      },
+      "dominant_color_threshold": {
+        "default": 0.05,
+        "description": "Dominant color threshold (0.0-1.0).",
+        "maximum": 1,
+        "minimum": 0,
+        "type": "number"
+      },
+      "max_colors": {
+        "anyOf": [
+          {
+            "maximum": 256,
+            "minimum": 1,
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "Maximum number of colors in the output palette. Set None to disable limit.",
+        "default": 32
+      },
+      "trim_borders": {
+        "default": false,
+        "description": "Trim borders of the image.",
+        "type": "boolean"
+      },
+      "alpha_threshold": {
+        "default": 128,
+        "description": "Alpha binarization threshold (0-255).",
+        "maximum": 255,
+        "minimum": 0,
+        "type": "integer"
+      },
+      "transparent_background": {
+        "default": false,
+        "description": "Remove background of the image. This will check for contiguous color regions from the edges after correction and make them transparent.",
+        "type": "boolean"
+      },
+      "background_mode": {
+        "default": "corners",
+        "enum": [
+          "edges",
+          "corners",
+          "midpoints"
+        ],
+        "description": "Controls where to flood-fill from when removing the background.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "image_url"
+    ],
+    "type": "object"
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "Image2pixelInput",
+    "Image2pixelOutput",
+    "ImageFile"
+  ]
+}

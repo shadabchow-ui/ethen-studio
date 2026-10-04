@@ -1,0 +1,129 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "google/gemini-omni-flash/v1.1/reference-to-video",
+  "task": "reference-to-video",
+  "source_url": "https://fal.ai/models/google/gemini-omni-flash/v1.1/reference-to-video",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=google%2Fgemini-omni-flash%2Fv1.1%2Freference-to-video",
+  "retrieved_at": "2026-10-04T19:53:35.031Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "image-to-video",
+  "bytes_sha256": "461e6c4aabbe39258248414c49ae2e1cc781d94b120ad550dd4c1fb31870b427",
+  "queue_path": "/google/gemini-omni-flash/v1.1/reference-to-video",
+  "input_name": "GeminiOmniFlashV11ReferenceToVideoInput",
+  "input": {
+    "$refName": "GeminiOmniFlashV11ReferenceToVideoInput",
+    "properties": {
+      "reference_video_urls": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        },
+        "description": "URLs of up to three reference videos. Each video must be at most three seconds long.",
+        "maxItems": 3
+      },
+      "prompt": {
+        "type": "string",
+        "maxLength": 20000,
+        "examples": [
+          "A cat inspired by <IMAGE_REF_0> walks through the setting in <VIDEO_REF_0>."
+        ],
+        "description": "The text prompt describing the video. Reference media is sent in list order before the prompt."
+      },
+      "aspect_ratio": {
+        "type": "string",
+        "default": "16:9",
+        "enum": [
+          "16:9",
+          "9:16"
+        ],
+        "description": "The aspect ratio of the generated video."
+      },
+      "duration": {
+        "minimum": 3,
+        "type": "integer",
+        "default": 8,
+        "maximum": 10,
+        "description": "The duration of the generated video, in seconds."
+      },
+      "resolution": {
+        "type": "string",
+        "default": "720p",
+        "enum": [
+          "360p",
+          "720p",
+          "1080p",
+          "4k"
+        ],
+        "description": "The resolution of the generated video."
+      },
+      "image_urls": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        },
+        "description": "URLs of reference images to incorporate into the video.",
+        "maxItems": 10
+      }
+    },
+    "required": [
+      "prompt"
+    ],
+    "type": "object"
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "GeminiOmniFlashV11ReferenceToVideoInput",
+    "GeminiOmniFlashV11ReferenceToVideoOutput",
+    "File"
+  ]
+}

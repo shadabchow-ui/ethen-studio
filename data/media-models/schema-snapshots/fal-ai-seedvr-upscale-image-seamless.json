@@ -1,0 +1,152 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/seedvr/upscale/image/seamless",
+  "task": "image-editing",
+  "source_url": "https://fal.ai/models/fal-ai/seedvr/upscale/image/seamless",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fseedvr%2Fupscale%2Fimage%2Fseamless",
+  "retrieved_at": "2026-10-04T19:51:34.441Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "image-to-image",
+  "bytes_sha256": "2d89a4f4cce01919f8c6ce3b1cdb5869dbafc77c03b08e5c77fe5d991ccc1c1a",
+  "queue_path": "/fal-ai/seedvr/upscale/image/seamless",
+  "input_name": "SeedvrUpscaleImageSeamlessInput",
+  "input": {
+    "$refName": "SeedvrUpscaleImageSeamlessInput",
+    "required": [
+      "image_url"
+    ],
+    "description": "Input for seamless tileable image upscaling.",
+    "type": "object",
+    "properties": {
+      "upscale_mode": {
+        "description": "The mode to use for the upscale. If 'target', the upscale factor will be calculated based on the target resolution. If 'factor', the upscale factor will be used directly.",
+        "type": "string",
+        "enum": [
+          "target",
+          "factor"
+        ],
+        "default": "factor"
+      },
+      "upscale_factor": {
+        "minimum": 1,
+        "description": "Upscaling factor to be used. Will multiply the dimensions with this factor when `upscale_mode` is `factor`.",
+        "type": "number",
+        "default": 2,
+        "maximum": 10
+      },
+      "target_resolution": {
+        "description": "The target resolution to upscale to when `upscale_mode` is `target`.",
+        "type": "string",
+        "enum": [
+          "720p",
+          "1080p",
+          "1440p",
+          "2160p"
+        ],
+        "default": "1080p"
+      },
+      "noise_scale": {
+        "multipleOf": 0.001,
+        "minimum": 0,
+        "description": "The noise scale to use for the generation process.",
+        "type": "number",
+        "maximum": 1,
+        "default": 0.1
+      },
+      "sync_mode": {
+        "description": "If `True`, the media will be returned as a data URI and the output data won't be available in the request history.",
+        "type": "boolean",
+        "default": false
+      },
+      "enable_safety_checker": {
+        "description": "If set to true, the safety checker will be enabled.",
+        "type": "boolean",
+        "default": true
+      },
+      "output_format": {
+        "description": "The format of the output image.",
+        "type": "string",
+        "enum": [
+          "png",
+          "jpeg",
+          "webp"
+        ],
+        "default": "png"
+      },
+      "seed": {
+        "anyOf": [
+          {
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "The random seed used for the generation process."
+      },
+      "image_url": {
+        "description": "The input image to be processed",
+        "type": "string",
+        "examples": [
+          "https://v3b.fal.media/files/b/0a93eb33/dQ_ZwLyeu8P2UJYsa8RDW_seamless_image_in.png"
+        ]
+      }
+    }
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "SeedvrUpscaleImageSeamlessInput",
+    "SeedvrUpscaleImageSeamlessOutput",
+    "ImageFile"
+  ]
+}

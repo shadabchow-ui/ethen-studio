@@ -1,0 +1,93 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/bytedance/omnihuman",
+  "task": "unknown",
+  "source_url": "https://fal.ai/models/fal-ai/bytedance/omnihuman",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fbytedance%2Fomnihuman",
+  "retrieved_at": "2026-10-04T19:42:50.743Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "image-to-video",
+  "bytes_sha256": "c6f279d241f966d19edf7fa675694cea1dacd8a0d3d1b2c40e62eb664149701b",
+  "queue_path": "/fal-ai/bytedance/omnihuman",
+  "input_name": "BytedanceOmnihumanInput",
+  "input": {
+    "$refName": "BytedanceOmnihumanInput",
+    "type": "object",
+    "properties": {
+      "image_url": {
+        "type": "string",
+        "examples": [
+          "https://storage.googleapis.com/falserverless/example_inputs/omnihuman.png"
+        ],
+        "description": "The URL of the image used to generate the video"
+      },
+      "audio_url": {
+        "type": "string",
+        "examples": [
+          "https://storage.googleapis.com/falserverless/example_inputs/omnihuman_audio.mp3"
+        ],
+        "description": "The URL of the audio file to generate the video. Audio must be under 30s long."
+      }
+    },
+    "required": [
+      "image_url",
+      "audio_url"
+    ]
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "BytedanceOmnihumanInput",
+    "BytedanceOmnihumanOutput",
+    "File"
+  ]
+}

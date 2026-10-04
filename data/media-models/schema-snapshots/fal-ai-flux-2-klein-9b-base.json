@@ -1,0 +1,190 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/flux-2/klein/9b/base",
+  "task": "unknown",
+  "source_url": "https://fal.ai/models/fal-ai/flux-2/klein/9b/base",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fflux-2%2Fklein%2F9b%2Fbase",
+  "retrieved_at": "2026-10-04T19:44:29.105Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "text-to-image",
+  "bytes_sha256": "4b3d4b908e4aaca364bcaf91c09de29e3cd6e6a347fa8d786734e160bf05ef1a",
+  "queue_path": "/fal-ai/flux-2/klein/9b/base",
+  "input_name": "Flux2Klein9bBaseInput",
+  "input": {
+    "$refName": "Flux2Klein9bBaseInput",
+    "required": [
+      "prompt"
+    ],
+    "properties": {
+      "acceleration": {
+        "enum": [
+          "none",
+          "regular",
+          "high"
+        ],
+        "default": "regular",
+        "type": "string",
+        "description": "The acceleration level to use for image generation."
+      },
+      "enable_safety_checker": {
+        "default": true,
+        "type": "boolean",
+        "description": "If set to true, the safety checker will be enabled. Disabling it requires account authorization; unauthorized requests are always checked, and images flagged as unsafe are returned as black images."
+      },
+      "seed": {
+        "description": "The seed to use for the generation. If not provided, a random seed will be used.",
+        "anyOf": [
+          {
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "sync_mode": {
+        "default": false,
+        "type": "boolean",
+        "description": "If `True`, the media will be returned as a data URI. Output is not stored when this is True."
+      },
+      "num_inference_steps": {
+        "description": "The number of inference steps to perform.",
+        "maximum": 50,
+        "default": 28,
+        "type": "integer",
+        "minimum": 4
+      },
+      "num_images": {
+        "description": "The number of images to generate.",
+        "maximum": 4,
+        "default": 1,
+        "type": "integer",
+        "minimum": 1
+      },
+      "prompt": {
+        "examples": [
+          "A cyberpunk samurai standing in neon-lit Tokyo street at night, rain-soaked pavement reflecting holographic advertisements in pink and blue, steam rising from street vents, wearing futuristic armor with glowing accents, cinematic composition, Unreal Engine 5 quality, ray-traced reflections, shallow depth of field, hyper-detailed"
+        ],
+        "type": "string",
+        "description": "The prompt to generate an image from."
+      },
+      "output_format": {
+        "enum": [
+          "jpeg",
+          "png",
+          "webp"
+        ],
+        "default": "png",
+        "type": "string",
+        "description": "The format of the generated image."
+      },
+      "guidance_scale": {
+        "description": "Guidance scale for classifier-free guidance.",
+        "maximum": 20,
+        "default": 5,
+        "type": "number",
+        "minimum": 0
+      },
+      "negative_prompt": {
+        "default": "",
+        "type": "string",
+        "description": "Negative prompt for classifier-free guidance. Describes what to avoid in the image."
+      },
+      "image_size": {
+        "default": "landscape_4_3",
+        "description": "The size of the image to generate.",
+        "anyOf": [
+          {
+            "$refName": "ImageSize",
+            "properties": {
+              "width": {
+                "default": 512,
+                "type": "integer",
+                "exclusiveMinimum": 0,
+                "maximum": 14142,
+                "description": "The width of the generated image."
+              },
+              "height": {
+                "default": 512,
+                "type": "integer",
+                "exclusiveMinimum": 0,
+                "maximum": 14142,
+                "description": "The height of the generated image."
+              }
+            },
+            "type": "object"
+          },
+          {
+            "enum": [
+              "square_hd",
+              "square",
+              "portrait_4_3",
+              "portrait_16_9",
+              "landscape_4_3",
+              "landscape_16_9"
+            ],
+            "type": "string"
+          }
+        ]
+      }
+    },
+    "type": "object"
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "Flux2Klein9bBaseInput",
+    "Flux2Klein9bBaseOutput",
+    "ImageSize",
+    "ImageFile"
+  ]
+}

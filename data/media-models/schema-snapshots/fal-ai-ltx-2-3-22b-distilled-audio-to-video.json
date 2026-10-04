@@ -1,0 +1,329 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/ltx-2.3-22b/distilled/audio-to-video",
+  "task": "video-editing",
+  "source_url": "https://fal.ai/models/fal-ai/ltx-2.3-22b/distilled/audio-to-video",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fltx-2.3-22b%2Fdistilled%2Faudio-to-video",
+  "retrieved_at": "2026-10-04T19:47:54.835Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "audio-to-video",
+  "bytes_sha256": "c6b8d9f0fed53b3bad9b1d6c60931480fd926b4f04750f5dd054665ff24a3ecb",
+  "queue_path": "/fal-ai/ltx-2.3-22b/distilled/audio-to-video",
+  "input_name": "Ltx2322bDistilledAudioToVideoInput",
+  "input": {
+    "$refName": "Ltx2322bDistilledAudioToVideoInput",
+    "type": "object",
+    "properties": {
+      "camera_lora": {
+        "default": "none",
+        "examples": [
+          "none"
+        ],
+        "type": "string",
+        "description": "The camera LoRA to use. This allows you to control the camera movement of the generated video more accurately than just prompting the model to move the camera.",
+        "enum": [
+          "dolly_in",
+          "dolly_out",
+          "dolly_left",
+          "dolly_right",
+          "jib_up",
+          "jib_down",
+          "static",
+          "none"
+        ]
+      },
+      "camera_lora_scale": {
+        "default": 1,
+        "minimum": 0,
+        "maximum": 1,
+        "type": "number",
+        "description": "The scale of the camera LoRA to use. This allows you to control the camera movement of the generated video more accurately than just prompting the model to move the camera."
+      },
+      "audio_url": {
+        "examples": [
+          "https://storage.googleapis.com/falserverless/example_inputs/ltx-2-a2v-input-audio.mp3"
+        ],
+        "type": "string",
+        "description": "The URL of the audio to generate the video from."
+      },
+      "image_strength": {
+        "default": 1,
+        "minimum": 0,
+        "maximum": 1,
+        "type": "number",
+        "description": "The strength of the image to use for the video generation."
+      },
+      "negative_prompt": {
+        "default": "news broadcast, 3d animation, computer graphics, pc game, console game, video game, cartoon, childish, watermark, logo, text, on screen text, subtitles, titles, signature, slowmo, static",
+        "type": "string",
+        "description": "The negative prompt to generate the video from."
+      },
+      "num_frames": {
+        "default": 121,
+        "minimum": 9,
+        "maximum": 481,
+        "type": "integer",
+        "description": "The number of frames to generate."
+      },
+      "video_write_mode": {
+        "default": "balanced",
+        "type": "string",
+        "description": "The write mode of the generated video.",
+        "enum": [
+          "fast",
+          "balanced",
+          "small"
+        ]
+      },
+      "scheduler": {
+        "default": "ltx2",
+        "examples": [
+          "ltx2"
+        ],
+        "type": "string",
+        "description": "The scheduler to use.",
+        "enum": [
+          "ltx2",
+          "linear_quadratic",
+          "beta"
+        ]
+      },
+      "image_url": {
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "Optional URL of an image to use as the first frame of the video.",
+        "examples": [
+          "https://storage.googleapis.com/falserverless/example_inputs/ltx-2-a2v-input-image.png"
+        ]
+      },
+      "enable_prompt_expansion": {
+        "default": true,
+        "type": "boolean",
+        "description": "Whether to enable prompt expansion."
+      },
+      "fps": {
+        "default": 24,
+        "minimum": 1,
+        "maximum": 60,
+        "type": "number",
+        "description": "The frames per second of the generated video."
+      },
+      "enable_safety_checker": {
+        "default": true,
+        "type": "boolean",
+        "description": "Whether to enable the safety checker."
+      },
+      "match_audio_length": {
+        "default": true,
+        "type": "boolean",
+        "description": "When enabled, the number of frames will be calculated based on the audio duration and FPS. When disabled, use the specified num_frames."
+      },
+      "prompt": {
+        "examples": [
+          "A woman speaks to the camera"
+        ],
+        "type": "string",
+        "description": "The prompt to generate the video from."
+      },
+      "video_quality": {
+        "default": "high",
+        "type": "string",
+        "description": "The quality of the generated video.",
+        "enum": [
+          "low",
+          "medium",
+          "high",
+          "maximum"
+        ]
+      },
+      "use_multiscale": {
+        "default": true,
+        "type": "boolean",
+        "description": "Whether to use multi-scale generation. If True, the model will generate the video at a smaller scale first, then use the smaller video to guide the generation of a video at or above your requested size. This results in better coherence and details."
+      },
+      "preprocess_audio": {
+        "default": true,
+        "type": "boolean",
+        "description": "Whether to preprocess the audio before using it as conditioning."
+      },
+      "sync_mode": {
+        "default": false,
+        "type": "boolean",
+        "description": "If `True`, the media will be returned as a data URI and the output data won't be available in the request history."
+      },
+      "end_image_strength": {
+        "default": 1,
+        "minimum": 0,
+        "maximum": 1,
+        "type": "number",
+        "description": "The strength of the end image to use for the video generation."
+      },
+      "end_image_url": {
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "The URL of the image to use as the end of the video."
+      },
+      "video_size": {
+        "anyOf": [
+          {
+            "$refName": "ImageSize",
+            "type": "object",
+            "properties": {
+              "width": {
+                "default": 512,
+                "maximum": 14142,
+                "exclusiveMinimum": 0,
+                "description": "The width of the generated image.",
+                "type": "integer"
+              },
+              "height": {
+                "default": 512,
+                "maximum": 14142,
+                "exclusiveMinimum": 0,
+                "description": "The height of the generated image.",
+                "type": "integer"
+              }
+            }
+          },
+          {
+            "type": "string",
+            "enum": [
+              "auto",
+              "square_hd",
+              "square",
+              "portrait_4_3",
+              "portrait_16_9",
+              "landscape_4_3",
+              "landscape_16_9"
+            ]
+          }
+        ],
+        "description": "The size of the generated video. Use 'auto' to match the input image dimensions if provided.",
+        "default": "landscape_16_9"
+      },
+      "distill_lora_second_pass_scale": {
+        "default": 0.5,
+        "minimum": 0,
+        "maximum": 1,
+        "type": "number",
+        "description": "The scale of the distill LoRA to use for the second and subsequent passes."
+      },
+      "acceleration": {
+        "default": "none",
+        "examples": [
+          "none"
+        ],
+        "type": "string",
+        "description": "The acceleration level to use.",
+        "enum": [
+          "none",
+          "regular",
+          "high",
+          "full"
+        ]
+      },
+      "video_output_type": {
+        "default": "X264 (.mp4)",
+        "type": "string",
+        "description": "The output type of the generated video.",
+        "enum": [
+          "X264 (.mp4)",
+          "VP9 (.webm)",
+          "PRORES4444 (.mov)",
+          "GIF (.gif)"
+        ]
+      },
+      "audio_strength": {
+        "default": 1,
+        "minimum": 0,
+        "maximum": 1,
+        "type": "number",
+        "description": "Audio conditioning strength. Values below 1.0 will allow the model to change the audio, while a value of exactly 1.0 will use the input audio without modification."
+      },
+      "seed": {
+        "anyOf": [
+          {
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "The seed for the random number generator."
+      }
+    },
+    "required": [
+      "prompt",
+      "audio_url"
+    ]
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "Ltx2322bDistilledAudioToVideoInput",
+    "Ltx2322bDistilledAudioToVideoOutput",
+    "ImageSize",
+    "VideoFile"
+  ]
+}

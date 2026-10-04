@@ -1,0 +1,89 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "blackforestlabs/flux-3/draft-enhance",
+  "task": "unknown",
+  "source_url": "https://fal.ai/models/blackforestlabs/flux-3/draft-enhance",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=blackforestlabs%2Fflux-3%2Fdraft-enhance",
+  "retrieved_at": "2026-10-04T19:41:30.285Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "video-to-video",
+  "bytes_sha256": "ef6c3b09b93a0d74c54fd308ad30ad6662eab5047f791944bd8f69944d782554",
+  "queue_path": "/blackforestlabs/flux-3/draft-enhance",
+  "input_name": "Flux3DraftEnhanceInput",
+  "input": {
+    "$refName": "Flux3DraftEnhanceInput",
+    "type": "object",
+    "properties": {
+      "draft_cache_url": {
+        "description": "URL or data URI of the encrypted draft cache bundle to enhance.",
+        "type": "string"
+      },
+      "safety_tolerance": {
+        "default": 2,
+        "minimum": 0,
+        "description": "The safety tolerance level for the generated video. 0 is the strictest and 4 is the most permissive.",
+        "maximum": 4,
+        "type": "integer"
+      }
+    },
+    "required": [
+      "draft_cache_url"
+    ]
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "Flux3DraftEnhanceInput",
+    "Flux3DraftEnhanceOutput",
+    "File"
+  ]
+}

@@ -1,0 +1,86 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/recraft/vectorize",
+  "task": "unknown",
+  "source_url": "https://fal.ai/models/fal-ai/recraft/vectorize",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Frecraft%2Fvectorize",
+  "retrieved_at": "2026-10-04T19:51:14.830Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "image-to-image",
+  "bytes_sha256": "d26332434043b44fcc14a51c2b31d4e2b57436a15f805d96395cad77ce5d4802",
+  "queue_path": "/fal-ai/recraft/vectorize",
+  "input_name": "RecraftVectorizeInput",
+  "input": {
+    "$refName": "RecraftVectorizeInput",
+    "properties": {
+      "image_url": {
+        "description": "The URL of the image to be vectorized. Must be in PNG, JPG or WEBP format, less than 5 MB in size, have resolution less than 16 MP and max dimension less than 4096 pixels, min dimension more than 256 pixels.",
+        "type": "string",
+        "_fal_ui_field": "image",
+        "examples": [
+          "https://storage.googleapis.com/falserverless/example_inputs/man_wave.png"
+        ]
+      }
+    },
+    "type": "object",
+    "required": [
+      "image_url"
+    ]
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "RecraftVectorizeInput",
+    "RecraftVectorizeOutput",
+    "File"
+  ]
+}

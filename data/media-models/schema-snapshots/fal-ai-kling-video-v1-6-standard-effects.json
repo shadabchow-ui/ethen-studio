@@ -1,0 +1,208 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/kling-video/v1.6/standard/effects",
+  "task": "video-editing",
+  "source_url": "https://fal.ai/models/fal-ai/kling-video/v1.6/standard/effects",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fkling-video%2Fv1.6%2Fstandard%2Feffects",
+  "retrieved_at": "2026-10-04T19:47:06.108Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "text-to-video",
+  "bytes_sha256": "9a7425dd8ef3f4cfd73d04aec9929a4ed1920868ee05962c531eb6b1b238fa51",
+  "queue_path": "/fal-ai/kling-video/v1.6/standard/effects",
+  "input_name": "KlingVideoV16StandardEffectsInput",
+  "input": {
+    "$refName": "KlingVideoV16StandardEffectsInput",
+    "required": [
+      "effect_scene"
+    ],
+    "type": "object",
+    "properties": {
+      "input_image_urls": {
+        "description": "Image URLs for the effect. heart_gesture requires exactly two images; all other effects require exactly one image.",
+        "type": "array",
+        "examples": [
+          [
+            "https://storage.googleapis.com/falserverless/juggernaut_examples/VHXMavzPyI27zi6JseyL4.png",
+            "https://storage.googleapis.com/falserverless/juggernaut_examples/QEW5VrzccxGva7mPfEXjf.png"
+          ]
+        ],
+        "items": {
+          "type": "string",
+          "_fal_ui_field": "image"
+        }
+      },
+      "effect_scene": {
+        "description": "The effect scene to use. heart_gesture is a multi-image effect; all other effects are single-image.",
+        "type": "string",
+        "examples": [
+          "heart_gesture"
+        ],
+        "enum": [
+          "heart_gesture",
+          "bullet_time_360",
+          "day_to_night",
+          "swish_swish",
+          "running_man",
+          "swing_swing",
+          "skateskate",
+          "building_sweater",
+          "pure_white_wings",
+          "black_wings",
+          "golden_wing",
+          "pink_pink_wings",
+          "countdown_teleport",
+          "instant_christmas",
+          "birthday_star",
+          "tiger_hug_pro",
+          "pet_lion_pro",
+          "guardian_spirit",
+          "drunk_dance",
+          "drunk_dance_pet",
+          "daoma_dance",
+          "bouncy_dance",
+          "smooth_sailing_dance",
+          "new_year_greeting",
+          "lion_dance",
+          "prosperity",
+          "great_success",
+          "golden_horse_fortune",
+          "red_packet_box",
+          "lucky_horse_year",
+          "lucky_red_packet",
+          "lucky_money_come",
+          "lion_dance_pet",
+          "dumpling_making_pet",
+          "fish_making_pet",
+          "pet_red_packet",
+          "lantern_glow",
+          "expression_challenge",
+          "overdrive",
+          "heart_gesture_dance",
+          "poping",
+          "martial_arts",
+          "running",
+          "nezha",
+          "motorcycle_dance",
+          "subject_3_dance",
+          "ghost_step_dance",
+          "phantom_jewel",
+          "zoom_out",
+          "cheers_2026",
+          "kiss_pro",
+          "fight_pro",
+          "hug_pro",
+          "heart_gesture_pro",
+          "dollar_rain_pro",
+          "pet_bee_pro",
+          "santa_random_surprise",
+          "magic_match_tree",
+          "happy_birthday",
+          "thumbs_up_pro",
+          "surprise_bouquet",
+          "bouquet_drop",
+          "glamour_photo_shoot",
+          "box_of_joy",
+          "first_toast_of_the_year",
+          "my_santa_pic",
+          "santa_gift",
+          "steampunk_christmas",
+          "snowglobe",
+          "christmas_photo_shoot",
+          "ornament_crash",
+          "santa_express",
+          "coronation_of_frost",
+          "spark_in_the_snow",
+          "scarlet_and_snow",
+          "bullet_time_lite",
+          "jumping_ginger_joy",
+          "venomous_spider",
+          "throne_of_king",
+          "luminous_elf",
+          "woodland_elf",
+          "snowboarding",
+          "witch_transform",
+          "vampire_transform",
+          "pumpkin_head_transform",
+          "demon_transform",
+          "mummy_transform",
+          "zombie_transform",
+          "cute_pumpkin_transform",
+          "halloween_escape",
+          "korean_baseball",
+          "pet_moto_rider",
+          "3d_cartoon_2",
+          "girlfriend",
+          "boyfriend",
+          "pet_dance",
+          "splashsplash",
+          "surfsurf"
+        ]
+      },
+      "duration": {
+        "description": "The duration of the generated video in seconds",
+        "type": "string",
+        "default": "5",
+        "enum": [
+          "5",
+          "10"
+        ]
+      }
+    }
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "KlingVideoV16StandardEffectsInput",
+    "KlingVideoV16StandardEffectsOutput",
+    "File"
+  ]
+}

@@ -1,0 +1,202 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "alibaba/wan-3.0/reference-to-video",
+  "task": "reference-to-video",
+  "source_url": "https://fal.ai/models/alibaba/wan-3.0/reference-to-video",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=alibaba%2Fwan-3.0%2Freference-to-video",
+  "retrieved_at": "2026-10-04T19:41:29.279Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "image-to-video",
+  "bytes_sha256": "4da7651d1216dcdc073b57c637584e83ec1fdbc49bfa7e1681c6b4ddbbb0f834",
+  "queue_path": "/alibaba/wan-3.0/reference-to-video",
+  "input_name": "Wan30ReferenceToVideoInput",
+  "input": {
+    "$refName": "Wan30ReferenceToVideoInput",
+    "properties": {
+      "file_url": {
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "Document URL to base the video on. Requires enable_thinking=true."
+      },
+      "prompt": {
+        "anyOf": [
+          {
+            "type": "string",
+            "maxLength": 20000
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "Text prompt directing how the reference media is used. Reference media can be addressed positionally, e.g. 'the subject in Image 1 walks past Video 1'."
+      },
+      "aspect_ratio": {
+        "type": "string",
+        "default": "adaptive",
+        "enum": [
+          "adaptive",
+          "16:9",
+          "4:3",
+          "1:1",
+          "3:4",
+          "9:16"
+        ],
+        "description": "Output aspect ratio, or adaptive selection."
+      },
+      "web_url": {
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "Public webpage URL to base the video on. Requires enable_thinking=true. Only pages that do not require login can be read."
+      },
+      "enable_prompt_expansion": {
+        "type": "boolean",
+        "default": true,
+        "description": "Enable intelligent prompt rewriting. Disabling it can save roughly 20-60 seconds of latency but is likely to degrade generation quality."
+      },
+      "enable_thinking": {
+        "type": "boolean",
+        "default": false,
+        "description": "Enable enhanced reasoning before generation."
+      },
+      "resolution": {
+        "type": "string",
+        "default": "1080p",
+        "enum": [
+          "480p",
+          "720p",
+          "1080p"
+        ],
+        "description": "Output video resolution tier."
+      },
+      "reference_video_urls": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        },
+        "description": "Up to 5 reference video URLs totaling at most 15 seconds. Each clip must be at least 16 fps. Input video duration is billed in addition to output duration.",
+        "maxItems": 5
+      },
+      "enable_safety_checker": {
+        "type": "boolean",
+        "default": true,
+        "description": "Enable content moderation for input and output. Disabling it requires account authorization; unauthorized requests are always checked."
+      },
+      "duration": {
+        "anyOf": [
+          {
+            "maximum": 30,
+            "type": "integer",
+            "minimum": 2
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": 5,
+        "description": "Output duration in seconds. Set to null for smart duration, which lets the model pick a length from the prompt and reference media."
+      },
+      "seed": {
+        "anyOf": [
+          {
+            "maximum": 2147483647,
+            "type": "integer",
+            "minimum": 0
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "reference_image_urls": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        },
+        "description": "Up to 10 reference image URLs.",
+        "maxItems": 10
+      },
+      "reference_audio_urls": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        },
+        "description": "Up to 5 reference audio URLs totaling at most 15 seconds.",
+        "maxItems": 5
+      },
+      "audio": {
+        "type": "boolean",
+        "default": true,
+        "description": "Include generated audio."
+      }
+    },
+    "type": "object"
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "Wan30ReferenceToVideoInput",
+    "Wan30ReferenceToVideoOutput",
+    "VideoFile"
+  ]
+}

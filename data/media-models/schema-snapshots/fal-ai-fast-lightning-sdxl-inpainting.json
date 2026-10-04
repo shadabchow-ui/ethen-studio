@@ -1,0 +1,251 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/fast-lightning-sdxl/inpainting",
+  "task": "unknown",
+  "source_url": "https://fal.ai/models/fal-ai/fast-lightning-sdxl/inpainting",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Ffast-lightning-sdxl%2Finpainting",
+  "retrieved_at": "2026-10-04T19:43:35.111Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "image-to-image",
+  "bytes_sha256": "0fce8f05c01ff590fe245becbc1cfb10fbaba2f5aab32af162078936b9da7936",
+  "queue_path": "/fal-ai/fast-lightning-sdxl/inpainting",
+  "input_name": "FastLightningSdxlInpaintingInput",
+  "input": {
+    "$refName": "FastLightningSdxlInpaintingInput",
+    "properties": {
+      "request_id": {
+        "description": "\n            An id bound to a request, can be used with response to identify the request\n            itself.\n        ",
+        "default": "",
+        "type": "string"
+      },
+      "strength": {
+        "minimum": 0.01,
+        "description": "determines how much the generated image resembles the initial image",
+        "default": 0.95,
+        "maximum": 1,
+        "type": "number"
+      },
+      "format": {
+        "description": "The format of the generated image.",
+        "enum": [
+          "jpeg",
+          "png"
+        ],
+        "default": "jpeg",
+        "type": "string"
+      },
+      "mask_url": {
+        "description": "The URL of the mask to use for inpainting.",
+        "type": "string",
+        "examples": [
+          "https://raw.githubusercontent.com/CompVis/latent-diffusion/main/data/inpainting_examples/overture-creations-5sI6fQgYIuo_mask.png"
+        ]
+      },
+      "num_images": {
+        "minimum": 1,
+        "description": "The number of images to generate.",
+        "default": 1,
+        "maximum": 8,
+        "type": "integer"
+      },
+      "seed": {
+        "description": "\n            The same seed and the same prompt given to the same version of Stable Diffusion\n            will output the same image every time.\n        ",
+        "anyOf": [
+          {
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "num_inference_steps": {
+        "description": "The number of inference steps to perform.",
+        "enum": [
+          1,
+          2,
+          4,
+          8
+        ],
+        "default": 4,
+        "type": "integer"
+      },
+      "sync_mode": {
+        "description": "If `True`, the media will be returned as a data URI and the output data won't be available in the request history.",
+        "default": false,
+        "type": "boolean"
+      },
+      "embeddings": {
+        "description": "The list of embeddings to use.",
+        "default": [],
+        "items": {
+          "$refName": "Embedding",
+          "properties": {
+            "path": {
+              "description": "URL or the path to the embedding weights.",
+              "type": "string",
+              "examples": [
+                "https://civitai.com/api/download/models/135931",
+                "https://filebin.net/3chfqasxpqu21y8n/my-custom-lora-v1.safetensors"
+              ]
+            },
+            "tokens": {
+              "description": "\n            The list of tokens to use for the embedding. When omitted, tokens\n            are generated as <s0>, <s1>, ... to match the number of vectors in\n            the embedding file.\n        ",
+              "default": null,
+              "anyOf": [
+                {
+                  "items": {
+                    "type": "string"
+                  },
+                  "type": "array"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            }
+          },
+          "required": [
+            "path"
+          ],
+          "type": "object"
+        },
+        "type": "array"
+      },
+      "image_url": {
+        "description": "The URL of the image to use as a starting point for the generation.",
+        "type": "string",
+        "examples": [
+          "https://raw.githubusercontent.com/CompVis/latent-diffusion/main/data/inpainting_examples/overture-creations-5sI6fQgYIuo.png"
+        ]
+      },
+      "prompt": {
+        "description": "The prompt to use for generating the image. Be as descriptive as possible for best results.",
+        "type": "string",
+        "examples": [
+          "a tiger sitting on a park bench"
+        ]
+      },
+      "expand_prompt": {
+        "description": "If set to true, the prompt will be expanded with additional prompts.",
+        "default": false,
+        "type": "boolean"
+      },
+      "image_size": {
+        "description": "The size of the generated image.",
+        "default": "square_hd",
+        "anyOf": [
+          {
+            "$refName": "ImageSize",
+            "properties": {
+              "height": {
+                "description": "The height of the generated image.",
+                "maximum": 14142,
+                "default": 512,
+                "exclusiveMinimum": 0,
+                "type": "integer"
+              },
+              "width": {
+                "description": "The width of the generated image.",
+                "maximum": 14142,
+                "default": 512,
+                "exclusiveMinimum": 0,
+                "type": "integer"
+              }
+            },
+            "type": "object"
+          },
+          {
+            "enum": [
+              "square_hd",
+              "square",
+              "portrait_4_3",
+              "portrait_16_9",
+              "landscape_4_3",
+              "landscape_16_9"
+            ],
+            "type": "string"
+          }
+        ]
+      },
+      "enable_safety_checker": {
+        "description": "If set to true, the safety checker will be enabled.",
+        "default": true,
+        "type": "boolean"
+      },
+      "safety_checker_version": {
+        "description": "The version of the safety checker to use. v1 is the default CompVis safety checker. v2 uses a custom ViT model.",
+        "enum": [
+          "v1",
+          "v2"
+        ],
+        "default": "v1",
+        "type": "string"
+      }
+    },
+    "required": [
+      "image_url",
+      "mask_url",
+      "prompt"
+    ],
+    "type": "object"
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "FastLightningSdxlInpaintingInput",
+    "FastLightningSdxlInpaintingOutput",
+    "Embedding",
+    "ImageSize",
+    "Image"
+  ]
+}

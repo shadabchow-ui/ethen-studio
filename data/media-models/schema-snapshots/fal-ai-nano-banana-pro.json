@@ -1,0 +1,184 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/nano-banana-pro",
+  "task": "unknown",
+  "source_url": "https://fal.ai/models/fal-ai/nano-banana-pro",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fnano-banana-pro",
+  "retrieved_at": "2026-10-04T19:49:35.984Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "text-to-image",
+  "bytes_sha256": "0541b41033de8b64d795a03498890f2ae7e0551f63d0bdc8bde468f607165f5d",
+  "queue_path": "/fal-ai/nano-banana-pro",
+  "input_name": "NanoBananaProInput",
+  "input": {
+    "$refName": "NanoBananaProInput",
+    "type": "object",
+    "properties": {
+      "prompt": {
+        "examples": [
+          "An action shot of a black lab swimming in an inground suburban swimming pool. The camera is placed meticulously on the water line, dividing the image in half, revealing both the dogs head above water holding a tennis ball in it's mouth, and it's paws paddling underwater."
+        ],
+        "type": "string",
+        "description": "The text prompt to generate an image from.",
+        "maxLength": 50000,
+        "minLength": 3
+      },
+      "sync_mode": {
+        "default": false,
+        "type": "boolean",
+        "description": "If `True`, the media will be returned as a data URI and the output data won't be available in the request history."
+      },
+      "system_prompt": {
+        "default": "",
+        "type": "string",
+        "description": "Optional system instruction that steers the model's persona and output style across the request. Leave blank to omit; when provided, it is sent as the system instruction to Gemini (or as a system message on OpenAI-compatible providers).",
+        "maxLength": 50000
+      },
+      "output_format": {
+        "default": "png",
+        "type": "string",
+        "description": "The format of the generated image.",
+        "enum": [
+          "jpeg",
+          "png",
+          "webp"
+        ]
+      },
+      "aspect_ratio": {
+        "default": "1:1",
+        "description": "The aspect ratio of the generated image.",
+        "anyOf": [
+          {
+            "type": "string",
+            "enum": [
+              "auto",
+              "21:9",
+              "16:9",
+              "3:2",
+              "4:3",
+              "5:4",
+              "1:1",
+              "4:5",
+              "3:4",
+              "2:3",
+              "9:16"
+            ]
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "limit_generations": {
+        "default": true,
+        "type": "boolean",
+        "description": "Experimental parameter to limit the number of generations from each round of prompting to 1. Set to `True` to to disregard any instructions in the prompt regarding the number of images to generate."
+      },
+      "safety_tolerance": {
+        "default": "4",
+        "type": "string",
+        "description": "The safety tolerance level for content moderation. 1 is the most strict (blocks most content), 6 is the least strict.",
+        "enum": [
+          "1",
+          "2",
+          "3",
+          "4",
+          "5",
+          "6"
+        ]
+      },
+      "enable_web_search": {
+        "default": false,
+        "type": "boolean",
+        "description": "Enable web search for the image generation task. This will allow the model to use the latest information from the web to generate the image."
+      },
+      "resolution": {
+        "default": "1K",
+        "type": "string",
+        "description": "The resolution of the image to generate.",
+        "enum": [
+          "1K",
+          "2K",
+          "4K"
+        ]
+      },
+      "num_images": {
+        "default": 1,
+        "minimum": 1,
+        "type": "integer",
+        "maximum": 4,
+        "description": "The number of images to generate."
+      },
+      "seed": {
+        "anyOf": [
+          {
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "The seed for the random number generator."
+      }
+    },
+    "required": [
+      "prompt"
+    ]
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "NanoBananaProInput",
+    "NanoBananaProOutput",
+    "ImageFile"
+  ]
+}

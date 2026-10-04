@@ -1,0 +1,187 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/hy-wu-edit",
+  "task": "unknown",
+  "source_url": "https://fal.ai/models/fal-ai/hy-wu-edit",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fhy-wu-edit",
+  "retrieved_at": "2026-10-04T19:45:44.604Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "image-to-image",
+  "bytes_sha256": "89e2ac6e30df0b13b1187f5f8cff47eb8a84410b0514c0bf07a93df8ef6386e0",
+  "queue_path": "/fal-ai/hy-wu-edit",
+  "input_name": "HyWuEditInput",
+  "input": {
+    "$refName": "HyWuEditInput",
+    "required": [
+      "prompt",
+      "image_urls"
+    ],
+    "type": "object",
+    "properties": {
+      "sync_mode": {
+        "type": "boolean",
+        "default": false,
+        "description": "If True, the media will be returned as a data URI."
+      },
+      "enable_safety_checker": {
+        "type": "boolean",
+        "default": true,
+        "description": "If set to true, the safety checker will be enabled."
+      },
+      "image_urls": {
+        "type": "array",
+        "examples": [
+          [
+            "https://v3b.fal.media/files/b/0a933dff/BE-FgBximAbCJzZSgDNNw_input_1_1.png",
+            "https://v3b.fal.media/files/b/0a933dff/fNUqzO_Lxwvr-_-4BLeCV_input_1_2.png"
+          ]
+        ],
+        "items": {
+          "type": "string"
+        },
+        "description": "URLs of input images for editing. Typically 2 images: the base image and the reference image. Supports up to 3 images."
+      },
+      "num_inference_steps": {
+        "maximum": 100,
+        "type": "integer",
+        "minimum": 1,
+        "default": 30,
+        "description": "Number of diffusion denoising steps."
+      },
+      "output_format": {
+        "type": "string",
+        "default": "png",
+        "enum": [
+          "jpeg",
+          "png"
+        ],
+        "description": "The format of the generated image."
+      },
+      "enable_thinking": {
+        "type": "boolean",
+        "default": true,
+        "description": "Enable thinking mode. The model reasons about the edit before generating, producing higher quality results at the cost of longer inference time. Disable for faster results on straightforward edits."
+      },
+      "seed": {
+        "anyOf": [
+          {
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "Random seed for reproducible results. If None, a random seed is used."
+      },
+      "prompt": {
+        "type": "string",
+        "examples": [
+          "Using image 1 as the base image, replace the outfit with the clothing from image 2 while keeping the subject, pose, and background unchanged."
+        ],
+        "description": "The text prompt describing the desired edit. Supports both English and Chinese. Use specific instructions like 'Replace the clothing on figure 1 with the outfit from figure 2'."
+      },
+      "num_images": {
+        "maximum": 4,
+        "type": "integer",
+        "minimum": 1,
+        "default": 1,
+        "description": "The number of images to generate."
+      },
+      "image_size": {
+        "default": "auto",
+        "anyOf": [
+          {
+            "$refName": "ImageSize",
+            "properties": {
+              "height": {
+                "maximum": 14142,
+                "type": "integer",
+                "exclusiveMinimum": 0,
+                "default": 512,
+                "description": "The height of the generated image."
+              },
+              "width": {
+                "maximum": 14142,
+                "type": "integer",
+                "exclusiveMinimum": 0,
+                "default": 512,
+                "description": "The width of the generated image."
+              }
+            },
+            "type": "object"
+          },
+          {
+            "type": "string",
+            "enum": [
+              "auto",
+              "square_hd",
+              "square",
+              "portrait_4_3",
+              "portrait_16_9",
+              "landscape_4_3",
+              "landscape_16_9"
+            ]
+          }
+        ],
+        "description": "The desired size of the generated image. If auto, image size will be determined by the model."
+      }
+    }
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "HyWuEditInput",
+    "HyWuEditOutput",
+    "ImageSize",
+    "Image"
+  ]
+}

@@ -1,0 +1,116 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "veed/fabric-1.0/text",
+  "task": "unknown",
+  "source_url": "https://fal.ai/models/veed/fabric-1.0/text",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=veed%2Ffabric-1.0%2Ftext",
+  "retrieved_at": "2026-10-04T19:55:30.783Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "text-to-video",
+  "bytes_sha256": "0f29b570f89e8ba3b89f761f3c306a9e3cb906a23271cecb27dd29e87d0d03bb",
+  "queue_path": "/veed/fabric-1.0/text",
+  "input_name": "Fabric10TextInput",
+  "input": {
+    "$refName": "Fabric10TextInput",
+    "required": [
+      "image_url",
+      "text",
+      "resolution"
+    ],
+    "type": "object",
+    "properties": {
+      "resolution": {
+        "enum": [
+          "720p",
+          "480p"
+        ],
+        "type": "string",
+        "description": "Resolution"
+      },
+      "text": {
+        "minLength": 1,
+        "maxLength": 2000,
+        "type": "string",
+        "examples": [
+          "Create talking videos with VEED Fabric-One API."
+        ]
+      },
+      "image_url": {
+        "minLength": 1,
+        "format": "uri",
+        "maxLength": 2083,
+        "type": "string",
+        "examples": [
+          "https://v3.fal.media/files/koala/NLVPfOI4XL1cWT2PmmqT3_Hope.png"
+        ]
+      },
+      "voice_description": {
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "Optional additional voice description. The primary voice description is auto-generated from the image. You can use simple descriptors like 'British accent' or 'Confident' or provide a detailed description like 'Confident male voice, mid-20s, with notes of...'"
+      }
+    }
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "Fabric10TextInput",
+    "Fabric10TextOutput",
+    "File"
+  ]
+}

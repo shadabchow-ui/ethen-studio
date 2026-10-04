@@ -1,0 +1,113 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/phota/enhance",
+  "task": "unknown",
+  "source_url": "https://fal.ai/models/fal-ai/phota/enhance",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fphota%2Fenhance",
+  "retrieved_at": "2026-10-04T19:49:52.909Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "image-to-image",
+  "bytes_sha256": "7c17a7ec42906c8430ae8c701239f95fe139f6bcfb2df21aa7d8239c0e9b8e94",
+  "queue_path": "/fal-ai/phota/enhance",
+  "input_name": "PhotaEnhanceInput",
+  "input": {
+    "$refName": "PhotaEnhanceInput",
+    "properties": {
+      "image_url": {
+        "examples": [
+          "https://v3b.fal.media/files/b/0a8b911d/Abk8vStrvmSPlzUqI_NN3_image_043.png"
+        ],
+        "type": "string",
+        "description": "URL/Base64 data URI of the image to enhance."
+      },
+      "output_format": {
+        "enum": [
+          "jpeg",
+          "png"
+        ],
+        "type": "string",
+        "description": "The format of the generated image.",
+        "default": "jpeg"
+      },
+      "sync_mode": {
+        "type": "boolean",
+        "description": "If `True`, the media will be returned as a data URI and the output data won't be available in the request history.",
+        "default": false
+      },
+      "profile_ids": {
+        "type": "array",
+        "description": "List of profile IDs to use for the image enhancement. The profiles sent over will be used as candidates for identity preservation.",
+        "items": {
+          "type": "string"
+        }
+      },
+      "num_images": {
+        "minimum": 1,
+        "type": "integer",
+        "description": "Number of images to generate.",
+        "maximum": 4,
+        "default": 1
+      }
+    },
+    "type": "object",
+    "required": [
+      "image_url"
+    ]
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "PhotaEnhanceInput",
+    "PhotaEnhanceOutput",
+    "ImageFile"
+  ]
+}

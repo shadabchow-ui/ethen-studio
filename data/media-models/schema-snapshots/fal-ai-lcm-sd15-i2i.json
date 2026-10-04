@@ -1,0 +1,170 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/lcm-sd15-i2i",
+  "task": "unknown",
+  "source_url": "https://fal.ai/models/fal-ai/lcm-sd15-i2i",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Flcm-sd15-i2i",
+  "retrieved_at": "2026-10-04T19:47:27.197Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "image-to-image",
+  "bytes_sha256": "b03f58e0653f61549205985ad7ee127fa308a246dc76d6d4f01b35655a6368a7",
+  "queue_path": "/fal-ai/lcm-sd15-i2i",
+  "input_name": "LcmSd15I2iInput",
+  "input": {
+    "$refName": "LcmSd15I2iInput",
+    "required": [
+      "prompt",
+      "image_url"
+    ],
+    "type": "object",
+    "properties": {
+      "negative_prompt": {
+        "default": "",
+        "examples": [
+          "cartoon, illustration, animation. face. male, female",
+          "ugly, deformed"
+        ],
+        "description": "\n            The negative prompt to use.Use it to address details that you don't want\n            in the image. This could be colors, objects, scenery and even the small details\n            (e.g. moustache, blurry, low resolution).\n        ",
+        "type": "string"
+      },
+      "num_images": {
+        "minimum": 1,
+        "default": 1,
+        "type": "integer",
+        "description": "\n            The number of images to generate. The function will return a list of images\n            with the same prompt and negative prompt but different seeds.\n        ",
+        "maximum": 8
+      },
+      "enable_safety_checks": {
+        "default": true,
+        "type": "boolean",
+        "description": "\n            If set to true, the resulting image will be checked whether it includes any\n            potentially unsafe content. If it does, it will be replaced with a black\n            image. Disabling safety checks requires account authorization; unauthorized\n            requests are always checked.\n        "
+      },
+      "guidance_scale": {
+        "minimum": 0,
+        "default": 1,
+        "type": "number",
+        "description": "\n            The CFG (Classifier Free Guidance) scale is a measure of how close you want\n            the model to stick to your prompt when looking for a related image to show you.\n        ",
+        "maximum": 16
+      },
+      "prompt": {
+        "description": "The prompt to use for generating the image. Be as descriptive as possible for best results.",
+        "examples": [
+          "masterpiece, colorful, photo of a beach in hawaii, sun"
+        ],
+        "type": "string"
+      },
+      "sync_mode": {
+        "default": false,
+        "type": "boolean",
+        "description": "If `True`, the media will be returned as a data URI and the output data won't be available in the request history."
+      },
+      "num_inference_steps": {
+        "minimum": 1,
+        "default": 4,
+        "type": "integer",
+        "description": "\n            The number of inference steps to use for generating the image. The more steps\n            the better the image will be but it will also take longer to generate.\n        ",
+        "maximum": 12
+      },
+      "strength": {
+        "minimum": 0,
+        "default": 0.8,
+        "type": "number",
+        "description": "The strength of the image.",
+        "maximum": 1
+      },
+      "mask_url": {
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "Mask URL for compatibility with generic LCM processing."
+      },
+      "seed": {
+        "anyOf": [
+          {
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "\n            The same seed and the same prompt given to the same version of Stable Diffusion\n            will output the same image every time.\n        ",
+        "examples": [
+          42
+        ]
+      },
+      "request_id": {
+        "default": "",
+        "type": "string",
+        "description": "\n            An id bound to a request, can be used with response to identify the request\n            itself.\n        "
+      },
+      "image_url": {
+        "description": "The image to use as a base.",
+        "examples": [
+          "https://storage.googleapis.com/falserverless/model_tests/lcm/beach.png"
+        ],
+        "type": "string"
+      }
+    }
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "LcmSd15I2iInput",
+    "LcmSd15I2iOutput",
+    "Image"
+  ]
+}

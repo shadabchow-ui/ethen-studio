@@ -1,0 +1,301 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/ideogram/character/remix",
+  "task": "unknown",
+  "source_url": "https://fal.ai/models/fal-ai/ideogram/character/remix",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fideogram%2Fcharacter%2Fremix",
+  "retrieved_at": "2026-10-04T19:45:50.828Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "image-to-image",
+  "bytes_sha256": "7c72ef82874dfc943412d18d705d52642ae3650a6ba9ceb3839f3f9e374d603b",
+  "queue_path": "/fal-ai/ideogram/character/remix",
+  "input_name": "IdeogramCharacterRemixInput",
+  "input": {
+    "$refName": "IdeogramCharacterRemixInput",
+    "properties": {
+      "strength": {
+        "minimum": 0.01,
+        "default": 0.8,
+        "description": "Strength of the input image in the remix",
+        "maximum": 1,
+        "type": "number"
+      },
+      "style_codes": {
+        "anyOf": [
+          {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "A list of 8 character hexadecimal codes representing the style of the image. Cannot be used in conjunction with style_reference_images or style"
+      },
+      "rendering_speed": {
+        "enum": [
+          "TURBO",
+          "BALANCED",
+          "QUALITY"
+        ],
+        "default": "BALANCED",
+        "description": "The rendering speed to use.",
+        "type": "string"
+      },
+      "sync_mode": {
+        "default": false,
+        "description": "If `True`, the media will be returned as a data URI and the output data won't be available in the request history.",
+        "type": "boolean"
+      },
+      "reference_mask_urls": {
+        "description": "A set of masks to apply to the character references. Currently only 1 mask is supported, rest will be ignored. (maximum total size 10MB across all character references). The masks should be in JPEG, PNG or WebP format",
+        "type": "array",
+        "items": {
+          "type": "string"
+        }
+      },
+      "image_urls": {
+        "anyOf": [
+          {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "A set of images to use as style references (maximum total size 10MB across all style references). The images should be in JPEG, PNG or WebP format"
+      },
+      "expand_prompt": {
+        "default": true,
+        "description": "Determine if MagicPrompt should be used in generating the request or not.",
+        "type": "boolean"
+      },
+      "seed": {
+        "anyOf": [
+          {
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "Seed for the random number generator"
+      },
+      "image_size": {
+        "default": "square_hd",
+        "anyOf": [
+          {
+            "$refName": "ImageSize",
+            "properties": {
+              "width": {
+                "default": 512,
+                "exclusiveMinimum": 0,
+                "description": "The width of the generated image.",
+                "maximum": 14142,
+                "type": "integer"
+              },
+              "height": {
+                "default": 512,
+                "exclusiveMinimum": 0,
+                "description": "The height of the generated image.",
+                "maximum": 14142,
+                "type": "integer"
+              }
+            },
+            "type": "object"
+          },
+          {
+            "enum": [
+              "square_hd",
+              "square",
+              "portrait_4_3",
+              "portrait_16_9",
+              "landscape_4_3",
+              "landscape_16_9"
+            ],
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "The resolution of the generated image"
+      },
+      "reference_image_urls": {
+        "examples": [
+          [
+            "https://v3.fal.media/files/kangaroo/0rinwnj_Kn9Fsu2dK-aKm_image.png"
+          ]
+        ],
+        "description": "A set of images to use as character references. Currently only 1 image is supported, rest will be ignored. (maximum total size 10MB across all character references). The images should be in JPEG, PNG or WebP format",
+        "type": "array",
+        "items": {
+          "type": "string"
+        }
+      },
+      "image_url": {
+        "description": "The image URL to remix",
+        "type": "string",
+        "examples": [
+          "https://v3.fal.media/files/panda/mcxydS-_4ZjfBWFtgoo2z_XHLsl7khq6dC6Qp3cIdJl08rG0I.avif"
+        ]
+      },
+      "num_images": {
+        "minimum": 1,
+        "default": 1,
+        "description": "Number of images to generate.",
+        "maximum": 8,
+        "type": "integer"
+      },
+      "negative_prompt": {
+        "default": "",
+        "description": "Description of what to exclude from an image. Descriptions in the prompt take precedence to descriptions in the negative prompt.",
+        "type": "string"
+      },
+      "style": {
+        "enum": [
+          "AUTO",
+          "REALISTIC",
+          "FICTION"
+        ],
+        "default": "AUTO",
+        "description": "The style type to generate with. Cannot be used with style_codes.",
+        "type": "string"
+      },
+      "prompt": {
+        "description": "The prompt to remix the image with",
+        "type": "string",
+        "examples": [
+          "A glamorous portrait photograph of a woman in an elegant ballroom setting. The subject wears a champagne-colored ball gown with a fitted bodice, long sleeves, and a full skirt adorned with delicate lace appliques. The dress features a crystal-embellished hair accessory and pearl drop earrings. The grand staircase has ornate gold railings and leads to an elaborate crystal chandelier hanging from an arched ceiling. The walls are decorated with classical paintings featuring floral motifs. The lighting is warm and dramatic, creating a soft glow throughout the space. The composition is shot in a formal portrait style with the subject positioned on the lower landing of the staircase, looking over her shoulder at the camera."
+        ]
+      },
+      "color_palette": {
+        "anyOf": [
+          {
+            "$refName": "ColorPalette",
+            "properties": {
+              "name": {
+                "anyOf": [
+                  {
+                    "enum": [
+                      "EMBER",
+                      "FRESH",
+                      "JUNGLE",
+                      "MAGIC",
+                      "MELON",
+                      "MOSAIC",
+                      "PASTEL",
+                      "ULTRAMARINE"
+                    ],
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "description": "A color palette preset value"
+              },
+              "members": {
+                "anyOf": [
+                  {
+                    "type": "array",
+                    "items": {
+                      "$refName": "ColorPaletteMember",
+                      "properties": {
+                        "unsupported": "depth-exceeded"
+                      },
+                      "type": "object",
+                      "required": [
+                        "rgb"
+                      ]
+                    }
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "description": "A list of color palette members that define the color palette"
+              }
+            },
+            "type": "object"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "A color palette for generation, must EITHER be specified via one of the presets (name) or explicitly via hexadecimal representations of the color with optional weights (members)"
+      }
+    },
+    "type": "object",
+    "required": [
+      "prompt",
+      "image_url",
+      "reference_image_urls"
+    ]
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "IdeogramCharacterRemixInput",
+    "IdeogramCharacterRemixOutput",
+    "ImageSize",
+    "ColorPalette",
+    "File",
+    "ColorPaletteMember",
+    "RGBColor"
+  ]
+}

@@ -1,0 +1,129 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/minimax/hailuo-02/standard/image-to-video",
+  "task": "image-to-video",
+  "source_url": "https://fal.ai/models/fal-ai/minimax/hailuo-02/standard/image-to-video",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fminimax%2Fhailuo-02%2Fstandard%2Fimage-to-video",
+  "retrieved_at": "2026-10-04T19:49:12.884Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "image-to-video",
+  "bytes_sha256": "7c1af27ec6c6e0f21a33c64131a490cfbc79f5e59a6be77f393749636689de5b",
+  "queue_path": "/fal-ai/minimax/hailuo-02/standard/image-to-video",
+  "input_name": "MinimaxHailuo02StandardImageToVideoInput",
+  "input": {
+    "$refName": "MinimaxHailuo02StandardImageToVideoInput",
+    "required": [
+      "prompt",
+      "image_url"
+    ],
+    "type": "object",
+    "properties": {
+      "duration": {
+        "description": "The duration of the video in seconds. 10 seconds videos are not supported for 1080p resolution.",
+        "enum": [
+          "6",
+          "10"
+        ],
+        "type": "string",
+        "default": "6"
+      },
+      "resolution": {
+        "description": "The resolution of the generated video.",
+        "enum": [
+          "512P",
+          "768P"
+        ],
+        "type": "string",
+        "default": "768P"
+      },
+      "end_image_url": {
+        "description": "Optional URL of the image to use as the last frame of the video",
+        "anyOf": [
+          {
+            "ui": {
+              "field": "image"
+            },
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "image_url": {
+        "type": "string",
+        "examples": [
+          "https://storage.googleapis.com/falserverless/model_tests/minimax/1749891352437225630-389852416840474630_1749891352.png"
+        ]
+      },
+      "prompt_optimizer": {
+        "description": "Whether to use the model's prompt optimizer",
+        "type": "boolean",
+        "default": true
+      },
+      "prompt": {
+        "type": "string",
+        "maxLength": 2000,
+        "examples": [
+          "Man walked into winter cave with polar bear"
+        ]
+      }
+    }
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "MinimaxHailuo02StandardImageToVideoInput",
+    "MinimaxHailuo02StandardImageToVideoOutput",
+    "File"
+  ]
+}

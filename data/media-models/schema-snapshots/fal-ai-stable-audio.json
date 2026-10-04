@@ -1,0 +1,106 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/stable-audio",
+  "task": "unknown",
+  "source_url": "https://fal.ai/models/fal-ai/stable-audio",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fstable-audio",
+  "retrieved_at": "2026-10-04T19:51:37.509Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "text-to-audio",
+  "bytes_sha256": "7d5df4724e671c6a233d655a1658c06f927209db01614a687dbbda7130235571",
+  "queue_path": "/fal-ai/stable-audio",
+  "input_name": "StableAudioInput",
+  "input": {
+    "$refName": "StableAudioInput",
+    "type": "object",
+    "properties": {
+      "prompt": {
+        "type": "string",
+        "description": "The prompt to generate audio from",
+        "examples": [
+          "128 BPM tech house drum loop"
+        ]
+      },
+      "seconds_total": {
+        "default": 30,
+        "minimum": 0,
+        "maximum": 47,
+        "type": "integer",
+        "description": "The duration of the audio clip to generate"
+      },
+      "seconds_start": {
+        "default": 0,
+        "minimum": 0,
+        "maximum": 47,
+        "type": "integer",
+        "description": "The start point of the audio clip to generate"
+      },
+      "steps": {
+        "default": 100,
+        "minimum": 2,
+        "maximum": 1000,
+        "type": "integer",
+        "description": "The number of steps to denoise the audio for"
+      }
+    },
+    "required": [
+      "prompt"
+    ]
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "StableAudioInput",
+    "StableAudioOutput",
+    "File"
+  ]
+}

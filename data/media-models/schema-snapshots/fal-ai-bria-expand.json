@@ -1,0 +1,189 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/bria/expand",
+  "task": "unknown",
+  "source_url": "https://fal.ai/models/fal-ai/bria/expand",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fbria%2Fexpand",
+  "retrieved_at": "2026-10-04T19:42:46.098Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "image-to-image",
+  "bytes_sha256": "b6acc1a4bfb0cf2135f6a5ba22ac4dab60074c7ec12fbd0a8d4a50638326838c",
+  "queue_path": "/fal-ai/bria/expand",
+  "input_name": "BriaExpandInput",
+  "input": {
+    "$refName": "BriaExpandInput",
+    "required": [
+      "image_url",
+      "canvas_size"
+    ],
+    "properties": {
+      "original_image_location": {
+        "examples": [
+          [
+            301,
+            -66
+          ]
+        ],
+        "description": "The desired location of the original image, inside the full canvas. Provide the location of the upper left corner of the original image. The location can also be outside the canvas (the original image will be cropped). Will be ignored if aspect_ratio is provided.",
+        "anyOf": [
+          {
+            "type": "array",
+            "items": {
+              "type": "integer"
+            }
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "prompt": {
+        "default": "",
+        "description": "Text on which you wish to base the image expansion. This parameter is optional. Bria currently supports prompts in English only, excluding special characters.",
+        "type": "string"
+      },
+      "image_url": {
+        "examples": [
+          "https://storage.googleapis.com/falserverless/model_tests/orange.png"
+        ],
+        "description": "The URL of the input image.",
+        "type": "string"
+      },
+      "original_image_size": {
+        "examples": [
+          [
+            610,
+            855
+          ]
+        ],
+        "description": "The desired size of the original image, inside the full canvas. Ensure that the ratio of input image foreground or main subject to the canvas area is greater than 15% to achieve optimal results. Will be ignored if aspect_ratio is provided.",
+        "anyOf": [
+          {
+            "type": "array",
+            "items": {
+              "type": "integer"
+            }
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "canvas_size": {
+        "examples": [
+          [
+            1200,
+            674
+          ]
+        ],
+        "description": "The desired size of the final image, after the expansion. should have an area of less than 5000x5000 pixels.",
+        "items": {
+          "type": "integer"
+        },
+        "type": "array"
+      },
+      "sync_mode": {
+        "default": false,
+        "description": "If `True`, the media will be returned as a data URI and the output data won't be available in the request history.",
+        "type": "boolean"
+      },
+      "aspect_ratio": {
+        "description": "The desired aspect ratio of the final image. Will be used over original_image_size and original_image_location if provided.",
+        "anyOf": [
+          {
+            "enum": [
+              "1:1",
+              "2:3",
+              "3:2",
+              "3:4",
+              "4:3",
+              "4:5",
+              "5:4",
+              "9:16",
+              "16:9"
+            ],
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "seed": {
+        "description": "You can choose whether you want your generated expension to be random or predictable. You can recreate the same result in the future by using the seed value of a result from the response. You can exclude this parameter if you are not interested in recreating your results. This parameter is optional.",
+        "anyOf": [
+          {
+            "maximum": 2147483647,
+            "type": "integer",
+            "minimum": 0
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "negative_prompt": {
+        "default": "",
+        "description": "The negative prompt you would like to use to generate images.",
+        "type": "string"
+      }
+    },
+    "type": "object"
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "BriaExpandInput",
+    "BriaExpandOutput",
+    "Image"
+  ]
+}

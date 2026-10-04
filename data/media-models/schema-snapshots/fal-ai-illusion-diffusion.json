@@ -1,0 +1,198 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/illusion-diffusion",
+  "task": "unknown",
+  "source_url": "https://fal.ai/models/fal-ai/illusion-diffusion",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fillusion-diffusion",
+  "retrieved_at": "2026-10-04T19:46:04.381Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "text-to-image",
+  "bytes_sha256": "d67542efa51f1b4a445d1538aada896a29f6348a64fcbf7be92c309178c916fb",
+  "queue_path": "/fal-ai/illusion-diffusion",
+  "input_name": "IllusionDiffusionInput",
+  "input": {
+    "$refName": "IllusionDiffusionInput",
+    "type": "object",
+    "properties": {
+      "num_inference_steps": {
+        "minimum": 0,
+        "type": "integer",
+        "description": "\n            Increasing the amount of steps tells Stable Diffusion that it should take more steps\n            to generate your final result which can increase the amount of detail in your image.\n        ",
+        "maximum": 80,
+        "default": 40
+      },
+      "image_url": {
+        "type": "string",
+        "examples": [
+          "https://storage.googleapis.com/falserverless/illusion-examples/pattern.png",
+          "https://storage.googleapis.com/falserverless/illusion-examples/checkers.png",
+          "https://storage.googleapis.com/falserverless/illusion-examples/checkers_mid.jpg",
+          "https://storage.googleapis.com/falserverless/illusion-examples/ultra_checkers.png",
+          "https://storage.googleapis.com/falserverless/illusion-examples/funky.jpeg",
+          "https://storage.googleapis.com/falserverless/illusion-examples/cubes.jpeg",
+          "https://storage.googleapis.com/falserverless/illusion-examples/turkey-flag.png",
+          "https://storage.googleapis.com/falserverless/illusion-examples/india-flag.png",
+          "https://storage.googleapis.com/falserverless/illusion-examples/usa-flag.png"
+        ],
+        "description": "Input image url."
+      },
+      "controlnet_conditioning_scale": {
+        "type": "number",
+        "description": "The scale of the ControlNet.",
+        "default": 1
+      },
+      "scheduler": {
+        "enum": [
+          "DPM++ Karras SDE",
+          "Euler"
+        ],
+        "type": "string",
+        "description": "Scheduler / sampler to use for the image denoising process.",
+        "default": "Euler"
+      },
+      "seed": {
+        "description": "\n            Seed of the generated Image. It will be the same value of the one passed in the\n            input or the randomly generated that was used in case none was passed.\n        ",
+        "anyOf": [
+          {
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "guidance_scale": {
+        "exclusiveMinimum": 0,
+        "type": "number",
+        "description": "\n            The CFG (Classifier Free Guidance) scale is a measure of how close you want\n            the model to stick to your prompt when looking for a related image to show you.\n        ",
+        "maximum": 50,
+        "default": 7.5
+      },
+      "control_guidance_start": {
+        "minimum": 0,
+        "type": "number",
+        "maximum": 1,
+        "default": 0
+      },
+      "negative_prompt": {
+        "type": "string",
+        "examples": [
+          "(worst quality, poor details:1.4), lowres, (artist name, signature, watermark:1.4), bad-artist-anime, bad_prompt_version2, bad-hands-5, ng_deepnegative_v1_75t"
+        ],
+        "description": "\n            The negative prompt to use. Use it to address details that you don't want\n            in the image. This could be colors, objects, scenery and even the small details\n            (e.g. moustache, blurry, low resolution).\n        ",
+        "default": ""
+      },
+      "image_size": {
+        "anyOf": [
+          {
+            "$refName": "ImageSize",
+            "type": "object",
+            "properties": {
+              "height": {
+                "exclusiveMinimum": 0,
+                "type": "integer",
+                "description": "The height of the generated image.",
+                "maximum": 14142,
+                "default": 512
+              },
+              "width": {
+                "exclusiveMinimum": 0,
+                "type": "integer",
+                "description": "The width of the generated image.",
+                "maximum": 14142,
+                "default": 512
+              }
+            }
+          },
+          {
+            "enum": [
+              "square_hd",
+              "square",
+              "portrait_4_3",
+              "portrait_16_9",
+              "landscape_4_3",
+              "landscape_16_9"
+            ],
+            "type": "string"
+          }
+        ],
+        "description": "\n            The size of the generated image. You can choose between some presets or\n            custom height and width that **must be multiples of 8**.\n        ",
+        "default": "square_hd"
+      },
+      "prompt": {
+        "type": "string",
+        "examples": [
+          "(masterpiece:1.4), (best quality), (detailed), Medieval village scene with busy streets and castle in the distance"
+        ],
+        "description": "The prompt to use for generating the image. Be as descriptive as possible for best results."
+      },
+      "control_guidance_end": {
+        "minimum": 0,
+        "type": "number",
+        "maximum": 1,
+        "default": 1
+      }
+    },
+    "required": [
+      "image_url",
+      "prompt"
+    ]
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "IllusionDiffusionInput",
+    "IllusionDiffusionOutput",
+    "ImageSize",
+    "Image"
+  ]
+}

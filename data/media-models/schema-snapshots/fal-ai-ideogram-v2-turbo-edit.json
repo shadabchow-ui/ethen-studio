@@ -1,0 +1,135 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/ideogram/v2/turbo/edit",
+  "task": "image-editing",
+  "source_url": "https://fal.ai/models/fal-ai/ideogram/v2/turbo/edit",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fideogram%2Fv2%2Fturbo%2Fedit",
+  "retrieved_at": "2026-10-04T19:45:56.560Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "image-to-image",
+  "bytes_sha256": "9f2ba3393222771eb1d7bce1002f1da5247f81cb0be4399535c7808e1bcefd8f",
+  "queue_path": "/fal-ai/ideogram/v2/turbo/edit",
+  "input_name": "IdeogramV2TurboEditInput",
+  "input": {
+    "$refName": "IdeogramV2TurboEditInput",
+    "properties": {
+      "mask_url": {
+        "description": "The mask URL to inpaint the image. Needs to match the dimensions of the input image.",
+        "type": "string",
+        "examples": [
+          "https://storage.googleapis.com/falserverless/flux-lora/example-images/mask_knight.jpeg"
+        ]
+      },
+      "image_url": {
+        "description": "The image URL to generate an image from. Needs to match the dimensions of the mask.",
+        "type": "string",
+        "examples": [
+          "https://storage.googleapis.com/falserverless/flux-lora/example-images/knight.jpeg"
+        ]
+      },
+      "sync_mode": {
+        "default": false,
+        "description": "If `True`, the media will be returned as a data URI and the output data won't be available in the request history.",
+        "type": "boolean"
+      },
+      "expand_prompt": {
+        "default": true,
+        "description": "Whether to expand the prompt with MagicPrompt functionality.",
+        "type": "boolean"
+      },
+      "style": {
+        "enum": [
+          "auto",
+          "general",
+          "realistic",
+          "design",
+          "render_3D",
+          "anime"
+        ],
+        "default": "auto",
+        "description": "The style of the generated image",
+        "type": "string"
+      },
+      "prompt": {
+        "description": "The prompt to fill the masked part of the image.",
+        "type": "string",
+        "examples": [
+          "A knight in shining armour holding a greatshield with \"FAL\" on it"
+        ]
+      },
+      "seed": {
+        "anyOf": [
+          {
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "Seed for the random number generator"
+      }
+    },
+    "type": "object",
+    "required": [
+      "prompt",
+      "image_url",
+      "mask_url"
+    ]
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "IdeogramV2TurboEditInput",
+    "IdeogramV2TurboEditOutput",
+    "File"
+  ]
+}

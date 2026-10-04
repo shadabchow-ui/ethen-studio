@@ -1,0 +1,152 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "cassetteai/video-sound-effects-generator",
+  "task": "video-editing",
+  "source_url": "https://fal.ai/models/cassetteai/video-sound-effects-generator",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=cassetteai%2Fvideo-sound-effects-generator",
+  "retrieved_at": "2026-10-04T19:42:20.326Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "video-to-video",
+  "bytes_sha256": "82c336704d188ec6ace037a64112177fb2c65bcda643175785b33803451accc7",
+  "queue_path": "/cassetteai/video-sound-effects-generator",
+  "input_name": "VideoSoundEffectsGeneratorInput",
+  "input": {
+    "$refName": "VideoSoundEffectsGeneratorInput",
+    "type": "object",
+    "properties": {
+      "video_url": {
+        "$refName": "Video",
+        "type": "object",
+        "properties": {
+          "file_size": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "examples": [
+              4404019
+            ],
+            "description": "The size of the file in bytes."
+          },
+          "file_name": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "examples": [
+              "z9RV14K95DvU.png"
+            ],
+            "description": "The name of the file. It will be auto-generated if not provided."
+          },
+          "content_type": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "examples": [
+              "image/png"
+            ],
+            "description": "The mime type of the file."
+          },
+          "url": {
+            "type": "string",
+            "description": "The URL where the file can be downloaded from."
+          },
+          "file_data": {
+            "anyOf": [
+              {
+                "format": "binary",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "File data"
+          }
+        },
+        "description": "A video file to analyze & re-sound with generated SFX.",
+        "required": [
+          "url"
+        ],
+        "examples": [
+          "https://v3.fal.media/files/tiger/3NOa3BqrJfr3jJBMqGexs_final_with_sfx.mp4",
+          "https://v3.fal.media/files/rabbit/vkNtbcJ3x7KmzjJZeVWQe_final_with_sfx.mp4"
+        ]
+      }
+    },
+    "description": "Pydantic model for receiving a video file to analyze and re-sound.",
+    "required": [
+      "video_url"
+    ]
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "VideoSoundEffectsGeneratorInput",
+    "VideoSoundEffectsGeneratorOutput",
+    "Video",
+    "File"
+  ]
+}

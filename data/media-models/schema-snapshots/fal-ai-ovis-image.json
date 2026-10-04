@@ -1,0 +1,190 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/ovis-image",
+  "task": "image-generation",
+  "source_url": "https://fal.ai/models/fal-ai/ovis-image",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fovis-image",
+  "retrieved_at": "2026-10-04T19:49:45.611Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "text-to-image",
+  "bytes_sha256": "e8610e0e2672265ebd628101a372cc9214a5faeb8f708309b3fca150e5359f38",
+  "queue_path": "/fal-ai/ovis-image",
+  "input_name": "OvisImageInput",
+  "input": {
+    "$refName": "OvisImageInput",
+    "required": [
+      "prompt"
+    ],
+    "type": "object",
+    "properties": {
+      "num_images": {
+        "minimum": 1,
+        "description": "The number of images to generate.",
+        "maximum": 4,
+        "type": "integer",
+        "default": 1
+      },
+      "guidance_scale": {
+        "minimum": 1,
+        "description": "The guidance scale to use for the image generation.",
+        "maximum": 20,
+        "type": "number",
+        "default": 5
+      },
+      "acceleration": {
+        "description": "The acceleration level to use.",
+        "type": "string",
+        "default": "regular",
+        "enum": [
+          "none",
+          "regular",
+          "high"
+        ]
+      },
+      "prompt": {
+        "description": "The prompt to generate an image from.",
+        "type": "string",
+        "examples": [
+          "The moment of digital upload, a human breaking apart into 3D voxels, leaving a grey world for a technicolor void, dynamic action shot, particle physics simulation, bright neon colors."
+        ]
+      },
+      "sync_mode": {
+        "description": "If `True`, the media will be returned as a data URI and the output data won't be available in the request history.",
+        "type": "boolean",
+        "default": false
+      },
+      "num_inference_steps": {
+        "minimum": 1,
+        "description": "The number of inference steps to perform.",
+        "maximum": 50,
+        "type": "integer",
+        "default": 28
+      },
+      "enable_safety_checker": {
+        "description": "If set to true, the safety checker will be enabled. Disabling it requires account authorization; unauthorized requests are always checked, and images flagged as unsafe are returned as black images.",
+        "type": "boolean",
+        "default": true
+      },
+      "output_format": {
+        "description": "The format of the generated image.",
+        "type": "string",
+        "default": "png",
+        "enum": [
+          "jpeg",
+          "png",
+          "webp"
+        ]
+      },
+      "seed": {
+        "anyOf": [
+          {
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "\n            The same seed and the same prompt given to the same version of the model\n            will output the same image every time.\n        "
+      },
+      "image_size": {
+        "anyOf": [
+          {
+            "$refName": "ImageSize",
+            "type": "object",
+            "properties": {
+              "height": {
+                "description": "The height of the generated image.",
+                "maximum": 14142,
+                "type": "integer",
+                "default": 512,
+                "exclusiveMinimum": 0
+              },
+              "width": {
+                "description": "The width of the generated image.",
+                "maximum": 14142,
+                "type": "integer",
+                "default": 512,
+                "exclusiveMinimum": 0
+              }
+            }
+          },
+          {
+            "type": "string",
+            "enum": [
+              "square_hd",
+              "square",
+              "portrait_4_3",
+              "portrait_16_9",
+              "landscape_4_3",
+              "landscape_16_9"
+            ]
+          }
+        ],
+        "description": "The size of the generated image.",
+        "default": "landscape_4_3"
+      },
+      "negative_prompt": {
+        "description": "The negative prompt to generate an image from.",
+        "type": "string",
+        "default": ""
+      }
+    }
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "OvisImageInput",
+    "OvisImageOutput",
+    "ImageSize",
+    "Image"
+  ]
+}

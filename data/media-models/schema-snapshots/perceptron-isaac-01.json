@@ -1,0 +1,104 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "perceptron/isaac-01",
+  "task": "unknown",
+  "source_url": "https://fal.ai/models/perceptron/isaac-01",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=perceptron%2Fisaac-01",
+  "retrieved_at": "2026-10-04T19:54:48.310Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "vision",
+  "bytes_sha256": "86a82cb3191b95e359d1a331c01841dd7041aa5dbc6d2db7ce1049462ff94131",
+  "queue_path": "/perceptron/isaac-01",
+  "input_name": "Isaac01Input",
+  "input": {
+    "$refName": "Isaac01Input",
+    "required": [
+      "image_url",
+      "prompt"
+    ],
+    "properties": {
+      "prompt": {
+        "examples": [
+          "Which car is trying to park into garage?"
+        ],
+        "description": "Prompt to be used for the image",
+        "type": "string"
+      },
+      "image_url": {
+        "examples": [
+          "https://v3b.fal.media/files/b/penguin/BxDPafViqMBGfNyvcmG-C_image-1d100e9%20(4).jpg"
+        ],
+        "description": "Image URL to be processed",
+        "type": "string"
+      },
+      "response_style": {
+        "default": "text",
+        "enum": [
+          "text",
+          "box",
+          "point",
+          "polygon"
+        ],
+        "description": "\nResponse style to be used for the image.\n\n- text: Model will output text. Good for descriptions and captioning.\n- box: Model will output a combination of text and bounding boxes. Good for\nlocalization.\n- point: Model will output a combination of text and points. Good for counting many\nobjects.\n- polygon: Model will output a combination of text and polygons. Good for granular\nsegmentation.\n",
+        "type": "string"
+      }
+    },
+    "type": "object"
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "Isaac01Input",
+    "Isaac01Output",
+    "CompletionUsage"
+  ]
+}

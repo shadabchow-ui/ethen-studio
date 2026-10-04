@@ -1,0 +1,120 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/image-apps-v2/perspective",
+  "task": "image-generation",
+  "source_url": "https://fal.ai/models/fal-ai/image-apps-v2/perspective",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fimage-apps-v2%2Fperspective",
+  "retrieved_at": "2026-10-04T19:46:09.495Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "image-to-image",
+  "bytes_sha256": "48cf8d0955265680c8cc19cca59b9941196e4dd26c6dc48d7de25c494044a0eb",
+  "queue_path": "/fal-ai/image-apps-v2/perspective",
+  "input_name": "ImageAppsV2PerspectiveInput",
+  "input": {
+    "$refName": "ImageAppsV2PerspectiveInput",
+    "type": "object",
+    "properties": {
+      "aspect_ratio": {
+        "$refName": "AspectRatio",
+        "type": "object",
+        "properties": {
+          "ratio": {
+            "enum": [
+              "1:1",
+              "16:9",
+              "9:16",
+              "4:3",
+              "3:4"
+            ],
+            "type": "string",
+            "description": "Aspect ratio for 4K resolution output",
+            "default": "1:1"
+          }
+        },
+        "description": "Aspect ratio for 4K output"
+      },
+      "target_perspective": {
+        "enum": [
+          "front",
+          "left_side",
+          "right_side",
+          "back",
+          "top_down",
+          "bottom_up",
+          "birds_eye",
+          "three_quarter_left",
+          "three_quarter_right"
+        ],
+        "type": "string",
+        "default": "front"
+      },
+      "image_url": {
+        "type": "string",
+        "examples": [
+          "https://v3b.fal.media/files/b/lion/aqEiZ8Ui6rxWUB-Ujfu79_52c238c6d75d45538eaa71c50d329ba0.png"
+        ],
+        "description": "Image URL for perspective change"
+      }
+    },
+    "required": [
+      "image_url"
+    ]
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "ImageAppsV2PerspectiveInput",
+    "ImageAppsV2PerspectiveOutput",
+    "AspectRatio",
+    "Image"
+  ]
+}

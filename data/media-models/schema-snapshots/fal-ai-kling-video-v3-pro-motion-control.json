@@ -1,0 +1,183 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/kling-video/v3/pro/motion-control",
+  "task": "video-editing",
+  "source_url": "https://fal.ai/models/fal-ai/kling-video/v3/pro/motion-control",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fkling-video%2Fv3%2Fpro%2Fmotion-control",
+  "retrieved_at": "2026-10-04T19:47:16.389Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "video-to-video",
+  "bytes_sha256": "19bf91c3ab89c44cdf9f53e50d17cf99b0851d7f980ad0fe89b5ceb5ef232ce9",
+  "queue_path": "/fal-ai/kling-video/v3/pro/motion-control",
+  "input_name": "KlingVideoV3ProMotionControlInput",
+  "input": {
+    "$refName": "KlingVideoV3ProMotionControlInput",
+    "required": [
+      "image_url",
+      "video_url",
+      "character_orientation"
+    ],
+    "type": "object",
+    "properties": {
+      "image_url": {
+        "description": "Reference image URL. The characters, backgrounds, and other elements in the generated video are based on this reference image. Characters should have clear body proportions, avoid occlusion, and occupy more than 5% of the image area.",
+        "examples": [
+          "https://v3b.fal.media/files/b/0a90ffa7/TNErq9yD7ZxGRATjfAqnh_EIgJSN67.png"
+        ],
+        "limit_description": "Max file size: 10.0MB, Min width: 340px, Min height: 340px, Max width: 3850px, Max height: 3850px, Min aspect ratio: 0.40, Max aspect ratio: 2.50, Timeout: 20.0s",
+        "type": "string",
+        "_fal_ui_field": "image"
+      },
+      "character_orientation": {
+        "description": "Controls whether the output character's orientation matches the reference image or video. 'video': orientation matches reference video - better for complex motions (max 30s). 'image': orientation matches reference image - better for following camera movements (max 10s).",
+        "type": "string",
+        "examples": [
+          "image"
+        ],
+        "enum": [
+          "image",
+          "video"
+        ]
+      },
+      "elements": {
+        "description": "Optional element for facial consistency binding. Upload a facial element to enhance identity preservation in the generated video. Only 1 element is supported. Reference in prompt as @Element1. Element binding is only supported when character_orientation is 'video'.",
+        "examples": [
+          null
+        ],
+        "anyOf": [
+          {
+            "type": "array",
+            "items": {
+              "$refName": "KlingV3ImageElementInput",
+              "properties": {
+                "reference_image_urls": {
+                  "description": "Additional reference images from different angles. 1-3 images supported. At least one image is required.",
+                  "anyOf": [
+                    {
+                      "type": "array",
+                      "items": {
+                        "type": "string",
+                        "_fal_ui_field": "image",
+                        "ui": {
+                          "unsupported": "depth-exceeded"
+                        },
+                        "limit_description": "Max file size: 50.0MB, Min width: 300px, Min height: 300px, Min aspect ratio: 0.40, Max aspect ratio: 2.50, Timeout: 20.0s"
+                      }
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "frontal_image_url": {
+                  "anyOf": [
+                    {
+                      "type": "string",
+                      "ui": {
+                        "field": "image"
+                      },
+                      "limit_description": "Max file size: 50.0MB, Min width: 300px, Min height: 300px, Min aspect ratio: 0.40, Max aspect ratio: 2.50, Timeout: 20.0s"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ],
+                  "description": "The frontal image of the element (main view)."
+                }
+              },
+              "type": "object"
+            }
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "video_url": {
+        "description": "Reference video URL. The character actions in the generated video will be consistent with this reference video. Should contain a realistic style character with entire body or upper body visible, including head, without obstruction. Duration limit depends on character_orientation: 10s max for 'image', 30s max for 'video'.",
+        "examples": [
+          "https://v3b.fal.media/files/b/0a90ff92/hklvF__w53diz6Rve7f5__JuDW2xl0mr6sJ_Kjz3Vxe_vidoeook%20(1)_1.mp4"
+        ],
+        "limit_description": "Max file size: 100.0MB, Min width: 340px, Min height: 340px, Max width: 3850px, Max height: 3850px, Min duration: 3.0s, Max duration: 30.05s, Timeout: 30.0s",
+        "type": "string",
+        "_fal_ui_field": "video"
+      },
+      "prompt": {
+        "anyOf": [
+          {
+            "type": "string",
+            "maxLength": 2500
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "examples": [
+          "A man dancing"
+        ]
+      },
+      "keep_original_sound": {
+        "description": "Whether to keep the original sound from the reference video.",
+        "type": "boolean",
+        "default": true
+      }
+    }
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "KlingVideoV3ProMotionControlInput",
+    "KlingVideoV3ProMotionControlOutput",
+    "KlingV3ImageElementInput",
+    "File"
+  ]
+}

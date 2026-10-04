@@ -1,0 +1,89 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/nafnet/deblur",
+  "task": "unknown",
+  "source_url": "https://fal.ai/models/fal-ai/nafnet/deblur",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fnafnet%2Fdeblur",
+  "retrieved_at": "2026-10-04T19:49:33.345Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "image-to-image",
+  "bytes_sha256": "9870a026b0ee46646e7f420e6bf02771f7a0d5ceeea3696e574fb6d9bbc6b75d",
+  "queue_path": "/fal-ai/nafnet/deblur",
+  "input_name": "NafnetDeblurInput",
+  "input": {
+    "$refName": "NafnetDeblurInput",
+    "required": [
+      "image_url"
+    ],
+    "type": "object",
+    "properties": {
+      "seed": {
+        "description": "seed to be used for generation",
+        "type": "integer"
+      },
+      "image_url": {
+        "description": "URL of image to be used for relighting",
+        "type": "string",
+        "examples": [
+          "https://storage.googleapis.com/falserverless/nafnet/blurry.png"
+        ]
+      }
+    }
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "NafnetDeblurInput",
+    "NafnetDeblurOutput",
+    "Image"
+  ]
+}

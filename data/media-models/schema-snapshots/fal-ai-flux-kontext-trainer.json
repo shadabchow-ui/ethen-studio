@@ -1,0 +1,113 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/flux-kontext-trainer",
+  "task": "unknown",
+  "source_url": "https://fal.ai/models/fal-ai/flux-kontext-trainer",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fflux-kontext-trainer",
+  "retrieved_at": "2026-10-04T19:44:44.220Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "training",
+  "bytes_sha256": "57942007cf95176d4d2249fa8c68ccc4eaad808e7d30607091658409bfab4714",
+  "queue_path": "/fal-ai/flux-kontext-trainer",
+  "input_name": "FluxKontextTrainerInput",
+  "input": {
+    "$refName": "FluxKontextTrainerInput",
+    "properties": {
+      "default_caption": {
+        "description": "Default caption to use when caption files are missing. If None, missing captions will cause an error.",
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "steps": {
+        "maximum": 10000,
+        "minimum": 1,
+        "description": "Number of steps to train for",
+        "default": 1000,
+        "type": "integer"
+      },
+      "learning_rate": {
+        "default": 0.0001,
+        "type": "number"
+      },
+      "output_lora_format": {
+        "enum": [
+          "fal",
+          "comfy"
+        ],
+        "description": "Dictates the naming scheme for the output weights",
+        "default": "fal",
+        "type": "string"
+      },
+      "image_data_url": {
+        "description": "\n        URL to the input data zip archive.\n\n        The zip should contain pairs of images. The images should be named:\n\n        ROOT_start.EXT and ROOT_end.EXT\n        For example:\n        photo_start.jpg and photo_end.jpg\n\n        The zip can also contain a text file for each image pair. The text file should be named:\n        ROOT.txt\n        For example:\n        photo.txt\n\n        This text file can be used to specify the edit instructions for the image pair.\n\n        If no text file is provided, the default_caption will be used.\n\n        If no default_caption is provided, the training will fail.\n        ",
+        "type": "string"
+      }
+    },
+    "required": [
+      "image_data_url"
+    ],
+    "type": "object"
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "FluxKontextTrainerInput",
+    "FluxKontextTrainerOutput",
+    "File"
+  ]
+}

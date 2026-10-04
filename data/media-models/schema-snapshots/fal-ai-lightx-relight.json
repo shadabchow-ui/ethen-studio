@@ -1,0 +1,199 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/lightx/relight",
+  "task": "unknown",
+  "source_url": "https://fal.ai/models/fal-ai/lightx/relight",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Flightx%2Frelight",
+  "retrieved_at": "2026-10-04T19:47:29.320Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "video-to-video",
+  "bytes_sha256": "b500762dbb25703286710b7a42419b282f912ae8ab23a50e8ee8e09bf3163c67",
+  "queue_path": "/fal-ai/lightx/relight",
+  "input_name": "LightxRelightInput",
+  "input": {
+    "$refName": "LightxRelightInput",
+    "properties": {
+      "relight_parameters": {
+        "anyOf": [
+          {
+            "$refName": "RelightParameters",
+            "properties": {
+              "cfg": {
+                "default": 2,
+                "maximum": 10,
+                "description": "Classifier-free guidance scale for relighting.",
+                "minimum": 1,
+                "type": "number"
+              },
+              "relight_prompt": {
+                "description": "Text prompt describing the desired lighting condition.",
+                "examples": [
+                  "Sunlight",
+                  "Red and Blue Neon Light",
+                  "Warm indoor lighting"
+                ],
+                "type": "string"
+              },
+              "bg_source": {
+                "default": "Left",
+                "enum": [
+                  "Left",
+                  "Right",
+                  "Top",
+                  "Bottom"
+                ],
+                "description": "Direction of the light source (used for IC-light).",
+                "type": "string"
+              },
+              "use_sky_mask": {
+                "default": false,
+                "description": "Whether to use sky masking for outdoor scenes.",
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "relight_prompt"
+            ],
+            "description": "Relighting parameters for video relighting operations.\n\nUsed with relight_condition_type 'ic' (intrinsic conditioning).",
+            "type": "object"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "Relighting parameters (required for relight_condition_type='ic'). Not used for 'bg' (which expects a background image URL instead).",
+        "examples": [
+          {
+            "cfg": 2,
+            "relight_prompt": "Sunlight",
+            "bg_source": "Right",
+            "use_sky_mask": false
+          }
+        ]
+      },
+      "relit_cond_type": {
+        "default": "ic",
+        "enum": [
+          "ic",
+          "ref",
+          "hdr",
+          "bg"
+        ],
+        "description": "Relight condition type.",
+        "type": "string"
+      },
+      "video_url": {
+        "description": "URL of the input video.",
+        "examples": [
+          "https://storage.googleapis.com/falserverless/example_inputs/lightx_video.mp4"
+        ],
+        "type": "string"
+      },
+      "relit_cond_img_url": {
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "URL of conditioning image. Required for relight_condition_type='ref'/'hdr'. Also required for relight_condition_type='bg' (background image).",
+        "examples": [
+          "https://storage.googleapis.com/falserverless/example_inputs/lightx_image.png"
+        ]
+      },
+      "ref_id": {
+        "default": 0,
+        "maximum": 48,
+        "description": "Frame index to use as reference to relight the video with reference. Must be less than the number of generated frames (default 49).",
+        "minimum": 0,
+        "type": "integer"
+      },
+      "seed": {
+        "anyOf": [
+          {
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "Random seed for reproducibility. If None, a random seed is chosen."
+      },
+      "prompt": {
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "Optional text prompt. If omitted, Light-X will auto-caption the video."
+      }
+    },
+    "required": [
+      "video_url"
+    ],
+    "description": "Relighting-only request (minimal schema).",
+    "type": "object"
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "LightxRelightInput",
+    "LightxRelightOutput",
+    "RelightParameters",
+    "File"
+  ]
+}

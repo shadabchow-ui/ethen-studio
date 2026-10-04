@@ -1,0 +1,219 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/creative-upscaler",
+  "task": "unknown",
+  "source_url": "https://fal.ai/models/fal-ai/creative-upscaler",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fcreative-upscaler",
+  "retrieved_at": "2026-10-04T19:43:12.055Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "image-to-image",
+  "bytes_sha256": "0465f5d1e2155a0b7f60500237523ced749fb6add69d1d5d45d7b54bf5323ce0",
+  "queue_path": "/fal-ai/creative-upscaler",
+  "input_name": "CreativeUpscalerInput",
+  "input": {
+    "$refName": "CreativeUpscalerInput",
+    "required": [
+      "image_url"
+    ],
+    "type": "object",
+    "properties": {
+      "scale": {
+        "description": "The scale of the output image. The higher the scale, the bigger the output image will be.",
+        "maximum": 5,
+        "type": "number",
+        "default": 2,
+        "minimum": 1
+      },
+      "seed": {
+        "description": "\n            The same seed and the same prompt given to the same version of Stable Diffusion\n            will output the same image every time.\n        ",
+        "anyOf": [
+          {
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "examples": [
+          42
+        ]
+      },
+      "additional_lora_scale": {
+        "description": "The scale of the additional LORA model to use for the upscaling. Default is 1.0",
+        "type": "number",
+        "default": 1
+      },
+      "guidance_scale": {
+        "description": "\n            The CFG (Classifier Free Guidance) scale is a measure of how close you want\n            the model to stick to your prompt when looking for a related image to show you.\n        ",
+        "maximum": 16,
+        "type": "number",
+        "default": 7.5,
+        "minimum": 0
+      },
+      "prompt": {
+        "description": "The prompt to use for generating the image. Be as descriptive as possible for best results. If no prompt is provide BLIP2 will be used to generate a prompt.",
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "examples": []
+      },
+      "override_size_limits": {
+        "description": "\n            Allow for large uploads that could take a very long time.\n        ",
+        "type": "boolean",
+        "default": false
+      },
+      "additional_embedding_url": {
+        "description": "The URL to the additional embeddings to use for the upscaling. Default is None",
+        "type": "string"
+      },
+      "num_inference_steps": {
+        "description": "\n            The number of inference steps to use for generating the image. The more steps\n            the better the image will be but it will also take longer to generate.\n        ",
+        "maximum": 200,
+        "type": "integer",
+        "default": 20,
+        "minimum": 1
+      },
+      "detail": {
+        "description": "How much detail to add",
+        "maximum": 5,
+        "type": "number",
+        "default": 1,
+        "minimum": 0
+      },
+      "negative_prompt": {
+        "description": "\n            The negative prompt to use.Use it to address details that you don't want\n            in the image. This could be colors, objects, scenery and even the small details\n            (e.g. moustache, blurry, low resolution).\n        ",
+        "type": "string",
+        "default": "blurry, low resolution, bad, ugly, low quality, pixelated, interpolated, compression artifacts, noisey, grainy",
+        "examples": [
+          "blurry, low resolution, bad, ugly, low quality, pixelated, interpolated, compression artifacts, noisey, grainy"
+        ]
+      },
+      "base_model_url": {
+        "description": "The URL to the base model to use for the upscaling",
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "creativity": {
+        "description": "How much the output can deviate from the original",
+        "maximum": 1,
+        "type": "number",
+        "default": 0.5,
+        "minimum": 0
+      },
+      "prompt_suffix": {
+        "description": "The suffix to add to the prompt. This is useful to add a common ending to all prompts such as 'high quality' etc or embedding tokens.",
+        "type": "string",
+        "default": " high quality, highly detailed, high resolution, sharp"
+      },
+      "skip_ccsr": {
+        "description": "\n            If set to true, the image will not be processed by the CCSR model before\n            being processed by the creativity model.\n        ",
+        "type": "boolean",
+        "default": false
+      },
+      "enable_safety_checks": {
+        "description": "\n            If set to true, the resulting image will be checked whether it includes any\n            potentially unsafe content. If it does, it will be replaced with a black\n            image.\n        ",
+        "type": "boolean",
+        "default": true
+      },
+      "model_type": {
+        "description": "The type of model to use for the upscaling. Default is SD_1_5",
+        "enum": [
+          "SD_1_5",
+          "SDXL"
+        ],
+        "type": "string",
+        "default": "SD_1_5",
+        "examples": [
+          "SD_1_5",
+          "SDXL"
+        ]
+      },
+      "image_url": {
+        "description": "The image to upscale.",
+        "type": "string",
+        "examples": [
+          "https://storage.googleapis.com/falserverless/model_tests/upscale/owl.png",
+          "https://storage.googleapis.com/falserverless/gallery/blue-bird.jpeg"
+        ]
+      },
+      "shape_preservation": {
+        "description": "How much to preserve the shape of the original image",
+        "maximum": 3,
+        "type": "number",
+        "default": 0.25,
+        "minimum": 0
+      },
+      "additional_lora_url": {
+        "description": "The URL to the additional LORA model to use for the upscaling. Default is None",
+        "type": "string"
+      }
+    }
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "CreativeUpscalerInput",
+    "CreativeUpscalerOutput",
+    "Image"
+  ]
+}

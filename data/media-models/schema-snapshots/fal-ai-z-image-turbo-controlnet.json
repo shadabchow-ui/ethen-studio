@@ -1,0 +1,234 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/z-image/turbo/controlnet",
+  "task": "image-generation",
+  "source_url": "https://fal.ai/models/fal-ai/z-image/turbo/controlnet",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fz-image%2Fturbo%2Fcontrolnet",
+  "retrieved_at": "2026-10-04T19:53:23.758Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "image-to-image",
+  "bytes_sha256": "405c3dceb98bfef3cfa438a8dbdfd99c0e3904b941ee9aa4361d66f3dad5b51e",
+  "queue_path": "/fal-ai/z-image/turbo/controlnet",
+  "input_name": "ZImageTurboControlnetInput",
+  "input": {
+    "$refName": "ZImageTurboControlnetInput",
+    "properties": {
+      "prompt": {
+        "description": "The prompt to generate an image from.",
+        "type": "string",
+        "examples": [
+          "A single leopard, its spotted golden coat detailed with black rosettes, cautiously peeks its head through dense green foliage. The leopard’s eyes are alert and focused forward, ears perked, whiskers slightly visible. The bushes consist of thick, leafy shrubs with varying shades of green, some leaves partially obscuring the leopard’s muzzle and forehead. Soft natural daylight filters through the canopy above, casting dappled shadows across the animal’s fur and surrounding leaves. The composition is a medium close-up, centered on the leopard’s head emerging from the undergrowth, with shallow depth of field blurring the background vegetation."
+        ]
+      },
+      "enable_prompt_expansion": {
+        "description": "Whether to enable prompt expansion. Note: this will increase the price by 0.0025 credits per request.",
+        "type": "boolean",
+        "default": false
+      },
+      "num_inference_steps": {
+        "maximum": 8,
+        "description": "The number of inference steps to perform.",
+        "type": "integer",
+        "minimum": 1,
+        "default": 8
+      },
+      "preprocess": {
+        "description": "What kind of preprocessing to apply to the image, if any.",
+        "anyOf": [
+          {
+            "enum": [
+              "none",
+              "canny",
+              "depth",
+              "pose"
+            ],
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": "none",
+        "examples": [
+          "none"
+        ]
+      },
+      "control_end": {
+        "maximum": 1,
+        "description": "The end of the controlnet conditioning.",
+        "type": "number",
+        "minimum": 0,
+        "default": 0.8
+      },
+      "enable_safety_checker": {
+        "description": "If set to true, the safety checker will be enabled. Disabling it requires account authorization; unauthorized requests are always checked, and images flagged as unsafe are returned as black images.",
+        "type": "boolean",
+        "default": true
+      },
+      "image_size": {
+        "description": "The size of the generated image.",
+        "anyOf": [
+          {
+            "$refName": "ImageSize",
+            "type": "object",
+            "properties": {
+              "height": {
+                "maximum": 14142,
+                "description": "The height of the generated image.",
+                "type": "integer",
+                "default": 512,
+                "exclusiveMinimum": 0
+              },
+              "width": {
+                "maximum": 14142,
+                "description": "The width of the generated image.",
+                "type": "integer",
+                "default": 512,
+                "exclusiveMinimum": 0
+              }
+            }
+          },
+          {
+            "enum": [
+              "square_hd",
+              "square",
+              "portrait_4_3",
+              "portrait_16_9",
+              "landscape_4_3",
+              "landscape_16_9",
+              "auto"
+            ],
+            "type": "string"
+          }
+        ],
+        "default": "auto"
+      },
+      "control_scale": {
+        "maximum": 1,
+        "description": "The scale of the controlnet conditioning.",
+        "type": "number",
+        "minimum": 0,
+        "default": 0.75
+      },
+      "output_format": {
+        "description": "The format of the generated image.",
+        "enum": [
+          "jpeg",
+          "png",
+          "webp"
+        ],
+        "type": "string",
+        "default": "png"
+      },
+      "num_images": {
+        "maximum": 4,
+        "description": "The number of images to generate.",
+        "type": "integer",
+        "minimum": 1,
+        "default": 1
+      },
+      "sync_mode": {
+        "description": "If `True`, the media will be returned as a data URI and the output data won't be available in the request history.",
+        "type": "boolean",
+        "default": false
+      },
+      "control_start": {
+        "maximum": 1,
+        "description": "The start of the controlnet conditioning.",
+        "type": "number",
+        "minimum": 0,
+        "default": 0
+      },
+      "acceleration": {
+        "description": "The acceleration level to use.",
+        "enum": [
+          "none",
+          "regular",
+          "high"
+        ],
+        "type": "string",
+        "default": "regular"
+      },
+      "image_url": {
+        "description": "URL of Image for ControlNet generation.",
+        "type": "string",
+        "examples": [
+          "https://storage.googleapis.com/falserverless/example_inputs/z-image-turbo-controlnet-input.jpg"
+        ]
+      },
+      "seed": {
+        "description": "\n            The same seed and the same prompt given to the same version of the model\n            will output the same image every time.\n        ",
+        "anyOf": [
+          {
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      }
+    },
+    "type": "object",
+    "required": [
+      "prompt",
+      "image_url"
+    ]
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "ZImageTurboControlnetInput",
+    "ZImageTurboControlnetOutput",
+    "ImageSize",
+    "ImageFile"
+  ]
+}

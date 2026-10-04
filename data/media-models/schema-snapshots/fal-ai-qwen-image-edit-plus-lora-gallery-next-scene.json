@@ -1,0 +1,217 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/qwen-image-edit-plus-lora-gallery/next-scene",
+  "task": "image-generation",
+  "source_url": "https://fal.ai/models/fal-ai/qwen-image-edit-plus-lora-gallery/next-scene",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fqwen-image-edit-plus-lora-gallery%2Fnext-scene",
+  "retrieved_at": "2026-10-04T19:50:57.811Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "image-to-image",
+  "bytes_sha256": "5572a90ce27caa166d6957d50719fab3ca7e767de6da707036b8d5afdf4d12e3",
+  "queue_path": "/fal-ai/qwen-image-edit-plus-lora-gallery/next-scene",
+  "input_name": "QwenImageEditPlusLoraGalleryNextSceneInput",
+  "input": {
+    "$refName": "QwenImageEditPlusLoraGalleryNextSceneInput",
+    "required": [
+      "image_urls"
+    ],
+    "description": "Input model for Next Scene endpoint - Create cinematic shot progressions and scene transitions",
+    "type": "object",
+    "properties": {
+      "num_images": {
+        "minimum": 1,
+        "default": 1,
+        "type": "integer",
+        "description": "Number of images to generate",
+        "maximum": 4
+      },
+      "guidance_scale": {
+        "minimum": 0,
+        "default": 1,
+        "type": "number",
+        "description": "The CFG (Classifier Free Guidance) scale. Controls how closely the model follows the prompt.",
+        "maximum": 20
+      },
+      "acceleration": {
+        "default": "regular",
+        "type": "string",
+        "enum": [
+          "none",
+          "regular"
+        ],
+        "description": "Acceleration level for image generation. 'regular' balances speed and quality."
+      },
+      "prompt": {
+        "type": "string",
+        "default": "Next Scene: The camera moves forward revealing more of the scene",
+        "description": "Describe the camera movement, framing change, or scene transition. Start with 'Next Scene:' for best results. Examples: camera movements (dolly, push-in, pull-back), framing changes (wide to close-up), new elements entering frame.",
+        "examples": [
+          "Next Scene: The camera pulls back to reveal the entire landscape",
+          "Next Scene: The camera tracks forward as sunlight breaks through the clouds",
+          "Next Scene: The camera pans right revealing new characters entering the frame"
+        ]
+      },
+      "num_inference_steps": {
+        "minimum": 2,
+        "default": 6,
+        "type": "integer",
+        "description": "The number of inference steps to perform.",
+        "maximum": 50
+      },
+      "image_urls": {
+        "description": "The URL of the image to create the next scene from.",
+        "items": {
+          "type": "string"
+        },
+        "type": "array",
+        "examples": [
+          [
+            "https://v3b.fal.media/files/b/penguin/Zj5z8GW7yYlrpOQtuwjKQ_086265e41092415f951a6576fed25e41.png"
+          ]
+        ]
+      },
+      "lora_scale": {
+        "minimum": 0,
+        "default": 1,
+        "type": "number",
+        "description": "The scale factor for the LoRA model. Controls the strength of the LoRA effect.",
+        "maximum": 4
+      },
+      "output_format": {
+        "default": "png",
+        "type": "string",
+        "enum": [
+          "png",
+          "jpeg",
+          "webp"
+        ],
+        "description": "The format of the output image"
+      },
+      "enable_safety_checker": {
+        "default": true,
+        "type": "boolean",
+        "description": "Whether to enable the safety checker for the generated image. Disabling it requires account authorization; unauthorized requests are always checked."
+      },
+      "seed": {
+        "anyOf": [
+          {
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "Random seed for reproducibility. Same seed with same prompt will produce same result."
+      },
+      "sync_mode": {
+        "default": false,
+        "type": "boolean",
+        "description": "If `True`, the media will be returned as a data URI and won't be saved in history."
+      },
+      "image_size": {
+        "anyOf": [
+          {
+            "$refName": "ImageSize",
+            "type": "object",
+            "properties": {
+              "height": {
+                "maximum": 14142,
+                "default": 512,
+                "type": "integer",
+                "description": "The height of the generated image.",
+                "exclusiveMinimum": 0
+              },
+              "width": {
+                "maximum": 14142,
+                "default": 512,
+                "type": "integer",
+                "description": "The width of the generated image.",
+                "exclusiveMinimum": 0
+              }
+            }
+          },
+          {
+            "type": "string",
+            "enum": [
+              "square_hd",
+              "square",
+              "portrait_4_3",
+              "portrait_16_9",
+              "landscape_4_3",
+              "landscape_16_9"
+            ]
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "The size of the generated image. If not provided, the size of the final input image will be used."
+      },
+      "negative_prompt": {
+        "default": " ",
+        "type": "string",
+        "description": "The negative prompt for the generation",
+        "examples": [
+          " "
+        ]
+      }
+    }
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "QwenImageEditPlusLoraGalleryNextSceneInput",
+    "QwenImageEditPlusLoraGalleryNextSceneOutput",
+    "ImageSize",
+    "Image"
+  ]
+}

@@ -1,0 +1,212 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/qwen-image-edit/image-to-image",
+  "task": "image-to-image",
+  "source_url": "https://fal.ai/models/fal-ai/qwen-image-edit/image-to-image",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fqwen-image-edit%2Fimage-to-image",
+  "retrieved_at": "2026-10-04T19:51:00.441Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "image-to-image",
+  "bytes_sha256": "dad99d09d76d2ad5f03c8b447a1a7f090fa54a18cf96dd1ccc75a32126886e75",
+  "queue_path": "/fal-ai/qwen-image-edit/image-to-image",
+  "input_name": "QwenImageEditImageToImageInput",
+  "input": {
+    "$refName": "QwenImageEditImageToImageInput",
+    "properties": {
+      "image_url": {
+        "type": "string",
+        "examples": [
+          "https://v3.fal.media/files/koala/oei_-iPIYFnhdB8SxojND_qwen-edit-res.png"
+        ],
+        "description": "The URL of the image to edit."
+      },
+      "num_inference_steps": {
+        "maximum": 50,
+        "type": "integer",
+        "default": 30,
+        "minimum": 2,
+        "description": "The number of inference steps to perform."
+      },
+      "prompt": {
+        "type": "string",
+        "examples": [
+          "Change bag to apple macbook"
+        ],
+        "description": "The prompt to generate the image with"
+      },
+      "sync_mode": {
+        "type": "boolean",
+        "default": false,
+        "description": "If `True`, the media will be returned as a data URI and the output data won't be available in the request history."
+      },
+      "enable_safety_checker": {
+        "type": "boolean",
+        "default": true,
+        "description": "If set to true, the safety checker will be enabled. Disabling it requires account authorization; unauthorized requests are always checked, and images flagged as unsafe are returned as black images."
+      },
+      "guidance_scale": {
+        "maximum": 20,
+        "type": "number",
+        "default": 4,
+        "minimum": 0,
+        "description": "\n            The CFG (Classifier Free Guidance) scale is a measure of how close you want\n            the model to stick to your prompt when looking for a related image to show you.\n        "
+      },
+      "negative_prompt": {
+        "type": "string",
+        "default": " ",
+        "examples": [
+          "blurry, ugly"
+        ],
+        "description": "The negative prompt for the generation"
+      },
+      "seed": {
+        "anyOf": [
+          {
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "\n            The same seed and the same prompt given to the same version of the model\n            will output the same image every time.\n        "
+      },
+      "output_format": {
+        "type": "string",
+        "default": "png",
+        "enum": [
+          "jpeg",
+          "png"
+        ],
+        "description": "The format of the generated image."
+      },
+      "image_size": {
+        "anyOf": [
+          {
+            "$refName": "ImageSize",
+            "properties": {
+              "height": {
+                "maximum": 14142,
+                "type": "integer",
+                "default": 512,
+                "exclusiveMinimum": 0,
+                "description": "The height of the generated image."
+              },
+              "width": {
+                "maximum": 14142,
+                "type": "integer",
+                "default": 512,
+                "exclusiveMinimum": 0,
+                "description": "The width of the generated image."
+              }
+            },
+            "type": "object"
+          },
+          {
+            "type": "string",
+            "enum": [
+              "square_hd",
+              "square",
+              "portrait_4_3",
+              "portrait_16_9",
+              "landscape_4_3",
+              "landscape_16_9"
+            ]
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "The size of the generated image."
+      },
+      "acceleration": {
+        "type": "string",
+        "default": "regular",
+        "enum": [
+          "none",
+          "regular",
+          "high"
+        ],
+        "examples": [
+          "regular"
+        ],
+        "description": "Acceleration level for image generation. Options: 'none', 'regular'. Higher acceleration increases speed. 'regular' balances speed and quality."
+      },
+      "num_images": {
+        "maximum": 4,
+        "type": "integer",
+        "default": 1,
+        "minimum": 1,
+        "description": "The number of images to generate."
+      },
+      "strength": {
+        "maximum": 1,
+        "type": "number",
+        "default": 0.94,
+        "minimum": 0.01,
+        "description": "Strength of the image-to-image transformation. Lower values preserve more of the original image."
+      }
+    },
+    "type": "object",
+    "required": [
+      "prompt",
+      "image_url"
+    ]
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "QwenImageEditImageToImageInput",
+    "QwenImageEditImageToImageOutput",
+    "ImageSize",
+    "Image"
+  ]
+}

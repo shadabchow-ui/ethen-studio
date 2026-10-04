@@ -1,0 +1,203 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/hyper3d/rodin",
+  "task": "unknown",
+  "source_url": "https://fal.ai/models/fal-ai/hyper3d/rodin",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fhyper3d%2Frodin",
+  "retrieved_at": "2026-10-04T19:45:45.317Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "image-to-3d",
+  "bytes_sha256": "e658f6f156e725b2e32f6c53e9fc3e23634186ef5412b3f4431a276ad0b445c1",
+  "queue_path": "/fal-ai/hyper3d/rodin",
+  "input_name": "Hyper3dRodinInput",
+  "input": {
+    "$refName": "Hyper3dRodinInput",
+    "type": "object",
+    "properties": {
+      "addons": {
+        "anyOf": [
+          {
+            "type": "string",
+            "const": "HighPack"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "Generation add-on features. Default is []. Possible values are HighPack. The HighPack option will provide 4K resolution textures instead of the default 1K, as well as models with high-poly. It will cost triple the billable units."
+      },
+      "prompt": {
+        "default": "",
+        "type": "string",
+        "description": "A textual prompt to guide model generation. Required for Text-to-3D mode. Optional for Image-to-3D mode.",
+        "maxLength": 1024,
+        "examples": [
+          "A futuristic robot with sleek metallic design."
+        ]
+      },
+      "geometry_file_format": {
+        "default": "glb",
+        "type": "string",
+        "description": "Format of the geometry file. Possible values: glb, usdz, fbx, obj, stl. Default is glb.",
+        "enum": [
+          "glb",
+          "usdz",
+          "fbx",
+          "obj",
+          "stl"
+        ]
+      },
+      "material": {
+        "default": "PBR",
+        "type": "string",
+        "description": "Material type. Possible values: PBR, Shaded. Default is PBR.",
+        "enum": [
+          "PBR",
+          "Shaded"
+        ],
+        "examples": [
+          "Shaded"
+        ]
+      },
+      "quality": {
+        "default": "medium",
+        "type": "string",
+        "description": "Generation quality. Possible values: high, medium, low, extra-low. Default is medium.",
+        "enum": [
+          "high",
+          "medium",
+          "low",
+          "extra-low"
+        ]
+      },
+      "use_hyper": {
+        "default": false,
+        "type": "boolean",
+        "description": "Whether to export the model using hyper mode. Default is false."
+      },
+      "TAPose": {
+        "default": false,
+        "type": "boolean",
+        "description": "When generating the human-like model, this parameter control the generation result to T/A Pose."
+      },
+      "input_image_urls": {
+        "items": {
+          "type": "string",
+          "_fal_ui_field": "image"
+        },
+        "type": "array",
+        "description": "URL of images to use while generating the 3D model. Required for Image-to-3D mode. Optional for Text-to-3D mode.",
+        "examples": [
+          "https://storage.googleapis.com/falserverless/model_tests/video_models/robot.png"
+        ]
+      },
+      "tier": {
+        "default": "Regular",
+        "type": "string",
+        "description": "Tier of generation. For Rodin Sketch, set to Sketch. For Rodin Regular, set to Regular.",
+        "enum": [
+          "Regular",
+          "Sketch"
+        ]
+      },
+      "condition_mode": {
+        "default": "concat",
+        "type": "string",
+        "description": "For fuse mode, One or more images are required.It will generate a model by extracting and fusing features of objects from multiple images.For concat mode, need to upload multiple multi-view images of the same object and generate the model. (You can upload multi-view images in any order, regardless of the order of view.)",
+        "enum": [
+          "fuse",
+          "concat"
+        ]
+      },
+      "bbox_condition": {
+        "anyOf": [
+          {
+            "items": {
+              "type": "integer"
+            },
+            "type": "array"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "An array that specifies the dimensions and scaling factor of the bounding box. Typically, this array contains 3 elements, Length(X-axis), Width(Y-axis) and Height(Z-axis).",
+        "example": [
+          100,
+          50,
+          150
+        ]
+      },
+      "seed": {
+        "anyOf": [
+          {
+            "minimum": 0,
+            "type": "integer",
+            "maximum": 65535
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "Seed value for randomization, ranging from 0 to 65535. Optional."
+      }
+    }
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "Hyper3dRodinInput",
+    "Hyper3dRodinOutput",
+    "File",
+    "Image"
+  ]
+}

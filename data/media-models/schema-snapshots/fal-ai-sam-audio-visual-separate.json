@@ -1,0 +1,145 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/sam-audio/visual-separate",
+  "task": "unknown",
+  "source_url": "https://fal.ai/models/fal-ai/sam-audio/visual-separate",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fsam-audio%2Fvisual-separate",
+  "retrieved_at": "2026-10-04T19:51:27.350Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "video-to-audio",
+  "bytes_sha256": "4ef181c9931ec6cdb6aaf99131ba8b27ea06055856b40156a15d35701bd92261",
+  "queue_path": "/fal-ai/sam-audio/visual-separate",
+  "input_name": "SamAudioVisualSeparateInput",
+  "input": {
+    "$refName": "SamAudioVisualSeparateInput",
+    "properties": {
+      "mask_video_url": {
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "URL of the mask video (binary mask indicating target object). Black=target, White=background."
+      },
+      "prompt": {
+        "type": "string",
+        "default": "",
+        "description": "Text prompt to assist with separation. Use natural language to describe the target sound.",
+        "examples": [
+          "man on the left"
+        ]
+      },
+      "video_url": {
+        "type": "string",
+        "description": "URL of the video file to process (MP4, MOV, etc.)",
+        "examples": [
+          "https://v3b.fal.media/files/b/0a8850d1/gff7zKI-6XwIbBBip4946_office.mp4"
+        ]
+      },
+      "reranking_candidates": {
+        "minimum": 1,
+        "type": "integer",
+        "default": 1,
+        "maximum": 4,
+        "description": "Number of candidates to generate and rank. Higher improves quality but increases latency and cost."
+      },
+      "max_chunk_duration": {
+        "minimum": 10,
+        "type": "number",
+        "default": 60,
+        "maximum": 60,
+        "description": "Maximum audio duration (in seconds) to process in a single pass. Longer audio will be chunked with overlap and blended."
+      },
+      "chunk_overlap": {
+        "minimum": 0,
+        "type": "number",
+        "default": 5,
+        "maximum": 30,
+        "description": "Overlap duration (in seconds) between chunks for crossfade blending."
+      },
+      "output_format": {
+        "type": "string",
+        "default": "wav",
+        "enum": [
+          "wav",
+          "mp3"
+        ],
+        "description": "Output audio format."
+      },
+      "acceleration": {
+        "type": "string",
+        "default": "balanced",
+        "enum": [
+          "fast",
+          "balanced",
+          "quality"
+        ],
+        "description": "The acceleration level to use."
+      }
+    },
+    "type": "object",
+    "required": [
+      "video_url"
+    ],
+    "description": "Input for visual-prompted audio separation."
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "SamAudioVisualSeparateInput",
+    "SamAudioVisualSeparateOutput",
+    "File"
+  ]
+}

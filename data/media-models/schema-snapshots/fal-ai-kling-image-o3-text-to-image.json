@@ -1,0 +1,210 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/kling-image/o3/text-to-image",
+  "task": "text-to-image",
+  "source_url": "https://fal.ai/models/fal-ai/kling-image/o3/text-to-image",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fkling-image%2Fo3%2Ftext-to-image",
+  "retrieved_at": "2026-10-04T19:46:46.250Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "text-to-image",
+  "bytes_sha256": "c11042f0b4127d372e9536ca9edc80bf9f6b9b4c74524829172c5e69d6d86732",
+  "queue_path": "/fal-ai/kling-image/o3/text-to-image",
+  "input_name": "KlingImageO3TextToImageInput",
+  "input": {
+    "$refName": "KlingImageO3TextToImageInput",
+    "required": [
+      "prompt"
+    ],
+    "properties": {
+      "prompt": {
+        "description": "Text prompt for image generation. Max 2500 characters.",
+        "examples": [
+          "A poster design says 'Kling Omni 3 Image is available on fal' with a cool font in the background as several rows and big font size. Big gap between the rows. High fashion model wearing a dress made entirely of living moss and small white flowers, standing in an abandoned greenhouse, shafts of light, editorial photography."
+        ],
+        "type": "string",
+        "maxLength": 2500
+      },
+      "series_amount": {
+        "description": "Number of images in series (2-9). Only used when result_type is 'series'.",
+        "anyOf": [
+          {
+            "minimum": 2,
+            "maximum": 9,
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "output_format": {
+        "enum": [
+          "jpeg",
+          "png",
+          "webp"
+        ],
+        "default": "png",
+        "description": "The format of the generated image.",
+        "type": "string"
+      },
+      "resolution": {
+        "enum": [
+          "1K",
+          "2K",
+          "4K"
+        ],
+        "default": "1K",
+        "description": "Image generation resolution. 1K: standard, 2K: high-res, 4K: ultra high-res.",
+        "type": "string"
+      },
+      "num_images": {
+        "minimum": 1,
+        "maximum": 9,
+        "description": "Number of images to generate (1-9). Only used when result_type is 'single'.",
+        "default": 1,
+        "type": "integer"
+      },
+      "elements": {
+        "description": "Optional: Elements (characters/objects) for face control. Reference in prompt as @Element1, @Element2, etc.",
+        "anyOf": [
+          {
+            "items": {
+              "$refName": "ElementInput",
+              "description": "Element input for image generation with face/character control.\n\nCreate an element by providing frontal_image_url (and optionally reference_image_urls).\nAll fields are optional - provide what you have available.",
+              "properties": {
+                "frontal_image_url": {
+                  "description": "The frontal image of the element (main view). Optional.",
+                  "anyOf": [
+                    {
+                      "_fal_ui_field": "image",
+                      "limit_description": "Max file size: 10.0MB, Min width: 300px, Min height: 300px, Min aspect ratio: 0.40, Max aspect ratio: 2.50, Timeout: 20.0s",
+                      "type": "string",
+                      "ui": {
+                        "field": "image"
+                      }
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "reference_image_urls": {
+                  "description": "Additional reference images from different angles. 0-3 images supported. Optional.",
+                  "anyOf": [
+                    {
+                      "items": {
+                        "_fal_ui_field": "image",
+                        "limit_description": "Max file size: 10.0MB, Min width: 300px, Min height: 300px, Min aspect ratio: 0.40, Max aspect ratio: 2.50, Timeout: 20.0s",
+                        "type": "string",
+                        "ui": {
+                          "unsupported": "depth-exceeded"
+                        }
+                      },
+                      "type": "array"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                }
+              },
+              "type": "object"
+            },
+            "type": "array"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "aspect_ratio": {
+        "enum": [
+          "16:9",
+          "9:16",
+          "1:1",
+          "4:3",
+          "3:4",
+          "3:2",
+          "2:3",
+          "21:9"
+        ],
+        "default": "16:9",
+        "description": "Aspect ratio of generated images.",
+        "type": "string"
+      },
+      "result_type": {
+        "enum": [
+          "single",
+          "series"
+        ],
+        "default": "single",
+        "description": "Result type. 'single' for one image, 'series' for a series of related images.",
+        "type": "string"
+      },
+      "sync_mode": {
+        "default": false,
+        "description": "If `True`, the media will be returned as a data URI.",
+        "type": "boolean"
+      }
+    },
+    "type": "object",
+    "description": "Request model for Kling O3 Text-to-Image Generation."
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "KlingImageO3TextToImageInput",
+    "KlingImageO3TextToImageOutput",
+    "ElementInput",
+    "Image"
+  ]
+}

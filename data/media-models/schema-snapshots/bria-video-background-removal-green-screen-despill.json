@@ -1,0 +1,113 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "bria/video/background-removal/green-screen-despill",
+  "task": "image-editing",
+  "source_url": "https://fal.ai/models/bria/video/background-removal/green-screen-despill",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=bria%2Fvideo%2Fbackground-removal%2Fgreen-screen-despill",
+  "retrieved_at": "2026-10-04T19:41:51.309Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "video-to-video",
+  "bytes_sha256": "2e865d3f1566267df3f1710c8371af0b6198221da94f1be8ed0296a0d5394590",
+  "queue_path": "/bria/video/background-removal/green-screen-despill",
+  "input_name": "VideoBackgroundRemovalGreenScreenDespillInput",
+  "input": {
+    "$refName": "VideoBackgroundRemovalGreenScreenDespillInput",
+    "properties": {
+      "spill_suppression": {
+        "maximum": 1,
+        "default": 1,
+        "type": "number",
+        "description": "Strength of green-spill suppression. Higher values pull the green channel toward the red/blue average on green-dominant pixels, removing the green fringe around the subject. 0 disables it.",
+        "minimum": 0
+      },
+      "preserve_audio": {
+        "default": true,
+        "type": "boolean",
+        "description": "If true, audio will be preserved in the output video."
+      },
+      "video_url": {
+        "examples": [
+          "https://bria-datasets.s3.us-east-1.amazonaws.com/rmbg_tests/videos/green_screen_video.webm"
+        ],
+        "type": "string",
+        "description": "Input video filmed on a green screen."
+      },
+      "output_container_and_codec": {
+        "default": "webm_vp9",
+        "type": "string",
+        "description": "Output container and codec. Options: mp4_h265, mp4_h264, webm_vp9, mov_h265, mov_proresks, mkv_h265, mkv_h264, mkv_vp9, gif.",
+        "enum": [
+          "mp4_h265",
+          "mp4_h264",
+          "webm_vp9",
+          "mov_h265",
+          "mov_proresks",
+          "mkv_h265",
+          "mkv_h264",
+          "mkv_vp9",
+          "gif"
+        ]
+      }
+    },
+    "type": "object",
+    "required": [
+      "video_url"
+    ]
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "VideoBackgroundRemovalGreenScreenDespillInput",
+    "VideoBackgroundRemovalGreenScreenDespillOutput",
+    "Video"
+  ]
+}

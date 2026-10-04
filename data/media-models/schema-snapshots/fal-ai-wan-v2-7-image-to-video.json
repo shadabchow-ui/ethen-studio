@@ -1,0 +1,220 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/wan/v2.7/image-to-video",
+  "task": "image-to-video",
+  "source_url": "https://fal.ai/models/fal-ai/wan/v2.7/image-to-video",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fwan%2Fv2.7%2Fimage-to-video",
+  "retrieved_at": "2026-10-04T19:53:08.554Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "image-to-video",
+  "bytes_sha256": "4dea96985fd5ce9cc5a163e956fcbab3dd8570236be1ddd30d3d18793b5d1c41",
+  "queue_path": "/fal-ai/wan/v2.7/image-to-video",
+  "input_name": "WanV27ImageToVideoInput",
+  "input": {
+    "$refName": "WanV27ImageToVideoInput",
+    "properties": {
+      "enable_prompt_expansion": {
+        "default": true,
+        "description": "Enable intelligent prompt rewriting.",
+        "type": "boolean"
+      },
+      "video_url": {
+        "anyOf": [
+          {
+            "ui": {
+              "field": "video"
+            },
+            "limit_description": "Max file size: 100.0MB, Min duration: 2s, Max duration: 10s, Timeout: 30.0s",
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "URL of a video clip to continue from. Format: MP4, MOV. Duration: 2-10s. Max 100 MB. Cannot be combined with image_url."
+      },
+      "image_url": {
+        "anyOf": [
+          {
+            "ui": {
+              "field": "image"
+            },
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "URL of the first frame image. Formats: JPEG, JPG, PNG, BMP, WEBP. Max 20 MB.",
+        "examples": [
+          "https://v3b.fal.media/files/b/0a9413bb/qH6QY4JRzWxHOFKtCe70S_uPDJyzKZ.png"
+        ]
+      },
+      "negative_prompt": {
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "Content to avoid in the video. Max 500 characters.",
+        "examples": [
+          "low resolution, errors, worst quality, low quality, incomplete, extra fingers, bad proportions, blurry, distorted"
+        ]
+      },
+      "audio_url": {
+        "anyOf": [
+          {
+            "ui": {
+              "field": "audio"
+            },
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "URL of driving audio. Supports WAV and MP3. Duration: 2-30s. Max 15 MB."
+      },
+      "enable_safety_checker": {
+        "default": true,
+        "description": "Enable content moderation for input and output. Disabling it requires account authorization; unauthorized requests are always checked.",
+        "type": "boolean"
+      },
+      "prompt": {
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "Text prompt describing the desired video. Max 5000 characters.",
+        "examples": [
+          "The massive humpback whale glides slowly through the deep blue water. It turns gracefully, its huge pectoral fin sweeping through the water like a wing. Sunbeams penetrate from above, illuminating the whale's textured skin. Small fish scatter. Awe-inspiring scale and grace."
+        ]
+      },
+      "duration": {
+        "type": "integer",
+        "enum": [
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15
+        ],
+        "examples": [
+          5,
+          10,
+          15
+        ],
+        "description": "Output video duration in seconds (2-15).",
+        "default": 5
+      },
+      "end_image_url": {
+        "anyOf": [
+          {
+            "ui": {
+              "field": "image"
+            },
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "URL of the last frame image for first-and-last-frame-to-video. Same constraints as image_url."
+      },
+      "resolution": {
+        "default": "1080p",
+        "enum": [
+          "720p",
+          "1080p"
+        ],
+        "description": "Output video resolution tier.",
+        "type": "string"
+      },
+      "seed": {
+        "anyOf": [
+          {
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "Random seed for reproducibility (0-2147483647)."
+      }
+    },
+    "type": "object",
+    "description": "Input for Wan 2.7 image-to-video generation.\n\nThe wan2.7-i2v model is a unified endpoint supporting:\n- First-frame-to-video (provide image_url)\n- First-and-last-frame-to-video (provide image_url + end_image_url)\n- Video continuation (provide video_url instead of image_url)"
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "WanV27ImageToVideoInput",
+    "WanV27ImageToVideoOutput",
+    "VideoFile"
+  ]
+}

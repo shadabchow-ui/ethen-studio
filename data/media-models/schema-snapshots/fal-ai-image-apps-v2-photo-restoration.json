@@ -1,0 +1,117 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/image-apps-v2/photo-restoration",
+  "task": "image-generation",
+  "source_url": "https://fal.ai/models/fal-ai/image-apps-v2/photo-restoration",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fimage-apps-v2%2Fphoto-restoration",
+  "retrieved_at": "2026-10-04T19:46:09.936Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "image-to-image",
+  "bytes_sha256": "bb56202e69025db1d589886dc54d11f53f4758c61c9e200fbdfd3bb2a5ad8811",
+  "queue_path": "/fal-ai/image-apps-v2/photo-restoration",
+  "input_name": "ImageAppsV2PhotoRestorationInput",
+  "input": {
+    "$refName": "ImageAppsV2PhotoRestorationInput",
+    "type": "object",
+    "properties": {
+      "aspect_ratio": {
+        "$refName": "AspectRatio",
+        "type": "object",
+        "properties": {
+          "ratio": {
+            "enum": [
+              "1:1",
+              "16:9",
+              "9:16",
+              "4:3",
+              "3:4"
+            ],
+            "type": "string",
+            "description": "Aspect ratio for 4K resolution output",
+            "default": "1:1"
+          }
+        },
+        "description": "Aspect ratio for 4K output (default: 4:3 for classic photos)"
+      },
+      "image_url": {
+        "type": "string",
+        "examples": [
+          "https://v3.fal.media/files/panda/BcOIyOJ5Z1-GOjDi_GmsX_50e353c588c74435882f8f68989b4af5.png"
+        ],
+        "description": "Old or damaged photo URL to restore"
+      },
+      "fix_colors": {
+        "type": "boolean",
+        "default": true
+      },
+      "enhance_resolution": {
+        "type": "boolean",
+        "default": true
+      },
+      "remove_scratches": {
+        "type": "boolean",
+        "default": true
+      }
+    },
+    "required": [
+      "image_url"
+    ]
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "ImageAppsV2PhotoRestorationInput",
+    "ImageAppsV2PhotoRestorationOutput",
+    "AspectRatio",
+    "Image"
+  ]
+}

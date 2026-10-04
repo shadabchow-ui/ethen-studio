@@ -1,0 +1,96 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/bagel/understand",
+  "task": "unknown",
+  "source_url": "https://fal.ai/models/fal-ai/bagel/understand",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fbagel%2Funderstand",
+  "retrieved_at": "2026-10-04T19:42:35.817Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "image-to-json",
+  "bytes_sha256": "2be982fbf2b3f587bdc5ad311f385822cf3559e3b83c3b4184878fbbebf86cec",
+  "queue_path": "/fal-ai/bagel/understand",
+  "input_name": "BagelUnderstandInput",
+  "input": {
+    "$refName": "BagelUnderstandInput",
+    "type": "object",
+    "properties": {
+      "prompt": {
+        "examples": [
+          "What is shown in the image? "
+        ],
+        "type": "string",
+        "description": "The prompt to query the image with."
+      },
+      "image_url": {
+        "examples": [
+          "https://storage.googleapis.com/falserverless/bagel/wRhCPSyiKTiLnnWvUpGIl.jpeg"
+        ],
+        "type": "string",
+        "description": "The image for the query."
+      },
+      "seed": {
+        "type": "integer",
+        "description": "The seed to use for the generation."
+      }
+    },
+    "required": [
+      "image_url",
+      "prompt"
+    ]
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "BagelUnderstandInput",
+    "BagelUnderstandOutput"
+  ]
+}

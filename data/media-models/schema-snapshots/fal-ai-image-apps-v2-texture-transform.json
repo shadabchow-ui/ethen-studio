@@ -1,0 +1,133 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/image-apps-v2/texture-transform",
+  "task": "image-generation",
+  "source_url": "https://fal.ai/models/fal-ai/image-apps-v2/texture-transform",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fimage-apps-v2%2Ftexture-transform",
+  "retrieved_at": "2026-10-04T19:46:13.609Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "image-to-image",
+  "bytes_sha256": "899077b21bd1bd2f6154e7337a6def4b834a5a9f1050b245c27d7b080fabbbb9",
+  "queue_path": "/fal-ai/image-apps-v2/texture-transform",
+  "input_name": "ImageAppsV2TextureTransformInput",
+  "input": {
+    "$refName": "ImageAppsV2TextureTransformInput",
+    "type": "object",
+    "properties": {
+      "aspect_ratio": {
+        "$refName": "AspectRatio",
+        "type": "object",
+        "properties": {
+          "ratio": {
+            "enum": [
+              "1:1",
+              "16:9",
+              "9:16",
+              "4:3",
+              "3:4"
+            ],
+            "type": "string",
+            "description": "Aspect ratio for 4K resolution output",
+            "default": "1:1"
+          }
+        },
+        "description": "Aspect ratio for 4K output"
+      },
+      "target_texture": {
+        "enum": [
+          "cotton",
+          "denim",
+          "wool",
+          "felt",
+          "wood",
+          "leather",
+          "velvet",
+          "stone",
+          "marble",
+          "ceramic",
+          "concrete",
+          "brick",
+          "clay",
+          "foam",
+          "glass",
+          "metal",
+          "silk",
+          "fabric",
+          "crystal",
+          "rubber",
+          "plastic",
+          "lace"
+        ],
+        "type": "string",
+        "default": "marble"
+      },
+      "image_url": {
+        "type": "string",
+        "examples": [
+          "https://v3.fal.media/files/tiger/WqtPStHkOu6W0lZcIlXD8_156e3c91cb3a4d12b7380cc43b5e4c67.png"
+        ],
+        "description": "Image URL for texture transformation"
+      }
+    },
+    "required": [
+      "image_url"
+    ]
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "ImageAppsV2TextureTransformInput",
+    "ImageAppsV2TextureTransformOutput",
+    "AspectRatio",
+    "Image"
+  ]
+}

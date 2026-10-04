@@ -1,0 +1,281 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/hyper3d/rodin/v2.5",
+  "task": "unknown",
+  "source_url": "https://fal.ai/models/fal-ai/hyper3d/rodin/v2.5",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fhyper3d%2Frodin%2Fv2.5",
+  "retrieved_at": "2026-10-04T19:45:46.447Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "image-to-3d",
+  "bytes_sha256": "6e9a2f850d537758eb933cda1898539bf0a4feea15a9aebb9f070f4b08acd73a",
+  "queue_path": "/fal-ai/hyper3d/rodin/v2.5",
+  "input_name": "Hyper3dRodinV25Input",
+  "input": {
+    "$refName": "Hyper3dRodinV25Input",
+    "type": "object",
+    "properties": {
+      "hd_texture": {
+        "default": false,
+        "type": "boolean",
+        "description": "Enables enhanced texture post-processing for higher visual fidelity."
+      },
+      "texture_delight": {
+        "default": false,
+        "type": "boolean",
+        "description": "Removes baked lighting/highlights from the generated textures."
+      },
+      "geometry_file_format": {
+        "default": "glb",
+        "type": "string",
+        "description": "Format of the geometry file. Possible values: glb, usdz, fbx, obj, stl. Default is glb.",
+        "enum": [
+          "glb",
+          "usdz",
+          "fbx",
+          "obj",
+          "stl"
+        ]
+      },
+      "material": {
+        "default": "All",
+        "type": "string",
+        "description": "Material type. PBR: physically-based materials with realistic lighting. Shaded: baked lighting with no PBR maps. All: both PBR and Shaded variants. None: geometry only with no textures.",
+        "enum": [
+          "PBR",
+          "Shaded",
+          "All",
+          "None"
+        ]
+      },
+      "TAPose": {
+        "default": false,
+        "type": "boolean",
+        "description": "Generate characters in T-pose or A-pose format, making them easier to rig and animate in 3D software."
+      },
+      "image_urls": {
+        "items": {
+          "type": "string",
+          "_fal_ui_field": "image"
+        },
+        "minItems": 1,
+        "type": "array",
+        "description": "URL of images to use while generating the 3D model. Required for Image-to-3D mode. Up to 5 images allowed.",
+        "maxItems": 5,
+        "examples": [
+          [
+            "https://v3.fal.media/files/panda/l7mQrG8plbB42lBNqVjm0_image.png",
+            "https://v3b.fal.media/files/b/kangaroo/scq50Bf1PB2NZOW8szphV_image.png",
+            "https://v3.fal.media/files/penguin/X21qtlVMazAtljzRCJD2__image.png"
+          ]
+        ]
+      },
+      "texture_mode": {
+        "anyOf": [
+          {
+            "type": "string",
+            "enum": [
+              "legacy",
+              "extreme-low",
+              "low",
+              "medium",
+              "high"
+            ]
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "Texture generation quality. When unset, the API picks a default appropriate for the tier."
+      },
+      "preview_render": {
+        "default": false,
+        "type": "boolean",
+        "description": "Generate a preview render image of the 3D model along with the model files."
+      },
+      "addons": {
+        "anyOf": [
+          {
+            "$refName": "RodinGen25Addons",
+            "type": "object",
+            "properties": {
+              "high_pack": {
+                "default": false,
+                "type": "boolean",
+                "description": "Selecting HighPack generates 4K resolution texture instead of the default 2K. In Quad mode, the number of faces becomes ~16× the count set in the quality parameter."
+              }
+            }
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "Optional add-ons. Single values are accepted as a shorthand for a list with one item."
+      },
+      "quality_mesh_option": {
+        "default": "Auto",
+        "type": "string",
+        "description": "Combined quality and mesh type selection. Quad = smooth surfaces, Triangle = detailed geometry. Maps to `mesh_mode` (Quad/Raw) and `quality_override` (face count) on the Hyper3D API. Valid face counts depend on the selected tier. Up to 1M Triangle is supported for tiers Extreme-Low, Low, and Medium. Up to 2M Triangle (as low as 20K Triangle) is supported for tiers High and Extreme-High. Auto option will choose the advised options for each tier:\n1. Gen-2.5-Minimum: 50K Triangle\n2. Gen-2.5-Extreme-Low: 50K Triangle\n3. Gen-2.5-Low: 50K Triangle\n4. Gen-2.5-Medium: 500K Triangle\n5. Gen-2.5-High: 500K Triangle\nGen-2.5-Extreme-High: 1M Triangle.",
+        "enum": [
+          "Auto",
+          "4K Quad",
+          "8K Quad",
+          "18K Quad",
+          "50K Quad",
+          "100K Quad",
+          "200K Quad",
+          "2K Triangle",
+          "20K Triangle",
+          "50K Triangle",
+          "150K Triangle",
+          "500K Triangle",
+          "1M Triangle",
+          "2M Triangle"
+        ]
+      },
+      "prompt": {
+        "default": "",
+        "type": "string",
+        "description": "A textual prompt to guide model generation. Optional for Image-to-3D mode - if empty, the model auto-generates a prompt from the images.",
+        "maxLength": 1024,
+        "examples": [
+          "A futuristic robot with sleek metallic design."
+        ]
+      },
+      "is_micro": {
+        "default": false,
+        "type": "boolean",
+        "description": "Generate finer micro-scale geometric detail. Only effective with `tier=\"Gen-2.5-Extreme-High\"`."
+      },
+      "bbox_condition": {
+        "anyOf": [
+          {
+            "$refName": "RodinGen25BbboxField",
+            "type": "object",
+            "properties": {
+              "width": {
+                "default": 0,
+                "minimum": 1,
+                "type": "integer",
+                "maximum": 2048,
+                "description": "Width (x axis) dimension for the bounding box constraint."
+              },
+              "height": {
+                "default": 0,
+                "minimum": 1,
+                "type": "integer",
+                "maximum": 2048,
+                "description": "Height (y axis) dimension for the bounding box constraint."
+              },
+              "length": {
+                "default": 0,
+                "minimum": 1,
+                "type": "integer",
+                "maximum": 2048,
+                "description": "Length (z axis) dimension for the bounding box constraint."
+              }
+            }
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "This is a controlnet that controls the maximum sized of the generated model."
+      },
+      "use_original_alpha": {
+        "default": false,
+        "type": "boolean",
+        "description": "When enabled, preserves the transparency channel from input images during 3D generation."
+      },
+      "tier": {
+        "default": "Gen-2.5-High",
+        "type": "string",
+        "description": "Generation tier. Higher tiers produce more detailed meshes. See more info in the [documentation](https://developer.hyper3d.ai/api-specification/rodin-gen2.5#use-gen-2.5-generation-with-following-gen-2.5-tiers). Selecting Gen-2.5-Minimum will automatically configure to a minimum mode, where 50K Triangle is selected, taking priority over quality_mesh_option.",
+        "enum": [
+          "Gen-2.5-Minimum",
+          "Gen-2.5-Extreme-Low",
+          "Gen-2.5-Low",
+          "Gen-2.5-Medium",
+          "Gen-2.5-High",
+          "Gen-2.5-Extreme-High"
+        ]
+      },
+      "enable_creative_mode": {
+        "default": false,
+        "type": "boolean",
+        "description": "If enabled, the generation will have enhanced generative robustness while ensuring output consistency. This corresponds to `geometry_instruct_mode` being equal to `creative` on the Hyper3D API."
+      },
+      "seed": {
+        "anyOf": [
+          {
+            "minimum": 0,
+            "type": "integer",
+            "maximum": 65535
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "Seed value for randomization, ranging from 0 to 65535. Optional."
+      }
+    }
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "Hyper3dRodinV25Input",
+    "Hyper3dRodinV25Output",
+    "RodinGen25Addons",
+    "RodinGen25BbboxField",
+    "File",
+    "Image"
+  ]
+}

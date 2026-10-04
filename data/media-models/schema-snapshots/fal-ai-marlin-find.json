@@ -1,0 +1,115 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/marlin/find",
+  "task": "unknown",
+  "source_url": "https://fal.ai/models/fal-ai/marlin/find",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fmarlin%2Ffind",
+  "retrieved_at": "2026-10-04T19:49:05.368Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "vision",
+  "bytes_sha256": "f35f18773b1b83639f0320a3cf7315b9ee124db384a6974faf5cc81f17c36283",
+  "queue_path": "/fal-ai/marlin/find",
+  "input_name": "MarlinFindInput",
+  "input": {
+    "$refName": "MarlinFindInput",
+    "required": [
+      "video_url",
+      "prompt"
+    ],
+    "properties": {
+      "prompt": {
+        "examples": [
+          "when is pizza dropped?"
+        ],
+        "description": "Natural-language description of the event or scene to find in the video.",
+        "maxLength": 500,
+        "type": "string"
+      },
+      "video_url": {
+        "max_file_size": 524288000,
+        "_fal_ui_field": "video",
+        "examples": [
+          "https://v3b.fal.media/files/b/0a913346/ZbEaRKcU1dMNYkHl9g1Zz_T4QEyOJ3R3WzuQS9.mp4"
+        ],
+        "description": "URL of the video to search through.",
+        "type": "string"
+      },
+      "top_p": {
+        "exclusiveMinimum": 0,
+        "default": 1,
+        "description": "Nucleus sampling threshold. Only used when do_sample is true.",
+        "maximum": 1,
+        "type": "number"
+      },
+      "do_sample": {
+        "default": false,
+        "description": "If true, sample with temperature/top_p; if false, use greedy decoding.",
+        "type": "boolean"
+      },
+      "temperature": {
+        "minimum": 0,
+        "maximum": 2,
+        "default": 1,
+        "description": "Sampling temperature. Only used when do_sample is true.",
+        "type": "number"
+      }
+    },
+    "type": "object"
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "MarlinFindInput",
+    "MarlinFindOutput",
+    "EventSegment"
+  ]
+}

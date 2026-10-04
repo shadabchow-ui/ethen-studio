@@ -1,0 +1,98 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/drct-super-resolution",
+  "task": "unknown",
+  "source_url": "https://fal.ai/models/fal-ai/drct-super-resolution",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fdrct-super-resolution",
+  "retrieved_at": "2026-10-04T19:43:17.224Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "image-to-image",
+  "bytes_sha256": "346b3d38b807a7692fcc600c586b98ffc97b8d1123e935f7495b2db0f8f894d0",
+  "queue_path": "/fal-ai/drct-super-resolution",
+  "input_name": "DrctSuperResolutionInput",
+  "input": {
+    "$refName": "DrctSuperResolutionInput",
+    "properties": {
+      "upscale_factor": {
+        "type": "integer",
+        "default": 4,
+        "const": 4,
+        "description": "Upscaling factor.",
+        "examples": [
+          4
+        ]
+      },
+      "image_url": {
+        "type": "string",
+        "description": "URL of the image to upscale.",
+        "examples": [
+          "https://storage.googleapis.com/falserverless/model_tests/svd/rocket.png",
+          "https://storage.googleapis.com/falserverless/example_inputs/dog.png",
+          "https://storage.googleapis.com/falserverless/example_inputs/girl.jpg",
+          "https://storage.googleapis.com/falserverless/model_tests/codeformer/codeformer_poor_1.jpeg",
+          "https://storage.googleapis.com/falserverless/model_tests/musepose/ref.png"
+        ]
+      }
+    },
+    "required": [
+      "image_url"
+    ],
+    "type": "object"
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "DrctSuperResolutionInput",
+    "DrctSuperResolutionOutput",
+    "Image"
+  ]
+}

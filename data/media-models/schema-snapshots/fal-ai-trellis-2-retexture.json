@@ -1,0 +1,165 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/trellis-2/retexture",
+  "task": "unknown",
+  "source_url": "https://fal.ai/models/fal-ai/trellis-2/retexture",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Ftrellis-2%2Fretexture",
+  "retrieved_at": "2026-10-04T19:52:01.883Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "image-to-3d",
+  "bytes_sha256": "8158bf6c6dfcbe957606b252e63acc5df2dd781c11671e539ed9b4bcf67467d1",
+  "queue_path": "/fal-ai/trellis-2/retexture",
+  "input_name": "Trellis2RetextureInput",
+  "input": {
+    "$refName": "Trellis2RetextureInput",
+    "properties": {
+      "texture_size": {
+        "type": "integer",
+        "default": 2048,
+        "enum": [
+          1024,
+          2048,
+          4096
+        ],
+        "description": "Resolution of the texture image baked onto the mesh. Higher values capture finer surface details but produce larger files."
+      },
+      "tex_slat_rescale_t": {
+        "maximum": 6,
+        "type": "number",
+        "default": 3,
+        "minimum": 1,
+        "description": "Controls noise schedule sharpness for texture generation. Higher values produce sharper texture details."
+      },
+      "tex_slat_guidance_interval_end": {
+        "maximum": 1,
+        "type": "number",
+        "default": 0.9,
+        "minimum": 0,
+        "description": "Fraction of the denoising process at which classifier-free guidance ends for the texture stage. Must be >= tex_slat_guidance_interval_start."
+      },
+      "tex_slat_guidance_strength": {
+        "maximum": 10,
+        "type": "number",
+        "default": 1,
+        "minimum": 0,
+        "description": "How closely the texture follows the input image colors. Higher values produce more vivid but potentially oversaturated textures."
+      },
+      "tex_slat_guidance_interval_start": {
+        "maximum": 1,
+        "type": "number",
+        "default": 0.6,
+        "minimum": 0,
+        "description": "Fraction of the denoising process at which classifier-free guidance starts for the texture stage. Guidance is only applied between interval_start and interval_end."
+      },
+      "image_url": {
+        "type": "string",
+        "examples": [
+          "https://v3b.fal.media/files/b/0a86b60d/xkpao5B0uxmH0tmJm0HVL_2fe35ce1-fe44-475b-b582-6846a149537c.png"
+        ],
+        "description": "URL of the reference image for texturing"
+      },
+      "mesh_url": {
+        "type": "string",
+        "examples": [
+          "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/main/Models/ClearCoatCarPaint/glTF-Binary/ClearCoatCarPaint.glb"
+        ],
+        "description": "URL of the untextured 3D mesh to retexture. Supports GLB, OBJ, PLY, and STL formats."
+      },
+      "tex_slat_sampling_steps": {
+        "maximum": 50,
+        "type": "integer",
+        "default": 12,
+        "minimum": 1,
+        "description": "Number of denoising steps for texture generation. More steps = slower but potentially cleaner textures."
+      },
+      "resolution": {
+        "type": "integer",
+        "default": 1024,
+        "enum": [
+          512,
+          1024
+        ],
+        "description": "Internal resolution for texture generation. Higher produces finer texture details but is slower."
+      },
+      "seed": {
+        "anyOf": [
+          {
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "Random seed for reproducibility"
+      },
+      "tex_slat_guidance_rescale": {
+        "maximum": 1,
+        "type": "number",
+        "default": 0,
+        "minimum": 0,
+        "description": "Dampens artifacts from high guidance in the texture stage. Increase if textures look noisy or have color banding."
+      }
+    },
+    "required": [
+      "image_url",
+      "mesh_url"
+    ],
+    "type": "object"
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "Trellis2RetextureInput",
+    "Trellis2RetextureOutput",
+    "File"
+  ]
+}

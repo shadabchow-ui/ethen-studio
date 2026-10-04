@@ -1,0 +1,191 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/kling-video/o3/standard/video-to-video/edit",
+  "task": "video-to-video",
+  "source_url": "https://fal.ai/models/fal-ai/kling-video/o3/standard/video-to-video/edit",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fkling-video%2Fo3%2Fstandard%2Fvideo-to-video%2Fedit",
+  "retrieved_at": "2026-10-04T19:47:03.570Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "video-to-video",
+  "bytes_sha256": "c7786ddab347e90cf0e7d9b56a6127e0cd279a54994068bb8c8b97b6c739620e",
+  "queue_path": "/fal-ai/kling-video/o3/standard/video-to-video/edit",
+  "input_name": "KlingVideoO3StandardVideoToVideoEditInput",
+  "input": {
+    "$refName": "KlingVideoO3StandardVideoToVideoEditInput",
+    "required": [
+      "prompt",
+      "video_url"
+    ],
+    "type": "object",
+    "properties": {
+      "shot_type": {
+        "description": "The type of multi-shot video generation.",
+        "type": "string",
+        "default": "customize",
+        "const": "customize"
+      },
+      "keep_audio": {
+        "description": "Whether to keep the original audio from the reference video. ",
+        "type": "boolean",
+        "default": true
+      },
+      "elements": {
+        "anyOf": [
+          {
+            "type": "array",
+            "items": {
+              "$refName": "KlingV3ImageElementInput",
+              "properties": {
+                "reference_image_urls": {
+                  "description": "Additional reference images from different angles. 1-3 images supported. At least one image is required.",
+                  "anyOf": [
+                    {
+                      "type": "array",
+                      "items": {
+                        "type": "string",
+                        "_fal_ui_field": "image",
+                        "ui": {
+                          "unsupported": "depth-exceeded"
+                        },
+                        "limit_description": "Max file size: 50.0MB, Min width: 300px, Min height: 300px, Min aspect ratio: 0.40, Max aspect ratio: 2.50, Timeout: 20.0s"
+                      }
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "frontal_image_url": {
+                  "anyOf": [
+                    {
+                      "type": "string",
+                      "ui": {
+                        "field": "image"
+                      },
+                      "limit_description": "Max file size: 50.0MB, Min width: 300px, Min height: 300px, Min aspect ratio: 0.40, Max aspect ratio: 2.50, Timeout: 20.0s"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ],
+                  "description": "The frontal image of the element (main view)."
+                }
+              },
+              "type": "object"
+            }
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "Elements (characters/objects) to include. Reference in prompt as @Element1, @Element2.",
+        "examples": [
+          [
+            {
+              "reference_image_urls": [
+                "https://storage.googleapis.com/falserverless/example_inputs/kling-o3/standard-v2v-edit/standard_element1_reference1.jpg"
+              ],
+              "frontal_image_url": "https://storage.googleapis.com/falserverless/example_inputs/kling-o3/standard-v2v-edit/element1_front.jpg"
+            }
+          ]
+        ]
+      },
+      "video_url": {
+        "description": "Reference video URL. Only .mp4/.mov formats, 3-15s duration, 720-3840px resolution, max 200MB.",
+        "examples": [
+          "https://storage.googleapis.com/falserverless/example_inputs/kling-o3/standard-v2v-edit/standard_video_reference.mp4"
+        ],
+        "limit_description": "Max file size: 200.0MB, Min width: 720px, Min height: 720px, Max width: 3840px, Max height: 3840px, Min duration: 3.0s, Max duration: 15.05s, Min FPS: 24.0, Max FPS: 60.0, Timeout: 30.0s",
+        "type": "string",
+        "_fal_ui_field": "video"
+      },
+      "prompt": {
+        "description": "Text prompt for video generation. Reference video as @Video1.",
+        "type": "string",
+        "examples": [
+          "change the main character to be Popeye from @Element1, dark lighting and rain, 3d character. make him sad, with rain dropping on him, dark light on the character."
+        ],
+        "maxLength": 2500
+      },
+      "image_urls": {
+        "anyOf": [
+          {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "_fal_ui_field": "image",
+              "ui": {
+                "field": "image"
+              },
+              "limit_description": "Max file size: 50.0MB, Min width: 300px, Min height: 300px, Min aspect ratio: 0.40, Max aspect ratio: 2.50, Timeout: 20.0s"
+            }
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "Reference images for style/appearance. Reference in prompt as @Image1, @Image2, etc. Maximum 4 total (elements + reference images) when using video.",
+        "examples": [
+          null
+        ]
+      }
+    }
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "KlingVideoO3StandardVideoToVideoEditInput",
+    "KlingVideoO3StandardVideoToVideoEditOutput",
+    "KlingV3ImageElementInput",
+    "File"
+  ]
+}

@@ -1,0 +1,173 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/chrono-edit",
+  "task": "unknown",
+  "source_url": "https://fal.ai/models/fal-ai/chrono-edit",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fchrono-edit",
+  "retrieved_at": "2026-10-04T19:43:01.920Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "image-to-image",
+  "bytes_sha256": "8c8b74f40aaf6c131b585150581c50eb3273ebe2909efa6c4fca9c6186f938f2",
+  "queue_path": "/fal-ai/chrono-edit",
+  "input_name": "ChronoEditInput",
+  "input": {
+    "$refName": "ChronoEditInput",
+    "type": "object",
+    "properties": {
+      "num_inference_steps": {
+        "minimum": 2,
+        "type": "integer",
+        "description": "The number of inference steps to perform.",
+        "maximum": 50,
+        "default": 8
+      },
+      "image_url": {
+        "type": "string",
+        "examples": [
+          "https://v3b.fal.media/files/b/zebra/yRvp9rTyDeDGHnbmtcsgK_original-wave.jpg"
+        ],
+        "description": "The image to edit."
+      },
+      "seed": {
+        "description": "The seed for the inference.",
+        "anyOf": [
+          {
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "num_temporal_reasoning_steps": {
+        "minimum": 2,
+        "type": "integer",
+        "description": "The number of temporal reasoning steps to perform.",
+        "maximum": 12,
+        "default": 8
+      },
+      "enable_prompt_expansion": {
+        "type": "boolean",
+        "examples": [
+          true
+        ],
+        "description": "Whether to enable prompt expansion.",
+        "default": true
+      },
+      "enable_safety_checker": {
+        "type": "boolean",
+        "description": "Whether to enable the safety checker. Disabling it requires account authorization; unauthorized requests are always checked.",
+        "default": true
+      },
+      "sync_mode": {
+        "type": "boolean",
+        "description": "Whether to return the image in sync mode.",
+        "default": false
+      },
+      "output_format": {
+        "enum": [
+          "jpeg",
+          "png",
+          "webp"
+        ],
+        "type": "string",
+        "description": "The format of the output image.",
+        "default": "jpeg"
+      },
+      "enable_temporal_reasoning": {
+        "type": "boolean",
+        "description": "Whether to enable temporal reasoning.",
+        "default": false
+      },
+      "guidance_scale": {
+        "minimum": 0,
+        "type": "number",
+        "description": "The guidance scale for the inference.",
+        "maximum": 10,
+        "default": 1
+      },
+      "resolution": {
+        "enum": [
+          "480p",
+          "720p"
+        ],
+        "type": "string",
+        "description": "The resolution of the output image.",
+        "default": "480p"
+      },
+      "prompt": {
+        "type": "string",
+        "examples": [
+          "Add a surfer to the wave in the illustration."
+        ],
+        "description": "The prompt to edit the image."
+      },
+      "turbo_mode": {
+        "type": "boolean",
+        "description": "Enable turbo mode to use for faster inference.",
+        "default": true
+      }
+    },
+    "description": "Input model for ChronoEdit standard editing operations",
+    "required": [
+      "image_url",
+      "prompt"
+    ]
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "ChronoEditInput",
+    "ChronoEditOutput",
+    "ImageFile"
+  ]
+}

@@ -1,0 +1,105 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/qwen-image-edit-2509-trainer",
+  "task": "image-generation",
+  "source_url": "https://fal.ai/models/fal-ai/qwen-image-edit-2509-trainer",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fqwen-image-edit-2509-trainer",
+  "retrieved_at": "2026-10-04T19:50:48.228Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "training",
+  "bytes_sha256": "b10d935c44d08e7e17bd41d96d8b72efa97c131b44d630be4400a359ab5e80b4",
+  "queue_path": "/fal-ai/qwen-image-edit-2509-trainer",
+  "input_name": "QwenImageEdit2509TrainerInput",
+  "input": {
+    "$refName": "QwenImageEdit2509TrainerInput",
+    "properties": {
+      "default_caption": {
+        "description": "Default caption to use when caption files are missing. If None, missing captions will cause an error.",
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "steps": {
+        "maximum": 30000,
+        "description": "Number of steps to train for",
+        "type": "integer",
+        "minimum": 1,
+        "default": 1000
+      },
+      "learning_rate": {
+        "description": "Learning rate for LoRA parameters.",
+        "type": "number",
+        "default": 0.0001
+      },
+      "image_data_url": {
+        "description": "\n    URL to the input data zip archive.\n\n    The zip should contain pairs of images. The images should be named:\n\n    ROOT_start.EXT and ROOT_end.EXT\n    For example:\n    photo_start.jpg and photo_end.jpg\n\n    The zip can also contain more than one reference image for each image pair. The reference images should be named:\n    ROOT_start.EXT, ROOT_start2.EXT, ROOT_start3.EXT, ..., ROOT_end.EXT\n    For example:\n    photo_start.jpg, photo_start2.jpg, photo_end.jpg\n\n    The Reference Image Count field should be set to the number of reference images.\n\n    The zip can also contain a text file for each image pair. The text file should be named:\n    ROOT.txt\n    For example:\n    photo.txt\n\n    This text file can be used to specify the edit instructions for the image pair.\n\n    If no text file is provided, the default_caption will be used.\n\n    If no default_caption is provided, the training will fail.\n    ",
+        "type": "string"
+      }
+    },
+    "type": "object",
+    "required": [
+      "image_data_url"
+    ]
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "QwenImageEdit2509TrainerInput",
+    "QwenImageEdit2509TrainerOutput",
+    "File"
+  ]
+}

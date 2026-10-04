@@ -1,0 +1,142 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/workflow-utilities/impulse-response",
+  "task": "unknown",
+  "source_url": "https://fal.ai/models/fal-ai/workflow-utilities/impulse-response",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fworkflow-utilities%2Fimpulse-response",
+  "retrieved_at": "2026-10-04T19:53:15.792Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "audio-to-audio",
+  "bytes_sha256": "54c42bf0abc417b04a0e9eb9c3b9e49544d7067be9d866e1ae60294b7ea25afb",
+  "queue_path": "/fal-ai/workflow-utilities/impulse-response",
+  "input_name": "WorkflowUtilitiesImpulseResponseInput",
+  "input": {
+    "$refName": "WorkflowUtilitiesImpulseResponseInput",
+    "description": "Input model for applying impulse response (IR) convolution reverb to audio",
+    "properties": {
+      "dry_level": {
+        "maximum": 1,
+        "description": "Level of the original (dry) signal in the mix (0.0-1.0)",
+        "type": "number",
+        "minimum": 0,
+        "default": 0.7
+      },
+      "audio_url": {
+        "description": "URL of the main audio file to process",
+        "type": "string",
+        "examples": [
+          "https://v3.fal.media/files/panda/1-0iezBUIePBa3Sz5YY5B_tmpy1jyshw9.wav"
+        ],
+        "max_file_size": 60000000
+      },
+      "loudness_lra": {
+        "maximum": 50,
+        "description": "Loudness Range target in LU (typically 5-15)",
+        "type": "number",
+        "minimum": 1,
+        "default": 8
+      },
+      "wet_level": {
+        "maximum": 1,
+        "description": "Level of the processed (wet) signal in the mix (0.0-1.0)",
+        "type": "number",
+        "minimum": 0,
+        "default": 0.3
+      },
+      "loudness_i": {
+        "maximum": 0,
+        "description": "Target integrated loudness in LUFS (typically -24 to -14)",
+        "type": "number",
+        "minimum": -70,
+        "default": -18
+      },
+      "impulse_response_url": {
+        "description": "URL of the impulse response WAV file (reverb/effect profile)",
+        "type": "string",
+        "examples": [
+          "https://v3.fal.media/files/panda/1-0iezBUIePBa3Sz5YY5B_tmpy1jyshw9.wav"
+        ],
+        "max_file_size": 60000000
+      },
+      "output_bitrate": {
+        "description": "Output audio bitrate",
+        "enum": [
+          "128k",
+          "192k",
+          "256k",
+          "320k"
+        ],
+        "type": "string",
+        "default": "192k"
+      },
+      "loudness_tp": {
+        "maximum": 0,
+        "description": "Maximum true peak in dBTP (typically -2 to -1)",
+        "type": "number",
+        "minimum": -10,
+        "default": -1.5
+      }
+    },
+    "type": "object",
+    "required": [
+      "audio_url",
+      "impulse_response_url"
+    ]
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "WorkflowUtilitiesImpulseResponseInput",
+    "WorkflowUtilitiesImpulseResponseOutput",
+    "AudioFile"
+  ]
+}

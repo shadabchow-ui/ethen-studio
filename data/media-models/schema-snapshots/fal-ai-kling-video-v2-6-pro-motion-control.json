@@ -1,0 +1,126 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/kling-video/v2.6/pro/motion-control",
+  "task": "video-editing",
+  "source_url": "https://fal.ai/models/fal-ai/kling-video/v2.6/pro/motion-control",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fkling-video%2Fv2.6%2Fpro%2Fmotion-control",
+  "retrieved_at": "2026-10-04T19:47:11.856Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "video-to-video",
+  "bytes_sha256": "78510282e7395b64d048d21229e85c6fa7241556df8710474c26e166f01af247",
+  "queue_path": "/fal-ai/kling-video/v2.6/pro/motion-control",
+  "input_name": "KlingVideoV26ProMotionControlInput",
+  "input": {
+    "$refName": "KlingVideoV26ProMotionControlInput",
+    "description": "Request model for motion control video generation.",
+    "required": [
+      "image_url",
+      "video_url",
+      "character_orientation"
+    ],
+    "type": "object",
+    "properties": {
+      "image_url": {
+        "description": "Reference image URL. The characters, backgrounds, and other elements in the generated video are based on this reference image. Characters should have clear body proportions, avoid occlusion, and occupy more than 5% of the image area.",
+        "examples": [
+          "https://v3b.fal.media/files/b/0a875302/8NaxQrQxDNHppHtqcchMm.png"
+        ],
+        "limit_description": "Max file size: 10.0MB, Min width: 340px, Min height: 340px, Max width: 3850px, Max height: 3850px, Min aspect ratio: 0.40, Max aspect ratio: 2.50, Timeout: 20.0s",
+        "type": "string",
+        "_fal_ui_field": "image"
+      },
+      "character_orientation": {
+        "description": "Controls whether the output character's orientation matches the reference image or video. 'video': orientation matches reference video - better for complex motions (max 30s). 'image': orientation matches reference image - better for following camera movements (max 10s).",
+        "type": "string",
+        "examples": [
+          "video"
+        ],
+        "enum": [
+          "image",
+          "video"
+        ]
+      },
+      "video_url": {
+        "limit_description": "Max file size: 100.0MB, Min width: 340px, Min height: 340px, Max width: 3850px, Max height: 3850px, Min duration: 3.0s, Max duration: 30.05s, Timeout: 30.0s",
+        "description": "Reference video URL. The character actions in the generated video will be consistent with this reference video. Should contain a realistic style character with entire body or upper body visible, including head, without obstruction. Duration limit depends on character_orientation: 10s max for 'image', 30s max for 'video'.",
+        "type": "string",
+        "_fal_ui_field": "video"
+      },
+      "prompt": {
+        "anyOf": [
+          {
+            "type": "string",
+            "maxLength": 2500
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "examples": [
+          "An african american woman dancing"
+        ]
+      },
+      "keep_original_sound": {
+        "description": "Whether to keep the original sound from the reference video.",
+        "type": "boolean",
+        "default": true
+      }
+    }
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "KlingVideoV26ProMotionControlInput",
+    "KlingVideoV26ProMotionControlOutput",
+    "File"
+  ]
+}

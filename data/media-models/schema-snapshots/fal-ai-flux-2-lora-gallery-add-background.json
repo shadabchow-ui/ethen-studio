@@ -1,0 +1,210 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/flux-2-lora-gallery/add-background",
+  "task": "unknown",
+  "source_url": "https://fal.ai/models/fal-ai/flux-2-lora-gallery/add-background",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fflux-2-lora-gallery%2Fadd-background",
+  "retrieved_at": "2026-10-04T19:44:08.476Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "image-to-image",
+  "bytes_sha256": "be9e61a40c7e814383c78dc2406b1d40e769007c068539ffb4faf01e4f7164df",
+  "queue_path": "/fal-ai/flux-2-lora-gallery/add-background",
+  "input_name": "Flux2LoraGalleryAddBackgroundInput",
+  "input": {
+    "$refName": "Flux2LoraGalleryAddBackgroundInput",
+    "description": "Input model for Add Background endpoint - Add background to images",
+    "required": [
+      "image_urls"
+    ],
+    "type": "object",
+    "properties": {
+      "image_size": {
+        "description": "The size of the generated image. If not provided, the size of the input image will be used.",
+        "anyOf": [
+          {
+            "$refName": "ImageSize",
+            "type": "object",
+            "properties": {
+              "height": {
+                "description": "The height of the generated image.",
+                "maximum": 14142,
+                "type": "integer",
+                "default": 512,
+                "exclusiveMinimum": 0
+              },
+              "width": {
+                "description": "The width of the generated image.",
+                "maximum": 14142,
+                "type": "integer",
+                "default": 512,
+                "exclusiveMinimum": 0
+              }
+            }
+          },
+          {
+            "enum": [
+              "square_hd",
+              "square",
+              "portrait_4_3",
+              "portrait_16_9",
+              "landscape_4_3",
+              "landscape_16_9"
+            ],
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "num_inference_steps": {
+        "description": "The number of inference steps to perform.",
+        "maximum": 50,
+        "type": "integer",
+        "minimum": 4,
+        "default": 40
+      },
+      "output_format": {
+        "description": "The format of the output image",
+        "enum": [
+          "png",
+          "jpeg",
+          "webp"
+        ],
+        "type": "string",
+        "default": "png"
+      },
+      "image_urls": {
+        "description": "The URLs of the images. Provide an image with a white or clean background.",
+        "items": {
+          "type": "string"
+        },
+        "type": "array",
+        "examples": [
+          [
+            "https://v3b.fal.media/files/b/penguin/SLhCyojehICmW3dW6U5F0.jpg"
+          ]
+        ]
+      },
+      "num_images": {
+        "description": "Number of images to generate",
+        "maximum": 4,
+        "type": "integer",
+        "minimum": 1,
+        "default": 1
+      },
+      "seed": {
+        "description": "Random seed for reproducibility. Same seed with same prompt will produce same result.",
+        "anyOf": [
+          {
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "sync_mode": {
+        "description": "If `True`, the media will be returned as a data URI and won't be saved in history.",
+        "type": "boolean",
+        "default": false
+      },
+      "acceleration": {
+        "description": "Acceleration level for image generation. 'regular' balances speed and quality.",
+        "enum": [
+          "none",
+          "regular"
+        ],
+        "type": "string",
+        "default": "regular"
+      },
+      "enable_safety_checker": {
+        "description": "Whether to enable the safety checker for the generated image. Disabling it requires account authorization; unauthorized requests are always checked.",
+        "type": "boolean",
+        "default": true
+      },
+      "lora_scale": {
+        "description": "The strength of the add background effect.",
+        "maximum": 2,
+        "type": "number",
+        "minimum": 0,
+        "default": 1
+      },
+      "guidance_scale": {
+        "description": "The CFG (Classifier Free Guidance) scale. Controls how closely the model follows the prompt.",
+        "maximum": 20,
+        "type": "number",
+        "minimum": 0,
+        "default": 2.5
+      },
+      "prompt": {
+        "description": "The prompt describing the background to add. Must start with 'Add Background' followed by your description.",
+        "type": "string",
+        "default": "Add Background forest",
+        "examples": [
+          "Add Background forest",
+          "Add Background modern office",
+          "Add Background beach sunset",
+          "Add Background city skyline at night"
+        ]
+      }
+    }
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "Flux2LoraGalleryAddBackgroundInput",
+    "Flux2LoraGalleryAddBackgroundOutput",
+    "ImageSize",
+    "Image"
+  ]
+}

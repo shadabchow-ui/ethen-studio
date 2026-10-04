@@ -1,0 +1,112 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "xai/grok-imagine-video/v1.5/image-to-video",
+  "task": "image-to-video",
+  "source_url": "https://fal.ai/models/xai/grok-imagine-video/v1.5/image-to-video",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=xai%2Fgrok-imagine-video%2Fv1.5%2Fimage-to-video",
+  "retrieved_at": "2026-10-04T19:55:45.534Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "image-to-video",
+  "bytes_sha256": "821971e073b0e113820b6ea9c42dab8569e3f68d89e49053af4bce9460e74e26",
+  "queue_path": "/xai/grok-imagine-video/v1.5/image-to-video",
+  "input_name": "GrokImagineVideoV15ImageToVideoInput",
+  "input": {
+    "$refName": "GrokImagineVideoV15ImageToVideoInput",
+    "description": "``grok-imagine-video-1.5`` image-to-video (no ``aspect_ratio``).\n\nWidens ``resolution`` to add the 1080p tier supported by the 1.5 model\n(the standard model remains 480p/720p only).",
+    "properties": {
+      "image_url": {
+        "description": "URL of the input image for video generation.",
+        "type": "string",
+        "examples": [
+          "https://v3b.fal.media/files/b/0a8b90e0/BFLE9VDlZqsryU-UA3BoD_image_004.png"
+        ]
+      },
+      "duration": {
+        "minimum": 1,
+        "description": "Video duration in seconds.",
+        "default": 6,
+        "maximum": 15,
+        "type": "integer"
+      },
+      "resolution": {
+        "enum": [
+          "480p",
+          "720p",
+          "1080p"
+        ],
+        "description": "Resolution of the output video.",
+        "default": "720p",
+        "type": "string"
+      },
+      "prompt": {
+        "maxLength": 4096,
+        "description": "Text description of desired changes or motion in the video.",
+        "type": "string",
+        "examples": [
+          "Medieval knight in ornate armor walking through a mystical forest, bioluminescent plants pulsing with light, ancient stone ruins overgrown with glowing vines, over-the-shoulder camera, dark fantasy aesthetic, volumetric fog and Lumen lighting"
+        ]
+      }
+    },
+    "required": [
+      "prompt",
+      "image_url"
+    ],
+    "type": "object"
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "GrokImagineVideoV15ImageToVideoInput",
+    "GrokImagineVideoV15ImageToVideoOutput",
+    "VideoFile"
+  ]
+}

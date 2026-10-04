@@ -1,0 +1,196 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/wan-25-preview/image-to-image",
+  "task": "image-to-image",
+  "source_url": "https://fal.ai/models/fal-ai/wan-25-preview/image-to-image",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fwan-25-preview%2Fimage-to-image",
+  "retrieved_at": "2026-10-04T19:52:37.803Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "image-to-image",
+  "bytes_sha256": "3880a57c0bf5ed44ba9528012d962f570d69a70c67e6f83246489b0f5871e5e3",
+  "queue_path": "/fal-ai/wan-25-preview/image-to-image",
+  "input_name": "Wan25PreviewImageToImageInput",
+  "input": {
+    "$refName": "Wan25PreviewImageToImageInput",
+    "description": "Input for image editing",
+    "properties": {
+      "seed": {
+        "description": "Random seed for reproducibility. If None, a random seed is chosen.",
+        "anyOf": [
+          {
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "image_size": {
+        "anyOf": [
+          {
+            "$refName": "ImageSize",
+            "properties": {
+              "height": {
+                "maximum": 14142,
+                "description": "The height of the generated image.",
+                "default": 512,
+                "type": "integer",
+                "exclusiveMinimum": 0
+              },
+              "width": {
+                "maximum": 14142,
+                "description": "The width of the generated image.",
+                "default": 512,
+                "type": "integer",
+                "exclusiveMinimum": 0
+              }
+            },
+            "type": "object"
+          },
+          {
+            "enum": [
+              "square_hd",
+              "square",
+              "portrait_4_3",
+              "portrait_16_9",
+              "landscape_4_3",
+              "landscape_16_9"
+            ],
+            "type": "string"
+          }
+        ],
+        "description": "The size of the generated image. Width and height must be between 384 and 1440 pixels.",
+        "default": "square",
+        "examples": [
+          "square",
+          "landscape_16_9",
+          "portrait_16_9",
+          {
+            "height": 1280,
+            "width": 1280
+          }
+        ]
+      },
+      "negative_prompt": {
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "Negative prompt to describe content to avoid. Max 500 characters.",
+        "examples": [
+          "low resolution, error, worst quality, low quality, defects"
+        ]
+      },
+      "enable_safety_checker": {
+        "description": "If set to true, the safety checker will be enabled. Disabling it requires account authorization; unauthorized requests are always checked.",
+        "default": true,
+        "type": "boolean",
+        "examples": [
+          true
+        ]
+      },
+      "num_images": {
+        "minimum": 1,
+        "maximum": 4,
+        "default": 1,
+        "description": "Number of images to generate. Values from 1 to 4.",
+        "type": "integer",
+        "examples": [
+          1
+        ]
+      },
+      "prompt": {
+        "description": "The text prompt describing how to edit the image. Max 2000 characters.",
+        "minLength": 1,
+        "type": "string",
+        "examples": [
+          "Reimagine the scene under a raging thunderstorm at night: lightning forks across the sky, illuminating the samurai in stark flashes of white light."
+        ]
+      },
+      "image_urls": {
+        "description": "URLs of images to edit. For single-image editing, provide 1 URL. For multi-reference generation, provide up to 2 URLs. If more than 2 URLs are provided, only the first 2 will be used.",
+        "min_width": 384,
+        "max_width": 5000,
+        "type": "array",
+        "examples": [
+          [
+            "https://v3.fal.media/files/penguin/4VZ7I1ZK5XNv33LV2JBxg.png"
+          ]
+        ],
+        "max_file_size": 26214400,
+        "items": {
+          "_fal_ui_field": "image",
+          "type": "string"
+        },
+        "max_height": 5000,
+        "min_height": 384
+      }
+    },
+    "required": [
+      "prompt",
+      "image_urls"
+    ],
+    "type": "object"
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "Wan25PreviewImageToImageInput",
+    "Wan25PreviewImageToImageOutput",
+    "ImageSize",
+    "ImageFile"
+  ]
+}

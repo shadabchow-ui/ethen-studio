@@ -1,0 +1,128 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/image-editing/realism",
+  "task": "image-generation",
+  "source_url": "https://fal.ai/models/fal-ai/image-editing/realism",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fimage-editing%2Frealism",
+  "retrieved_at": "2026-10-04T19:46:23.550Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "image-to-image",
+  "bytes_sha256": "e0ae661207d6840f281db2f5b3e1db2f258cac9f568e00a5036e14c10d131146",
+  "queue_path": "/fal-ai/image-editing/realism",
+  "input_name": "ImageEditingRealismInput",
+  "input": {
+    "$refName": "ImageEditingRealismInput",
+    "type": "object",
+    "properties": {
+      "enable_safety_checker": {
+        "type": "boolean",
+        "description": "Whether to enable the safety checker for the generated image.",
+        "default": true
+      },
+      "sync_mode": {
+        "type": "boolean",
+        "description": "If `True`, the media will be returned as a data URI and the output data won't be available in the request history.",
+        "default": false
+      },
+      "num_inference_steps": {
+        "minimum": 1,
+        "type": "integer",
+        "description": "Number of inference steps for sampling.",
+        "maximum": 50,
+        "default": 30
+      },
+      "image_url": {
+        "type": "string",
+        "examples": [
+          "https://v3.fal.media/files/penguin/QpRcoPb4dDyDJJSpFm4CZ_img_55_start.jpg"
+        ],
+        "description": "URL of the image to enhance with realism details."
+      },
+      "seed": {
+        "description": "The same seed and the same prompt given to the same version of the model will output the same image every time.",
+        "anyOf": [
+          {
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "lora_scale": {
+        "minimum": 0,
+        "type": "number",
+        "description": "The scale factor for the LoRA model. Controls the strength of the LoRA effect.",
+        "maximum": 2,
+        "default": 0.6
+      },
+      "guidance_scale": {
+        "minimum": 0,
+        "type": "number",
+        "description": "The CFG (Classifier Free Guidance) scale is a measure of how close you want the model to stick to your prompt when looking for a related image to show you.",
+        "maximum": 20,
+        "default": 3.5
+      }
+    },
+    "description": "Input model for realism enhancement endpoint.",
+    "required": [
+      "image_url"
+    ]
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "ImageEditingRealismInput",
+    "ImageEditingRealismOutput",
+    "Image"
+  ]
+}

@@ -1,0 +1,178 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/wan/v2.7/edit-video",
+  "task": "video-editing",
+  "source_url": "https://fal.ai/models/fal-ai/wan/v2.7/edit-video",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fwan%2Fv2.7%2Fedit-video",
+  "retrieved_at": "2026-10-04T19:53:07.757Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "video-to-video",
+  "bytes_sha256": "a9845e7e9db52ac58d5f99f929fda15aab4099e17c46b68baf1754eaa4f73cc4",
+  "queue_path": "/fal-ai/wan/v2.7/edit-video",
+  "input_name": "WanV27EditVideoInput",
+  "input": {
+    "$refName": "WanV27EditVideoInput",
+    "properties": {
+      "enable_safety_checker": {
+        "default": true,
+        "description": "Enable content moderation for input and output. Disabling it requires account authorization; unauthorized requests are always checked.",
+        "type": "boolean"
+      },
+      "prompt": {
+        "examples": [
+          "Transform the entire scene into a beautiful watercolor painting style. Soft brushstrokes, flowing paint washes, visible paper texture. Colors should bleed and blend naturally like wet watercolor on paper."
+        ],
+        "type": "string",
+        "minLength": 1,
+        "description": "Editing instruction or style transfer description."
+      },
+      "aspect_ratio": {
+        "description": "Aspect ratio of the generated video. If not provided, uses the aspect ratio of the input video.",
+        "anyOf": [
+          {
+            "enum": [
+              "16:9",
+              "9:16",
+              "1:1",
+              "4:3",
+              "3:4"
+            ],
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "seed": {
+        "description": "Random seed for reproducibility (0-2147483647).",
+        "anyOf": [
+          {
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "duration": {
+        "enum": [
+          0,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10
+        ],
+        "default": 0,
+        "description": "Output video duration in seconds. Default 0 means match input video duration. When set (2-10), truncates from the start.",
+        "type": "integer"
+      },
+      "resolution": {
+        "enum": [
+          "720p",
+          "1080p"
+        ],
+        "default": "1080p",
+        "description": "Output video resolution tier.",
+        "type": "string"
+      },
+      "reference_image_url": {
+        "description": "Reference image URL for reference-based editing.",
+        "anyOf": [
+          {
+            "type": "string",
+            "ui": {
+              "field": "image"
+            }
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "audio_setting": {
+        "enum": [
+          "auto",
+          "origin"
+        ],
+        "default": "auto",
+        "description": "Audio handling. 'auto': model decides whether to regenerate audio. 'origin': preserve original audio from input video.",
+        "type": "string"
+      },
+      "video_url": {
+        "examples": [
+          "https://v3b.fal.media/files/b/0a940a70/s4jC3lmmbU8Q6xM-SFtWB_m5JJudvy.mp4"
+        ],
+        "type": "string",
+        "description": "URL of the input video to edit. Format: MP4, MOV. Duration: 2-10s. Max 100 MB.\n\nMax file size: 100.0MB, Min duration: 2s, Max duration: 10s, Timeout: 30.0s"
+      }
+    },
+    "required": [
+      "prompt",
+      "video_url"
+    ],
+    "description": "Input for Wan 2.7 video editing.\n\nSupports instruction-based editing, reference image-based editing,\nand video style transfer.",
+    "type": "object"
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "WanV27EditVideoInput",
+    "WanV27EditVideoOutput",
+    "VideoFile"
+  ]
+}

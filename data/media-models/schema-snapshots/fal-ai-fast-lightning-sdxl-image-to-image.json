@@ -1,0 +1,253 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/fast-lightning-sdxl/image-to-image",
+  "task": "image-to-image",
+  "source_url": "https://fal.ai/models/fal-ai/fast-lightning-sdxl/image-to-image",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Ffast-lightning-sdxl%2Fimage-to-image",
+  "retrieved_at": "2026-10-04T19:43:34.615Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "image-to-image",
+  "bytes_sha256": "96369b728e7c0c3a85696775c26192d197921be793fb61ce33b07d9a213ee78a",
+  "queue_path": "/fal-ai/fast-lightning-sdxl/image-to-image",
+  "input_name": "FastLightningSdxlImageToImageInput",
+  "input": {
+    "$refName": "FastLightningSdxlImageToImageInput",
+    "properties": {
+      "request_id": {
+        "description": "\n            An id bound to a request, can be used with response to identify the request\n            itself.\n        ",
+        "default": "",
+        "type": "string"
+      },
+      "strength": {
+        "minimum": 0.05,
+        "description": "determines how much the generated image resembles the initial image",
+        "default": 0.95,
+        "maximum": 1,
+        "type": "number"
+      },
+      "crop_output": {
+        "description": "\n        If set to true, the output cropped to the proper aspect ratio after generating.\n        ",
+        "default": false,
+        "type": "boolean"
+      },
+      "format": {
+        "description": "The format of the generated image.",
+        "enum": [
+          "jpeg",
+          "png"
+        ],
+        "default": "jpeg",
+        "type": "string"
+      },
+      "num_images": {
+        "minimum": 1,
+        "description": "The number of images to generate.",
+        "default": 1,
+        "maximum": 8,
+        "type": "integer"
+      },
+      "seed": {
+        "description": "\n            The same seed and the same prompt given to the same version of Stable Diffusion\n            will output the same image every time.\n        ",
+        "anyOf": [
+          {
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "preserve_aspect_ratio": {
+        "description": "\n        If set to true, the aspect ratio of the generated image will be preserved even\n        if the image size is too large. However, if the image is not a multiple of 32\n        in width or height, it will be resized to the nearest multiple of 32. By default,\n        this snapping to the nearest multiple of 32 will not preserve the aspect ratio.\n        Set crop_output to True, to crop the output to the proper aspect ratio\n        after generating.\n        ",
+        "default": false,
+        "type": "boolean"
+      },
+      "sync_mode": {
+        "description": "If `True`, the media will be returned as a data URI and the output data won't be available in the request history.",
+        "default": false,
+        "type": "boolean"
+      },
+      "embeddings": {
+        "description": "The list of embeddings to use.",
+        "default": [],
+        "items": {
+          "$refName": "Embedding",
+          "properties": {
+            "path": {
+              "description": "URL or the path to the embedding weights.",
+              "type": "string",
+              "examples": [
+                "https://civitai.com/api/download/models/135931",
+                "https://filebin.net/3chfqasxpqu21y8n/my-custom-lora-v1.safetensors"
+              ]
+            },
+            "tokens": {
+              "description": "\n            The list of tokens to use for the embedding. When omitted, tokens\n            are generated as <s0>, <s1>, ... to match the number of vectors in\n            the embedding file.\n        ",
+              "default": null,
+              "anyOf": [
+                {
+                  "items": {
+                    "type": "string"
+                  },
+                  "type": "array"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            }
+          },
+          "required": [
+            "path"
+          ],
+          "type": "object"
+        },
+        "type": "array"
+      },
+      "num_inference_steps": {
+        "description": "The number of inference steps to perform.",
+        "enum": [
+          1,
+          2,
+          4,
+          8
+        ],
+        "default": 4,
+        "type": "integer"
+      },
+      "image_url": {
+        "description": "The URL of the image to use as a starting point for the generation.",
+        "type": "string",
+        "examples": [
+          "https://fal-cdn.batuhan-941.workers.dev/files/tiger/IExuP-WICqaIesLZAZPur.jpeg"
+        ]
+      },
+      "prompt": {
+        "description": "The prompt to use for generating the image. Be as descriptive as possible for best results.",
+        "type": "string",
+        "examples": [
+          "an island near sea, with seagulls, moon shining over the sea, light house, boats int he background, fish flying over the sea"
+        ]
+      },
+      "expand_prompt": {
+        "description": "If set to true, the prompt will be expanded with additional prompts.",
+        "default": false,
+        "type": "boolean"
+      },
+      "image_size": {
+        "description": "The size of the generated image.",
+        "default": "square_hd",
+        "anyOf": [
+          {
+            "$refName": "ImageSize",
+            "properties": {
+              "height": {
+                "description": "The height of the generated image.",
+                "maximum": 14142,
+                "default": 512,
+                "exclusiveMinimum": 0,
+                "type": "integer"
+              },
+              "width": {
+                "description": "The width of the generated image.",
+                "maximum": 14142,
+                "default": 512,
+                "exclusiveMinimum": 0,
+                "type": "integer"
+              }
+            },
+            "type": "object"
+          },
+          {
+            "enum": [
+              "square_hd",
+              "square",
+              "portrait_4_3",
+              "portrait_16_9",
+              "landscape_4_3",
+              "landscape_16_9"
+            ],
+            "type": "string"
+          }
+        ]
+      },
+      "enable_safety_checker": {
+        "description": "If set to true, the safety checker will be enabled.",
+        "default": true,
+        "type": "boolean"
+      },
+      "safety_checker_version": {
+        "description": "The version of the safety checker to use. v1 is the default CompVis safety checker. v2 uses a custom ViT model.",
+        "enum": [
+          "v1",
+          "v2"
+        ],
+        "default": "v1",
+        "type": "string"
+      }
+    },
+    "required": [
+      "image_url",
+      "prompt"
+    ],
+    "type": "object"
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "FastLightningSdxlImageToImageInput",
+    "FastLightningSdxlImageToImageOutput",
+    "Embedding",
+    "ImageSize",
+    "Image"
+  ]
+}

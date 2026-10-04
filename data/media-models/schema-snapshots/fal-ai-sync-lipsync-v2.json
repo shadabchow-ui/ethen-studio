@@ -1,0 +1,114 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/sync-lipsync/v2",
+  "task": "unknown",
+  "source_url": "https://fal.ai/models/fal-ai/sync-lipsync/v2",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fsync-lipsync%2Fv2",
+  "retrieved_at": "2026-10-04T19:51:55.363Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "video-to-video",
+  "bytes_sha256": "b74a56c9231bb38fc0a3408990e91ca8b1d60710485e22a351ac4f0f493c98eb",
+  "queue_path": "/fal-ai/sync-lipsync/v2",
+  "input_name": "SyncLipsyncV2Input",
+  "input": {
+    "$refName": "SyncLipsyncV2Input",
+    "properties": {
+      "video_url": {
+        "type": "string",
+        "description": "URL of the input video",
+        "examples": [
+          "https://v3.fal.media/files/tiger/IugLCDJRIoGqvqTa-EJTr_3wg74vCqyNuQ-IiBd77MM_output.mp4"
+        ]
+      },
+      "sync_mode": {
+        "type": "string",
+        "default": "cut_off",
+        "enum": [
+          "cut_off",
+          "loop",
+          "bounce",
+          "silence",
+          "remap"
+        ],
+        "description": "Lipsync mode when audio and video durations are out of sync."
+      },
+      "audio_url": {
+        "type": "string",
+        "description": "URL of the input audio",
+        "examples": [
+          "https://fal.media/files/lion/vyFWygmZsIZlUO4s0nr2n.wav"
+        ]
+      },
+      "model": {
+        "type": "string",
+        "default": "lipsync-2",
+        "enum": [
+          "lipsync-2",
+          "lipsync-2-pro"
+        ],
+        "description": "The model to use for lipsyncing. `lipsync-2-pro` will cost roughly 1.67 times as much as `lipsync-2` for the same duration."
+      }
+    },
+    "type": "object",
+    "required": [
+      "video_url",
+      "audio_url"
+    ]
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "SyncLipsyncV2Input",
+    "SyncLipsyncV2Output",
+    "File"
+  ]
+}

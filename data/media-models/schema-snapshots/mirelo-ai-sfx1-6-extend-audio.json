@@ -1,0 +1,147 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "mirelo-ai/sfx1.6/extend-audio",
+  "task": "unknown",
+  "source_url": "https://fal.ai/models/mirelo-ai/sfx1.6/extend-audio",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=mirelo-ai%2Fsfx1.6%2Fextend-audio",
+  "retrieved_at": "2026-10-04T19:54:31.007Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "audio-to-audio",
+  "bytes_sha256": "9f57deec1fe8e64c48527fcd2d0a47d8b0d8136628fc13befd6c7453e547e620",
+  "queue_path": "/mirelo-ai/sfx1.6/extend-audio",
+  "input_name": "Sfx16ExtendAudioInput",
+  "input": {
+    "$refName": "Sfx16ExtendAudioInput",
+    "required": [
+      "audio_url"
+    ],
+    "properties": {
+      "append_duration": {
+        "minimum": 1,
+        "description": "How many seconds to add after the prefix. Total output = prefix duration + append_duration, capped at 60s. Minimum 1s, maximum 57s (60s cap minus the 3s prefix minimum).",
+        "type": "number",
+        "default": 10,
+        "maximum": 57
+      },
+      "upload_audio_format": {
+        "description": "Audio format for the returned files.",
+        "type": "string",
+        "default": "wav",
+        "enum": [
+          "wav",
+          "mp3",
+          "aac",
+          "flac"
+        ]
+      },
+      "double_output": {
+        "description": "Only used when ambience=true: concatenate the loop with itself for a 2x-length output.",
+        "type": "boolean",
+        "default": false
+      },
+      "seed": {
+        "description": "Seed for generation. -1 or None for random.",
+        "anyOf": [
+          {
+            "minimum": -1,
+            "type": "integer",
+            "maximum": 18446744073709552000
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "text_prompt": {
+        "examples": [
+          "birds chirping"
+        ],
+        "description": "Optional text prompt guiding the extension.",
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "audio_url": {
+        "examples": [
+          "https://di3otfzjg1gxa.cloudfront.net/mirelo-ambience-birds_chirping.aac"
+        ],
+        "description": "URL of the audio prefix to extend. The prefix duration must be 3–59 seconds; the total output (prefix + append_duration) is capped at 60 seconds.",
+        "type": "string"
+      },
+      "num_samples": {
+        "minimum": 1,
+        "description": "Number of variations to generate.",
+        "type": "integer",
+        "default": 2,
+        "maximum": 4
+      },
+      "ambience": {
+        "description": "When true, run the extend+loop path: extend the prefix and stitch the end back to the prefix start so the tile loops seamlessly. When false, run a one-shot extension.",
+        "type": "boolean",
+        "default": false
+      }
+    },
+    "type": "object"
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "Sfx16ExtendAudioInput",
+    "Sfx16ExtendAudioOutput",
+    "Audio"
+  ]
+}

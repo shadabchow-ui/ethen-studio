@@ -1,0 +1,194 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/boogu-image",
+  "task": "image-generation",
+  "source_url": "https://fal.ai/models/fal-ai/boogu-image",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fboogu-image",
+  "retrieved_at": "2026-10-04T19:42:43.336Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "text-to-image",
+  "bytes_sha256": "92e93b6b93b048d3ef3472d74f7e64e610a6b4518f95a18112f7df0a52f085e6",
+  "queue_path": "/fal-ai/boogu-image",
+  "input_name": "BooguImageInput",
+  "input": {
+    "$refName": "BooguImageInput",
+    "required": [
+      "prompt"
+    ],
+    "type": "object",
+    "properties": {
+      "cfg_range_end": {
+        "description": "End of the timestep fraction over which CFG is applied.",
+        "maximum": 1,
+        "type": "number",
+        "default": 1,
+        "minimum": 0
+      },
+      "seed": {
+        "description": "The same seed and the same prompt given to the same version of the model will output the same image every time.",
+        "anyOf": [
+          {
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "output_format": {
+        "description": "The format of the generated image.",
+        "enum": [
+          "jpeg",
+          "png"
+        ],
+        "type": "string",
+        "default": "jpeg"
+      },
+      "num_images": {
+        "description": "The number of images to generate.",
+        "maximum": 4,
+        "type": "integer",
+        "default": 1,
+        "minimum": 1
+      },
+      "prompt": {
+        "description": "The instruction describing the image to generate. Boogu-Image is bilingual — English and Chinese instructions are both supported. Detailed, descriptive prompts produce the best results.",
+        "type": "string",
+        "examples": [
+          "A street photography shot of an elderly scavenger with a deeply weathered face in the center of the frame, a trash can and a traffic light in the background. Shot on a Leica camera, high photographic texture, cinematic lighting, photorealistic.",
+          "一只柯基犬戴着墨镜，坐在阳光明媚的海滩上，电影感，浅景深。"
+        ]
+      },
+      "cfg_range_start": {
+        "description": "Start of the timestep fraction over which CFG is applied.",
+        "maximum": 1,
+        "type": "number",
+        "default": 0,
+        "minimum": 0
+      },
+      "sync_mode": {
+        "description": "If true, the media is returned as a data URI and the output is not available in the request history.",
+        "type": "boolean",
+        "default": false
+      },
+      "image_size": {
+        "description": "The size of the generated image. The model's maximum native resolution is 2K; larger requests are clamped. Dimensions are aligned to multiples of 16.",
+        "anyOf": [
+          {
+            "$refName": "ImageSize",
+            "type": "object",
+            "properties": {
+              "height": {
+                "description": "The height of the generated image.",
+                "maximum": 14142,
+                "type": "integer",
+                "default": 512,
+                "exclusiveMinimum": 0
+              },
+              "width": {
+                "description": "The width of the generated image.",
+                "maximum": 14142,
+                "type": "integer",
+                "default": 512,
+                "exclusiveMinimum": 0
+              }
+            }
+          },
+          {
+            "enum": [
+              "square_hd",
+              "square",
+              "portrait_4_3",
+              "portrait_16_9",
+              "landscape_4_3",
+              "landscape_16_9"
+            ],
+            "type": "string"
+          }
+        ],
+        "default": "square_hd"
+      },
+      "enable_safety_checker": {
+        "description": "If true, the safety checker is run on the generated images. Disabling it requires account authorization; unauthorized requests are always checked, and images flagged as unsafe are returned as black images.",
+        "type": "boolean",
+        "default": true
+      },
+      "negative_prompt": {
+        "description": "Describes what should NOT appear in the image. Used for classifier-free guidance; leave empty to disable text negative guidance.",
+        "type": "string",
+        "default": ""
+      },
+      "guidance_scale": {
+        "description": "Controls how closely generation follows the text instruction. Higher values stick more closely to the prompt. A value of 1.0 disables text classifier-free guidance.",
+        "maximum": 8,
+        "type": "number",
+        "default": 4,
+        "minimum": 1
+      },
+      "num_inference_steps": {
+        "description": "The number of denoising steps to perform.",
+        "maximum": 50,
+        "type": "integer",
+        "default": 30,
+        "minimum": 20
+      }
+    }
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "BooguImageInput",
+    "BooguImageOutput",
+    "ImageSize",
+    "Image"
+  ]
+}

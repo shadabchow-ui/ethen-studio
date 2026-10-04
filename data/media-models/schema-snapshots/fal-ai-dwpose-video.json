@@ -1,0 +1,102 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/dwpose/video",
+  "task": "video-editing",
+  "source_url": "https://fal.ai/models/fal-ai/dwpose/video",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fdwpose%2Fvideo",
+  "retrieved_at": "2026-10-04T19:43:19.170Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "video-to-video",
+  "bytes_sha256": "3780feaa6b1257a50b6087faabc20e941d6de9029254696b4be0112f8520bbb6",
+  "queue_path": "/fal-ai/dwpose/video",
+  "input_name": "DwposeVideoInput",
+  "input": {
+    "$refName": "DwposeVideoInput",
+    "properties": {
+      "video_url": {
+        "description": "URL of video to be used for pose estimation",
+        "type": "string",
+        "examples": [
+          "https://storage.googleapis.com/falserverless/gallery/Ben2/100063-video-2160.mp4"
+        ]
+      },
+      "draw_mode": {
+        "description": "Mode of drawing the pose on the video. Options are: 'full-pose', 'body-pose', 'face-pose', 'hand-pose', 'face-hand-mask', 'face-mask', 'hand-mask'.",
+        "enum": [
+          "full-pose",
+          "body-pose",
+          "face-pose",
+          "hand-pose",
+          "face-hand-mask",
+          "face-mask",
+          "hand-mask"
+        ],
+        "default": "body-pose",
+        "type": "string",
+        "examples": [
+          "body-pose"
+        ]
+      }
+    },
+    "required": [
+      "video_url"
+    ],
+    "type": "object"
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "DwposeVideoInput",
+    "DwposeVideoOutput",
+    "File"
+  ]
+}

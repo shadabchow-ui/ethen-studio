@@ -1,0 +1,85 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/heygen/v3/filler-word-removal",
+  "task": "unknown",
+  "source_url": "https://fal.ai/models/fal-ai/heygen/v3/filler-word-removal",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fheygen%2Fv3%2Ffiller-word-removal",
+  "retrieved_at": "2026-10-04T19:45:28.537Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "video-to-video",
+  "bytes_sha256": "802a77742f307010b55e255ad80b69627d1857ad12c3189adb0ef096864c8986",
+  "queue_path": "/fal-ai/heygen/v3/filler-word-removal",
+  "input_name": "HeygenV3FillerWordRemovalInput",
+  "input": {
+    "$refName": "HeygenV3FillerWordRemovalInput",
+    "properties": {
+      "video_url": {
+        "description": "URL of the source video to remove filler words and long silences from.",
+        "type": "string",
+        "examples": [
+          "https://v3b.fal.media/files/b/0a9004c7/FM7Q5tK2b59x66Bl8HC0Z_vt-lang-en.mp4"
+        ]
+      }
+    },
+    "required": [
+      "video_url"
+    ],
+    "type": "object"
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "HeygenV3FillerWordRemovalInput",
+    "HeygenV3FillerWordRemovalOutput",
+    "File"
+  ]
+}

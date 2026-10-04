@@ -1,0 +1,105 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/qwen-image-2512-trainer",
+  "task": "image-generation",
+  "source_url": "https://fal.ai/models/fal-ai/qwen-image-2512-trainer",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fqwen-image-2512-trainer",
+  "retrieved_at": "2026-10-04T19:50:36.247Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "training",
+  "bytes_sha256": "cd52d5dc79f55d39f5fa6a7199b534bd11b262e2214bc4f53983d46734fc8783",
+  "queue_path": "/fal-ai/qwen-image-2512-trainer",
+  "input_name": "QwenImage2512TrainerInput",
+  "input": {
+    "$refName": "QwenImage2512TrainerInput",
+    "required": [
+      "image_data_url"
+    ],
+    "type": "object",
+    "properties": {
+      "image_data_url": {
+        "description": "\n    URL to the input data zip archive for text-to-image training.\n\n    The zip should contain images with their corresponding text captions:\n\n    image.EXT and image.txt\n    For example:\n    photo.jpg and photo.txt\n\n    The text file contains the caption/prompt describing the target image.\n\n    If no text file is provided for an image, the default_caption will be used.\n\n    If no default_caption is provided and a text file is missing, the training will fail.\n    ",
+        "type": "string"
+      },
+      "learning_rate": {
+        "description": "Learning rate for LoRA parameters.",
+        "default": 0.0005,
+        "type": "number"
+      },
+      "steps": {
+        "minimum": 1,
+        "type": "integer",
+        "description": "Number of steps to train for",
+        "maximum": 30000,
+        "default": 1000
+      },
+      "default_caption": {
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "Default caption to use when caption files are missing. If None, missing captions will cause an error."
+      }
+    }
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "QwenImage2512TrainerInput",
+    "QwenImage2512TrainerOutput",
+    "File"
+  ]
+}

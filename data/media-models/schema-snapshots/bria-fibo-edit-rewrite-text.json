@@ -1,0 +1,93 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "bria/fibo-edit/rewrite_text",
+  "task": "unknown",
+  "source_url": "https://fal.ai/models/bria/fibo-edit/rewrite_text",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=bria%2Ffibo-edit%2Frewrite_text",
+  "retrieved_at": "2026-10-04T19:41:44.436Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "image-to-image",
+  "bytes_sha256": "7834d8c9c03d878a1f95467e35a6817303042a24bbd9062704e22ec537147128",
+  "queue_path": "/bria/fibo-edit/rewrite_text",
+  "input_name": "FiboEditRewrite_textInput",
+  "input": {
+    "$refName": "FiboEditRewrite_textInput",
+    "required": [
+      "image_url",
+      "new_text"
+    ],
+    "type": "object",
+    "properties": {
+      "new_text": {
+        "examples": [
+          "FIBO Edit!"
+        ],
+        "type": "string",
+        "description": "The new text string to appear in the image."
+      },
+      "image_url": {
+        "examples": [
+          "https://bria-datasets.s3.us-east-1.amazonaws.com/Liza/create_an_image_of_cake__with_text_on_it_saying___Hi_there__.png"
+        ],
+        "type": "string",
+        "description": "The source image."
+      }
+    }
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "FiboEditRewrite_textInput",
+    "FiboEditRewrite_textOutput",
+    "Image"
+  ]
+}

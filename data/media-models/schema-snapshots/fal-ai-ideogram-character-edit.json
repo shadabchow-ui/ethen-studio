@@ -1,0 +1,246 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/ideogram/character/edit",
+  "task": "image-editing",
+  "source_url": "https://fal.ai/models/fal-ai/ideogram/character/edit",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fideogram%2Fcharacter%2Fedit",
+  "retrieved_at": "2026-10-04T19:45:50.260Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "image-to-image",
+  "bytes_sha256": "fbd016c201963ea7eeb95e443aa3f1e2eb6865aca4f3574d8ebc3813c7a6b823",
+  "queue_path": "/fal-ai/ideogram/character/edit",
+  "input_name": "IdeogramCharacterEditInput",
+  "input": {
+    "$refName": "IdeogramCharacterEditInput",
+    "properties": {
+      "style_codes": {
+        "anyOf": [
+          {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "A list of 8 character hexadecimal codes representing the style of the image. Cannot be used in conjunction with style_reference_images or style"
+      },
+      "color_palette": {
+        "anyOf": [
+          {
+            "$refName": "ColorPalette",
+            "properties": {
+              "name": {
+                "anyOf": [
+                  {
+                    "enum": [
+                      "EMBER",
+                      "FRESH",
+                      "JUNGLE",
+                      "MAGIC",
+                      "MELON",
+                      "MOSAIC",
+                      "PASTEL",
+                      "ULTRAMARINE"
+                    ],
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "description": "A color palette preset value"
+              },
+              "members": {
+                "anyOf": [
+                  {
+                    "type": "array",
+                    "items": {
+                      "$refName": "ColorPaletteMember",
+                      "properties": {
+                        "unsupported": "depth-exceeded"
+                      },
+                      "type": "object",
+                      "required": [
+                        "rgb"
+                      ]
+                    }
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "description": "A list of color palette members that define the color palette"
+              }
+            },
+            "type": "object"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "A color palette for generation, must EITHER be specified via one of the presets (name) or explicitly via hexadecimal representations of the color with optional weights (members)"
+      },
+      "rendering_speed": {
+        "enum": [
+          "TURBO",
+          "BALANCED",
+          "QUALITY"
+        ],
+        "default": "BALANCED",
+        "description": "The rendering speed to use.",
+        "type": "string"
+      },
+      "image_urls": {
+        "anyOf": [
+          {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "A set of images to use as style references (maximum total size 10MB across all style references). The images should be in JPEG, PNG or WebP format"
+      },
+      "expand_prompt": {
+        "default": true,
+        "description": "Determine if MagicPrompt should be used in generating the request or not.",
+        "type": "boolean"
+      },
+      "seed": {
+        "anyOf": [
+          {
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "Seed for the random number generator"
+      },
+      "mask_url": {
+        "description": "The mask URL to inpaint the image. MUST have the exact same dimensions (width and height) as the input image.",
+        "type": "string",
+        "examples": [
+          "https://v3.fal.media/files/panda/jVDAgSkpsZFDP080ceSZJ_woman_face_mask.png"
+        ]
+      },
+      "reference_image_urls": {
+        "examples": [
+          [
+            "https://v3.fal.media/files/kangaroo/0rinwnj_Kn9Fsu2dK-aKm_image.png"
+          ]
+        ],
+        "description": "A set of images to use as character references. Currently only 1 image is supported, rest will be ignored. (maximum total size 10MB across all character references). The images should be in JPEG, PNG or WebP format",
+        "type": "array",
+        "items": {
+          "type": "string"
+        }
+      },
+      "image_url": {
+        "description": "The image URL to generate an image from. MUST have the exact same dimensions (width and height) as the mask image.",
+        "type": "string",
+        "examples": [
+          "https://v3.fal.media/files/panda/-LC_gNNV3wUHaGMQT3klE_output.png"
+        ]
+      },
+      "num_images": {
+        "minimum": 1,
+        "default": 1,
+        "description": "Number of images to generate.",
+        "maximum": 8,
+        "type": "integer"
+      },
+      "sync_mode": {
+        "default": false,
+        "description": "If `True`, the media will be returned as a data URI and the output data won't be available in the request history.",
+        "type": "boolean"
+      },
+      "reference_mask_urls": {
+        "description": "A set of masks to apply to the character references. Currently only 1 mask is supported, rest will be ignored. (maximum total size 10MB across all character references). The masks should be in JPEG, PNG or WebP format",
+        "type": "array",
+        "items": {
+          "type": "string"
+        }
+      },
+      "prompt": {
+        "description": "The prompt to fill the masked part of the image.",
+        "type": "string",
+        "examples": [
+          "woman holding bag"
+        ]
+      }
+    },
+    "type": "object",
+    "required": [
+      "prompt",
+      "image_url",
+      "mask_url",
+      "reference_image_urls"
+    ]
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "IdeogramCharacterEditInput",
+    "IdeogramCharacterEditOutput",
+    "ColorPalette",
+    "File",
+    "ColorPaletteMember",
+    "RGBColor"
+  ]
+}

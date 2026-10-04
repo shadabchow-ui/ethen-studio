@@ -1,0 +1,209 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "krea/v2/medium/text-to-image",
+  "task": "text-to-image",
+  "source_url": "https://fal.ai/models/krea/v2/medium/text-to-image",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=krea%2Fv2%2Fmedium%2Ftext-to-image",
+  "retrieved_at": "2026-10-04T19:53:54.520Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "text-to-image",
+  "bytes_sha256": "1fb095026bf01490df6fca3adc38fb6724c09423968b13bc0eaba0da42d96917",
+  "queue_path": "/krea/v2/medium/text-to-image",
+  "input_name": "V2MediumTextToImageInput",
+  "input": {
+    "$refName": "V2MediumTextToImageInput",
+    "properties": {
+      "image_style_references": {
+        "items": {
+          "$refName": "ImageStyleReference",
+          "properties": {
+            "image_url": {
+              "type": "string",
+              "description": "Publicly accessible URL of a reference image."
+            },
+            "strength": {
+              "maximum": 2,
+              "type": "number",
+              "description": "How strongly the reference influences the generated image. Negative values push away from the reference.",
+              "minimum": -2,
+              "default": 1
+            }
+          },
+          "type": "object",
+          "required": [
+            "image_url"
+          ]
+        },
+        "maxItems": 10,
+        "type": "array",
+        "description": "Optional list of reference images that guide the style of the generated image. At most 10 entries.",
+        "default": []
+      },
+      "moodboards": {
+        "items": {
+          "$refName": "Moodboard",
+          "properties": {
+            "strength": {
+              "maximum": 1,
+              "type": "number",
+              "description": "How strongly the moodboard influences the generated image.",
+              "minimum": 0,
+              "default": 0.23
+            },
+            "id": {
+              "type": "string",
+              "description": "Krea moodboard identifier (UUID)."
+            }
+          },
+          "type": "object",
+          "required": [
+            "id"
+          ]
+        },
+        "maxItems": 1,
+        "type": "array",
+        "description": "Optional moodboard to apply to the generation. Krea currently accepts at most one moodboard per request. Each entry references a moodboard by `id` (UUID).",
+        "default": []
+      },
+      "prompt": {
+        "minLength": 1,
+        "maxLength": 5000,
+        "type": "string",
+        "examples": [
+          "A Van Gogh-tinged Provençal farmhouse under starry nights."
+        ],
+        "description": "Text description of the image to generate."
+      },
+      "styles": {
+        "items": {
+          "$refName": "Style",
+          "properties": {
+            "strength": {
+              "maximum": 2,
+              "type": "number",
+              "description": "How strongly the style influences the generated image. Negative values push away from the style.",
+              "minimum": -2,
+              "default": 1
+            },
+            "id": {
+              "type": "string",
+              "description": "Krea style identifier (a LoRA-based preset style) returned by the Krea styles catalog."
+            }
+          },
+          "type": "object",
+          "required": [
+            "id"
+          ]
+        },
+        "maxItems": 10,
+        "type": "array",
+        "description": "Optional list of Krea preset styles (LoRA-based) to apply. Each entry references a style by `id` from the Krea styles catalog. At most 10 entries.",
+        "default": []
+      },
+      "creativity": {
+        "enum": [
+          "raw",
+          "low",
+          "medium",
+          "high"
+        ],
+        "type": "string",
+        "description": "Controls how loosely the model interprets the prompt. Higher values produce more creative results that may drift from the prompt; lower values stay closer to the prompt.",
+        "default": "medium"
+      },
+      "seed": {
+        "anyOf": [
+          {
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "Random seed for reproducible generation."
+      },
+      "aspect_ratio": {
+        "enum": [
+          "1:1",
+          "4:3",
+          "3:2",
+          "16:9",
+          "2.35:1",
+          "4:5",
+          "2:3",
+          "9:16"
+        ],
+        "examples": [
+          "1:1"
+        ],
+        "type": "string",
+        "description": "Aspect ratio of the generated image.",
+        "default": "1:1"
+      }
+    },
+    "type": "object",
+    "required": [
+      "prompt"
+    ],
+    "description": "Input for Krea-2 Medium image generation."
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "V2MediumTextToImageInput",
+    "V2MediumTextToImageOutput",
+    "ImageStyleReference",
+    "Moodboard",
+    "Style",
+    "Image"
+  ]
+}

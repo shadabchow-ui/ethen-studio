@@ -1,0 +1,186 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/photomaker",
+  "task": "unknown",
+  "source_url": "https://fal.ai/models/fal-ai/photomaker",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fphotomaker",
+  "retrieved_at": "2026-10-04T19:49:53.547Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "image-to-image",
+  "bytes_sha256": "562b3d0910f5df86b08ed28465c8e363e7e1b0cd5a250af6aa387323067f5a86",
+  "queue_path": "/fal-ai/photomaker",
+  "input_name": "PhotomakerInput",
+  "input": {
+    "$refName": "PhotomakerInput",
+    "properties": {
+      "num_inference_steps": {
+        "description": "\n            Increasing the amount of steps tells Stable Diffusion that it should take more steps\n            to generate your final result which can increase the amount of detail in your image.\n        ",
+        "maximum": 100,
+        "type": "integer",
+        "minimum": 20,
+        "default": 50
+      },
+      "guidance_scale": {
+        "description": "\n            The CFG (Classifier Free Guidance) scale is a measure of how close you want\n            the model to stick to your prompt when looking for a related image to show you.\n        ",
+        "maximum": 10,
+        "type": "number",
+        "minimum": 1,
+        "default": 5
+      },
+      "seed": {
+        "description": "\n            The same seed and the same prompt given to the same version of Stable Diffusion\n            will output the same image every time.\n        ",
+        "anyOf": [
+          {
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "examples": [
+          42
+        ]
+      },
+      "initial_image_url": {
+        "description": "Optional initial image for img2img",
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "num_images": {
+        "description": "\n            Number of images to generate in one request. Note that the higher the batch size,\n            the longer it will take to generate the images.\n        ",
+        "maximum": 4,
+        "type": "integer",
+        "minimum": 1,
+        "default": 1
+      },
+      "base_pipeline": {
+        "description": "The base pipeline to use for generating the image.",
+        "enum": [
+          "photomaker",
+          "photomaker-style"
+        ],
+        "type": "string",
+        "default": "photomaker"
+      },
+      "initial_image_strength": {
+        "description": "How much noise to add to the latent image. O for no noise, 1 for maximum noise.",
+        "maximum": 1,
+        "type": "number",
+        "minimum": 0,
+        "default": 0.5
+      },
+      "image_archive_url": {
+        "description": "The URL of the image archive containing the images you want to use.",
+        "type": "string",
+        "examples": [
+          "https://storage.googleapis.com/falserverless/model_tests/photomaker/elon.zip"
+        ]
+      },
+      "prompt": {
+        "description": "The prompt to use for generating the image. Be as descriptive as possible for best results.",
+        "type": "string",
+        "examples": [
+          "instagram photo, portrait photo of a man img, colorful, perfect face, natural skin, hard shadows, film grain"
+        ]
+      },
+      "negative_prompt": {
+        "description": "\n            The negative prompt to use.Use it to address details that you don't want\n            in the image. This could be colors, objects, scenery and even the small details\n            (e.g. moustache, blurry, low resolution).\n        ",
+        "type": "string",
+        "default": "",
+        "examples": [
+          "nsfw, lowres, bad anatomy, bad hands, text, error, missing fingers, extra digit, fewer digits, cropped, worst quality, low quality, normal quality, jpeg artifacts, signature, watermark, username, blurry"
+        ]
+      },
+      "style": {
+        "enum": [
+          "(No style)",
+          "Cinematic",
+          "Disney Character",
+          "Digital Art",
+          "Photographic",
+          "Fantasy art",
+          "Neonpunk",
+          "Enhance",
+          "Comic book",
+          "Lowpoly",
+          "Line art"
+        ],
+        "type": "string",
+        "default": "Photographic"
+      },
+      "style_strength": {
+        "maximum": 50,
+        "type": "integer",
+        "minimum": 15,
+        "default": 20
+      }
+    },
+    "type": "object",
+    "required": [
+      "image_archive_url",
+      "prompt"
+    ]
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "PhotomakerInput",
+    "PhotomakerOutput",
+    "Image"
+  ]
+}

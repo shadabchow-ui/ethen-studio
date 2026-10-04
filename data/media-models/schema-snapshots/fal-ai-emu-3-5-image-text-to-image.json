@@ -1,0 +1,141 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/emu-3.5-image/text-to-image",
+  "task": "text-to-image",
+  "source_url": "https://fal.ai/models/fal-ai/emu-3.5-image/text-to-image",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Femu-3.5-image%2Ftext-to-image",
+  "retrieved_at": "2026-10-04T19:43:22.296Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "text-to-image",
+  "bytes_sha256": "a400368f05e423c380f3842c3673d98509104fe2cebc75270d16c3d21cd82bd3",
+  "queue_path": "/fal-ai/emu-3.5-image/text-to-image",
+  "input_name": "Emu35ImageTextToImageInput",
+  "input": {
+    "$refName": "Emu35ImageTextToImageInput",
+    "properties": {
+      "aspect_ratio": {
+        "enum": [
+          "21:9",
+          "16:9",
+          "4:3",
+          "3:2",
+          "1:1",
+          "2:3",
+          "3:4",
+          "9:16",
+          "9:21"
+        ],
+        "description": "The aspect ratio of the output image.",
+        "default": "1:1",
+        "type": "string"
+      },
+      "output_format": {
+        "enum": [
+          "jpeg",
+          "png",
+          "webp"
+        ],
+        "description": "The format of the output image.",
+        "default": "png",
+        "type": "string"
+      },
+      "sync_mode": {
+        "description": "Whether to return the image in sync mode.",
+        "default": false,
+        "type": "boolean"
+      },
+      "enable_safety_checker": {
+        "description": "Whether to enable the safety checker.",
+        "default": true,
+        "type": "boolean"
+      },
+      "resolution": {
+        "enum": [
+          "480p",
+          "720p"
+        ],
+        "description": "The resolution of the output image.",
+        "default": "720p",
+        "type": "string"
+      },
+      "prompt": {
+        "description": "The prompt to create the image.",
+        "type": "string",
+        "examples": [
+          "Capture an intimate close-up bathed in warm, soft, late-afternoon sunlight filtering into a quintessential 1960s kitchen. The focal point is a charmingly designed vintage package of all-purpose flour, resting invitingly on a speckled Formica countertop. The packaging itself evokes pure nostalgia: perhaps thick, slightly textured paper in a warm cream tone, adorned with simple, bold typography (a friendly serif or script) in classic red and blue \"ALL-PURPOSE FLOUR\", featuring a delightful illustration like a stylized sheaf of wheat or a cheerful baker character. In smaller bold print at the bottom of the package: \"NET WT 5 LBS (80 OZ) 2.27kg\". Focus sharply on the package details – the slightly soft edges of the paper bag, the texture of the vintage printing, the inviting \"All-Purpose Flour\" text. Subtle hints of the 1960s kitchen frame the shot – the chrome edge of the counter gleaming softly, a blurred glimpse of a pastel yellow ceramic tile backsplash, or the corner of a vintage metal canister set just out of focus. The shallow depth of field keeps attention locked on the beautifully designed package, creating an aesthetic rich in warmth, authenticity, and nostalgic appeal."
+        ]
+      },
+      "seed": {
+        "description": "The seed for the inference.",
+        "anyOf": [
+          {
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      }
+    },
+    "required": [
+      "prompt"
+    ],
+    "type": "object"
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "Emu35ImageTextToImageInput",
+    "Emu35ImageTextToImageOutput",
+    "ImageFile"
+  ]
+}

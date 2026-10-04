@@ -1,0 +1,121 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/kling-video/v2.6/pro/text-to-video",
+  "task": "text-to-video",
+  "source_url": "https://fal.ai/models/fal-ai/kling-video/v2.6/pro/text-to-video",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fkling-video%2Fv2.6%2Fpro%2Ftext-to-video",
+  "retrieved_at": "2026-10-04T19:47:13.152Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "text-to-video",
+  "bytes_sha256": "5cefd301ddba323b0e5759977ab0d1622a756997125bdd46b471d4e53a4ef1bf",
+  "queue_path": "/fal-ai/kling-video/v2.6/pro/text-to-video",
+  "input_name": "KlingVideoV26ProTextToVideoInput",
+  "input": {
+    "$refName": "KlingVideoV26ProTextToVideoInput",
+    "required": [
+      "prompt"
+    ],
+    "type": "object",
+    "properties": {
+      "generate_audio": {
+        "description": "Whether to generate native audio for the video. Supports Chinese and English voice output. Other languages are automatically translated to English. For English speech, use lowercase letters; for acronyms or proper nouns, use uppercase.",
+        "type": "boolean",
+        "default": true
+      },
+      "negative_prompt": {
+        "type": "string",
+        "default": "blur, distort, and low quality",
+        "maxLength": 2500
+      },
+      "cfg_scale": {
+        "maximum": 1,
+        "description": "\n            The CFG (Classifier Free Guidance) scale is a measure of how close you want\n            the model to stick to your prompt.\n        ",
+        "type": "number",
+        "minimum": 0,
+        "default": 0.5
+      },
+      "prompt": {
+        "type": "string",
+        "examples": [
+          "Old friends reuniting at a train station after 20 years, one exclaims 'Is that really you?!' other tearfully replies 'I promised I'd come back, didn't I?', train whistle, steam hissing, emotional orchestral swell, crowd murmur"
+        ],
+        "maxLength": 2500
+      },
+      "duration": {
+        "description": "The duration of the generated video in seconds",
+        "type": "string",
+        "default": "5",
+        "enum": [
+          "5",
+          "10"
+        ]
+      },
+      "aspect_ratio": {
+        "description": "The aspect ratio of the generated video frame",
+        "type": "string",
+        "default": "16:9",
+        "enum": [
+          "16:9",
+          "9:16",
+          "1:1"
+        ]
+      }
+    }
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "KlingVideoV26ProTextToVideoInput",
+    "KlingVideoV26ProTextToVideoOutput",
+    "File"
+  ]
+}

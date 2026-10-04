@@ -1,0 +1,228 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/ernie-image/lora",
+  "task": "lora-training",
+  "source_url": "https://fal.ai/models/fal-ai/ernie-image/lora",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fernie-image%2Flora",
+  "retrieved_at": "2026-10-04T19:43:23.925Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "text-to-image",
+  "bytes_sha256": "9719b8955503e45e554f4c2d22edce4deebdd782f5644babf1d50f172dd58d05",
+  "queue_path": "/fal-ai/ernie-image/lora",
+  "input_name": "ErnieImageLoraInput",
+  "input": {
+    "$refName": "ErnieImageLoraInput",
+    "properties": {
+      "num_inference_steps": {
+        "maximum": 100,
+        "type": "integer",
+        "description": "Number of denoising steps.",
+        "minimum": 1,
+        "default": 50
+      },
+      "image_size": {
+        "anyOf": [
+          {
+            "$refName": "ImageSize",
+            "properties": {
+              "height": {
+                "exclusiveMinimum": 0,
+                "type": "integer",
+                "description": "The height of the generated image.",
+                "maximum": 14142,
+                "default": 512
+              },
+              "width": {
+                "exclusiveMinimum": 0,
+                "type": "integer",
+                "description": "The width of the generated image.",
+                "maximum": 14142,
+                "default": 512
+              }
+            },
+            "type": "object"
+          },
+          {
+            "type": "string",
+            "enum": [
+              "square_hd",
+              "square",
+              "portrait_4_3",
+              "portrait_16_9",
+              "landscape_4_3",
+              "landscape_16_9",
+              "square_uhd",
+              "portrait_3_2",
+              "landscape_3_2",
+              "portrait_hd",
+              "landscape_hd"
+            ]
+          }
+        ],
+        "description": "The size of the generated image.",
+        "default": "square_hd"
+      },
+      "prompt": {
+        "examples": [
+          "A serene mountain landscape at sunset with golden light"
+        ],
+        "type": "string",
+        "description": "Text prompt for image generation. Supports English, Chinese, and Japanese."
+      },
+      "enable_prompt_expansion": {
+        "type": "boolean",
+        "description": "If True, the prompt will be enhanced using an LLM for more detailed results.",
+        "default": true
+      },
+      "acceleration": {
+        "default": "regular",
+        "examples": [
+          "regular"
+        ],
+        "type": "string",
+        "description": "The acceleration level to use for the image generation.",
+        "enum": [
+          "none",
+          "regular",
+          "high"
+        ]
+      },
+      "enable_safety_checker": {
+        "type": "boolean",
+        "description": "Enable NSFW safety checking on the generated images. Disabling it requires account authorization; unauthorized requests are always checked.",
+        "default": true
+      },
+      "loras": {
+        "items": {
+          "$refName": "LoraWeight",
+          "properties": {
+            "path": {
+              "type": "string",
+              "description": "URL or the path to the LoRA weights."
+            },
+            "scale": {
+              "maximum": 4,
+              "type": "number",
+              "description": "\n            The scale of the LoRA weight. This is used to scale the LoRA weight\n            before merging it with the base model.\n        ",
+              "minimum": 0,
+              "default": 1
+            }
+          },
+          "type": "object",
+          "required": [
+            "path"
+          ]
+        },
+        "type": "array",
+        "description": "The LoRAs to use for image generation. You can use up to 3 LoRAs and they will be merged together to generate the final image.",
+        "default": []
+      },
+      "output_format": {
+        "default": "jpeg",
+        "type": "string",
+        "description": "Output image format.",
+        "enum": [
+          "jpeg",
+          "png"
+        ]
+      },
+      "seed": {
+        "anyOf": [
+          {
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "Random seed for reproducibility."
+      },
+      "negative_prompt": {
+        "type": "string",
+        "description": "Negative prompt to guide what should not be in the image.",
+        "default": ""
+      },
+      "num_images": {
+        "maximum": 4,
+        "type": "integer",
+        "description": "Number of images to generate.",
+        "minimum": 1,
+        "default": 1
+      },
+      "sync_mode": {
+        "type": "boolean",
+        "description": "If True, the image will be returned as a data URI instead of a URL.",
+        "default": false
+      },
+      "guidance_scale": {
+        "maximum": 20,
+        "type": "number",
+        "description": "Classifier-free guidance scale.",
+        "minimum": 1,
+        "default": 5
+      }
+    },
+    "type": "object",
+    "required": [
+      "prompt"
+    ]
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "ErnieImageLoraInput",
+    "ErnieImageLoraOutput",
+    "ImageSize",
+    "LoraWeight",
+    "Image"
+  ]
+}

@@ -1,0 +1,124 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "microsoft/mai-image-2.5",
+  "task": "image-generation",
+  "source_url": "https://fal.ai/models/microsoft/mai-image-2.5",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=microsoft%2Fmai-image-2.5",
+  "retrieved_at": "2026-10-04T19:54:09.416Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "text-to-image",
+  "bytes_sha256": "d4d157b7c1c8a4ee12c9dfb625b2062823f6d2ec5409ae087421f771bf77e915",
+  "queue_path": "/microsoft/mai-image-2.5",
+  "input_name": "MaiImage25Input",
+  "input": {
+    "$refName": "MaiImage25Input",
+    "properties": {
+      "num_images": {
+        "minimum": 1,
+        "type": "integer",
+        "default": 1,
+        "maximum": 4,
+        "description": "The number of images to generate."
+      },
+      "prompt": {
+        "examples": [
+          "A photorealistic concept-art poster of a university campus at sunset, cinematic lighting, a banner reading \"LOUISVILLE\" in bold serif type."
+        ],
+        "type": "string",
+        "maxLength": 5000,
+        "description": "The text prompt to generate an image from.",
+        "minLength": 3
+      },
+      "aspect_ratio": {
+        "type": "string",
+        "default": "auto",
+        "enum": [
+          "auto",
+          "1:1",
+          "4:3",
+          "3:4",
+          "16:9",
+          "9:16",
+          "3:2",
+          "2:3"
+        ],
+        "description": "The aspect ratio of the generated image. Use \"auto\" to let the model decide based on the prompt."
+      },
+      "output_format": {
+        "type": "string",
+        "default": "png",
+        "enum": [
+          "jpeg",
+          "png",
+          "webp"
+        ],
+        "description": "The format of the generated image."
+      },
+      "sync_mode": {
+        "type": "boolean",
+        "default": false,
+        "description": "If `True`, the media will be returned as a data URI and the output data won't be available in the request history."
+      }
+    },
+    "type": "object",
+    "required": [
+      "prompt"
+    ]
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "MaiImage25Input",
+    "MaiImage25Output",
+    "ImageFile"
+  ]
+}

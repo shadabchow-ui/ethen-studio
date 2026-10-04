@@ -1,0 +1,175 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/stable-diffusion-v3-medium",
+  "task": "unknown",
+  "source_url": "https://fal.ai/models/fal-ai/stable-diffusion-v3-medium",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fstable-diffusion-v3-medium",
+  "retrieved_at": "2026-10-04T19:51:50.799Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "text-to-image",
+  "bytes_sha256": "fe4c6cadcf3f08c851600742eadd035a5ebf00427170a227e5df1e39a30ce772",
+  "queue_path": "/fal-ai/stable-diffusion-v3-medium",
+  "input_name": "StableDiffusionV3MediumInput",
+  "input": {
+    "$refName": "StableDiffusionV3MediumInput",
+    "type": "object",
+    "properties": {
+      "negative_prompt": {
+        "default": "",
+        "type": "string",
+        "description": "The negative prompt to generate an image from."
+      },
+      "prompt": {
+        "examples": [
+          "Digital art, portrait of an anthropomorphic roaring Tiger warrior with full armor, close up in the middle of a battle, behind him there is a banner with the text \"Open Source\""
+        ],
+        "type": "string",
+        "description": "The prompt to generate an image from."
+      },
+      "guidance_scale": {
+        "default": 5,
+        "minimum": 0,
+        "type": "number",
+        "description": "\n            The CFG (Classifier Free Guidance) scale is a measure of how close you want\n            the model to stick to your prompt when looking for a related image to show you.\n        ",
+        "maximum": 20
+      },
+      "sync_mode": {
+        "default": false,
+        "type": "boolean",
+        "description": "If `True`, the media will be returned as a data URI and the output data won't be available in the request history."
+      },
+      "image_size": {
+        "anyOf": [
+          {
+            "$refName": "ImageSize",
+            "type": "object",
+            "properties": {
+              "width": {
+                "default": 512,
+                "type": "integer",
+                "exclusiveMinimum": 0,
+                "maximum": 14142,
+                "description": "The width of the generated image."
+              },
+              "height": {
+                "default": 512,
+                "type": "integer",
+                "exclusiveMinimum": 0,
+                "maximum": 14142,
+                "description": "The height of the generated image."
+              }
+            }
+          },
+          {
+            "type": "string",
+            "enum": [
+              "square_hd",
+              "square",
+              "portrait_4_3",
+              "portrait_16_9",
+              "landscape_4_3",
+              "landscape_16_9"
+            ]
+          }
+        ],
+        "default": "square_hd",
+        "description": "The size of the generated image."
+      },
+      "num_inference_steps": {
+        "default": 28,
+        "minimum": 1,
+        "type": "integer",
+        "description": "The number of inference steps to perform.",
+        "maximum": 50
+      },
+      "enable_safety_checker": {
+        "default": true,
+        "type": "boolean",
+        "description": "If set to true, the safety checker will be enabled. Disabling it requires account authorization; unauthorized requests are always checked, and images flagged as unsafe are returned as black images."
+      },
+      "prompt_expansion": {
+        "default": false,
+        "type": "boolean",
+        "description": "If set to true, prompt will be upsampled with more details."
+      },
+      "num_images": {
+        "default": 1,
+        "minimum": 1,
+        "type": "integer",
+        "description": "The number of images to generate.",
+        "maximum": 4
+      },
+      "seed": {
+        "anyOf": [
+          {
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "\n            The same seed and the same prompt given to the same version of Stable Diffusion\n            will output the same image every time.\n        "
+      }
+    },
+    "required": [
+      "prompt"
+    ]
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "StableDiffusionV3MediumInput",
+    "StableDiffusionV3MediumOutput",
+    "ImageSize",
+    "Image"
+  ]
+}

@@ -1,0 +1,179 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/flux-2-max/edit",
+  "task": "image-editing",
+  "source_url": "https://fal.ai/models/fal-ai/flux-2-max/edit",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fflux-2-max%2Fedit",
+  "retrieved_at": "2026-10-04T19:44:14.636Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "image-to-image",
+  "bytes_sha256": "1b534aab922a7a64b8623fd379d67fc2560caf70998f9492f70421696d86795d",
+  "queue_path": "/fal-ai/flux-2-max/edit",
+  "input_name": "Flux2MaxEditInput",
+  "input": {
+    "$refName": "Flux2MaxEditInput",
+    "properties": {
+      "prompt": {
+        "type": "string",
+        "description": "The prompt to generate an image from.",
+        "examples": [
+          "A high-fashion magazine cover featuring an android in an avant-garde geometric cloth dress, with logo prints from @Image1. The backdrop is an eye-catching scenery. The title text 'FAL MAGAZINE' spans the top in bold white serif font. Overlay text at the bottom right reads 'THE FUTURE OF AI' in a sleek, thin sans-serif font."
+        ]
+      },
+      "safety_tolerance": {
+        "type": "string",
+        "default": "2",
+        "enum": [
+          "1",
+          "2",
+          "3",
+          "4",
+          "5"
+        ],
+        "description": "The safety tolerance level for the generated image. 1 being the most strict and 5 being the most permissive."
+      },
+      "enable_safety_checker": {
+        "type": "boolean",
+        "default": true,
+        "description": "Whether to enable the safety checker. Disabling it requires account authorization; unauthorized requests are always checked."
+      },
+      "image_urls": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        },
+        "description": "List of URLs of input images for editing",
+        "examples": [
+          [
+            "https://storage.googleapis.com/falserverless/example_inputs/flux2/max.jpg"
+          ]
+        ]
+      },
+      "image_size": {
+        "anyOf": [
+          {
+            "$refName": "ImageSize",
+            "properties": {
+              "height": {
+                "maximum": 14142,
+                "type": "integer",
+                "default": 512,
+                "exclusiveMinimum": 0,
+                "description": "The height of the generated image."
+              },
+              "width": {
+                "maximum": 14142,
+                "type": "integer",
+                "default": 512,
+                "exclusiveMinimum": 0,
+                "description": "The width of the generated image."
+              }
+            },
+            "type": "object"
+          },
+          {
+            "type": "string",
+            "enum": [
+              "auto",
+              "square_hd",
+              "square",
+              "portrait_4_3",
+              "portrait_16_9",
+              "landscape_4_3",
+              "landscape_16_9"
+            ]
+          }
+        ],
+        "default": "auto",
+        "description": "The size of the generated image. If `auto`, the size will be determined by the model."
+      },
+      "output_format": {
+        "type": "string",
+        "default": "jpeg",
+        "enum": [
+          "jpeg",
+          "png"
+        ],
+        "description": "The format of the generated image."
+      },
+      "seed": {
+        "anyOf": [
+          {
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "The seed to use for the generation."
+      },
+      "sync_mode": {
+        "type": "boolean",
+        "default": false,
+        "description": "If `True`, the media will be returned as a data URI and the output data won't be available in the request history."
+      }
+    },
+    "required": [
+      "prompt",
+      "image_urls"
+    ],
+    "type": "object"
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "Flux2MaxEditInput",
+    "Flux2MaxEditOutput",
+    "ImageSize",
+    "ImageFile"
+  ]
+}

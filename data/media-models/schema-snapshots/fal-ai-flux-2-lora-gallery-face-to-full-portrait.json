@@ -1,0 +1,209 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/flux-2-lora-gallery/face-to-full-portrait",
+  "task": "unknown",
+  "source_url": "https://fal.ai/models/fal-ai/flux-2-lora-gallery/face-to-full-portrait",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fflux-2-lora-gallery%2Fface-to-full-portrait",
+  "retrieved_at": "2026-10-04T19:44:10.493Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "image-to-image",
+  "bytes_sha256": "87cded5f0c4248594a7f4f80b67850c8f673417e11dcbb5e47533f31a1f64628",
+  "queue_path": "/fal-ai/flux-2-lora-gallery/face-to-full-portrait",
+  "input_name": "Flux2LoraGalleryFaceToFullPortraitInput",
+  "input": {
+    "$refName": "Flux2LoraGalleryFaceToFullPortraitInput",
+    "description": "Input model for Face to Full Portrait endpoint - Generate full portrait from face",
+    "required": [
+      "image_urls"
+    ],
+    "type": "object",
+    "properties": {
+      "image_size": {
+        "description": "The size of the generated image. If not provided, the size of the input image will be used.",
+        "anyOf": [
+          {
+            "$refName": "ImageSize",
+            "type": "object",
+            "properties": {
+              "height": {
+                "description": "The height of the generated image.",
+                "maximum": 14142,
+                "type": "integer",
+                "default": 512,
+                "exclusiveMinimum": 0
+              },
+              "width": {
+                "description": "The width of the generated image.",
+                "maximum": 14142,
+                "type": "integer",
+                "default": 512,
+                "exclusiveMinimum": 0
+              }
+            }
+          },
+          {
+            "enum": [
+              "square_hd",
+              "square",
+              "portrait_4_3",
+              "portrait_16_9",
+              "landscape_4_3",
+              "landscape_16_9"
+            ],
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "num_inference_steps": {
+        "description": "The number of inference steps to perform.",
+        "maximum": 50,
+        "type": "integer",
+        "minimum": 4,
+        "default": 40
+      },
+      "output_format": {
+        "description": "The format of the output image",
+        "enum": [
+          "png",
+          "jpeg",
+          "webp"
+        ],
+        "type": "string",
+        "default": "png"
+      },
+      "image_urls": {
+        "description": "The URL of the cropped face image.",
+        "items": {
+          "type": "string"
+        },
+        "type": "array",
+        "examples": [
+          [
+            "https://v3b.fal.media/files/b/elephant/XJPJL2v5pAOmx9LemHWAE.png"
+          ]
+        ]
+      },
+      "num_images": {
+        "description": "Number of images to generate",
+        "maximum": 4,
+        "type": "integer",
+        "minimum": 1,
+        "default": 1
+      },
+      "seed": {
+        "description": "Random seed for reproducibility. Same seed with same prompt will produce same result.",
+        "anyOf": [
+          {
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "sync_mode": {
+        "description": "If `True`, the media will be returned as a data URI and won't be saved in history.",
+        "type": "boolean",
+        "default": false
+      },
+      "acceleration": {
+        "description": "Acceleration level for image generation. 'regular' balances speed and quality.",
+        "enum": [
+          "none",
+          "regular"
+        ],
+        "type": "string",
+        "default": "regular"
+      },
+      "enable_safety_checker": {
+        "description": "Whether to enable the safety checker for the generated image. Disabling it requires account authorization; unauthorized requests are always checked.",
+        "type": "boolean",
+        "default": true
+      },
+      "lora_scale": {
+        "description": "The strength of the face to full portrait effect.",
+        "maximum": 2,
+        "type": "number",
+        "minimum": 0,
+        "default": 1
+      },
+      "guidance_scale": {
+        "description": "The CFG (Classifier Free Guidance) scale. Controls how closely the model follows the prompt.",
+        "maximum": 20,
+        "type": "number",
+        "minimum": 0,
+        "default": 2.5
+      },
+      "prompt": {
+        "description": "The prompt describing the full portrait to generate from the face.",
+        "type": "string",
+        "default": "Face to full portrait",
+        "examples": [
+          "Face to full portrait",
+          "Face to full portrait in professional attire",
+          "Face to full portrait casual outdoor setting"
+        ]
+      }
+    }
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "Flux2LoraGalleryFaceToFullPortraitInput",
+    "Flux2LoraGalleryFaceToFullPortraitOutput",
+    "ImageSize",
+    "Image"
+  ]
+}

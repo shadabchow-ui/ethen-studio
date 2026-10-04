@@ -1,0 +1,144 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/kandinsky5-pro/image-to-video",
+  "task": "image-to-video",
+  "source_url": "https://fal.ai/models/fal-ai/kandinsky5-pro/image-to-video",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fkandinsky5-pro%2Fimage-to-video",
+  "retrieved_at": "2026-10-04T19:46:43.104Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "image-to-video",
+  "bytes_sha256": "f2f7d74f29d37bd65b4ab55cc7f7792e908e1db8d16bed686bf4859ceb9b7e82",
+  "queue_path": "/fal-ai/kandinsky5-pro/image-to-video",
+  "input_name": "Kandinsky5ProImageToVideoInput",
+  "input": {
+    "$refName": "Kandinsky5ProImageToVideoInput",
+    "properties": {
+      "duration": {
+        "default": "5s",
+        "description": "Video duration.",
+        "type": "string",
+        "const": "5s"
+      },
+      "prompt": {
+        "examples": [
+          "The white dragon warrior stands still, eyes full of determination and strength. The camera slowly moves closer or circles around the warrior, highlighting the powerful presence and heroic spirit of the character."
+        ],
+        "description": "The prompt to generate the video from.",
+        "type": "string"
+      },
+      "num_inference_steps": {
+        "default": 28,
+        "minimum": 1,
+        "maximum": 40,
+        "type": "integer"
+      },
+      "image_url": {
+        "examples": [
+          "https://storage.googleapis.com/falserverless/model_tests/wan/dragon-warrior.jpg"
+        ],
+        "description": "The URL of the image to use as a reference for the video generation.",
+        "type": "string"
+      },
+      "resolution": {
+        "default": "512P",
+        "description": "Video resolution: 512p or 1024p.",
+        "type": "string",
+        "enum": [
+          "512P",
+          "1024P"
+        ]
+      },
+      "acceleration": {
+        "anyOf": [
+          {
+            "type": "string",
+            "enum": [
+              "none",
+              "regular"
+            ]
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": "regular",
+        "description": "Acceleration level for faster generation."
+      },
+      "seed": {
+        "anyOf": [
+          {
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "examples": [
+          42
+        ],
+        "description": "The seed to use for generation. If not provided, a random seed will be used."
+      }
+    },
+    "required": [
+      "prompt",
+      "image_url"
+    ],
+    "type": "object"
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "Kandinsky5ProImageToVideoInput",
+    "Kandinsky5ProImageToVideoOutput",
+    "File"
+  ]
+}

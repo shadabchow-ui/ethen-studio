@@ -1,0 +1,118 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/kling-video/video-to-audio",
+  "task": "video-editing",
+  "source_url": "https://fal.ai/models/fal-ai/kling-video/video-to-audio",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fkling-video%2Fvideo-to-audio",
+  "retrieved_at": "2026-10-04T19:47:22.262Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "video-to-audio",
+  "bytes_sha256": "ed88f15879589da58112b44f758ee306174063d4dbe195f40b949dba351c5370",
+  "queue_path": "/fal-ai/kling-video/video-to-audio",
+  "input_name": "KlingVideoVideoToAudioInput",
+  "input": {
+    "$refName": "KlingVideoVideoToAudioInput",
+    "required": [
+      "video_url"
+    ],
+    "type": "object",
+    "properties": {
+      "video_url": {
+        "description": "The video URL to extract audio from. Only .mp4/.mov formats are supported. File size does not exceed 100MB. Video duration between 3.0s and 20.0s.",
+        "examples": [
+          "https://storage.googleapis.com/falserverless/model_tests/kling/kling-v2.5-turbo-pro-image-to-video-output.mp4"
+        ],
+        "limit_description": "Max file size: 100.0MB, Min duration: 3.0s, Max duration: 20.0s, Timeout: 120.0s",
+        "type": "string",
+        "_fal_ui_field": "video"
+      },
+      "background_music_prompt": {
+        "description": "Background music prompt. Cannot exceed 200 characters.",
+        "default": "intense car race",
+        "anyOf": [
+          {
+            "type": "string",
+            "maxLength": 200
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "asmr_mode": {
+        "description": "Enable ASMR mode. This mode enhances detailed sound effects and is suitable for highly immersive content scenarios.",
+        "type": "boolean",
+        "default": false
+      },
+      "sound_effect_prompt": {
+        "description": "Sound effect prompt. Cannot exceed 200 characters.",
+        "default": "Car tires screech as they accelerate in a drag race",
+        "anyOf": [
+          {
+            "type": "string",
+            "maxLength": 200
+          },
+          {
+            "type": "null"
+          }
+        ]
+      }
+    }
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "KlingVideoVideoToAudioInput",
+    "KlingVideoVideoToAudioOutput",
+    "File"
+  ]
+}

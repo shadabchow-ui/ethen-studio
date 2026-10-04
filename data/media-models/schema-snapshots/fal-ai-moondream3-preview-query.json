@@ -1,0 +1,127 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/moondream3-preview/query",
+  "task": "unknown",
+  "source_url": "https://fal.ai/models/fal-ai/moondream3-preview/query",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fmoondream3-preview%2Fquery",
+  "retrieved_at": "2026-10-04T19:49:31.686Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "vision",
+  "bytes_sha256": "6b7a62cff12ee19ac840fdbe32a8b8d161de8e442ed433ec5419c45eb0044032",
+  "queue_path": "/fal-ai/moondream3-preview/query",
+  "input_name": "Moondream3PreviewQueryInput",
+  "input": {
+    "$refName": "Moondream3PreviewQueryInput",
+    "properties": {
+      "top_p": {
+        "description": "Nucleus sampling probability mass to use, between 0 and 1.",
+        "anyOf": [
+          {
+            "maximum": 1,
+            "minimum": 0,
+            "type": "number"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "temperature": {
+        "description": "Sampling temperature to use, between 0 and 1. Higher values like 0.8 will make the output more random, while lower values like 0.2 will make it more focused and deterministic. If not set, defaults to 0.",
+        "anyOf": [
+          {
+            "maximum": 1,
+            "minimum": 0,
+            "type": "number"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "image_url": {
+        "description": "URL of the image to be processed",
+        "max_width": 7000,
+        "max_height": 7000,
+        "type": "string",
+        "examples": [
+          "https://storage.googleapis.com/falserverless/example_inputs/moondream-3-preview/query_in.jpg"
+        ]
+      },
+      "prompt": {
+        "description": "Query to be asked in the image",
+        "minLength": 1,
+        "type": "string",
+        "examples": [
+          "List the safety measures taken by this worker in a JSON array under `safety_measures` key"
+        ]
+      },
+      "reasoning": {
+        "description": "Whether to include detailed reasoning behind the answer",
+        "default": true,
+        "type": "boolean"
+      }
+    },
+    "required": [
+      "image_url",
+      "prompt"
+    ],
+    "type": "object"
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "Moondream3PreviewQueryInput",
+    "Moondream3PreviewQueryOutput",
+    "UsageInfo"
+  ]
+}

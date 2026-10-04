@@ -1,0 +1,198 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/cogvideox-5b",
+  "task": "unknown",
+  "source_url": "https://fal.ai/models/fal-ai/cogvideox-5b",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fcogvideox-5b",
+  "retrieved_at": "2026-10-04T19:43:04.844Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "text-to-video",
+  "bytes_sha256": "d411deace8644ebd549fb235cf476ca99d1b57a383b753e9badd4a43808246f9",
+  "queue_path": "/fal-ai/cogvideox-5b",
+  "input_name": "Cogvideox5bInput",
+  "input": {
+    "$refName": "Cogvideox5bInput",
+    "properties": {
+      "num_inference_steps": {
+        "default": 50,
+        "maximum": 50,
+        "description": "The number of inference steps to perform.",
+        "minimum": 1,
+        "type": "integer"
+      },
+      "negative_prompt": {
+        "default": "",
+        "description": "The negative prompt to generate video from",
+        "examples": [
+          "Distorted, discontinuous, Ugly, blurry, low resolution, motionless, static, disfigured, disconnected limbs, Ugly faces, incomplete arms"
+        ],
+        "type": "string"
+      },
+      "loras": {
+        "default": [],
+        "description": "\n            The LoRAs to use for the image generation. We currently support one lora.\n        ",
+        "examples": [],
+        "items": {
+          "$refName": "LoraWeight",
+          "properties": {
+            "scale": {
+              "default": 1,
+              "maximum": 4,
+              "description": "\n            The scale of the LoRA weight. This is used to scale the LoRA weight\n            before merging it with the base model.\n        ",
+              "minimum": 0,
+              "type": "number"
+            },
+            "path": {
+              "description": "URL or the path to the LoRA weights.",
+              "type": "string"
+            }
+          },
+          "required": [
+            "path"
+          ],
+          "type": "object"
+        },
+        "type": "array"
+      },
+      "prompt": {
+        "description": "The prompt to generate the video from.",
+        "examples": [
+          "A garden comes to life as a kaleidoscope of butterflies flutters amidst the blossoms, their delicate wings casting shadows on the petals below. In the background, a grand fountain cascades water with a gentle splendor, its rhythmic sound providing a soothing backdrop. Beneath the cool shade of a mature tree, a solitary wooden chair invites solitude and reflection, its smooth surface worn by the touch of countless visitors seeking a moment of tranquility in nature's embrace."
+        ],
+        "type": "string"
+      },
+      "export_fps": {
+        "default": 16,
+        "maximum": 32,
+        "description": "The target FPS of the video",
+        "minimum": 4,
+        "type": "integer"
+      },
+      "use_rife": {
+        "default": true,
+        "description": "Use RIFE for video interpolation",
+        "type": "boolean"
+      },
+      "video_size": {
+        "anyOf": [
+          {
+            "$refName": "ImageSize",
+            "properties": {
+              "height": {
+                "default": 512,
+                "maximum": 14142,
+                "exclusiveMinimum": 0,
+                "description": "The height of the generated image.",
+                "type": "integer"
+              },
+              "width": {
+                "default": 512,
+                "maximum": 14142,
+                "exclusiveMinimum": 0,
+                "description": "The width of the generated image.",
+                "type": "integer"
+              }
+            },
+            "type": "object"
+          },
+          {
+            "enum": [
+              "square_hd",
+              "square",
+              "portrait_4_3",
+              "portrait_16_9",
+              "landscape_4_3",
+              "landscape_16_9"
+            ],
+            "type": "string"
+          }
+        ],
+        "description": "The size of the generated video.",
+        "default": {
+          "height": 480,
+          "width": 720
+        }
+      },
+      "guidance_scale": {
+        "default": 7,
+        "maximum": 20,
+        "description": "\n            The CFG (Classifier Free Guidance) scale is a measure of how close you want\n            the model to stick to your prompt when looking for a related video to show you.\n        ",
+        "minimum": 0,
+        "type": "number"
+      },
+      "seed": {
+        "anyOf": [
+          {
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "\n            The same seed and the same prompt given to the same version of the model\n            will output the same video every time.\n        "
+      }
+    },
+    "required": [
+      "prompt"
+    ],
+    "type": "object"
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "Cogvideox5bInput",
+    "Cogvideox5bOutput",
+    "LoraWeight",
+    "ImageSize",
+    "File"
+  ]
+}

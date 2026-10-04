@@ -1,0 +1,97 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/moondream-next/batch",
+  "task": "unknown",
+  "source_url": "https://fal.ai/models/fal-ai/moondream-next/batch",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fmoondream-next%2Fbatch",
+  "retrieved_at": "2026-10-04T19:49:24.041Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "vision",
+  "bytes_sha256": "3131c9034af6d7469c6c5630f20d05d4a86bd05cc25e7f0f1ed1e24f98bcfbfe",
+  "queue_path": "/fal-ai/moondream-next/batch",
+  "input_name": "MoondreamNextBatchInput",
+  "input": {
+    "$refName": "MoondreamNextBatchInput",
+    "properties": {
+      "max_tokens": {
+        "default": 64,
+        "maximum": 512,
+        "description": "Maximum number of tokens to generate",
+        "minimum": 1,
+        "type": "integer"
+      },
+      "images_data_url": {
+        "description": "List of image URLs to be processed (maximum 32 images)",
+        "type": "string"
+      },
+      "prompt": {
+        "description": "Single prompt to apply to all images",
+        "examples": [
+          "Describe this image in detail."
+        ],
+        "type": "string"
+      }
+    },
+    "required": [
+      "images_data_url",
+      "prompt"
+    ],
+    "type": "object"
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "MoondreamNextBatchInput",
+    "MoondreamNextBatchOutput",
+    "File"
+  ]
+}

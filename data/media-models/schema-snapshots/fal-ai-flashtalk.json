@@ -1,0 +1,104 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/flashtalk",
+  "task": "unknown",
+  "source_url": "https://fal.ai/models/fal-ai/flashtalk",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fflashtalk",
+  "retrieved_at": "2026-10-04T19:43:50.116Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "audio-to-video",
+  "bytes_sha256": "2a0cd40bbe9bfb7f8f9882d355fc440bef2f3aff62ae5bad49b105ce1c5fa493",
+  "queue_path": "/fal-ai/flashtalk",
+  "input_name": "FlashtalkInput",
+  "input": {
+    "$refName": "FlashtalkInput",
+    "properties": {
+      "image_url": {
+        "type": "string",
+        "examples": [
+          "https://v3.fal.media/files/koala/gmpc0QevDF9bBsL1EAYVF_1c637094161147559f0910a68275dc34.png"
+        ],
+        "description": "URL of the face reference image."
+      },
+      "seed": {
+        "anyOf": [
+          {
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "Random seed for reproducibility."
+      },
+      "audio_url": {
+        "type": "string",
+        "examples": [
+          "https://v3.fal.media/files/penguin/PtiCYda53E9Dav25QmQYI_output.mp3"
+        ],
+        "description": "URL of the speech audio file (WAV, MP3, etc)."
+      }
+    },
+    "required": [
+      "image_url",
+      "audio_url"
+    ],
+    "type": "object"
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "FlashtalkInput",
+    "FlashtalkOutput",
+    "File"
+  ]
+}

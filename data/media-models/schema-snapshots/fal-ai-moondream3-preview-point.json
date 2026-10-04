@@ -1,0 +1,106 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/moondream3-preview/point",
+  "task": "unknown",
+  "source_url": "https://fal.ai/models/fal-ai/moondream3-preview/point",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fmoondream3-preview%2Fpoint",
+  "retrieved_at": "2026-10-04T19:49:31.187Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "vision",
+  "bytes_sha256": "f3f8de3a6b888f2487f44393063ecfdd330be00b5fce20ec24b1cf68ad65729b",
+  "queue_path": "/fal-ai/moondream3-preview/point",
+  "input_name": "Moondream3PreviewPointInput",
+  "input": {
+    "$refName": "Moondream3PreviewPointInput",
+    "properties": {
+      "preview": {
+        "description": "Whether to preview the output",
+        "default": false,
+        "type": "boolean",
+        "examples": [
+          true
+        ]
+      },
+      "image_url": {
+        "description": "URL of the image to be processed",
+        "max_width": 7000,
+        "max_height": 7000,
+        "type": "string",
+        "examples": [
+          "https://storage.googleapis.com/falserverless/example_inputs/moondream-3-preview/point_in.jpg"
+        ]
+      },
+      "prompt": {
+        "description": "Object to be located in the image",
+        "minLength": 1,
+        "type": "string",
+        "examples": [
+          "bottle caps"
+        ]
+      }
+    },
+    "required": [
+      "image_url",
+      "prompt"
+    ],
+    "type": "object"
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "Moondream3PreviewPointInput",
+    "Moondream3PreviewPointOutput",
+    "ImageFile",
+    "Point",
+    "UsageInfo"
+  ]
+}

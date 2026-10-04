@@ -1,0 +1,149 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/ideogram/v3/generate-transparent",
+  "task": "unknown",
+  "source_url": "https://fal.ai/models/fal-ai/ideogram/v3/generate-transparent",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fideogram%2Fv3%2Fgenerate-transparent",
+  "retrieved_at": "2026-10-04T19:46:01.462Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "text-to-image",
+  "bytes_sha256": "cb87c2ee4e5e43998167fcf8d7d0661143860987d5363bc16f8b80330e928b4a",
+  "queue_path": "/fal-ai/ideogram/v3/generate-transparent",
+  "input_name": "IdeogramV3GenerateTransparentInput",
+  "input": {
+    "$refName": "IdeogramV3GenerateTransparentInput",
+    "properties": {
+      "rendering_speed": {
+        "enum": [
+          "TURBO",
+          "BALANCED",
+          "QUALITY"
+        ],
+        "default": "BALANCED",
+        "description": "The rendering speed to use.",
+        "type": "string"
+      },
+      "aspect_ratio": {
+        "enum": [
+          "1:3",
+          "3:1",
+          "1:2",
+          "2:1",
+          "9:16",
+          "16:9",
+          "10:16",
+          "16:10",
+          "2:3",
+          "3:2",
+          "3:4",
+          "4:3",
+          "4:5",
+          "5:4",
+          "1:1"
+        ],
+        "default": "1:1",
+        "description": "The aspect ratio of the generated image.",
+        "type": "string"
+      },
+      "seed": {
+        "anyOf": [
+          {
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "Seed for the random number generator"
+      },
+      "expand_prompt": {
+        "default": true,
+        "description": "Determine if MagicPrompt should be used in generating the request or not.",
+        "type": "boolean"
+      },
+      "num_images": {
+        "minimum": 1,
+        "default": 1,
+        "description": "Number of images to generate.",
+        "maximum": 8,
+        "type": "integer"
+      },
+      "negative_prompt": {
+        "default": "",
+        "description": "Description of what to exclude from an image. Descriptions in the prompt take precedence to descriptions in the negative prompt.",
+        "type": "string"
+      },
+      "sync_mode": {
+        "default": false,
+        "description": "If `True`, the media will be returned as a data URI and the output data won't be available in the request history.",
+        "type": "boolean"
+      },
+      "prompt": {
+        "examples": [
+          "A logo for Ideogram Coffee."
+        ],
+        "type": "string"
+      }
+    },
+    "type": "object",
+    "required": [
+      "prompt"
+    ]
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "IdeogramV3GenerateTransparentInput",
+    "IdeogramV3GenerateTransparentOutput",
+    "File"
+  ]
+}

@@ -1,0 +1,192 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/vecglypher/image-to-svg",
+  "task": "image-generation",
+  "source_url": "https://fal.ai/models/fal-ai/vecglypher/image-to-svg",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fvecglypher%2Fimage-to-svg",
+  "retrieved_at": "2026-10-04T19:52:05.651Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "image-to-image",
+  "bytes_sha256": "c8613d03c1b43e24b34120c24e12302a9d377bdd4b2cb70f25f4725a14f6b0cd",
+  "queue_path": "/fal-ai/vecglypher/image-to-svg",
+  "input_name": "VecglypherImageToSvgInput",
+  "input": {
+    "$refName": "VecglypherImageToSvgInput",
+    "type": "object",
+    "properties": {
+      "reference_image_urls": {
+        "examples": [
+          [
+            "https://v3b.fal.media/files/b/0a90bfc2/IUtUCjqyIosJpS9_tcOIP_Screenshot%202026-03-03%20at%207.26.15%3FPM.png"
+          ]
+        ],
+        "items": {
+          "type": "string"
+        },
+        "type": "array",
+        "minItems": 1,
+        "description": "URLs of reference glyph images whose style should be matched. Provide 1 to 8 images of individual glyph characters.",
+        "maxItems": 8
+      },
+      "prompt": {
+        "examples": [
+          "g"
+        ],
+        "type": "string",
+        "description": "The target text to generate as vector glyphs, styled to match the reference images."
+      },
+      "output_size": {
+        "default": 512,
+        "minimum": 64,
+        "type": "integer",
+        "maximum": 4096,
+        "description": "Maximum dimension (width or height) of the output SVG in pixels. The aspect ratio is preserved."
+      },
+      "fill_color": {
+        "default": "black",
+        "examples": [
+          "black",
+          "#FF5733",
+          "rgb(255,87,51)",
+          "none"
+        ],
+        "type": "string",
+        "description": "Fill color for the generated glyphs. Accepts any valid SVG/CSS color value."
+      },
+      "stroke_color": {
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "examples": [
+          "black",
+          "#333333",
+          "none"
+        ],
+        "description": "Optional stroke (outline) color for the generated glyphs. When set, adds an outline around each glyph path."
+      },
+      "repetition_penalty": {
+        "default": 1,
+        "minimum": 0,
+        "type": "number",
+        "maximum": 2,
+        "description": "Repetition penalty."
+      },
+      "temperature": {
+        "default": 0.1,
+        "minimum": 0,
+        "type": "number",
+        "maximum": 2,
+        "description": "Sampling temperature."
+      },
+      "top_p": {
+        "default": 0.95,
+        "minimum": 0,
+        "type": "number",
+        "maximum": 1,
+        "description": "Top-p (nucleus) sampling parameter."
+      },
+      "top_k": {
+        "default": 5,
+        "minimum": -1,
+        "type": "integer",
+        "maximum": 100,
+        "description": "Top-k sampling parameter."
+      },
+      "stroke_width": {
+        "default": 1,
+        "minimum": 0.1,
+        "type": "number",
+        "maximum": 50,
+        "description": "Stroke width in SVG units. Only applies when stroke_color is set."
+      },
+      "max_tokens": {
+        "default": 8192,
+        "minimum": 256,
+        "type": "integer",
+        "maximum": 16384,
+        "description": "Maximum tokens to generate."
+      },
+      "enable_safety_checker": {
+        "default": true,
+        "type": "boolean",
+        "description": "Enable input safety checking."
+      },
+      "seed": {
+        "anyOf": [
+          {
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "Random seed for reproducibility."
+      }
+    },
+    "required": [
+      "prompt",
+      "reference_image_urls"
+    ]
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "VecglypherImageToSvgInput",
+    "VecglypherImageToSvgOutput",
+    "File"
+  ]
+}

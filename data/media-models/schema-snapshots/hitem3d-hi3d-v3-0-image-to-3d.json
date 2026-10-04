@@ -1,0 +1,149 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "hitem3d/hi3d/v3.0/image-to-3d",
+  "task": "image-generation",
+  "source_url": "https://fal.ai/models/hitem3d/hi3d/v3.0/image-to-3d",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=hitem3d%2Fhi3d%2Fv3.0%2Fimage-to-3d",
+  "retrieved_at": "2026-10-04T19:53:42.448Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "image-to-3d",
+  "bytes_sha256": "c87484e775f66807e1fb42550d30547aa6ae820541ad0890519b13e26b99c66a",
+  "queue_path": "/hitem3d/hi3d/v3.0/image-to-3d",
+  "input_name": "Hi3dV30ImageTo3dInput",
+  "input": {
+    "$refName": "Hi3dV30ImageTo3dInput",
+    "type": "object",
+    "properties": {
+      "export_format": {
+        "default": "glb",
+        "type": "string",
+        "description": "File format of the generated model.",
+        "enum": [
+          "glb",
+          "obj",
+          "stl",
+          "fbx",
+          "usdz"
+        ]
+      },
+      "face_count": {
+        "anyOf": [
+          {
+            "minimum": 100000,
+            "type": "integer",
+            "maximum": 5000000
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "Target face count. The partner recommends 2,000,000 for 2048quality and 5,000,000 for 2048master."
+      },
+      "enable_pbr": {
+        "default": true,
+        "type": "boolean",
+        "description": "Generate PBR material maps together with the texture. Only supported (and billed) for v2.0/v2.1 and v3.0 models when enable_texture is true; ignored otherwise."
+      },
+      "image_url": {
+        "examples": [
+          "https://storage.googleapis.com/falserverless/example_inputs/dog.png"
+        ],
+        "type": "string",
+        "description": "URL of the input image. PNG, JPEG and WebP formats are supported, up to 20MB."
+      },
+      "model": {
+        "default": "hi3dv3.0",
+        "type": "string",
+        "description": "Hi3D v3.0 model version used by this endpoint.",
+        "const": "hi3dv3.0"
+      },
+      "enable_texture": {
+        "default": true,
+        "type": "boolean",
+        "description": "Whether to generate textures in addition to geometry. When false, only the geometry mesh is generated (and billed)."
+      },
+      "enable_safety_checker": {
+        "default": true,
+        "type": "boolean",
+        "description": "If set to true, input images are checked for safety before processing."
+      },
+      "resolution": {
+        "default": "2048quality",
+        "type": "string",
+        "description": "Generation resolution. 2048quality is the faster default; 2048master provides the highest quality.",
+        "enum": [
+          "2048quality",
+          "2048master"
+        ]
+      },
+      "shading": {
+        "default": 0.5,
+        "minimum": 0,
+        "type": "number",
+        "description": "De-shading strength.",
+        "multipleOf": 0.1,
+        "maximum": 1
+      }
+    },
+    "required": [
+      "image_url"
+    ],
+    "description": "Input for Hi3D v3.0 single-image generation."
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "Hi3dV30ImageTo3dInput",
+    "Hi3dV30ImageTo3dOutput",
+    "File"
+  ]
+}

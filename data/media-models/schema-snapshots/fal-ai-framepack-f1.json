@@ -1,0 +1,159 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/framepack/f1",
+  "task": "unknown",
+  "source_url": "https://fal.ai/models/fal-ai/framepack/f1",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fframepack%2Ff1",
+  "retrieved_at": "2026-10-04T19:45:11.313Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "image-to-video",
+  "bytes_sha256": "d89b5c0ce9e44be7544485e840ba927e2e4824ca9f8c711e64d7d5892125e017",
+  "queue_path": "/fal-ai/framepack/f1",
+  "input_name": "FramepackF1Input",
+  "input": {
+    "$refName": "FramepackF1Input",
+    "properties": {
+      "enable_safety_checker": {
+        "description": "If set to true, the safety checker will be enabled.",
+        "type": "boolean",
+        "examples": [
+          true
+        ],
+        "default": false
+      },
+      "negative_prompt": {
+        "description": "Negative prompt for video generation.",
+        "type": "string",
+        "examples": [
+          "Ugly, blurry distorted, bad quality"
+        ],
+        "default": ""
+      },
+      "num_frames": {
+        "description": "The number of frames to generate.",
+        "maximum": 900,
+        "type": "integer",
+        "minimum": 30,
+        "default": 180
+      },
+      "image_url": {
+        "description": "URL of the image input.",
+        "type": "string",
+        "examples": [
+          "https://storage.googleapis.com/falserverless/framepack/framepack.jpg"
+        ]
+      },
+      "guidance_scale": {
+        "description": "Guidance scale for the generation.",
+        "maximum": 32,
+        "type": "number",
+        "minimum": 0,
+        "default": 10
+      },
+      "resolution": {
+        "description": "The resolution of the video to generate. 720p generations cost 1.5x more than 480p generations.",
+        "type": "string",
+        "default": "480p",
+        "enum": [
+          "720p",
+          "480p"
+        ]
+      },
+      "prompt": {
+        "description": "Text prompt for video generation (max 500 characters).",
+        "type": "string",
+        "examples": [
+          "A mesmerising video of a deep sea jellyfish moving through an inky-black ocean. The jellyfish glows softly with an amber bioluminescence. The overall scene is lifelike."
+        ]
+      },
+      "seed": {
+        "description": "The seed to use for generating the video.",
+        "anyOf": [
+          {
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "cfg_scale": {
+        "description": "Classifier-Free Guidance scale for the generation.",
+        "maximum": 7,
+        "type": "number",
+        "minimum": 0,
+        "default": 1
+      },
+      "aspect_ratio": {
+        "description": "The aspect ratio of the video to generate.",
+        "type": "string",
+        "default": "16:9",
+        "enum": [
+          "16:9",
+          "9:16"
+        ]
+      }
+    },
+    "type": "object",
+    "required": [
+      "prompt",
+      "image_url"
+    ]
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "FramepackF1Input",
+    "FramepackF1Output",
+    "File"
+  ]
+}

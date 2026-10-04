@@ -1,0 +1,93 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "bria/fibo-edit/blend",
+  "task": "unknown",
+  "source_url": "https://fal.ai/models/bria/fibo-edit/blend",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=bria%2Ffibo-edit%2Fblend",
+  "retrieved_at": "2026-10-04T19:41:39.993Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "image-to-image",
+  "bytes_sha256": "6f17e2fa6e647621b3b8df3700daa27167f157e643524d7d7f15e9a02170897a",
+  "queue_path": "/bria/fibo-edit/blend",
+  "input_name": "FiboEditBlendInput",
+  "input": {
+    "$refName": "FiboEditBlendInput",
+    "required": [
+      "image_url",
+      "instruction"
+    ],
+    "type": "object",
+    "properties": {
+      "image_url": {
+        "examples": [
+          "https://bria-datasets.s3.us-east-1.amazonaws.com/Liza/shirt.png"
+        ],
+        "type": "string",
+        "description": "The source image."
+      },
+      "instruction": {
+        "examples": [
+          "Place the art on the shirt, keep the art exactly the same"
+        ],
+        "type": "string",
+        "description": "Instruct what elements you would like to blend in your image."
+      }
+    }
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "FiboEditBlendInput",
+    "FiboEditBlendOutput",
+    "Image"
+  ]
+}

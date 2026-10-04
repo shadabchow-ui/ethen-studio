@@ -1,0 +1,123 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/luma-dream-machine/ray-2-flash",
+  "task": "unknown",
+  "source_url": "https://fal.ai/models/fal-ai/luma-dream-machine/ray-2-flash",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fluma-dream-machine%2Fray-2-flash",
+  "retrieved_at": "2026-10-04T19:48:54.849Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "text-to-video",
+  "bytes_sha256": "1349b4ea7b1b78a294f8eebab091c2fa1470a75d13b451ef568603ae8d3fc0a1",
+  "queue_path": "/fal-ai/luma-dream-machine/ray-2-flash",
+  "input_name": "LumaDreamMachineRay2FlashInput",
+  "input": {
+    "$refName": "LumaDreamMachineRay2FlashInput",
+    "required": [
+      "prompt"
+    ],
+    "properties": {
+      "duration": {
+        "enum": [
+          "5s",
+          "9s"
+        ],
+        "default": "5s",
+        "description": "The duration of the generated video (9s costs 2x more)",
+        "type": "string"
+      },
+      "aspect_ratio": {
+        "enum": [
+          "16:9",
+          "9:16",
+          "4:3",
+          "3:4",
+          "21:9",
+          "9:21"
+        ],
+        "default": "16:9",
+        "description": "The aspect ratio of the generated video",
+        "type": "string"
+      },
+      "loop": {
+        "default": false,
+        "description": "Whether the video should loop (end of video is blended with the beginning)",
+        "type": "boolean"
+      },
+      "prompt": {
+        "examples": [
+          "A herd of wild horses galloping across a dusty desert plain under a blazing midday sun, their manes flying in the wind; filmed in a wide tracking shot with dynamic motion, warm natural lighting, and an epic."
+        ],
+        "maxLength": 5000,
+        "minLength": 3,
+        "type": "string"
+      },
+      "resolution": {
+        "enum": [
+          "540p",
+          "720p",
+          "1080p"
+        ],
+        "default": "540p",
+        "description": "The resolution of the generated video (720p costs 2x more, 1080p costs 4x more)",
+        "type": "string"
+      }
+    },
+    "type": "object"
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "LumaDreamMachineRay2FlashInput",
+    "LumaDreamMachineRay2FlashOutput",
+    "File"
+  ]
+}

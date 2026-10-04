@@ -1,0 +1,142 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/auto-caption",
+  "task": "unknown",
+  "source_url": "https://fal.ai/models/fal-ai/auto-caption",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fauto-caption",
+  "retrieved_at": "2026-10-04T19:42:34.253Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "video-to-video",
+  "bytes_sha256": "cc21fe1a1d0dc8318c2f75ab465483160633df603c4d138ee0b55390f1d5c85a",
+  "queue_path": "/fal-ai/auto-caption",
+  "input_name": "AutoCaptionInput",
+  "input": {
+    "$refName": "AutoCaptionInput",
+    "properties": {
+      "video_url": {
+        "type": "string",
+        "description": "URL to the .mp4 video with audio. Only videos of size <400MB are allowed."
+      },
+      "stroke_width": {
+        "type": "integer",
+        "default": 1,
+        "description": "Width of the text strokes in pixels"
+      },
+      "text_case": {
+        "type": "string",
+        "default": "default",
+        "enum": [
+          "default",
+          "upper",
+          "lower"
+        ],
+        "description": "Capitalization to apply to subtitle text. 'upper' converts text to UPPERCASE, 'lower' converts to lowercase, and 'default' preserves the original casing produced by the speech recognizer."
+      },
+      "font_size": {
+        "type": "integer",
+        "default": 24,
+        "description": "Size of text in generated captions."
+      },
+      "top_align": {
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "number"
+          }
+        ],
+        "default": "center",
+        "description": "Top-to-bottom alignment of the text. Can be a string ('top', 'center', 'bottom') or a float (0.0-1.0)"
+      },
+      "left_align": {
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "number"
+          }
+        ],
+        "default": "center",
+        "description": "Left-to-right alignment of the text. Can be a string ('left', 'center', 'right') or a float (0.0-1.0)"
+      },
+      "refresh_interval": {
+        "minimum": 0.5,
+        "type": "number",
+        "default": 1.5,
+        "maximum": 3,
+        "description": "Number of seconds the captions should stay on screen. A higher number will also result in more text being displayed at once."
+      },
+      "txt_color": {
+        "type": "string",
+        "default": "white",
+        "description": "Colour of the text. Can be a RGB tuple, a color name, or an hexadecimal notation."
+      },
+      "txt_font": {
+        "type": "string",
+        "default": "Standard",
+        "description": "Font for generated captions. Choose one in 'Arial','Standard','Garamond', 'Times New Roman','Georgia', or pass a url to a .ttf file"
+      }
+    },
+    "required": [
+      "video_url"
+    ],
+    "type": "object"
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "AutoCaptionInput",
+    "AutoCaptionOutput"
+  ]
+}

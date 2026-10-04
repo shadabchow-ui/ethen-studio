@@ -1,0 +1,143 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/gpt-image-1/text-to-image",
+  "task": "text-to-image",
+  "source_url": "https://fal.ai/models/fal-ai/gpt-image-1/text-to-image",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fgpt-image-1%2Ftext-to-image",
+  "retrieved_at": "2026-10-04T19:45:23.571Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "text-to-image",
+  "bytes_sha256": "fd46e5126d2d056afebc9e5532a15c357e4f4a825db271a30799f03e7ef3ab02",
+  "queue_path": "/fal-ai/gpt-image-1/text-to-image",
+  "input_name": "GptImage1TextToImageInput",
+  "input": {
+    "$refName": "GptImage1TextToImageInput",
+    "type": "object",
+    "required": [
+      "prompt"
+    ],
+    "properties": {
+      "sync_mode": {
+        "description": "If `True`, the media will be returned as a data URI and the output data won't be available in the request history.",
+        "type": "boolean",
+        "default": false
+      },
+      "background": {
+        "description": "Background for the generated image",
+        "type": "string",
+        "default": "auto",
+        "enum": [
+          "auto",
+          "transparent",
+          "opaque"
+        ]
+      },
+      "quality": {
+        "description": "Quality for the generated image",
+        "type": "string",
+        "default": "auto",
+        "enum": [
+          "auto",
+          "low",
+          "medium",
+          "high"
+        ]
+      },
+      "output_format": {
+        "description": "Output format for the images",
+        "type": "string",
+        "default": "png",
+        "enum": [
+          "jpeg",
+          "png",
+          "webp"
+        ]
+      },
+      "prompt": {
+        "description": "The prompt for image generation",
+        "minLength": 2,
+        "examples": [
+          "A serene cyberpunk cityscape at twilight, with neon signs glowing in vibrant blues and purples, reflecting on rain-slick streets. Sleek futuristic buildings tower above, connected by glowing skybridges. A lone figure in a hooded jacket stands under a streetlamp, backlit by soft mist. The atmosphere is cinematic, moody"
+        ],
+        "type": "string"
+      },
+      "num_images": {
+        "maximum": 4,
+        "description": "Number of images to generate",
+        "type": "integer",
+        "examples": [
+          1
+        ],
+        "minimum": 1,
+        "default": 1
+      },
+      "image_size": {
+        "description": "Aspect ratio for the generated image",
+        "type": "string",
+        "default": "auto",
+        "enum": [
+          "auto",
+          "1024x1024",
+          "1536x1024",
+          "1024x1536"
+        ]
+      }
+    }
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "GptImage1TextToImageInput",
+    "GptImage1TextToImageOutput",
+    "ImageFile"
+  ]
+}

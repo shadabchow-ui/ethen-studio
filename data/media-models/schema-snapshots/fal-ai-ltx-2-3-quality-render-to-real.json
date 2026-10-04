@@ -1,0 +1,221 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/ltx-2.3-quality/render-to-real",
+  "task": "unknown",
+  "source_url": "https://fal.ai/models/fal-ai/ltx-2.3-quality/render-to-real",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fltx-2.3-quality%2Frender-to-real",
+  "retrieved_at": "2026-10-04T19:48:23.103Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "video-to-video",
+  "bytes_sha256": "8c7dc577d8442c3877d06e9f133df7166700d35a88529f5d8522140157e52707",
+  "queue_path": "/fal-ai/ltx-2.3-quality/render-to-real",
+  "input_name": "Ltx23QualityRenderToRealInput",
+  "input": {
+    "$refName": "Ltx23QualityRenderToRealInput",
+    "type": "object",
+    "properties": {
+      "seed": {
+        "description": "Random seed for reproducibility. If None, a random seed is chosen.",
+        "anyOf": [
+          {
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "image_url": {
+        "description": "Optional reference image used as the FIRST frame (image-to-video anchor), matching how the adapter was trained. It defines the photoreal look of frame 0; leave empty to let the render alone drive the result.",
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "video_quality": {
+        "enum": [
+          "low",
+          "medium",
+          "high",
+          "maximum"
+        ],
+        "type": "string",
+        "description": "The quality preset of the generated video.",
+        "default": "high"
+      },
+      "intensity": {
+        "enum": [
+          "light",
+          "strong",
+          "strong-v2"
+        ],
+        "type": "string",
+        "description": "How hard to push the render toward photorealism. 'light' keeps more of the source render's look and motion; 'strong' transforms more aggressively for a more photoreal result; 'strong-v2' is the newest improved adapter (better multi-scene coherence, audio, talking characters, and higher overall quality).",
+        "default": "light"
+      },
+      "num_inference_steps": {
+        "minimum": 8,
+        "type": "integer",
+        "description": "Number of inference steps. Defaults to 15 and can be increased up to 30.",
+        "maximum": 30,
+        "default": 15
+      },
+      "guidance_scale": {
+        "minimum": 1,
+        "type": "number",
+        "description": "Classifier-free guidance scale. The default is tuned for fast, high-quality generation.",
+        "maximum": 20,
+        "default": 1
+      },
+      "enable_safety_checker": {
+        "type": "boolean",
+        "description": "Whether to enable the safety checker.",
+        "default": true
+      },
+      "sync_mode": {
+        "type": "boolean",
+        "description": "If True, the media is returned as a data URI inline in the response. Useful for short-lived requests and tests.",
+        "default": false
+      },
+      "enable_prompt_expansion": {
+        "type": "boolean",
+        "description": "When enabled, an AI model expands your prompt into a richer description before generation (off by default sends it as written). The `3DREAL` trigger is always kept, and the final prompt used is returned in the output.",
+        "default": false
+      },
+      "video_write_mode": {
+        "enum": [
+          "fast",
+          "balanced",
+          "small"
+        ],
+        "type": "string",
+        "description": "The write mode of the generated video.",
+        "default": "balanced"
+      },
+      "frames_per_second": {
+        "minimum": 1,
+        "type": "number",
+        "description": "Frames per second of the generated video.",
+        "maximum": 60,
+        "default": 24
+      },
+      "generate_audio": {
+        "type": "boolean",
+        "description": "Whether to include audio in the returned video. When disabled, the final MP4 is returned without an audio track.",
+        "default": true
+      },
+      "video_url": {
+        "type": "string",
+        "examples": [
+          "https://v3b.fal.media/files/b/0a8824b1/sdm0KfmenrlywesfzY1Y1_if6euPp1.mp4"
+        ],
+        "description": "The URL of the 3D / CG / game render to make photorealistic."
+      },
+      "detail_refine_strength": {
+        "minimum": 0.3,
+        "type": "number",
+        "description": "Denoise strength of the detailer pass, used only when enable_detail_refine is on. Higher regenerates more detail (and can drift further from the base); lower is a lighter touch that stays closer to the base. Default 0.75.",
+        "maximum": 0.95,
+        "default": 0.75
+      },
+      "num_frames": {
+        "minimum": 9,
+        "type": "integer",
+        "description": "The number of output frames. Output duration is num_frames / frames_per_second. The IC-LoRA control budget caps the resolution x frames volume: roughly 6s at 720p or 15s at 480p; a request above it returns a 422 (lower num_frames, or use 480p).",
+        "maximum": 481,
+        "default": 121
+      },
+      "negative_prompt": {
+        "type": "string",
+        "description": "The negative prompt to steer generation away from.",
+        "default": "color distortion, overexposure, static, blurry details, subtitles, style, artwork, painting, frame, still, dim overall tone, worst quality, low quality, JPEG compression artifacts, ugly, mutilated, extra fingers, poorly drawn hands, poorly drawn face, deformed, disfigured, malformed limbs, fused fingers, motionless frame, cluttered background, three legs, crowded background, walking backwards"
+      },
+      "enable_detail_refine": {
+        "type": "boolean",
+        "description": "Add a second refinement stage for a sharper, higher-resolution result. After the base pass the video latent is 2x latent-upscaled (spatial upscaler) and refined by a short detailer pass on the distilled model. NOTE: this doubles the output width AND height (4x the pixels), so the request costs roughly 4X THE PRICE and is slower. Off by default.",
+        "default": false
+      },
+      "resolution": {
+        "enum": [
+          "480p",
+          "720p"
+        ],
+        "type": "string",
+        "description": "Output resolution (short side), preserving the source aspect ratio. The IC-LoRA control path caps the resolution x frames volume, so resolution trades against duration: 720p allows up to ~6s (sharper), 480p up to ~15s (softer but longer). A request above the budget is rejected with a clear error — pick 480p for longer clips. Output duration is num_frames / frames_per_second.",
+        "default": "720p"
+      },
+      "prompt": {
+        "type": "string",
+        "examples": [
+          "3DREAL. Make it a detailed realistic 3D render. A sleek, futuristic hoverbike with glowing blue lights speeds down a multi-lane highway, leaving a trail of orange exhaust."
+        ],
+        "description": "The text prompt, pre-filled with the `3DREAL` trigger the adapter activates on. Describe the photorealistic result after it. The `3DREAL` trigger is always kept, even if you clear it or enable prompt expansion.",
+        "default": "3DREAL. "
+      }
+    },
+    "description": "Render-to-real: turn a stylized 3D / CG / game render into photorealistic\nfootage.\n\nThe source ``video_url`` (the render) is fed straight into the IC-LoRA guide\nand re-rendered as photorealistic live-action through the render-to-real\nadapter; an optional ``image_url`` anchors the FIRST frame (image-to-video),\nmatching how the adapter was trained. Output size follows the source video,\ncapped to the stable IC-LoRA budget. Runs on the distilled 8-step path; the\ncaller writes the ``prompt`` (pre-filled with the ``3DREAL`` trigger).\nOptional prompt expansion enriches it, and ``3DREAL`` is always kept; the\nfinal prompt used is returned in the output.",
+    "required": [
+      "video_url"
+    ]
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "Ltx23QualityRenderToRealInput",
+    "Ltx23QualityRenderToRealOutput",
+    "File"
+  ]
+}

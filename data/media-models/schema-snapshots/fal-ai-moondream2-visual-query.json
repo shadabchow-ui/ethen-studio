@@ -1,0 +1,89 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/moondream2/visual-query",
+  "task": "unknown",
+  "source_url": "https://fal.ai/models/fal-ai/moondream2/visual-query",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fmoondream2%2Fvisual-query",
+  "retrieved_at": "2026-10-04T19:49:28.794Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "vision",
+  "bytes_sha256": "4cccc0525dd8b2d50f8be7fd86c2b0d9058b280d43b1eb139724f8ef88469626",
+  "queue_path": "/fal-ai/moondream2/visual-query",
+  "input_name": "Moondream2VisualQueryInput",
+  "input": {
+    "$refName": "Moondream2VisualQueryInput",
+    "required": [
+      "image_url",
+      "prompt"
+    ],
+    "type": "object",
+    "properties": {
+      "prompt": {
+        "description": "Query to be asked in the image",
+        "type": "string"
+      },
+      "image_url": {
+        "description": "URL of the image to be processed",
+        "type": "string",
+        "examples": [
+          "https://llava-vl.github.io/static/images/monalisa.jpg"
+        ]
+      }
+    }
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "Moondream2VisualQueryInput",
+    "Moondream2VisualQueryOutput"
+  ]
+}

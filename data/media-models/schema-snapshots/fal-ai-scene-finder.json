@@ -1,0 +1,116 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/scene-finder",
+  "task": "unknown",
+  "source_url": "https://fal.ai/models/fal-ai/scene-finder",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fscene-finder",
+  "retrieved_at": "2026-10-04T19:51:31.880Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "vision",
+  "bytes_sha256": "20536c1b0e73828a93447beaaa1963fab3c59b8a6cc4b87a163a04572834dd59",
+  "queue_path": "/fal-ai/scene-finder",
+  "input_name": "SceneFinderInput",
+  "input": {
+    "$refName": "SceneFinderInput",
+    "properties": {
+      "frames_per_second": {
+        "maximum": 8,
+        "type": "integer",
+        "description": "Frames per second to sample from the video. Higher values give more precision but use more memory.",
+        "minimum": 1,
+        "default": 2
+      },
+      "frame_selection": {
+        "default": "mid",
+        "type": "string",
+        "description": "Which frame(s) to extract from each detected segment. 'mid' returns the midpoint frame, 'start' the first frame, 'end' the last frame, 'all' returns start + mid + end.",
+        "enum": [
+          "mid",
+          "start",
+          "end",
+          "all"
+        ]
+      },
+      "prompt": {
+        "examples": [
+          "a dog with only one eye open",
+          "blonde woman with her bag"
+        ],
+        "type": "string",
+        "maxLength": 1000,
+        "description": "Text description of the event or scene to find in the video."
+      },
+      "video_url": {
+        "max_file_size": 524288000,
+        "examples": [
+          "https://v3b.fal.media/files/b/0a913346/ZbEaRKcU1dMNYkHl9g1Zz_T4QEyOJ3R3WzuQS9.mp4"
+        ],
+        "type": "string",
+        "description": "URL of the video to search through.",
+        "_fal_ui_field": "video"
+      }
+    },
+    "type": "object",
+    "required": [
+      "video_url",
+      "prompt"
+    ]
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "SceneFinderInput",
+    "SceneFinderOutput",
+    "Image",
+    "EventSegment"
+  ]
+}

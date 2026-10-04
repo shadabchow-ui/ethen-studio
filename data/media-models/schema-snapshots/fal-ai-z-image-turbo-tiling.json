@@ -1,0 +1,239 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/z-image/turbo/tiling",
+  "task": "image-generation",
+  "source_url": "https://fal.ai/models/fal-ai/z-image/turbo/tiling",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fz-image%2Fturbo%2Ftiling",
+  "retrieved_at": "2026-10-04T19:53:28.608Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "text-to-image",
+  "bytes_sha256": "2ac95094971838b6e3a87591f69ac5dd04026a61b5b3fc1613de1fa91974a0c9",
+  "queue_path": "/fal-ai/z-image/turbo/tiling",
+  "input_name": "ZImageTurboTilingInput",
+  "input": {
+    "$refName": "ZImageTurboTilingInput",
+    "properties": {
+      "num_inference_steps": {
+        "maximum": 8,
+        "description": "The number of inference steps to perform.",
+        "type": "integer",
+        "minimum": 1,
+        "default": 8
+      },
+      "enable_prompt_expansion": {
+        "description": "Whether to enable prompt expansion. Note: this will increase the price by 0.0025 credits per request.",
+        "type": "boolean",
+        "default": false
+      },
+      "tile_size": {
+        "maximum": 256,
+        "description": "Tile size in latent space. Must be even (divisible by 2) for patchification. Automatically capped to the generated image dimensions on tiled axes. (64 = 512px, 128 = 1024px, 256 = 2048px).",
+        "type": "integer",
+        "multipleOf": 2,
+        "minimum": 32,
+        "default": 128
+      },
+      "tile_stride": {
+        "maximum": 128,
+        "description": "Tile stride in latent space. Must be even (divisible by 2). Automatically capped to half the effective tile size. (32 = 256px, 64 = 512px, 128 = 1024px).",
+        "type": "integer",
+        "multipleOf": 2,
+        "minimum": 16,
+        "default": 64
+      },
+      "prompt": {
+        "description": "The prompt to generate an image from.",
+        "type": "string",
+        "examples": [
+          "A hyper-realistic, high-resolution 4k texture of an ancient weathered brick wall heavily overgrown with lush green moss and soft lichens. The bricks are aged, featuring deep earthy tones, natural cracks, and gritty textures. Vibrant emerald moss fills the mortar lines and spills over the rough surfaces of the stones. Uniform, flat cinematic lighting ensures no harsh shadows, highlighting the intricate organic details and damp stone surfaces. The composition is a perfectly balanced overhead view, showcasing a rich tapestry of botanical growth and masonry craftsmanship with professional clarity and hyper-detailed grit."
+        ]
+      },
+      "mask_image_url": {
+        "description": "URL of a mask image for inpainting. White regions are regenerated, black regions are preserved. Requires image_url.",
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "enable_safety_checker": {
+        "description": "If set to true, the safety checker will be enabled. Disabling it requires account authorization; unauthorized requests are always checked, and images flagged as unsafe are returned as black images.",
+        "type": "boolean",
+        "default": true
+      },
+      "image_size": {
+        "description": "The size of the generated image. Use 'auto' to match the input image size (or 1024x1024 if no image).",
+        "anyOf": [
+          {
+            "$refName": "ImageSize",
+            "type": "object",
+            "properties": {
+              "height": {
+                "maximum": 14142,
+                "description": "The height of the generated image.",
+                "type": "integer",
+                "default": 512,
+                "exclusiveMinimum": 0
+              },
+              "width": {
+                "maximum": 14142,
+                "description": "The width of the generated image.",
+                "type": "integer",
+                "default": 512,
+                "exclusiveMinimum": 0
+              }
+            }
+          },
+          {
+            "enum": [
+              "square_hd",
+              "square",
+              "portrait_4_3",
+              "portrait_16_9",
+              "landscape_4_3",
+              "landscape_16_9",
+              "auto"
+            ],
+            "type": "string"
+          }
+        ],
+        "default": "square_hd"
+      },
+      "output_format": {
+        "description": "The format of the generated image.",
+        "enum": [
+          "jpeg",
+          "png",
+          "webp"
+        ],
+        "type": "string",
+        "default": "png"
+      },
+      "num_images": {
+        "maximum": 4,
+        "description": "The number of images to generate.",
+        "type": "integer",
+        "minimum": 1,
+        "default": 1
+      },
+      "tiling_mode": {
+        "description": "Tiling direction: 'both' (omnidirectional), 'horizontal' (left-right only), 'vertical' (top-bottom only).",
+        "enum": [
+          "both",
+          "horizontal",
+          "vertical"
+        ],
+        "type": "string",
+        "default": "both"
+      },
+      "sync_mode": {
+        "description": "If `True`, the media will be returned as a data URI and the output data won't be available in the request history.",
+        "type": "boolean",
+        "default": false
+      },
+      "image_url": {
+        "description": "URL of an image for image-to-image or inpainting. When provided without mask_image_url, performs image-to-image; with mask_image_url, performs inpainting.",
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "strength": {
+        "maximum": 1,
+        "description": "How much to transform the input image. Only used when image_url is provided.",
+        "type": "number",
+        "default": 0.6,
+        "exclusiveMinimum": 0
+      },
+      "acceleration": {
+        "description": "The acceleration level to use.",
+        "enum": [
+          "none",
+          "regular",
+          "high"
+        ],
+        "type": "string",
+        "default": "regular"
+      },
+      "seed": {
+        "description": "\n            The same seed and the same prompt given to the same version of the model\n            will output the same image every time.\n        ",
+        "anyOf": [
+          {
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      }
+    },
+    "type": "object",
+    "required": [
+      "prompt"
+    ]
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "ZImageTurboTilingInput",
+    "ZImageTurboTilingOutput",
+    "ImageSize",
+    "ImageFile"
+  ]
+}

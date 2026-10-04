@@ -1,0 +1,220 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/flux-2-lora-gallery/multiple-angles",
+  "task": "unknown",
+  "source_url": "https://fal.ai/models/fal-ai/flux-2-lora-gallery/multiple-angles",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fflux-2-lora-gallery%2Fmultiple-angles",
+  "retrieved_at": "2026-10-04T19:44:11.575Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "image-to-image",
+  "bytes_sha256": "dd53eaf936ce2372a8bd22a0b6a7d645666d2fa59b0e4e4950545d74fbe39c9e",
+  "queue_path": "/fal-ai/flux-2-lora-gallery/multiple-angles",
+  "input_name": "Flux2LoraGalleryMultipleAnglesInput",
+  "input": {
+    "$refName": "Flux2LoraGalleryMultipleAnglesInput",
+    "description": "Input model for Multiple Angles endpoint - Camera control with precise adjustments using <sks> trigger word. Prompt is built automatically from slider values.",
+    "required": [
+      "image_urls"
+    ],
+    "type": "object",
+    "properties": {
+      "num_inference_steps": {
+        "description": "The number of inference steps to perform.",
+        "maximum": 50,
+        "type": "integer",
+        "minimum": 4,
+        "default": 40
+      },
+      "zoom": {
+        "description": "Camera zoom/distance. 0=wide shot (far away), 5=medium shot (normal), 10=close-up (very close).",
+        "maximum": 10,
+        "type": "number",
+        "minimum": 0,
+        "default": 5
+      },
+      "output_format": {
+        "description": "The format of the output image.",
+        "enum": [
+          "png",
+          "jpeg",
+          "webp"
+        ],
+        "type": "string",
+        "default": "png"
+      },
+      "image_urls": {
+        "description": "The URL of the image to adjust camera angle for.",
+        "items": {
+          "type": "string"
+        },
+        "type": "array",
+        "examples": [
+          [
+            "https://v3.fal.media/files/monkey/i3saq4bAPXSIl08nZtq9P_ec535747aefc4e31943136a6d8587075.png"
+          ]
+        ]
+      },
+      "num_images": {
+        "description": "Number of images to generate.",
+        "maximum": 4,
+        "type": "integer",
+        "minimum": 1,
+        "default": 1
+      },
+      "seed": {
+        "description": "Random seed for reproducibility.",
+        "anyOf": [
+          {
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "sync_mode": {
+        "description": "If True, the media will be returned as a data URI.",
+        "type": "boolean",
+        "default": false
+      },
+      "horizontal_angle": {
+        "description": "Horizontal rotation angle around the object in degrees. 0°=front view, 90°=right side, 180°=back view, 270°=left side, 360°=front view again.",
+        "maximum": 360,
+        "type": "number",
+        "minimum": 0,
+        "default": 0
+      },
+      "lora_scale": {
+        "description": "The strength of the multiple angles effect.",
+        "maximum": 2,
+        "type": "number",
+        "minimum": 0,
+        "default": 1
+      },
+      "acceleration": {
+        "description": "Acceleration level for image generation.",
+        "enum": [
+          "none",
+          "regular"
+        ],
+        "type": "string",
+        "default": "regular"
+      },
+      "enable_safety_checker": {
+        "description": "Whether to enable the safety checker. Disabling it requires account authorization; unauthorized requests are always checked.",
+        "type": "boolean",
+        "default": true
+      },
+      "vertical_angle": {
+        "description": "Vertical camera angle in degrees. 0°=eye-level shot, 30°=elevated shot, 60°=high-angle shot (looking down from above).",
+        "maximum": 60,
+        "type": "number",
+        "minimum": 0,
+        "default": 0
+      },
+      "guidance_scale": {
+        "description": "The CFG (Classifier Free Guidance) scale.",
+        "maximum": 20,
+        "type": "number",
+        "minimum": 0,
+        "default": 2.5
+      },
+      "image_size": {
+        "description": "The size of the generated image. If not provided, the size of the input image will be used.",
+        "anyOf": [
+          {
+            "$refName": "ImageSize",
+            "type": "object",
+            "properties": {
+              "height": {
+                "description": "The height of the generated image.",
+                "maximum": 14142,
+                "type": "integer",
+                "default": 512,
+                "exclusiveMinimum": 0
+              },
+              "width": {
+                "description": "The width of the generated image.",
+                "maximum": 14142,
+                "type": "integer",
+                "default": 512,
+                "exclusiveMinimum": 0
+              }
+            }
+          },
+          {
+            "enum": [
+              "square_hd",
+              "square",
+              "portrait_4_3",
+              "portrait_16_9",
+              "landscape_4_3",
+              "landscape_16_9"
+            ],
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      }
+    }
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "Flux2LoraGalleryMultipleAnglesInput",
+    "Flux2LoraGalleryMultipleAnglesOutput",
+    "ImageSize",
+    "Image"
+  ]
+}

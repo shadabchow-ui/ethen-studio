@@ -1,0 +1,190 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/z-image/base",
+  "task": "image-generation",
+  "source_url": "https://fal.ai/models/fal-ai/z-image/base",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fz-image%2Fbase",
+  "retrieved_at": "2026-10-04T19:53:21.864Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "text-to-image",
+  "bytes_sha256": "e582ca561510fcedf9c01d553f94677a6d5ebad516fee340cf58c0dbec19f1d6",
+  "queue_path": "/fal-ai/z-image/base",
+  "input_name": "ZImageBaseInput",
+  "input": {
+    "$refName": "ZImageBaseInput",
+    "properties": {
+      "num_inference_steps": {
+        "maximum": 50,
+        "type": "integer",
+        "description": "The number of inference steps to perform.",
+        "minimum": 1,
+        "default": 28
+      },
+      "image_size": {
+        "anyOf": [
+          {
+            "$refName": "ImageSize",
+            "type": "object",
+            "properties": {
+              "height": {
+                "maximum": 14142,
+                "description": "The height of the generated image.",
+                "type": "integer",
+                "default": 512,
+                "exclusiveMinimum": 0
+              },
+              "width": {
+                "maximum": 14142,
+                "description": "The width of the generated image.",
+                "type": "integer",
+                "default": 512,
+                "exclusiveMinimum": 0
+              }
+            }
+          },
+          {
+            "type": "string",
+            "enum": [
+              "square_hd",
+              "square",
+              "portrait_4_3",
+              "portrait_16_9",
+              "landscape_4_3",
+              "landscape_16_9"
+            ]
+          }
+        ],
+        "description": "The size of the generated image.",
+        "default": "landscape_4_3"
+      },
+      "seed": {
+        "anyOf": [
+          {
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "\n            The same seed and the same prompt given to the same version of the model\n            will output the same image every time.\n        "
+      },
+      "acceleration": {
+        "default": "regular",
+        "type": "string",
+        "description": "The acceleration level to use.",
+        "enum": [
+          "none",
+          "regular",
+          "high"
+        ]
+      },
+      "enable_safety_checker": {
+        "type": "boolean",
+        "description": "If set to true, the safety checker will be enabled. Disabling it requires account authorization; unauthorized requests are always checked, and images flagged as unsafe are returned as black images.",
+        "default": true
+      },
+      "output_format": {
+        "default": "png",
+        "type": "string",
+        "description": "The format of the generated image.",
+        "enum": [
+          "jpeg",
+          "png",
+          "webp"
+        ]
+      },
+      "negative_prompt": {
+        "type": "string",
+        "description": "The negative prompt to use for the image generation.",
+        "default": ""
+      },
+      "prompt": {
+        "examples": [
+          "Grandmother knitting by a window, an empty chair by her"
+        ],
+        "type": "string",
+        "description": "The prompt to generate an image from."
+      },
+      "sync_mode": {
+        "type": "boolean",
+        "description": "If `True`, the media will be returned as a data URI and the output data won't be available in the request history.",
+        "default": false
+      },
+      "num_images": {
+        "maximum": 4,
+        "type": "integer",
+        "description": "The number of images to generate.",
+        "minimum": 1,
+        "default": 1
+      },
+      "guidance_scale": {
+        "maximum": 20,
+        "type": "number",
+        "description": "The guidance scale to use for the image generation.",
+        "minimum": 1,
+        "default": 4
+      }
+    },
+    "type": "object",
+    "required": [
+      "prompt"
+    ]
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "ZImageBaseInput",
+    "ZImageBaseOutput",
+    "ImageSize",
+    "ImageFile"
+  ]
+}

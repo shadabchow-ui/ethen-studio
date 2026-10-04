@@ -1,0 +1,193 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/flux-2-flex/edit",
+  "task": "image-editing",
+  "source_url": "https://fal.ai/models/fal-ai/flux-2-flex/edit",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fflux-2-flex%2Fedit",
+  "retrieved_at": "2026-10-04T19:44:06.362Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "image-to-image",
+  "bytes_sha256": "8922971c51967ce0e34e513c334a84257a728d0fb1ce0d2eca19e9f1cdd35807",
+  "queue_path": "/fal-ai/flux-2-flex/edit",
+  "input_name": "Flux2FlexEditInput",
+  "input": {
+    "$refName": "Flux2FlexEditInput",
+    "properties": {
+      "safety_tolerance": {
+        "enum": [
+          "1",
+          "2",
+          "3",
+          "4",
+          "5"
+        ],
+        "type": "string",
+        "description": "The safety tolerance level for the generated image. 1 being the most strict and 5 being the most permissive.",
+        "default": "2"
+      },
+      "image_size": {
+        "anyOf": [
+          {
+            "$refName": "ImageSize",
+            "properties": {
+              "height": {
+                "exclusiveMinimum": 0,
+                "type": "integer",
+                "description": "The height of the generated image.",
+                "maximum": 14142,
+                "default": 512
+              },
+              "width": {
+                "exclusiveMinimum": 0,
+                "type": "integer",
+                "description": "The width of the generated image.",
+                "maximum": 14142,
+                "default": 512
+              }
+            },
+            "type": "object"
+          },
+          {
+            "type": "string",
+            "enum": [
+              "auto",
+              "square_hd",
+              "square",
+              "portrait_4_3",
+              "portrait_16_9",
+              "landscape_4_3",
+              "landscape_16_9"
+            ]
+          }
+        ],
+        "description": "The size of the generated image. If `auto`, the size will be determined by the model.",
+        "default": "auto"
+      },
+      "guidance_scale": {
+        "minimum": 1.5,
+        "type": "number",
+        "description": "The guidance scale to use for the generation.",
+        "maximum": 10,
+        "default": 3.5
+      },
+      "enable_safety_checker": {
+        "type": "boolean",
+        "description": "Whether to enable the safety checker. Disabling it requires account authorization; unauthorized requests are always checked.",
+        "default": true
+      },
+      "image_urls": {
+        "examples": [
+          [
+            "https://storage.googleapis.com/falserverless/example_inputs/flux2_flex_edit_input.png"
+          ]
+        ],
+        "type": "array",
+        "description": "List of URLs of input images for editing",
+        "items": {
+          "type": "string"
+        }
+      },
+      "prompt": {
+        "examples": [
+          "Change colors of the vase. In a cozy living room setting, visualize a gradient vase placed on a table, flowing from rich #6a0dad to soft #ff69b4. Add an artistic carving text with a big font on vase says \"FLEX\" in the middle."
+        ],
+        "type": "string",
+        "description": "The prompt to generate an image from."
+      },
+      "seed": {
+        "anyOf": [
+          {
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "The seed to use for the generation."
+      },
+      "output_format": {
+        "enum": [
+          "jpeg",
+          "png"
+        ],
+        "type": "string",
+        "description": "The format of the generated image.",
+        "default": "jpeg"
+      },
+      "sync_mode": {
+        "type": "boolean",
+        "description": "If `True`, the media will be returned as a data URI and the output data won't be available in the request history.",
+        "default": false
+      },
+      "num_inference_steps": {
+        "minimum": 2,
+        "type": "integer",
+        "description": "The number of inference steps to perform.",
+        "maximum": 50,
+        "default": 28
+      }
+    },
+    "type": "object",
+    "required": [
+      "prompt",
+      "image_urls"
+    ]
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "Flux2FlexEditInput",
+    "Flux2FlexEditOutput",
+    "ImageSize",
+    "ImageFile"
+  ]
+}

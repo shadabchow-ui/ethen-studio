@@ -1,0 +1,116 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/finegrain-eraser",
+  "task": "unknown",
+  "source_url": "https://fal.ai/models/fal-ai/finegrain-eraser",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Ffinegrain-eraser",
+  "retrieved_at": "2026-10-04T19:43:46.902Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "image-to-image",
+  "bytes_sha256": "f1a5af43d9979960ca9d60e3b7554bf22f3212c5c65c992d6543f40581b583d8",
+  "queue_path": "/fal-ai/finegrain-eraser",
+  "input_name": "FinegrainEraserInput",
+  "input": {
+    "$refName": "FinegrainEraserInput",
+    "properties": {
+      "prompt": {
+        "examples": [
+          "person on the right and snowboard"
+        ],
+        "type": "string",
+        "description": "Text description of what to erase"
+      },
+      "mode": {
+        "enum": [
+          "express",
+          "standard",
+          "premium"
+        ],
+        "default": "standard",
+        "type": "string",
+        "description": "Erase quality mode"
+      },
+      "seed": {
+        "description": "Random seed for reproducible generation",
+        "anyOf": [
+          {
+            "maximum": 999,
+            "type": "integer",
+            "minimum": 0
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "image_url": {
+        "examples": [
+          "https://v3.fal.media/files/elephant/IKqKIxDfRDK8fzeETCveO_erase_example01.jpg"
+        ],
+        "type": "string",
+        "description": "URL of the image to edit"
+      }
+    },
+    "required": [
+      "image_url",
+      "prompt"
+    ],
+    "type": "object"
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "FinegrainEraserInput",
+    "FinegrainEraserOutput",
+    "File"
+  ]
+}

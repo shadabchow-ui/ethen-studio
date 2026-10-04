@@ -1,0 +1,99 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "bria/fibo-edit/colorize",
+  "task": "unknown",
+  "source_url": "https://fal.ai/models/bria/fibo-edit/colorize",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=bria%2Ffibo-edit%2Fcolorize",
+  "retrieved_at": "2026-10-04T19:41:40.478Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "image-to-image",
+  "bytes_sha256": "821aa910e6c8a9671ee0a547695c720e3956ed97d96931e53c2381ed3e0db5fa",
+  "queue_path": "/bria/fibo-edit/colorize",
+  "input_name": "FiboEditColorizeInput",
+  "input": {
+    "$refName": "FiboEditColorizeInput",
+    "required": [
+      "image_url",
+      "color"
+    ],
+    "type": "object",
+    "properties": {
+      "color": {
+        "examples": [
+          "contemporary color"
+        ],
+        "type": "string",
+        "enum": [
+          "contemporary color",
+          "vivid color",
+          "black and white colors",
+          "sepia vintage"
+        ],
+        "description": "Select the color palette or aesthetic for the output image"
+      },
+      "image_url": {
+        "examples": [
+          "https://bria-datasets.s3.us-east-1.amazonaws.com/Liza/png+-+2026-01-13T083840.113.png"
+        ],
+        "type": "string",
+        "description": "The source image."
+      }
+    }
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "FiboEditColorizeInput",
+    "FiboEditColorizeOutput",
+    "Image"
+  ]
+}

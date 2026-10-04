@@ -1,0 +1,107 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/post-processing/parabolize",
+  "task": "unknown",
+  "source_url": "https://fal.ai/models/fal-ai/post-processing/parabolize",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fpost-processing%2Fparabolize",
+  "retrieved_at": "2026-10-04T19:50:32.809Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "image-to-image",
+  "bytes_sha256": "f7958df1f1bcfc7b7ec3f1ee1ba218e68e02a4afea5a50d4c8de6bca66d210a7",
+  "queue_path": "/fal-ai/post-processing/parabolize",
+  "input_name": "PostProcessingParabolizeInput",
+  "input": {
+    "$refName": "PostProcessingParabolizeInput",
+    "properties": {
+      "parabolize_coeff": {
+        "description": "Parabolize coefficient",
+        "minimum": -10,
+        "maximum": 10,
+        "default": 1,
+        "type": "number"
+      },
+      "image_url": {
+        "description": "URL of image to process",
+        "_fal_ui_field": "image",
+        "type": "string",
+        "examples": [
+          "https://storage.googleapis.com/falserverless/web-examples/post-process/postpro-input.jpg"
+        ]
+      },
+      "vertex_y": {
+        "description": "Vertex Y position",
+        "minimum": 0,
+        "maximum": 1,
+        "default": 0.5,
+        "type": "number"
+      },
+      "vertex_x": {
+        "description": "Vertex X position",
+        "minimum": 0,
+        "maximum": 1,
+        "default": 0.5,
+        "type": "number"
+      }
+    },
+    "required": [
+      "image_url"
+    ],
+    "type": "object"
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "PostProcessingParabolizeInput",
+    "PostProcessingParabolizeOutput",
+    "Image"
+  ]
+}

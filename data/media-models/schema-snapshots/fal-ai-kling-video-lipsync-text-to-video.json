@@ -1,0 +1,167 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/kling-video/lipsync/text-to-video",
+  "task": "text-to-video",
+  "source_url": "https://fal.ai/models/fal-ai/kling-video/lipsync/text-to-video",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fkling-video%2Flipsync%2Ftext-to-video",
+  "retrieved_at": "2026-10-04T19:46:49.635Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "text-to-video",
+  "bytes_sha256": "f5df7adf505d4cb8a4ad7c4c582050dc117ea1dfd69148acaac751a1a5df2193",
+  "queue_path": "/fal-ai/kling-video/lipsync/text-to-video",
+  "input_name": "KlingVideoLipsyncTextToVideoInput",
+  "input": {
+    "$refName": "KlingVideoLipsyncTextToVideoInput",
+    "required": [
+      "video_url",
+      "text",
+      "voice_id"
+    ],
+    "type": "object",
+    "properties": {
+      "video_url": {
+        "description": "The URL of the video to generate the lip sync for. Supports .mp4/.mov, ≤100MB, 2-60s, 720p/1080p only, width/height 720–1920px. If validation fails, an error is returned.",
+        "type": "string",
+        "_fal_ui_field": "video",
+        "examples": [
+          "https://fal.media/files/koala/8teUPbRRMtAUTORDvqy0l.mp4"
+        ]
+      },
+      "voice_language": {
+        "description": "The voice language corresponding to the Voice ID",
+        "type": "string",
+        "default": "en",
+        "enum": [
+          "zh",
+          "en"
+        ]
+      },
+      "voice_id": {
+        "description": "Voice ID to use for speech synthesis",
+        "type": "string",
+        "examples": [
+          "genshin_klee2"
+        ],
+        "enum": [
+          "genshin_vindi2",
+          "zhinen_xuesheng",
+          "AOT",
+          "ai_shatang",
+          "genshin_klee2",
+          "genshin_kirara",
+          "ai_kaiya",
+          "oversea_male1",
+          "ai_chenjiahao_712",
+          "girlfriend_4_speech02",
+          "chat1_female_new-3",
+          "chat_0407_5-1",
+          "cartoon-boy-07",
+          "uk_boy1",
+          "cartoon-girl-01",
+          "PeppaPig_platform",
+          "ai_huangzhong_712",
+          "ai_huangyaoshi_712",
+          "ai_laoguowang_712",
+          "chengshu_jiejie",
+          "you_pingjing",
+          "calm_story1",
+          "uk_man2",
+          "laopopo_speech02",
+          "heainainai_speech02",
+          "reader_en_m-v1",
+          "commercial_lady_en_f-v1",
+          "tiyuxi_xuedi",
+          "tiexin_nanyou",
+          "girlfriend_1_speech02",
+          "girlfriend_2_speech02",
+          "zhuxi_speech02",
+          "uk_oldman3",
+          "dongbeilaotie_speech02",
+          "chongqingxiaohuo_speech02",
+          "chuanmeizi_speech02",
+          "chaoshandashu_speech02",
+          "ai_taiwan_man2_speech02",
+          "xianzhanggui_speech02",
+          "tianjinjiejie_speech02",
+          "diyinnansang_DB_CN_M_04-v2",
+          "yizhipiannan-v1",
+          "guanxiaofang-v2",
+          "tianmeixuemei-v1",
+          "daopianyansang-v1",
+          "mengwa-v1"
+        ]
+      },
+      "voice_speed": {
+        "maximum": 2,
+        "description": "Speech rate for Text to Video generation",
+        "type": "number",
+        "minimum": 0.8,
+        "default": 1
+      },
+      "text": {
+        "description": "Text content for lip-sync video generation. Max 120 characters.",
+        "type": "string",
+        "examples": [
+          "Mental health is as important as physical health, shaping our emotions, thoughts, and daily interactions."
+        ],
+        "maxLength": 120
+      }
+    }
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "KlingVideoLipsyncTextToVideoInput",
+    "KlingVideoLipsyncTextToVideoOutput",
+    "File"
+  ]
+}

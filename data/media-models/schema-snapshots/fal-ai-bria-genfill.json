@@ -1,0 +1,131 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/bria/genfill",
+  "task": "unknown",
+  "source_url": "https://fal.ai/models/fal-ai/bria/genfill",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fbria%2Fgenfill",
+  "retrieved_at": "2026-10-04T19:42:46.646Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "image-to-image",
+  "bytes_sha256": "b36eceb2a05c25cc4c31c5c1c82e2e5191d7abd514a894d22b314cc1d88893f2",
+  "queue_path": "/fal-ai/bria/genfill",
+  "input_name": "BriaGenfillInput",
+  "input": {
+    "$refName": "BriaGenfillInput",
+    "required": [
+      "image_url",
+      "mask_url",
+      "prompt"
+    ],
+    "properties": {
+      "seed": {
+        "description": "\n            The same seed and the same prompt given to the same version of the model\n            will output the same image every time.\n        ",
+        "anyOf": [
+          {
+            "maximum": 2147483647,
+            "type": "integer",
+            "minimum": 0
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "num_images": {
+        "maximum": 4,
+        "default": 1,
+        "description": "Number of Images to generate.",
+        "type": "integer",
+        "minimum": 1
+      },
+      "image_url": {
+        "examples": [
+          "https://storage.googleapis.com/falserverless/bria/bria_genfill_img.png"
+        ],
+        "description": "Input Image to erase from",
+        "type": "string"
+      },
+      "mask_url": {
+        "examples": [
+          "https://storage.googleapis.com/falserverless/bria/bria_genfill_mask.png"
+        ],
+        "description": "The URL of the binary mask image that represents the area that will be cleaned.",
+        "type": "string"
+      },
+      "negative_prompt": {
+        "default": "",
+        "description": "The negative prompt you would like to use to generate images.",
+        "type": "string"
+      },
+      "prompt": {
+        "examples": [
+          "A red delicious cherry"
+        ],
+        "description": "The prompt you would like to use to generate images.",
+        "type": "string"
+      },
+      "sync_mode": {
+        "default": false,
+        "description": "If `True`, the media will be returned as a data URI and the output data won't be available in the request history.",
+        "type": "boolean"
+      }
+    },
+    "type": "object"
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "BriaGenfillInput",
+    "BriaGenfillOutput",
+    "Image"
+  ]
+}

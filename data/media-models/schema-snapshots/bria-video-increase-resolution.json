@@ -1,0 +1,116 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "bria/video/increase-resolution",
+  "task": "video-editing",
+  "source_url": "https://fal.ai/models/bria/video/increase-resolution",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=bria%2Fvideo%2Fincrease-resolution",
+  "retrieved_at": "2026-10-04T19:41:55.743Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "video-to-video",
+  "bytes_sha256": "8761187467be7d875093c5994d40911bdea965e972bf94eaf33d43e739dd4986",
+  "queue_path": "/bria/video/increase-resolution",
+  "input_name": "VideoIncreaseResolutionInput",
+  "input": {
+    "$refName": "VideoIncreaseResolutionInput",
+    "required": [
+      "video_url"
+    ],
+    "type": "object",
+    "properties": {
+      "preserve_audio": {
+        "default": true,
+        "type": "boolean",
+        "description": "If true, audio will be preserved in the output video."
+      },
+      "video_url": {
+        "examples": [
+          "https://bria-datasets.s3.us-east-1.amazonaws.com/video_increase_res/3446608-sd_426_240_25fps.mp4"
+        ],
+        "type": "string",
+        "description": "Input video to increase resolution. Size should be less than 7680,4320 and duration less than 30s."
+      },
+      "output_container_and_codec": {
+        "default": "webm_vp9",
+        "enum": [
+          "mp4_h265",
+          "mp4_h264",
+          "webm_vp9",
+          "mov_h265",
+          "mov_proresks",
+          "mkv_h265",
+          "mkv_h264",
+          "mkv_vp9",
+          "gif"
+        ],
+        "type": "string",
+        "description": "Output container and codec. Options: mp4_h265, mp4_h264, webm_vp9, mov_h265, mov_proresks, mkv_h265, mkv_h264, mkv_vp9, gif."
+      },
+      "desired_increase": {
+        "default": "2",
+        "enum": [
+          "2",
+          "4"
+        ],
+        "type": "string",
+        "description": "desired_increase factor. Options: 2x, 4x."
+      }
+    }
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "VideoIncreaseResolutionInput",
+    "VideoIncreaseResolutionOutput",
+    "Video",
+    "File"
+  ]
+}

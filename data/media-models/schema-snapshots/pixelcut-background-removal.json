@@ -1,0 +1,102 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "pixelcut/background-removal",
+  "task": "unknown",
+  "source_url": "https://fal.ai/models/pixelcut/background-removal",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=pixelcut%2Fbackground-removal",
+  "retrieved_at": "2026-10-04T19:54:49.265Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "image-to-image",
+  "bytes_sha256": "7c29f071b90f75a01afe33893360e27e3b587aac8d3120f24a83dc07358827d9",
+  "queue_path": "/pixelcut/background-removal",
+  "input_name": "BackgroundRemovalInput",
+  "input": {
+    "$refName": "BackgroundRemovalInput",
+    "type": "object",
+    "required": [
+      "image_url"
+    ],
+    "properties": {
+      "image_url": {
+        "type": "string",
+        "description": "Input image (JPEG or PNG)",
+        "examples": [
+          "https://cdn3.pixelcut.app/fal/background-remover/jewelry.jpg",
+          "https://cdn3.pixelcut.app/fal/background-remover/portrait.jpg"
+        ]
+      },
+      "output_format": {
+        "type": "string",
+        "enum": [
+          "rgba",
+          "alpha",
+          "zip"
+        ],
+        "description": "Output format",
+        "default": "rgba"
+      },
+      "sync_mode": {
+        "type": "boolean",
+        "default": true,
+        "description": "When true, return result as a data URL instead of uploading to storage"
+      }
+    }
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "BackgroundRemovalInput",
+    "BackgroundRemovalOutput",
+    "File",
+    "Image"
+  ]
+}

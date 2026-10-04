@@ -1,0 +1,109 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/workflow-utilities/pick-image-by-index",
+  "task": "image-generation",
+  "source_url": "https://fal.ai/models/fal-ai/workflow-utilities/pick-image-by-index",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fworkflow-utilities%2Fpick-image-by-index",
+  "retrieved_at": "2026-10-04T19:53:16.925Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "workflow",
+  "bytes_sha256": "bbff65589322106719418a17797dcf9190d9f520c6d2e465ee3840ea35fe8c6a",
+  "queue_path": "/fal-ai/workflow-utilities/pick-image-by-index",
+  "input_name": "WorkflowUtilitiesPickImageByIndexInput",
+  "input": {
+    "$refName": "WorkflowUtilitiesPickImageByIndexInput",
+    "description": "Input model for selecting a single image from an array by 1-based index.\n\nPass-through utility: the URL is returned as provided in the input,\nwithout fetching or re-uploading the image.",
+    "properties": {
+      "image_urls": {
+        "description": "Array of image URLs to select from",
+        "items": {
+          "type": "string"
+        },
+        "type": "array",
+        "examples": [
+          [
+            "https://storage.googleapis.com/falserverless/example_inputs/ltxv-image-input.jpg",
+            "https://storage.googleapis.com/falserverless/example_inputs/wan_s2v_cat.png"
+          ]
+        ]
+      },
+      "fallback_index": {
+        "description": "Behavior when `index` exceeds the length of `image_urls`. When `first-image`, returns the first image in the array. When `last-image`, returns the last image in the array. This input has no effect when `index` is within range, when `index` is below 1, or when `image_urls` is empty (the latter two cases still return validation errors). Default is `first-image`.",
+        "enum": [
+          "first-image",
+          "last-image"
+        ],
+        "type": "string",
+        "default": "first-image"
+      },
+      "index": {
+        "description": "1-based position of the image to return. Value 1 returns the first image, 2 returns the second, and so on.",
+        "type": "integer",
+        "examples": [
+          1
+        ]
+      }
+    },
+    "type": "object",
+    "required": [
+      "image_urls",
+      "index"
+    ]
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "WorkflowUtilitiesPickImageByIndexInput",
+    "WorkflowUtilitiesPickImageByIndexOutput",
+    "Image"
+  ]
+}

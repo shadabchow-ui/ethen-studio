@@ -1,0 +1,121 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "decart/lucy-restyle",
+  "task": "unknown",
+  "source_url": "https://fal.ai/models/decart/lucy-restyle",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=decart%2Flucy-restyle",
+  "retrieved_at": "2026-10-04T19:42:23.942Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "video-to-video",
+  "bytes_sha256": "7da2108413f384ba74617c58e578bb6606436535b89268bc0bd6960421a9a9ca",
+  "queue_path": "/decart/lucy-restyle",
+  "input_name": "LucyRestyleInput",
+  "input": {
+    "$refName": "LucyRestyleInput",
+    "required": [
+      "prompt",
+      "video_url"
+    ],
+    "properties": {
+      "resolution": {
+        "description": "Resolution of the generated video",
+        "type": "string",
+        "const": "720p",
+        "default": "720p"
+      },
+      "seed": {
+        "anyOf": [
+          {
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "Seed for video generation"
+      },
+      "enhance_prompt": {
+        "description": "Whether to enhance the prompt for better results.",
+        "type": "boolean",
+        "default": true
+      },
+      "sync_mode": {
+        "description": "\n            If set to true, the function will wait for the video to be generated\n            and uploaded before returning the response. This will increase the\n            latency of the function but it allows you to get the video directly\n            in the response without going through the CDN.\n        ",
+        "type": "boolean",
+        "default": false
+      },
+      "video_url": {
+        "examples": [
+          "https://v3b.fal.media/files/b/0a86729a/wIXfP8RYCtKBQAV9HPs7o_output.mp4"
+        ],
+        "description": "URL of the video to edit",
+        "type": "string"
+      },
+      "prompt": {
+        "examples": [
+          "Make it psychedelic art style with trippy colors and patterns"
+        ],
+        "description": "Text description of the desired video content",
+        "type": "string",
+        "maxLength": 1500
+      }
+    },
+    "type": "object"
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "LucyRestyleInput",
+    "LucyRestyleOutput",
+    "File"
+  ]
+}

@@ -1,0 +1,197 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/omni-zero",
+  "task": "unknown",
+  "source_url": "https://fal.ai/models/fal-ai/omni-zero",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fomni-zero",
+  "retrieved_at": "2026-10-04T19:49:40.491Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "image-to-image",
+  "bytes_sha256": "8f519e4d14311aebf322dedace403ca55de79c17153688cad41117740d127098",
+  "queue_path": "/fal-ai/omni-zero",
+  "input_name": "OmniZeroInput",
+  "input": {
+    "$refName": "OmniZeroInput",
+    "properties": {
+      "identity_image_url": {
+        "examples": [
+          "https://storage.googleapis.com/falserverless/model_tests/omni_zero/identity.jpg"
+        ],
+        "type": "string",
+        "description": "Identity image url."
+      },
+      "composition_strength": {
+        "examples": [
+          1
+        ],
+        "type": "number",
+        "description": "Composition strength.",
+        "default": 1
+      },
+      "style_strength": {
+        "examples": [
+          1
+        ],
+        "type": "number",
+        "description": "Style strength.",
+        "default": 1
+      },
+      "composition_image_url": {
+        "examples": [
+          "https://storage.googleapis.com/falserverless/model_tests/omni_zero/structure.jpg"
+        ],
+        "type": "string",
+        "description": "Composition image url."
+      },
+      "image_url": {
+        "examples": [
+          "https://storage.googleapis.com/falserverless/model_tests/omni_zero/structure.jpg"
+        ],
+        "type": "string",
+        "description": "Input image url."
+      },
+      "image_strength": {
+        "examples": [
+          0.75
+        ],
+        "type": "number",
+        "description": "Image strength.",
+        "default": 0.75
+      },
+      "negative_prompt": {
+        "examples": [
+          ""
+        ],
+        "type": "string",
+        "description": "Negative prompt to guide the image generation.",
+        "default": ""
+      },
+      "seed": {
+        "examples": [
+          42
+        ],
+        "type": "integer",
+        "description": "Seed.",
+        "default": 42
+      },
+      "face_strength": {
+        "examples": [
+          1
+        ],
+        "type": "number",
+        "description": "Face strength.",
+        "default": 1
+      },
+      "number_of_images": {
+        "examples": [
+          1
+        ],
+        "type": "integer",
+        "description": "Number of images.",
+        "default": 1
+      },
+      "guidance_scale": {
+        "examples": [
+          5
+        ],
+        "type": "number",
+        "description": "Guidance scale.",
+        "default": 5
+      },
+      "identity_strength": {
+        "examples": [
+          1
+        ],
+        "type": "number",
+        "description": "Identity strength.",
+        "default": 1
+      },
+      "depth_strength": {
+        "examples": [
+          0.5
+        ],
+        "type": "number",
+        "description": "Depth strength.",
+        "default": 0.5
+      },
+      "prompt": {
+        "examples": [
+          "A woman"
+        ],
+        "type": "string",
+        "description": "Prompt to guide the image generation."
+      },
+      "style_image_url": {
+        "examples": [
+          "https://storage.googleapis.com/falserverless/model_tests/omni_zero/style.jpg"
+        ],
+        "type": "string",
+        "description": "Style image url."
+      }
+    },
+    "type": "object",
+    "required": [
+      "prompt",
+      "image_url",
+      "composition_image_url",
+      "style_image_url",
+      "identity_image_url"
+    ]
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "OmniZeroInput",
+    "OmniZeroOutput",
+    "Image"
+  ]
+}

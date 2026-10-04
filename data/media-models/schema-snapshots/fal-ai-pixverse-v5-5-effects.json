@@ -1,0 +1,288 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/pixverse/v5.5/effects",
+  "task": "unknown",
+  "source_url": "https://fal.ai/models/fal-ai/pixverse/v5.5/effects",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fpixverse%2Fv5.5%2Feffects",
+  "retrieved_at": "2026-10-04T19:50:14.718Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "image-to-video",
+  "bytes_sha256": "f366fc56c88a27d528227dcc4e094e9234fca8be311420ea6b50d1913b9040eb",
+  "queue_path": "/fal-ai/pixverse/v5.5/effects",
+  "input_name": "PixverseV55EffectsInput",
+  "input": {
+    "$refName": "PixverseV55EffectsInput",
+    "properties": {
+      "image_url": {
+        "examples": [
+          "https://v3.fal.media/files/koala/q5ahL3KS7ikt3MvpNUG8l_image%20(72).webp"
+        ],
+        "type": "string",
+        "description": "Optional URL of the image to use as the first frame. If not provided, generates from text"
+      },
+      "thinking_type": {
+        "description": "Prompt optimization mode: 'enabled' to optimize, 'disabled' to turn off, 'auto' for model decision",
+        "anyOf": [
+          {
+            "enum": [
+              "enabled",
+              "disabled",
+              "auto"
+            ],
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "duration": {
+        "enum": [
+          "5",
+          "8",
+          "10"
+        ],
+        "default": "5",
+        "description": "The duration of the generated video in seconds",
+        "type": "string"
+      },
+      "effect": {
+        "enum": [
+          "Kiss Me AI",
+          "Kiss",
+          "Muscle Surge",
+          "Warmth of Jesus",
+          "Anything, Robot",
+          "The Tiger Touch",
+          "Hug",
+          "Holy Wings",
+          "Microwave",
+          "Zombie Mode",
+          "Squid Game",
+          "Baby Face",
+          "Black Myth: Wukong",
+          "Long Hair Magic",
+          "Leggy Run",
+          "Fin-tastic Mermaid",
+          "Punch Face",
+          "Creepy Devil Smile",
+          "Thunder God",
+          "Eye Zoom Challenge",
+          "Who's Arrested?",
+          "Baby Arrived",
+          "Werewolf Rage",
+          "Bald Swipe",
+          "BOOM DROP",
+          "Huge Cutie",
+          "Liquid Metal",
+          "Sharksnap!",
+          "Dust Me Away",
+          "3D Figurine Factor",
+          "Bikini Up",
+          "My Girlfriends",
+          "My Boyfriends",
+          "Subject 3 Fever",
+          "Earth Zoom",
+          "Pole Dance",
+          "Vroom Dance",
+          "GhostFace Terror",
+          "Dragon Evoker",
+          "Skeletal Bae",
+          "Summoning succubus",
+          "Halloween Voodoo Doll",
+          "3D Naked-Eye AD",
+          "Package Explosion",
+          "Dishes Served",
+          "Ocean ad",
+          "Supermarket AD",
+          "Tree doll",
+          "Come Feel My Abs",
+          "The Bicep Flex",
+          "London Elite Vibe",
+          "Flora Nymph Gown",
+          "Christmas Costume",
+          "It's Snowy",
+          "Reindeer Cruiser",
+          "Snow Globe Maker",
+          "Pet Christmas Outfit",
+          "Adopt a Polar Pal",
+          "Cat Christmas Box",
+          "Starlight Gift Box",
+          "Xmas Poster",
+          "Pet Christmas Tree",
+          "City Santa Hat",
+          "Stocking Sweetie",
+          "Christmas Night",
+          "Xmas Front Page Karma",
+          "Grinch's Xmas Hijack",
+          "Giant Product",
+          "Truck Fashion Shoot",
+          "Beach AD",
+          "Shoal Surround",
+          "Mechanical Assembly",
+          "Lighting AD",
+          "Billboard AD",
+          "Product close-up",
+          "Parachute Delivery",
+          "Dreamlike Cloud",
+          "Macaron Machine",
+          "Poster AD",
+          "Truck AD",
+          "Graffiti AD",
+          "3D Figurine Factory",
+          "The Exclusive First Class",
+          "Art Zoom Challenge",
+          "I Quit",
+          "Hitchcock Dolly Zoom",
+          "Smell the Lens",
+          "I believe I can fly",
+          "Strikout Dance",
+          "Courtside Cam",
+          "Pit Crew Moment",
+          "K-Baseball Sprint",
+          "Toddler Doodle",
+          "Idol Ending",
+          "Apex Dance",
+          "OmniHero Forge",
+          "Palm Decode",
+          "The Age Ripple",
+          "My Future Is Limitless",
+          "Knee Slide",
+          "Epic Goal Save",
+          "Sideline Ball Boy",
+          "Cup Celebration",
+          "Victory Roar",
+          "Vuvuzela Fan",
+          "World Champion Lift",
+          "Tunnel to Captain",
+          "Liquid Soccer Morph",
+          "Jump Into Crowd 2",
+          "Golden Pitch Crasher",
+          "Stadium Fan Cam",
+          "Broadcast Moto GP",
+          "The Grotesque Clay",
+          "Rookie Star Card",
+          "The Final Hug",
+          "Sharp Post-Match Comment",
+          "Street Maverick",
+          "Pitch Legend",
+          "One Step At A Time",
+          "Birthday Mirror",
+          "Superstar Lobby",
+          "Final Battle Room",
+          "Top of the World",
+          "Mini Me Unboxed",
+          "WonderPOP Surprise",
+          "White Chicks",
+          "Kiss me",
+          "What a Day",
+          "The Last Leap at Sunset",
+          "Tiny Sticker Chef Chaos",
+          "Mini Squeeze Toy",
+          "Tearful Gunman",
+          "Street Fashion Caricature",
+          "Mini Me Makeover",
+          "Street Art Awakening",
+          "Hug Together",
+          "ACAI dance Duet",
+          "PUBG Winner Hit!",
+          "Blocky Mini-Me",
+          "Cheat Day Busted",
+          "MiniSocial Recharge",
+          "My Little Perler Charm",
+          "Where did this cobweb come from?",
+          "Holy Beast Summoning Technique",
+          "IT'S THE FIRST OF THE MONTH",
+          "Pet Editorial",
+          "Three lifetime bond",
+          "Pixel World",
+          "Mint in Box",
+          "Hands up, Hand",
+          "Flora Nymph Go",
+          "Somber Embrace",
+          "Beam me up",
+          "Suit Swagger"
+        ],
+        "description": "The effect to apply to the video",
+        "type": "string"
+      },
+      "negative_prompt": {
+        "default": "",
+        "description": "Negative prompt to be used for the generation. Limited to 2048 UTF-8 encoded bytes. Because the limit counts bytes rather than characters, emoji and non-Latin or accented characters (which use multiple bytes each) can push a visually short prompt over the cap.",
+        "type": "string"
+      },
+      "resolution": {
+        "enum": [
+          "360p",
+          "540p",
+          "720p",
+          "1080p"
+        ],
+        "default": "720p",
+        "description": "The resolution of the generated video.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "effect",
+      "image_url"
+    ],
+    "type": "object"
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "PixverseV55EffectsInput",
+    "PixverseV55EffectsOutput",
+    "File"
+  ]
+}

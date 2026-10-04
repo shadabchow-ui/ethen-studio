@@ -1,0 +1,303 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "bria/product-dimensions",
+  "task": "unknown",
+  "source_url": "https://fal.ai/models/bria/product-dimensions",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=bria%2Fproduct-dimensions",
+  "retrieved_at": "2026-10-04T19:41:50.142Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "image-to-image",
+  "bytes_sha256": "ebe9d455124c2420636712079bc9e9385137870c3cc5b6156be4f4bdeff98926",
+  "queue_path": "/bria/product-dimensions",
+  "input_name": "ProductDimensionsInput",
+  "input": {
+    "$refName": "ProductDimensionsInput",
+    "required": [
+      "image",
+      "dimensions",
+      "style"
+    ],
+    "properties": {
+      "dimensions": {
+        "type": "array",
+        "examples": [
+          [
+            {
+              "name": "height",
+              "position": "left",
+              "unit": "cm",
+              "value": 22
+            },
+            {
+              "name": "width_bottom",
+              "position": "bottom",
+              "unit": "cm",
+              "value": 7
+            }
+          ]
+        ],
+        "minItems": 1,
+        "description": "Dimension callouts to render. At least one entry is required.",
+        "items": {
+          "$refName": "DimensionEntry",
+          "required": [
+            "name",
+            "value",
+            "unit"
+          ],
+          "properties": {
+            "name": {
+              "enum": [
+                "height",
+                "width_bottom",
+                "width_top"
+              ],
+              "type": "string",
+              "description": "Dimension to render. length/depth are intentionally disabled."
+            },
+            "position": {
+              "anyOf": [
+                {
+                  "enum": [
+                    "top",
+                    "bottom",
+                    "left",
+                    "right"
+                  ],
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Callout side; defaults by dimension name when omitted."
+            },
+            "unit": {
+              "enum": [
+                "mm",
+                "cm",
+                "m",
+                "in",
+                "\"",
+                "ft",
+                "'"
+              ],
+              "type": "string",
+              "description": "Physical measurement unit."
+            },
+            "value": {
+              "exclusiveMinimum": 0,
+              "type": "number",
+              "description": "Physical measurement value."
+            }
+          },
+          "type": "object"
+        }
+      },
+      "units_display": {
+        "enum": [
+          "single",
+          "dual_bullet",
+          "dual_slash",
+          "dual_parens"
+        ],
+        "type": "string",
+        "description": "How labels display primary and secondary units when both are provided.",
+        "default": "single"
+      },
+      "background": {
+        "type": "string",
+        "description": "Hex color or one of: white, cream, charcoal.",
+        "default": "white"
+      },
+      "style": {
+        "enum": [
+          "default",
+          "childlike",
+          "elegant"
+        ],
+        "examples": [
+          "default"
+        ],
+        "description": "Rendering style.",
+        "type": "string"
+      },
+      "sync": {
+        "type": "boolean",
+        "description": "When true, return generated images directly as base64 instead of CDN URLs.",
+        "default": false
+      },
+      "title_position": {
+        "enum": [
+          "top_left",
+          "top_center",
+          "top_right"
+        ],
+        "type": "string",
+        "description": "Title placement along the top.",
+        "default": "top_center"
+      },
+      "proportional_lines": {
+        "type": "boolean",
+        "description": "Scale dimension line lengths by measurement.",
+        "default": true
+      },
+      "image": {
+        "examples": [
+          "https://bria-datasets.s3.us-east-1.amazonaws.com/product_dimensions/water+bottle+fal/water_bottle_white_background.png"
+        ],
+        "description": "Source product image as a public URL or raw base64-encoded image bytes.",
+        "type": "string"
+      },
+      "capacity": {
+        "anyOf": [
+          {
+            "$refName": "CapacityInput",
+            "required": [
+              "value",
+              "unit"
+            ],
+            "properties": {
+              "value": {
+                "exclusiveMinimum": 0,
+                "type": "number"
+              },
+              "unit": {
+                "enum": [
+                  "fl_oz",
+                  "ml",
+                  "l",
+                  "qt",
+                  "gal",
+                  "cups"
+                ],
+                "type": "string"
+              }
+            },
+            "type": "object"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "Optional capacity badge below the product."
+      },
+      "output_format": {
+        "enum": [
+          "png",
+          "jpeg",
+          "dual"
+        ],
+        "type": "string",
+        "description": "Controls the rendered response: png, jpeg, or dual composite plus transparent overlay.",
+        "default": "png"
+      },
+      "output_size": {
+        "minimum": 256,
+        "type": "integer",
+        "maximum": 2200,
+        "description": "Square output edge length in pixels.",
+        "default": 2200
+      },
+      "weight": {
+        "anyOf": [
+          {
+            "$refName": "WeightInput",
+            "required": [
+              "value",
+              "unit"
+            ],
+            "properties": {
+              "label": {
+                "enum": [
+                  "Weight",
+                  "Net Weight"
+                ],
+                "type": "string",
+                "default": "Weight"
+              },
+              "value": {
+                "exclusiveMinimum": 0,
+                "type": "number"
+              },
+              "unit": {
+                "enum": [
+                  "lb",
+                  "oz",
+                  "g",
+                  "kg"
+                ],
+                "type": "string"
+              }
+            },
+            "type": "object"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "Optional weight badge below the product."
+      }
+    },
+    "type": "object"
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "ProductDimensionsInput",
+    "ProductDimensionsOutput",
+    "DimensionEntry",
+    "CapacityInput",
+    "WeightInput",
+    "Image"
+  ]
+}

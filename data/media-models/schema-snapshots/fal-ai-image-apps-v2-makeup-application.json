@@ -1,0 +1,132 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/image-apps-v2/makeup-application",
+  "task": "image-generation",
+  "source_url": "https://fal.ai/models/fal-ai/image-apps-v2/makeup-application",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fimage-apps-v2%2Fmakeup-application",
+  "retrieved_at": "2026-10-04T19:46:07.778Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "image-to-image",
+  "bytes_sha256": "d46595f7a47b13016f8410cd54987c4e85ce7214f7a98e36de23105c3fc74356",
+  "queue_path": "/fal-ai/image-apps-v2/makeup-application",
+  "input_name": "ImageAppsV2MakeupApplicationInput",
+  "input": {
+    "$refName": "ImageAppsV2MakeupApplicationInput",
+    "type": "object",
+    "properties": {
+      "aspect_ratio": {
+        "$refName": "AspectRatio",
+        "type": "object",
+        "properties": {
+          "ratio": {
+            "enum": [
+              "1:1",
+              "16:9",
+              "9:16",
+              "4:3",
+              "3:4"
+            ],
+            "type": "string",
+            "description": "Aspect ratio for 4K resolution output",
+            "default": "1:1"
+          }
+        },
+        "description": "Aspect ratio for 4K output (default: 3:4 for portraits)"
+      },
+      "intensity": {
+        "enum": [
+          "light",
+          "medium",
+          "heavy",
+          "dramatic"
+        ],
+        "type": "string",
+        "default": "medium"
+      },
+      "makeup_style": {
+        "enum": [
+          "natural",
+          "glamorous",
+          "smoky_eyes",
+          "bold_lips",
+          "no_makeup",
+          "remove_makeup",
+          "dramatic",
+          "bridal",
+          "professional",
+          "korean_style",
+          "artistic"
+        ],
+        "type": "string",
+        "default": "natural"
+      },
+      "image_url": {
+        "type": "string",
+        "examples": [
+          "https://v3.fal.media/files/elephant/jpdD30YLw3OfPdVDxq1-D_1ec2e27f3e7d400fbf5f7aa2b80e89f0.png"
+        ],
+        "description": "Portrait image URL for makeup application"
+      }
+    },
+    "required": [
+      "image_url"
+    ]
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "ImageAppsV2MakeupApplicationInput",
+    "ImageAppsV2MakeupApplicationOutput",
+    "AspectRatio",
+    "Image"
+  ]
+}

@@ -1,0 +1,182 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "luma/agent/ray/v3.2/reframe",
+  "task": "unknown",
+  "source_url": "https://fal.ai/models/luma/agent/ray/v3.2/reframe",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=luma%2Fagent%2Fray%2Fv3.2%2Freframe",
+  "retrieved_at": "2026-10-04T19:54:02.667Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "video-to-video",
+  "bytes_sha256": "99f7058a09438bf076bd95c0ec2ab218630f95b7233776515d5fc0b4e7f9cbd8",
+  "queue_path": "/luma/agent/ray/v3.2/reframe",
+  "input_name": "AgentRayV32ReframeInput",
+  "input": {
+    "$refName": "AgentRayV32ReframeInput",
+    "properties": {
+      "aspect_ratio": {
+        "enum": [
+          "3:4",
+          "4:3",
+          "1:1",
+          "9:16",
+          "16:9",
+          "21:9"
+        ],
+        "examples": [
+          "21:9"
+        ],
+        "description": "Target aspect ratio for the reframed video.",
+        "type": "string"
+      },
+      "source_position": {
+        "anyOf": [
+          {
+            "$refName": "RayReframeSourcePosition",
+            "properties": {
+              "h_norm": {
+                "maximum": 2,
+                "exclusiveMinimum": 0,
+                "description": "Height of the source rectangle as a fraction of output height.",
+                "type": "number"
+              },
+              "y_norm": {
+                "maximum": 2,
+                "description": "Top edge of the source rectangle as a fraction of output height.",
+                "minimum": -2,
+                "type": "number"
+              },
+              "x_norm": {
+                "maximum": 2,
+                "description": "Left edge of the source rectangle as a fraction of output width.",
+                "minimum": -2,
+                "type": "number"
+              },
+              "w_norm": {
+                "maximum": 2,
+                "exclusiveMinimum": 0,
+                "description": "Width of the source rectangle as a fraction of output width.",
+                "type": "number"
+              }
+            },
+            "required": [
+              "x_norm",
+              "y_norm",
+              "w_norm",
+              "h_norm"
+            ],
+            "type": "object"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "Optional normalized source rectangle controlling where the source video sits in the output canvas."
+      },
+      "video_url": {
+        "description": "URL of the source video to reframe (must be 10 seconds or less).",
+        "examples": [
+          "https://storage.googleapis.com/falserverless/example_inputs/birefnet-video-input.mp4"
+        ],
+        "minLength": 1,
+        "type": "string"
+      },
+      "resolution": {
+        "type": "string",
+        "enum": [
+          "540p",
+          "720p",
+          "1080p"
+        ],
+        "description": "Resolution of the reframed video. Higher resolutions cost more.",
+        "default": "540p"
+      },
+      "duration": {
+        "anyOf": [
+          {
+            "enum": [
+              "5s",
+              "10s"
+            ],
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "Duration of the reframed video. Defaults to matching the source video's duration; set explicitly to 5s or 10s to override."
+      },
+      "prompt": {
+        "maxLength": 6000,
+        "examples": [
+          "Extend the scene into cinematic widescreen with matching lighting and background detail."
+        ],
+        "description": "Text prompt describing the content to paint into the newly exposed canvas area when reframing to the target aspect ratio.",
+        "minLength": 1,
+        "type": "string"
+      }
+    },
+    "required": [
+      "prompt",
+      "video_url",
+      "aspect_ratio"
+    ],
+    "type": "object"
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "AgentRayV32ReframeInput",
+    "AgentRayV32ReframeOutput",
+    "RayReframeSourcePosition",
+    "File"
+  ]
+}

@@ -1,0 +1,111 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "imagineart/imagineart-2.0-edit-preview/image-to-image",
+  "task": "image-to-image",
+  "source_url": "https://fal.ai/models/imagineart/imagineart-2.0-edit-preview/image-to-image",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=imagineart%2Fimagineart-2.0-edit-preview%2Fimage-to-image",
+  "retrieved_at": "2026-10-04T19:53:52.998Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "image-to-image",
+  "bytes_sha256": "d07e8c3fd248e016613fa100825af1e4a9958437bcb7b60cf462f747e672e188",
+  "queue_path": "/imagineart/imagineart-2.0-edit-preview/image-to-image",
+  "input_name": "Imagineart20EditPreviewImageToImageInput",
+  "input": {
+    "$refName": "Imagineart20EditPreviewImageToImageInput",
+    "properties": {
+      "prompt": {
+        "description": "Editing instruction (e.g. 'replace the background with a sunset beach').",
+        "type": "string"
+      },
+      "image_urls": {
+        "items": {
+          "type": "string"
+        },
+        "description": "Reference image URL(s). Up to 4 images.",
+        "type": "array"
+      },
+      "aspect_ratio": {
+        "description": "Output aspect ratio. 'auto' = match the first input image's aspect ratio, sized to fill ",
+        "default": "auto",
+        "type": "string",
+        "enum": [
+          "auto",
+          "1:1",
+          "9:16",
+          "16:9",
+          "3:2",
+          "2:3",
+          "4:3",
+          "3:4",
+          "4:5",
+          "5:4",
+          "3:1",
+          "1:3",
+          "21:9"
+        ]
+      }
+    },
+    "description": "Request payload for image-to-image editing.",
+    "required": [
+      "image_urls",
+      "prompt"
+    ],
+    "type": "object"
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "Imagineart20EditPreviewImageToImageInput",
+    "Imagineart20EditPreviewImageToImageOutput",
+    "Image"
+  ]
+}

@@ -1,0 +1,188 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "openai/gpt-image-2.5/sunburst/text-to-image",
+  "task": "text-to-image",
+  "source_url": "https://fal.ai/models/openai/gpt-image-2.5/sunburst/text-to-image",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=openai%2Fgpt-image-2.5%2Fsunburst%2Ftext-to-image",
+  "retrieved_at": "2026-10-04T19:54:41.663Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "text-to-image",
+  "bytes_sha256": "68db1cdecaab774e264cfcff0455069d8382367aea38b1b4f4c6f7c15ac122f5",
+  "queue_path": "/openai/gpt-image-2.5/sunburst/text-to-image",
+  "input_name": "GptImage25SunburstTextToImageInput",
+  "input": {
+    "$refName": "GptImage25SunburstTextToImageInput",
+    "properties": {
+      "quality": {
+        "default": "high",
+        "type": "string",
+        "description": "Quality for the generated image. Higher settings increase detail, latency, and token usage. Use 'auto' to let the model choose.",
+        "enum": [
+          "auto",
+          "low",
+          "medium",
+          "high",
+          "xhigh",
+          "max"
+        ]
+      },
+      "image_size": {
+        "anyOf": [
+          {
+            "$refName": "ImageSize",
+            "properties": {
+              "height": {
+                "exclusiveMinimum": 0,
+                "type": "integer",
+                "description": "The height of the generated image.",
+                "maximum": 14142,
+                "default": 512
+              },
+              "width": {
+                "exclusiveMinimum": 0,
+                "type": "integer",
+                "description": "The width of the generated image.",
+                "maximum": 14142,
+                "default": 512
+              }
+            },
+            "type": "object"
+          },
+          {
+            "type": "string",
+            "enum": [
+              "square_hd",
+              "square",
+              "portrait_4_3",
+              "portrait_16_9",
+              "landscape_4_3",
+              "landscape_16_9",
+              "auto"
+            ]
+          }
+        ],
+        "description": "The size of the generated image. Supports preset names, explicit {width, height}, or 'auto' to let the model pick the best size. Concrete sizes must have both dimensions as multiples of 16, max edge 3840px, aspect ratio <= 3:1, total pixels between 655,360 and 8,294,400.",
+        "default": "landscape_4_3"
+      },
+      "output_compression": {
+        "anyOf": [
+          {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 100
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "Compression level from 0 to 100. Only supported when output_format is 'jpeg' or 'webp'."
+      },
+      "background": {
+        "default": "auto",
+        "type": "string",
+        "description": "Background for the generated image",
+        "enum": [
+          "auto",
+          "transparent",
+          "opaque"
+        ]
+      },
+      "output_format": {
+        "default": "png",
+        "type": "string",
+        "description": "Output format for the images",
+        "enum": [
+          "jpeg",
+          "png",
+          "webp"
+        ]
+      },
+      "prompt": {
+        "minLength": 1,
+        "maxLength": 32000,
+        "type": "string",
+        "examples": [
+          "create a realistic image taken with iphone at these coordinates 41°43′32″N 49°56′49″W 15 April 1912"
+        ],
+        "description": "The prompt for image generation"
+      },
+      "sync_mode": {
+        "type": "boolean",
+        "description": "If `True`, the media will be returned as a data URI and the output data won't be available in the request history.",
+        "default": false
+      },
+      "num_images": {
+        "maximum": 10,
+        "examples": [
+          1
+        ],
+        "type": "integer",
+        "description": "Number of images to generate",
+        "minimum": 1,
+        "default": 1
+      }
+    },
+    "type": "object",
+    "required": [
+      "prompt"
+    ],
+    "description": "GPT Image 2.5 generation inputs, kept separate from GPT Image 2."
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "GptImage25SunburstTextToImageInput",
+    "GptImage25SunburstTextToImageOutput",
+    "ImageSize",
+    "ImageFile"
+  ]
+}

@@ -1,0 +1,143 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "nvidia/nemotron-asr-multilingual/asr",
+  "task": "unknown",
+  "source_url": "https://fal.ai/models/nvidia/nemotron-asr-multilingual/asr",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=nvidia%2Fnemotron-asr-multilingual%2Fasr",
+  "retrieved_at": "2026-10-04T19:54:38.423Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "speech-to-text",
+  "bytes_sha256": "a27a32ebdd18f5c8d0779c1a0880ee52f2677d1d187451b11c7587fc02ed9185",
+  "queue_path": "/nvidia/nemotron-asr-multilingual/asr",
+  "input_name": "NemotronAsrMultilingualAsrInput",
+  "input": {
+    "$refName": "NemotronAsrMultilingualAsrInput",
+    "required": [
+      "audio_url"
+    ],
+    "type": "object",
+    "properties": {
+      "acceleration": {
+        "description": "Controls the speed/accuracy trade-off. 'none' = best accuracy (1.12s chunks), 'regular' = balanced (0.56s chunks), 'high' = faster (0.32s chunks), 'full' = fastest (0.08s chunks).",
+        "type": "string",
+        "enum": [
+          "none",
+          "regular",
+          "high",
+          "full"
+        ],
+        "default": "regular"
+      },
+      "language": {
+        "description": "Target language for transcription (language-ID prompt). 'auto' lets the model detect the language.",
+        "type": "string",
+        "enum": [
+          "auto",
+          "en-US",
+          "en-GB",
+          "es-US",
+          "es-ES",
+          "de-DE",
+          "fr-FR",
+          "fr-CA",
+          "it-IT",
+          "ar-AR",
+          "ja-JP",
+          "ko-KR",
+          "pt-BR",
+          "pt-PT",
+          "ru-RU",
+          "hi-IN",
+          "zh-CN",
+          "vi-VN",
+          "he-IL",
+          "nl-NL",
+          "cs-CZ",
+          "da-DK",
+          "pl-PL",
+          "nn-NO",
+          "nb-NO",
+          "sv-SE",
+          "th-TH",
+          "tr-TR",
+          "bg-BG",
+          "el-GR",
+          "et-EE",
+          "fi-FI",
+          "hr-HR",
+          "hu-HU",
+          "lt-LT",
+          "lv-LV",
+          "ro-RO",
+          "sk-SK",
+          "uk-UA",
+          "mt-MT",
+          "sl-SI"
+        ],
+        "default": "auto"
+      },
+      "audio_url": {
+        "description": "URL of the audio file to transcribe.",
+        "type": "string",
+        "examples": [
+          "https://v3b.fal.media/files/b/0a9c95c6/qxxx5skDQl8fPqbkjpxBc_speech.mp3"
+        ]
+      }
+    }
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "NemotronAsrMultilingualAsrInput",
+    "NemotronAsrMultilingualAsrOutput"
+  ]
+}

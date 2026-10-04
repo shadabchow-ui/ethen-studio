@@ -1,0 +1,88 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/x-ailab/nsfw",
+  "task": "unknown",
+  "source_url": "https://fal.ai/models/fal-ai/x-ailab/nsfw",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fx-ailab%2Fnsfw",
+  "retrieved_at": "2026-10-04T19:53:20.208Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "vision",
+  "bytes_sha256": "ad73d59d3c3eb801208281eff9b0101eb1bd6fb66f7dab4532fe32e7cbfee5ce",
+  "queue_path": "/fal-ai/x-ailab/nsfw",
+  "input_name": "XAilabNsfwInput",
+  "input": {
+    "$refName": "XAilabNsfwInput",
+    "properties": {
+      "image_urls": {
+        "description": "List of image URLs to check. If more than 10 images are provided, only the first 10 will be checked.",
+        "examples": [
+          "https://storage.googleapis.com/falserverless/model_tests/remove_background/elephant.jpg"
+        ],
+        "items": {
+          "_fal_ui_field": "image",
+          "type": "string"
+        },
+        "type": "array"
+      }
+    },
+    "required": [
+      "image_urls"
+    ],
+    "type": "object"
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "XAilabNsfwInput",
+    "XAilabNsfwOutput"
+  ]
+}

@@ -1,0 +1,121 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/thinksound/audio",
+  "task": "unknown",
+  "source_url": "https://fal.ai/models/fal-ai/thinksound/audio",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fthinksound%2Faudio",
+  "retrieved_at": "2026-10-04T19:51:59.247Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "video-to-video",
+  "bytes_sha256": "af5b3398003bff2a3c26cf618b82d69e4ab1e4b503ffd778b830e06c2a4eb68d",
+  "queue_path": "/fal-ai/thinksound/audio",
+  "input_name": "ThinksoundAudioInput",
+  "input": {
+    "$refName": "ThinksoundAudioInput",
+    "properties": {
+      "num_inference_steps": {
+        "minimum": 2,
+        "examples": [
+          24
+        ],
+        "type": "integer",
+        "description": "The number of inference steps for audio generation.",
+        "maximum": 100,
+        "default": 24
+      },
+      "prompt": {
+        "type": "string",
+        "description": "A prompt to guide the audio generation. If not provided, it will be extracted from the video.",
+        "default": ""
+      },
+      "video_url": {
+        "examples": [
+          "https://storage.googleapis.com/falserverless/example_inputs/thinksound-input.mp4"
+        ],
+        "type": "string",
+        "description": "The URL of the video to generate the audio for."
+      },
+      "seed": {
+        "anyOf": [
+          {
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "The seed for the random number generator"
+      },
+      "cfg_scale": {
+        "minimum": 1,
+        "examples": [
+          5
+        ],
+        "type": "number",
+        "description": "The classifier-free guidance scale for audio generation.",
+        "maximum": 20,
+        "default": 5
+      }
+    },
+    "type": "object",
+    "required": [
+      "video_url"
+    ]
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "ThinksoundAudioInput",
+    "ThinksoundAudioOutput",
+    "File"
+  ]
+}

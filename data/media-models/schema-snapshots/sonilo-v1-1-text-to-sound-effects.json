@@ -1,0 +1,105 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "sonilo/v1.1/text-to-sound-effects",
+  "task": "unknown",
+  "source_url": "https://fal.ai/models/sonilo/v1.1/text-to-sound-effects",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=sonilo%2Fv1.1%2Ftext-to-sound-effects",
+  "retrieved_at": "2026-10-04T19:55:11.311Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "text-to-audio",
+  "bytes_sha256": "53b15396d3d89249dc096fdefe6019c98183959712c7b4c2f36dd3bd9c7d07c6",
+  "queue_path": "/sonilo/v1.1/text-to-sound-effects",
+  "input_name": "V11TextToSoundEffectsInput",
+  "input": {
+    "$refName": "V11TextToSoundEffectsInput",
+    "properties": {
+      "audio_format": {
+        "default": "aac",
+        "type": "string",
+        "description": "Audio file format: aac (default), mp3, wav, or flac.",
+        "enum": [
+          "wav",
+          "mp3",
+          "aac",
+          "flac"
+        ]
+      },
+      "prompt": {
+        "examples": [
+          "Heavy rain on a tin roof with distant rolling thunder"
+        ],
+        "type": "string",
+        "description": "Describe the sound you want to create."
+      },
+      "duration": {
+        "minimum": 0.5,
+        "type": "number",
+        "description": "How long the audio should be, in seconds (0.5 to 180).",
+        "maximum": 180,
+        "default": 8
+      }
+    },
+    "type": "object",
+    "required": [
+      "prompt"
+    ],
+    "description": "sfx-v1.0 /text-to-audio schema: plain-language field help for the product\nPlayground. Duration accepts fractional seconds; flash and seed are hidden."
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "V11TextToSoundEffectsInput",
+    "V11TextToSoundEffectsOutput",
+    "Audio",
+    "WatermarkInfo"
+  ]
+}

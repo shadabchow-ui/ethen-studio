@@ -1,0 +1,230 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "minimax/h3/reference-to-video/lora",
+  "task": "reference-to-video",
+  "source_url": "https://fal.ai/models/minimax/h3/reference-to-video/lora",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=minimax%2Fh3%2Freference-to-video%2Flora",
+  "retrieved_at": "2026-10-04T19:54:25.021Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "video-to-video",
+  "bytes_sha256": "aca48f23ec6eaa248803f94f38465372b49bc01a1a5fdfcf2e0a5d6d1f106b75",
+  "queue_path": "/minimax/h3/reference-to-video/lora",
+  "input_name": "H3ReferenceToVideoLoraInput",
+  "input": {
+    "$refName": "H3ReferenceToVideoLoraInput",
+    "required": [
+      "prompt",
+      "loras"
+    ],
+    "type": "object",
+    "properties": {
+      "prompt_expansion_mode": {
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": "balanced",
+        "examples": [
+          "disabled",
+          "fast",
+          "balanced",
+          "quality"
+        ],
+        "description": "How much effort to spend rewriting the prompt before generation. 'disabled' skips prompt expansion. 'fast' returns in about a second. 'balanced' picks per request. 'quality' spends up to ~30s on a richer prompt."
+      },
+      "reference_image_urls": {
+        "examples": [
+          [
+            "https://storage.googleapis.com/falserverless/example_inputs/hailuo23/pro_i2v_in.jpg"
+          ]
+        ],
+        "maxItems": 9,
+        "description": "URLs of subject/style reference images, referenced in the prompt as Image 1, Image 2, and so on. Reference images, videos, and audio clips must add up to at most 12 files.",
+        "items": {
+          "type": "string"
+        },
+        "type": "array"
+      },
+      "aspect_ratio": {
+        "description": "The aspect ratio of the generated video.",
+        "default": "adaptive",
+        "enum": [
+          "adaptive",
+          "21:9",
+          "16:9",
+          "4:3",
+          "1:1",
+          "3:4",
+          "9:16"
+        ],
+        "type": "string"
+      },
+      "prompt": {
+        "maxLength": 50000,
+        "description": "Text prompt for video generation. Refer to reference assets by their modality and order in the reference lists: Image 1, Image 2, Video 1, Audio 1, and so on.",
+        "minLength": 1,
+        "type": "string",
+        "examples": [
+          "Image 1 is the female protagonist. Image 2 is her small dog. Keep the woman and dog consistent with their respective reference images while they walk together through a sunlit garden."
+        ]
+      },
+      "loras": {
+        "maxItems": 3,
+        "description": "List of LoRA adapters to apply to the transformer.",
+        "items": {
+          "$refName": "LoRAInput",
+          "required": [
+            "path"
+          ],
+          "description": "A single LoRA adapter to apply to the transformer.",
+          "type": "object",
+          "properties": {
+            "weight_name": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Name of the LoRA weight file. Only used when `path` is a HuggingFace repo and it holds more than one LoRA."
+            },
+            "path": {
+              "description": "URL or HuggingFace repo id (owner/repo) of the LoRA weights.",
+              "type": "string",
+              "examples": [
+                "https://huggingface.co/owner/repo/resolve/main/lora.safetensors"
+              ]
+            },
+            "scale": {
+              "minimum": 0,
+              "default": 1,
+              "type": "number",
+              "maximum": 4,
+              "description": "Strength of the LoRA (0.0 to 4.0)."
+            }
+          }
+        },
+        "minItems": 1,
+        "type": "array"
+      },
+      "duration": {
+        "minimum": 5,
+        "description": "The duration of the video in seconds.",
+        "default": 5,
+        "type": "integer",
+        "maximum": 15
+      },
+      "sync_mode": {
+        "default": false,
+        "type": "boolean",
+        "description": "Return the generated video as base64 instead of a CDN URL."
+      },
+      "enable_safety_checker": {
+        "default": true,
+        "type": "boolean",
+        "description": "If set to true, the safety checker will be enabled."
+      },
+      "resolution": {
+        "description": "The resolution of the generated video. 480P and 768P are native generation modes; 2K and 4K upscale a 768P base result.",
+        "default": "2K",
+        "enum": [
+          "480P",
+          "768P",
+          "2K",
+          "4K"
+        ],
+        "type": "string"
+      },
+      "seed": {
+        "anyOf": [
+          {
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "Random seed. A random seed is selected when omitted."
+      },
+      "reference_audio_urls": {
+        "maxItems": 3,
+        "description": "URLs of reference audio clips (2-15 seconds each, combined duration at most 15 seconds), referenced in the prompt as Audio 1, Audio 2, and so on. Images, videos, and audio can be provided individually or together. Reference images, videos, and audio clips must add up to at most 12 files.",
+        "items": {
+          "type": "string"
+        },
+        "type": "array"
+      },
+      "reference_video_urls": {
+        "maxItems": 3,
+        "description": "URLs of motion/reference video clips (2-15 seconds each, combined duration at most 15 seconds), referenced in the prompt as Video 1, Video 2, and so on. Reference images, videos, and audio clips must add up to at most 12 files.",
+        "items": {
+          "type": "string"
+        },
+        "type": "array"
+      }
+    }
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "H3ReferenceToVideoLoraInput",
+    "H3ReferenceToVideoLoraOutput",
+    "LoRAInput",
+    "File"
+  ]
+}

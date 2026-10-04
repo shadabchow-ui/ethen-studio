@@ -1,0 +1,101 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "xai/grok-imagine-video/extend-video",
+  "task": "video-editing",
+  "source_url": "https://fal.ai/models/xai/grok-imagine-video/extend-video",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=xai%2Fgrok-imagine-video%2Fextend-video",
+  "retrieved_at": "2026-10-04T19:55:43.248Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "video-to-video",
+  "bytes_sha256": "bf11780faa6f86366825d7871cae59fd2de63f217ae7a7f0c3f6052344c5bec6",
+  "queue_path": "/xai/grok-imagine-video/extend-video",
+  "input_name": "GrokImagineVideoExtendVideoInput",
+  "input": {
+    "$refName": "GrokImagineVideoExtendVideoInput",
+    "properties": {
+      "video_url": {
+        "description": "URL of the source video to extend. Must be MP4 format (H.264, H.265, or AV1 codec), 2-15 seconds long.",
+        "type": "string",
+        "examples": [
+          "https://v3b.fal.media/files/b/0a8b9112/V5Z_NIPE3ppMDWivNo6_q_video_019.mp4"
+        ]
+      },
+      "duration": {
+        "minimum": 2,
+        "description": "Length of the extension in seconds.",
+        "default": 6,
+        "maximum": 10,
+        "type": "integer"
+      },
+      "prompt": {
+        "maxLength": 4096,
+        "description": "Text description of what should happen next in the video.",
+        "type": "string",
+        "examples": [
+          "The camera slowly zooms out to reveal the city skyline at sunset"
+        ]
+      }
+    },
+    "required": [
+      "prompt",
+      "video_url"
+    ],
+    "type": "object"
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "GrokImagineVideoExtendVideoInput",
+    "GrokImagineVideoExtendVideoOutput",
+    "VideoFile"
+  ]
+}

@@ -1,0 +1,190 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/hunyuan-image/v3/text-to-image",
+  "task": "text-to-image",
+  "source_url": "https://fal.ai/models/fal-ai/hunyuan-image/v3/text-to-image",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fhunyuan-image%2Fv3%2Ftext-to-image",
+  "retrieved_at": "2026-10-04T19:45:39.311Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "text-to-image",
+  "bytes_sha256": "2146c714f985adfd584614e884231f6925445c17d5b2b4c012c125a8f6e6b1d5",
+  "queue_path": "/fal-ai/hunyuan-image/v3/text-to-image",
+  "input_name": "HunyuanImageV3TextToImageInput",
+  "input": {
+    "$refName": "HunyuanImageV3TextToImageInput",
+    "properties": {
+      "sync_mode": {
+        "type": "boolean",
+        "description": "If `True`, the media will be returned as a data URI and the output data won't be available in the request history.",
+        "default": false
+      },
+      "num_inference_steps": {
+        "type": "integer",
+        "description": "Number of denoising steps.",
+        "maximum": 50,
+        "minimum": 1,
+        "default": 28
+      },
+      "image_size": {
+        "anyOf": [
+          {
+            "$refName": "ImageSize",
+            "properties": {
+              "height": {
+                "type": "integer",
+                "description": "The height of the generated image.",
+                "exclusiveMinimum": 0,
+                "maximum": 14142,
+                "default": 512
+              },
+              "width": {
+                "type": "integer",
+                "description": "The width of the generated image.",
+                "exclusiveMinimum": 0,
+                "maximum": 14142,
+                "default": 512
+              }
+            },
+            "type": "object"
+          },
+          {
+            "enum": [
+              "square_hd",
+              "square",
+              "portrait_4_3",
+              "portrait_16_9",
+              "landscape_4_3",
+              "landscape_16_9"
+            ],
+            "type": "string"
+          }
+        ],
+        "description": "The desired size of the generated image.",
+        "default": "square_hd"
+      },
+      "negative_prompt": {
+        "type": "string",
+        "description": "The negative prompt to guide the image generation away from certain concepts.",
+        "examples": [
+          "blurry, low quality, watermark, signature"
+        ],
+        "default": ""
+      },
+      "seed": {
+        "anyOf": [
+          {
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "Random seed for reproducible results. If None, a random seed is used."
+      },
+      "enable_prompt_expansion": {
+        "type": "boolean",
+        "description": "Whether to enable prompt expansion. This will use a large language model to expand the prompt with additional details while maintaining the original meaning.",
+        "examples": [
+          true
+        ],
+        "default": false
+      },
+      "num_images": {
+        "type": "integer",
+        "description": "The number of images to generate.",
+        "maximum": 4,
+        "minimum": 1,
+        "default": 1
+      },
+      "prompt": {
+        "description": "The text prompt for image-to-image.",
+        "examples": [
+          "200mm telephoto through crowd gaps; subject laughing, candid; creamy background compression, color pop from a single bold garment, catchlight in eyes."
+        ],
+        "type": "string"
+      },
+      "enable_safety_checker": {
+        "type": "boolean",
+        "description": "If set to true, the safety checker will be enabled. Disabling it requires account authorization; unauthorized requests are always checked.",
+        "default": true
+      },
+      "guidance_scale": {
+        "type": "number",
+        "description": "Controls how much the model adheres to the prompt. Higher values mean stricter adherence.",
+        "maximum": 20,
+        "minimum": 1,
+        "default": 7.5
+      },
+      "output_format": {
+        "type": "string",
+        "description": "The format of the generated image.",
+        "enum": [
+          "jpeg",
+          "png"
+        ],
+        "default": "png"
+      }
+    },
+    "required": [
+      "prompt"
+    ],
+    "type": "object"
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "HunyuanImageV3TextToImageInput",
+    "HunyuanImageV3TextToImageOutput",
+    "ImageSize",
+    "Image"
+  ]
+}

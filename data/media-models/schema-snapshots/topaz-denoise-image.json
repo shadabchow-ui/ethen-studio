@@ -1,0 +1,106 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "topaz/denoise/image",
+  "task": "image-generation",
+  "source_url": "https://fal.ai/models/topaz/denoise/image",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=topaz%2Fdenoise%2Fimage",
+  "retrieved_at": "2026-10-04T19:55:16.229Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "image-to-image",
+  "bytes_sha256": "c39c4447c06881a7572aa78a5187eb45189c9b323088d01dc7e2f24dd6eeb2b6",
+  "queue_path": "/topaz/denoise/image",
+  "input_name": "DenoiseImageInput",
+  "input": {
+    "$refName": "DenoiseImageInput",
+    "properties": {
+      "image_url": {
+        "minLength": 1,
+        "examples": [
+          "https://storage.googleapis.com/falserverless/model_tests/codeformer/codeformer_poor_1.jpeg"
+        ],
+        "type": "string",
+        "description": "Url of the image to process"
+      },
+      "output_format": {
+        "default": "jpeg",
+        "type": "string",
+        "description": "Output format of the processed image.",
+        "enum": [
+          "jpeg",
+          "png"
+        ]
+      },
+      "model": {
+        "default": "Normal",
+        "type": "string",
+        "description": "Denoise model. Normal is general-purpose; Strong and Extreme remove progressively more noise; Denoise Max is Topaz's highest-quality generative denoiser.",
+        "enum": [
+          "Normal",
+          "Strong",
+          "Extreme",
+          "Denoise Max"
+        ]
+      }
+    },
+    "type": "object",
+    "required": [
+      "image_url"
+    ]
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "DenoiseImageInput",
+    "DenoiseImageOutput",
+    "File"
+  ]
+}

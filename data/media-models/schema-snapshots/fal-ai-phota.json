@@ -1,0 +1,139 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/phota",
+  "task": "unknown",
+  "source_url": "https://fal.ai/models/fal-ai/phota",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fphota",
+  "retrieved_at": "2026-10-04T19:49:50.105Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "text-to-image",
+  "bytes_sha256": "2660e028f0e22f1240d622fd0a1d84119a9cf9266218d95466714c8471cf2fb9",
+  "queue_path": "/fal-ai/phota",
+  "input_name": "PhotaInput",
+  "input": {
+    "$refName": "PhotaInput",
+    "properties": {
+      "sync_mode": {
+        "type": "boolean",
+        "description": "If `True`, the media will be returned as a data URI and the output data won't be available in the request history.",
+        "default": false
+      },
+      "prompt": {
+        "examples": [
+          "Middle Eastern man in traditional clothing sitting in a cool tent in the desert with a laptop"
+        ],
+        "type": "string",
+        "description": "Text description of the desired image. In case you wish to use specific profiles, refer to them as [[profile_id_1]], [[profile_id_2]], etc."
+      },
+      "output_format": {
+        "enum": [
+          "jpeg",
+          "png"
+        ],
+        "type": "string",
+        "description": "The format of the generated image.",
+        "default": "jpeg"
+      },
+      "aspect_ratio": {
+        "enum": [
+          "auto",
+          "1:1",
+          "16:9",
+          "4:3",
+          "3:4",
+          "9:16"
+        ],
+        "type": "string",
+        "description": "Aspect ratio of the generated image.",
+        "default": "auto"
+      },
+      "num_images": {
+        "minimum": 1,
+        "type": "integer",
+        "description": "Number of images to generate.",
+        "maximum": 4,
+        "default": 1
+      },
+      "resolution": {
+        "enum": [
+          "1K",
+          "4K"
+        ],
+        "type": "string",
+        "description": "Resolution of the generated image.",
+        "default": "1K"
+      },
+      "base_model": {
+        "enum": [
+          "nb2",
+          "qwen-image-2",
+          "flux-2",
+          "seedream-5-pro"
+        ],
+        "type": "string",
+        "description": "Base model used to render the image. Identity composes on top of whichever base model is selected, so trained profiles work with all of them. Only `nb2` supports `4K`.",
+        "default": "nb2"
+      }
+    },
+    "type": "object",
+    "required": [
+      "prompt"
+    ]
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "PhotaInput",
+    "PhotaOutput",
+    "ImageFile"
+  ]
+}

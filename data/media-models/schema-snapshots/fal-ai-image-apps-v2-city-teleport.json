@@ -1,0 +1,154 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/image-apps-v2/city-teleport",
+  "task": "image-generation",
+  "source_url": "https://fal.ai/models/fal-ai/image-apps-v2/city-teleport",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fimage-apps-v2%2Fcity-teleport",
+  "retrieved_at": "2026-10-04T19:46:05.815Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "image-to-image",
+  "bytes_sha256": "6f4c5a2f123f92d213224c864e9466a377c1ce11fa930ce3606e2a713cd8bea7",
+  "queue_path": "/fal-ai/image-apps-v2/city-teleport",
+  "input_name": "ImageAppsV2CityTeleportInput",
+  "input": {
+    "$refName": "ImageAppsV2CityTeleportInput",
+    "type": "object",
+    "properties": {
+      "city_name": {
+        "type": "string",
+        "examples": [
+          "Paris"
+        ],
+        "description": "City name (used when city_image_url is not provided)"
+      },
+      "camera_angle": {
+        "enum": [
+          "eye_level",
+          "low_angle",
+          "high_angle",
+          "dutch_angle",
+          "birds_eye_view",
+          "worms_eye_view",
+          "overhead",
+          "side_angle"
+        ],
+        "type": "string",
+        "description": "Camera angle for the shot",
+        "default": "eye_level"
+      },
+      "aspect_ratio": {
+        "$refName": "AspectRatio",
+        "type": "object",
+        "properties": {
+          "ratio": {
+            "enum": [
+              "1:1",
+              "16:9",
+              "9:16",
+              "4:3",
+              "3:4"
+            ],
+            "type": "string",
+            "description": "Aspect ratio for 4K resolution output",
+            "default": "1:1"
+          }
+        },
+        "description": "Aspect ratio for 4K output"
+      },
+      "person_image_url": {
+        "type": "string",
+        "examples": [
+          "https://v3.fal.media/files/kangaroo/qsFWu-bO3FwcTQSym9HeL_e52f70668f2940a3b4ea2cab54fcb65b.png"
+        ],
+        "description": "Person photo URL"
+      },
+      "photo_shot": {
+        "enum": [
+          "extreme_close_up",
+          "close_up",
+          "medium_close_up",
+          "medium_shot",
+          "medium_long_shot",
+          "long_shot",
+          "extreme_long_shot",
+          "full_body"
+        ],
+        "type": "string",
+        "description": "Type of photo shot",
+        "default": "medium_shot"
+      },
+      "city_image_url": {
+        "description": "Optional city background image URL. When provided, the person will be blended into this custom scene.",
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      }
+    },
+    "required": [
+      "person_image_url",
+      "city_name"
+    ]
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "ImageAppsV2CityTeleportInput",
+    "ImageAppsV2CityTeleportOutput",
+    "AspectRatio",
+    "Image"
+  ]
+}

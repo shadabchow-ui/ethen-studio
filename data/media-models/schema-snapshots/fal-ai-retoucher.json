@@ -1,0 +1,96 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/retoucher",
+  "task": "unknown",
+  "source_url": "https://fal.ai/models/fal-ai/retoucher",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fretoucher",
+  "retrieved_at": "2026-10-04T19:51:15.307Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "image-to-image",
+  "bytes_sha256": "57cd3c914108272567afce54cda8dd4ac14c19897be93af58312b5e2bc0c1d22",
+  "queue_path": "/fal-ai/retoucher",
+  "input_name": "RetoucherInput",
+  "input": {
+    "$refName": "RetoucherInput",
+    "type": "object",
+    "properties": {
+      "seed": {
+        "description": "Seed for reproducibility. Different seeds will make slightly different results.",
+        "anyOf": [
+          {
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "image_url": {
+        "type": "string",
+        "examples": [
+          "https://storage.googleapis.com/falserverless/model_tests/retoucher/Dalton-Meereskosmetik-Magazin-Pickelguide-Model_1.resized.jpg"
+        ],
+        "description": "The URL of the image to be retouched."
+      }
+    },
+    "required": [
+      "image_url"
+    ]
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "RetoucherInput",
+    "RetoucherOutput",
+    "Image"
+  ]
+}

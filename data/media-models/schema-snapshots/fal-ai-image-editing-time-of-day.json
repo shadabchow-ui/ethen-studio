@@ -1,0 +1,167 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/image-editing/time-of-day",
+  "task": "image-generation",
+  "source_url": "https://fal.ai/models/fal-ai/image-editing/time-of-day",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fimage-editing%2Ftime-of-day",
+  "retrieved_at": "2026-10-04T19:46:27.114Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "image-to-image",
+  "bytes_sha256": "2fc55c21257dc09737581bb631880c5c4d8fd43d9a5c3b21adc7faa4434aacbd",
+  "queue_path": "/fal-ai/image-editing/time-of-day",
+  "input_name": "ImageEditingTimeOfDayInput",
+  "input": {
+    "$refName": "ImageEditingTimeOfDayInput",
+    "type": "object",
+    "properties": {
+      "num_inference_steps": {
+        "minimum": 1,
+        "type": "integer",
+        "description": "Number of inference steps for sampling.",
+        "maximum": 50,
+        "default": 30
+      },
+      "image_url": {
+        "type": "string",
+        "examples": [
+          "https://v3.fal.media/files/zebra/hAjCkcyly4gsS9-cptD3Y_image%20(20).png"
+        ],
+        "description": "Image prompt for the omni model."
+      },
+      "seed": {
+        "description": "The same seed and the same prompt given to the same version of the model will output the same image every time.",
+        "anyOf": [
+          {
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "output_format": {
+        "enum": [
+          "jpeg",
+          "png"
+        ],
+        "type": "string",
+        "description": "The format of the generated image.",
+        "default": "jpeg"
+      },
+      "guidance_scale": {
+        "minimum": 0,
+        "type": "number",
+        "description": "The CFG (Classifier Free Guidance) scale is a measure of how close you want the model to stick to your prompt when looking for a related image to show you.",
+        "maximum": 20,
+        "default": 3.5
+      },
+      "aspect_ratio": {
+        "description": "The aspect ratio of the generated image.",
+        "anyOf": [
+          {
+            "enum": [
+              "21:9",
+              "16:9",
+              "4:3",
+              "3:2",
+              "1:1",
+              "2:3",
+              "3:4",
+              "9:16",
+              "9:21"
+            ],
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "sync_mode": {
+        "type": "boolean",
+        "description": "If `True`, the media will be returned as a data URI and the output data won't be available in the request history.",
+        "default": false
+      },
+      "safety_tolerance": {
+        "enum": [
+          "1",
+          "2",
+          "3",
+          "4",
+          "5",
+          "6"
+        ],
+        "type": "string",
+        "description": "The safety tolerance level for the generated image. 1 being the most strict and 6 being the most permissive.",
+        "default": "2"
+      },
+      "prompt": {
+        "type": "string",
+        "examples": [
+          "golden hour"
+        ],
+        "description": "The time of day to transform the scene to.",
+        "default": "golden hour"
+      }
+    },
+    "required": [
+      "image_url"
+    ]
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "ImageEditingTimeOfDayInput",
+    "ImageEditingTimeOfDayOutput",
+    "Image"
+  ]
+}

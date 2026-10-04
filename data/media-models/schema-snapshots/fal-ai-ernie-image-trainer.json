@@ -1,0 +1,105 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/ernie-image-trainer",
+  "task": "image-generation",
+  "source_url": "https://fal.ai/models/fal-ai/ernie-image-trainer",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fernie-image-trainer",
+  "retrieved_at": "2026-10-04T19:43:23.342Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "training",
+  "bytes_sha256": "1585c3f993cab9fe5418c35b9b8d1de0172f5d2702189fc3e5b5f0b65dbf6f26",
+  "queue_path": "/fal-ai/ernie-image-trainer",
+  "input_name": "ErnieImageTrainerInput",
+  "input": {
+    "$refName": "ErnieImageTrainerInput",
+    "properties": {
+      "default_caption": {
+        "description": "Default caption to use when caption files are missing. If None, missing captions will cause an error.",
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "steps": {
+        "maximum": 40000,
+        "description": "Number of steps to train for",
+        "type": "integer",
+        "minimum": 10,
+        "default": 2000
+      },
+      "images_data_url": {
+        "description": "\n        URL to the input data zip archive.\n\n        The zip should contain pairs of images and corresponding captions.\n\n        The images should be named: ROOT.EXT. For example: 001.jpg\n\n        The corresponding captions should be named: ROOT.txt. For example: 001.txt\n\n        If no text file is provided for an image, the default_caption will be used.\n        ",
+        "type": "string"
+      },
+      "learning_rate": {
+        "description": "Learning rate.",
+        "type": "number",
+        "default": 0.0005
+      }
+    },
+    "type": "object",
+    "required": [
+      "images_data_url"
+    ]
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "ErnieImageTrainerInput",
+    "ErnieImageTrainerOutput",
+    "File"
+  ]
+}

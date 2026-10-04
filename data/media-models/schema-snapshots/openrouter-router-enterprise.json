@@ -1,0 +1,317 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "openrouter/router/enterprise",
+  "task": "unknown",
+  "source_url": "https://fal.ai/models/openrouter/router/enterprise",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=openrouter%2Frouter%2Fenterprise",
+  "retrieved_at": "2026-10-04T19:54:44.350Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "llm",
+  "bytes_sha256": "dfe15cf428ef4164c8709b94749c5517dec86968344715f3be66bf491f81ce5a",
+  "queue_path": "/openrouter/router/enterprise",
+  "input_name": "RouterEnterpriseInput",
+  "input": {
+    "$refName": "RouterEnterpriseInput",
+    "properties": {
+      "system_prompt": {
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "System prompt to provide context or instructions to the model"
+      },
+      "max_tokens": {
+        "anyOf": [
+          {
+            "type": "integer",
+            "minimum": 1
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "This sets the upper limit for the number of tokens the model can generate in response. It won't produce more than this limit. The maximum value is the context length minus the prompt length."
+      },
+      "model": {
+        "examples": [
+          "anthropic/claude-opus-5.5",
+          "anthropic/claude-sonnet-5",
+          "openai/gpt-6-sol",
+          "openai/gpt-6-astra",
+          "openai/gpt-6-luna",
+          "google/gemini-3.8-flash",
+          "google/gemini-3.5-flash-lite",
+          "google/gemini-3.1-pro-preview",
+          "x-ai/grok-4.7",
+          "deepseek/deepseek-v4.1-flash",
+          "deepseek/deepseek-v4-pro-0813",
+          "qwen/qwen3.8-27b",
+          "z-ai/glm-5.3",
+          "moonshotai/kimi-k3",
+          "minimax/minimax-m3",
+          "mistralai/mistral-medium-3-5",
+          "anthropic/claude-opus-4.6",
+          "anthropic/claude-sonnet-4.6",
+          "anthropic/claude-opus-4.5",
+          "anthropic/claude-sonnet-4.5",
+          "anthropic/claude-haiku-4.5",
+          "google/gemini-3-flash-preview",
+          "z-ai/glm-4.7",
+          "z-ai/glm-4.6",
+          "deepseek/deepseek-v3.2",
+          "nvidia/nemotron-3-nano-30b-a3b",
+          "amazon/nova-premier-v1",
+          "amazon/nova-2-lite-v1",
+          "mistralai/ministral-14b-2512",
+          "minimax/minimax-m2",
+          "moonshotai/kimi-k2.5",
+          "moonshotai/kimi-k2-thinking",
+          "perplexity/sonar-pro-search"
+        ],
+        "type": "string",
+        "description": "Name of the model to use. Charged based on actual token usage."
+      },
+      "temperature": {
+        "minimum": 0,
+        "type": "number",
+        "description": "This setting influences the variety in the model's responses. Lower values lead to more predictable and typical responses, while higher values encourage more diverse and less common responses. At 0, the model always gives the same response for a given input.",
+        "maximum": 2,
+        "default": 1
+      },
+      "reasoning": {
+        "type": "boolean",
+        "description": "Should reasoning be the part of the final answer.",
+        "default": false
+      },
+      "prompt": {
+        "examples": [
+          "Write a short story (under 200 words) about an AI that learns to dream. Use vivid sensory details and end with a surprising twist that makes the reader feel both awe and melancholy."
+        ],
+        "type": "string",
+        "description": "Prompt to be used for the chat completion"
+      },
+      "web_search_options": {
+        "anyOf": [
+          {
+            "$refName": "WebSearchOptions",
+            "properties": {
+              "max_characters": {
+                "anyOf": [
+                  {
+                    "type": "integer",
+                    "maximum": 100000,
+                    "minimum": 1
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "description": "Exact maximum characters of content per result (1-100,000). Applies to the Exa engine; ignored with native provider search. Takes precedence over search_context_size when both are set."
+              },
+              "search_context_size": {
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "enum": [
+                      "low",
+                      "medium",
+                      "high"
+                    ]
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "description": "How much content to retrieve per result. For Exa: low=5K, medium=15K, high=30K characters per result; when omitted, Exa picks adaptively (~2-4K per result). Ignored with native provider search. Overridden by max_characters when both are set."
+              },
+              "excluded_domains": {
+                "anyOf": [
+                  {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "description": "Exclude results from these domains. Supported by Exa and some native providers (not OpenAI or Google native search)."
+              },
+              "max_results": {
+                "anyOf": [
+                  {
+                    "type": "integer",
+                    "maximum": 25,
+                    "minimum": 1
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "description": "Maximum results per search call (1-25). Applies to the Exa engine; ignored with native provider search. Defaults to 5."
+              },
+              "engine": {
+                "default": "auto",
+                "type": "string",
+                "description": "Search engine to use. 'auto' uses native provider search when available and falls back to Exa. 'native' prefers the provider's built-in web search (OpenAI, Anthropic, Google, xAI, Perplexity), falling back to Exa for models without native support. 'exa' always uses Exa's search API.",
+                "enum": [
+                  "auto",
+                  "native",
+                  "exa"
+                ]
+              },
+              "max_total_results": {
+                "anyOf": [
+                  {
+                    "type": "integer",
+                    "minimum": 1
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "description": "Maximum total results across all search calls in a single request. Useful for controlling cost and context size in agentic loops."
+              },
+              "allowed_domains": {
+                "anyOf": [
+                  {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "description": "Limit results to these domains. Supported by Exa and most native providers (not Google native search)."
+              },
+              "max_uses": {
+                "anyOf": [
+                  {
+                    "type": "integer",
+                    "minimum": 1
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "description": "Maximum number of searches the model may perform in a single request. Once reached, further search calls return an error result instead of executing. With native provider search, forwarded only to Anthropic; other native providers ignore it."
+              },
+              "user_location": {
+                "anyOf": [
+                  {
+                    "$refName": "WebSearchUserLocation",
+                    "properties": {
+                      "timezone": {
+                        "unsupported": "depth-exceeded"
+                      },
+                      "type": {
+                        "unsupported": "depth-exceeded"
+                      },
+                      "city": {
+                        "unsupported": "depth-exceeded"
+                      },
+                      "region": {
+                        "unsupported": "depth-exceeded"
+                      },
+                      "country": {
+                        "unsupported": "depth-exceeded"
+                      }
+                    },
+                    "type": "object",
+                    "description": "Approximate user location to bias web search results geographically.\n\nOnly honored by native provider search; ignored by the Exa engine.\nAll fields are optional."
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "description": "Approximate user location for location-biased results. Only supported by native provider search; ignored by Exa."
+              }
+            },
+            "type": "object",
+            "description": "Options for the OpenRouter ``openrouter:web_search`` server tool."
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "Options for web search (engine, result limits, domain filters, ...). Ignored unless enable_web_search is true."
+      },
+      "enable_web_search": {
+        "type": "boolean",
+        "description": "Give the model access to real-time web information via OpenRouter's web search server tool. When enabled, the model decides when to search and may search multiple times per request. Search costs are charged in addition to token usage.",
+        "default": false
+      }
+    },
+    "type": "object",
+    "required": [
+      "prompt",
+      "model"
+    ]
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "RouterEnterpriseInput",
+    "RouterEnterpriseOutput",
+    "WebSearchOptions",
+    "UsageInfo",
+    "WebSearchUserLocation",
+    "PromptTokensDetails"
+  ]
+}

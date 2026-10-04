@@ -1,0 +1,101 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/feynobg",
+  "task": "unknown",
+  "source_url": "https://fal.ai/models/fal-ai/feynobg",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Ffeynobg",
+  "retrieved_at": "2026-10-04T19:43:40.355Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "image-to-image",
+  "bytes_sha256": "11e6c8089bf0b10772fb243e8c9f694be8ea321ace96c7c75d9e0a8b6ef26d9b",
+  "queue_path": "/fal-ai/feynobg",
+  "input_name": "FeynobgInput",
+  "input": {
+    "$refName": "FeynobgInput",
+    "properties": {
+      "sync_mode": {
+        "description": "If true, the output is returned as a data URI and is not stored in request history.",
+        "default": false,
+        "type": "boolean"
+      },
+      "image_url": {
+        "description": "URL of the image to remove the background from.",
+        "type": "string",
+        "examples": [
+          "https://storage.googleapis.com/falserverless/example_inputs/birefnet-input.jpeg"
+        ]
+      },
+      "seed": {
+        "description": "Seed used for reproducible inference.",
+        "anyOf": [
+          {
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      }
+    },
+    "required": [
+      "image_url"
+    ],
+    "type": "object"
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "FeynobgInput",
+    "FeynobgOutput",
+    "Image"
+  ]
+}

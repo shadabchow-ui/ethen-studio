@@ -1,0 +1,108 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "bria/fibo-edit/restyle",
+  "task": "unknown",
+  "source_url": "https://fal.ai/models/bria/fibo-edit/restyle",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=bria%2Ffibo-edit%2Frestyle",
+  "retrieved_at": "2026-10-04T19:41:43.924Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "image-to-image",
+  "bytes_sha256": "a037fa368ef0812a5fc99e33871501ed1e033fdbff352f411bf0fc73c1d99b26",
+  "queue_path": "/bria/fibo-edit/restyle",
+  "input_name": "FiboEditRestyleInput",
+  "input": {
+    "$refName": "FiboEditRestyleInput",
+    "required": [
+      "image_url",
+      "style"
+    ],
+    "type": "object",
+    "properties": {
+      "style": {
+        "examples": [
+          "3D Render"
+        ],
+        "type": "string",
+        "enum": [
+          "3D Render",
+          "Cubism",
+          "Oil Painting",
+          "Anime",
+          "Cartoon",
+          "Coloring Book",
+          "Retro Ad",
+          "Pop Art Halftone",
+          "Vector Art",
+          "Story Board",
+          "Art Nouveau",
+          "Cross Etching",
+          "Wood Cut"
+        ],
+        "description": "Select the desired artistic style for the output image."
+      },
+      "image_url": {
+        "examples": [
+          "https://bria-datasets.s3.us-east-1.amazonaws.com/Liza/high_camera_angle_warm_filter.png"
+        ],
+        "type": "string",
+        "description": "The source image."
+      }
+    }
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "FiboEditRestyleInput",
+    "FiboEditRestyleOutput",
+    "Image"
+  ]
+}

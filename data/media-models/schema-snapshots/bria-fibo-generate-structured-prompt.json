@@ -1,0 +1,342 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "bria/fibo/generate/structured_prompt",
+  "task": "unknown",
+  "source_url": "https://fal.ai/models/bria/fibo/generate/structured_prompt",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=bria%2Ffibo%2Fgenerate%2Fstructured_prompt",
+  "retrieved_at": "2026-10-04T19:41:47.509Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "text-to-json",
+  "bytes_sha256": "9a56b310d91ccb6320d708eb80e80f8396fde84c709ac7f4e3fd87fc465f7c08",
+  "queue_path": "/bria/fibo/generate/structured_prompt",
+  "input_name": "FiboGenerateStructured_promptInput",
+  "input": {
+    "$refName": "FiboGenerateStructured_promptInput",
+    "properties": {
+      "structured_prompt": {
+        "anyOf": [
+          {
+            "$refName": "TailoredStructuredPrompt",
+            "properties": {
+              "aesthetics": {
+                "anyOf": [
+                  {
+                    "$refName": "Aesthetics",
+                    "properties": {
+                      "composition": {
+                        "unsupported": "depth-exceeded"
+                      },
+                      "preference_score": {
+                        "unsupported": "depth-exceeded"
+                      },
+                      "color_scheme": {
+                        "unsupported": "depth-exceeded"
+                      },
+                      "mood_atmosphere": {
+                        "unsupported": "depth-exceeded"
+                      },
+                      "aesthetic_score": {
+                        "unsupported": "depth-exceeded"
+                      }
+                    },
+                    "type": "object"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "description": "The aesthetics of the image to be generated."
+              },
+              "background_setting": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "description": "The background setting of the image to be generated."
+              },
+              "actor_prefix": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "trigger_word": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "artistic_style": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "description": "The artistic style of the image to be generated."
+              },
+              "objects": {
+                "default": [],
+                "anyOf": [
+                  {
+                    "items": {
+                      "$refName": "PromptObject",
+                      "properties": {
+                        "unsupported": "depth-exceeded"
+                      },
+                      "required": [
+                        "relationship"
+                      ],
+                      "type": "object"
+                    },
+                    "type": "array"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "description": "A list of objects in the image to be generated, along with their attributes and relationships to other objects in the image."
+              },
+              "text_render": {
+                "default": [],
+                "anyOf": [
+                  {
+                    "items": {},
+                    "type": "array"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "description": "A list of text to be rendered in the image."
+              },
+              "art_direction": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "short_description": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "description": "A short description of the image to be generated."
+              },
+              "style_medium": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "description": "The style medium of the image to be generated."
+              },
+              "lighting": {
+                "anyOf": [
+                  {
+                    "$refName": "Lighting",
+                    "properties": {
+                      "direction": {
+                        "unsupported": "depth-exceeded"
+                      },
+                      "conditions": {
+                        "unsupported": "depth-exceeded"
+                      },
+                      "shadows": {
+                        "unsupported": "depth-exceeded"
+                      }
+                    },
+                    "type": "object"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "description": "The lighting of the image to be generated."
+              },
+              "action_description": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "photographic_characteristics": {
+                "anyOf": [
+                  {
+                    "$refName": "PhotographicCharacteristics",
+                    "properties": {
+                      "depth_of_field": {
+                        "unsupported": "depth-exceeded"
+                      },
+                      "focus": {
+                        "unsupported": "depth-exceeded"
+                      },
+                      "camera_angle": {
+                        "unsupported": "depth-exceeded"
+                      },
+                      "lens_focal_length": {
+                        "unsupported": "depth-exceeded"
+                      }
+                    },
+                    "type": "object"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "description": "The photographic characteristics of the image to be generated."
+              },
+              "context": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "description": "The context of the image to be generated."
+              },
+              "sub_trigger_word": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              }
+            },
+            "type": "object",
+            "description": "Structured prompt for tailored-model requests, with the extra custom fields."
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "The structured prompt to generate an image from."
+      },
+      "seed": {
+        "default": 5555,
+        "type": "integer",
+        "description": "Random seed for reproducibility."
+      },
+      "prompt": {
+        "examples": [
+          "A hyper-detailed, ultra-fluffy owl sitting in the trees at night, looking directly at the camera with wide, adorable, expressive eyes. Its feathers are soft and voluminous, catching the cool moonlight with subtle silver highlights. The owl’s gaze is curious and full of charm, giving it a whimsical, storybook-like personality."
+        ],
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "Prompt for image generation."
+      },
+      "image_url": {
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "Reference image (file or URL)."
+      }
+    },
+    "type": "object"
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "FiboGenerateStructured_promptInput",
+    "FiboGenerateStructured_promptOutput",
+    "TailoredStructuredPrompt",
+    "Lighting",
+    "Aesthetics",
+    "PhotographicCharacteristics",
+    "PromptObject"
+  ]
+}

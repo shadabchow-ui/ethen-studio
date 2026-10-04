@@ -1,0 +1,116 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/vidu/q1/image-to-video",
+  "task": "image-to-video",
+  "source_url": "https://fal.ai/models/fal-ai/vidu/q1/image-to-video",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fvidu%2Fq1%2Fimage-to-video",
+  "retrieved_at": "2026-10-04T19:52:17.436Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "image-to-video",
+  "bytes_sha256": "d272d258d894c7b824d365b1a46d3e84ee995f3ea9dbe1958bf350cbf3111f1e",
+  "queue_path": "/fal-ai/vidu/q1/image-to-video",
+  "input_name": "ViduQ1ImageToVideoInput",
+  "input": {
+    "$refName": "ViduQ1ImageToVideoInput",
+    "properties": {
+      "image_url": {
+        "examples": [
+          "https://storage.googleapis.com/falserverless/model_tests/video_models/vidu_i2v.jpg"
+        ],
+        "type": "string",
+        "description": "URL of the image to use as the first frame"
+      },
+      "prompt": {
+        "examples": [
+          "The astronaut waved and the camera moved up."
+        ],
+        "type": "string",
+        "maxLength": 1500,
+        "description": "Text prompt for video generation, max 1500 characters"
+      },
+      "seed": {
+        "anyOf": [
+          {
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "Seed for the random number generator"
+      },
+      "movement_amplitude": {
+        "enum": [
+          "auto",
+          "small",
+          "medium",
+          "large"
+        ],
+        "type": "string",
+        "description": "The movement amplitude of objects in the frame",
+        "default": "auto"
+      }
+    },
+    "type": "object",
+    "required": [
+      "prompt",
+      "image_url"
+    ]
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "ViduQ1ImageToVideoInput",
+    "ViduQ1ImageToVideoOutput",
+    "File"
+  ]
+}

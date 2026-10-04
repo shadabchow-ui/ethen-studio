@@ -1,0 +1,239 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/sync-lipsync/v3",
+  "task": "unknown",
+  "source_url": "https://fal.ai/models/fal-ai/sync-lipsync/v3",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fsync-lipsync%2Fv3",
+  "retrieved_at": "2026-10-04T19:51:56.387Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "video-to-video",
+  "bytes_sha256": "3b95fef134f4b0cd93f4a10661d741696e611889e0d2681474f55d9b8113a52a",
+  "queue_path": "/fal-ai/sync-lipsync/v3",
+  "input_name": "SyncLipsyncV3Input",
+  "input": {
+    "$refName": "SyncLipsyncV3Input",
+    "properties": {
+      "video_url": {
+        "type": "string",
+        "description": "URL of the input video",
+        "examples": [
+          "https://v3.fal.media/files/tiger/IugLCDJRIoGqvqTa-EJTr_3wg74vCqyNuQ-IiBd77MM_output.mp4"
+        ]
+      },
+      "options": {
+        "anyOf": [
+          {
+            "$refName": "Sync3GenerationOptions",
+            "properties": {
+              "active_speaker_detection": {
+                "anyOf": [
+                  {
+                    "$refName": "Sync3ActiveSpeakerDetection",
+                    "properties": {
+                      "v3": {
+                        "unsupported": "depth-exceeded"
+                      },
+                      "face_image": {
+                        "unsupported": "depth-exceeded"
+                      },
+                      "frame_number": {
+                        "unsupported": "depth-exceeded"
+                      },
+                      "bounding_boxes_url": {
+                        "unsupported": "depth-exceeded"
+                      },
+                      "use_v2": {
+                        "unsupported": "depth-exceeded"
+                      },
+                      "auto_detect": {
+                        "unsupported": "depth-exceeded"
+                      },
+                      "bounding_boxes": {
+                        "unsupported": "depth-exceeded"
+                      },
+                      "coordinates": {
+                        "unsupported": "depth-exceeded"
+                      }
+                    },
+                    "type": "object"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "description": "Active speaker detection configuration for videos with multiple people."
+              },
+              "temperature": {
+                "anyOf": [
+                  {
+                    "minimum": 0,
+                    "type": "number",
+                    "maximum": 1
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "description": "Controls how expressive lipsync can be; 0 is least expressive, 1 is most expressive. Sync.so handles this natively for sync-3, so this option is ignored by sync-3."
+              },
+              "prompt": {
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "enum": [
+                      "happy",
+                      "sad",
+                      "angry",
+                      "disgusted",
+                      "surprised",
+                      "neutral"
+                    ]
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "description": "Emotion prompt for generation. This is a Sync.so option primarily used by react-1."
+              },
+              "occlusion_detection_enabled": {
+                "anyOf": [
+                  {
+                    "type": "boolean"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "description": "Whether to detect occlusion during generation. Sync.so handles this automatically for sync-3, so this option is ignored by sync-3."
+              },
+              "model_mode": {
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "enum": [
+                      "lips",
+                      "face",
+                      "head",
+                      "lipsync",
+                      "emotion",
+                      "talking_head"
+                    ]
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "description": "Edit region for the model. This is a Sync.so option primarily used by react-1."
+              },
+              "sync_mode": {
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "enum": [
+                      "cut_off",
+                      "loop",
+                      "bounce",
+                      "silence",
+                      "remap"
+                    ]
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "description": "Defines how to handle duration mismatches between video and audio inputs. Overrides the top-level sync_mode when provided."
+              }
+            },
+            "type": "object"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "Additional Sync.so generation options. If options.sync_mode is set, it overrides the top-level sync_mode field."
+      },
+      "audio_url": {
+        "type": "string",
+        "description": "URL of the input audio",
+        "examples": [
+          "https://fal.media/files/lion/vyFWygmZsIZlUO4s0nr2n.wav"
+        ]
+      },
+      "sync_mode": {
+        "type": "string",
+        "default": "cut_off",
+        "enum": [
+          "cut_off",
+          "loop",
+          "bounce",
+          "silence",
+          "remap"
+        ],
+        "description": "Lipsync mode when audio and video durations are out of sync."
+      }
+    },
+    "type": "object",
+    "required": [
+      "video_url",
+      "audio_url"
+    ]
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "SyncLipsyncV3Input",
+    "SyncLipsyncV3Output",
+    "Sync3GenerationOptions",
+    "File",
+    "Sync3ActiveSpeakerDetection"
+  ]
+}

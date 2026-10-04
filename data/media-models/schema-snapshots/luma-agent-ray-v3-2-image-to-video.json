@@ -1,0 +1,195 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "luma/agent/ray/v3.2/image-to-video",
+  "task": "image-to-video",
+  "source_url": "https://fal.ai/models/luma/agent/ray/v3.2/image-to-video",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=luma%2Fagent%2Fray%2Fv3.2%2Fimage-to-video",
+  "retrieved_at": "2026-10-04T19:54:02.136Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "image-to-video",
+  "bytes_sha256": "15d7bce591ca4f76140f050b861703d7d027f1785837b12cd69703c3729c93a4",
+  "queue_path": "/luma/agent/ray/v3.2/image-to-video",
+  "input_name": "AgentRayV32ImageToVideoInput",
+  "input": {
+    "$refName": "AgentRayV32ImageToVideoInput",
+    "properties": {
+      "keyframes": {
+        "anyOf": [
+          {
+            "maxItems": 64,
+            "minItems": 1,
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "Multi-keyframe image-to-video guide frames: 1-64 image URLs pinned at the positions given by keyframe_indexes. Mutually exclusive with image_url, end_image_url, and loop; unlocks 10s and HDR. Provide keyframes and keyframe_indexes together (same length)."
+      },
+      "hdr": {
+        "type": "boolean",
+        "description": "Generate an HDR-encoded MP4. Requires HDR access on the account and a resolution of 720p or 1080p; not supported with loop.",
+        "default": false
+      },
+      "image_url": {
+        "anyOf": [
+          {
+            "minLength": 1,
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "URL of the image used as the first frame of the video. Provide either image_url (optionally with end_image_url) or keyframes — the two anchoring modes are mutually exclusive.",
+        "examples": [
+          "https://storage.googleapis.com/falserverless/gallery/example_inputs_liuyifei.png"
+        ]
+      },
+      "duration": {
+        "type": "string",
+        "enum": [
+          "5s",
+          "10s"
+        ],
+        "description": "Duration of the generated video. 10s requires multi-keyframe input (keyframes / keyframe_indexes); it is not supported with a single image_url / end_image_url anchor.",
+        "default": "5s"
+      },
+      "exr_export": {
+        "type": "boolean",
+        "description": "Also export an EXR file alongside the MP4. Requires hdr=true and HDR access.",
+        "default": false
+      },
+      "keyframe_indexes": {
+        "anyOf": [
+          {
+            "maxItems": 64,
+            "minItems": 1,
+            "items": {
+              "type": "integer"
+            },
+            "type": "array"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "Output-frame positions (duration x 24fps: 5s -> 0-120, 10s -> 0-240) where each keyframes[i] is anchored. Non-negative, unique, and the same length as keyframes."
+      },
+      "end_image_url": {
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "Optional URL of an image used as the last frame. When set, the model interpolates between image_url and end_image_url. Cannot be combined with keyframes."
+      },
+      "loop": {
+        "type": "boolean",
+        "description": "Generate a seamless loop. Only valid for standard-dynamic-range generations without an end frame or keyframes.",
+        "default": false
+      },
+      "prompt": {
+        "maxLength": 6000,
+        "examples": [
+          "Low-angle shot of a majestic tiger prowling through a snowy landscape, leaving paw prints on the white blanket."
+        ],
+        "description": "Text prompt describing the motion/scene to generate.",
+        "minLength": 1,
+        "type": "string"
+      },
+      "resolution": {
+        "type": "string",
+        "enum": [
+          "540p",
+          "720p",
+          "1080p"
+        ],
+        "description": "Resolution of the generated video. Higher resolutions cost more.",
+        "default": "540p"
+      },
+      "aspect_ratio": {
+        "type": "string",
+        "enum": [
+          "3:4",
+          "4:3",
+          "1:1",
+          "9:16",
+          "16:9",
+          "21:9"
+        ],
+        "examples": [
+          "16:9"
+        ],
+        "description": "Aspect ratio of the generated video.",
+        "default": "16:9"
+      }
+    },
+    "required": [
+      "prompt"
+    ],
+    "type": "object"
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "AgentRayV32ImageToVideoInput",
+    "AgentRayV32ImageToVideoOutput",
+    "File"
+  ]
+}

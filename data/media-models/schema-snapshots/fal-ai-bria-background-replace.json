@@ -1,0 +1,148 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/bria/background/replace",
+  "task": "unknown",
+  "source_url": "https://fal.ai/models/fal-ai/bria/background/replace",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fbria%2Fbackground%2Freplace",
+  "retrieved_at": "2026-10-04T19:42:44.854Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "image-to-image",
+  "bytes_sha256": "761a1a11596bf3d911f6d54c42f5c5107853aeab813d4fed48929ce95c9f78c9",
+  "queue_path": "/fal-ai/bria/background/replace",
+  "input_name": "BriaBackgroundReplaceInput",
+  "input": {
+    "$refName": "BriaBackgroundReplaceInput",
+    "required": [
+      "image_url"
+    ],
+    "properties": {
+      "ref_image_url": {
+        "examples": [
+          "https://storage.googleapis.com/falserverless/bria/bria_bg_replace_bg.jpg"
+        ],
+        "default": "",
+        "description": "The URL of the reference image to be used for generating the new background. Use \"\" to leave empty. Either ref_image_url or bg_prompt has to be provided but not both. If both ref_image_url and ref_image_file are provided, ref_image_url will be used. Accepted formats are jpeg, jpg, png, webp.",
+        "type": "string"
+      },
+      "seed": {
+        "description": "\n            The same seed and the same prompt given to the same version of the model\n            will output the same image every time.\n        ",
+        "anyOf": [
+          {
+            "maximum": 2147483647,
+            "type": "integer",
+            "minimum": 0
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "refine_prompt": {
+        "default": true,
+        "description": "Whether to refine prompt",
+        "type": "boolean"
+      },
+      "fast": {
+        "default": true,
+        "description": "Whether to use the fast model",
+        "type": "boolean"
+      },
+      "num_images": {
+        "maximum": 4,
+        "default": 1,
+        "description": "Number of Images to generate.",
+        "type": "integer",
+        "minimum": 1
+      },
+      "sync_mode": {
+        "default": false,
+        "description": "If `True`, the media will be returned as a data URI and the output data won't be available in the request history.",
+        "type": "boolean"
+      },
+      "image_url": {
+        "examples": [
+          "https://storage.googleapis.com/falserverless/bria/bria_bg_replace_fg.jpg"
+        ],
+        "description": "Input Image to erase from",
+        "type": "string"
+      },
+      "prompt": {
+        "examples": [
+          "Man leaning against a wall"
+        ],
+        "description": "The prompt you would like to use to generate images.",
+        "anyOf": [
+          {
+            "minLength": 1,
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "negative_prompt": {
+        "default": "",
+        "description": "The negative prompt you would like to use to generate images.",
+        "type": "string"
+      }
+    },
+    "type": "object"
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "BriaBackgroundReplaceInput",
+    "BriaBackgroundReplaceOutput",
+    "Image"
+  ]
+}

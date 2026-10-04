@@ -1,0 +1,137 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "xai/grok-imagine-image",
+  "task": "image-generation",
+  "source_url": "https://fal.ai/models/xai/grok-imagine-image",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=xai%2Fgrok-imagine-image",
+  "retrieved_at": "2026-10-04T19:55:38.988Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "text-to-image",
+  "bytes_sha256": "56c054e539d99aba9a4b1bd75b3ca2b225744bade218fc4e4c1ad98dc87d32bb",
+  "queue_path": "/xai/grok-imagine-image",
+  "input_name": "GrokImagineImageInput",
+  "input": {
+    "$refName": "GrokImagineImageInput",
+    "properties": {
+      "num_images": {
+        "minimum": 1,
+        "description": "Number of images to generate.",
+        "default": 1,
+        "maximum": 4,
+        "type": "integer"
+      },
+      "resolution": {
+        "description": "Resolution of the generated image. `1k` for standard resolution, `2k` for high resolution.",
+        "enum": [
+          "1k",
+          "2k"
+        ],
+        "default": "1k",
+        "type": "string"
+      },
+      "sync_mode": {
+        "description": "If `True`, the media will be returned as a data URI and the output data won't be available in the request history.",
+        "default": false,
+        "type": "boolean"
+      },
+      "aspect_ratio": {
+        "description": "Aspect ratio of the generated image.",
+        "enum": [
+          "2:1",
+          "20:9",
+          "19.5:9",
+          "16:9",
+          "4:3",
+          "3:2",
+          "1:1",
+          "2:3",
+          "3:4",
+          "9:16",
+          "9:19.5",
+          "9:20",
+          "1:2"
+        ],
+        "default": "1:1",
+        "type": "string"
+      },
+      "prompt": {
+        "maxLength": 8000,
+        "description": "Text description of the desired image.",
+        "type": "string",
+        "examples": [
+          "Abstract human silhouette, golden particles ready to burst outward representing joy, data visualization style, emotional expression through particles, artistic scientific"
+        ]
+      },
+      "output_format": {
+        "description": "The format of the generated image.",
+        "enum": [
+          "jpeg",
+          "png",
+          "webp"
+        ],
+        "default": "jpeg",
+        "type": "string"
+      }
+    },
+    "required": [
+      "prompt"
+    ],
+    "type": "object"
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "GrokImagineImageInput",
+    "GrokImagineImageOutput",
+    "ImageFile"
+  ]
+}

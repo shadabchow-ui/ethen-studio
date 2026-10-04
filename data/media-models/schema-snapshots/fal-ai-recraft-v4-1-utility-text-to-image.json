@@ -1,0 +1,199 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/recraft/v4.1/utility/text-to-image",
+  "task": "text-to-image",
+  "source_url": "https://fal.ai/models/fal-ai/recraft/v4.1/utility/text-to-image",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Frecraft%2Fv4.1%2Futility%2Ftext-to-image",
+  "retrieved_at": "2026-10-04T19:51:11.564Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "text-to-image",
+  "bytes_sha256": "4af9bbe3556a432e037f495915d82061083877c5ae220f62b7c3dee49de4f9e6",
+  "queue_path": "/fal-ai/recraft/v4.1/utility/text-to-image",
+  "input_name": "RecraftV41UtilityTextToImageInput",
+  "input": {
+    "$refName": "RecraftV41UtilityTextToImageInput",
+    "properties": {
+      "colors": {
+        "description": "An array of preferable colors",
+        "type": "array",
+        "items": {
+          "$refName": "RGBColor",
+          "properties": {
+            "r": {
+              "description": "Red color value",
+              "type": "integer",
+              "minimum": 0,
+              "default": 0,
+              "maximum": 255
+            },
+            "b": {
+              "description": "Blue color value",
+              "type": "integer",
+              "minimum": 0,
+              "default": 0,
+              "maximum": 255
+            },
+            "g": {
+              "description": "Green color value",
+              "type": "integer",
+              "minimum": 0,
+              "default": 0,
+              "maximum": 255
+            }
+          },
+          "type": "object"
+        },
+        "default": []
+      },
+      "background_color": {
+        "anyOf": [
+          {
+            "$refName": "RGBColor",
+            "properties": {
+              "r": {
+                "description": "Red color value",
+                "type": "integer",
+                "minimum": 0,
+                "default": 0,
+                "maximum": 255
+              },
+              "b": {
+                "description": "Blue color value",
+                "type": "integer",
+                "minimum": 0,
+                "default": 0,
+                "maximum": 255
+              },
+              "g": {
+                "description": "Green color value",
+                "type": "integer",
+                "minimum": 0,
+                "default": 0,
+                "maximum": 255
+              }
+            },
+            "type": "object"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "The preferable background color of the generated images."
+      },
+      "enable_safety_checker": {
+        "description": "If set to true, the safety checker will be enabled. Disabling it requires account authorization; unauthorized requests are always checked.",
+        "type": "boolean",
+        "default": true
+      },
+      "prompt": {
+        "type": "string",
+        "examples": [
+          "Tilt-shift miniature effect on a real Portuguese fishing village at golden hour, colorful boats in the harbor appearing toy-like, selective focus band across the middle, saturated primary colors of blue red and yellow boats against white buildings, 90mm tilt-shift lens, the familiar made fantastical, Wes Anderson color sensibility"
+        ],
+        "maxLength": 10000,
+        "minLength": 1
+      },
+      "image_size": {
+        "examples": [
+          "landscape_16_9"
+        ],
+        "default": "square_hd",
+        "anyOf": [
+          {
+            "$refName": "ImageSize",
+            "properties": {
+              "height": {
+                "description": "The height of the generated image.",
+                "type": "integer",
+                "exclusiveMinimum": 0,
+                "default": 512,
+                "maximum": 14142
+              },
+              "width": {
+                "description": "The width of the generated image.",
+                "type": "integer",
+                "exclusiveMinimum": 0,
+                "default": 512,
+                "maximum": 14142
+              }
+            },
+            "type": "object"
+          },
+          {
+            "type": "string",
+            "enum": [
+              "square_hd",
+              "square",
+              "portrait_4_3",
+              "portrait_16_9",
+              "landscape_4_3",
+              "landscape_16_9"
+            ]
+          }
+        ]
+      }
+    },
+    "type": "object",
+    "required": [
+      "prompt"
+    ]
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "RecraftV41UtilityTextToImageInput",
+    "RecraftV41UtilityTextToImageOutput",
+    "RGBColor",
+    "ImageSize",
+    "File"
+  ]
+}

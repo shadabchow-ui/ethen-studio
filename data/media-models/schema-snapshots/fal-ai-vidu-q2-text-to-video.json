@@ -1,0 +1,148 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/vidu/q2/text-to-video",
+  "task": "text-to-video",
+  "source_url": "https://fal.ai/models/fal-ai/vidu/q2/text-to-video",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fvidu%2Fq2%2Ftext-to-video",
+  "retrieved_at": "2026-10-04T19:52:24.312Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "text-to-video",
+  "bytes_sha256": "075c494be3209ec1092c74d100b6ab5952bc27f812bbc5c20f1da7e6b163e0f1",
+  "queue_path": "/fal-ai/vidu/q2/text-to-video",
+  "input_name": "ViduQ2TextToVideoInput",
+  "input": {
+    "$refName": "ViduQ2TextToVideoInput",
+    "properties": {
+      "resolution": {
+        "enum": [
+          "360p",
+          "520p",
+          "720p",
+          "1080p"
+        ],
+        "type": "string",
+        "description": "Output video resolution",
+        "default": "720p"
+      },
+      "prompt": {
+        "examples": [
+          "A cinematic shot of a futuristic city at sunset, with flying cars and towering skyscrapers."
+        ],
+        "type": "string",
+        "maxLength": 3000,
+        "description": "Text prompt for video generation, max 3000 characters"
+      },
+      "seed": {
+        "anyOf": [
+          {
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "Random seed for reproducibility. If None, a random seed is chosen."
+      },
+      "aspect_ratio": {
+        "enum": [
+          "16:9",
+          "9:16",
+          "1:1"
+        ],
+        "type": "string",
+        "description": "The aspect ratio of the output video",
+        "default": "16:9"
+      },
+      "movement_amplitude": {
+        "enum": [
+          "auto",
+          "small",
+          "medium",
+          "large"
+        ],
+        "type": "string",
+        "description": "The movement amplitude of objects in the frame",
+        "default": "auto"
+      },
+      "duration": {
+        "enum": [
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8
+        ],
+        "type": "integer",
+        "description": "Duration of the video in seconds",
+        "default": 4
+      },
+      "bgm": {
+        "type": "boolean",
+        "description": "Whether to add background music to the video (only for 4-second videos)",
+        "default": false
+      }
+    },
+    "type": "object",
+    "required": [
+      "prompt"
+    ]
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "ViduQ2TextToVideoInput",
+    "ViduQ2TextToVideoOutput",
+    "File"
+  ]
+}

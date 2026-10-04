@@ -1,0 +1,274 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/dreamshaper",
+  "task": "unknown",
+  "source_url": "https://fal.ai/models/fal-ai/dreamshaper",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fdreamshaper",
+  "retrieved_at": "2026-10-04T19:43:18.204Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "text-to-image",
+  "bytes_sha256": "ceabef3f615cd5ae356ebbac84b4cf45f5b851bb2a885de68afa371a3d100101",
+  "queue_path": "/fal-ai/dreamshaper",
+  "input_name": "DreamshaperInput",
+  "input": {
+    "$refName": "DreamshaperInput",
+    "required": [
+      "prompt"
+    ],
+    "type": "object",
+    "properties": {
+      "seed": {
+        "description": "\n            The same seed and the same prompt given to the same version of Stable Diffusion\n            will output the same image every time.\n        ",
+        "anyOf": [
+          {
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null
+      },
+      "embeddings": {
+        "description": "The list of embeddings to use.",
+        "items": {
+          "$refName": "Embedding",
+          "required": [
+            "path"
+          ],
+          "type": "object",
+          "properties": {
+            "tokens": {
+              "description": "\n            The list of tokens to use for the embedding. When omitted, tokens\n            are generated as <s0>, <s1>, ... to match the number of vectors in\n            the embedding file.\n        ",
+              "anyOf": [
+                {
+                  "items": {
+                    "type": "string"
+                  },
+                  "type": "array"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "default": null
+            },
+            "path": {
+              "description": "URL or the path to the embedding weights.",
+              "type": "string",
+              "examples": [
+                "https://civitai.com/api/download/models/135931",
+                "https://filebin.net/3chfqasxpqu21y8n/my-custom-lora-v1.safetensors"
+              ]
+            }
+          }
+        },
+        "type": "array",
+        "default": []
+      },
+      "prompt": {
+        "description": "The prompt to use for generating the image. Be as descriptive as possible for best results.",
+        "type": "string",
+        "examples": [
+          "A hyperdetailed photograph of a Cat dressed as a mafia boss holding a fish walking down a Japanese fish market with an angry face, 8k resolution, best quality, beautiful photograph, dynamic lighting,"
+        ]
+      },
+      "safety_checker_version": {
+        "description": "The version of the safety checker to use. v1 is the default CompVis safety checker. v2 uses a custom ViT model.",
+        "enum": [
+          "v1",
+          "v2"
+        ],
+        "type": "string",
+        "default": "v1"
+      },
+      "request_id": {
+        "description": "\n            An id bound to a request, can be used with response to identify the request\n            itself.\n        ",
+        "type": "string",
+        "default": ""
+      },
+      "format": {
+        "description": "The format of the generated image.",
+        "enum": [
+          "jpeg",
+          "png"
+        ],
+        "type": "string",
+        "default": "jpeg"
+      },
+      "enable_safety_checker": {
+        "description": "If set to true, the safety checker will be enabled.",
+        "type": "boolean",
+        "default": true
+      },
+      "negative_prompt": {
+        "description": "The negative prompt to use. Use it to address details that you don't want in the image.",
+        "type": "string",
+        "default": "(worst quality, low quality, normal quality, lowres, low details, oversaturated, undersaturated, overexposed, underexposed, grayscale, bw, bad photo, bad photography, bad art:1.4), (watermark, signature, text font, username, error, logo, words, letters, digits, autograph, trademark, name:1.2), (blur, blurry, grainy), morbid, ugly, asymmetrical, mutated malformed, mutilated, poorly lit, bad shadow, draft, cropped, out of frame, cut off, censored, jpeg artifacts, out of focus, glitch, duplicate, (airbrushed, cartoon, anime, semi-realistic, cgi, render, blender, digital art, manga, amateur:1.3), (3D ,3D Game, 3D Game Scene, 3D Character:1.1), (bad hands, bad anatomy, bad body, bad face, bad teeth, bad arms, bad legs, deformities:1.3)"
+      },
+      "expand_prompt": {
+        "description": "If set to true, the prompt will be expanded with additional prompts.",
+        "type": "boolean",
+        "default": false
+      },
+      "image_size": {
+        "anyOf": [
+          {
+            "$refName": "ImageSize",
+            "type": "object",
+            "properties": {
+              "height": {
+                "maximum": 14142,
+                "description": "The height of the generated image.",
+                "type": "integer",
+                "default": 512,
+                "exclusiveMinimum": 0
+              },
+              "width": {
+                "maximum": 14142,
+                "description": "The width of the generated image.",
+                "type": "integer",
+                "default": 512,
+                "exclusiveMinimum": 0
+              }
+            }
+          },
+          {
+            "enum": [
+              "square_hd",
+              "square",
+              "portrait_4_3",
+              "portrait_16_9",
+              "landscape_4_3",
+              "landscape_16_9"
+            ],
+            "type": "string"
+          }
+        ],
+        "default": {
+          "height": 1024,
+          "width": 1024
+        }
+      },
+      "num_images": {
+        "maximum": 8,
+        "description": "The number of images to generate.",
+        "type": "integer",
+        "minimum": 1,
+        "default": 1
+      },
+      "sync_mode": {
+        "description": "If `True`, the media will be returned as a data URI and the output data won't be available in the request history.",
+        "type": "boolean",
+        "default": false
+      },
+      "loras": {
+        "description": "The list of LoRA weights to use.",
+        "items": {
+          "$refName": "LoraWeight",
+          "required": [
+            "path"
+          ],
+          "type": "object",
+          "properties": {
+            "scale": {
+              "maximum": 1,
+              "description": "\n            The scale of the LoRA weight. This is used to scale the LoRA weight\n            before merging it with the base model.\n        ",
+              "type": "number",
+              "minimum": 0,
+              "default": 1
+            },
+            "force": {
+              "description": "If set to true, the embedding will be forced to be used.",
+              "type": "boolean",
+              "default": false
+            },
+            "path": {
+              "description": "URL or path to a LoRA safetensors file. Or HF model name that resolves to safetensors weights.",
+              "type": "string",
+              "examples": [
+                "https://civitai.com/api/download/models/135931",
+                "https://filebin.net/3chfqasxpqu21y8n/my-custom-lora-v1.safetensors"
+              ]
+            }
+          }
+        },
+        "type": "array",
+        "default": []
+      },
+      "guidance_scale": {
+        "maximum": 20,
+        "description": "The CFG (Classifier Free Guidance) scale is a measure of how close you want the model to stick to your prompt when looking for a related image to show you.",
+        "type": "number",
+        "minimum": 0,
+        "default": 5
+      },
+      "num_inference_steps": {
+        "maximum": 70,
+        "description": "The number of inference steps to perform.",
+        "type": "integer",
+        "minimum": 1,
+        "default": 35
+      }
+    }
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "DreamshaperInput",
+    "DreamshaperOutput",
+    "Embedding",
+    "ImageSize",
+    "LoraWeight",
+    "Image"
+  ]
+}

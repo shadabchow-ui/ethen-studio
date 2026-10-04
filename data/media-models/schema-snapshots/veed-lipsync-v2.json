@@ -1,0 +1,99 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "veed/lipsync/v2",
+  "task": "unknown",
+  "source_url": "https://fal.ai/models/veed/lipsync/v2",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=veed%2Flipsync%2Fv2",
+  "retrieved_at": "2026-10-04T19:55:31.844Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "video-to-video",
+  "bytes_sha256": "2a3a44447093cb9864f48bfcbdd407a9ac09999d57e5ecef520c5af341e9bec4",
+  "queue_path": "/veed/lipsync/v2",
+  "input_name": "LipsyncV2Input",
+  "input": {
+    "$refName": "LipsyncV2Input",
+    "required": [
+      "video_url",
+      "audio_url"
+    ],
+    "properties": {
+      "audio_url": {
+        "examples": [
+          "https://v3.fal.media/files/rabbit/Ql3ade3wEKlZXRQLRbhxm_tts.mp3"
+        ],
+        "minLength": 1,
+        "maxLength": 2083,
+        "description": "New audio track to articulate",
+        "format": "uri",
+        "type": "string"
+      },
+      "video_url": {
+        "examples": [
+          "https://v3.fal.media/files/monkey/q1fDPhrpfjfsaRmbhTed4_influencer.mp4"
+        ],
+        "minLength": 1,
+        "maxLength": 2083,
+        "description": "Source video to lipsync",
+        "format": "uri",
+        "type": "string"
+      }
+    },
+    "type": "object"
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "LipsyncV2Input",
+    "LipsyncV2Output",
+    "File"
+  ]
+}

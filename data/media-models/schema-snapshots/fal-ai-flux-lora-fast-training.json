@@ -1,0 +1,135 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/flux-lora-fast-training",
+  "task": "unknown",
+  "source_url": "https://fal.ai/models/fal-ai/flux-lora-fast-training",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fflux-lora-fast-training",
+  "retrieved_at": "2026-10-04T19:44:49.150Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "training",
+  "bytes_sha256": "24d3bd3b78d71b826257336408999c67b538a88f81b4ccf93863df3681f8f924",
+  "queue_path": "/fal-ai/flux-lora-fast-training",
+  "input_name": "FluxLoraFastTrainingInput",
+  "input": {
+    "$refName": "FluxLoraFastTrainingInput",
+    "required": [
+      "images_data_url"
+    ],
+    "type": "object",
+    "properties": {
+      "is_style": {
+        "type": "boolean",
+        "default": false,
+        "description": "If True, the training will be for a style. This will deactivate segmentation, captioning and will use trigger word instead. Use the trigger word to specify the style."
+      },
+      "steps": {
+        "examples": [
+          1000
+        ],
+        "anyOf": [
+          {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 10000
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "Number of steps to train the LoRA on."
+      },
+      "images_data_url": {
+        "type": "string",
+        "description": "\n        URL to zip archive with images. Try to use at least 4 images in general the more the better.\n\n        In addition to images the archive can contain text files with captions. Each text file should have the same name as the image file it corresponds to.\n    "
+      },
+      "trigger_word": {
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "Trigger word to be used in the captions. If None, a trigger word will not be used.\n        If no captions are provide the trigger_word will be used instead of captions. If captions are the trigger word will not be used.\n        "
+      },
+      "create_masks": {
+        "type": "boolean",
+        "default": true,
+        "description": "If True segmentation masks will be used in the weight the training loss. For people a face mask is used if possible."
+      },
+      "data_archive_format": {
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "The format of the archive. If not specified, the format will be inferred from the URL."
+      },
+      "is_input_format_already_preprocessed": {
+        "type": "boolean",
+        "default": false,
+        "description": "Specifies whether the input data is already in a processed format. When set to False (default), the system expects raw input where image files and their corresponding caption files share the same name (e.g., 'photo.jpg' and 'photo.txt'). Set to True if your data is already in a preprocessed format."
+      }
+    }
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "FluxLoraFastTrainingInput",
+    "FluxLoraFastTrainingOutput",
+    "File"
+  ]
+}

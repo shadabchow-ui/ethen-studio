@@ -1,0 +1,131 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "bytedance/seedream/v5/pro/layerize",
+  "task": "unknown",
+  "source_url": "https://fal.ai/models/bytedance/seedream/v5/pro/layerize",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=bytedance%2Fseedream%2Fv5%2Fpro%2Flayerize",
+  "retrieved_at": "2026-10-04T19:42:16.679Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "image-to-image",
+  "bytes_sha256": "bac988fde0d11e22a1792e6e928d372589cebacb015859a1d1b59d8c182fe4ed",
+  "queue_path": "/bytedance/seedream/v5/pro/layerize",
+  "input_name": "SeedreamV5ProLayerizeInput",
+  "input": {
+    "$refName": "SeedreamV5ProLayerizeInput",
+    "properties": {
+      "sync_mode": {
+        "description": "If `True`, the media will be returned as a data URI and the output data won't be available in the request history.",
+        "default": false,
+        "type": "boolean"
+      },
+      "image_size": {
+        "description": "Resolution tier for the output base image and layers. `auto` adapts to the input image while preserving each element's aspect ratio.",
+        "enum": [
+          "auto",
+          "auto_1K",
+          "auto_1.5K",
+          "auto_2K"
+        ],
+        "default": "auto",
+        "type": "string",
+        "examples": [
+          "auto"
+        ]
+      },
+      "enable_safety_checker": {
+        "description": "If set to true, the safety checker will be enabled. Disabling it requires account authorization; unauthorized requests are always checked.",
+        "default": true,
+        "type": "boolean",
+        "examples": [
+          true
+        ]
+      },
+      "enhance_prompt_mode": {
+        "description": "Prompt optimization mode. `standard` prioritizes image quality; `fast` reduces generation time.",
+        "enum": [
+          "standard",
+          "fast"
+        ],
+        "default": "standard",
+        "type": "string"
+      },
+      "prompt": {
+        "description": "Optional instructions describing which elements to separate. When empty, the model automatically separates the major elements. Normalized `<bbox>left top right bottom</bbox>` tags may be used for precise coordinate targeting.",
+        "default": "",
+        "type": "string",
+        "examples": [
+          "Return name and description in english."
+        ]
+      },
+      "image_url": {
+        "description": "URL of the image to decompose into a base image and independently editable layers. The image must contain between 512x512 and 6000x6000 total pixels, have an aspect ratio between 1/16 and 16, and be no larger than 30 MB.",
+        "type": "string",
+        "examples": [
+          "https://storage.googleapis.com/falserverless/example_inputs/kontext_example_input.webp"
+        ]
+      }
+    },
+    "required": [
+      "image_url"
+    ],
+    "type": "object"
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "SeedreamV5ProLayerizeInput",
+    "SeedreamV5ProLayerizeOutput",
+    "SeedDream50ProLayer",
+    "Image",
+    "SeedDream50ProLayerBoundingBox"
+  ]
+}

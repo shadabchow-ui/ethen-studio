@@ -1,0 +1,93 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/musetalk",
+  "task": "unknown",
+  "source_url": "https://fal.ai/models/fal-ai/musetalk",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fmusetalk",
+  "retrieved_at": "2026-10-04T19:49:32.666Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "image-to-video",
+  "bytes_sha256": "c2d3da6d4e54613195348416d44bbf6423c3db4763b0cfa2bba43e1d8b9a01c4",
+  "queue_path": "/fal-ai/musetalk",
+  "input_name": "MusetalkInput",
+  "input": {
+    "$refName": "MusetalkInput",
+    "required": [
+      "source_video_url",
+      "audio_url"
+    ],
+    "type": "object",
+    "properties": {
+      "source_video_url": {
+        "description": "URL of the source video",
+        "type": "string",
+        "examples": [
+          "https://raw.githubusercontent.com/TMElyralab/MuseTalk/main/data/video/sun.mp4"
+        ]
+      },
+      "audio_url": {
+        "description": "URL of the audio",
+        "type": "string",
+        "examples": [
+          "https://raw.githubusercontent.com/TMElyralab/MuseTalk/main/data/audio/sun.wav"
+        ]
+      }
+    }
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "MusetalkInput",
+    "MusetalkOutput",
+    "File"
+  ]
+}

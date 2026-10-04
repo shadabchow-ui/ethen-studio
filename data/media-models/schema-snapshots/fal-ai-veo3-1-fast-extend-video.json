@@ -1,0 +1,161 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/veo3.1/fast/extend-video",
+  "task": "video-editing",
+  "source_url": "https://fal.ai/models/fal-ai/veo3.1/fast/extend-video",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fveo3.1%2Ffast%2Fextend-video",
+  "retrieved_at": "2026-10-04T19:52:07.188Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "video-to-video",
+  "bytes_sha256": "2a368767b9dcf642811d85dfcfd638660e2ef75b94c363b5b3bf20c7dbccb495",
+  "queue_path": "/fal-ai/veo3.1/fast/extend-video",
+  "input_name": "Veo31FastExtendVideoInput",
+  "input": {
+    "$refName": "Veo31FastExtendVideoInput",
+    "properties": {
+      "aspect_ratio": {
+        "default": "auto",
+        "description": "The aspect ratio of the generated video.",
+        "enum": [
+          "auto",
+          "16:9",
+          "9:16"
+        ],
+        "type": "string"
+      },
+      "video_url": {
+        "description": "URL of the video to extend. The video should be 720p or 1080p resolution in 16:9 or 9:16 aspect ratio.",
+        "examples": [
+          "https://v3b.fal.media/files/b/0a8670fe/pY8UGl4_C452wOm9XUBYO_9ae04df8771c4f3f979fa5cabeca6ada.mp4"
+        ],
+        "type": "string"
+      },
+      "negative_prompt": {
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "A negative prompt to guide the video generation."
+      },
+      "duration": {
+        "default": "7s",
+        "const": "7s",
+        "description": "The duration of the generated video.",
+        "type": "string"
+      },
+      "safety_tolerance": {
+        "default": "4",
+        "description": "The safety tolerance level for content moderation. 1 is the most strict (blocks most content), 6 is the least strict.",
+        "enum": [
+          "1",
+          "2",
+          "3",
+          "4",
+          "5",
+          "6"
+        ],
+        "type": "string"
+      },
+      "prompt": {
+        "maxLength": 20000,
+        "examples": [
+          "Continue the scene naturally, maintaining the same style and motion."
+        ],
+        "description": "The text prompt describing how the video should be extended",
+        "type": "string"
+      },
+      "auto_fix": {
+        "default": false,
+        "description": "Whether to automatically attempt to fix prompts that fail content policy or other validation checks by rewriting them.",
+        "type": "boolean"
+      },
+      "resolution": {
+        "default": "720p",
+        "const": "720p",
+        "description": "The resolution of the generated video.",
+        "type": "string"
+      },
+      "generate_audio": {
+        "default": true,
+        "description": "Whether to generate audio for the video.",
+        "type": "boolean"
+      },
+      "seed": {
+        "anyOf": [
+          {
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "The seed for the random number generator."
+      }
+    },
+    "required": [
+      "prompt",
+      "video_url"
+    ],
+    "type": "object"
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "Veo31FastExtendVideoInput",
+    "Veo31FastExtendVideoOutput",
+    "File"
+  ]
+}

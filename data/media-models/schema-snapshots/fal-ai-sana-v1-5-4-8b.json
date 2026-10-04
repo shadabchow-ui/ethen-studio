@@ -1,0 +1,202 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/sana/v1.5/4.8b",
+  "task": "unknown",
+  "source_url": "https://fal.ai/models/fal-ai/sana/v1.5/4.8b",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fsana%2Fv1.5%2F4.8b",
+  "retrieved_at": "2026-10-04T19:51:30.925Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "text-to-image",
+  "bytes_sha256": "6222ae5b4195386c9e8e3e83731181ef8daee16c1cef2c12810c7c0148efbf14",
+  "queue_path": "/fal-ai/sana/v1.5/4.8b",
+  "input_name": "SanaV154.8bInput",
+  "input": {
+    "$refName": "SanaV154.8bInput",
+    "properties": {
+      "style_name": {
+        "enum": [
+          "(No style)",
+          "Cinematic",
+          "Photographic",
+          "Anime",
+          "Manga",
+          "Digital Art",
+          "Pixel art",
+          "Fantasy art",
+          "Neonpunk",
+          "3D Model"
+        ],
+        "description": "The style to generate the image in.",
+        "default": "(No style)",
+        "type": "string"
+      },
+      "num_inference_steps": {
+        "maximum": 50,
+        "minimum": 1,
+        "default": 18,
+        "description": "The number of inference steps to perform.",
+        "type": "integer"
+      },
+      "sync_mode": {
+        "description": "If `True`, the media will be returned as a data URI and the output data won't be available in the request history.",
+        "default": false,
+        "type": "boolean"
+      },
+      "num_images": {
+        "maximum": 4,
+        "minimum": 1,
+        "default": 1,
+        "description": "The number of images to generate.",
+        "type": "integer"
+      },
+      "prompt": {
+        "description": "The prompt to generate an image from.",
+        "type": "string",
+        "examples": [
+          "Underwater coral reef ecosystem during peak bioluminescent activity, multiple layers of marine life - from microscopic plankton to massive coral structures, light refracting through crystal-clear tropical waters, creating prismatic color gradients, hyper-detailed texture of marine organisms"
+        ]
+      },
+      "seed": {
+        "description": "\n            The same seed and the same prompt given to the same version of the model\n            will output the same image every time.\n        ",
+        "anyOf": [
+          {
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "image_size": {
+        "description": "The size of the generated image.",
+        "default": {
+          "height": 2160,
+          "width": 3840
+        },
+        "anyOf": [
+          {
+            "$refName": "ImageSize",
+            "properties": {
+              "height": {
+                "maximum": 14142,
+                "description": "The height of the generated image.",
+                "default": 512,
+                "exclusiveMinimum": 0,
+                "type": "integer"
+              },
+              "width": {
+                "maximum": 14142,
+                "description": "The width of the generated image.",
+                "default": 512,
+                "exclusiveMinimum": 0,
+                "type": "integer"
+              }
+            },
+            "type": "object"
+          },
+          {
+            "enum": [
+              "square_hd",
+              "square",
+              "portrait_4_3",
+              "portrait_16_9",
+              "landscape_4_3",
+              "landscape_16_9"
+            ],
+            "type": "string"
+          }
+        ]
+      },
+      "enable_safety_checker": {
+        "description": "If set to true, the safety checker will be enabled. Disabling it requires account authorization; unauthorized requests are always checked, and images flagged as unsafe are returned as black images.",
+        "default": true,
+        "type": "boolean"
+      },
+      "output_format": {
+        "enum": [
+          "jpeg",
+          "png"
+        ],
+        "description": "The format of the generated image.",
+        "default": "jpeg",
+        "type": "string"
+      },
+      "guidance_scale": {
+        "maximum": 20,
+        "minimum": 0,
+        "default": 5,
+        "description": "\n            The CFG (Classifier Free Guidance) scale is a measure of how close you want\n            the model to stick to your prompt when looking for a related image to show you.\n        ",
+        "type": "number"
+      },
+      "negative_prompt": {
+        "description": "\n            The negative prompt to use. Use it to address details that you don't want\n            in the image. This could be colors, objects, scenery and even the small details\n            (e.g. moustache, blurry, low resolution).\n        ",
+        "default": "",
+        "type": "string",
+        "examples": [
+          ""
+        ]
+      }
+    },
+    "required": [
+      "prompt"
+    ],
+    "type": "object"
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "SanaV154.8bInput",
+    "SanaV154.8bOutput",
+    "ImageSize",
+    "Image"
+  ]
+}

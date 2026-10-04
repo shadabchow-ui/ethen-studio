@@ -1,0 +1,82 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "bria/ad-delayer",
+  "task": "unknown",
+  "source_url": "https://fal.ai/models/bria/ad-delayer",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=bria%2Fad-delayer",
+  "retrieved_at": "2026-10-04T19:41:36.203Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "image-to-json",
+  "bytes_sha256": "7e3915ff39b0ffb2bb2661c868d763741bc27905b5528571e63688b1da3b608a",
+  "queue_path": "/bria/ad-delayer",
+  "input_name": "AdDelayerInput",
+  "input": {
+    "$refName": "AdDelayerInput",
+    "properties": {
+      "image_url": {
+        "description": "Reference ad image to split into layers, as a public URL.",
+        "default": "https://bria-datasets.s3.amazonaws.com/ad-delayer/aurora_ad.png",
+        "type": "string",
+        "examples": [
+          "https://bria-datasets.s3.amazonaws.com/ad-delayer/aurora_ad.png"
+        ]
+      }
+    },
+    "type": "object"
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "AdDelayerInput",
+    "AdDelayerOutput"
+  ]
+}

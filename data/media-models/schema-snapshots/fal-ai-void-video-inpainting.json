@@ -1,0 +1,169 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/void-video-inpainting",
+  "task": "video-editing",
+  "source_url": "https://fal.ai/models/fal-ai/void-video-inpainting",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fvoid-video-inpainting",
+  "retrieved_at": "2026-10-04T19:52:30.641Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "video-to-video",
+  "bytes_sha256": "0279d2a57dcc5c0dfe0a8caff280b4d360dba8963b3d161f14f8ebba355afe96",
+  "queue_path": "/fal-ai/void-video-inpainting",
+  "input_name": "VoidVideoInpaintingInput",
+  "input": {
+    "$refName": "VoidVideoInpaintingInput",
+    "properties": {
+      "video_url": {
+        "type": "string",
+        "examples": [
+          "https://storage.googleapis.com/falserverless/kontext-blog/input_video.mp4"
+        ],
+        "description": "URL of the input video containing the object to remove."
+      },
+      "num_inference_steps": {
+        "minimum": 1,
+        "type": "integer",
+        "default": 30,
+        "maximum": 50,
+        "description": "Number of denoising steps. Higher values improve quality but increase latency."
+      },
+      "mask_prompt": {
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "examples": [
+          "the person walking through the hallway"
+        ],
+        "description": "Text description of what should be masked in the input video, such as the object or person to remove. Used to generate a temporary mask video with SAM-3 when `quad_mask_video_url` is not provided."
+      },
+      "enable_pass2_refinement": {
+        "type": "boolean",
+        "default": false,
+        "description": "Run VOID Pass 2 warped-noise refinement after Pass 1. This is slower but can improve temporal consistency on longer clips."
+      },
+      "quad_mask_video_url": {
+        "type": "string",
+        "default": "",
+        "examples": [
+          "https://storage.googleapis.com/falserverless/kontext-blog/trimask_quadmask.mp4"
+        ],
+        "description": "URL of a mask video for the removal target. For best results this should be a VOID-style quadmask video with 4 grayscale values: 0=object to remove, 63=overlap, 127=affected region, 255=background to keep. A simple binary mask (0=remove, 255=keep) also works. If omitted, the app will generate a temporary mask video from `mask_prompt` using the SAM-3 video endpoint and convert it to a quadmask automatically."
+      },
+      "prompt": {
+        "type": "string",
+        "examples": [
+          "a video of buildings reflecting on a calm river"
+        ],
+        "description": "Text description of the desired background after object removal."
+      },
+      "enable_safety_checker": {
+        "type": "boolean",
+        "default": true,
+        "description": "Enable content safety checking on the output."
+      },
+      "guidance_scale": {
+        "minimum": 0,
+        "type": "number",
+        "default": 1,
+        "maximum": 20,
+        "description": "Classifier-free guidance scale."
+      },
+      "negative_prompt": {
+        "type": "string",
+        "default": "The video is not of a high quality, it has a low resolution. Watermark present in each frame. The background is solid. Strange body and strange trajectory. Distortion.",
+        "description": "Negative prompt to guide generation away from undesired outputs."
+      },
+      "seed": {
+        "anyOf": [
+          {
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "Random seed for reproducibility."
+      },
+      "num_frames": {
+        "minimum": 1,
+        "type": "integer",
+        "default": 85,
+        "maximum": 197,
+        "description": "Temporal window size for inference. The backend snaps this to the nearest CogVideoX-safe value that works with temporal compression and patching. Valid outputs are 69, 77, 85, ..., 197."
+      },
+      "strength": {
+        "minimum": 0,
+        "type": "number",
+        "default": 1,
+        "maximum": 1,
+        "description": "Denoising strength. 1.0 means full denoising."
+      }
+    },
+    "type": "object",
+    "required": [
+      "video_url",
+      "prompt"
+    ]
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "VoidVideoInpaintingInput",
+    "VoidVideoInpaintingOutput",
+    "File"
+  ]
+}

@@ -1,0 +1,118 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "bria/increase-resolution",
+  "task": "unknown",
+  "source_url": "https://fal.ai/models/bria/increase-resolution",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=bria%2Fincrease-resolution",
+  "retrieved_at": "2026-10-04T19:41:48.720Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "image-to-image",
+  "bytes_sha256": "b30116ae2e3d0d6419fd46f4aa46e30acf73adbaec91d3f02292648bbf78d952",
+  "queue_path": "/bria/increase-resolution",
+  "input_name": "IncreaseResolutionInput",
+  "input": {
+    "$refName": "IncreaseResolutionInput",
+    "required": [
+      "image_url"
+    ],
+    "properties": {
+      "output_type": {
+        "default": "png",
+        "enum": [
+          "png",
+          "jpeg"
+        ],
+        "description": "Image format. JPEG carries no alpha, so preserve_alpha does not apply.",
+        "type": "string"
+      },
+      "preserve_alpha": {
+        "default": true,
+        "description": "Reattach the source alpha channel to the result.",
+        "type": "boolean"
+      },
+      "preserve_color": {
+        "default": false,
+        "description": "Correct the upscaled result's color cast against the source image.",
+        "type": "boolean"
+      },
+      "sync_mode": {
+        "default": false,
+        "description": "Return the image inline instead of as a URL.",
+        "type": "boolean"
+      },
+      "image_url": {
+        "examples": [
+          "https://bria-test-images.s3.amazonaws.com/increase_res/playground/sample_input_1000x1250.png"
+        ],
+        "description": "URL of the image to upscale.",
+        "type": "string"
+      },
+      "desired_increase": {
+        "default": 2,
+        "enum": [
+          2,
+          4
+        ],
+        "description": "Upscale factor. Each factor is its own SwinIR checkpoint.",
+        "type": "integer"
+      }
+    },
+    "type": "object"
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "IncreaseResolutionInput",
+    "IncreaseResolutionOutput",
+    "Image"
+  ]
+}

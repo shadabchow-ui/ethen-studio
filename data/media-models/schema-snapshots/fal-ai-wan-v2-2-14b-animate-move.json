@@ -1,0 +1,203 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/wan/v2.2-14b/animate/move",
+  "task": "unknown",
+  "source_url": "https://fal.ai/models/fal-ai/wan/v2.2-14b/animate/move",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fwan%2Fv2.2-14b%2Fanimate%2Fmove",
+  "retrieved_at": "2026-10-04T19:52:52.598Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "video-to-video",
+  "bytes_sha256": "bfc1c702e0e2c30fdf091adf14a67dedffd54a3ec88487997847acd5ce8d397b",
+  "queue_path": "/fal-ai/wan/v2.2-14b/animate/move",
+  "input_name": "WanV2214bAnimateMoveInput",
+  "input": {
+    "$refName": "WanV2214bAnimateMoveInput",
+    "required": [
+      "video_url",
+      "image_url"
+    ],
+    "properties": {
+      "video_write_mode": {
+        "examples": [
+          "balanced"
+        ],
+        "enum": [
+          "fast",
+          "balanced",
+          "small"
+        ],
+        "default": "balanced",
+        "type": "string",
+        "description": "The write mode of the output video. Faster write mode means faster results but larger file size, balanced write mode is a good compromise between speed and quality, and small write mode is the slowest but produces the smallest file size."
+      },
+      "enable_safety_checker": {
+        "examples": [
+          true
+        ],
+        "default": false,
+        "type": "boolean",
+        "description": "If set to true, input data will be checked for safety before processing. Disabling it requires account authorization; unauthorized requests are always checked."
+      },
+      "return_frames_zip": {
+        "default": false,
+        "type": "boolean",
+        "description": "If true, also return a ZIP archive containing per-frame images generated on GPU (lossless)."
+      },
+      "video_quality": {
+        "examples": [
+          "high"
+        ],
+        "enum": [
+          "low",
+          "medium",
+          "high",
+          "maximum"
+        ],
+        "default": "high",
+        "type": "string",
+        "description": "The quality of the output video. Higher quality means better visual quality but larger file size."
+      },
+      "seed": {
+        "description": "Random seed for reproducibility. If None, a random seed is chosen.",
+        "anyOf": [
+          {
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "resolution": {
+        "examples": [
+          "480p"
+        ],
+        "enum": [
+          "480p",
+          "580p",
+          "720p"
+        ],
+        "default": "480p",
+        "type": "string",
+        "description": "Resolution of the generated video (480p, 580p, or 720p)."
+      },
+      "num_inference_steps": {
+        "examples": [
+          6
+        ],
+        "maximum": 40,
+        "default": 20,
+        "description": "Number of inference steps for sampling. Higher values give better quality but take longer.",
+        "type": "integer",
+        "minimum": 2
+      },
+      "image_url": {
+        "examples": [
+          "https://v3b.fal.media/files/b/panda/-oMlZo9Yyj_Nzoza_tgds_GmLF86r5bOt50eMMKCszy_eacc949b3933443c9915a83c98fbe85e.png"
+        ],
+        "type": "string",
+        "description": "URL of the input image. If the input image does not match the chosen aspect ratio, it is resized and center cropped."
+      },
+      "enable_output_safety_checker": {
+        "examples": [
+          false
+        ],
+        "default": false,
+        "type": "boolean",
+        "description": "If set to true, output video will be checked for safety after generation."
+      },
+      "use_turbo": {
+        "examples": [
+          true
+        ],
+        "description": "If true, applies quality enhancement for faster generation with improved quality. When enabled, parameters are automatically optimized for best results.",
+        "default": false,
+        "type": "boolean"
+      },
+      "guidance_scale": {
+        "examples": [
+          1
+        ],
+        "maximum": 10,
+        "default": 1,
+        "description": "Classifier-free guidance scale. Higher values give better adherence to the prompt but may decrease quality.",
+        "type": "number",
+        "minimum": 1
+      },
+      "shift": {
+        "examples": [
+          8
+        ],
+        "maximum": 10,
+        "default": 5,
+        "description": "Shift value for the video. Must be between 1.0 and 10.0.",
+        "type": "number",
+        "minimum": 1
+      },
+      "video_url": {
+        "examples": [
+          "https://v3b.fal.media/files/b/panda/a6SvJg96V8eoglMlYFShU_5385885-hd_1080_1920_25fps.mp4"
+        ],
+        "type": "string",
+        "description": "URL of the input video."
+      }
+    },
+    "type": "object"
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "WanV2214bAnimateMoveInput",
+    "WanV2214bAnimateMoveOutput",
+    "File"
+  ]
+}

@@ -1,0 +1,151 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "sonilo/v1.1/video-to-sound-effects",
+  "task": "video-editing",
+  "source_url": "https://fal.ai/models/sonilo/v1.1/video-to-sound-effects",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=sonilo%2Fv1.1%2Fvideo-to-sound-effects",
+  "retrieved_at": "2026-10-04T19:55:11.875Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "video-to-audio",
+  "bytes_sha256": "f37df99dc20802bd6d80321090aa3a61f97a3f4418a50928cab7d5870fe56d4e",
+  "queue_path": "/sonilo/v1.1/video-to-sound-effects",
+  "input_name": "V11VideoToSoundEffectsInput",
+  "input": {
+    "$refName": "V11VideoToSoundEffectsInput",
+    "properties": {
+      "segments": {
+        "anyOf": [
+          {
+            "type": "array",
+            "items": {
+              "$refName": "SfxSegment",
+              "properties": {
+                "start": {
+                  "type": "number",
+                  "description": "Segment start time in seconds (from video start). The FIRST segment's start must be 0.",
+                  "minimum": 0,
+                  "default": 0
+                },
+                "prompt": {
+                  "type": "string",
+                  "description": "SFX / foley description for this segment.",
+                  "default": ""
+                },
+                "end": {
+                  "type": "number",
+                  "description": "Segment end time in seconds. Must equal the next segment's start (contiguous; no gaps/overlaps); the last segment's end must be <= the video duration.",
+                  "minimum": 0,
+                  "default": 0
+                }
+              },
+              "type": "object"
+            }
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "Optional. Split the video into time ranges, each with its own sound description. Leave empty to split into scenes automatically."
+      },
+      "audio_format": {
+        "default": "aac",
+        "type": "string",
+        "description": "Format of the returned audio file: aac (default), mp3, wav, or flac. (The video with sound is always AAC.)",
+        "enum": [
+          "wav",
+          "mp3",
+          "aac",
+          "flac"
+        ]
+      },
+      "video_url": {
+        "examples": [
+          "https://storage.googleapis.com/falserverless/model_tests/video_models/mmaudio_input.mp4"
+        ],
+        "type": "string",
+        "description": "The video to add sound to (public URL, or upload a file). The generated audio matches the video's length."
+      },
+      "keep_speech_vocal": {
+        "type": "boolean",
+        "description": "Keep the original video's speech/vocals. When on, the source audio is separated (music source separation) and the isolated vocals are kept as recorded, with the generated sound mixed in at a level matched to the voice; the rest of the original soundtrack (music, ambience) is dropped. Applies to the returned audio and video. When off (default), the result carries only the generated sound.",
+        "default": false
+      },
+      "prompt": {
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "Optional. Describe the kind of sound you want; it steers the generated audio for every scene. Leave empty to caption the video automatically."
+      }
+    },
+    "type": "object",
+    "required": [
+      "video_url"
+    ],
+    "description": "sfx-v1.0 video schema (video-to-audio / video-to-video): plain-language\nfield help for the product Playground. Prompt and segments are advanced;\nflash and seed are hidden."
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "V11VideoToSoundEffectsInput",
+    "V11VideoToSoundEffectsOutput",
+    "SfxSegment",
+    "WatermarkInfo",
+    "Audio",
+    "SfxOutputSegment",
+    "SfxSegmentMeta"
+  ]
+}

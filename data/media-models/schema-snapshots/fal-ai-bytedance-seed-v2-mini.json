@@ -1,0 +1,205 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/bytedance/seed/v2/mini",
+  "task": "unknown",
+  "source_url": "https://fal.ai/models/fal-ai/bytedance/seed/v2/mini",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fbytedance%2Fseed%2Fv2%2Fmini",
+  "retrieved_at": "2026-10-04T19:42:51.842Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "llm",
+  "bytes_sha256": "4bc788a0543cd7068d0ceaa104604a67d8b5aa7e71776325497c0710a1ed2cab",
+  "queue_path": "/fal-ai/bytedance/seed/v2/mini",
+  "input_name": "BytedanceSeedV2MiniInput",
+  "input": {
+    "$refName": "BytedanceSeedV2MiniInput",
+    "type": "object",
+    "properties": {
+      "top_p": {
+        "minimum": 0,
+        "type": "number",
+        "maximum": 1,
+        "description": "Nucleus sampling parameter. The model considers tokens with top_p cumulative probability mass. Lower values narrow the token selection.",
+        "default": 0.7
+      },
+      "video_urls": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        },
+        "description": "URLs of videos for video understanding. Supported formats: MP4, MOV. Audio comprehension is not supported. A maximum of 3 videos is supported. Any additional videos will be ignored."
+      },
+      "reasoning_effort": {
+        "description": "Controls the depth of reasoning before the model responds. Only applicable when `thinking` is `enabled` or `auto`. `minimal` for immediate response, `low` for faster response with light reasoning, `medium` for balanced speed and depth, `high` for deep analysis of complex issues.",
+        "anyOf": [
+          {
+            "enum": [
+              "minimal",
+              "low",
+              "medium",
+              "high"
+            ],
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "thinking": {
+        "enum": [
+          "enabled",
+          "disabled",
+          "auto"
+        ],
+        "type": "string",
+        "description": "Controls the model's chain-of-thought reasoning. `enabled` always includes reasoning, `disabled` never includes reasoning, `auto` lets the model decide based on the query.",
+        "default": "enabled"
+      },
+      "image_urls": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        },
+        "description": "URLs of images for visual understanding. Supported formats: JPEG, PNG, WebP. A maximum of 6 images is supported. Any additional images will be ignored."
+      },
+      "max_completion_tokens": {
+        "minimum": 1,
+        "type": "integer",
+        "maximum": 65536,
+        "description": "Controls the maximum length of the model's output, including both the model's response and its chain-of-thought content, measured in tokens.",
+        "default": 4096
+      },
+      "temperature": {
+        "minimum": 0,
+        "type": "number",
+        "maximum": 2,
+        "description": "Controls randomness in the response. Lower values make output more focused and deterministic, higher values make it more creative.",
+        "default": 1
+      },
+      "system_prompt": {
+        "description": "Optional system prompt to guide the model's behavior.",
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "prompt": {
+        "type": "string",
+        "examples": [
+          "What can you do?"
+        ],
+        "description": "The text prompt or question for the model."
+      },
+      "messages": {
+        "examples": [
+          []
+        ],
+        "description": "Optional prior conversation history for multi-turn conversations. Pass back the `messages` field from a previous response to provide context. The current `prompt`, `image_urls`, `video_urls`, and `system_prompt` are always appended as the latest user turn.",
+        "anyOf": [
+          {
+            "type": "array",
+            "items": {
+              "$refName": "Seed2MiniMessage",
+              "type": "object",
+              "properties": {
+                "content": {
+                  "description": "The content of the message. Can be a string for text-only messages, or a list of content parts for multimodal messages (e.g. with images).",
+                  "anyOf": [
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "array",
+                      "items": {
+                        "type": "object"
+                      }
+                    }
+                  ]
+                },
+                "role": {
+                  "enum": [
+                    "system",
+                    "user",
+                    "assistant"
+                  ],
+                  "type": "string",
+                  "description": "The role of the message author."
+                }
+              },
+              "required": [
+                "role",
+                "content"
+              ]
+            }
+          },
+          {
+            "type": "null"
+          }
+        ]
+      }
+    },
+    "required": [
+      "prompt"
+    ]
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "BytedanceSeedV2MiniInput",
+    "BytedanceSeedV2MiniOutput",
+    "Seed2MiniMessage"
+  ]
+}

@@ -1,0 +1,186 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/pixverse/c1/reference-to-video",
+  "task": "reference-to-video",
+  "source_url": "https://fal.ai/models/fal-ai/pixverse/c1/reference-to-video",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fpixverse%2Fc1%2Freference-to-video",
+  "retrieved_at": "2026-10-04T19:49:59.479Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "image-to-video",
+  "bytes_sha256": "cd3be0ee9020bb519351c6053e80794d311507171fc5ce48af1420e54e02e458",
+  "queue_path": "/fal-ai/pixverse/c1/reference-to-video",
+  "input_name": "PixverseC1ReferenceToVideoInput",
+  "input": {
+    "$refName": "PixverseC1ReferenceToVideoInput",
+    "properties": {
+      "aspect_ratio": {
+        "enum": [
+          "16:9",
+          "4:3",
+          "1:1",
+          "3:4",
+          "9:16",
+          "2:3",
+          "3:2",
+          "21:9"
+        ],
+        "default": "16:9",
+        "description": "The aspect ratio of the generated video",
+        "type": "string"
+      },
+      "prompt": {
+        "examples": [
+          "A @character walks through a magical forest"
+        ],
+        "description": "The prompt for the reference-to-video generation. Use @ref_name to refer to uploaded references. Limited to 2048 UTF-8 encoded bytes. Because the limit counts bytes rather than characters, emoji and non-Latin or accented characters (which use multiple bytes each) can push a visually short prompt over the cap.",
+        "type": "string"
+      },
+      "image_references": {
+        "minItems": 1,
+        "type": "array",
+        "description": "List of reference images with type and name. Use @ref_name in the prompt to refer to each reference.",
+        "examples": [
+          [
+            {
+              "ref_name": "character",
+              "type": "subject",
+              "image_url": "https://v3.fal.media/files/zebra/qL93Je8ezvzQgDOEzTjKF_KhGKZTEebZcDw6T5rwQPK_output.png"
+            }
+          ]
+        ],
+        "maxItems": 7,
+        "items": {
+          "$refName": "ImageReference",
+          "properties": {
+            "ref_name": {
+              "examples": [
+                "character",
+                "dog",
+                "room"
+              ],
+              "description": "A short name for this reference. Use @ref_name in the prompt to refer to this image.",
+              "type": "string"
+            },
+            "type": {
+              "enum": [
+                "subject",
+                "background"
+              ],
+              "default": "subject",
+              "description": "Type of reference: 'subject' for character/object references, 'background' for scene/environment references",
+              "type": "string"
+            },
+            "image_url": {
+              "examples": [
+                "https://v3.fal.media/files/zebra/qL93Je8ezvzQgDOEzTjKF_KhGKZTEebZcDw6T5rwQPK_output.png"
+              ],
+              "description": "URL of the reference image",
+              "type": "string"
+            }
+          },
+          "required": [
+            "image_url",
+            "ref_name"
+          ],
+          "type": "object"
+        }
+      },
+      "duration": {
+        "type": "integer",
+        "maximum": 15,
+        "default": 5,
+        "description": "The duration of the generated video in seconds (1-15)",
+        "minimum": 1
+      },
+      "seed": {
+        "description": "\n            The same seed and the same prompt given to the same version of the model\n            will output the same video every time.\n        ",
+        "anyOf": [
+          {
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "generate_audio_switch": {
+        "type": "boolean",
+        "default": false,
+        "description": "Enable audio generation (BGM, SFX, dialogue)"
+      },
+      "resolution": {
+        "enum": [
+          "360p",
+          "540p",
+          "720p",
+          "1080p"
+        ],
+        "default": "720p",
+        "description": "The resolution of the generated video",
+        "type": "string"
+      }
+    },
+    "required": [
+      "prompt",
+      "image_references"
+    ],
+    "type": "object"
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "PixverseC1ReferenceToVideoInput",
+    "PixverseC1ReferenceToVideoOutput",
+    "ImageReference",
+    "File"
+  ]
+}
