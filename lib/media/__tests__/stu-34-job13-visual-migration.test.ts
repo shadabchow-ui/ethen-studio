@@ -72,13 +72,13 @@ check(STUDIO_SHELL_DEMO_MARKERS.length === 6, "six demo tripwire markers", STUDI
 // ── 2. Canonical stack mounted on the workbench layout ──
 const workbenchLayout = source("app/studio/(workbench)/layout.tsx");
 for (const needle of [
-  "AppShell",
+  "StudioWorkbenchChrome",
   "StudioWorkbenchBoot",
   "StudioWorkbenchSelectionProvider",
   "getStudioNavEntries",
   "getStudioPaletteEntries",
-  "navSections=",
-  "paletteItems=",
+  "navEntries=",
+  "paletteEntries=",
 ]) {
   check(workbenchLayout.includes(needle), `workbench layout composes ${needle}`);
 }
@@ -142,9 +142,11 @@ walk(STUDIO_APP);
 for (const expected of EXPECTED_PAGES) {
   check(observedPages.includes(expected), `route preserved: ${expected}`);
 }
-check(observedPages.length === EXPECTED_PAGES.length, `page count is ${EXPECTED_PAGES.length}`, observedPages.join(","));
+const routeBaseline = JSON.parse(source("artifacts/studio-closure/OPUS-FINAL-004_ROUTE_BASELINE.json")) as { pages: string[]; apis: string[]; live_workbench_pages: string[] };
+const baselineUrls = routeBaseline.pages.map(path => path.slice(3).replace(/\/page\.tsx$/, "").replace(/\/\([^/]*\)/g, ""));
+check(JSON.stringify(observedPages.slice().sort()) === JSON.stringify(baselineUrls.sort()), "all current committed Studio routes preserved", observedPages.join(","));
 
-// API routes: 52 certified + 1 thin job-presentation read route.
+// API routes are pinned to the current committed V1 cutover baseline.
 const apiRoutes: string[] = [];
 const walkApi = (dir: string) => {
   for (const entry of readdirSync(dir, { withFileTypes: true })) {
@@ -154,22 +156,26 @@ const walkApi = (dir: string) => {
   }
 };
 walkApi(join(ROOT, "app/api"));
-check(apiRoutes.length === 53, `API route count is 53 (52 + job-presentation)`, String(apiRoutes.length));
+check(apiRoutes.length === routeBaseline.apis.length && routeBaseline.apis.every(path => apiRoutes.includes(join(ROOT, path))), "all current committed Studio API paths preserved");
 check(
-  existsSync(join(ROOT, "app/api/media/shell/job-presentation/route.ts")),
-  "job-presentation read route exists",
+  !existsSync(join(ROOT, "app/api/media/shell/job-presentation/route.ts")) &&
+    source("lib/studio-v5/media-cutover.ts").includes('retired(`${M}/shell/job-presentation/route.ts`') &&
+    existsSync(join(ROOT, "app/api/studio/v1/jobs/[jobId]/route.ts")),
+  "documented legacy projection retirement retains canonical V1 job read route",
 );
 
-// Redirects unchanged.
+// V5 owner-locked one-hop redirects and canonical Apps destination.
 for (const [page, target] of [
-  ["(workbench)/image/page.tsx", "/studio/apps?category=image"],
-  ["(workbench)/video/page.tsx", "/studio/apps?category=video"],
-  ["(workbench)/audio/page.tsx", "/studio/apps?category=audio"],
-  ["(workbench)/canvas/page.tsx", "/studio"],
-  ["(workbench)/apps/page.tsx", "/studio"],
+  ["(workbench)/image/page.tsx", "/studio/create/image"],
+  ["(workbench)/video/page.tsx", "/studio/create/video"],
+  ["(workbench)/audio/page.tsx", "/studio/create/voice"],
+  ["(workbench)/canvas/page.tsx", "/studio/workflows"],
+
 ]) {
   check(source(`app/studio/${page}`).includes(target), `redirect preserved: ${page} → ${target}`);
 }
+
+check(source("app/studio/(workbench)/apps/page.tsx").includes("StudioAppsLibrary") && source("app/studio/(workbench)/apps/page.tsx").includes('dataSource="live"'), "canonical Apps destination renders live V5 library");
 
 // ── 4. Live datasource + demo tripwire ──
 const workbenchPages: string[] = [];
@@ -181,7 +187,7 @@ const walkPages = (dir: string) => {
   }
 };
 walkPages(join(STUDIO_APP, "(workbench)"));
-let liveCount = 0;
+const observedLive: string[] = [];
 for (const page of workbenchPages) {
   const body = readFileSync(page, "utf8");
   const isRedirect = body.includes("redirect(");
@@ -189,26 +195,20 @@ for (const page of workbenchPages) {
   for (const marker of STUDIO_SHELL_DEMO_MARKERS) {
     check(!body.includes(marker), `no demo marker ${marker}: ${page.slice(STUDIO_APP.length)}`);
   }
-  if (!isRedirect && (body.includes('dataSource="live"') || body.includes("StudioGeneratorWorkbench"))) liveCount += 1;
+  if (!isRedirect && (body.includes('dataSource="live"') || body.includes("StudioGeneratorWorkbench"))) observedLive.push(page.slice(ROOT.length + 1));
 }
-check(liveCount === 20, `live StudioShell on workbench pages (${liveCount})`);
-const workbenchSrc = source("/components/studio/StudioGeneratorWorkbench.tsx");
-check(workbenchSrc.includes('dataSource="live"'), "generator workbench renders live StudioShell");
-
-// Generator panels mount the canonical workbench, not the retired page.
-for (const panel of [
-  "ai-influencer",
-  "character-motion",
-  "cinematic-scene",
-  "create-image",
-  "game-assets",
-  "image-to-video",
-  "marketing",
-  "product-ad",
-  "text-to-video",
-]) {
+check(JSON.stringify(observedLive.sort()) === JSON.stringify(routeBaseline.live_workbench_pages.slice().sort()), "all committed live workbench pages retain their live datasource");
+// Legacy generator panels follow the committed V5 cutover destinations.
+const legacyPanels: Record<string, string> = {
+  "ai-influencer": "/studio/influencer", "character-motion": "/studio/create/video",
+  "cinematic-scene": "/studio/pro/cinema", "create-image": "/studio/create/image",
+  "game-assets": "/studio/create/image", "image-to-video": "/studio/create/video",
+  marketing: "/studio/marketing", "product-ad": "/studio/marketing", "text-to-video": "/studio/create/video",
+};
+check(!existsSync(join(ROOT, "components/studio/StudioGeneratorWorkbench.tsx")), "retired generator workbench stays absent");
+for (const [panel, destination] of Object.entries(legacyPanels)) {
   const body = source(`app/studio/(workbench)/apps/${panel}/page.tsx`);
-  check(body.includes("StudioGeneratorWorkbench"), `panel mounts canonical workbench: ${panel}`);
+  check(body.includes("redirect(") && body.includes(destination), `legacy panel follows canonical destination: ${panel}`);
   check(!body.includes("StudioAppPanelPage"), `panel dropped retired page: ${panel}`);
 }
 
@@ -245,7 +245,6 @@ check(getNavSectionsForPath("/projects") === SHELL_NAV_SECTIONS, "shared /projec
 const RETIRED = [
   "StudioAppPanelPage.tsx",
   "StudioShellFrame.tsx",
-  "StudioStage.tsx",
   "StudioSettingsRail.tsx",
   "StudioInspectorRail.tsx",
   "StageResultToolbar.tsx",
@@ -263,6 +262,7 @@ const RETIRED = [
 for (const file of RETIRED) {
   check(!existsSync(join(ROOT, "/components/studio", file)), `retired: ${file}`);
 }
+check(existsSync(join(ROOT, "components/studio/StudioStage.tsx")) && source("components/studio/StudioProjectReview.tsx").includes("StudioStage"), "shared result-stage retained for active project review");
 const standalone = source("/components/studio/StudioStandalonePages.tsx");
 for (const orphan of ["StudioAppsPage", "StudioImagePage", "StudioVideoPage", "StudioAudioPage", "StudioCanvasPage", "StudioModalityPage"]) {
   check(!standalone.includes(orphan), `orphan export removed: ${orphan}`);
@@ -271,7 +271,7 @@ for (const kept of ["StudioJobsPage", "StudioAssetsPage", "StudioProjectsPage"])
   check(standalone.includes(kept), `live export retained: ${kept}`);
 }
 check(existsSync(join(ROOT, "/components/studio/StudioPageFrame.tsx")), "StudioPageFrame retained as content frame");
-check(existsSync(join(ROOT, "components/studio/StudioAppPanelPage.tsx")), "root test-mirror intact for source-scan tests");
+check(!existsSync(join(ROOT, "components/studio/StudioAppPanelPage.tsx")), "standalone tree retains no obsolete monolith test mirror");
 
 // ── 7. Responsive + accessibility contracts pinned ──
 check(
@@ -291,7 +291,7 @@ const viewport = source("packages/ui/src/design-system/v2/canvas/CanvasViewport.
 check(viewport.includes("scrollOwner"), "canvas scroll ownership stays explicit");
 const newUiFiles = [
   ...readdirSync(slotsDir).filter((name) => name.endsWith(".tsx")).map((name) => `/components/studio/slots/${name}`),
-  "/components/studio/StudioGeneratorWorkbench.tsx",
+
 ];
 for (const file of newUiFiles) {
   const body = source(file);
