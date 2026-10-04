@@ -1,0 +1,143 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "nvidia/nemotron-3-nano-omni/video",
+  "task": "video-editing",
+  "source_url": "https://fal.ai/models/nvidia/nemotron-3-nano-omni/video",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=nvidia%2Fnemotron-3-nano-omni%2Fvideo",
+  "retrieved_at": "2026-10-04T19:54:37.246Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "video-to-text",
+  "bytes_sha256": "3a7255119315f05bde11246811eec7d44bfda01940c1eb04e7cd977379cfb957",
+  "queue_path": "/nvidia/nemotron-3-nano-omni/video",
+  "input_name": "Nemotron3NanoOmniVideoInput",
+  "input": {
+    "$refName": "Nemotron3NanoOmniVideoInput",
+    "required": [
+      "prompt",
+      "video_url"
+    ],
+    "type": "object",
+    "properties": {
+      "prompt": {
+        "description": "Text prompt to send to the model. English only.",
+        "type": "string",
+        "examples": [
+          "Summarize the key capabilities of a multimodal agent."
+        ],
+        "minLength": 1
+      },
+      "temperature": {
+        "description": "Sampling temperature. Lower is more deterministic.",
+        "maximum": 2,
+        "type": "number",
+        "minimum": 0,
+        "default": 0.7
+      },
+      "video_url": {
+        "description": "URL of the video to reason about. mp4, up to 1080p, max 2 minutes.",
+        "type": "string",
+        "examples": [
+          "https://storage.googleapis.com/falserverless/example_inputs/nemotron-3-nano-omni/video_in.mp4"
+        ]
+      },
+      "top_p": {
+        "description": "Nucleus sampling probability mass.",
+        "maximum": 1,
+        "type": "number",
+        "minimum": 0,
+        "default": 0.95
+      },
+      "system_prompt": {
+        "description": "Optional system prompt to steer the model. Reasoning behavior is controlled by the separate `reasoning_mode` field.",
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "examples": [
+          "You are a concise enterprise assistant."
+        ]
+      },
+      "enable_safety_checker": {
+        "description": "Whether to enable the safety checker.",
+        "type": "boolean",
+        "default": true
+      },
+      "reasoning_mode": {
+        "description": "Whether the model should emit an explicit reasoning trace. `no_think` returns a direct answer; `think` returns chain-of-thought followed by the final answer.",
+        "enum": [
+          "think",
+          "no_think"
+        ],
+        "type": "string",
+        "default": "no_think"
+      },
+      "max_tokens": {
+        "description": "Maximum number of tokens to generate.",
+        "maximum": 20000,
+        "type": "integer",
+        "minimum": 1,
+        "default": 1024
+      }
+    }
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "Nemotron3NanoOmniVideoInput",
+    "Nemotron3NanoOmniVideoOutput",
+    "UsageInfo"
+  ]
+}

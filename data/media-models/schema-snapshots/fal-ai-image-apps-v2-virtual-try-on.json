@@ -1,0 +1,117 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/image-apps-v2/virtual-try-on",
+  "task": "image-generation",
+  "source_url": "https://fal.ai/models/fal-ai/image-apps-v2/virtual-try-on",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fimage-apps-v2%2Fvirtual-try-on",
+  "retrieved_at": "2026-10-04T19:46:14.114Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "image-to-image",
+  "bytes_sha256": "10f0b2aef34d2b4c11998e5534334a2b8c26a17ee94bd347bc0a34c06fc4293a",
+  "queue_path": "/fal-ai/image-apps-v2/virtual-try-on",
+  "input_name": "ImageAppsV2VirtualTryOnInput",
+  "input": {
+    "$refName": "ImageAppsV2VirtualTryOnInput",
+    "type": "object",
+    "properties": {
+      "aspect_ratio": {
+        "$refName": "AspectRatio",
+        "type": "object",
+        "properties": {
+          "ratio": {
+            "enum": [
+              "1:1",
+              "16:9",
+              "9:16",
+              "4:3",
+              "3:4"
+            ],
+            "type": "string",
+            "description": "Aspect ratio for 4K resolution output",
+            "default": "1:1"
+          }
+        },
+        "description": "Aspect ratio for 4K output (default: 3:4 for fashion)"
+      },
+      "person_image_url": {
+        "type": "string",
+        "examples": [
+          "https://v3.fal.media/files/tiger/4vxSHizex4UWR5fdnPs1A.jpeg"
+        ],
+        "description": "Person photo URL"
+      },
+      "preserve_pose": {
+        "type": "boolean",
+        "default": true
+      },
+      "clothing_image_url": {
+        "type": "string",
+        "examples": [
+          "https://v3b.fal.media/files/b/monkey/5ZWXSKUuk9EilI1apFCeu_1ecd050187f24b9aa1d2defb88d8d8ae.png"
+        ],
+        "description": "Clothing photo URL"
+      }
+    },
+    "required": [
+      "person_image_url",
+      "clothing_image_url"
+    ]
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "ImageAppsV2VirtualTryOnInput",
+    "ImageAppsV2VirtualTryOnOutput",
+    "AspectRatio",
+    "Image"
+  ]
+}

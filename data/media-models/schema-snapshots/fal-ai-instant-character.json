@@ -1,0 +1,197 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/instant-character",
+  "task": "unknown",
+  "source_url": "https://fal.ai/models/fal-ai/instant-character",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Finstant-character",
+  "retrieved_at": "2026-10-04T19:46:40.773Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "image-to-image",
+  "bytes_sha256": "70bfa1da9c7be2255cf31200d09685feb25e1abe8cf5faf9ce9cc63c34a06966",
+  "queue_path": "/fal-ai/instant-character",
+  "input_name": "InstantCharacterInput",
+  "input": {
+    "$refName": "InstantCharacterInput",
+    "properties": {
+      "image_size": {
+        "default": "square_hd",
+        "description": "The size of the generated image.",
+        "anyOf": [
+          {
+            "$refName": "ImageSize",
+            "properties": {
+              "width": {
+                "exclusiveMinimum": 0,
+                "maximum": 14142,
+                "default": 512,
+                "type": "integer",
+                "description": "The width of the generated image."
+              },
+              "height": {
+                "exclusiveMinimum": 0,
+                "maximum": 14142,
+                "default": 512,
+                "type": "integer",
+                "description": "The height of the generated image."
+              }
+            },
+            "type": "object"
+          },
+          {
+            "enum": [
+              "square_hd",
+              "square",
+              "portrait_4_3",
+              "portrait_16_9",
+              "landscape_4_3",
+              "landscape_16_9"
+            ],
+            "type": "string"
+          }
+        ]
+      },
+      "enable_safety_checker": {
+        "default": true,
+        "type": "boolean",
+        "description": "If set to true, the safety checker will be enabled. Disabling it requires account authorization; unauthorized requests are always checked, and images flagged as unsafe are returned as black images."
+      },
+      "prompt": {
+        "examples": [
+          "A girl is playing a guitar in street"
+        ],
+        "type": "string",
+        "description": "The prompt to generate an image from."
+      },
+      "image_url": {
+        "examples": [
+          "https://storage.googleapis.com/falserverless/example_inputs/girl.jpg"
+        ],
+        "type": "string",
+        "description": "The image URL to generate an image from. Needs to match the dimensions of the mask."
+      },
+      "num_inference_steps": {
+        "maximum": 50,
+        "default": 28,
+        "type": "integer",
+        "description": "The number of inference steps to perform.",
+        "minimum": 1
+      },
+      "num_images": {
+        "maximum": 4,
+        "default": 1,
+        "type": "integer",
+        "description": "The number of images to generate.",
+        "minimum": 1
+      },
+      "seed": {
+        "description": "\n            The same seed and the same prompt given to the same version of the model\n            will output the same image every time.\n        ",
+        "anyOf": [
+          {
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "output_format": {
+        "enum": [
+          "jpeg",
+          "png"
+        ],
+        "default": "jpeg",
+        "type": "string",
+        "description": "The format of the generated image."
+      },
+      "guidance_scale": {
+        "maximum": 20,
+        "default": 3.5,
+        "type": "number",
+        "description": "\n            The CFG (Classifier Free Guidance) scale is a measure of how close you want\n            the model to stick to your prompt when looking for a related image to show you.\n        ",
+        "minimum": 0
+      },
+      "negative_prompt": {
+        "examples": [
+          ""
+        ],
+        "default": "",
+        "type": "string",
+        "description": "\n            The negative prompt to use. Use it to address details that you don't want\n            in the image. This could be colors, objects, scenery and even the small details\n            (e.g. moustache, blurry, low resolution).\n        "
+      },
+      "sync_mode": {
+        "default": false,
+        "type": "boolean",
+        "description": "If `True`, the media will be returned as a data URI and the output data won't be available in the request history."
+      },
+      "scale": {
+        "maximum": 2,
+        "default": 1,
+        "type": "number",
+        "description": "The scale of the subject image. Higher values will make the subject image more prominent in the generated image.",
+        "minimum": 0
+      }
+    },
+    "required": [
+      "prompt",
+      "image_url"
+    ],
+    "type": "object"
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "InstantCharacterInput",
+    "InstantCharacterOutput",
+    "ImageSize",
+    "Image"
+  ]
+}

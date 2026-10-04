@@ -1,0 +1,205 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/ip-adapter-face-id",
+  "task": "unknown",
+  "source_url": "https://fal.ai/models/fal-ai/ip-adapter-face-id",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fip-adapter-face-id",
+  "retrieved_at": "2026-10-04T19:46:41.669Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "image-to-image",
+  "bytes_sha256": "08ee19425891220abd1c27befe6eeb99d28120460ecbc646eca41b11f5d920fb",
+  "queue_path": "/fal-ai/ip-adapter-face-id",
+  "input_name": "IpAdapterFaceIdInput",
+  "input": {
+    "$refName": "IpAdapterFaceIdInput",
+    "properties": {
+      "height": {
+        "maximum": 1024,
+        "type": "integer",
+        "default": 512,
+        "minimum": 512,
+        "description": "\n            The height of the generated image.\n        "
+      },
+      "num_inference_steps": {
+        "maximum": 200,
+        "type": "integer",
+        "default": 50,
+        "minimum": 1,
+        "description": "\n            The number of inference steps to use for generating the image. The more steps\n            the better the image will be but it will also take longer to generate.\n        "
+      },
+      "prompt": {
+        "type": "string",
+        "examples": [
+          "Man cyberpunk, synthwave night city, futuristic, high quality, highly detailed, high resolution, sharp, hyper realistic, extremely detailed"
+        ],
+        "description": "The prompt to use for generating the image. Be as descriptive as possible for best results."
+      },
+      "base_sdxl_model_repo": {
+        "type": "string",
+        "default": "SG161222/RealVisXL_V3.0",
+        "description": "The URL to the base SDXL model. Default is SG161222/RealVisXL_V3.0"
+      },
+      "face_image_url": {
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "examples": [
+          "https://storage.googleapis.com/falserverless/model_tests/upscale/image%20(8).png"
+        ],
+        "description": "An image of a face to match. If an image with a size of 640x640 is not provided, it will be scaled and cropped to that size."
+      },
+      "face_id_det_size": {
+        "maximum": 640,
+        "type": "integer",
+        "default": 640,
+        "minimum": 64,
+        "description": "\n            The size of the face detection model. The higher the number the more accurate\n            the detection will be but it will also take longer to run. The higher the number the more\n            likely it will fail to find a face as well. Lower it if you are having trouble\n            finding a face in the image.\n        "
+      },
+      "guidance_scale": {
+        "maximum": 16,
+        "type": "number",
+        "default": 7.5,
+        "minimum": 0,
+        "description": "\n            The CFG (Classifier Free Guidance) scale is a measure of how close you want\n            the model to stick to your prompt when looking for a related image to show you.\n        "
+      },
+      "negative_prompt": {
+        "type": "string",
+        "default": "blurry, low resolution, bad, ugly, low quality, pixelated, interpolated, compression artifacts, noisey, grainy",
+        "examples": [
+          "blurry, low resolution, bad, ugly, low quality, pixelated, interpolated, compression artifacts, noisey, grainy"
+        ],
+        "description": "\n            The negative prompt to use.Use it to address details that you don't want\n            in the image. This could be colors, objects, scenery and even the small details\n            (e.g. moustache, blurry, low resolution).\n        "
+      },
+      "seed": {
+        "anyOf": [
+          {
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "examples": [
+          42
+        ],
+        "description": "\n            The same seed and the same prompt given to the same version of Stable Diffusion\n            will output the same image every time.\n        "
+      },
+      "base_1_5_model_repo": {
+        "type": "string",
+        "default": "SG161222/Realistic_Vision_V4.0_noVAE",
+        "description": "The URL to the base 1.5 model. Default is SG161222/Realistic_Vision_V4.0_noVAE"
+      },
+      "num_samples": {
+        "maximum": 4,
+        "type": "integer",
+        "default": 4,
+        "minimum": 1,
+        "description": "\n            The number of samples for face id. The more samples the better the image will\n            be but it will also take longer to generate. Default is 4.\n        "
+      },
+      "width": {
+        "maximum": 1024,
+        "type": "integer",
+        "default": 512,
+        "minimum": 512,
+        "description": "\n            The width of the generated image.\n        "
+      },
+      "face_images_data_url": {
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "\n            URL to zip archive with images of faces. The images embedding will be averaged to\n            create a more accurate face id.\n        "
+      },
+      "model_type": {
+        "type": "string",
+        "default": "1_5-v1",
+        "enum": [
+          "1_5-v1",
+          "1_5-v1-plus",
+          "1_5-v2-plus",
+          "SDXL-v1",
+          "SDXL-v2-plus",
+          "1_5-auraface-v1"
+        ],
+        "examples": [
+          "1_5-v1",
+          "1_5-v1-plus",
+          "1_5-v2-plus",
+          "SDXL-v1",
+          "SDXL-v2-plus",
+          "1_5-auraface-v1"
+        ],
+        "description": "The model type to use. 1_5 is the default and is recommended for most use cases."
+      }
+    },
+    "type": "object",
+    "required": [
+      "prompt"
+    ]
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "IpAdapterFaceIdInput",
+    "IpAdapterFaceIdOutput",
+    "Image"
+  ]
+}

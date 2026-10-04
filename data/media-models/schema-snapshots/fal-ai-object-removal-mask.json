@@ -1,0 +1,110 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/object-removal/mask",
+  "task": "unknown",
+  "source_url": "https://fal.ai/models/fal-ai/object-removal/mask",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fobject-removal%2Fmask",
+  "retrieved_at": "2026-10-04T19:49:39.888Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "image-to-image",
+  "bytes_sha256": "976779a00092f1424cb56ea9707791269a60338f4b97c540c9b67692205f748f",
+  "queue_path": "/fal-ai/object-removal/mask",
+  "input_name": "ObjectRemovalMaskInput",
+  "input": {
+    "$refName": "ObjectRemovalMaskInput",
+    "properties": {
+      "image_url": {
+        "type": "string",
+        "description": "The URL of the image to remove objects from.",
+        "examples": [
+          "https://v3.fal.media/files/zebra/o0DORfJawy-T9P_-NsvLY.png"
+        ]
+      },
+      "mask_expansion": {
+        "minimum": 0,
+        "type": "integer",
+        "default": 15,
+        "maximum": 50,
+        "description": "Amount of pixels to expand the mask by. Range: 0-50"
+      },
+      "mask_url": {
+        "type": "string",
+        "description": "The URL of the mask image. White pixels (255) indicate areas to remove.",
+        "examples": [
+          "https://v3.fal.media/files/tiger/7nq9-v-lJtBCPnK1332fr.png"
+        ]
+      },
+      "model": {
+        "type": "string",
+        "default": "best_quality",
+        "enum": [
+          "low_quality",
+          "medium_quality",
+          "high_quality",
+          "best_quality"
+        ]
+      }
+    },
+    "type": "object",
+    "required": [
+      "image_url",
+      "mask_url"
+    ]
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "ObjectRemovalMaskInput",
+    "ObjectRemovalMaskOutput",
+    "Image"
+  ]
+}

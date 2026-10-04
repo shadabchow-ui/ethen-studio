@@ -1,0 +1,186 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/hunyuan-image/v3/instruct/edit",
+  "task": "image-editing",
+  "source_url": "https://fal.ai/models/fal-ai/hunyuan-image/v3/instruct/edit",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fhunyuan-image%2Fv3%2Finstruct%2Fedit",
+  "retrieved_at": "2026-10-04T19:45:38.195Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "image-to-image",
+  "bytes_sha256": "c2c06b5c77b6a040690b9d40fdf9b757286b6238792596ce757e2b7d635de306",
+  "queue_path": "/fal-ai/hunyuan-image/v3/instruct/edit",
+  "input_name": "HunyuanImageV3InstructEditInput",
+  "input": {
+    "$refName": "HunyuanImageV3InstructEditInput",
+    "properties": {
+      "sync_mode": {
+        "default": false,
+        "description": "If `True`, the media will be returned as a data URI and the output data won't be available in the request history.",
+        "type": "boolean"
+      },
+      "enable_prompt_expansion": {
+        "default": true,
+        "description": "If set to true, the prompt will be expanded through the model's internal recaptioning step.",
+        "type": "boolean"
+      },
+      "image_size": {
+        "anyOf": [
+          {
+            "$refName": "ImageSize",
+            "properties": {
+              "height": {
+                "type": "integer",
+                "description": "The height of the generated image.",
+                "exclusiveMinimum": 0,
+                "maximum": 14142,
+                "default": 512
+              },
+              "width": {
+                "type": "integer",
+                "description": "The width of the generated image.",
+                "exclusiveMinimum": 0,
+                "maximum": 14142,
+                "default": 512
+              }
+            },
+            "type": "object"
+          },
+          {
+            "enum": [
+              "auto",
+              "square_hd",
+              "square",
+              "portrait_4_3",
+              "portrait_16_9",
+              "landscape_4_3",
+              "landscape_16_9"
+            ],
+            "type": "string"
+          }
+        ],
+        "description": "The desired size of the generated image. If auto, image size will be determined by the model.",
+        "default": "auto"
+      },
+      "guidance_scale": {
+        "default": 3.5,
+        "description": "Controls how much the model adheres to the prompt. Higher values mean stricter adherence.",
+        "exclusiveMinimum": 1,
+        "maximum": 20,
+        "type": "number"
+      },
+      "output_format": {
+        "default": "png",
+        "description": "The format of the generated image.",
+        "enum": [
+          "jpeg",
+          "png"
+        ],
+        "type": "string"
+      },
+      "num_images": {
+        "default": 1,
+        "maximum": 4,
+        "description": "The number of images to generate.",
+        "minimum": 1,
+        "type": "integer"
+      },
+      "prompt": {
+        "description": "The text prompt to generate an image from.",
+        "examples": [
+          "Turn this artwork into a realistic image"
+        ],
+        "type": "string"
+      },
+      "enable_safety_checker": {
+        "default": true,
+        "description": "If set to true, the safety checker will be enabled.",
+        "type": "boolean"
+      },
+      "image_urls": {
+        "description": "The URLs of the images to use as a reference for the generation. A maximum of 3 images are supported.",
+        "examples": [
+          [
+            "https://v3b.fal.media/files/b/0a8c3cf9/voXcX8hd5maRSrSvZalXh_jAMqrScj.png"
+          ]
+        ],
+        "items": {
+          "type": "string"
+        },
+        "type": "array"
+      },
+      "seed": {
+        "anyOf": [
+          {
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "Random seed for reproducible results. If None, a random seed is used."
+      }
+    },
+    "required": [
+      "prompt",
+      "image_urls"
+    ],
+    "type": "object"
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "HunyuanImageV3InstructEditInput",
+    "HunyuanImageV3InstructEditOutput",
+    "ImageSize",
+    "Image"
+  ]
+}

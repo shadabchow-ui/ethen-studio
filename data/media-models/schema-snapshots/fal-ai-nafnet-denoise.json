@@ -1,0 +1,89 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/nafnet/denoise",
+  "task": "unknown",
+  "source_url": "https://fal.ai/models/fal-ai/nafnet/denoise",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fnafnet%2Fdenoise",
+  "retrieved_at": "2026-10-04T19:49:33.824Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "image-to-image",
+  "bytes_sha256": "59700e8f2242d0f29d4e16e4f1a2f67fb2e6c0b2bde0822803597b562a356354",
+  "queue_path": "/fal-ai/nafnet/denoise",
+  "input_name": "NafnetDenoiseInput",
+  "input": {
+    "$refName": "NafnetDenoiseInput",
+    "required": [
+      "image_url"
+    ],
+    "type": "object",
+    "properties": {
+      "seed": {
+        "description": "seed to be used for generation",
+        "type": "integer"
+      },
+      "image_url": {
+        "description": "URL of image to be used for relighting",
+        "type": "string",
+        "examples": [
+          "https://storage.googleapis.com/falserverless/nafnet/noisy.png"
+        ]
+      }
+    }
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "NafnetDenoiseInput",
+    "NafnetDenoiseOutput",
+    "Image"
+  ]
+}

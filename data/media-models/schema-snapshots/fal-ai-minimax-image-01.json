@@ -1,0 +1,114 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/minimax/image-01",
+  "task": "image-generation",
+  "source_url": "https://fal.ai/models/fal-ai/minimax/image-01",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fminimax%2Fimage-01",
+  "retrieved_at": "2026-10-04T19:49:18.328Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "text-to-image",
+  "bytes_sha256": "88d52457d17d94edacc6a6b83820e81d120b7a921f6dd2c62055fceb9645b821",
+  "queue_path": "/fal-ai/minimax/image-01",
+  "input_name": "MinimaxImage01Input",
+  "input": {
+    "$refName": "MinimaxImage01Input",
+    "required": [
+      "prompt"
+    ],
+    "type": "object",
+    "properties": {
+      "num_images": {
+        "maximum": 9,
+        "description": "Number of images to generate (1-9)",
+        "type": "integer",
+        "minimum": 1,
+        "default": 1
+      },
+      "prompt_optimizer": {
+        "description": "Whether to enable automatic prompt optimization",
+        "type": "boolean",
+        "default": false
+      },
+      "aspect_ratio": {
+        "description": "Aspect ratio of the generated image",
+        "enum": [
+          "1:1",
+          "16:9",
+          "4:3",
+          "3:2",
+          "2:3",
+          "3:4",
+          "9:16",
+          "21:9"
+        ],
+        "type": "string",
+        "default": "1:1"
+      },
+      "prompt": {
+        "description": "Text prompt for image generation (max 1500 characters)",
+        "type": "string",
+        "maxLength": 1500,
+        "examples": [
+          "Man dressed in white t shirt, full-body stand front view image, outdoor, Venice beach sign, full-body image, Los Angeles, Fashion photography of 90s, documentary, Film grain, photorealistic"
+        ],
+        "minLength": 1
+      }
+    }
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "MinimaxImage01Input",
+    "MinimaxImage01Output",
+    "File"
+  ]
+}

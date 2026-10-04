@@ -1,0 +1,327 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/ltx23-video-trainer",
+  "task": "video-editing",
+  "source_url": "https://fal.ai/models/fal-ai/ltx23-video-trainer",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fltx23-video-trainer",
+  "retrieved_at": "2026-10-04T19:48:52.359Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "training",
+  "bytes_sha256": "da043bc4039b45ad04e8354f13f5dbe5b7ddf4a57ce2c839c643fb4ad6836645",
+  "queue_path": "/fal-ai/ltx23-video-trainer",
+  "input_name": "Ltx23VideoTrainerInput",
+  "input": {
+    "$refName": "Ltx23VideoTrainerInput",
+    "description": "Input for the ``ltx23-video-trainer`` ``/`` endpoint.\n\nRe-declares ``number_of_steps`` with this trainer's own feasible ceiling\n(``MAXIMUM_NUM_STEPS``). The shared ``LTX23Input`` base keeps the legacy\n20000 ceiling so ``ltx23-audio-to-video-trainer`` (which inherits it) is\nunaffected. The default is unchanged (``DEFAULT_NUM_STEPS``); only the upper\nbound is tightened so an infeasible request is rejected up front with a 422\ninstead of timing out after a full 12 h window (ML-6058). See the\n``MAXIMUM_NUM_STEPS`` comment above for the request-timeout arithmetic.",
+    "required": [
+      "training_data_url"
+    ],
+    "type": "object",
+    "properties": {
+      "number_of_frames": {
+        "description": "Number of frames per training sample. Must satisfy frames % 8 == 1 (e.g., 1, 9, 17, 25, 33, 41, 49, 57, 65, 73, 81, 89, 97).",
+        "type": "integer",
+        "examples": [
+          89
+        ],
+        "minimum": 9,
+        "default": 89,
+        "maximum": 121
+      },
+      "with_audio": {
+        "description": "Enable joint audio-video training. If None (default), automatically detects whether input videos have audio. Set to True to force audio training, or False to disable.",
+        "anyOf": [
+          {
+            "type": "boolean"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "validation_frame_rate": {
+        "description": "Target frames per second for validation videos.",
+        "type": "integer",
+        "examples": [
+          25
+        ],
+        "minimum": 8,
+        "default": 25,
+        "maximum": 60
+      },
+      "validation_aspect_ratio": {
+        "description": "The aspect ratio to use for validation.",
+        "type": "string",
+        "examples": [
+          "1:1"
+        ],
+        "default": "1:1",
+        "enum": [
+          "16:9",
+          "1:1",
+          "9:16"
+        ]
+      },
+      "training_data_url": {
+        "description": "URL to zip archive with videos or images. Try to use at least 10 files, although more is better.\n\n        **Supported video formats:** .mp4, .mov, .avi, .mkv\n        **Supported image formats:** .png, .jpg, .jpeg\n\n        Note: The dataset must contain ONLY videos OR ONLY images - mixed datasets are not supported.\n\n        The archive can also contain text files with captions. Each text file should have the same name as the media file it corresponds to.",
+        "type": "string"
+      },
+      "generate_audio_in_validation": {
+        "description": "Whether to generate audio in validation samples.",
+        "type": "boolean",
+        "default": true
+      },
+      "split_input_into_scenes": {
+        "description": "If true, videos above a certain duration threshold will be split into scenes.",
+        "type": "boolean",
+        "examples": [
+          true
+        ],
+        "default": true
+      },
+      "audio_preserve_pitch": {
+        "description": "When audio duration doesn't match video duration, stretch/compress audio without changing pitch. If disabled, audio is trimmed or padded with silence.",
+        "type": "boolean",
+        "default": true
+      },
+      "validation_number_of_frames": {
+        "description": "The number of frames in validation videos.",
+        "type": "integer",
+        "examples": [
+          89
+        ],
+        "minimum": 9,
+        "default": 89,
+        "maximum": 121
+      },
+      "trigger_phrase": {
+        "description": "A phrase that will trigger the LoRA style. Will be prepended to captions during training.",
+        "type": "string",
+        "examples": [
+          ""
+        ],
+        "default": ""
+      },
+      "validation_negative_prompt": {
+        "description": "A negative prompt to use for validation.",
+        "type": "string",
+        "default": "worst quality, inconsistent motion, blurry, jittery, distorted"
+      },
+      "frame_rate": {
+        "description": "Target frames per second for the video.",
+        "type": "integer",
+        "examples": [
+          25
+        ],
+        "minimum": 8,
+        "default": 25,
+        "maximum": 60
+      },
+      "first_frame_conditioning_p": {
+        "description": "Probability of conditioning on the first frame during training. Higher values improve image-to-video performance.",
+        "type": "number",
+        "minimum": 0,
+        "default": 0.5,
+        "maximum": 1
+      },
+      "audio_normalize": {
+        "description": "Normalize audio peak amplitude to a consistent level. Recommended for consistent audio levels across the dataset.",
+        "type": "boolean",
+        "default": true
+      },
+      "rank": {
+        "description": "The rank of the LoRA adaptation. Higher values increase capacity but use more memory.",
+        "type": "integer",
+        "examples": [
+          32
+        ],
+        "default": 32,
+        "enum": [
+          8,
+          16,
+          32,
+          64,
+          128
+        ]
+      },
+      "aspect_ratio": {
+        "description": "Aspect ratio to use for training.",
+        "type": "string",
+        "examples": [
+          "1:1"
+        ],
+        "default": "1:1",
+        "enum": [
+          "16:9",
+          "1:1",
+          "9:16"
+        ]
+      },
+      "stg_scale": {
+        "description": "STG (Spatio-Temporal Guidance) scale. 0.0 disables STG. Recommended value is 1.0.",
+        "type": "number",
+        "minimum": 0,
+        "default": 1,
+        "maximum": 3
+      },
+      "validation": {
+        "description": "A list of validation prompts to use during training. When providing an image, _all_ validation inputs must have an image.",
+        "maxItems": 2,
+        "type": "array",
+        "items": {
+          "$refName": "Validation",
+          "properties": {
+            "image_url": {
+              "description": "An image to use for image-to-video validation. If provided for one validation, _all_ validation inputs must have an image.",
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "prompt": {
+              "description": "The prompt to use for validation.",
+              "type": "string"
+            }
+          },
+          "type": "object",
+          "required": [
+            "prompt"
+          ]
+        },
+        "default": []
+      },
+      "auto_scale_input": {
+        "description": "If true, videos will be automatically scaled to the target frame count and fps. This option has no effect on image datasets.",
+        "type": "boolean",
+        "examples": [
+          false
+        ],
+        "default": false
+      },
+      "validation_resolution": {
+        "description": "The resolution to use for validation.",
+        "type": "string",
+        "examples": [
+          "high"
+        ],
+        "default": "high",
+        "enum": [
+          "low",
+          "medium",
+          "high"
+        ]
+      },
+      "learning_rate": {
+        "description": "Learning rate for optimization. Higher values can lead to faster training but may cause overfitting.",
+        "examples": [
+          0.0002
+        ],
+        "default": 0.0002,
+        "step": 0.0001,
+        "maximum": 1,
+        "type": "number",
+        "minimum": 0.000001
+      },
+      "resolution": {
+        "description": "Resolution to use for training. Higher resolutions require more memory.",
+        "type": "string",
+        "examples": [
+          "medium"
+        ],
+        "default": "medium",
+        "enum": [
+          "low",
+          "medium",
+          "high"
+        ]
+      },
+      "split_input_duration_threshold": {
+        "description": "The duration threshold in seconds. If a video is longer than this, it will be split into scenes.",
+        "type": "number",
+        "examples": [
+          30
+        ],
+        "minimum": 1,
+        "default": 30,
+        "maximum": 60
+      },
+      "number_of_steps": {
+        "description": "The number of training steps.",
+        "examples": [
+          2000
+        ],
+        "default": 2000,
+        "step": 100,
+        "maximum": 6000,
+        "type": "integer",
+        "minimum": 100
+      },
+      "debug_dataset": {
+        "description": "When enabled, the trainer returns a downloadable archive of your preprocessed training data for manual inspection. Use this to verify that your videos, images, and captions were processed correctly before committing to a full training run.",
+        "type": "boolean",
+        "default": false
+      }
+    }
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "Ltx23VideoTrainerInput",
+    "Ltx23VideoTrainerOutput",
+    "Validation",
+    "File"
+  ]
+}

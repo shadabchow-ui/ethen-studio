@@ -1,0 +1,146 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "mirage-api/avatar-x/text-to-video",
+  "task": "text-to-video",
+  "source_url": "https://fal.ai/models/mirage-api/avatar-x/text-to-video",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=mirage-api%2Favatar-x%2Ftext-to-video",
+  "retrieved_at": "2026-10-04T19:54:27.963Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "text-to-video",
+  "bytes_sha256": "531fa4982672596c21a1f5640164690d992c8c9e11957d211da7640db3e845fc",
+  "queue_path": "/mirage-api/avatar-x/text-to-video",
+  "input_name": "AvatarXTextToVideoInput",
+  "input": {
+    "$refName": "AvatarXTextToVideoInput",
+    "type": "object",
+    "required": [
+      "script"
+    ],
+    "description": "Inputs for generating stock-avatar speech and a lip-synced video.",
+    "properties": {
+      "video_reference_url": {
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "Publicly fetchable HTTPS URL of a reference video. When supplied, audio_reference_url is also required and the selected avatar is ignored; no cookies or authorization headers. Supports H.264, H.265/HEVC, or ProRes in .mp4, .mov, or .m4v and VP8 or VP9 in .webm, from 1 to 120 seconds and up to 1 GiB, with a 9:16 or 16:9 display aspect ratio (within 5%). Any audio track is ignored."
+      },
+      "avatar": {
+        "default": "Jasmine",
+        "anyOf": [
+          {
+            "type": "string",
+            "enum": [
+              "None",
+              "Ayesha",
+              "Ayesha (16:9)",
+              "Farhan",
+              "Farhan (16:9)",
+              "Giulia",
+              "Giulia (16:9)",
+              "Jasmine",
+              "Jasmine (16:9)",
+              "Luke",
+              "Luke (16:9)",
+              "Maya",
+              "Maya (16:9)",
+              "Michael",
+              "Michael (16:9)",
+              "Neha",
+              "Neha (16:9)",
+              "Tariq",
+              "Tariq (16:9)",
+              "Valerie",
+              "Valerie (16:9)"
+            ]
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "Stock visual and voice. Browse the [avatar catalog](https://captions.ai/help/docs/api/actor-catalog) to preview every available avatar and copy the exact Avatar value. Select None to send no avatar. When video_reference_url and audio_reference_url are both supplied, the references replace the avatar entirely and it may be omitted."
+      },
+      "audio_reference_url": {
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "Publicly fetchable HTTPS URL of a voice reference. When supplied, video_reference_url is also required and the selected avatar is ignored; no cookies or authorization headers. Supports MP3, PCM WAV or AIFF, AAC or ALAC, Opus or Vorbis, and FLAC audio from 10 to 180 seconds and up to 64 MiB, with one mono or stereo stream sampled from 8 to 48 kHz. Only the first 60 seconds are used."
+      },
+      "script": {
+        "type": "string",
+        "maxLength": 1500,
+        "minLength": 50,
+        "description": "Use 50 to 1,500 characters. The 50-character minimum typically produces about four seconds of speech. Generated speech must be 180 seconds or shorter; speaking pace may cause shorter scripts to exceed this limit.",
+        "examples": [
+          "Put in a script, and Mirage Avatar X turns it into a clear, expressive video. Let’s bring your next idea to life."
+        ]
+      }
+    },
+    "additionalProperties": false
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "AvatarXTextToVideoInput",
+    "AvatarXTextToVideoOutput",
+    "Video"
+  ]
+}

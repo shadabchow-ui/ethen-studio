@@ -1,0 +1,94 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "topaz/sdr-to-hdr/video",
+  "task": "video-editing",
+  "source_url": "https://fal.ai/models/topaz/sdr-to-hdr/video",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=topaz%2Fsdr-to-hdr%2Fvideo",
+  "retrieved_at": "2026-10-04T19:55:18.684Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "video-to-video",
+  "bytes_sha256": "407836e49b7bb4ded931070e37d9dfc1e2bb13f5a7faad8a68cf7a707cb1ace4",
+  "queue_path": "/topaz/sdr-to-hdr/video",
+  "input_name": "SdrToHdrVideoInput",
+  "input": {
+    "$refName": "SdrToHdrVideoInput",
+    "properties": {
+      "output_format": {
+        "default": "mp4",
+        "type": "string",
+        "description": "Output container/codec: mp4 delivers 10-bit H265 HDR10; prores delivers 10-bit ProRes 422 HQ in a .mov, Topaz's recommended format for grading and mastering workflows (much larger files).",
+        "enum": [
+          "mp4",
+          "prores"
+        ]
+      },
+      "video_url": {
+        "examples": [
+          "https://v3.fal.media/files/kangaroo/y5-1YTGpun17eSeggZMzX_video-1733468228.mp4"
+        ],
+        "type": "string",
+        "description": "URL of the SDR video to convert to HDR"
+      }
+    },
+    "type": "object",
+    "required": [
+      "video_url"
+    ]
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "SdrToHdrVideoInput",
+    "SdrToHdrVideoOutput",
+    "File"
+  ]
+}

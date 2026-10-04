@@ -1,0 +1,138 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/flashhead",
+  "task": "unknown",
+  "source_url": "https://fal.ai/models/fal-ai/flashhead",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fflashhead",
+  "retrieved_at": "2026-10-04T19:43:49.554Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "image-to-video",
+  "bytes_sha256": "7798c4b1efff22ff54660288845724f1c40bbbdf8369846b3b786789a455622c",
+  "queue_path": "/fal-ai/flashhead",
+  "input_name": "FlashheadInput",
+  "input": {
+    "$refName": "FlashheadInput",
+    "properties": {
+      "seed": {
+        "description": "Random seed for reproducibility.",
+        "anyOf": [
+          {
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "stability": {
+        "minimum": 0,
+        "maximum": 1,
+        "default": 0.5,
+        "description": "Voice stability (0-1).",
+        "type": "number"
+      },
+      "image_url": {
+        "description": "URL of the face reference image. Portrait recommended.",
+        "type": "string",
+        "examples": [
+          "https://v3.fal.media/files/koala/gmpc0QevDF9bBsL1EAYVF_1c637094161147559f0910a68275dc34.png"
+        ]
+      },
+      "voice": {
+        "enum": [
+          "Aria",
+          "Roger",
+          "Sarah",
+          "Laura",
+          "Charlie",
+          "George",
+          "Callum",
+          "River",
+          "Liam",
+          "Charlotte",
+          "Alice",
+          "Matilda",
+          "Will",
+          "Jessica",
+          "Eric",
+          "Chris",
+          "Brian",
+          "Daniel",
+          "Lily",
+          "Bill"
+        ],
+        "description": "ElevenLabs voice name.",
+        "default": "Aria",
+        "type": "string"
+      },
+      "text": {
+        "description": "Text to speak. Converted to speech via ElevenLabs.",
+        "type": "string",
+        "examples": [
+          "Hello there! How are you doing today?"
+        ]
+      }
+    },
+    "required": [
+      "image_url",
+      "text"
+    ],
+    "type": "object"
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "FlashheadInput",
+    "FlashheadOutput",
+    "File"
+  ]
+}

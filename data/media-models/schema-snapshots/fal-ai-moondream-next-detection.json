@@ -1,0 +1,118 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/moondream-next/detection",
+  "task": "unknown",
+  "source_url": "https://fal.ai/models/fal-ai/moondream-next/detection",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fmoondream-next%2Fdetection",
+  "retrieved_at": "2026-10-04T19:49:24.815Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "image-to-image",
+  "bytes_sha256": "80fff1407b9e1b20d991a11a912535b21a6b226dc9e30a4d84c47ffbdde7f444",
+  "queue_path": "/fal-ai/moondream-next/detection",
+  "input_name": "MoondreamNextDetectionInput",
+  "input": {
+    "$refName": "MoondreamNextDetectionInput",
+    "properties": {
+      "task_type": {
+        "enum": [
+          "bbox_detection",
+          "point_detection",
+          "gaze_detection"
+        ],
+        "description": "Type of detection to perform",
+        "type": "string"
+      },
+      "show_visualization": {
+        "default": true,
+        "description": "Whether to show visualization for detection",
+        "type": "boolean"
+      },
+      "combine_points": {
+        "default": false,
+        "description": "Whether to combine points into a single point for point detection. This has no effect for bbox detection or gaze detection.",
+        "type": "boolean"
+      },
+      "detection_prompt": {
+        "description": "Text description of what to detect",
+        "examples": [
+          "Person"
+        ],
+        "type": "string"
+      },
+      "use_ensemble": {
+        "default": false,
+        "description": "Whether to use ensemble for gaze detection",
+        "type": "boolean"
+      },
+      "image_url": {
+        "description": "Image URL to be processed",
+        "examples": [
+          "https://llava-vl.github.io/static/images/monalisa.jpg"
+        ],
+        "type": "string"
+      }
+    },
+    "required": [
+      "image_url",
+      "task_type",
+      "detection_prompt"
+    ],
+    "type": "object"
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "MoondreamNextDetectionInput",
+    "MoondreamNextDetectionOutput",
+    "Image"
+  ]
+}

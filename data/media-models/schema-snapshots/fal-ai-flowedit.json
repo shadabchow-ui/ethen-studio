@@ -1,0 +1,190 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/flowedit",
+  "task": "unknown",
+  "source_url": "https://fal.ai/models/fal-ai/flowedit",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fflowedit",
+  "retrieved_at": "2026-10-04T19:43:58.360Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "image-to-image",
+  "bytes_sha256": "3f13ca4bc38766faefa809aa37d9f68670fb65640a25741fecebb155f998ae5d",
+  "queue_path": "/fal-ai/flowedit",
+  "input_name": "FloweditInput",
+  "input": {
+    "$refName": "FloweditInput",
+    "required": [
+      "image_url",
+      "source_prompt",
+      "target_prompt"
+    ],
+    "type": "object",
+    "properties": {
+      "tar_guidance_scale": {
+        "description": "Guidance scale for target.",
+        "anyOf": [
+          {
+            "maximum": 30,
+            "type": "number",
+            "minimum": 0
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": 5.5
+      },
+      "num_inference_steps": {
+        "description": "Steps for which the model should run.",
+        "anyOf": [
+          {
+            "maximum": 50,
+            "type": "integer",
+            "minimum": 1
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": 28
+      },
+      "n_avg": {
+        "description": "Average step count",
+        "anyOf": [
+          {
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": 1
+      },
+      "n_max": {
+        "description": "Control the strength of the edit",
+        "anyOf": [
+          {
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": 23
+      },
+      "source_prompt": {
+        "description": "Prompt of the image to be used.",
+        "type": "string",
+        "examples": [
+          "The image features a tall white lighthouse standing prominently\n      on a hill, with a beautiful blue sky in the background. The lighthouse is illuminated\n      by a bright light, making it a prominent landmark in the scene."
+        ]
+      },
+      "image_url": {
+        "description": "URL of image to be used for relighting",
+        "type": "string",
+        "examples": [
+          "https://storage.googleapis.com/falserverless/model_tests/FlowEdit/lighthouse.png"
+        ]
+      },
+      "n_min": {
+        "description": "Minimum step for improved style edits",
+        "anyOf": [
+          {
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": 0
+      },
+      "target_prompt": {
+        "description": "Prompt of the image to be made.",
+        "type": "string",
+        "examples": [
+          "The image features Big ben clock tower standing prominently\n      on a hill, with a beautiful blue sky in the background. The Big ben clock tower is illuminated\n      by a bright light, making it a prominent landmark in the scene."
+        ]
+      },
+      "src_guidance_scale": {
+        "description": "Guidance scale for the source.",
+        "anyOf": [
+          {
+            "maximum": 30,
+            "type": "number",
+            "minimum": 0
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": 1.5
+      },
+      "seed": {
+        "description": "Random seed for reproducible generation. If set none, a random seed will be used.",
+        "anyOf": [
+          {
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      }
+    }
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "FloweditInput",
+    "FloweditOutput",
+    "Image"
+  ]
+}

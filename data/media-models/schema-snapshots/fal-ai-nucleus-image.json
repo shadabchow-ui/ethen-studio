@@ -1,0 +1,158 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/nucleus-image",
+  "task": "image-generation",
+  "source_url": "https://fal.ai/models/fal-ai/nucleus-image",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fnucleus-image",
+  "retrieved_at": "2026-10-04T19:49:38.290Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "text-to-image",
+  "bytes_sha256": "96662b075be7ff131bea77a7c884212b3c9b6f861676375e31ccf704b0911287",
+  "queue_path": "/fal-ai/nucleus-image",
+  "input_name": "NucleusImageInput",
+  "input": {
+    "$refName": "NucleusImageInput",
+    "required": [
+      "prompt"
+    ],
+    "properties": {
+      "enable_safety_checker": {
+        "default": true,
+        "description": "If set to true, the safety checker will be enabled. Disabling it requires account authorization; unauthorized requests are always checked, and images flagged as unsafe are returned as black images.",
+        "type": "boolean"
+      },
+      "prompt": {
+        "examples": [
+          "A weathered lighthouse on a rocky coastline at golden hour, waves crashing below, dramatic amber clouds, cinematic realism"
+        ],
+        "description": "The prompt to use for generating the image.",
+        "type": "string"
+      },
+      "aspect_ratio": {
+        "enum": [
+          "1:1",
+          "16:9",
+          "9:16",
+          "4:3",
+          "3:4",
+          "3:2",
+          "2:3"
+        ],
+        "default": "1:1",
+        "description": "The output aspect ratio. Nucleus-Image supports a fixed set of aspect-ratio presets.",
+        "type": "string"
+      },
+      "num_inference_steps": {
+        "maximum": 100,
+        "default": 50,
+        "description": "The number of inference steps to perform.",
+        "type": "integer",
+        "minimum": 1
+      },
+      "num_images": {
+        "maximum": 2,
+        "default": 1,
+        "description": "The number of images to generate.",
+        "type": "integer",
+        "minimum": 1
+      },
+      "sync_mode": {
+        "default": false,
+        "description": "If `True`, return media as data URIs instead of persisted CDN files.",
+        "type": "boolean"
+      },
+      "output_format": {
+        "enum": [
+          "jpeg",
+          "png"
+        ],
+        "default": "png",
+        "description": "The format of the generated image.",
+        "type": "string"
+      },
+      "guidance_scale": {
+        "maximum": 20,
+        "default": 8,
+        "description": "The classifier-free guidance scale.",
+        "type": "number",
+        "minimum": 0
+      },
+      "negative_prompt": {
+        "examples": [
+          "blurry, low quality, distorted text"
+        ],
+        "default": "",
+        "description": "The negative prompt to use for generation.",
+        "type": "string"
+      },
+      "seed": {
+        "description": "Seed for reproducible generation.",
+        "anyOf": [
+          {
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      }
+    },
+    "type": "object"
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "NucleusImageInput",
+    "NucleusImageOutput",
+    "Image"
+  ]
+}

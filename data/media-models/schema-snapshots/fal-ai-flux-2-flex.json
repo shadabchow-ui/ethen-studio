@@ -1,0 +1,179 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/flux-2-flex",
+  "task": "unknown",
+  "source_url": "https://fal.ai/models/fal-ai/flux-2-flex",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fflux-2-flex",
+  "retrieved_at": "2026-10-04T19:44:05.737Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "text-to-image",
+  "bytes_sha256": "ddf7deec3338b90f35a8eba31ba8fd0300cf3bbb8b3088b174666cbf6a06d06c",
+  "queue_path": "/fal-ai/flux-2-flex",
+  "input_name": "Flux2FlexInput",
+  "input": {
+    "$refName": "Flux2FlexInput",
+    "properties": {
+      "safety_tolerance": {
+        "enum": [
+          "1",
+          "2",
+          "3",
+          "4",
+          "5"
+        ],
+        "type": "string",
+        "description": "The safety tolerance level for the generated image. 1 being the most strict and 5 being the most permissive.",
+        "default": "2"
+      },
+      "image_size": {
+        "anyOf": [
+          {
+            "$refName": "ImageSize",
+            "properties": {
+              "height": {
+                "exclusiveMinimum": 0,
+                "type": "integer",
+                "description": "The height of the generated image.",
+                "maximum": 14142,
+                "default": 512
+              },
+              "width": {
+                "exclusiveMinimum": 0,
+                "type": "integer",
+                "description": "The width of the generated image.",
+                "maximum": 14142,
+                "default": 512
+              }
+            },
+            "type": "object"
+          },
+          {
+            "type": "string",
+            "enum": [
+              "square_hd",
+              "square",
+              "portrait_4_3",
+              "portrait_16_9",
+              "landscape_4_3",
+              "landscape_16_9"
+            ]
+          }
+        ],
+        "description": "The size of the generated image.",
+        "default": "landscape_4_3"
+      },
+      "num_inference_steps": {
+        "minimum": 2,
+        "type": "integer",
+        "description": "The number of inference steps to perform.",
+        "maximum": 50,
+        "default": 28
+      },
+      "enable_safety_checker": {
+        "type": "boolean",
+        "description": "Whether to enable the safety checker. Disabling it requires account authorization; unauthorized requests are always checked.",
+        "default": true
+      },
+      "prompt": {
+        "examples": [
+          "A high-quality 3D render of a cute fluffy monster eating a giant donut; the fur simulation is incredibly detailed, the donut glaze is sticky and reflective, bright daylight lighting, shallow depth of field."
+        ],
+        "type": "string",
+        "description": "The prompt to generate an image from."
+      },
+      "seed": {
+        "anyOf": [
+          {
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "The seed to use for the generation."
+      },
+      "output_format": {
+        "enum": [
+          "jpeg",
+          "png"
+        ],
+        "type": "string",
+        "description": "The format of the generated image.",
+        "default": "jpeg"
+      },
+      "sync_mode": {
+        "type": "boolean",
+        "description": "If `True`, the media will be returned as a data URI and the output data won't be available in the request history.",
+        "default": false
+      },
+      "guidance_scale": {
+        "minimum": 1.5,
+        "type": "number",
+        "description": "The guidance scale to use for the generation.",
+        "maximum": 10,
+        "default": 3.5
+      }
+    },
+    "type": "object",
+    "required": [
+      "prompt"
+    ]
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "Flux2FlexInput",
+    "Flux2FlexOutput",
+    "ImageSize",
+    "ImageFile"
+  ]
+}

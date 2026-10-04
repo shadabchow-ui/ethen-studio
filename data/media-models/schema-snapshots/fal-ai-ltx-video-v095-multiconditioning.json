@@ -1,0 +1,197 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/ltx-video-v095/multiconditioning",
+  "task": "video-editing",
+  "source_url": "https://fal.ai/models/fal-ai/ltx-video-v095/multiconditioning",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fltx-video-v095%2Fmulticonditioning",
+  "retrieved_at": "2026-10-04T19:48:36.556Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "video-to-video",
+  "bytes_sha256": "8925acd2abc0661021289e65514862210549e6bb78c7b0cd00f59bbabecb5437",
+  "queue_path": "/fal-ai/ltx-video-v095/multiconditioning",
+  "input_name": "LtxVideoV095MulticonditioningInput",
+  "input": {
+    "$refName": "LtxVideoV095MulticonditioningInput",
+    "properties": {
+      "aspect_ratio": {
+        "default": "16:9",
+        "enum": [
+          "9:16",
+          "16:9"
+        ],
+        "description": "Aspect ratio of the generated video (16:9 or 9:16).",
+        "type": "string"
+      },
+      "num_inference_steps": {
+        "default": 40,
+        "maximum": 50,
+        "description": "Number of inference steps",
+        "minimum": 2,
+        "type": "integer"
+      },
+      "negative_prompt": {
+        "default": "worst quality, inconsistent motion, blurry, jittery, distorted",
+        "description": "Negative prompt for generation",
+        "type": "string"
+      },
+      "images": {
+        "default": [],
+        "description": "URL of images to use as conditioning",
+        "examples": [
+          [
+            {
+              "start_frame_num": 0,
+              "image_url": "https://storage.googleapis.com/falserverless/model_tests/ltx/NswO1P8sCLzrh1WefqQFK_9a6bdbfa54b944c9a770338159a113fd.jpg"
+            },
+            {
+              "start_frame_num": 120,
+              "image_url": "https://storage.googleapis.com/falserverless/model_tests/ltx/YAPOGvmS2tM_Krdp7q6-d_267c97e017c34f679844a4477dfcec38.jpg"
+            }
+          ]
+        ],
+        "items": {
+          "$refName": "ImageConditioningInput",
+          "properties": {
+            "start_frame_num": {
+              "multipleOf": 8,
+              "maximum": 120,
+              "description": "Frame number of the image from which the conditioning starts. Must be a multiple of 8.",
+              "minimum": 0,
+              "type": "integer"
+            },
+            "image_url": {
+              "description": "URL of image to use as conditioning",
+              "type": "string"
+            }
+          },
+          "required": [
+            "image_url",
+            "start_frame_num"
+          ],
+          "type": "object"
+        },
+        "type": "array"
+      },
+      "expand_prompt": {
+        "default": true,
+        "description": "Whether to expand the prompt using the model's own capabilities.",
+        "type": "boolean"
+      },
+      "prompt": {
+        "description": "Text prompt to guide generation",
+        "examples": [
+          "\n            A vibrant, abstract composition featuring a person with outstretched arms, rendered in a kaleidoscope of colors against a deep, dark background. The figure is composed of intricate, swirling patterns reminiscent of a mosaic, with hues of orange, yellow, blue, and green that evoke the style of artists such as Wassily Kandinsky or Bridget Riley. \n\nThe camera zooms into the face striking portrait of a man, reimagined through the lens of old-school video-game graphics. The subject's face is rendered in a kaleidoscope of colors, with bold blues and reds set against a vibrant yellow backdrop. His dark hair is pulled back, framing his profile in a dramatic pose\n        "
+        ],
+        "type": "string"
+      },
+      "resolution": {
+        "default": "720p",
+        "enum": [
+          "480p",
+          "720p"
+        ],
+        "description": "Resolution of the generated video (480p or 720p).",
+        "type": "string"
+      },
+      "videos": {
+        "default": [],
+        "description": "Videos to use as conditioning",
+        "items": {
+          "$refName": "VideoConditioningInput",
+          "properties": {
+            "start_frame_num": {
+              "multipleOf": 8,
+              "maximum": 120,
+              "description": "Frame number of the video from which the conditioning starts. Must be a multiple of 8.",
+              "minimum": 0,
+              "type": "integer"
+            },
+            "video_url": {
+              "description": "URL of video to be extended",
+              "type": "string"
+            }
+          },
+          "required": [
+            "video_url",
+            "start_frame_num"
+          ],
+          "type": "object"
+        },
+        "type": "array"
+      },
+      "seed": {
+        "anyOf": [
+          {
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "Random seed for generation"
+      }
+    },
+    "required": [
+      "prompt"
+    ],
+    "type": "object"
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "LtxVideoV095MulticonditioningInput",
+    "LtxVideoV095MulticonditioningOutput",
+    "ImageConditioningInput",
+    "VideoConditioningInput",
+    "File"
+  ]
+}

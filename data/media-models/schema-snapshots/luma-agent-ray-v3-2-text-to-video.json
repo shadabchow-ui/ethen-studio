@@ -1,0 +1,137 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "luma/agent/ray/v3.2/text-to-video",
+  "task": "text-to-video",
+  "source_url": "https://fal.ai/models/luma/agent/ray/v3.2/text-to-video",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=luma%2Fagent%2Fray%2Fv3.2%2Ftext-to-video",
+  "retrieved_at": "2026-10-04T19:54:03.166Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "text-to-video",
+  "bytes_sha256": "068cf201550f30f91f7db0011862748293012ba06414b163dda471108dab3178",
+  "queue_path": "/luma/agent/ray/v3.2/text-to-video",
+  "input_name": "AgentRayV32TextToVideoInput",
+  "input": {
+    "$refName": "AgentRayV32TextToVideoInput",
+    "properties": {
+      "aspect_ratio": {
+        "type": "string",
+        "enum": [
+          "3:4",
+          "4:3",
+          "1:1",
+          "9:16",
+          "16:9",
+          "21:9"
+        ],
+        "examples": [
+          "16:9"
+        ],
+        "description": "Aspect ratio of the generated video.",
+        "default": "16:9"
+      },
+      "hdr": {
+        "type": "boolean",
+        "description": "Generate an HDR-encoded MP4. Requires HDR access on the account and a resolution of 720p or 1080p; not supported with 10s or loop.",
+        "default": false
+      },
+      "loop": {
+        "type": "boolean",
+        "description": "Generate a seamless loop. Only valid for 5s, standard-dynamic-range generations without an end frame.",
+        "default": false
+      },
+      "resolution": {
+        "type": "string",
+        "enum": [
+          "540p",
+          "720p",
+          "1080p"
+        ],
+        "description": "Resolution of the generated video. Higher resolutions cost more.",
+        "default": "540p"
+      },
+      "duration": {
+        "type": "string",
+        "enum": [
+          "5s",
+          "10s"
+        ],
+        "description": "Duration of the generated video.",
+        "default": "5s"
+      },
+      "exr_export": {
+        "type": "boolean",
+        "description": "Also export an EXR file alongside the MP4. Requires hdr=true and HDR access.",
+        "default": false
+      },
+      "prompt": {
+        "maxLength": 6000,
+        "examples": [
+          "A herd of wild horses galloping across a dusty desert plain under a blazing midday sun, their manes flying in the wind; wide tracking shot."
+        ],
+        "description": "Text prompt describing the video to generate.",
+        "minLength": 1,
+        "type": "string"
+      }
+    },
+    "required": [
+      "prompt"
+    ],
+    "type": "object"
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "AgentRayV32TextToVideoInput",
+    "AgentRayV32TextToVideoOutput",
+    "File"
+  ]
+}

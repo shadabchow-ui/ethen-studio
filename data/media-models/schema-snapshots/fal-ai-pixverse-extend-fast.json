@@ -1,0 +1,156 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/pixverse/extend/fast",
+  "task": "unknown",
+  "source_url": "https://fal.ai/models/fal-ai/pixverse/extend/fast",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fpixverse%2Fextend%2Ffast",
+  "retrieved_at": "2026-10-04T19:50:01.913Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "video-to-video",
+  "bytes_sha256": "6a8823f7246abc5722ba525fbba3193fa7f668d5252178fa5dedb1bd98993553",
+  "queue_path": "/fal-ai/pixverse/extend/fast",
+  "input_name": "PixverseExtendFastInput",
+  "input": {
+    "$refName": "PixverseExtendFastInput",
+    "properties": {
+      "model": {
+        "enum": [
+          "v3.5",
+          "v4",
+          "v4.5",
+          "v5",
+          "v5.5",
+          "v5.6",
+          "v6"
+        ],
+        "default": "v4.5",
+        "description": "The model version to use for generation",
+        "type": "string"
+      },
+      "seed": {
+        "description": "Random seed for generation",
+        "anyOf": [
+          {
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "resolution": {
+        "enum": [
+          "360p",
+          "540p",
+          "720p"
+        ],
+        "default": "720p",
+        "description": "The resolution of the generated video. Fast mode doesn't support 1080p",
+        "type": "string"
+      },
+      "generate_audio_switch": {
+        "default": false,
+        "description": "Enable audio generation (BGM, SFX, dialogue). Supported in v5.6+ models.",
+        "type": "boolean"
+      },
+      "prompt": {
+        "examples": [
+          "A kid is talking into camera"
+        ],
+        "type": "string",
+        "description": "Prompt describing how to extend the video"
+      },
+      "style": {
+        "description": "The style of the extended video",
+        "anyOf": [
+          {
+            "enum": [
+              "anime",
+              "3d_animation",
+              "clay",
+              "comic",
+              "cyberpunk"
+            ],
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "negative_prompt": {
+        "default": "",
+        "description": "Negative prompt to be used for the generation",
+        "type": "string"
+      },
+      "video_url": {
+        "examples": [
+          "https://v3.fal.media/files/rabbit/88-jI3VWXU4Q8kSNrWo3c_output.mp4"
+        ],
+        "type": "string",
+        "description": "URL of the input video to extend"
+      }
+    },
+    "required": [
+      "video_url",
+      "prompt"
+    ],
+    "type": "object"
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "PixverseExtendFastInput",
+    "PixverseExtendFastOutput",
+    "File"
+  ]
+}

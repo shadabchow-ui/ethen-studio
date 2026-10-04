@@ -1,0 +1,119 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "blackforestlabs/flux-video-upscale",
+  "task": "video-editing",
+  "source_url": "https://fal.ai/models/blackforestlabs/flux-video-upscale",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=blackforestlabs%2Fflux-video-upscale",
+  "retrieved_at": "2026-10-04T19:41:35.706Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "video-to-video",
+  "bytes_sha256": "7027db5a4570a67d26f2016d36bbb2bf83904812a897f5cf9e4a3124a8217443",
+  "queue_path": "/blackforestlabs/flux-video-upscale",
+  "input_name": "FluxVideoUpscaleInput",
+  "input": {
+    "$refName": "FluxVideoUpscaleInput",
+    "properties": {
+      "upscale_factor": {
+        "maximum": 3,
+        "type": "number",
+        "default": 2,
+        "minimum": 1.5,
+        "description": "Output scaling factor. The source aspect ratio is preserved."
+      },
+      "prompt": {
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "Optional description used to guide creative detail enhancement."
+      },
+      "safety_tolerance": {
+        "maximum": 4,
+        "type": "integer",
+        "default": 2,
+        "minimum": 0,
+        "description": "Moderation strictness. Lower values are stricter."
+      },
+      "creativity": {
+        "type": "integer",
+        "default": 1,
+        "enum": [
+          0,
+          1
+        ],
+        "description": "Use 0 for a source-faithful upscale or 1 for creative detail enhancement."
+      },
+      "video_url": {
+        "type": "string",
+        "description": "URL of the MP4 video to upscale. The video must be at most 20 seconds and 50 MB.",
+        "examples": [
+          "https://v3b.fal.media/files/b/0a93a27d/-iFpecUCsSdwXVMevsZa3_output_5s_448x256.mp4"
+        ]
+      }
+    },
+    "type": "object",
+    "required": [
+      "video_url"
+    ]
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "FluxVideoUpscaleInput",
+    "FluxVideoUpscaleOutput",
+    "File"
+  ]
+}

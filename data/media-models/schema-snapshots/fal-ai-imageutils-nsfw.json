@@ -1,0 +1,84 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/imageutils/nsfw",
+  "task": "unknown",
+  "source_url": "https://fal.ai/models/fal-ai/imageutils/nsfw",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fimageutils%2Fnsfw",
+  "retrieved_at": "2026-10-04T19:46:37.146Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "vision",
+  "bytes_sha256": "f3257a81bc61468cc85745b413a37a840b30359bcaba4bcd828beac0479b706f",
+  "queue_path": "/fal-ai/imageutils/nsfw",
+  "input_name": "ImageutilsNsfwInput",
+  "input": {
+    "$refName": "ImageutilsNsfwInput",
+    "properties": {
+      "image_url": {
+        "examples": [
+          "https://storage.googleapis.com/falserverless/model_tests/remove_background/elephant.jpg"
+        ],
+        "type": "string",
+        "description": "Input image url."
+      }
+    },
+    "required": [
+      "image_url"
+    ],
+    "type": "object"
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "ImageutilsNsfwInput",
+    "ImageutilsNsfwOutput"
+  ]
+}

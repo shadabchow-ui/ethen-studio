@@ -1,0 +1,144 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/kling-video/v2.6/pro/image-to-video",
+  "task": "image-to-video",
+  "source_url": "https://fal.ai/models/fal-ai/kling-video/v2.6/pro/image-to-video",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fkling-video%2Fv2.6%2Fpro%2Fimage-to-video",
+  "retrieved_at": "2026-10-04T19:47:10.959Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "image-to-video",
+  "bytes_sha256": "482f1038cd9368595216be02e4af1d273438e2fa1a370aec194e8f4bd7bfff03",
+  "queue_path": "/fal-ai/kling-video/v2.6/pro/image-to-video",
+  "input_name": "KlingVideoV26ProImageToVideoInput",
+  "input": {
+    "$refName": "KlingVideoV26ProImageToVideoInput",
+    "required": [
+      "prompt",
+      "start_image_url"
+    ],
+    "type": "object",
+    "properties": {
+      "generate_audio": {
+        "description": "Whether to generate native audio for the video. Supports Chinese and English voice output. Other languages are automatically translated to English. For English speech, use lowercase letters; for acronyms or proper nouns, use uppercase.",
+        "type": "boolean",
+        "default": true
+      },
+      "negative_prompt": {
+        "type": "string",
+        "default": "blur, distort, and low quality",
+        "maxLength": 2500
+      },
+      "voice_ids": {
+        "anyOf": [
+          {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "Optional Voice IDs for video generation. Reference voices in your prompt with <<<voice_1>>> and <<<voice_2>>> (maximum 2 voices per task). Get voice IDs from the kling video create-voice endpoint: https://fal.ai/models/fal-ai/kling-video/create-voice"
+      },
+      "end_image_url": {
+        "anyOf": [
+          {
+            "type": "string",
+            "_fal_ui_field": "image",
+            "ui": {
+              "field": "image"
+            },
+            "limit_description": "Max file size: 50.0MB, Min width: 300px, Min height: 300px, Min aspect ratio: 0.40, Max aspect ratio: 2.50, Timeout: 20.0s"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "URL of the image to be used for the end of the video"
+      },
+      "prompt": {
+        "type": "string",
+        "examples": [
+          "A king walks slowly and says \"My people, here I am! I am here to save you all\""
+        ],
+        "maxLength": 2500
+      },
+      "duration": {
+        "description": "The duration of the generated video in seconds",
+        "type": "string",
+        "default": "5",
+        "enum": [
+          "5",
+          "10"
+        ]
+      },
+      "start_image_url": {
+        "description": "URL of the image to be used for the video",
+        "examples": [
+          "https://v3b.fal.media/files/b/0a84ab29/BSJXz9Ht-jgRgMf4IGxLU_upscaled.png"
+        ],
+        "limit_description": "Max file size: 50.0MB, Min width: 300px, Min height: 300px, Min aspect ratio: 0.40, Max aspect ratio: 2.50, Timeout: 20.0s",
+        "type": "string",
+        "_fal_ui_field": "image"
+      }
+    }
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "KlingVideoV26ProImageToVideoInput",
+    "KlingVideoV26ProImageToVideoOutput",
+    "File"
+  ]
+}

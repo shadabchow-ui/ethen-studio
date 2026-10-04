@@ -1,0 +1,165 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/flux-2-pro",
+  "task": "unknown",
+  "source_url": "https://fal.ai/models/fal-ai/flux-2-pro",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fflux-2-pro",
+  "retrieved_at": "2026-10-04T19:44:15.177Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "text-to-image",
+  "bytes_sha256": "8561d9ffa8f2834cdbe3d233d6b2e36f14704278d84931a6eae3cbe5a6fd9635",
+  "queue_path": "/fal-ai/flux-2-pro",
+  "input_name": "Flux2ProInput",
+  "input": {
+    "$refName": "Flux2ProInput",
+    "type": "object",
+    "properties": {
+      "image_size": {
+        "default": "landscape_4_3",
+        "description": "The size of the generated image.",
+        "anyOf": [
+          {
+            "$refName": "ImageSize",
+            "type": "object",
+            "properties": {
+              "width": {
+                "default": 512,
+                "maximum": 14142,
+                "exclusiveMinimum": 0,
+                "type": "integer",
+                "description": "The width of the generated image."
+              },
+              "height": {
+                "default": 512,
+                "maximum": 14142,
+                "exclusiveMinimum": 0,
+                "type": "integer",
+                "description": "The height of the generated image."
+              }
+            }
+          },
+          {
+            "type": "string",
+            "enum": [
+              "square_hd",
+              "square",
+              "portrait_4_3",
+              "portrait_16_9",
+              "landscape_4_3",
+              "landscape_16_9"
+            ]
+          }
+        ]
+      },
+      "prompt": {
+        "examples": [
+          "An intense close-up of knight's visor reflecting battle, sword raised, flames in background, chiaroscuro helmet shadows, hyper-detailed armor, square medieval, cinematic lighting"
+        ],
+        "type": "string",
+        "description": "The prompt to generate an image from."
+      },
+      "safety_tolerance": {
+        "default": "2",
+        "type": "string",
+        "description": "The safety tolerance level for the generated image. 1 being the most strict and 5 being the most permissive.",
+        "enum": [
+          "1",
+          "2",
+          "3",
+          "4",
+          "5"
+        ]
+      },
+      "sync_mode": {
+        "default": false,
+        "type": "boolean",
+        "description": "If `True`, the media will be returned as a data URI and the output data won't be available in the request history."
+      },
+      "enable_safety_checker": {
+        "default": true,
+        "type": "boolean",
+        "description": "Whether to enable the safety checker. Disabling it requires account authorization; unauthorized requests are always checked."
+      },
+      "seed": {
+        "anyOf": [
+          {
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "The seed to use for the generation."
+      },
+      "output_format": {
+        "default": "jpeg",
+        "type": "string",
+        "description": "The format of the generated image.",
+        "enum": [
+          "jpeg",
+          "png"
+        ]
+      }
+    },
+    "required": [
+      "prompt"
+    ]
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "Flux2ProInput",
+    "Flux2ProOutput",
+    "ImageSize",
+    "ImageFile"
+  ]
+}

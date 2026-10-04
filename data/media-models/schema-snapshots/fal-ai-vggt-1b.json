@@ -1,0 +1,178 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/vggt-1b",
+  "task": "unknown",
+  "source_url": "https://fal.ai/models/fal-ai/vggt-1b",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fvggt-1b",
+  "retrieved_at": "2026-10-04T19:52:13.329Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "image-to-json",
+  "bytes_sha256": "24a8154f68b099262216345be85a92859cb6e44752a29f5962879c0736ba0aad",
+  "queue_path": "/fal-ai/vggt-1b",
+  "input_name": "Vggt1bInput",
+  "input": {
+    "$refName": "Vggt1bInput",
+    "properties": {
+      "alpha_blend_onto": {
+        "enum": [
+          "keep",
+          "white",
+          "black",
+          "mean"
+        ],
+        "type": "string",
+        "description": "How to handle images with an alpha channel. 'white'/'black' composite onto that background, 'mean' composites onto the ImageNet mean RGB, and 'keep' discards alpha and keeps the original pixel values.",
+        "default": "white"
+      },
+      "export_point_cloud": {
+        "type": "boolean",
+        "description": "Return a GLB scene holding the fused coloured point cloud plus a cone mesh per estimated camera.",
+        "default": true
+      },
+      "exclude_keys": {
+        "type": "array",
+        "description": "Keys to omit from each prediction JSON file.",
+        "items": {
+          "type": "string",
+          "enum": [
+            "image",
+            "pose_enc",
+            "extrinsic",
+            "intrinsic",
+            "depth",
+            "depth_conf",
+            "mask",
+            "original_image"
+          ]
+        }
+      },
+      "frame_sampling_rate": {
+        "minimum": 1,
+        "type": "integer",
+        "description": "Sample every n-th frame of `video_url`. The first and last frames of the video are always included. Ignored when no video is given.",
+        "maximum": 1000,
+        "default": 24
+      },
+      "enable_safety_checker": {
+        "type": "boolean",
+        "description": "Enable safety checking of the input images and video.",
+        "default": true
+      },
+      "export_prediction_data": {
+        "type": "boolean",
+        "description": "Return one JSON file per frame with the raw model outputs (camera pose encoding, depth, depth confidence, mask).",
+        "default": true
+      },
+      "image_urls": {
+        "examples": [
+          [
+            "https://storage.googleapis.com/falserverless/example_inputs/dog.png"
+          ]
+        ],
+        "type": "array",
+        "maxItems": 48,
+        "description": "Input images to reconstruct. Accepts JPEG, PNG, WEBP and the other formats Pillow decodes. Images are padded to a square and resized so the longest side is 518 pixels.",
+        "items": {
+          "type": "string"
+        }
+      },
+      "video_url": {
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "Optional input video. Frames are sampled every `frame_sampling_rate`-th frame (the first and last frames are always included) and appended after `image_urls`."
+      },
+      "export_depth_maps": {
+        "type": "boolean",
+        "description": "Return one 16-bit grayscale PNG depth raster per frame. Pixel values map linearly from `depth_range` onto 0-65535.",
+        "default": true
+      },
+      "confidence_percentile": {
+        "minimum": 0,
+        "type": "number",
+        "description": "Drop this percentage of the lowest-confidence points before building the point cloud. 0 keeps every point.",
+        "maximum": 100,
+        "default": 50
+      },
+      "array_encoding": {
+        "enum": [
+          "base64",
+          "list"
+        ],
+        "type": "string",
+        "description": "How arrays are encoded inside the prediction JSON files. 'base64' emits {data, shape, dtype} objects; 'list' emits nested JSON lists, which are far larger.",
+        "default": "base64"
+      },
+      "max_points": {
+        "minimum": 1000,
+        "type": "integer",
+        "description": "Upper bound on the number of points written to the GLB. Points above the default 250,000-point budget are evenly subsampled to limit GLB serialization and upload latency.",
+        "maximum": 5000000,
+        "default": 250000
+      }
+    },
+    "type": "object"
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "Vggt1bInput",
+    "Vggt1bOutput",
+    "File",
+    "Image"
+  ]
+}

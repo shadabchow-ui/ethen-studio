@@ -1,0 +1,99 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/video-understanding",
+  "task": "video-editing",
+  "source_url": "https://fal.ai/models/fal-ai/video-understanding",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fvideo-understanding",
+  "retrieved_at": "2026-10-04T19:52:15.778Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "vision",
+  "bytes_sha256": "e0be9d40dc75f17083a5abb09127221b98819ec04a146d7f0b715986b4024ee2",
+  "queue_path": "/fal-ai/video-understanding",
+  "input_name": "VideoUnderstandingInput",
+  "input": {
+    "$refName": "VideoUnderstandingInput",
+    "properties": {
+      "video_url": {
+        "description": "URL of the video to analyze",
+        "type": "string",
+        "examples": [
+          "https://v3.fal.media/files/elephant/mLAMkUTxFMbe2xF0qpLdA_Ll9mDE8webFA6GAu3vD_M_71ee7217db1d4aa4af1d2f1ae060389b.mp4"
+        ]
+      },
+      "prompt": {
+        "maxLength": 5000,
+        "description": "The question or prompt about the video content.",
+        "minLength": 1,
+        "type": "string",
+        "examples": [
+          "What is happening in this video?"
+        ]
+      },
+      "detailed_analysis": {
+        "description": "Whether to request a more detailed analysis of the video",
+        "default": false,
+        "type": "boolean"
+      }
+    },
+    "required": [
+      "video_url",
+      "prompt"
+    ],
+    "type": "object"
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "VideoUnderstandingInput",
+    "VideoUnderstandingOutput"
+  ]
+}

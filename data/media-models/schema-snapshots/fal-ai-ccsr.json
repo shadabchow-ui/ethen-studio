@@ -1,0 +1,187 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/ccsr",
+  "task": "unknown",
+  "source_url": "https://fal.ai/models/fal-ai/ccsr",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fccsr",
+  "retrieved_at": "2026-10-04T19:43:01.459Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "image-to-image",
+  "bytes_sha256": "05b11cacef4e8fa95489cf5dd71e023bf94cda63a7cf2c45c4c00fed428160f4",
+  "queue_path": "/fal-ai/ccsr",
+  "input_name": "CcsrInput",
+  "input": {
+    "$refName": "CcsrInput",
+    "required": [
+      "image_url"
+    ],
+    "type": "object",
+    "properties": {
+      "tile_vae": {
+        "description": "If specified, a patch-based sampling strategy will be used for VAE decoding.",
+        "type": "boolean",
+        "default": false
+      },
+      "tile_vae_decoder_size": {
+        "minimum": 64,
+        "description": "Size of VAE patch.",
+        "maximum": 2048,
+        "type": "integer",
+        "default": 226
+      },
+      "tile_vae_encoder_size": {
+        "minimum": 128,
+        "description": "Size of latent image",
+        "maximum": 2048,
+        "type": "integer",
+        "default": 1024
+      },
+      "tile_diffusion_stride": {
+        "minimum": 128,
+        "description": "Stride of sliding patch.",
+        "maximum": 1024,
+        "type": "integer",
+        "default": 512
+      },
+      "color_fix_type": {
+        "examples": [
+          "adain",
+          "wavelet",
+          "none"
+        ],
+        "description": "Type of color correction for samples.",
+        "type": "string",
+        "enum": [
+          "none",
+          "wavelet",
+          "adain"
+        ],
+        "default": "adain"
+      },
+      "seed": {
+        "anyOf": [
+          {
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "Seed for reproducibility. Different seeds will make slightly different results."
+      },
+      "t_min": {
+        "minimum": 0,
+        "description": "The starting point of uniform sampling strategy.",
+        "maximum": 1,
+        "type": "number",
+        "default": 0.3333
+      },
+      "tile_diffusion_size": {
+        "minimum": 256,
+        "description": "Size of patch.",
+        "maximum": 2048,
+        "type": "integer",
+        "default": 1024
+      },
+      "steps": {
+        "minimum": 10,
+        "description": "The number of steps to run the model for. The higher the number the better the quality and longer it will take to generate.",
+        "maximum": 100,
+        "type": "integer",
+        "default": 50
+      },
+      "t_max": {
+        "minimum": 0,
+        "description": "The ending point of uniform sampling strategy.",
+        "maximum": 1,
+        "type": "number",
+        "default": 0.6667
+      },
+      "scale": {
+        "minimum": 1,
+        "description": "The scale of the output image. The higher the scale, the bigger the output image will be.",
+        "maximum": 4,
+        "type": "number",
+        "default": 2
+      },
+      "tile_diffusion": {
+        "examples": [
+          "none",
+          "mix",
+          "gaussian"
+        ],
+        "description": "If specified, a patch-based sampling strategy will be used for sampling.",
+        "type": "string",
+        "enum": [
+          "none",
+          "mix",
+          "gaussian"
+        ],
+        "default": "none"
+      },
+      "image_url": {
+        "description": "The URL or data URI of the image to upscale.",
+        "examples": [
+          "https://storage.googleapis.com/falserverless/gallery/blue-bird.jpeg"
+        ],
+        "type": "string"
+      }
+    }
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "CcsrInput",
+    "CcsrOutput",
+    "Image"
+  ]
+}

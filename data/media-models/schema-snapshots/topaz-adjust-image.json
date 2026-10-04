@@ -1,0 +1,105 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "topaz/adjust/image",
+  "task": "image-generation",
+  "source_url": "https://fal.ai/models/topaz/adjust/image",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=topaz%2Fadjust%2Fimage",
+  "retrieved_at": "2026-10-04T19:55:14.080Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "image-to-image",
+  "bytes_sha256": "3de254f77d9a47ed70c90a25471e18bf282bd9c40d2df411cd6480142e292575",
+  "queue_path": "/topaz/adjust/image",
+  "input_name": "AdjustImageInput",
+  "input": {
+    "$refName": "AdjustImageInput",
+    "properties": {
+      "image_url": {
+        "minLength": 1,
+        "examples": [
+          "https://storage.googleapis.com/falserverless/model_tests/codeformer/codeformer_poor_1.jpeg"
+        ],
+        "type": "string",
+        "description": "Url of the image to process"
+      },
+      "output_format": {
+        "default": "jpeg",
+        "type": "string",
+        "description": "Output format of the processed image.",
+        "enum": [
+          "jpeg",
+          "png"
+        ]
+      },
+      "model": {
+        "default": "Adjust V2",
+        "type": "string",
+        "description": "Color & lighting correction. Adjust V2 fixes exposure/lighting; White Balance corrects color; Colorize adds color to B&W images.",
+        "enum": [
+          "Adjust V2",
+          "White Balance",
+          "Colorize"
+        ]
+      }
+    },
+    "type": "object",
+    "required": [
+      "image_url"
+    ]
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "AdjustImageInput",
+    "AdjustImageOutput",
+    "File"
+  ]
+}

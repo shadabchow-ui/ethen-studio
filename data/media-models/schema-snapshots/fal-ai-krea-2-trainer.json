@@ -1,0 +1,126 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/krea-2-trainer",
+  "task": "unknown",
+  "source_url": "https://fal.ai/models/fal-ai/krea-2-trainer",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fkrea-2-trainer",
+  "retrieved_at": "2026-10-04T19:47:23.757Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "training",
+  "bytes_sha256": "ceafcc3842b2ad089b1113c3e63a3474181d8f2b7733337f4a4bee083683e9b0",
+  "queue_path": "/fal-ai/krea-2-trainer",
+  "input_name": "Krea2TrainerInput",
+  "input": {
+    "$refName": "Krea2TrainerInput",
+    "properties": {
+      "trigger_phrase": {
+        "default": "",
+        "type": "string",
+        "description": "Instance phrase used as the caption for any image that ships no .txt caption file (DreamBooth-style); also seeds the default validation prompts. Required when some images have no caption file and auto_captioning is Off."
+      },
+      "steps": {
+        "default": 100,
+        "type": "integer",
+        "description": "Number of LoRA training steps.",
+        "maximum": 10000,
+        "minimum": 50
+      },
+      "debug_dataset": {
+        "type": "boolean",
+        "description": "When enabled, returns a downloadable archive of the exact dataset used for training after caption backfill or auto-captioning.",
+        "default": false
+      },
+      "resolution": {
+        "type": "integer",
+        "description": "Training resolution (images are cover-resized + center-cropped to a square). 768 trains ~1.7x faster at lower VRAM with near-identical style quality; 1024 maximizes fine detail.",
+        "enum": [
+          768,
+          1024
+        ],
+        "default": 768
+      },
+      "auto_captioning": {
+        "type": "string",
+        "description": "Optional automatic captioning mode. Off preserves the existing behavior: every image must include a same-stem .txt caption or fall back to trigger_phrase. Object/Character, Style, and Custom use dataset-captioner to generate captions with google/gemma-4-31B-it; trigger_phrase is included in the captioning prompt and normalized in the final sidecars using the selected LoRA captioning convention. Cost of captioning will be passed through directly.",
+        "enum": [
+          "Off",
+          "Object/Character",
+          "Style",
+          "Custom"
+        ],
+        "default": "Off"
+      },
+      "learning_rate": {
+        "type": "number",
+        "description": "Learning rate for the LoRA B factor (and for A when lora_a_lr_multiplier=1). Krea recommends 3e-4–7e-4 (constant schedule). For muon this is the match_rms_adamw-scaled (AdamW-equivalent) rate.",
+        "maximum": 0.01,
+        "minimum": 0.000001,
+        "default": 0.0005
+      },
+      "images_data_url": {
+        "type": "string",
+        "description": "URL to a .zip archive of training images (PNG/JPG/JPEG/WebP). Each image may carry a same-stem caption: an image named ROOT.EXT (e.g. 001.jpg) pairs with a caption file named ROOT.txt (e.g. 001.txt). Images with no caption file fall back to `trigger_phrase`, so each image must have either a caption file or a non-empty `trigger_phrase` — otherwise the request is rejected (422)."
+      }
+    },
+    "required": [
+      "images_data_url"
+    ],
+    "type": "object"
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "Krea2TrainerInput",
+    "Krea2TrainerOutput",
+    "File"
+  ]
+}

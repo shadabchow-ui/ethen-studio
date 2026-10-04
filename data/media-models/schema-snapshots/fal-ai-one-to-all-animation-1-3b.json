@@ -1,0 +1,141 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/one-to-all-animation/1.3b",
+  "task": "unknown",
+  "source_url": "https://fal.ai/models/fal-ai/one-to-all-animation/1.3b",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fone-to-all-animation%2F1.3b",
+  "retrieved_at": "2026-10-04T19:49:43.719Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "video-to-video",
+  "bytes_sha256": "12b37160069546394b0d7a7fcb75ea0ab2af2fb7eeb94d8a938f9fd86cf159f2",
+  "queue_path": "/fal-ai/one-to-all-animation/1.3b",
+  "input_name": "OneToAllAnimation13bInput",
+  "input": {
+    "$refName": "OneToAllAnimation13bInput",
+    "required": [
+      "prompt",
+      "negative_prompt",
+      "image_url",
+      "video_url"
+    ],
+    "type": "object",
+    "properties": {
+      "num_inference_steps": {
+        "maximum": 30,
+        "description": "The number of inference steps to use for the video generation.",
+        "type": "integer",
+        "minimum": 2,
+        "default": 30
+      },
+      "resolution": {
+        "description": "The resolution of the video to generate.",
+        "enum": [
+          "480p",
+          "580p",
+          "720p"
+        ],
+        "type": "string",
+        "default": "480p"
+      },
+      "video_url": {
+        "_fal_ui_field": "video",
+        "description": "The URL of the video to use as a reference for the video generation.",
+        "type": "string",
+        "examples": [
+          "https://videos.pexels.com/video-files/5385885/5385885-hd_1080_1920_25fps.mp4"
+        ]
+      },
+      "image_guidance_scale": {
+        "maximum": 10,
+        "description": "The image guidance scale to use for the video generation.",
+        "type": "number",
+        "minimum": 1,
+        "default": 2
+      },
+      "image_url": {
+        "description": "The URL of the image to use as a reference for the video generation.",
+        "type": "string",
+        "examples": [
+          "https://v3b.fal.media/files/b/panda/-oMlZo9Yyj_Nzoza_tgds_GmLF86r5bOt50eMMKCszy_eacc949b3933443c9915a83c98fbe85e.png"
+        ]
+      },
+      "pose_guidance_scale": {
+        "maximum": 10,
+        "description": "The pose guidance scale to use for the video generation.",
+        "type": "number",
+        "minimum": 1,
+        "default": 1.5
+      },
+      "negative_prompt": {
+        "description": "The negative prompt to generate the video from.",
+        "type": "string",
+        "examples": [
+          "black background, Aerial view, aerial view, overexposed, low quality, deformation, a poor composition, bad hands, bad teeth, bad eyes, bad limbs, distortion"
+        ]
+      },
+      "prompt": {
+        "description": "The prompt to generate the video from.",
+        "type": "string",
+        "examples": [
+          "A robot figure dancing"
+        ]
+      }
+    }
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "OneToAllAnimation13bInput",
+    "OneToAllAnimation13bOutput",
+    "File"
+  ]
+}

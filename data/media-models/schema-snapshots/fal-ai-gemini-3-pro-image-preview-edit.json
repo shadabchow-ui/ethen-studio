@@ -1,0 +1,198 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/gemini-3-pro-image-preview/edit",
+  "task": "image-editing",
+  "source_url": "https://fal.ai/models/fal-ai/gemini-3-pro-image-preview/edit",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fgemini-3-pro-image-preview%2Fedit",
+  "retrieved_at": "2026-10-04T19:45:15.331Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "image-to-image",
+  "bytes_sha256": "e5426483f3df377c76e5b8e0350d113829e667593a2203cf0d911e5a66cf1667",
+  "queue_path": "/fal-ai/gemini-3-pro-image-preview/edit",
+  "input_name": "Gemini3ProImagePreviewEditInput",
+  "input": {
+    "$refName": "Gemini3ProImagePreviewEditInput",
+    "type": "object",
+    "required": [
+      "prompt",
+      "image_urls"
+    ],
+    "properties": {
+      "sync_mode": {
+        "type": "boolean",
+        "default": false,
+        "description": "If `True`, the media will be returned as a data URI and the output data won't be available in the request history."
+      },
+      "aspect_ratio": {
+        "default": "auto",
+        "anyOf": [
+          {
+            "type": "string",
+            "enum": [
+              "auto",
+              "21:9",
+              "16:9",
+              "3:2",
+              "4:3",
+              "5:4",
+              "1:1",
+              "4:5",
+              "3:4",
+              "2:3",
+              "9:16"
+            ]
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "The aspect ratio of the generated image."
+      },
+      "num_images": {
+        "maximum": 4,
+        "type": "integer",
+        "minimum": 1,
+        "default": 1,
+        "description": "The number of images to generate."
+      },
+      "image_urls": {
+        "type": "array",
+        "examples": [
+          [
+            "https://storage.googleapis.com/falserverless/example_inputs/nano-banana-edit-input.png",
+            "https://storage.googleapis.com/falserverless/example_inputs/nano-banana-edit-input-2.png"
+          ]
+        ],
+        "items": {
+          "type": "string"
+        },
+        "description": "The URLs of the images to use for image-to-image generation or image editing."
+      },
+      "enable_web_search": {
+        "type": "boolean",
+        "default": false,
+        "description": "Enable web search for the image generation task. This will allow the model to use the latest information from the web to generate the image."
+      },
+      "output_format": {
+        "type": "string",
+        "default": "png",
+        "enum": [
+          "jpeg",
+          "png",
+          "webp"
+        ],
+        "description": "The format of the generated image."
+      },
+      "safety_tolerance": {
+        "type": "string",
+        "default": "4",
+        "enum": [
+          "1",
+          "2",
+          "3",
+          "4",
+          "5",
+          "6"
+        ],
+        "description": "The safety tolerance level for content moderation. 1 is the most strict (blocks most content), 6 is the least strict."
+      },
+      "seed": {
+        "anyOf": [
+          {
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "The seed for the random number generator."
+      },
+      "prompt": {
+        "description": "The prompt for image editing.",
+        "minLength": 3,
+        "examples": [
+          "make a photo of the man driving the car down the california coastline"
+        ],
+        "maxLength": 50000,
+        "type": "string"
+      },
+      "resolution": {
+        "type": "string",
+        "default": "1K",
+        "enum": [
+          "1K",
+          "2K",
+          "4K"
+        ],
+        "description": "The resolution of the image to generate."
+      },
+      "system_prompt": {
+        "description": "Optional system instruction that steers the model's persona and output style across the request. Leave blank to omit; when provided, it is sent as the system instruction to Gemini (or as a system message on OpenAI-compatible providers).",
+        "type": "string",
+        "maxLength": 50000,
+        "default": ""
+      },
+      "limit_generations": {
+        "type": "boolean",
+        "default": true,
+        "description": "Experimental parameter to limit the number of generations from each round of prompting to 1. Set to `True` to to disregard any instructions in the prompt regarding the number of images to generate."
+      }
+    }
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "Gemini3ProImagePreviewEditInput",
+    "Gemini3ProImagePreviewEditOutput",
+    "ImageFile"
+  ]
+}

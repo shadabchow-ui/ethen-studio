@@ -1,0 +1,188 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/kling-video/o1/reference-to-video",
+  "task": "reference-to-video",
+  "source_url": "https://fal.ai/models/fal-ai/kling-video/o1/reference-to-video",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fkling-video%2Fo1%2Freference-to-video",
+  "retrieved_at": "2026-10-04T19:46:50.766Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "image-to-video",
+  "bytes_sha256": "6b149aa573ab39102e8604e5ca55ef10918a188b9231603f8abfb89bcad7b2cf",
+  "queue_path": "/fal-ai/kling-video/o1/reference-to-video",
+  "input_name": "KlingVideoO1ReferenceToVideoInput",
+  "input": {
+    "$refName": "KlingVideoO1ReferenceToVideoInput",
+    "description": "Input for start-frame video generation with optional reference images and elements.",
+    "required": [
+      "prompt"
+    ],
+    "type": "object",
+    "properties": {
+      "image_urls": {
+        "anyOf": [
+          {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "_fal_ui_field": "image",
+              "ui": {
+                "field": "image"
+              },
+              "limit_description": "Max file size: 50.0MB, Min width: 300px, Min height: 300px, Min aspect ratio: 0.40, Max aspect ratio: 2.50, Timeout: 20.0s"
+            }
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "Additional reference images for style/appearance. Reference in prompt as @Image1, @Image2, etc. Maximum 7 total (elements + reference images + start image).",
+        "examples": [
+          [
+            "https://v3b.fal.media/files/b/koala/v9COzzH23FGBYdGLgbK3u.png",
+            "https://v3b.fal.media/files/b/elephant/5Is2huKQFSE7A7c5uUeUF.png"
+          ]
+        ]
+      },
+      "elements": {
+        "anyOf": [
+          {
+            "type": "array",
+            "items": {
+              "$refName": "OmniVideoElementInput",
+              "required": [
+                "frontal_image_url"
+              ],
+              "type": "object",
+              "properties": {
+                "reference_image_urls": {
+                  "description": "Additional reference images from different angles. 1-3 images supported. At least one image is required.",
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "_fal_ui_field": "image",
+                    "limit_description": "Max file size: 50.0MB, Min width: 300px, Min height: 300px, Min aspect ratio: 0.40, Max aspect ratio: 2.50, Timeout: 20.0s"
+                  }
+                },
+                "frontal_image_url": {
+                  "description": "The frontal image of the element (main view).\n\nMax file size: 50.0MB, Min width: 300px, Min height: 300px, Min aspect ratio: 0.40, Max aspect ratio: 2.50, Timeout: 20.0s",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "Elements (characters/objects) to include in the video. Reference in prompt as @Element1, @Element2, etc. Maximum 7 total (elements + reference images + start image).",
+        "examples": [
+          [
+            {
+              "reference_image_urls": [
+                "https://v3b.fal.media/files/b/kangaroo/YMpmQkYt9xugpOTQyZW0O.png",
+                "https://v3b.fal.media/files/b/zebra/d6ywajNyJ6bnpa_xBue-K.png"
+              ],
+              "frontal_image_url": "https://v3b.fal.media/files/b/panda/MQp-ghIqshvMZROKh9lW3.png"
+            },
+            {
+              "reference_image_urls": [
+                "https://v3b.fal.media/files/b/kangaroo/EBF4nWihspyv4pp6hgj7D.png"
+              ],
+              "frontal_image_url": "https://v3b.fal.media/files/b/koala/gSnsA7HJlgcaTyR5Ujj2H.png"
+            }
+          ]
+        ]
+      },
+      "prompt": {
+        "description": "Take @Element1, @Element2 to reference elements and @Image1, @Image2 to reference images in order.",
+        "type": "string",
+        "examples": [
+          "Take @Image1 as the start frame. Start with a high-angle satellite view of the ancient greenhouse ruin surrounded by nature. The camera swoops down and flies inside the building, revealing the character from @Element1 standing in the sun-drenched center. The camera then seamlessly transitions into a smooth 180-degree orbit around the character, moving to the back view. As the open backpack comes into focus, the camera continues to push forward, zooming deep inside the bag to reveal the glowing stone from @Element2 nestled inside. Cinematic lighting, hopeful atmosphere, 35mm lens. Make sure to keep it as the style of @Image2."
+        ],
+        "maxLength": 2500
+      },
+      "duration": {
+        "description": "Video duration in seconds.",
+        "type": "string",
+        "default": "5",
+        "enum": [
+          "3",
+          "4",
+          "5",
+          "6",
+          "7",
+          "8",
+          "9",
+          "10"
+        ]
+      },
+      "aspect_ratio": {
+        "description": "The aspect ratio of the generated video frame.",
+        "type": "string",
+        "default": "16:9",
+        "enum": [
+          "16:9",
+          "9:16",
+          "1:1"
+        ]
+      }
+    }
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "KlingVideoO1ReferenceToVideoInput",
+    "KlingVideoO1ReferenceToVideoOutput",
+    "OmniVideoElementInput",
+    "File"
+  ]
+}

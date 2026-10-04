@@ -1,0 +1,116 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/z-image-trainer",
+  "task": "image-generation",
+  "source_url": "https://fal.ai/models/fal-ai/z-image-trainer",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fz-image-trainer",
+  "retrieved_at": "2026-10-04T19:53:20.781Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "training",
+  "bytes_sha256": "574ef0399c193f50d27456e02cc1877ed924122f85c9a9206a38d5e4ea42a675",
+  "queue_path": "/fal-ai/z-image-trainer",
+  "input_name": "ZImageTrainerInput",
+  "input": {
+    "$refName": "ZImageTrainerInput",
+    "required": [
+      "image_data_url"
+    ],
+    "type": "object",
+    "properties": {
+      "learning_rate": {
+        "description": "Learning rate applied to trainable parameters.",
+        "type": "number",
+        "default": 0.0001
+      },
+      "default_caption": {
+        "description": "Default caption to use when caption files are missing. If None, missing captions will cause an error.",
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "steps": {
+        "description": "Total number of training steps.",
+        "default": 1000,
+        "maximum": 10000,
+        "type": "integer",
+        "minimum": 100,
+        "multipleOf": 100
+      },
+      "image_data_url": {
+        "description": "\n    URL to zip archive with images of a consistent style. Try to use at least 10 images, although more is better.\n\n    The zip can also contain a text file for each image. The text file should be named:\n    ROOT.txt\n    For example:\n    photo.txt\n\n    This text file can be used to specify the edit instructions for the image pair.\n\n    If no text file is provided, the default_caption will be used.\n\n    If no default_caption is provided, the training will fail.\n    ",
+        "type": "string"
+      },
+      "training_type": {
+        "description": "Type of training to perform. Use 'content' to focus on the content of the images, 'style' to focus on the style of the images, and 'balanced' to focus on a combination of both.",
+        "type": "string",
+        "default": "balanced",
+        "enum": [
+          "content",
+          "style",
+          "balanced"
+        ]
+      }
+    }
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "ZImageTrainerInput",
+    "ZImageTrainerOutput",
+    "File"
+  ]
+}

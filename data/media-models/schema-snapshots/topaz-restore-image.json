@@ -1,0 +1,105 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "topaz/restore/image",
+  "task": "image-generation",
+  "source_url": "https://fal.ai/models/topaz/restore/image",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=topaz%2Frestore%2Fimage",
+  "retrieved_at": "2026-10-04T19:55:18.077Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "image-to-image",
+  "bytes_sha256": "40f2e1c561cf7e756265335137d315bf3380df3b5208579060e6f76ca6e3bae2",
+  "queue_path": "/topaz/restore/image",
+  "input_name": "RestoreImageInput",
+  "input": {
+    "$refName": "RestoreImageInput",
+    "properties": {
+      "image_url": {
+        "minLength": 1,
+        "examples": [
+          "https://storage.googleapis.com/falserverless/model_tests/codeformer/codeformer_poor_1.jpeg"
+        ],
+        "type": "string",
+        "description": "Url of the image to process"
+      },
+      "output_format": {
+        "default": "jpeg",
+        "type": "string",
+        "description": "Output format of the processed image.",
+        "enum": [
+          "jpeg",
+          "png"
+        ]
+      },
+      "model": {
+        "default": "Recover 3",
+        "type": "string",
+        "description": "Restoration. Recover 3 rebuilds natural detail; Dust-Scratch V2 cleans up film dust and scratches; Faces restores facial detail with Face Recovery 3.",
+        "enum": [
+          "Recover 3",
+          "Dust-Scratch V2",
+          "Faces"
+        ]
+      }
+    },
+    "type": "object",
+    "required": [
+      "image_url"
+    ]
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "RestoreImageInput",
+    "RestoreImageOutput",
+    "File"
+  ]
+}

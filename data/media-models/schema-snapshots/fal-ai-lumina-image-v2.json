@@ -1,0 +1,199 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/lumina-image/v2",
+  "task": "image-generation",
+  "source_url": "https://fal.ai/models/fal-ai/lumina-image/v2",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Flumina-image%2Fv2",
+  "retrieved_at": "2026-10-04T19:49:01.447Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "text-to-image",
+  "bytes_sha256": "469d9534d04b358f26ab9aa43137e50fb8144d2099b87d6f5c97069e5758cb50",
+  "queue_path": "/fal-ai/lumina-image/v2",
+  "input_name": "LuminaImageV2Input",
+  "input": {
+    "$refName": "LuminaImageV2Input",
+    "properties": {
+      "guidance_scale": {
+        "maximum": 20,
+        "type": "number",
+        "default": 4,
+        "minimum": 0,
+        "description": "\n            The CFG (Classifier Free Guidance) scale is a measure of how close you want\n            the model to stick to your prompt when looking for a related image to show you.\n        "
+      },
+      "prompt": {
+        "type": "string",
+        "description": "The prompt to generate an image from.",
+        "examples": [
+          "A vibrant and artistic digital composition featuring colorful splashes of paint in the background, creating an energetic and dynamic effect. The text 'Lumina on Fal' is elegantly integrated into the scene, standing out with a modern, bold, and slightly futuristic font. The colors are bright and varied, including neon blues, purples, pinks, and oranges, blending seamlessly in a fluid, abstract style. The text appears slightly illuminated, complementing the vivid splashes around it."
+        ]
+      },
+      "image_size": {
+        "anyOf": [
+          {
+            "$refName": "ImageSize",
+            "properties": {
+              "height": {
+                "maximum": 14142,
+                "exclusiveMinimum": 0,
+                "default": 512,
+                "type": "integer",
+                "description": "The height of the generated image."
+              },
+              "width": {
+                "maximum": 14142,
+                "exclusiveMinimum": 0,
+                "default": 512,
+                "type": "integer",
+                "description": "The width of the generated image."
+              }
+            },
+            "type": "object"
+          },
+          {
+            "type": "string",
+            "enum": [
+              "square_hd",
+              "square",
+              "portrait_4_3",
+              "portrait_16_9",
+              "landscape_4_3",
+              "landscape_16_9"
+            ]
+          }
+        ],
+        "default": "landscape_4_3",
+        "description": "The size of the generated image."
+      },
+      "num_inference_steps": {
+        "maximum": 50,
+        "type": "integer",
+        "default": 30,
+        "minimum": 1,
+        "description": "The number of inference steps to perform."
+      },
+      "enable_safety_checker": {
+        "type": "boolean",
+        "default": true,
+        "description": "If set to true, the safety checker will be enabled. Disabling it requires account authorization; unauthorized requests are always checked."
+      },
+      "cfg_normalization": {
+        "type": "boolean",
+        "default": true,
+        "description": "Whether to apply normalization-based guidance scale."
+      },
+      "negative_prompt": {
+        "type": "string",
+        "default": "",
+        "description": "\n            The negative prompt to use. Use it to address details that you don't want\n            in the image. This could be colors, objects, scenery and even the small details\n            (e.g. moustache, blurry, low resolution).\n        ",
+        "examples": [
+          ""
+        ]
+      },
+      "seed": {
+        "anyOf": [
+          {
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "\n            The same seed and the same prompt given to the same version of the model\n            will output the same image every time.\n        "
+      },
+      "output_format": {
+        "type": "string",
+        "default": "jpeg",
+        "enum": [
+          "jpeg",
+          "png"
+        ],
+        "description": "The format of the generated image."
+      },
+      "cfg_trunc_ratio": {
+        "maximum": 1,
+        "type": "number",
+        "default": 1,
+        "minimum": 0,
+        "description": "The ratio of the timestep interval to apply normalization-based guidance scale."
+      },
+      "num_images": {
+        "maximum": 4,
+        "type": "integer",
+        "default": 1,
+        "minimum": 1,
+        "description": "The number of images to generate."
+      },
+      "system_prompt": {
+        "type": "string",
+        "default": "You are an assistant designed to generate superior images with the superior degree of image-text alignment based on textual prompts or user prompts.",
+        "description": "The system prompt to use."
+      },
+      "sync_mode": {
+        "type": "boolean",
+        "default": false,
+        "description": "If `True`, the media will be returned as a data URI and the output data won't be available in the request history."
+      }
+    },
+    "required": [
+      "prompt"
+    ],
+    "type": "object"
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "LuminaImageV2Input",
+    "LuminaImageV2Output",
+    "ImageSize",
+    "Image"
+  ]
+}

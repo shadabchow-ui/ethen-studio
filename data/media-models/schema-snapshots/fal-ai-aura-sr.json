@@ -1,0 +1,118 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/aura-sr",
+  "task": "unknown",
+  "source_url": "https://fal.ai/models/fal-ai/aura-sr",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Faura-sr",
+  "retrieved_at": "2026-10-04T19:42:33.592Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "image-to-image",
+  "bytes_sha256": "cbe93322398f8c11a88af8dbb74e64e1c6cd223855e711b26d57066a5f1a438f",
+  "queue_path": "/fal-ai/aura-sr",
+  "input_name": "AuraSrInput",
+  "input": {
+    "$refName": "AuraSrInput",
+    "properties": {
+      "image_url": {
+        "examples": [
+          "https://storage.googleapis.com/falserverless/model_tests/svd/rocket.png",
+          "https://storage.googleapis.com/falserverless/example_inputs/dog.png",
+          "https://storage.googleapis.com/falserverless/example_inputs/girl.jpg"
+        ],
+        "type": "string",
+        "description": "URL of the image to upscale."
+      },
+      "overlapping_tiles": {
+        "examples": [
+          true,
+          false
+        ],
+        "type": "boolean",
+        "description": "Whether to use overlapping tiles for upscaling. Setting this to true helps remove seams but doubles the inference time.",
+        "default": false
+      },
+      "checkpoint": {
+        "default": "v1",
+        "examples": [
+          "v2",
+          "v1"
+        ],
+        "type": "string",
+        "description": "Checkpoint to use for upscaling. More coming soon.",
+        "enum": [
+          "v1",
+          "v2"
+        ]
+      },
+      "upscale_factor": {
+        "examples": [
+          4
+        ],
+        "type": "integer",
+        "const": 4,
+        "description": "Upscaling factor. More coming soon.",
+        "default": 4
+      }
+    },
+    "type": "object",
+    "required": [
+      "image_url"
+    ]
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "AuraSrInput",
+    "AuraSrOutput",
+    "Image"
+  ]
+}

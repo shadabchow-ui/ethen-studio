@@ -1,0 +1,217 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/recraft-20b",
+  "task": "text-to-image",
+  "source_url": "https://fal.ai/models/fal-ai/recraft-20b",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Frecraft-20b",
+  "retrieved_at": "2026-10-04T19:51:05.464Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "text-to-image",
+  "bytes_sha256": "5e6f4c456ec207b2869636e3d84918718fe41c74138acd863e4064bb3c491968",
+  "queue_path": "/fal-ai/recraft-20b",
+  "input_name": "Recraft20bInput",
+  "input": {
+    "$refName": "Recraft20bInput",
+    "type": "object",
+    "properties": {
+      "colors": {
+        "default": [],
+        "items": {
+          "$refName": "RGBColor",
+          "type": "object",
+          "properties": {
+            "b": {
+              "default": 0,
+              "minimum": 0,
+              "type": "integer",
+              "maximum": 255,
+              "description": "Blue color value"
+            },
+            "r": {
+              "default": 0,
+              "minimum": 0,
+              "type": "integer",
+              "maximum": 255,
+              "description": "Red color value"
+            },
+            "g": {
+              "default": 0,
+              "minimum": 0,
+              "type": "integer",
+              "maximum": 255,
+              "description": "Green color value"
+            }
+          }
+        },
+        "type": "array",
+        "description": "An array of preferable colors"
+      },
+      "prompt": {
+        "examples": [
+          "a red panda in Kyoto"
+        ],
+        "type": "string",
+        "maxLength": 1000,
+        "minLength": 1
+      },
+      "style": {
+        "default": "realistic_image",
+        "type": "string",
+        "description": "The style of the generated images. Vector images cost 2X as much.",
+        "enum": [
+          "any",
+          "realistic_image",
+          "digital_illustration",
+          "vector_illustration",
+          "realistic_image/b_and_w",
+          "realistic_image/enterprise",
+          "realistic_image/hard_flash",
+          "realistic_image/hdr",
+          "realistic_image/motion_blur",
+          "realistic_image/natural_light",
+          "realistic_image/studio_portrait",
+          "digital_illustration/2d_art_poster",
+          "digital_illustration/2d_art_poster_2",
+          "digital_illustration/3d",
+          "digital_illustration/80s",
+          "digital_illustration/engraving_color",
+          "digital_illustration/glow",
+          "digital_illustration/grain",
+          "digital_illustration/hand_drawn",
+          "digital_illustration/hand_drawn_outline",
+          "digital_illustration/handmade_3d",
+          "digital_illustration/infantile_sketch",
+          "digital_illustration/kawaii",
+          "digital_illustration/pixel_art",
+          "digital_illustration/psychedelic",
+          "digital_illustration/seamless",
+          "digital_illustration/voxel",
+          "digital_illustration/watercolor",
+          "vector_illustration/cartoon",
+          "vector_illustration/doodle_line_art",
+          "vector_illustration/engraving",
+          "vector_illustration/flat_2",
+          "vector_illustration/kawaii",
+          "vector_illustration/line_art",
+          "vector_illustration/line_circuit",
+          "vector_illustration/linocut",
+          "vector_illustration/seamless"
+        ]
+      },
+      "enable_safety_checker": {
+        "default": false,
+        "type": "boolean",
+        "description": "If set to true, the safety checker will be enabled. Disabling it requires account authorization; unauthorized requests are always checked."
+      },
+      "style_id": {
+        "anyOf": [
+          {
+            "type": "string",
+            "format": "uuid4"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "The ID of the custom style reference (optional)"
+      },
+      "image_size": {
+        "anyOf": [
+          {
+            "$refName": "ImageSize",
+            "type": "object",
+            "properties": {
+              "width": {
+                "default": 512,
+                "type": "integer",
+                "exclusiveMinimum": 0,
+                "maximum": 14142,
+                "description": "The width of the generated image."
+              },
+              "height": {
+                "default": 512,
+                "type": "integer",
+                "exclusiveMinimum": 0,
+                "maximum": 14142,
+                "description": "The height of the generated image."
+              }
+            }
+          },
+          {
+            "type": "string",
+            "enum": [
+              "square_hd",
+              "square",
+              "portrait_4_3",
+              "portrait_16_9",
+              "landscape_4_3",
+              "landscape_16_9"
+            ]
+          }
+        ],
+        "default": "square_hd"
+      }
+    },
+    "required": [
+      "prompt"
+    ]
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "Recraft20bInput",
+    "Recraft20bOutput",
+    "RGBColor",
+    "ImageSize",
+    "File"
+  ]
+}

@@ -1,0 +1,93 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/florence-2-large/caption-to-phrase-grounding",
+  "task": "unknown",
+  "source_url": "https://fal.ai/models/fal-ai/florence-2-large/caption-to-phrase-grounding",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fflorence-2-large%2Fcaption-to-phrase-grounding",
+  "retrieved_at": "2026-10-04T19:43:51.637Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "image-to-image",
+  "bytes_sha256": "9aa9774aea2c2a540a51ff2247bbcf842bbf461be4fd95cfa86a0875b4338ce8",
+  "queue_path": "/fal-ai/florence-2-large/caption-to-phrase-grounding",
+  "input_name": "Florence2LargeCaptionToPhraseGroundingInput",
+  "input": {
+    "$refName": "Florence2LargeCaptionToPhraseGroundingInput",
+    "properties": {
+      "text_input": {
+        "description": "Text input for the task",
+        "type": "string"
+      },
+      "image_url": {
+        "description": "The URL of the image to be processed.",
+        "type": "string",
+        "examples": [
+          "https://huggingface.co/datasets/huggingface/documentation-images/resolve/main/transformers/tasks/car.jpg",
+          "http://ecx.images-amazon.com/images/I/51UUzBDAMsL.jpg"
+        ]
+      }
+    },
+    "type": "object",
+    "required": [
+      "image_url",
+      "text_input"
+    ]
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "Florence2LargeCaptionToPhraseGroundingInput",
+    "Florence2LargeCaptionToPhraseGroundingOutput",
+    "BoundingBoxes",
+    "Image",
+    "BoundingBox"
+  ]
+}

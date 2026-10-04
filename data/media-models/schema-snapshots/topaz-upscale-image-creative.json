@@ -1,0 +1,151 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "topaz/upscale/image/creative",
+  "task": "image-editing",
+  "source_url": "https://fal.ai/models/topaz/upscale/image/creative",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=topaz%2Fupscale%2Fimage%2Fcreative",
+  "retrieved_at": "2026-10-04T19:55:20.190Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "image-to-image",
+  "bytes_sha256": "8c3d9e602e04acc3ff12b1bc796cef4438c6755cee1de0c1b5fd366391d1d0bc",
+  "queue_path": "/topaz/upscale/image/creative",
+  "input_name": "UpscaleImageCreativeInput",
+  "input": {
+    "$refName": "UpscaleImageCreativeInput",
+    "properties": {
+      "crop_to_fill": {
+        "type": "boolean",
+        "default": false
+      },
+      "autoprompt": {
+        "anyOf": [
+          {
+            "type": "boolean"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "Enable automatic prompt generation. Applies to Bloom 2 only; Topaz defaults it to true when omitted."
+      },
+      "model": {
+        "default": "Bloom 2",
+        "type": "string",
+        "description": "Creative (Bloom) upscaling model. Bloom 2 is the latest and most capable; Bloom creatively upscales and transforms AI-generated images; Bloom Realism biases the added detail toward photorealism.",
+        "enum": [
+          "Bloom 2",
+          "Bloom",
+          "Bloom Realism"
+        ]
+      },
+      "creativity": {
+        "anyOf": [
+          {
+            "type": "integer",
+            "maximum": 9,
+            "minimum": 1
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "Creativity level (1-9). Higher values produce more creative/hallucinated details. Applies to Bloom 2 only."
+      },
+      "upscale_factor": {
+        "minimum": 1,
+        "type": "number",
+        "description": "Factor to upscale the image by (e.g. 2.0 doubles width and height)",
+        "maximum": 4,
+        "default": 2
+      },
+      "image_url": {
+        "minLength": 1,
+        "examples": [
+          "https://storage.googleapis.com/falserverless/model_tests/codeformer/codeformer_poor_1.jpeg"
+        ],
+        "type": "string",
+        "description": "Url of the image to be upscaled"
+      },
+      "output_format": {
+        "default": "jpeg",
+        "type": "string",
+        "description": "Output format of the upscaled image.",
+        "enum": [
+          "jpeg",
+          "png"
+        ]
+      },
+      "color_preservation": {
+        "anyOf": [
+          {
+            "type": "boolean"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "Preserve the source image's colors in the output. Applies to Bloom 2 only."
+      }
+    },
+    "type": "object",
+    "required": [
+      "image_url"
+    ]
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "UpscaleImageCreativeInput",
+    "UpscaleImageCreativeOutput",
+    "File"
+  ]
+}

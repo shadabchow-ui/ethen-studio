@@ -1,0 +1,167 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/hunyuan3d-v3/image-to-3d",
+  "task": "image-generation",
+  "source_url": "https://fal.ai/models/fal-ai/hunyuan3d-v3/image-to-3d",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fhunyuan3d-v3%2Fimage-to-3d",
+  "retrieved_at": "2026-10-04T19:45:44.105Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "image-to-3d",
+  "bytes_sha256": "da95c3c3fd984e79ace10bd1fcc9bf874b9b7d7feefedf042da7edd857f637d4",
+  "queue_path": "/fal-ai/hunyuan3d-v3/image-to-3d",
+  "input_name": "Hunyuan3dV3ImageTo3dInput",
+  "input": {
+    "$refName": "Hunyuan3dV3ImageTo3dInput",
+    "required": [
+      "input_image_url"
+    ],
+    "type": "object",
+    "properties": {
+      "left_image_url": {
+        "description": "Optional left view image URL for better 3D reconstruction.",
+        "anyOf": [
+          {
+            "_fal_ui_field": "image",
+            "ui": {
+              "field": "image"
+            },
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "max_file_size": 8388608
+      },
+      "face_count": {
+        "description": "Target face count. Range: 40000-1500000",
+        "maximum": 1500000,
+        "type": "integer",
+        "default": 500000,
+        "minimum": 40000
+      },
+      "back_image_url": {
+        "description": "Optional back view image URL for better 3D reconstruction.",
+        "anyOf": [
+          {
+            "_fal_ui_field": "image",
+            "ui": {
+              "field": "image"
+            },
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "max_file_size": 8388608
+      },
+      "enable_pbr": {
+        "description": "Whether to enable PBR material generation. Does not take effect when generate_type is Geometry.",
+        "type": "boolean",
+        "default": false
+      },
+      "polygon_type": {
+        "description": "Polygon type. Only takes effect when GenerateType is LowPoly.",
+        "enum": [
+          "triangle",
+          "quadrilateral"
+        ],
+        "type": "string",
+        "default": "triangle"
+      },
+      "input_image_url": {
+        "description": "URL of image to use while generating the 3D model.",
+        "_fal_ui_field": "image",
+        "type": "string",
+        "max_file_size": 8388608,
+        "examples": [
+          "https://v3b.fal.media/files/b/0a865ab1/omYcawLUo4RZbO8J6ZgZR.png"
+        ]
+      },
+      "right_image_url": {
+        "description": "Optional right view image URL for better 3D reconstruction.",
+        "anyOf": [
+          {
+            "_fal_ui_field": "image",
+            "ui": {
+              "field": "image"
+            },
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "max_file_size": 8388608
+      },
+      "generate_type": {
+        "description": "Generation type. Normal: textured model. LowPoly: polygon reduction. Geometry: white model without texture.",
+        "enum": [
+          "Normal",
+          "LowPoly",
+          "Geometry"
+        ],
+        "type": "string",
+        "default": "Normal"
+      }
+    }
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "Hunyuan3dV3ImageTo3dInput",
+    "Hunyuan3dV3ImageTo3dOutput",
+    "File",
+    "ModelUrls"
+  ]
+}

@@ -1,0 +1,197 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/hidream-o1-image/dev",
+  "task": "image-generation",
+  "source_url": "https://fal.ai/models/fal-ai/hidream-o1-image/dev",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fhidream-o1-image%2Fdev",
+  "retrieved_at": "2026-10-04T19:45:33.550Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "text-to-image",
+  "bytes_sha256": "b5a9022edb35d8fb5616cf764cfdfca430bbc72837111ac2bae2baeeafd39134",
+  "queue_path": "/fal-ai/hidream-o1-image/dev",
+  "input_name": "HidreamO1ImageDevInput",
+  "input": {
+    "$refName": "HidreamO1ImageDevInput",
+    "properties": {
+      "enable_safety_checker": {
+        "description": "Enable the safety checker on generated images.",
+        "type": "boolean",
+        "default": true
+      },
+      "sync_mode": {
+        "description": "If `True`, the media will be returned as a data URI and the output data won't be available in the request history.",
+        "type": "boolean",
+        "default": false
+      },
+      "output_format": {
+        "description": "The format of the generated image.",
+        "type": "string",
+        "default": "png",
+        "enum": [
+          "jpeg",
+          "png",
+          "webp"
+        ]
+      },
+      "num_inference_steps": {
+        "description": "Number of denoising steps. The dev model is distilled for 28 steps.",
+        "type": "integer",
+        "minimum": 1,
+        "default": 28,
+        "maximum": 28
+      },
+      "reference_image_urls": {
+        "type": "array",
+        "examples": [
+          [
+            "https://storage.googleapis.com/falserverless/model_tests/hidream/woman.png"
+          ]
+        ],
+        "items": {
+          "type": "string"
+        },
+        "default": [],
+        "description": "Optional reference images. Use none for text-to-image, one for image editing, or multiple for subject-driven personalization."
+      },
+      "guidance_scale": {
+        "description": "Classifier-free guidance scale. The dev model uses 0.0 by default.",
+        "type": "number",
+        "minimum": 0,
+        "default": 0,
+        "maximum": 20
+      },
+      "seed": {
+        "description": "Random seed for reproducible generation.",
+        "anyOf": [
+          {
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "keep_original_aspect": {
+        "description": "When exactly one reference image is provided, preserve its aspect ratio for the output image.",
+        "type": "boolean",
+        "default": false
+      },
+      "prompt": {
+        "minLength": 1,
+        "examples": [
+          "A cinematic product photo of a ceramic mug on a marble counter, soft window light, shallow depth of field."
+        ],
+        "type": "string",
+        "description": "Text prompt for image generation, editing, or subject-driven personalization."
+      },
+      "num_images": {
+        "description": "Number of images to generate.",
+        "type": "integer",
+        "minimum": 1,
+        "default": 1,
+        "maximum": 4
+      },
+      "image_size": {
+        "description": "Requested output image size. Dimensions are rounded down to a multiple of 32, up to about 2048x2048 pixels.",
+        "default": {
+          "height": 1024,
+          "width": 1024
+        },
+        "anyOf": [
+          {
+            "$refName": "ImageSize",
+            "properties": {
+              "height": {
+                "exclusiveMinimum": 0,
+                "type": "integer",
+                "description": "The height of the generated image.",
+                "maximum": 14142,
+                "default": 512
+              },
+              "width": {
+                "exclusiveMinimum": 0,
+                "type": "integer",
+                "description": "The width of the generated image.",
+                "maximum": 14142,
+                "default": 512
+              }
+            },
+            "type": "object"
+          },
+          {
+            "type": "string",
+            "enum": [
+              "square_hd",
+              "square",
+              "portrait_4_3",
+              "portrait_16_9",
+              "landscape_4_3",
+              "landscape_16_9"
+            ]
+          }
+        ]
+      }
+    },
+    "type": "object",
+    "required": [
+      "prompt"
+    ]
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "HidreamO1ImageDevInput",
+    "HidreamO1ImageDevOutput",
+    "ImageSize",
+    "ImageFile"
+  ]
+}

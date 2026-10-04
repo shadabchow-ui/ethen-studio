@@ -1,0 +1,119 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/krea-wan-14b/video-to-video",
+  "task": "video-to-video",
+  "source_url": "https://fal.ai/models/fal-ai/krea-wan-14b/video-to-video",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fkrea-wan-14b%2Fvideo-to-video",
+  "retrieved_at": "2026-10-04T19:47:26.278Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "video-to-video",
+  "bytes_sha256": "09269b37a6a3d1827a66c551891079a79a4139b5319f3ac67ea0bb785e061ef6",
+  "queue_path": "/fal-ai/krea-wan-14b/video-to-video",
+  "input_name": "KreaWan14bVideoToVideoInput",
+  "input": {
+    "$refName": "KreaWan14bVideoToVideoInput",
+    "required": [
+      "prompt",
+      "video_url"
+    ],
+    "type": "object",
+    "properties": {
+      "video_url": {
+        "description": "URL of the input video. Currently, only outputs of 16:9 aspect ratio and 480p resolution are supported. Video duration should be less than 1000 frames at 16fps, and output frames will be 6 plus a multiple of 12, for example 18, 30, 42, etc.",
+        "type": "string",
+        "examples": [
+          "https://storage.googleapis.com/falserverless/example_inputs/krea_wan_14b_v2v_input.mp4"
+        ]
+      },
+      "seed": {
+        "anyOf": [
+          {
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "Seed for the video-to-video generation."
+      },
+      "prompt": {
+        "description": "Prompt for the video-to-video generation.",
+        "type": "string",
+        "examples": [
+          "A powerful, matte black jeep, its robust frame contrasting with the lush green surroundings, navigates a winding jungle road, kicking up small clouds of dust and loose earth from its tires."
+        ]
+      },
+      "strength": {
+        "maximum": 1,
+        "type": "number",
+        "minimum": 0.01,
+        "default": 0.85,
+        "description": "Denoising strength for the video-to-video generation. 0.0 preserves the original, 1.0 completely remakes the video."
+      },
+      "enable_prompt_expansion": {
+        "description": "Whether to enable prompt expansion. This will use a large language model to expand the prompt with additional details while maintaining the original meaning.",
+        "type": "boolean",
+        "examples": [
+          true
+        ],
+        "default": false
+      }
+    }
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "KreaWan14bVideoToVideoInput",
+    "KreaWan14bVideoToVideoOutput",
+    "File"
+  ]
+}

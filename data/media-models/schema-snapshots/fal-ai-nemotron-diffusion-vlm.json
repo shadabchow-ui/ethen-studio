@@ -1,0 +1,129 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/nemotron-diffusion-vlm",
+  "task": "unknown",
+  "source_url": "https://fal.ai/models/fal-ai/nemotron-diffusion-vlm",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fnemotron-diffusion-vlm",
+  "retrieved_at": "2026-10-04T19:49:37.822Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "vision",
+  "bytes_sha256": "e4e38f738386d215c90283987109cfedc539482c76b74d4885d0664811a32342",
+  "queue_path": "/fal-ai/nemotron-diffusion-vlm",
+  "input_name": "NemotronDiffusionVlmInput",
+  "input": {
+    "$refName": "NemotronDiffusionVlmInput",
+    "required": [
+      "image_url",
+      "prompt"
+    ],
+    "type": "object",
+    "properties": {
+      "threshold": {
+        "minimum": 0,
+        "default": 0.9,
+        "type": "number",
+        "maximum": 1,
+        "description": "Confidence threshold used by diffusion decoding."
+      },
+      "block_length": {
+        "minimum": 8,
+        "default": 32,
+        "type": "integer",
+        "maximum": 128,
+        "description": "Block length used by diffusion decoding."
+      },
+      "max_tokens": {
+        "minimum": 1,
+        "default": 512,
+        "type": "integer",
+        "maximum": 8192,
+        "description": "Maximum number of tokens to generate."
+      },
+      "num_inference_steps": {
+        "anyOf": [
+          {
+            "minimum": 1,
+            "type": "integer",
+            "maximum": 1024
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": 256,
+        "description": "Number of diffusion decoding steps. Defaults to 256, rounded up only when omitted and required by the upstream block schedule. Explicit values must be at least max_tokens / block_length and divisible by max_tokens / block_length."
+      },
+      "prompt": {
+        "description": "Prompt to answer about the image.",
+        "type": "string",
+        "examples": [
+          "Describe the image in one short sentence."
+        ]
+      },
+      "image_url": {
+        "description": "URL of the image to be processed.",
+        "type": "string",
+        "examples": [
+          "https://storage.googleapis.com/falserverless/example_inputs/dog.png"
+        ]
+      }
+    }
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "NemotronDiffusionVlmInput",
+    "NemotronDiffusionVlmOutput",
+    "NemotronDiffusionVLMUsage",
+    "NemotronDiffusionVLMTimings"
+  ]
+}

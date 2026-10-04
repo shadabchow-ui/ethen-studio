@@ -1,0 +1,130 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/birefnet",
+  "task": "unknown",
+  "source_url": "https://fal.ai/models/fal-ai/birefnet",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fbirefnet",
+  "retrieved_at": "2026-10-04T19:42:40.543Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "image-to-image",
+  "bytes_sha256": "0e18b9ef34e946f78b3023465c3d6063954fc9887f9d9410f0b125c0deb461cf",
+  "queue_path": "/fal-ai/birefnet",
+  "input_name": "BirefnetInput",
+  "input": {
+    "$refName": "BirefnetInput",
+    "properties": {
+      "image_url": {
+        "examples": [
+          "https://storage.googleapis.com/falserverless/example_inputs/birefnet-input.jpeg"
+        ],
+        "description": "URL of the image to remove background from",
+        "type": "string",
+        "_fal_ui_field": "image"
+      },
+      "output_mask": {
+        "default": false,
+        "type": "boolean",
+        "description": "Whether to output the mask used to remove the background"
+      },
+      "refine_foreground": {
+        "default": true,
+        "type": "boolean",
+        "description": "Whether to refine the foreground using the estimated mask"
+      },
+      "output_format": {
+        "enum": [
+          "webp",
+          "png",
+          "gif"
+        ],
+        "default": "png",
+        "type": "string",
+        "description": "The format of the output image"
+      },
+      "model": {
+        "enum": [
+          "General Use (Light)",
+          "General Use (Heavy)",
+          "Portrait"
+        ],
+        "default": "General Use (Light)",
+        "type": "string",
+        "description": "\n            Model to use for background removal.\n            The 'General Use (Light)' model is the original model used in the BiRefNet repository.\n            The 'General Use (Heavy)' model is a slower but more accurate model.\n            The 'Portrait' model is a model trained specifically for portrait images.\n            The 'General Use (Light)' model is recommended for most use cases.\n\n            The corresponding models are as follows:\n            - 'General Use (Light)': BiRefNet-DIS_ep580.pth\n            - 'General Use (Heavy)': BiRefNet-massive-epoch_240.pth\n            - 'Portrait': BiRefNet-portrait-TR_P3M_10k-epoch_120.pth\n        "
+      },
+      "operating_resolution": {
+        "enum": [
+          "1024x1024",
+          "2048x2048"
+        ],
+        "default": "1024x1024",
+        "type": "string",
+        "description": "The resolution to operate on. The higher the resolution, the more accurate the output will be for high res input images."
+      },
+      "sync_mode": {
+        "default": false,
+        "type": "boolean",
+        "description": "If `True`, the media will be returned as a data URI and the output data won't be available in the request history."
+      }
+    },
+    "required": [
+      "image_url"
+    ],
+    "type": "object"
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "BirefnetInput",
+    "BirefnetOutput",
+    "ImageFile"
+  ]
+}

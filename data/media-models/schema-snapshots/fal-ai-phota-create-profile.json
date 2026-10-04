@@ -1,0 +1,81 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/phota/create-profile",
+  "task": "unknown",
+  "source_url": "https://fal.ai/models/fal-ai/phota/create-profile",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fphota%2Fcreate-profile",
+  "retrieved_at": "2026-10-04T19:49:51.048Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "training",
+  "bytes_sha256": "c921c197f5af877b61718953c3e0e3fdbfba33d1fec537c8ec40ea544c281737",
+  "queue_path": "/fal-ai/phota/create-profile",
+  "input_name": "PhotaCreateProfileInput",
+  "input": {
+    "$refName": "PhotaCreateProfileInput",
+    "properties": {
+      "image_data_url": {
+        "type": "string",
+        "description": "URL to a ZIP archive containing the profile images."
+      }
+    },
+    "type": "object",
+    "required": [
+      "image_data_url"
+    ]
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "PhotaCreateProfileInput",
+    "PhotaCreateProfileOutput"
+  ]
+}

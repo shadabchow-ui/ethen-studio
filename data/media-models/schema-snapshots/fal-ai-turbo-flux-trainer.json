@@ -1,0 +1,132 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/turbo-flux-trainer",
+  "task": "unknown",
+  "source_url": "https://fal.ai/models/fal-ai/turbo-flux-trainer",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fturbo-flux-trainer",
+  "retrieved_at": "2026-10-04T19:52:03.382Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "training",
+  "bytes_sha256": "4cc32e4eebc94a813a4a058773d90e9d214075d083a4c3175d78e2d9ffb7b4be",
+  "queue_path": "/fal-ai/turbo-flux-trainer",
+  "input_name": "TurboFluxTrainerInput",
+  "input": {
+    "$refName": "TurboFluxTrainerInput",
+    "properties": {
+      "trigger_phrase": {
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "Trigger phrase to be used in the captions. If None, a trigger word will not be used.\n        If no captions are provide the trigger_work will be used instead of captions. If captions are provided, the trigger word will replace the `[trigger]` string in the captions.\n        ",
+        "default": "ohwx"
+      },
+      "steps": {
+        "description": "Number of steps to train the LoRA on.",
+        "maximum": 10000,
+        "minimum": 1,
+        "default": 1000,
+        "type": "integer",
+        "examples": [
+          1000
+        ]
+      },
+      "training_style": {
+        "anyOf": [
+          {
+            "enum": [
+              "subject",
+              "style"
+            ],
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "Training style to use.",
+        "default": "subject"
+      },
+      "face_crop": {
+        "default": true,
+        "description": "Whether to try to detect the face and crop the images to the face.",
+        "type": "boolean"
+      },
+      "images_data_url": {
+        "description": "\n        URL to zip archive with images of a consistent style. Try to use at least 10 images, although more is better.\n        ",
+        "type": "string"
+      },
+      "learning_rate": {
+        "default": 0.00115,
+        "maximum": 0.01,
+        "description": "Learning rate for the training.",
+        "minimum": 1e-7,
+        "type": "number"
+      }
+    },
+    "required": [
+      "images_data_url"
+    ],
+    "type": "object"
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "TurboFluxTrainerInput",
+    "TurboFluxTrainerOutput",
+    "File"
+  ]
+}

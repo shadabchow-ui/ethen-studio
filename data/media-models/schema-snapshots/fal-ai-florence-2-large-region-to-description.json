@@ -1,0 +1,132 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/florence-2-large/region-to-description",
+  "task": "unknown",
+  "source_url": "https://fal.ai/models/fal-ai/florence-2-large/region-to-description",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fflorence-2-large%2Fregion-to-description",
+  "retrieved_at": "2026-10-04T19:43:57.400Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "vision",
+  "bytes_sha256": "6aae08e4f9c59ac06a0dfc3184278162766a43a6b3e11fcd2ede1f843ba80e54",
+  "queue_path": "/fal-ai/florence-2-large/region-to-description",
+  "input_name": "Florence2LargeRegionToDescriptionInput",
+  "input": {
+    "$refName": "Florence2LargeRegionToDescriptionInput",
+    "properties": {
+      "region": {
+        "$refName": "Region",
+        "properties": {
+          "y2": {
+            "maximum": 999,
+            "description": "Y-coordinate of the bottom-right corner",
+            "type": "integer",
+            "minimum": 0
+          },
+          "x2": {
+            "maximum": 999,
+            "description": "X-coordinate of the bottom-right corner",
+            "type": "integer",
+            "minimum": 0
+          },
+          "y1": {
+            "maximum": 999,
+            "description": "Y-coordinate of the top-left corner",
+            "type": "integer",
+            "minimum": 0
+          },
+          "x1": {
+            "maximum": 999,
+            "description": "X-coordinate of the top-left corner",
+            "type": "integer",
+            "minimum": 0
+          }
+        },
+        "type": "object",
+        "required": [
+          "x1",
+          "y1",
+          "x2",
+          "y2"
+        ],
+        "description": "The user input coordinates",
+        "examples": [
+          {
+            "y2": 200,
+            "x2": 200,
+            "y1": 100,
+            "x1": 100
+          }
+        ]
+      },
+      "image_url": {
+        "description": "The URL of the image to be processed.",
+        "type": "string",
+        "examples": [
+          "https://huggingface.co/datasets/huggingface/documentation-images/resolve/main/transformers/tasks/car.jpg",
+          "http://ecx.images-amazon.com/images/I/51UUzBDAMsL.jpg"
+        ]
+      }
+    },
+    "type": "object",
+    "required": [
+      "image_url",
+      "region"
+    ]
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "Florence2LargeRegionToDescriptionInput",
+    "Florence2LargeRegionToDescriptionOutput",
+    "Region"
+  ]
+}

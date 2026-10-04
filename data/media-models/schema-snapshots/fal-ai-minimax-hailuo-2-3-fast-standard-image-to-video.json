@@ -1,0 +1,110 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/minimax/hailuo-2.3-fast/standard/image-to-video",
+  "task": "image-to-video",
+  "source_url": "https://fal.ai/models/fal-ai/minimax/hailuo-2.3-fast/standard/image-to-video",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fminimax%2Fhailuo-2.3-fast%2Fstandard%2Fimage-to-video",
+  "retrieved_at": "2026-10-04T19:49:15.034Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "image-to-video",
+  "bytes_sha256": "5f8ba466054023cb1e1eed45173b4951dc523be3e8a30bc520c3471caf236fe3",
+  "queue_path": "/fal-ai/minimax/hailuo-2.3-fast/standard/image-to-video",
+  "input_name": "MinimaxHailuo23FastStandardImageToVideoInput",
+  "input": {
+    "$refName": "MinimaxHailuo23FastStandardImageToVideoInput",
+    "required": [
+      "prompt",
+      "image_url"
+    ],
+    "type": "object",
+    "properties": {
+      "duration": {
+        "description": "The duration of the video in seconds.",
+        "enum": [
+          "6",
+          "10"
+        ],
+        "type": "string",
+        "default": "6"
+      },
+      "image_url": {
+        "description": "URL of the image to use as the first frame",
+        "_fal_ui_field": "image",
+        "type": "string",
+        "examples": [
+          "https://storage.googleapis.com/falserverless/example_inputs/hailuo23/fast_standard_i2v_in.jpg"
+        ]
+      },
+      "prompt_optimizer": {
+        "description": "Whether to use the model's prompt optimizer",
+        "type": "boolean",
+        "default": true
+      },
+      "prompt": {
+        "description": "Text prompt for video generation",
+        "type": "string",
+        "maxLength": 2000,
+        "examples": [
+          "Athlete running powerfully on beach, dynamic camera movement tracking the runner, waves and sunset in motion, Hollywood movie cinematography, professional sports filming, inspiring atmosphere"
+        ],
+        "minLength": 1
+      }
+    }
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "MinimaxHailuo23FastStandardImageToVideoInput",
+    "MinimaxHailuo23FastStandardImageToVideoOutput",
+    "File"
+  ]
+}

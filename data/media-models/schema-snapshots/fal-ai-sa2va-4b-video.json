@@ -1,0 +1,106 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/sa2va/4b/video",
+  "task": "video-editing",
+  "source_url": "https://fal.ai/models/fal-ai/sa2va/4b/video",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fsa2va%2F4b%2Fvideo",
+  "retrieved_at": "2026-10-04T19:51:17.331Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "vision",
+  "bytes_sha256": "749963ad45f48c50e554122f4428ea0816f0cb49cf913e26262d2f8ec9e69452",
+  "queue_path": "/fal-ai/sa2va/4b/video",
+  "input_name": "Sa2va4bVideoInput",
+  "input": {
+    "$refName": "Sa2va4bVideoInput",
+    "properties": {
+      "video_url": {
+        "description": "The URL of the input video.",
+        "type": "string",
+        "examples": [
+          "https://drive.google.com/uc?id=1iOFYbNITYwrebBBp9kaEGhBndFSRLz8k"
+        ]
+      },
+      "num_frames_to_sample": {
+        "description": "Number of frames to sample from the video. Defaults to 32 if not provided. Minimum 5, maximum 100.",
+        "anyOf": [
+          {
+            "minimum": 5,
+            "maximum": 100,
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "prompt": {
+        "description": "Prompt to be used for the chat completion",
+        "type": "string",
+        "examples": [
+          "Could you please give me a brief description of the video? Please respond with interleaved segmentation masks for the corresponding parts of the answer."
+        ]
+      }
+    },
+    "required": [
+      "prompt",
+      "video_url"
+    ],
+    "type": "object"
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "Sa2va4bVideoInput",
+    "Sa2va4bVideoOutput",
+    "File"
+  ]
+}

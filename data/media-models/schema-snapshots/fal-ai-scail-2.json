@@ -1,0 +1,169 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/scail-2",
+  "task": "unknown",
+  "source_url": "https://fal.ai/models/fal-ai/scail-2",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fscail-2",
+  "retrieved_at": "2026-10-04T19:51:31.398Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "video-to-video",
+  "bytes_sha256": "6b15d500b608b0f16619ce40b0ec3046a2a64fea0c7d76d68070576d86466996",
+  "queue_path": "/fal-ai/scail-2",
+  "input_name": "Scail2Input",
+  "input": {
+    "$refName": "Scail2Input",
+    "required": [
+      "prompt",
+      "image_url",
+      "video_url"
+    ],
+    "properties": {
+      "mode": {
+        "description": "`animation` animates the reference character with the driving motion. `replacement` replaces the driving subject with the reference character while keeping the original scene.",
+        "enum": [
+          "animation",
+          "replacement"
+        ],
+        "default": "animation",
+        "type": "string"
+      },
+      "driving_type": {
+        "enum": [
+          "end_to_end",
+          "pose"
+        ],
+        "default": "end_to_end",
+        "type": "string",
+        "description": "Driving signal for animation mode. `end_to_end` (default) drives directly from the SAM3-masked driving video and is the recommended, most robust path. `pose` renders an explicit NLF/DWPose skeleton from the driving video (more control for challenging inputs)."
+      },
+      "prompt": {
+        "examples": [
+          "A person dancing gracefully in a sunlit studio"
+        ],
+        "type": "string",
+        "description": "The prompt describing the final video to generate."
+      },
+      "image_url": {
+        "examples": [
+          "https://v3b.fal.media/files/b/panda/-oMlZo9Yyj_Nzoza_tgds_GmLF86r5bOt50eMMKCszy_eacc949b3933443c9915a83c98fbe85e.png"
+        ],
+        "description": "URL of the reference character image. The character in this image is animated (or used to replace a subject) according to the driving video.",
+        "type": "string"
+      },
+      "num_inference_steps": {
+        "maximum": 50,
+        "default": 40,
+        "type": "integer",
+        "description": "Number of diffusion sampling steps. Higher improves quality but is slower.",
+        "minimum": 2
+      },
+      "resolution": {
+        "enum": [
+          "512p",
+          "704p"
+        ],
+        "default": "512p",
+        "type": "string",
+        "description": "Output resolution. 512p outputs 896x512 (landscape) or 512x896 (portrait); 704p outputs 1280x704 or 704x1280. Orientation is chosen automatically from the reference image aspect ratio."
+      },
+      "shift": {
+        "maximum": 10,
+        "default": 3,
+        "type": "number",
+        "description": "Flow-matching noise schedule shift. 3.0 is recommended for the 512p tier.",
+        "minimum": 1
+      },
+      "seed": {
+        "description": "Random seed. Leave empty for a random seed. The seed used is returned in the response.",
+        "anyOf": [
+          {
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "guidance_scale": {
+        "maximum": 10,
+        "default": 5,
+        "type": "number",
+        "description": "Classifier-free guidance scale. Controls prompt adherence versus creativity.",
+        "minimum": 1
+      },
+      "subject_type": {
+        "description": "Type of subject in the driving video. `animal` switches the SAM3 detection prompt to non-human subjects.",
+        "enum": [
+          "human",
+          "animal"
+        ],
+        "default": "human",
+        "type": "string"
+      },
+      "video_url": {
+        "examples": [
+          "https://v3b.fal.media/files/b/panda/a6SvJg96V8eoglMlYFShU_5385885-hd_1080_1920_25fps.mp4"
+        ],
+        "type": "string",
+        "description": "URL of the driving (motion) video. The subject can be a human, multiple humans, or an animal."
+      }
+    },
+    "type": "object"
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "Scail2Input",
+    "Scail2Output",
+    "File"
+  ]
+}

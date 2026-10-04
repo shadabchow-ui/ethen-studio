@@ -1,0 +1,126 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/ffmpeg-api/compose",
+  "task": "unknown",
+  "source_url": "https://fal.ai/models/fal-ai/ffmpeg-api/compose",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fffmpeg-api%2Fcompose",
+  "retrieved_at": "2026-10-04T19:43:40.829Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "video-to-video",
+  "bytes_sha256": "59e8b6cf65a16e22fce1d63fa8e07f2476e9b4b08b4439d7ff7abe3aede7d6af",
+  "queue_path": "/fal-ai/ffmpeg-api/compose",
+  "input_name": "FfmpegApiComposeInput",
+  "input": {
+    "$refName": "FfmpegApiComposeInput",
+    "properties": {
+      "tracks": {
+        "items": {
+          "$refName": "Track",
+          "properties": {
+            "keyframes": {
+              "items": {
+                "$refName": "Keyframe",
+                "properties": {
+                  "duration": {
+                    "unsupported": "depth-exceeded"
+                  },
+                  "url": {
+                    "unsupported": "depth-exceeded"
+                  },
+                  "timestamp": {
+                    "unsupported": "depth-exceeded"
+                  }
+                },
+                "required": [
+                  "timestamp",
+                  "duration",
+                  "url"
+                ],
+                "type": "object"
+              },
+              "type": "array",
+              "description": "List of keyframes that make up this track"
+            },
+            "id": {
+              "type": "string",
+              "description": "Unique identifier for the track"
+            },
+            "type": {
+              "type": "string",
+              "description": "Type of track ('video', 'audio', or 'image')"
+            }
+          },
+          "required": [
+            "id",
+            "type",
+            "keyframes"
+          ],
+          "type": "object"
+        },
+        "type": "array",
+        "description": "List of tracks to be combined into the final media"
+      }
+    },
+    "required": [
+      "tracks"
+    ],
+    "type": "object"
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "FfmpegApiComposeInput",
+    "FfmpegApiComposeOutput",
+    "Track",
+    "Keyframe"
+  ]
+}

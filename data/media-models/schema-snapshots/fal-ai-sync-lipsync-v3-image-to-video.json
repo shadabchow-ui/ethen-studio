@@ -1,0 +1,93 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/sync-lipsync/v3/image-to-video",
+  "task": "image-to-video",
+  "source_url": "https://fal.ai/models/fal-ai/sync-lipsync/v3/image-to-video",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fsync-lipsync%2Fv3%2Fimage-to-video",
+  "retrieved_at": "2026-10-04T19:51:57.114Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "image-to-video",
+  "bytes_sha256": "22281e811559ea5516ff68dfd1bfb2772f0f5e903ef7ff5f3dadd92c7c4295bb",
+  "queue_path": "/fal-ai/sync-lipsync/v3/image-to-video",
+  "input_name": "SyncLipsyncV3ImageToVideoInput",
+  "input": {
+    "$refName": "SyncLipsyncV3ImageToVideoInput",
+    "properties": {
+      "image_url": {
+        "type": "string",
+        "description": "URL of the input image. sync-3 animates the face in the image so it lip-syncs to the provided audio (image-to-video). Supported image formats: JPEG, PNG and WebP.",
+        "examples": [
+          "https://storage.googleapis.com/falserverless/example_inputs/echo-mimic-input-image.png"
+        ]
+      },
+      "audio_url": {
+        "type": "string",
+        "description": "URL of the input audio. The output video matches its duration.",
+        "examples": [
+          "https://fal.media/files/lion/vyFWygmZsIZlUO4s0nr2n.wav"
+        ]
+      }
+    },
+    "type": "object",
+    "required": [
+      "image_url",
+      "audio_url"
+    ]
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "SyncLipsyncV3ImageToVideoInput",
+    "SyncLipsyncV3ImageToVideoOutput",
+    "File"
+  ]
+}

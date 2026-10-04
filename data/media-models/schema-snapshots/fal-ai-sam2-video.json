@@ -1,0 +1,206 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/sam2/video",
+  "task": "video-editing",
+  "source_url": "https://fal.ai/models/fal-ai/sam2/video",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fsam2%2Fvideo",
+  "retrieved_at": "2026-10-04T19:51:28.843Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "video-to-video",
+  "bytes_sha256": "3112fafed8d281cf636241aa8ac3219047100a228be65040bc8026850fd5ef3f",
+  "queue_path": "/fal-ai/sam2/video",
+  "input_name": "Sam2VideoInput",
+  "input": {
+    "$refName": "Sam2VideoInput",
+    "properties": {
+      "boundingbox_zip": {
+        "description": "Return per-frame bounding box overlays as a zip archive.",
+        "type": "boolean",
+        "default": false
+      },
+      "mask_url": {
+        "description": "The URL of the mask to be applied initially.",
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "prompts": {
+        "description": "List of prompts to segment the video",
+        "items": {
+          "$refName": "PointPrompt",
+          "type": "object",
+          "properties": {
+            "label": {
+              "description": "Label of the prompt. 1 for foreground, 0 for background",
+              "enum": [
+                0,
+                1
+              ],
+              "type": "integer",
+              "default": 1
+            },
+            "x": {
+              "description": "X Coordinate of the prompt",
+              "type": "integer",
+              "default": 305
+            },
+            "frame_index": {
+              "description": "The frame index to interact with.",
+              "type": "integer",
+              "default": 0
+            },
+            "y": {
+              "description": "Y Coordinate of the prompt",
+              "type": "integer",
+              "default": 350
+            }
+          }
+        },
+        "type": "array",
+        "default": [],
+        "examples": [
+          [
+            {
+              "label": 1,
+              "x": 210,
+              "frame_index": 0,
+              "y": 350
+            },
+            {
+              "label": 1,
+              "x": 250,
+              "frame_index": 0,
+              "y": 220
+            }
+          ]
+        ]
+      },
+      "video_url": {
+        "description": "The URL of the video to be segmented.",
+        "type": "string",
+        "examples": [
+          "https://drive.google.com/uc?id=1iOFYbNITYwrebBBp9kaEGhBndFSRLz8k"
+        ]
+      },
+      "apply_mask": {
+        "description": "Apply the mask on the video.",
+        "type": "boolean",
+        "default": false
+      },
+      "box_prompts": {
+        "description": "Coordinates for boxes",
+        "items": {
+          "$refName": "BoxPrompt",
+          "type": "object",
+          "properties": {
+            "frame_index": {
+              "description": "The frame index to interact with.",
+              "type": "integer",
+              "default": 0
+            },
+            "y_min": {
+              "description": "Y Min Coordinate of the box",
+              "type": "integer",
+              "default": 0
+            },
+            "y_max": {
+              "description": "Y Max Coordinate of the prompt",
+              "type": "integer",
+              "default": 0
+            },
+            "x_min": {
+              "description": "X Min Coordinate of the box",
+              "type": "integer",
+              "default": 0
+            },
+            "x_max": {
+              "description": "X Max Coordinate of the prompt",
+              "type": "integer",
+              "default": 0
+            }
+          }
+        },
+        "type": "array",
+        "default": [],
+        "examples": [
+          [
+            {
+              "frame_index": 0,
+              "y_min": 0,
+              "y_max": 400,
+              "x_min": 300,
+              "x_max": 500
+            }
+          ]
+        ]
+      }
+    },
+    "type": "object",
+    "required": [
+      "video_url"
+    ]
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "Sam2VideoInput",
+    "Sam2VideoOutput",
+    "PointPrompt",
+    "BoxPrompt",
+    "File"
+  ]
+}

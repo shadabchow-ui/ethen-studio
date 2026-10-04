@@ -1,0 +1,107 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/lyria3/pro",
+  "task": "unknown",
+  "source_url": "https://fal.ai/models/fal-ai/lyria3/pro",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Flyria3%2Fpro",
+  "retrieved_at": "2026-10-04T19:49:02.966Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "text-to-audio",
+  "bytes_sha256": "f31b67397b016246fbc7d5af3f83b1fe83ee854fa0559ec233e01163893d8ce3",
+  "queue_path": "/fal-ai/lyria3/pro",
+  "input_name": "Lyria3ProInput",
+  "input": {
+    "$refName": "Lyria3ProInput",
+    "properties": {
+      "image_url": {
+        "examples": [
+          "https://v3b.fal.media/files/b/0a93b559/qjT9o0CId1B65PbD6Yp06_9c94501900464c5aa98f302fa4b00375.png"
+        ],
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "Optional image URL to use as inspiration for music generation. The model will create music that matches the mood and theme of the image."
+      },
+      "negative_prompt": {
+        "deprecated": true,
+        "type": "string",
+        "default": "",
+        "description": "Negative prompting is not supported by Lyria 3."
+      },
+      "prompt": {
+        "type": "string",
+        "examples": [
+          "An energetic electronic dance track with soaring synth leads, punchy four-on-the-floor kick drums, and a catchy vocal hook singing 'Feel the rhythm, feel the night'. 128 BPM."
+        ],
+        "maxLength": 5000,
+        "minLength": 1,
+        "description": "The text prompt describing the music you want to generate. Include genre, mood, instrumentation, tempo, and vocal style for best results. Lyria 3 supports vocals, lyrics, and multi-language generation."
+      }
+    },
+    "type": "object",
+    "required": [
+      "prompt"
+    ]
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "Lyria3ProInput",
+    "Lyria3ProOutput",
+    "File"
+  ]
+}

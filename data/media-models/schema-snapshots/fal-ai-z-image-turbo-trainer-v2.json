@@ -1,0 +1,105 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/z-image-turbo-trainer-v2",
+  "task": "image-generation",
+  "source_url": "https://fal.ai/models/fal-ai/z-image-turbo-trainer-v2",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fz-image-turbo-trainer-v2",
+  "retrieved_at": "2026-10-04T19:53:21.241Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "training",
+  "bytes_sha256": "03a441b89ace9d6bb413389d46d3c6d4f23384a5f2fca1dfa10793d3eb40fa2d",
+  "queue_path": "/fal-ai/z-image-turbo-trainer-v2",
+  "input_name": "ZImageTurboTrainerV2Input",
+  "input": {
+    "$refName": "ZImageTurboTrainerV2Input",
+    "properties": {
+      "image_data_url": {
+        "type": "string",
+        "description": "\n        URL to the input data zip archive.\n\n        The zip should contain pairs of images and corresponding captions.\n\n        The images should be named: ROOT.EXT. For example: 001.jpg\n\n        The corresponding captions should be named: ROOT.txt. For example: 001.txt\n\n        If no text file is provided for an image, the default_caption will be used.\n        "
+      },
+      "learning_rate": {
+        "type": "number",
+        "default": 0.0005,
+        "description": "Learning rate."
+      },
+      "steps": {
+        "maximum": 40000,
+        "type": "integer",
+        "default": 2000,
+        "minimum": 10,
+        "description": "Number of steps to train for"
+      },
+      "default_caption": {
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "Default caption to use when caption files are missing. If None, missing captions will cause an error."
+      }
+    },
+    "required": [
+      "image_data_url"
+    ],
+    "type": "object"
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "ZImageTurboTrainerV2Input",
+    "ZImageTurboTrainerV2Output",
+    "File"
+  ]
+}

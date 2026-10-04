@@ -1,0 +1,200 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/sam-audio/span-separate",
+  "task": "unknown",
+  "source_url": "https://fal.ai/models/fal-ai/sam-audio/span-separate",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fsam-audio%2Fspan-separate",
+  "retrieved_at": "2026-10-04T19:51:26.874Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "audio-to-audio",
+  "bytes_sha256": "3bec59b1394e1890a865171916220cfb5b5cc615f1f81ddf6253ea175c476d61",
+  "queue_path": "/fal-ai/sam-audio/span-separate",
+  "input_name": "SamAudioSpanSeparateInput",
+  "input": {
+    "$refName": "SamAudioSpanSeparateInput",
+    "properties": {
+      "prompt": {
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "examples": [
+          "man singing",
+          "dog barking"
+        ],
+        "description": "Text prompt describing the sound to isolate. Optional but recommended - helps the model identify what type of sound to extract from the span."
+      },
+      "spans": {
+        "type": "array",
+        "items": {
+          "$refName": "AudioTimeSpan",
+          "properties": {
+            "include": {
+              "type": "boolean",
+              "default": true,
+              "description": "Whether to include (True) or exclude (False) sounds in this span"
+            },
+            "end": {
+              "minimum": 0,
+              "type": "number",
+              "description": "End time of the span in seconds",
+              "examples": [
+                1.5,
+                4
+              ]
+            },
+            "start": {
+              "minimum": 0,
+              "type": "number",
+              "description": "Start time of the span in seconds",
+              "examples": [
+                0.5,
+                2
+              ]
+            }
+          },
+          "type": "object",
+          "required": [
+            "start",
+            "end"
+          ],
+          "description": "A time span indicating where the target sound occurs."
+        },
+        "description": "Time spans where the target sound occurs which should be isolated.",
+        "examples": [
+          [
+            {
+              "include": true,
+              "end": 10,
+              "start": 6
+            }
+          ]
+        ]
+      },
+      "trim_to_span": {
+        "type": "boolean",
+        "default": false,
+        "description": "Trim output audio to only include the specified span time range. If False, returns the full audio length with the target sound isolated throughout."
+      },
+      "audio_url": {
+        "type": "string",
+        "description": "URL of the audio file to process.",
+        "examples": [
+          "https://v3b.fal.media/files/b/0a8853d1/T7zRmsiculA6u_V6RCF2c_man.mp3"
+        ]
+      },
+      "reranking_candidates": {
+        "minimum": 1,
+        "type": "integer",
+        "default": 1,
+        "maximum": 7,
+        "description": "Number of candidates to generate and rank. Higher improves quality but increases latency and cost. Requires text prompt; ignored for span-only separation."
+      },
+      "max_chunk_duration": {
+        "minimum": 10,
+        "type": "number",
+        "default": 60,
+        "maximum": 60,
+        "description": "Maximum audio duration (in seconds) to process in a single pass. Longer audio will be chunked with overlap and blended."
+      },
+      "chunk_overlap": {
+        "minimum": 0,
+        "type": "number",
+        "default": 5,
+        "maximum": 30,
+        "description": "Overlap duration (in seconds) between chunks for crossfade blending."
+      },
+      "output_format": {
+        "type": "string",
+        "default": "wav",
+        "enum": [
+          "wav",
+          "mp3"
+        ],
+        "description": "Output audio format."
+      },
+      "acceleration": {
+        "type": "string",
+        "default": "balanced",
+        "enum": [
+          "fast",
+          "balanced",
+          "quality"
+        ],
+        "description": "The acceleration level to use."
+      },
+      "use_sound_activity_ranking": {
+        "type": "boolean",
+        "default": false,
+        "description": "Use sound activity detection to rank reranking candidates based on how well each candidate's non-silent regions match the provided spans. Enables effective reranking even without a text prompt (span-only separation). Requires reranking_candidates > 1."
+      }
+    },
+    "type": "object",
+    "required": [
+      "audio_url",
+      "spans"
+    ],
+    "description": "Input for temporal span-based audio separation."
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "SamAudioSpanSeparateInput",
+    "SamAudioSpanSeparateOutput",
+    "AudioTimeSpan",
+    "File"
+  ]
+}

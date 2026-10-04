@@ -1,0 +1,95 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "cassetteai/sound-effects-generator",
+  "task": "unknown",
+  "source_url": "https://fal.ai/models/cassetteai/sound-effects-generator",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=cassetteai%2Fsound-effects-generator",
+  "retrieved_at": "2026-10-04T19:42:17.962Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "text-to-audio",
+  "bytes_sha256": "01d08c8c6ad60a3cad5f2a5ea4b06f72b62bb8db03e33088d74b99ed352882d6",
+  "queue_path": "/cassetteai/sound-effects-generator",
+  "input_name": "SoundEffectsGeneratorInput",
+  "input": {
+    "$refName": "SoundEffectsGeneratorInput",
+    "type": "object",
+    "properties": {
+      "prompt": {
+        "examples": [
+          "dog barking in the rain"
+        ],
+        "type": "string",
+        "description": "The prompt to generate SFX."
+      },
+      "duration": {
+        "minimum": 1,
+        "type": "integer",
+        "examples": [
+          30
+        ],
+        "description": "The duration of the generated SFX in seconds.",
+        "maximum": 30
+      }
+    },
+    "required": [
+      "prompt",
+      "duration"
+    ]
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "SoundEffectsGeneratorInput",
+    "SoundEffectsGeneratorOutput",
+    "File"
+  ]
+}

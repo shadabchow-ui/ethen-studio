@@ -1,0 +1,95 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/ffmpeg-api/extract-frame",
+  "task": "unknown",
+  "source_url": "https://fal.ai/models/fal-ai/ffmpeg-api/extract-frame",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fffmpeg-api%2Fextract-frame",
+  "retrieved_at": "2026-10-04T19:43:41.349Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "image-to-image",
+  "bytes_sha256": "6eca66920094e266c5f1f61d9b61a0e61a76182215a9e57754583f8c792a4e5e",
+  "queue_path": "/fal-ai/ffmpeg-api/extract-frame",
+  "input_name": "FfmpegApiExtractFrameInput",
+  "input": {
+    "$refName": "FfmpegApiExtractFrameInput",
+    "properties": {
+      "video_url": {
+        "examples": [
+          "https://v3.fal.media/files/monkey/R6D8anxtsyItZTyBB2ksC_qeoDDxmLSg8cuWasM54KY_output.mp4"
+        ],
+        "type": "string",
+        "description": "URL of the video file to use as the video track"
+      },
+      "frame_type": {
+        "default": "first",
+        "type": "string",
+        "description": "Type of frame to extract: first, middle, or last frame of the video",
+        "enum": [
+          "first",
+          "middle",
+          "last"
+        ]
+      }
+    },
+    "required": [
+      "video_url"
+    ],
+    "type": "object"
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "FfmpegApiExtractFrameInput",
+    "FfmpegApiExtractFrameOutput",
+    "Image"
+  ]
+}

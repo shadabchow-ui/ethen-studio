@@ -1,0 +1,168 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/smart-resize",
+  "task": "unknown",
+  "source_url": "https://fal.ai/models/fal-ai/smart-resize",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fsmart-resize",
+  "retrieved_at": "2026-10-04T19:51:36.580Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "image-to-image",
+  "bytes_sha256": "5d221032702182ba6643aa02565a57ec71be531cecd40d7149e3bd655ff6b94b",
+  "queue_path": "/fal-ai/smart-resize",
+  "input_name": "SmartResizeInput",
+  "input": {
+    "$refName": "SmartResizeInput",
+    "properties": {
+      "safety_tolerance": {
+        "default": "4",
+        "type": "string",
+        "description": "The safety tolerance level applied to the inner nano-banana-pro /edit calls. Higher numbers loosen safety filtering.",
+        "enum": [
+          "1",
+          "2",
+          "3",
+          "4",
+          "5",
+          "6"
+        ]
+      },
+      "target_sizes": {
+        "examples": [
+          [
+            "1024x1024",
+            "1920x1080",
+            "768x1344"
+          ]
+        ],
+        "type": "array",
+        "minItems": 1,
+        "description": "The list of target dimensions to generate, each written as ``<width>x<height>`` (e.g. ``\"1920x1080\"``). One output image is produced per target size (multiplied by ``num_images_per_size``). The endpoint internally picks the smallest nano-banana-pro preset that fully covers each target so the final image is a pixel-perfect match with no upscaling.",
+        "maxItems": 10,
+        "items": {
+          "type": "string"
+        }
+      },
+      "num_images_per_size": {
+        "maximum": 4,
+        "type": "integer",
+        "description": "The number of nano-banana-pro variants to produce for each target size. The response images list will contain ``len(target_sizes) * num_images_per_size`` images in total.",
+        "minimum": 1,
+        "default": 1
+      },
+      "resolution": {
+        "default": "1K",
+        "type": "string",
+        "description": "Hint for the minimum resolution tier to use internally. The smart-resize algorithm may pick a higher tier automatically when the requested target size is too large for this tier. This field does not affect the final output dimensions — those come from ``target_sizes``.",
+        "enum": [
+          "1K",
+          "2K",
+          "4K"
+        ]
+      },
+      "image_url": {
+        "examples": [
+          "https://storage.googleapis.com/falserverless/example_inputs/nano-banana-edit-input.png"
+        ],
+        "type": "string",
+        "description": "The URL of the source image to resize."
+      },
+      "prompt": {
+        "examples": [
+          ""
+        ],
+        "type": "string",
+        "maxLength": 5000,
+        "description": "Optional extra instruction that is forwarded to nano-banana-pro alongside the auto-generated resize prompt. Leave empty to let the model preserve the original image content as closely as possible.",
+        "default": ""
+      },
+      "seed": {
+        "anyOf": [
+          {
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "Optional random seed forwarded to the inner nano-banana-pro /edit calls for reproducibility. The same seed is used for every target size when set."
+      },
+      "output_format": {
+        "default": "png",
+        "type": "string",
+        "description": "The output image format.",
+        "enum": [
+          "jpeg",
+          "png",
+          "webp"
+        ]
+      },
+      "sync_mode": {
+        "type": "boolean",
+        "description": "When True, the response contains data URIs in place of CDN URLs so the client can decode the images without an extra HTTP request. Adds latency for large outputs.",
+        "default": false
+      }
+    },
+    "type": "object",
+    "required": [
+      "image_url",
+      "target_sizes"
+    ]
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "SmartResizeInput",
+    "SmartResizeOutput",
+    "ImageFile",
+    "SmartResizeResult"
+  ]
+}

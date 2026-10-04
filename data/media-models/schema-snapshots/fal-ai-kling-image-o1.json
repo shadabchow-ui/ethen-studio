@@ -1,0 +1,214 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/kling-image/o1",
+  "task": "image-generation",
+  "source_url": "https://fal.ai/models/fal-ai/kling-image/o1",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fkling-image%2Fo1",
+  "retrieved_at": "2026-10-04T19:46:45.255Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "image-to-image",
+  "bytes_sha256": "854a303e25391527ac8dceca65f2bee1ecd678bce6db71600c2889b7cd570f20",
+  "queue_path": "/fal-ai/kling-image/o1",
+  "input_name": "KlingImageO1Input",
+  "input": {
+    "$refName": "KlingImageO1Input",
+    "required": [
+      "prompt",
+      "image_urls"
+    ],
+    "properties": {
+      "prompt": {
+        "description": "Text prompt for image generation. Reference images using @Image1, @Image2, etc. (or @Image if only one image). Max 2500 characters.",
+        "examples": [
+          "Put @Image1 to the back seat of the car in @Image2, put @Element1 on to the @Image1"
+        ],
+        "type": "string",
+        "maxLength": 2500
+      },
+      "output_format": {
+        "enum": [
+          "jpeg",
+          "png",
+          "webp"
+        ],
+        "default": "png",
+        "description": "The format of the generated image.",
+        "type": "string"
+      },
+      "resolution": {
+        "enum": [
+          "1K",
+          "2K"
+        ],
+        "default": "1K",
+        "description": "Image generation resolution. 1K: standard, 2K: high-res.",
+        "type": "string"
+      },
+      "num_images": {
+        "minimum": 1,
+        "maximum": 9,
+        "description": "Number of images to generate (1-9).",
+        "default": 1,
+        "type": "integer"
+      },
+      "elements": {
+        "description": "Elements (characters/objects) to include in the image. Reference in prompt as @Element1, @Element2, etc. Maximum 10 total (elements + reference images).",
+        "anyOf": [
+          {
+            "items": {
+              "$refName": "ElementInput",
+              "description": "Element input for image generation with face/character control.\n\nCreate an element by providing frontal_image_url (and optionally reference_image_urls).\nAll fields are optional - provide what you have available.",
+              "properties": {
+                "frontal_image_url": {
+                  "description": "The frontal image of the element (main view). Optional.",
+                  "anyOf": [
+                    {
+                      "_fal_ui_field": "image",
+                      "limit_description": "Max file size: 10.0MB, Min width: 300px, Min height: 300px, Min aspect ratio: 0.40, Max aspect ratio: 2.50, Timeout: 20.0s",
+                      "type": "string",
+                      "ui": {
+                        "field": "image"
+                      }
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "reference_image_urls": {
+                  "description": "Additional reference images from different angles. 0-3 images supported. Optional.",
+                  "anyOf": [
+                    {
+                      "items": {
+                        "_fal_ui_field": "image",
+                        "limit_description": "Max file size: 10.0MB, Min width: 300px, Min height: 300px, Min aspect ratio: 0.40, Max aspect ratio: 2.50, Timeout: 20.0s",
+                        "type": "string",
+                        "ui": {
+                          "unsupported": "depth-exceeded"
+                        }
+                      },
+                      "type": "array"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                }
+              },
+              "type": "object"
+            },
+            "type": "array"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "examples": [
+          [
+            {
+              "frontal_image_url": "https://storage.googleapis.com/falserverless/example_inputs/kling-image-o1/element-1-front.png",
+              "reference_image_urls": [
+                "https://storage.googleapis.com/falserverless/example_inputs/kling-image-o1/element-1-reference.png"
+              ]
+            }
+          ]
+        ]
+      },
+      "image_urls": {
+        "items": {
+          "_fal_ui_field": "image",
+          "limit_description": "Max file size: 10.0MB, Min width: 300px, Min height: 300px, Min aspect ratio: 0.40, Max aspect ratio: 2.50, Timeout: 20.0s",
+          "type": "string"
+        },
+        "description": "List of reference images. Reference images in prompt using @Image1, @Image2, etc. (1-indexed). Max 10 images.",
+        "examples": [
+          [
+            "https://storage.googleapis.com/falserverless/example_inputs/kling-image-o1/input.png",
+            "https://storage.googleapis.com/falserverless/example_inputs/kling-image-o1/input-2.png"
+          ]
+        ],
+        "type": "array"
+      },
+      "aspect_ratio": {
+        "enum": [
+          "auto",
+          "16:9",
+          "9:16",
+          "1:1",
+          "4:3",
+          "3:4",
+          "3:2",
+          "2:3",
+          "21:9"
+        ],
+        "default": "auto",
+        "description": "Aspect ratio of generated images. 'auto' intelligently determines based on input content.",
+        "type": "string"
+      },
+      "sync_mode": {
+        "default": false,
+        "description": "If `True`, the media will be returned as a data URI and the output data won't be available in the request history.",
+        "type": "boolean"
+      }
+    },
+    "type": "object",
+    "description": "Request model for Kling O1 Omni Image (legacy)."
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "KlingImageO1Input",
+    "KlingImageO1Output",
+    "ElementInput",
+    "Image"
+  ]
+}

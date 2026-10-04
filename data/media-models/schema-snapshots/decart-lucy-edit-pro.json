@@ -1,0 +1,121 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "decart/lucy-edit/pro",
+  "task": "unknown",
+  "source_url": "https://fal.ai/models/decart/lucy-edit/pro",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=decart%2Flucy-edit%2Fpro",
+  "retrieved_at": "2026-10-04T19:42:23.363Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "video-to-video",
+  "bytes_sha256": "38d2970df138590b2d3c85d46499ab091763cf52a8c17db6f54517d44895175c",
+  "queue_path": "/decart/lucy-edit/pro",
+  "input_name": "LucyEditProInput",
+  "input": {
+    "$refName": "LucyEditProInput",
+    "properties": {
+      "resolution": {
+        "default": "720p",
+        "const": "720p",
+        "description": "Resolution of the generated video",
+        "type": "string"
+      },
+      "enhance_prompt": {
+        "default": true,
+        "description": "Whether to enhance the prompt for better results.",
+        "type": "boolean"
+      },
+      "video_url": {
+        "examples": [
+          "https://v3.fal.media/files/monkey/GI7ArkqpQVk3M6V1C_epr_original.mp4"
+        ],
+        "description": "URL of the video to edit",
+        "type": "string"
+      },
+      "sync_mode": {
+        "default": true,
+        "description": "\n            If set to true, the function will wait for the video to be generated\n            and uploaded before returning the response. This will increase the\n            latency of the function but it allows you to get the video directly\n            in the response without going through the CDN.\n        ",
+        "type": "boolean"
+      },
+      "prompt": {
+        "examples": [
+          "Transform the woman's outfit into a regal medieval gown with flowing velvet fabric, intricate gold embroidery, and a jeweled crown, giving her the appearance of a queen."
+        ],
+        "description": "Text description of the desired video content",
+        "maxLength": 1500,
+        "type": "string"
+      },
+      "seed": {
+        "description": "Seed for video generation. If not provided, a random seed will be used.",
+        "anyOf": [
+          {
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      }
+    },
+    "required": [
+      "prompt",
+      "video_url"
+    ],
+    "type": "object"
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "LucyEditProInput",
+    "LucyEditProOutput",
+    "File"
+  ]
+}

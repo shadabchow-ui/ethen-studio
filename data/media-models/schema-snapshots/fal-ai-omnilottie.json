@@ -1,0 +1,114 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/omnilottie",
+  "task": "unknown",
+  "source_url": "https://fal.ai/models/fal-ai/omnilottie",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fomnilottie",
+  "retrieved_at": "2026-10-04T19:49:42.145Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "json",
+  "bytes_sha256": "8d4c0d99cc0ad1b7b43f3da7eab29ea832604ff3e3224acbd74a3a8fbbc0ba18",
+  "queue_path": "/fal-ai/omnilottie",
+  "input_name": "OmnilottieInput",
+  "input": {
+    "$refName": "OmnilottieInput",
+    "properties": {
+      "prompt": {
+        "maxLength": 2000,
+        "description": "Text description of the Lottie animation to generate.",
+        "type": "string",
+        "examples": [
+          "A red ball bouncing up and down"
+        ]
+      },
+      "temperature": {
+        "description": "Sampling temperature for generation.",
+        "minimum": 0,
+        "default": 0.9,
+        "maximum": 2,
+        "type": "number"
+      },
+      "max_tokens": {
+        "description": "Maximum number of Lottie tokens to generate.",
+        "minimum": 256,
+        "default": 4096,
+        "maximum": 8192,
+        "type": "integer"
+      },
+      "top_p": {
+        "description": "Nucleus sampling probability threshold.",
+        "minimum": 0,
+        "default": 0.25,
+        "maximum": 1,
+        "type": "number"
+      },
+      "top_k": {
+        "description": "Top-k sampling parameter.",
+        "minimum": 1,
+        "default": 5,
+        "maximum": 100,
+        "type": "integer"
+      }
+    },
+    "required": [
+      "prompt"
+    ],
+    "type": "object"
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "OmnilottieInput",
+    "OmnilottieOutput",
+    "File"
+  ]
+}

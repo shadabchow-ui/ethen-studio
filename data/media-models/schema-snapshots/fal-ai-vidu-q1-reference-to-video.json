@@ -1,0 +1,138 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/vidu/q1/reference-to-video",
+  "task": "reference-to-video",
+  "source_url": "https://fal.ai/models/fal-ai/vidu/q1/reference-to-video",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fvidu%2Fq1%2Freference-to-video",
+  "retrieved_at": "2026-10-04T19:52:18.035Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "image-to-video",
+  "bytes_sha256": "114167831609c432447e4d566453a48d6c71dd870534e5e77825fa5b6b772aba",
+  "queue_path": "/fal-ai/vidu/q1/reference-to-video",
+  "input_name": "ViduQ1ReferenceToVideoInput",
+  "input": {
+    "$refName": "ViduQ1ReferenceToVideoInput",
+    "properties": {
+      "reference_image_urls": {
+        "examples": [
+          [
+            "https://v3.fal.media/files/panda/HDpZj0eLjWwCpjA5__0l1_0e6cd0b9eb7a4a968c0019a4eee15e46.png",
+            "https://v3.fal.media/files/zebra/153izt1cBlMU-TwD0_B7Q_ea34618f5d974653a16a755aa61e488a.png",
+            "https://v3.fal.media/files/koala/RCSZ7VEEKGFDfMoGHCwzo_f626718793e94769b1ad36d5891864a4.png"
+          ]
+        ],
+        "type": "array",
+        "description": "URLs of the reference images to use for consistent subject appearance. Q1 model supports up to 7 reference images.",
+        "items": {
+          "type": "string"
+        }
+      },
+      "prompt": {
+        "examples": [
+          "A young woman and a monkey inside a colorful house"
+        ],
+        "type": "string",
+        "maxLength": 1500,
+        "description": "Text prompt for video generation, max 1500 characters"
+      },
+      "seed": {
+        "anyOf": [
+          {
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "Random seed for generation"
+      },
+      "aspect_ratio": {
+        "enum": [
+          "16:9",
+          "9:16",
+          "1:1"
+        ],
+        "type": "string",
+        "description": "The aspect ratio of the output video",
+        "default": "16:9"
+      },
+      "movement_amplitude": {
+        "enum": [
+          "auto",
+          "small",
+          "medium",
+          "large"
+        ],
+        "type": "string",
+        "description": "The movement amplitude of objects in the frame",
+        "default": "auto"
+      },
+      "bgm": {
+        "type": "boolean",
+        "description": "Whether to add background music to the generated video",
+        "default": false
+      }
+    },
+    "type": "object",
+    "required": [
+      "prompt",
+      "reference_image_urls"
+    ]
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "ViduQ1ReferenceToVideoInput",
+    "ViduQ1ReferenceToVideoOutput",
+    "File"
+  ]
+}

@@ -1,0 +1,692 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/lora/inpaint",
+  "task": "image-editing",
+  "source_url": "https://fal.ai/models/fal-ai/lora/inpaint",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Flora%2Finpaint",
+  "retrieved_at": "2026-10-04T19:47:40.760Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "image-to-image",
+  "bytes_sha256": "8151adfe3bf054a5df35f589f6e702803af3fb06b18258891a4332959d806fcb",
+  "queue_path": "/fal-ai/lora/inpaint",
+  "input_name": "LoraInpaintInput",
+  "input": {
+    "$refName": "LoraInpaintInput",
+    "required": [
+      "model_name",
+      "prompt"
+    ],
+    "properties": {
+      "image_encoder_subfolder": {
+        "examples": [],
+        "description": "\n            The subfolder of the image encoder model to use for the image generation.\n        ",
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "ic_light_model_background_image_url": {
+        "description": "\n            The URL of the IC Light model background image to use for the image generation.\n            Make sure to use a background compatible with the model.\n        ",
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "clip_skip": {
+        "maximum": 2,
+        "default": 0,
+        "type": "integer",
+        "description": "\n            Skips part of the image generation process, leading to slightly different results.\n            This means the image renders faster, too.\n        ",
+        "minimum": 0
+      },
+      "scheduler": {
+        "description": "Scheduler / sampler to use for the image denoising process.",
+        "anyOf": [
+          {
+            "enum": [
+              "DPM++ 2M",
+              "DPM++ 2M Karras",
+              "DPM++ 2M SDE",
+              "DPM++ 2M SDE Karras",
+              "Euler",
+              "Euler A",
+              "Euler (trailing timesteps)",
+              "LCM",
+              "LCM (trailing timesteps)",
+              "DDIM",
+              "TCD"
+            ],
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "sigmas": {
+        "$refName": "SigmasInput",
+        "properties": {
+          "method": {
+            "enum": [
+              "default",
+              "array"
+            ],
+            "default": "default",
+            "type": "string",
+            "description": "\n            The method to use for the sigmas. If set to 'custom', the sigmas will be set based\n            on the provided sigmas schedule in the `array` field.\n            Defaults to 'default' which means the scheduler will use the sigmas of the scheduler.\n        "
+          },
+          "array": {
+            "default": [],
+            "type": "array",
+            "items": {
+              "type": "number"
+            },
+            "description": "\n           Sigmas schedule to be used if 'custom' method is selected.\n        "
+          }
+        },
+        "type": "object",
+        "default": {
+          "method": "default",
+          "array": []
+        },
+        "description": "\n            Optionally override the sigmas to use for the denoising process. Only works with schedulers which support the `sigmas` argument in their `set_sigmas` method.\n            Defaults to not overriding, in which case the scheduler automatically sets the sigmas based on the `num_inference_steps` parameter.\n            If set to a custom sigma schedule, the `num_inference_steps` parameter will be ignored. Cannot be set if `timesteps` is set.\n        "
+      },
+      "unet_name": {
+        "description": "URL or HuggingFace ID of the custom U-Net model to use for the image generation.",
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "eta": {
+        "maximum": 1,
+        "default": 0,
+        "type": "number",
+        "description": "The eta value to be used for the image generation.",
+        "minimum": 0
+      },
+      "tile_stride_width": {
+        "maximum": 2048,
+        "default": 2048,
+        "type": "integer",
+        "description": "The stride of the tiles to be used for the image generation.",
+        "minimum": 64
+      },
+      "tile_stride_height": {
+        "maximum": 2048,
+        "default": 2048,
+        "type": "integer",
+        "description": "The stride of the tiles to be used for the image generation.",
+        "minimum": 64
+      },
+      "controlnets": {
+        "default": [],
+        "type": "array",
+        "items": {
+          "$refName": "ControlNet",
+          "required": [
+            "path",
+            "image_url"
+          ],
+          "properties": {
+            "end_percentage": {
+              "maximum": 1,
+              "default": 1,
+              "type": "number",
+              "description": "\n            The percentage of the image to end applying the controlnet in terms of the total timesteps.\n        ",
+              "minimum": 0
+            },
+            "start_percentage": {
+              "maximum": 1,
+              "default": 0,
+              "type": "number",
+              "description": "\n            The percentage of the image to start applying the controlnet in terms of the total timesteps.\n        ",
+              "minimum": 0
+            },
+            "conditioning_scale": {
+              "maximum": 2,
+              "default": 1,
+              "type": "number",
+              "description": "\n            The scale of the control net weight. This is used to scale the control net weight\n            before merging it with the base model.\n        ",
+              "minimum": 0
+            },
+            "image_url": {
+              "type": "string",
+              "description": "URL of the image to be used as the control net."
+            },
+            "config_url": {
+              "description": "optional URL to the controlnet config.json file.",
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "variant": {
+              "description": "The optional variant if a Hugging Face repo key is used.",
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "mask_url": {
+              "description": "\n            The mask to use for the controlnet. When using a mask, the control image size and the mask size must be the same and divisible by 32.\n        ",
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "path": {
+              "type": "string",
+              "description": "URL or the path to the control net weights."
+            },
+            "ip_adapter_index": {
+              "description": "\n            The index of the IP adapter to be applied to the controlnet. This is only needed for InstantID ControlNets.\n        ",
+              "anyOf": [
+                {
+                  "type": "integer"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            }
+          },
+          "type": "object"
+        },
+        "description": "\n            The control nets to use for the image generation. You can use any number of control nets\n            and they will be applied to the image at the specified timesteps.\n        "
+      },
+      "ic_light_image_url": {
+        "description": "\n            The URL of the IC Light model image to use for the image generation.\n        ",
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "debug_per_pass_latents": {
+        "default": false,
+        "type": "boolean",
+        "description": "If set to true, the latents will be saved for debugging per pass."
+      },
+      "image_url": {
+        "description": "URL of image to use for image to image/inpainting.",
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "tile_width": {
+        "maximum": 4096,
+        "default": 4096,
+        "type": "integer",
+        "description": "The size of the tiles to be used for the image generation.",
+        "minimum": 128
+      },
+      "debug_latents": {
+        "default": false,
+        "type": "boolean",
+        "description": "If set to true, the latents will be saved for debugging."
+      },
+      "guidance_scale": {
+        "maximum": 20,
+        "default": 7.5,
+        "type": "number",
+        "description": "\n            The CFG (Classifier Free Guidance) scale is a measure of how close you want\n            the model to stick to your prompt when looking for a related image to show you.\n        ",
+        "minimum": 0
+      },
+      "model_name": {
+        "examples": [
+          "stabilityai/stable-diffusion-xl-base-1.0",
+          "runwayml/stable-diffusion-v1-5",
+          "SG161222/Realistic_Vision_V2.0"
+        ],
+        "type": "string",
+        "description": "URL or HuggingFace ID of the base model to generate the image."
+      },
+      "loras": {
+        "default": [],
+        "type": "array",
+        "items": {
+          "$refName": "LoraWeight",
+          "required": [
+            "path"
+          ],
+          "properties": {
+            "path": {
+              "type": "string",
+              "description": "URL or the path to the LoRA weights."
+            },
+            "scale": {
+              "maximum": 4,
+              "default": 1,
+              "type": "number",
+              "description": "\n            The scale of the LoRA weight. This is used to scale the LoRA weight\n            before merging it with the base model.\n        ",
+              "minimum": 0
+            }
+          },
+          "type": "object"
+        },
+        "description": "\n            The LoRAs to use for the image generation. You can use any number of LoRAs\n            and they will be merged together to generate the final image.\n        "
+      },
+      "noise_strength": {
+        "exclusiveMinimum": 0,
+        "maximum": 1,
+        "default": 0.5,
+        "type": "number",
+        "description": "The amount of noise to add to noise image for image. Only used if the image_url is provided. 1.0 is complete noise and values near 0 are minimal noise."
+      },
+      "controlnet_guess_mode": {
+        "default": false,
+        "type": "boolean",
+        "description": "\n            If set to true, the controlnet will be applied to only the conditional predictions.\n        "
+      },
+      "rescale_betas_snr_zero": {
+        "default": false,
+        "type": "boolean",
+        "description": "\n            Whether to set the rescale_betas_snr_zero option or not for the sampler\n        "
+      },
+      "seed": {
+        "description": "\n            The same seed and the same prompt given to the same version of Stable Diffusion\n            will output the same image every time.\n        ",
+        "anyOf": [
+          {
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "ic_light_model_url": {
+        "description": "\n            The URL of the IC Light model to use for the image generation.\n        ",
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "image_format": {
+        "examples": [
+          "jpeg"
+        ],
+        "enum": [
+          "jpeg",
+          "png"
+        ],
+        "default": "png",
+        "description": "The format of the generated image.",
+        "type": "string"
+      },
+      "num_images": {
+        "maximum": 8,
+        "default": 1,
+        "type": "integer",
+        "description": "\n            Number of images to generate in one request. Note that the higher the batch size,\n            the longer it will take to generate the images.\n        ",
+        "minimum": 1
+      },
+      "timesteps": {
+        "$refName": "TimestepsInput",
+        "properties": {
+          "method": {
+            "enum": [
+              "default",
+              "array"
+            ],
+            "default": "default",
+            "type": "string",
+            "description": "\n            The method to use for the timesteps. If set to 'array', the timesteps will be set based\n            on the provided timesteps schedule in the `array` field.\n            Defaults to 'default' which means the scheduler will use the `num_inference_steps` parameter.\n        "
+          },
+          "array": {
+            "default": [],
+            "type": "array",
+            "items": {
+              "type": "integer"
+            },
+            "description": "\n           Timesteps schedule to be used if 'custom' method is selected.\n        "
+          }
+        },
+        "type": "object",
+        "default": {
+          "method": "default",
+          "array": []
+        },
+        "description": "\n            Optionally override the timesteps to use for the denoising process. Only works with schedulers which support the `timesteps` argument in their `set_timesteps` method.\n            Defaults to not overriding, in which case the scheduler automatically sets the timesteps based on the `num_inference_steps` parameter.\n            If set to a custom timestep schedule, the `num_inference_steps` parameter will be ignored. Cannot be set if `sigmas` is set.\n        "
+      },
+      "mask_url": {
+        "description": "URL of black-and-white image to use as mask during inpainting.",
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "prompt": {
+        "examples": [
+          "Photo of a european medieval 40 year old queen, silver hair, highly detailed face, detailed eyes, head shot, intricate crown, age spots, wrinkles",
+          "Photo of a classic red mustang car parked in las vegas strip at night"
+        ],
+        "type": "string",
+        "description": "The prompt to use for generating the image. Be as descriptive as possible for best results."
+      },
+      "image_encoder_weight_name": {
+        "examples": [
+          "pytorch_model.bin"
+        ],
+        "default": "pytorch_model.bin",
+        "description": "\n            The weight name of the image encoder model to use for the image generation.\n        ",
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "prompt_weighting": {
+        "examples": [
+          true
+        ],
+        "default": false,
+        "type": "boolean",
+        "description": "\n            If set to true, the prompt weighting syntax will be used.\n            Additionally, this will lift the 77 token limit by averaging embeddings.\n        "
+      },
+      "enable_safety_checker": {
+        "default": false,
+        "type": "boolean",
+        "description": "If set to true, the safety checker will be enabled."
+      },
+      "tile_height": {
+        "maximum": 4096,
+        "default": 4096,
+        "type": "integer",
+        "description": "The size of the tiles to be used for the image generation.",
+        "minimum": 128
+      },
+      "image_encoder_path": {
+        "description": "\n            The path to the image encoder model to use for the image generation.\n        ",
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "num_inference_steps": {
+        "maximum": 150,
+        "default": 30,
+        "type": "integer",
+        "description": "\n            Increasing the amount of steps tells Stable Diffusion that it should take more steps\n            to generate your final result which can increase the amount of detail in your image.\n        ",
+        "minimum": 1
+      },
+      "embeddings": {
+        "default": [],
+        "type": "array",
+        "items": {
+          "$refName": "Embedding",
+          "required": [
+            "path"
+          ],
+          "properties": {
+            "tokens": {
+              "description": "\n            The tokens to map the embedding weights to. Use these tokens in your\n            prompts. When omitted, tokens are generated as <s0>, <s1>, ... to\n            match the number of vectors in the embedding file.\n        ",
+              "anyOf": [
+                {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "path": {
+              "type": "string",
+              "description": "URL or the path to the embedding weights."
+            }
+          },
+          "type": "object"
+        },
+        "description": "\n            The embeddings to use for the image generation. Only a single embedding is supported at the moment.\n            The embeddings will be used to map the tokens in the prompt to the embedding weights.\n        "
+      },
+      "variant": {
+        "description": "The variant of the model to use for huggingface models, e.g. 'fp16'.",
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "negative_prompt": {
+        "examples": [
+          "cartoon, painting, illustration, worst quality, low quality, normal quality"
+        ],
+        "default": "",
+        "type": "string",
+        "description": "\n            The negative prompt to use.Use it to address details that you don't want\n            in the image. This could be colors, objects, scenery and even the small details\n            (e.g. moustache, blurry, low resolution).\n        "
+      },
+      "ip_adapter": {
+        "default": [],
+        "type": "array",
+        "items": {
+          "$refName": "IPAdapter",
+          "required": [
+            "ip_adapter_image_url",
+            "path"
+          ],
+          "properties": {
+            "scale": {
+              "default": 1,
+              "type": "number",
+              "description": "\n            The scale of the IP adapter weight. This is used to scale the IP adapter weight\n            before merging it with the base model.\n        ",
+              "minimum": 0
+            },
+            "weight_name": {
+              "description": "Name of the weight file.",
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "ip_adapter_mask_url": {
+              "description": "\n            The mask to use for the IP adapter. When using a mask, the ip-adapter image size and the mask size must be the same\n        ",
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "unconditional_noising_factor": {
+              "maximum": 1,
+              "default": 0,
+              "type": "number",
+              "description": "The factor to apply to the unconditional noising of the IP adapter.",
+              "minimum": 0
+            },
+            "model_subfolder": {
+              "description": "Subfolder in the model directory where the IP adapter weights are stored.",
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "path": {
+              "type": "string",
+              "description": "URL or the path to the IP adapter weights."
+            },
+            "scale_json": {
+              "description": "\n            The scale of the IP adapter weight. This is used to scale the IP adapter weight\n            before merging it with the base model.\n        ",
+              "anyOf": [
+                {
+                  "type": "object"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "ip_adapter_image_url": {
+              "description": "URL of the image to be used as the IP adapter.",
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              ]
+            },
+            "image_projection_shortcut": {
+              "default": true,
+              "type": "boolean",
+              "description": "\n            The value to set the image projection shortcut to. For FaceID plus V1 models,\n            this should be set to False. For FaceID plus V2 models, this should be set to True.\n            Default is True.\n        "
+            },
+            "insight_face_model_path": {
+              "description": "URL or the path to the InsightFace model weights.",
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            }
+          },
+          "type": "object"
+        },
+        "description": "\n            The IP adapter to use for the image generation.\n        "
+      },
+      "prediction_type": {
+        "enum": [
+          "v_prediction",
+          "epsilon"
+        ],
+        "default": "epsilon",
+        "type": "string",
+        "description": "\n            The type of prediction to use for the image generation.\n            The `epsilon` is the default.\n        "
+      }
+    },
+    "type": "object"
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "LoraInpaintInput",
+    "LoraInpaintOutput",
+    "SigmasInput",
+    "ControlNet",
+    "LoraWeight",
+    "TimestepsInput",
+    "Embedding",
+    "IPAdapter",
+    "Image",
+    "File"
+  ]
+}

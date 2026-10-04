@@ -1,0 +1,232 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/qwen-image-edit-lora",
+  "task": "image-generation",
+  "source_url": "https://fal.ai/models/fal-ai/qwen-image-edit-lora",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fqwen-image-edit-lora",
+  "retrieved_at": "2026-10-04T19:50:50.139Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "image-to-image",
+  "bytes_sha256": "ba2ee20d19afd25f94f9454fe1cd0c4b11b77400328e64ce163acae4336a9106",
+  "queue_path": "/fal-ai/qwen-image-edit-lora",
+  "input_name": "QwenImageEditLoraInput",
+  "input": {
+    "$refName": "QwenImageEditLoraInput",
+    "properties": {
+      "acceleration": {
+        "examples": [
+          "regular"
+        ],
+        "enum": [
+          "none",
+          "regular",
+          "high"
+        ],
+        "type": "string",
+        "default": "none",
+        "description": "Acceleration level for image generation. Options: 'none', 'regular'. Higher acceleration increases speed. 'regular' balances speed and quality."
+      },
+      "prompt": {
+        "examples": [
+          "Change bag to apple macbook"
+        ],
+        "type": "string",
+        "description": "The prompt to generate the image with"
+      },
+      "enable_safety_checker": {
+        "default": true,
+        "type": "boolean",
+        "description": "If set to true, the safety checker will be enabled. Disabling it requires account authorization; unauthorized requests are always checked, and images flagged as unsafe are returned as black images."
+      },
+      "seed": {
+        "description": "\n            The same seed and the same prompt given to the same version of the model\n            will output the same image every time.\n        ",
+        "anyOf": [
+          {
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "sync_mode": {
+        "default": false,
+        "type": "boolean",
+        "description": "If `True`, the media will be returned as a data URI and the output data won't be available in the request history."
+      },
+      "num_inference_steps": {
+        "type": "integer",
+        "maximum": 50,
+        "default": 30,
+        "description": "The number of inference steps to perform.",
+        "minimum": 2
+      },
+      "num_images": {
+        "type": "integer",
+        "maximum": 4,
+        "default": 1,
+        "description": "The number of images to generate.",
+        "minimum": 1
+      },
+      "image_url": {
+        "examples": [
+          "https://v3.fal.media/files/koala/oei_-iPIYFnhdB8SxojND_qwen-edit-res.png"
+        ],
+        "description": "The URL of the image to edit.",
+        "type": "string"
+      },
+      "output_format": {
+        "enum": [
+          "jpeg",
+          "png"
+        ],
+        "default": "png",
+        "description": "The format of the generated image.",
+        "type": "string"
+      },
+      "guidance_scale": {
+        "type": "number",
+        "maximum": 20,
+        "default": 4,
+        "description": "\n            The CFG (Classifier Free Guidance) scale is a measure of how close you want\n            the model to stick to your prompt when looking for a related image to show you.\n        ",
+        "minimum": 0
+      },
+      "negative_prompt": {
+        "examples": [
+          "blurry, ugly"
+        ],
+        "default": " ",
+        "type": "string",
+        "description": "The negative prompt for the generation"
+      },
+      "loras": {
+        "examples": [],
+        "type": "array",
+        "description": "\n            The LoRAs to use for the image generation. You can use up to 3 LoRAs\n            and they will be merged together to generate the final image.\n        ",
+        "default": [],
+        "items": {
+          "$refName": "LoraWeight",
+          "properties": {
+            "path": {
+              "type": "string",
+              "description": "URL or the path to the LoRA weights."
+            },
+            "scale": {
+              "type": "number",
+              "maximum": 4,
+              "default": 1,
+              "description": "\n            The scale of the LoRA weight. This is used to scale the LoRA weight\n            before merging it with the base model.\n        ",
+              "minimum": 0
+            }
+          },
+          "required": [
+            "path"
+          ],
+          "type": "object"
+        }
+      },
+      "image_size": {
+        "description": "The size of the generated image.",
+        "anyOf": [
+          {
+            "$refName": "ImageSize",
+            "properties": {
+              "width": {
+                "exclusiveMinimum": 0,
+                "maximum": 14142,
+                "default": 512,
+                "description": "The width of the generated image.",
+                "type": "integer"
+              },
+              "height": {
+                "exclusiveMinimum": 0,
+                "maximum": 14142,
+                "default": 512,
+                "description": "The height of the generated image.",
+                "type": "integer"
+              }
+            },
+            "type": "object"
+          },
+          {
+            "enum": [
+              "square_hd",
+              "square",
+              "portrait_4_3",
+              "portrait_16_9",
+              "landscape_4_3",
+              "landscape_16_9"
+            ],
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      }
+    },
+    "required": [
+      "prompt",
+      "image_url"
+    ],
+    "type": "object"
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "QwenImageEditLoraInput",
+    "QwenImageEditLoraOutput",
+    "LoraWeight",
+    "ImageSize",
+    "Image"
+  ]
+}

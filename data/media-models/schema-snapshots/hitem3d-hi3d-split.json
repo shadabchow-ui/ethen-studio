@@ -1,0 +1,145 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "hitem3d/hi3d/split",
+  "task": "unknown",
+  "source_url": "https://fal.ai/models/hitem3d/hi3d/split",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=hitem3d%2Fhi3d%2Fsplit",
+  "retrieved_at": "2026-10-04T19:53:41.264Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "3d-to-3d",
+  "bytes_sha256": "17e8272f4f9da17e6e6f17bc9da67ab7d96c2e35d657cf675fe3f3d01c05f4bc",
+  "queue_path": "/hitem3d/hi3d/split",
+  "input_name": "Hi3dSplitInput",
+  "input": {
+    "$refName": "Hi3dSplitInput",
+    "type": "object",
+    "properties": {
+      "model": {
+        "default": "character",
+        "type": "string",
+        "description": "Split model type: 'character' splits humanoid models using a template with optional joints; 'general' splits any model by granularity level.",
+        "enum": [
+          "character",
+          "general"
+        ]
+      },
+      "part": {
+        "default": "a",
+        "type": "string",
+        "description": "Character split template (used when model is 'character'): 'a' 6 parts, 'b' 5 parts, 'c' 4 parts excluding head, 'd' 4 parts including head, 'e' 3 parts, 'f' 2 parts.",
+        "enum": [
+          "a",
+          "b",
+          "c",
+          "d",
+          "e",
+          "f"
+        ]
+      },
+      "export_format": {
+        "default": "glb",
+        "type": "string",
+        "description": "File format of the generated model. Character split currently supports only 'glb'.",
+        "enum": [
+          "glb",
+          "obj",
+          "stl",
+          "fbx",
+          "usdz"
+        ]
+      },
+      "enable_safety_checker": {
+        "default": true,
+        "type": "boolean",
+        "description": "If set to true, inputs are checked for safety before processing."
+      },
+      "level": {
+        "default": "medium",
+        "type": "string",
+        "description": "Split granularity (used when model is 'general').",
+        "enum": [
+          "low",
+          "medium",
+          "high"
+        ]
+      },
+      "joint": {
+        "default": "ball",
+        "type": "string",
+        "description": "Joint type added between character parts (used when model is 'character').",
+        "enum": [
+          "none",
+          "ball",
+          "dovetail"
+        ]
+      },
+      "mesh_url": {
+        "examples": [
+          "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Models/master/2.0/DamagedHelmet/glTF-Binary/DamagedHelmet.glb"
+        ],
+        "type": "string",
+        "description": "URL of the input model to split. GLB, STL and OBJ formats are supported, up to 200MB."
+      }
+    },
+    "required": [
+      "mesh_url"
+    ],
+    "description": "Input for splitting a 3D model into parts."
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "Hi3dSplitInput",
+    "Hi3dSplitOutput",
+    "File"
+  ]
+}

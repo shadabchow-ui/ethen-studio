@@ -1,0 +1,85 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "bria/fibo-edit/restore",
+  "task": "unknown",
+  "source_url": "https://fal.ai/models/bria/fibo-edit/restore",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=bria%2Ffibo-edit%2Frestore",
+  "retrieved_at": "2026-10-04T19:41:42.994Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "image-to-image",
+  "bytes_sha256": "1f4f684e891ac9309b6899ec1347fa5c644af7ee1178b6d5be8087e1bcfc5830",
+  "queue_path": "/bria/fibo-edit/restore",
+  "input_name": "FiboEditRestoreInput",
+  "input": {
+    "$refName": "FiboEditRestoreInput",
+    "required": [
+      "image_url"
+    ],
+    "type": "object",
+    "properties": {
+      "image_url": {
+        "examples": [
+          "https://bria-datasets.s3.us-east-1.amazonaws.com/Liza/png+-+2026-01-13T134151.337.png"
+        ],
+        "type": "string",
+        "description": "The source image."
+      }
+    }
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "FiboEditRestoreInput",
+    "FiboEditRestoreOutput",
+    "Image"
+  ]
+}

@@ -1,0 +1,153 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/flux-lora-portrait-trainer",
+  "task": "unknown",
+  "source_url": "https://fal.ai/models/fal-ai/flux-lora-portrait-trainer",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fflux-lora-portrait-trainer",
+  "retrieved_at": "2026-10-04T19:44:50.134Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "training",
+  "bytes_sha256": "8bc1473e41d580b6b76e68648672a41feddc0b34d0f19b595cb95f2822743099",
+  "queue_path": "/fal-ai/flux-lora-portrait-trainer",
+  "input_name": "FluxLoraPortraitTrainerInput",
+  "input": {
+    "$refName": "FluxLoraPortraitTrainerInput",
+    "properties": {
+      "images_data_url": {
+        "description": "\n        URL to zip archive with images of a consistent style. Try to use at least 10 images, although more is better.\n\n        In addition to images the archive can contain text files with captions. Each text file should have the same name as the image file it corresponds to.\n\n        The captions can include a special string `[trigger]`. If a trigger_word is specified, it will replace `[trigger]` in the captions.\n    ",
+        "type": "string"
+      },
+      "resume_from_checkpoint": {
+        "default": "",
+        "description": "URL to a checkpoint to resume training from.",
+        "type": "string"
+      },
+      "multiresolution_training": {
+        "default": true,
+        "examples": [
+          true
+        ],
+        "description": "If True, multiresolution training will be used.",
+        "type": "boolean"
+      },
+      "learning_rate": {
+        "default": 0.00009,
+        "minimum": 0.000001,
+        "description": "Learning rate to use for training.",
+        "maximum": 0.001,
+        "type": "number",
+        "examples": [
+          0.0002
+        ]
+      },
+      "steps": {
+        "maximum": 10000,
+        "default": 2500,
+        "minimum": 1,
+        "type": "integer",
+        "description": "Number of steps to train the LoRA on.",
+        "examples": [
+          1000
+        ]
+      },
+      "subject_crop": {
+        "default": true,
+        "examples": [
+          true
+        ],
+        "description": "If True, the subject will be cropped from the image.",
+        "type": "boolean"
+      },
+      "trigger_phrase": {
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "Trigger phrase to be used in the captions. If None, a trigger word will not be used.\n        If no captions are provide the trigger_work will be used instead of captions. If captions are provided, the trigger word will replace the `[trigger]` string in the captions.\n        "
+      },
+      "data_archive_format": {
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "The format of the archive. If not specified, the format will be inferred from the URL."
+      },
+      "create_masks": {
+        "default": false,
+        "examples": [
+          false
+        ],
+        "description": "If True, masks will be created for the subject.",
+        "type": "boolean"
+      }
+    },
+    "required": [
+      "images_data_url"
+    ],
+    "type": "object"
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "FluxLoraPortraitTrainerInput",
+    "FluxLoraPortraitTrainerOutput",
+    "File"
+  ]
+}

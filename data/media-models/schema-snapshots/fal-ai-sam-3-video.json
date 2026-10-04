@@ -1,0 +1,251 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/sam-3/video",
+  "task": "video-editing",
+  "source_url": "https://fal.ai/models/fal-ai/sam-3/video",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fsam-3%2Fvideo",
+  "retrieved_at": "2026-10-04T19:51:25.068Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "video-to-video",
+  "bytes_sha256": "8c44916445c007709e55e5b642e183f3016fe0adf34c4791fe903d59ed9e60f2",
+  "queue_path": "/fal-ai/sam-3/video",
+  "input_name": "Sam3VideoInput",
+  "input": {
+    "$refName": "Sam3VideoInput",
+    "properties": {
+      "detection_threshold": {
+        "maximum": 1,
+        "minimum": 0.1,
+        "default": 0.5,
+        "description": "Detection confidence threshold (0.0-1.0). Lower = more detections but less precise. ",
+        "type": "number"
+      },
+      "prompt": {
+        "description": "Text prompt for segmentation. Use commas to track multiple objects (e.g., 'person, cloth').",
+        "default": "",
+        "type": "string",
+        "examples": [
+          "person",
+          "person, cloth"
+        ]
+      },
+      "text_prompt": {
+        "description": "[DEPRECATED] Use 'prompt' instead. Kept for backward compatibility.",
+        "deprecated": true,
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "video_url": {
+        "description": "The URL of the video to be segmented.",
+        "type": "string"
+      },
+      "point_prompts": {
+        "description": "List of point prompts",
+        "default": [],
+        "items": {
+          "$refName": "PointPromptBase",
+          "properties": {
+            "y": {
+              "description": "Y Coordinate of the prompt",
+              "anyOf": [
+                {
+                  "type": "integer"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "label": {
+              "description": "1 for foreground, 0 for background",
+              "anyOf": [
+                {
+                  "enum": [
+                    0,
+                    1
+                  ],
+                  "type": "integer"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "x": {
+              "description": "X Coordinate of the prompt",
+              "anyOf": [
+                {
+                  "type": "integer"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "object_id": {
+              "description": "Optional object identifier. Prompts sharing an object id refine the same object. When a text prompt is also given, the id selects which detected object the points refine.",
+              "anyOf": [
+                {
+                  "type": "integer"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            }
+          },
+          "type": "object"
+        },
+        "type": "array"
+      },
+      "video_output_type": {
+        "enum": [
+          "X264 (.mp4)",
+          "VP9 (.webm)"
+        ],
+        "description": "The output type of the generated video.",
+        "default": "X264 (.mp4)",
+        "type": "string"
+      },
+      "apply_mask": {
+        "description": "Apply the mask on the video.",
+        "default": true,
+        "type": "boolean"
+      },
+      "box_prompts": {
+        "description": "List of box prompt coordinates (x_min, y_min, x_max, y_max).",
+        "default": [],
+        "items": {
+          "$refName": "BoxPromptBase",
+          "properties": {
+            "x_min": {
+              "description": "X Min Coordinate of the box",
+              "anyOf": [
+                {
+                  "type": "integer"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "object_id": {
+              "description": "Optional object identifier. Boxes sharing an object id refine the same object.",
+              "anyOf": [
+                {
+                  "type": "integer"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "y_min": {
+              "description": "Y Min Coordinate of the box",
+              "anyOf": [
+                {
+                  "type": "integer"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "x_max": {
+              "description": "X Max Coordinate of the box",
+              "anyOf": [
+                {
+                  "type": "integer"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "y_max": {
+              "description": "Y Max Coordinate of the box",
+              "anyOf": [
+                {
+                  "type": "integer"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            }
+          },
+          "type": "object"
+        },
+        "type": "array"
+      }
+    },
+    "required": [
+      "video_url"
+    ],
+    "type": "object"
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "Sam3VideoInput",
+    "Sam3VideoOutput",
+    "PointPromptBase",
+    "BoxPromptBase",
+    "File"
+  ]
+}

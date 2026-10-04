@@ -1,0 +1,146 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/fast-animatediff/turbo/video-to-video",
+  "task": "video-to-video",
+  "source_url": "https://fal.ai/models/fal-ai/fast-animatediff/turbo/video-to-video",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Ffast-animatediff%2Fturbo%2Fvideo-to-video",
+  "retrieved_at": "2026-10-04T19:43:31.166Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "video-to-video",
+  "bytes_sha256": "8b647fad2c35b43c30a5e4af07cdc1d4310640cbbf5f892234d1fbb83438d7c1",
+  "queue_path": "/fal-ai/fast-animatediff/turbo/video-to-video",
+  "input_name": "FastAnimatediffTurboVideoToVideoInput",
+  "input": {
+    "$refName": "FastAnimatediffTurboVideoToVideoInput",
+    "properties": {
+      "num_inference_steps": {
+        "maximum": 50,
+        "description": "The number of inference steps to perform. 4-12 is recommended for turbo mode.",
+        "default": 12,
+        "minimum": 1,
+        "type": "integer"
+      },
+      "strength": {
+        "maximum": 1,
+        "description": "The strength of the input video in the final output.",
+        "default": 0.7,
+        "minimum": 0,
+        "type": "number"
+      },
+      "prompt": {
+        "description": "The prompt to use for generating the image. Be as descriptive as possible for best results.",
+        "type": "string",
+        "examples": [
+          "closeup of tony stark, robert downey jr, fireworks, high quality, ultra HD",
+          "panda playing a guitar, on a boat, in the ocean, high quality, high quality, ultra HD, realistic"
+        ]
+      },
+      "seed": {
+        "description": "\n            The same seed and the same prompt given to the same version of Stable Diffusion\n            will output the same image every time.\n        ",
+        "anyOf": [
+          {
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "video_url": {
+        "description": "URL of the video.",
+        "type": "string",
+        "examples": [
+          "https://huggingface.co/datasets/huggingface/documentation-images/resolve/main/diffusers/animatediff-vid2vid-input-2.gif",
+          "https://huggingface.co/datasets/huggingface/documentation-images/resolve/main/diffusers/animatediff-vid2vid-input-1.gif"
+        ]
+      },
+      "first_n_seconds": {
+        "maximum": 4,
+        "description": "The first N number of seconds of video to animate.",
+        "default": 3,
+        "minimum": 2,
+        "type": "integer"
+      },
+      "negative_prompt": {
+        "description": "\n            The negative prompt to use. Use it to address details that you don't want\n            in the image. This could be colors, objects, scenery and even the small details\n            (e.g. moustache, blurry, low resolution).\n        ",
+        "default": "(bad quality, worst quality:1.2), ugly faces, bad anime",
+        "type": "string"
+      },
+      "fps": {
+        "maximum": 16,
+        "description": "Number of frames per second to extract from the video.",
+        "default": 8,
+        "minimum": 1,
+        "type": "integer"
+      },
+      "guidance_scale": {
+        "maximum": 20,
+        "description": "The CFG (Classifier Free Guidance) scale is a measure of how close you want the model to stick to your prompt when looking for a related image to show you.",
+        "default": 2,
+        "minimum": 0,
+        "type": "number"
+      }
+    },
+    "required": [
+      "prompt",
+      "video_url"
+    ],
+    "type": "object"
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "FastAnimatediffTurboVideoToVideoInput",
+    "FastAnimatediffTurboVideoToVideoOutput",
+    "File"
+  ]
+}

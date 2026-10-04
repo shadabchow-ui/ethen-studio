@@ -1,0 +1,241 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/kling-video/o3/4k/video-to-video/reference",
+  "task": "video-to-video",
+  "source_url": "https://fal.ai/models/fal-ai/kling-video/o3/4k/video-to-video/reference",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fkling-video%2Fo3%2F4k%2Fvideo-to-video%2Freference",
+  "retrieved_at": "2026-10-04T19:46:58.216Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "video-to-video",
+  "bytes_sha256": "6a76b8bc9ae4feafc8c54d1e011170b04db7b2e4f37f05468a38764e0b8a2a12",
+  "queue_path": "/fal-ai/kling-video/o3/4k/video-to-video/reference",
+  "input_name": "KlingVideoO34kVideoToVideoReferenceInput",
+  "input": {
+    "$refName": "KlingVideoO34kVideoToVideoReferenceInput",
+    "description": "Input for O3 4K video-reference generation.",
+    "required": [
+      "prompt",
+      "video_url"
+    ],
+    "type": "object",
+    "properties": {
+      "image_urls": {
+        "anyOf": [
+          {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "_fal_ui_field": "image",
+              "ui": {
+                "field": "image"
+              },
+              "limit_description": "Max file size: 50.0MB, Min width: 300px, Min height: 300px, Min aspect ratio: 0.40, Max aspect ratio: 2.50, Timeout: 20.0s"
+            }
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "Reference images for style/appearance. Reference in prompt as @Image1, @Image2, etc. Maximum 4 total (elements + reference images) when using video.",
+        "examples": [
+          [
+            "https://storage.googleapis.com/falserverless/example_inputs/kling-o3/pro-v2v-reference/image_url1.jpg",
+            "https://storage.googleapis.com/falserverless/example_inputs/kling-o3/pro-v2v-reference/image_url2.jpg"
+          ]
+        ]
+      },
+      "video_url": {
+        "description": "Reference video URL. Only .mp4/.mov formats, 3-15s duration, 720-3840px resolution, max 200MB.",
+        "examples": [
+          "https://storage.googleapis.com/falserverless/example_inputs/kling-o3/pro-v2v-reference/video_reference.mp4"
+        ],
+        "limit_description": "Max file size: 200.0MB, Min width: 720px, Min height: 720px, Max width: 3840px, Max height: 3840px, Min duration: 3.0s, Max duration: 15.05s, Min FPS: 24.0, Max FPS: 60.0, Timeout: 30.0s",
+        "type": "string",
+        "_fal_ui_field": "video"
+      },
+      "shot_type": {
+        "description": "The type of multi-shot video generation.",
+        "type": "string",
+        "default": "customize",
+        "const": "customize"
+      },
+      "elements": {
+        "anyOf": [
+          {
+            "type": "array",
+            "items": {
+              "$refName": "KlingV3ImageElementInput",
+              "properties": {
+                "reference_image_urls": {
+                  "description": "Additional reference images from different angles. 1-3 images supported. At least one image is required.",
+                  "anyOf": [
+                    {
+                      "type": "array",
+                      "items": {
+                        "type": "string",
+                        "_fal_ui_field": "image",
+                        "ui": {
+                          "unsupported": "depth-exceeded"
+                        },
+                        "limit_description": "Max file size: 50.0MB, Min width: 300px, Min height: 300px, Min aspect ratio: 0.40, Max aspect ratio: 2.50, Timeout: 20.0s"
+                      }
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "frontal_image_url": {
+                  "anyOf": [
+                    {
+                      "type": "string",
+                      "ui": {
+                        "field": "image"
+                      },
+                      "limit_description": "Max file size: 50.0MB, Min width: 300px, Min height: 300px, Min aspect ratio: 0.40, Max aspect ratio: 2.50, Timeout: 20.0s"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ],
+                  "description": "The frontal image of the element (main view)."
+                }
+              },
+              "type": "object"
+            }
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "Elements (characters/objects) to include. Reference in prompt as @Element1, @Element2.",
+        "examples": [
+          [
+            {
+              "reference_image_urls": [
+                "https://storage.googleapis.com/falserverless/example_inputs/kling-o3/pro-v2v-reference/element1_reference1.png"
+              ],
+              "frontal_image_url": "https://storage.googleapis.com/falserverless/example_inputs/kling-o3/pro-v2v-reference/element1_front.png"
+            }
+          ]
+        ]
+      },
+      "keep_audio": {
+        "description": "Whether to keep the original audio from the reference video. ",
+        "type": "boolean",
+        "examples": [
+          false
+        ],
+        "default": true
+      },
+      "prompt": {
+        "description": "Text prompt for video generation. Reference video as @Video1.",
+        "type": "string",
+        "examples": [
+          "Integrate @Element1 in the scene. Style video should be following watercolor style of @Image1"
+        ],
+        "maxLength": 2500
+      },
+      "duration": {
+        "description": "Video duration in seconds (3-15s for reference video).",
+        "examples": [
+          "5"
+        ],
+        "anyOf": [
+          {
+            "type": "string",
+            "enum": [
+              "3",
+              "4",
+              "5",
+              "6",
+              "7",
+              "8",
+              "9",
+              "10",
+              "11",
+              "12",
+              "13",
+              "14",
+              "15"
+            ]
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "aspect_ratio": {
+        "description": "Aspect ratio.",
+        "type": "string",
+        "examples": [
+          "auto"
+        ],
+        "default": "auto",
+        "enum": [
+          "auto",
+          "16:9",
+          "9:16",
+          "1:1"
+        ]
+      }
+    }
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "KlingVideoO34kVideoToVideoReferenceInput",
+    "KlingVideoO34kVideoToVideoReferenceOutput",
+    "KlingV3ImageElementInput",
+    "File"
+  ]
+}

@@ -1,0 +1,158 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/bytedance-upscaler/upscale/video",
+  "task": "image-editing",
+  "source_url": "https://fal.ai/models/fal-ai/bytedance-upscaler/upscale/video",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fbytedance-upscaler%2Fupscale%2Fvideo",
+  "retrieved_at": "2026-10-04T19:42:49.617Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "video-to-video",
+  "bytes_sha256": "cc9a713ca16268ee7a5bc1dfe503e1d952a6cf9e985dc51b7e9535e494ced334",
+  "queue_path": "/fal-ai/bytedance-upscaler/upscale/video",
+  "input_name": "BytedanceUpscalerUpscaleVideoInput",
+  "input": {
+    "$refName": "BytedanceUpscalerUpscaleVideoInput",
+    "properties": {
+      "scale_ratio": {
+        "description": "The scaling ratio for the output video resolution. When set, overrides target_resolution and scales the input resolution by this factor (e.g., 2.0 doubles the resolution). Range: 1.1 to 10.0. Please note that this is valid only up to 4k resolution, and trying to scale beyond 4k will result in an error. (4k is defined as having atotal pixel count of 3840x2160).",
+        "anyOf": [
+          {
+            "maximum": 10,
+            "minimum": 1.1,
+            "type": "number"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "enhancement_tier": {
+        "enum": [
+          "fast",
+          "standard",
+          "pro"
+        ],
+        "description": "The enhancement quality tier. 'fast' provides essential upscaling with good speed, 'standard' uses adaptive algorithms for better visual texture, 'pro' uses large-model restoration for cinematic quality (longer processing time), and 10 times the cost of `standard` and `fast`.",
+        "default": "standard",
+        "type": "string"
+      },
+      "enhancement_preset": {
+        "enum": [
+          "general",
+          "ugc",
+          "short_series",
+          "aigc",
+          "old_film"
+        ],
+        "description": "The enhancement preset optimized for specific video scenarios. 'general' is a general-purpose template, 'ugc' targets user-generated short videos, 'short_series' is for short dramas, 'aigc' is for AI-generated content, and 'old_film' is for classic film restoration.",
+        "default": "general",
+        "type": "string"
+      },
+      "video_url": {
+        "description": "The URL of the video to upscale.",
+        "type": "string",
+        "examples": [
+          "https://storage.googleapis.com/falserverless/example_inputs/bytedance_video_upscaler_input.mp4"
+        ]
+      },
+      "target_fps": {
+        "maximum": 120,
+        "minimum": 24,
+        "default": 30,
+        "description": "The target frame rate of the enhanced video in frames per second.",
+        "type": "number"
+      },
+      "fidelity": {
+        "enum": [
+          "high",
+          "medium"
+        ],
+        "description": "The enhancement intensity. 'high' applies mild enhancement while keeping visual texture close to the source video. 'medium' provides a balanced image quality enhancement.",
+        "default": "high",
+        "type": "string"
+      },
+      "bit_depth": {
+        "enum": [
+          8,
+          10,
+          12
+        ],
+        "description": "The color bit depth of the output video. 10-bit and 12-bit output require the Pro enhancement tier.",
+        "default": 8,
+        "type": "integer"
+      },
+      "target_resolution": {
+        "enum": [
+          "1080p",
+          "2k",
+          "4k",
+          "6k",
+          "8k"
+        ],
+        "description": "The target resolution of the video to upscale.",
+        "default": "1080p",
+        "type": "string"
+      }
+    },
+    "required": [
+      "video_url"
+    ],
+    "type": "object"
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "BytedanceUpscalerUpscaleVideoInput",
+    "BytedanceUpscalerUpscaleVideoOutput",
+    "File"
+  ]
+}

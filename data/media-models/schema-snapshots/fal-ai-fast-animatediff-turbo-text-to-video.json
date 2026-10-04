@@ -1,0 +1,168 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/fast-animatediff/turbo/text-to-video",
+  "task": "text-to-video",
+  "source_url": "https://fal.ai/models/fal-ai/fast-animatediff/turbo/text-to-video",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Ffast-animatediff%2Fturbo%2Ftext-to-video",
+  "retrieved_at": "2026-10-04T19:43:30.624Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "text-to-video",
+  "bytes_sha256": "0e4bea910f95b5c8afb852b7e88216c010f796a4cc41368e9a0ac10b3e514a5c",
+  "queue_path": "/fal-ai/fast-animatediff/turbo/text-to-video",
+  "input_name": "FastAnimatediffTurboTextToVideoInput",
+  "input": {
+    "$refName": "FastAnimatediffTurboTextToVideoInput",
+    "properties": {
+      "num_inference_steps": {
+        "maximum": 50,
+        "description": "The number of inference steps to perform. 4-12 is recommended for turbo mode.",
+        "default": 8,
+        "minimum": 1,
+        "type": "integer"
+      },
+      "prompt": {
+        "description": "The prompt to use for generating the video. Be as descriptive as possible for best results.",
+        "type": "string",
+        "examples": [
+          "masterpiece, best quality, 1girl, solo, cherry blossoms, hanami, pink flower, white flower, spring season, wisteria, petals, flower, plum blossoms, outdoors, falling petals, white hair, black eyes",
+          "panda playing a guitar, on a boat, in the ocean, high quality, high quality, ultra HD, realistic"
+        ]
+      },
+      "seed": {
+        "description": "\n            The same seed and the same prompt given to the same version of Stable Diffusion\n            will output the same image every time.\n        ",
+        "anyOf": [
+          {
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "fps": {
+        "maximum": 16,
+        "description": "Number of frames per second to extract from the video.",
+        "default": 8,
+        "minimum": 1,
+        "type": "integer"
+      },
+      "num_frames": {
+        "maximum": 32,
+        "description": "The number of frames to generate for the video.",
+        "default": 16,
+        "minimum": 1,
+        "type": "integer"
+      },
+      "video_size": {
+        "description": "The size of the video to generate.",
+        "default": "square",
+        "anyOf": [
+          {
+            "$refName": "ImageSize",
+            "properties": {
+              "height": {
+                "maximum": 14142,
+                "description": "The height of the generated image.",
+                "default": 512,
+                "type": "integer",
+                "exclusiveMinimum": 0
+              },
+              "width": {
+                "maximum": 14142,
+                "description": "The width of the generated image.",
+                "default": 512,
+                "type": "integer",
+                "exclusiveMinimum": 0
+              }
+            },
+            "type": "object"
+          },
+          {
+            "enum": [
+              "square_hd",
+              "square",
+              "portrait_4_3",
+              "portrait_16_9",
+              "landscape_4_3",
+              "landscape_16_9"
+            ],
+            "type": "string"
+          }
+        ]
+      },
+      "negative_prompt": {
+        "description": "\n            The negative prompt to use. Use it to address details that you don't want\n            in the image. This could be colors, objects, scenery and even the small details\n            (e.g. moustache, blurry, low resolution).\n        ",
+        "default": "(bad quality, worst quality:1.2), ugly faces, bad anime",
+        "type": "string"
+      },
+      "guidance_scale": {
+        "maximum": 20,
+        "description": "The CFG (Classifier Free Guidance) scale is a measure of how close you want the model to stick to your prompt when looking for a related image to show you.",
+        "default": 2,
+        "minimum": 0,
+        "type": "number"
+      }
+    },
+    "required": [
+      "prompt"
+    ],
+    "type": "object"
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "FastAnimatediffTurboTextToVideoInput",
+    "FastAnimatediffTurboTextToVideoOutput",
+    "ImageSize",
+    "File"
+  ]
+}

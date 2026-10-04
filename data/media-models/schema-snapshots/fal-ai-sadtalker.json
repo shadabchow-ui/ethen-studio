@@ -1,0 +1,149 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/sadtalker",
+  "task": "unknown",
+  "source_url": "https://fal.ai/models/fal-ai/sadtalker",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fsadtalker",
+  "retrieved_at": "2026-10-04T19:51:19.175Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "image-to-video",
+  "bytes_sha256": "d245f69a07934962e850cc146e3d78e77f5b2a8b4f6c0bf60083389752f5a817",
+  "queue_path": "/fal-ai/sadtalker",
+  "input_name": "SadtalkerInput",
+  "input": {
+    "$refName": "SadtalkerInput",
+    "properties": {
+      "expression_scale": {
+        "default": 1,
+        "multipleOf": 0.1,
+        "description": "The scale of the expression",
+        "maximum": 3,
+        "minimum": 0,
+        "type": "number"
+      },
+      "pose_style": {
+        "default": 0,
+        "description": "The style of the pose",
+        "maximum": 45,
+        "minimum": 0,
+        "type": "integer"
+      },
+      "face_model_resolution": {
+        "default": "256",
+        "enum": [
+          "256",
+          "512"
+        ],
+        "description": "The resolution of the face model",
+        "type": "string"
+      },
+      "face_enhancer": {
+        "anyOf": [
+          {
+            "const": "gfpgan",
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "The type of face enhancer to use",
+        "examples": [
+          null
+        ]
+      },
+      "still_mode": {
+        "default": false,
+        "description": "Whether to use still mode. Fewer head motion, works with preprocess `full`.",
+        "type": "boolean"
+      },
+      "source_image_url": {
+        "description": "URL of the source image",
+        "examples": [
+          "https://storage.googleapis.com/falserverless/model_tests/sadtalker/anime_girl.png"
+        ],
+        "type": "string"
+      },
+      "preprocess": {
+        "default": "crop",
+        "enum": [
+          "crop",
+          "extcrop",
+          "resize",
+          "full",
+          "extfull"
+        ],
+        "description": "The type of preprocessing to use",
+        "type": "string"
+      },
+      "driven_audio_url": {
+        "description": "URL of the driven audio",
+        "examples": [
+          "https://storage.googleapis.com/falserverless/model_tests/sadtalker/deyu.wav"
+        ],
+        "type": "string"
+      }
+    },
+    "required": [
+      "source_image_url",
+      "driven_audio_url"
+    ],
+    "type": "object"
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "SadtalkerInput",
+    "SadtalkerOutput",
+    "File"
+  ]
+}

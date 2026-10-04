@@ -1,0 +1,169 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/magi-distilled/extend-video",
+  "task": "video-editing",
+  "source_url": "https://fal.ai/models/fal-ai/magi-distilled/extend-video",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fmagi-distilled%2Fextend-video",
+  "retrieved_at": "2026-10-04T19:49:03.945Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "video-to-video",
+  "bytes_sha256": "e8081c14868a1ed1e934f4f4053c28e10902baddf93e23feacfc54f6618d2b92",
+  "queue_path": "/fal-ai/magi-distilled/extend-video",
+  "input_name": "MagiDistilledExtendVideoInput",
+  "input": {
+    "$refName": "MagiDistilledExtendVideoInput",
+    "required": [
+      "prompt",
+      "video_url"
+    ],
+    "type": "object",
+    "properties": {
+      "start_frame": {
+        "anyOf": [
+          {
+            "minimum": 0,
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "The frame to begin the generation from, with the remaining frames will be treated as the prefix video. The final video will contain the frames up until this number unchanged, followed by the generated frames. The default start frame is 32 frames before the end of the video, which gives optimal results."
+      },
+      "video_url": {
+        "description": "URL of the input video to represent the beginning of the video. If the input video does not match the chosen aspect ratio, it is resized and center cropped.",
+        "type": "string",
+        "examples": [
+          "https://v3.fal.media/files/rabbit/lTH9PY_LQG0FjueBxMfDN_0395dec3-0c4a-4c25-8399-ebb198b73a30.mp4"
+        ]
+      },
+      "aspect_ratio": {
+        "description": "Aspect ratio of the generated video. If 'auto', the aspect ratio will be determined automatically based on the input image.",
+        "type": "string",
+        "default": "auto",
+        "enum": [
+          "auto",
+          "16:9",
+          "9:16",
+          "1:1"
+        ]
+      },
+      "prompt": {
+        "description": "The text prompt to guide video generation.",
+        "type": "string",
+        "examples": [
+          ""
+        ]
+      },
+      "num_inference_steps": {
+        "description": "Number of inference steps for sampling. Higher values give better quality but take longer.",
+        "type": "integer",
+        "default": 16,
+        "enum": [
+          4,
+          8,
+          16,
+          32
+        ]
+      },
+      "resolution": {
+        "description": "Resolution of the generated video (480p or 720p). 480p is 0.5 billing units, and 720p is 1 billing unit.",
+        "type": "string",
+        "default": "720p",
+        "enum": [
+          "480p",
+          "720p"
+        ]
+      },
+      "num_frames": {
+        "anyOf": [
+          {
+            "minimum": 96,
+            "type": "integer",
+            "maximum": 192
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "Number of frames to generate. Must be between 96 and 192 (inclusive). Each additional 24 frames beyond 96 incurs an additional billing unit.",
+        "default": 96
+      },
+      "enable_safety_checker": {
+        "description": "If set to true, the safety checker will be enabled. Disabling it requires account authorization; unauthorized requests are always checked.",
+        "type": "boolean",
+        "default": true,
+        "examples": [
+          true
+        ]
+      },
+      "seed": {
+        "anyOf": [
+          {
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "Random seed for reproducibility. If None, a random seed is chosen."
+      }
+    }
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "MagiDistilledExtendVideoInput",
+    "MagiDistilledExtendVideoOutput",
+    "File"
+  ]
+}

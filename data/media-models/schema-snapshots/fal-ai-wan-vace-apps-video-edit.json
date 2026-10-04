@@ -1,0 +1,187 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/wan-vace-apps/video-edit",
+  "task": "video-editing",
+  "source_url": "https://fal.ai/models/fal-ai/wan-vace-apps/video-edit",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fwan-vace-apps%2Fvideo-edit",
+  "retrieved_at": "2026-10-04T19:52:51.893Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "video-to-video",
+  "bytes_sha256": "728eb8a3adf5d1c9a2e6d7c3360e5e16e1750c17606f31f536de63122768e91b",
+  "queue_path": "/fal-ai/wan-vace-apps/video-edit",
+  "input_name": "WanVaceAppsVideoEditInput",
+  "input": {
+    "$refName": "WanVaceAppsVideoEditInput",
+    "properties": {
+      "acceleration": {
+        "examples": [
+          "regular"
+        ],
+        "default": "regular",
+        "description": "Acceleration to use for inference. Options are 'none' or 'regular'. Accelerated inference will very slightly affect output, but will be significantly faster.",
+        "anyOf": [
+          {
+            "enum": [
+              "none",
+              "low",
+              "regular"
+            ],
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "video_url": {
+        "examples": [
+          "https://storage.googleapis.com/falserverless/example_inputs/vace-video-edit-input.mp4"
+        ],
+        "description": "URL of the input video.",
+        "type": "string"
+      },
+      "enable_safety_checker": {
+        "default": true,
+        "description": "Whether to enable the safety checker.",
+        "type": "boolean"
+      },
+      "return_frames_zip": {
+        "default": false,
+        "description": "Whether to include a ZIP archive containing all generated frames.",
+        "type": "boolean"
+      },
+      "prompt": {
+        "examples": [
+          "replace him with a large anthropomorphic polar bear"
+        ],
+        "description": "Prompt to edit the video.",
+        "type": "string"
+      },
+      "aspect_ratio": {
+        "examples": [
+          "auto"
+        ],
+        "enum": [
+          "auto",
+          "16:9",
+          "9:16",
+          "1:1"
+        ],
+        "default": "auto",
+        "description": "Aspect ratio of the edited video.",
+        "type": "string"
+      },
+      "resolution": {
+        "examples": [
+          "auto"
+        ],
+        "enum": [
+          "auto",
+          "240p",
+          "360p",
+          "480p",
+          "580p",
+          "720p"
+        ],
+        "type": "string",
+        "default": "auto",
+        "description": "Resolution of the edited video."
+      },
+      "enable_auto_downsample": {
+        "default": true,
+        "description": "Whether to enable automatic downsampling. If your video has a high frame rate or is long, enabling longer sequences to be generated. The video will be interpolated back to the original frame rate after generation.",
+        "type": "boolean"
+      },
+      "video_type": {
+        "examples": [
+          "auto"
+        ],
+        "enum": [
+          "auto",
+          "general",
+          "human"
+        ],
+        "default": "auto",
+        "description": "The type of video you're editing. Use 'general' for most videos, and 'human' for videos emphasizing human subjects and motions. The default value 'auto' means the model will guess based on the first frame of the video.",
+        "type": "string"
+      },
+      "auto_downsample_min_fps": {
+        "type": "number",
+        "maximum": 60,
+        "default": 15,
+        "description": "The minimum frames per second to downsample the video to.",
+        "minimum": 1
+      },
+      "image_urls": {
+        "description": "URLs of the input images to use as a reference for the generation.",
+        "type": "array",
+        "default": [],
+        "items": {
+          "type": "string"
+        }
+      }
+    },
+    "required": [
+      "prompt",
+      "video_url"
+    ],
+    "type": "object"
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "WanVaceAppsVideoEditInput",
+    "WanVaceAppsVideoEditOutput",
+    "File",
+    "VideoFile"
+  ]
+}

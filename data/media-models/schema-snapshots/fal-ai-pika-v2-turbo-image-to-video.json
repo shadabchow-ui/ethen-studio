@@ -1,0 +1,121 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/pika/v2/turbo/image-to-video",
+  "task": "image-to-video",
+  "source_url": "https://fal.ai/models/fal-ai/pika/v2/turbo/image-to-video",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fpika%2Fv2%2Fturbo%2Fimage-to-video",
+  "retrieved_at": "2026-10-04T19:49:56.894Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "image-to-video",
+  "bytes_sha256": "c21d1271d96df309a0980538f3750432b73ef0ae421f4f1fab20460b8817abcd",
+  "queue_path": "/fal-ai/pika/v2/turbo/image-to-video",
+  "input_name": "PikaV2TurboImageToVideoInput",
+  "input": {
+    "$refName": "PikaV2TurboImageToVideoInput",
+    "properties": {
+      "negative_prompt": {
+        "default": "",
+        "description": "A negative prompt to guide the model",
+        "type": "string"
+      },
+      "prompt": {
+        "type": "string",
+        "examples": [
+          "Camera slow dolly out"
+        ]
+      },
+      "duration": {
+        "default": 5,
+        "description": "The duration of the generated video in seconds",
+        "type": "integer"
+      },
+      "image_url": {
+        "type": "string",
+        "examples": [
+          "https://storage.googleapis.com/falserverless/example_inputs/pika/pika_i2v_v2_turbo_input.png"
+        ]
+      },
+      "resolution": {
+        "default": "720p",
+        "description": "The resolution of the generated video",
+        "type": "string",
+        "enum": [
+          "720p",
+          "1080p"
+        ]
+      },
+      "seed": {
+        "anyOf": [
+          {
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "The seed for the random number generator"
+      }
+    },
+    "required": [
+      "prompt",
+      "image_url"
+    ],
+    "type": "object"
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "PikaV2TurboImageToVideoInput",
+    "PikaV2TurboImageToVideoOutput",
+    "File"
+  ]
+}

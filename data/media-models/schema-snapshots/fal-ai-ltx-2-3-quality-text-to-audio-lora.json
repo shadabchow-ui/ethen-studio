@@ -1,0 +1,187 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/ltx-2.3-quality/text-to-audio/lora",
+  "task": "lora-training",
+  "source_url": "https://fal.ai/models/fal-ai/ltx-2.3-quality/text-to-audio/lora",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fltx-2.3-quality%2Ftext-to-audio%2Flora",
+  "retrieved_at": "2026-10-04T19:48:23.643Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "text-to-audio",
+  "bytes_sha256": "0a414d39f6b91f37a59e07f4feef2ad56e7a29f62bd5c53eb1cb158275cecf4c",
+  "queue_path": "/fal-ai/ltx-2.3-quality/text-to-audio/lora",
+  "input_name": "Ltx23QualityTextToAudioLoraInput",
+  "input": {
+    "$refName": "Ltx23QualityTextToAudioLoraInput",
+    "type": "object",
+    "properties": {
+      "frames_per_second": {
+        "minimum": 1,
+        "type": "number",
+        "description": "Frame rate used to derive the generated audio duration.",
+        "maximum": 60,
+        "default": 24
+      },
+      "num_inference_steps": {
+        "minimum": 8,
+        "type": "integer",
+        "description": "Number of inference steps.",
+        "maximum": 30,
+        "default": 15
+      },
+      "loras": {
+        "type": "array",
+        "items": {
+          "$refName": "LoRAInput",
+          "type": "object",
+          "properties": {
+            "path": {
+              "type": "string",
+              "examples": [
+                "https://example.com/path/to/lora.safetensors"
+              ],
+              "description": "Direct HTTP(S) download URL of the LoRA file (.safetensors). The file is downloaded through an SSRF-safe downloader before it is loaded. Max size: 3 GB.",
+              "maxLength": 2048
+            },
+            "scale": {
+              "minimum": 0,
+              "type": "number",
+              "description": "Strength of the LoRA application (0.0 to 2.0). Higher values = stronger effect on the generated video.",
+              "maximum": 2,
+              "default": 1
+            },
+            "transformer": {
+              "enum": [
+                "high",
+                "low",
+                "both"
+              ],
+              "type": "string",
+              "description": "Forward-compatibility flag for multi-transformer architectures. LTX-2.3 has a single transformer, so 'both' is the right choice for almost all users.",
+              "default": "both"
+            }
+          },
+          "description": "A single LoRA to apply on top of the LTX-2.3 base model.\n\nLoaded at request time through the registry SSRF-safe downloader.",
+          "required": [
+            "path"
+          ]
+        },
+        "maxItems": 3,
+        "description": "Up to 3 LoRAs to apply on top of LTX-2.3. Each path is downloaded through the registry SSRF-safe downloader before it is loaded. Max size: 3 GB per LoRA."
+      },
+      "seed": {
+        "description": "Random seed for reproducibility. If None, a random seed is chosen.",
+        "anyOf": [
+          {
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "enable_prompt_expansion": {
+        "type": "boolean",
+        "description": "Whether to enable prompt expansion.",
+        "default": false
+      },
+      "num_frames": {
+        "minimum": 9,
+        "type": "integer",
+        "description": "The audio duration expressed in LTX video-frame units. Duration is approximately num_frames / frames_per_second seconds.",
+        "maximum": 481,
+        "default": 121
+      },
+      "sync_mode": {
+        "type": "boolean",
+        "description": "If True, the audio is returned as a data URI inline in the response. Useful for short-lived requests and tests.",
+        "default": false
+      },
+      "negative_prompt": {
+        "type": "string",
+        "description": "The negative prompt to steer generation away from.",
+        "default": "pc game, console game, video game, cartoon, childish, ugly"
+      },
+      "guidance_scale": {
+        "minimum": 1,
+        "type": "number",
+        "description": "Classifier-free guidance scale.",
+        "maximum": 20,
+        "default": 1
+      },
+      "enable_safety_checker": {
+        "type": "boolean",
+        "description": "Whether to enable the safety checker.",
+        "default": true
+      },
+      "prompt": {
+        "type": "string",
+        "examples": [
+          "A woman says: 'Oh, what a lovely day we are having!' Natural speech, clean studio audio."
+        ],
+        "description": "The prompt to generate the audio from."
+      }
+    },
+    "description": "Text-to-audio + user-supplied LoRAs.",
+    "required": [
+      "loras",
+      "prompt"
+    ]
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "Ltx23QualityTextToAudioLoraInput",
+    "Ltx23QualityTextToAudioLoraOutput",
+    "LoRAInput",
+    "File"
+  ]
+}

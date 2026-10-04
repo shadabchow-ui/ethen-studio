@@ -1,0 +1,98 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/minimax/video-01-subject-reference",
+  "task": "video-editing",
+  "source_url": "https://fal.ai/models/fal-ai/minimax/video-01-subject-reference",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fminimax%2Fvideo-01-subject-reference",
+  "retrieved_at": "2026-10-04T19:49:22.513Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "image-to-video",
+  "bytes_sha256": "bc6ec9f29eaf1fbf04b4365b30b42e7f0cad528e6a8176b583ab7c28d127f38b",
+  "queue_path": "/fal-ai/minimax/video-01-subject-reference",
+  "input_name": "MinimaxVideo01SubjectReferenceInput",
+  "input": {
+    "$refName": "MinimaxVideo01SubjectReferenceInput",
+    "required": [
+      "prompt",
+      "subject_reference_image_url"
+    ],
+    "type": "object",
+    "properties": {
+      "subject_reference_image_url": {
+        "description": "URL of the subject reference image to use for consistent subject appearance",
+        "type": "string",
+        "examples": [
+          "https://fal.media/files/tiger/s2xnjhLpjM6L8ISxlDCAw.png"
+        ]
+      },
+      "prompt_optimizer": {
+        "description": "Whether to use the model's prompt optimizer",
+        "type": "boolean",
+        "default": true
+      },
+      "prompt": {
+        "type": "string",
+        "maxLength": 2000,
+        "examples": [
+          "A stylish woman walks down a Tokyo street filled with warm glowing neon and animated city signage."
+        ]
+      }
+    }
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "MinimaxVideo01SubjectReferenceInput",
+    "MinimaxVideo01SubjectReferenceOutput",
+    "File"
+  ]
+}

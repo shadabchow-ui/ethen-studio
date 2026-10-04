@@ -1,0 +1,98 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/hunyuan-3d/v3.1/rapid/image-to-3d",
+  "task": "image-generation",
+  "source_url": "https://fal.ai/models/fal-ai/hunyuan-3d/v3.1/rapid/image-to-3d",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fhunyuan-3d%2Fv3.1%2Frapid%2Fimage-to-3d",
+  "retrieved_at": "2026-10-04T19:45:36.775Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "image-to-3d",
+  "bytes_sha256": "147b37ff227306a21f2e95b4f3726a03d924abb503a69674e55b1acaa7600679",
+  "queue_path": "/fal-ai/hunyuan-3d/v3.1/rapid/image-to-3d",
+  "input_name": "Hunyuan3dV31RapidImageTo3dInput",
+  "input": {
+    "$refName": "Hunyuan3dV31RapidImageTo3dInput",
+    "required": [
+      "input_image_url"
+    ],
+    "properties": {
+      "input_image_url": {
+        "examples": [
+          "https://v3b.fal.media/files/b/0a865ab1/omYcawLUo4RZbO8J6ZgZR.png"
+        ],
+        "type": "string",
+        "description": "Front view image URL. Resolution: 128-5000px, max 8MB (recommended ≤6MB for base64 encoding), formats: JPG/PNG/WEBP. Tips: simple background, single object, object >50% of frame.",
+        "_fal_ui_field": "image",
+        "max_file_size": 8388608
+      },
+      "enable_pbr": {
+        "default": false,
+        "type": "boolean",
+        "description": "Enable PBR material generation (metallic, roughness, normal textures). Does not take effect when enable_geometry is True."
+      },
+      "enable_geometry": {
+        "default": false,
+        "type": "boolean",
+        "description": "Generate geometry-only white model without textures. When enabled, enable_pbr is ignored and OBJ is not supported (default output is GLB)."
+      }
+    },
+    "type": "object"
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "Hunyuan3dV31RapidImageTo3dInput",
+    "Hunyuan3dV31RapidImageTo3dOutput",
+    "File",
+    "ModelUrls"
+  ]
+}

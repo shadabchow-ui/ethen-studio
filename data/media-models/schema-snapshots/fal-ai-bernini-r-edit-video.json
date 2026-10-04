@@ -1,0 +1,157 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/bernini-r/edit-video",
+  "task": "video-editing",
+  "source_url": "https://fal.ai/models/fal-ai/bernini-r/edit-video",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fbernini-r%2Fedit-video",
+  "retrieved_at": "2026-10-04T19:42:38.011Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "video-to-video",
+  "bytes_sha256": "031f06cc2ab7abc8297d6d75404b07b5b869717973467758bc2f67191e6e72a3",
+  "queue_path": "/fal-ai/bernini-r/edit-video",
+  "input_name": "BerniniREditVideoInput",
+  "input": {
+    "$refName": "BerniniREditVideoInput",
+    "required": [
+      "prompt",
+      "video_url"
+    ],
+    "type": "object",
+    "properties": {
+      "frames_per_second": {
+        "description": "Output frames per second.",
+        "type": "integer",
+        "minimum": 4,
+        "default": 16,
+        "maximum": 30
+      },
+      "negative_prompt": {
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "Negative prompt. Defaults to the standard Wan2.2 negative prompt."
+      },
+      "enable_prompt_expansion": {
+        "type": "boolean",
+        "default": false,
+        "description": "Rewrite the prompt with an LLM before generation. The model is tuned on enhanced prompts; off by default."
+      },
+      "num_frames": {
+        "description": "Number of frames. Snapped internally to 4k+1.",
+        "type": "integer",
+        "minimum": 5,
+        "default": 81,
+        "maximum": 121
+      },
+      "acceleration": {
+        "type": "string",
+        "default": "none",
+        "enum": [
+          "none",
+          "regular"
+        ],
+        "description": "Acceleration level. 'regular' enables MagCache step-skipping for faster generation at a small quality cost; 'none' (default) runs the full denoising schedule."
+      },
+      "num_inference_steps": {
+        "description": "Number of denoising steps.",
+        "type": "integer",
+        "minimum": 1,
+        "default": 30,
+        "maximum": 50
+      },
+      "video_url": {
+        "type": "string",
+        "examples": [
+          "https://storage.googleapis.com/falserverless/example_inputs/seedance_pro_i2v.mp4"
+        ],
+        "description": "Source video to edit."
+      },
+      "max_image_size": {
+        "description": "Long-edge size (px). Sets the output size for generation tasks and caps source/reference media for editing tasks.",
+        "type": "integer",
+        "minimum": 256,
+        "default": 848,
+        "maximum": 1280
+      },
+      "prompt": {
+        "type": "string",
+        "examples": [
+          "A cute corgi leaping in a sunny park, Van Gogh oil-painting style."
+        ],
+        "description": "Text prompt or editing instruction."
+      },
+      "seed": {
+        "anyOf": [
+          {
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "Seed for reproducibility. Random when omitted."
+      }
+    }
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "BerniniREditVideoInput",
+    "BerniniREditVideoOutput",
+    "File"
+  ]
+}

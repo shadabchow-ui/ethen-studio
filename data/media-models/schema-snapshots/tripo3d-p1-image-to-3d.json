@@ -1,0 +1,116 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "tripo3d/p1/image-to-3d",
+  "task": "image-generation",
+  "source_url": "https://fal.ai/models/tripo3d/p1/image-to-3d",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=tripo3d%2Fp1%2Fimage-to-3d",
+  "retrieved_at": "2026-10-04T19:55:27.690Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "image-to-3d",
+  "bytes_sha256": "b8846aca2f31cbbbc14d86ca871bcf56ced620365f65fa44ab38534b4cb39ba4",
+  "queue_path": "/tripo3d/p1/image-to-3d",
+  "input_name": "P1ImageTo3dInput",
+  "input": {
+    "$refName": "P1ImageTo3dInput",
+    "properties": {
+      "image_url": {
+        "examples": [
+          "https://v3b.fal.media/files/b/zebra/3osHJDI8IZ2wl6sGtEUeB_image.png"
+        ],
+        "description": "URL of the input image for 3D model creation.",
+        "type": "string"
+      },
+      "model_seed": {
+        "anyOf": [
+          {
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "Seed for geometry generation reproducibility."
+      },
+      "face_limit": {
+        "anyOf": [
+          {
+            "minimum": 48,
+            "type": "integer",
+            "maximum": 20000
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "Target number of faces for the generated mesh. If not set, the model adaptively determines the count."
+      },
+      "texture": {
+        "default": true,
+        "description": "Whether to generate textures for the model.",
+        "type": "boolean"
+      }
+    },
+    "required": [
+      "image_url"
+    ],
+    "type": "object",
+    "description": "Input for Image to 3D generation using the P1 model.\n\nP1 is optimized for clean low-poly mesh generation in ~2 seconds.\nIt supports a restricted parameter set compared to H3.1/v2.5."
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "P1ImageTo3dInput",
+    "P1ImageTo3dOutput",
+    "File",
+    "ModelUrls"
+  ]
+}

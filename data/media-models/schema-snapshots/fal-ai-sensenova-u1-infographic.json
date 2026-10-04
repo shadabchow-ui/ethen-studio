@@ -1,0 +1,157 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/sensenova-u1-infographic",
+  "task": "unknown",
+  "source_url": "https://fal.ai/models/fal-ai/sensenova-u1-infographic",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fsensenova-u1-infographic",
+  "retrieved_at": "2026-10-04T19:51:35.622Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "text-to-image",
+  "bytes_sha256": "512bf6ad5692017e9cb1250f602f49c3317c07fc1393cf24aad307e89e930cdb",
+  "queue_path": "/fal-ai/sensenova-u1-infographic",
+  "input_name": "SensenovaU1InfographicInput",
+  "input": {
+    "$refName": "SensenovaU1InfographicInput",
+    "required": [
+      "prompt"
+    ],
+    "type": "object",
+    "properties": {
+      "timestep_shift": {
+        "minimum": 1,
+        "default": 3,
+        "maximum": 8,
+        "type": "number",
+        "description": "Timestep shifting factor for the flow-matching sampler. Higher values bias sampling towards earlier timesteps."
+      },
+      "aspect_ratio": {
+        "default": "16:9",
+        "type": "string",
+        "enum": [
+          "1:1",
+          "16:9",
+          "9:16",
+          "3:2",
+          "2:3",
+          "4:3",
+          "3:4",
+          "1:2",
+          "2:1"
+        ],
+        "description": "Aspect ratio for the generated image. Maps to the trained resolution buckets — using ratios outside this set is not supported. Defaults to 16:9, which fits most poster / presentation-style infographics."
+      },
+      "guidance_scale": {
+        "minimum": 1,
+        "default": 4,
+        "maximum": 10,
+        "type": "number",
+        "description": "Classifier-free guidance scale. Higher values follow the prompt more strictly."
+      },
+      "prompt": {
+        "description": "Text prompt describing the infographic to generate. Detailed prompts that specify layout, sections, color palette, typography, and the data being visualized work best.",
+        "type": "string",
+        "examples": [
+          "A flat-design infographic titled 'The Lifecycle of a Tree' with five labeled stages laid out left-to-right (seed, sapling, young tree, mature tree, decomposition), soft pastel green-and-brown palette, minimal sans-serif headings, hand-drawn vector illustrations, white background, subtle drop-shadow on cards."
+        ]
+      },
+      "num_inference_steps": {
+        "minimum": 10,
+        "default": 50,
+        "maximum": 100,
+        "type": "integer",
+        "description": "Number of flow-matching denoising steps."
+      },
+      "sync_mode": {
+        "default": false,
+        "type": "boolean",
+        "description": "If True, the media will be returned as a data URI and the output data won't be available in the request history."
+      },
+      "enable_safety_checker": {
+        "default": true,
+        "type": "boolean",
+        "description": "If set to true, the safety checker will be enabled."
+      },
+      "use_thinking": {
+        "default": false,
+        "type": "boolean",
+        "description": "If True, run chain-of-thought before image generation. Improves complex-prompt fidelity but is slower and billed at 1.2x."
+      },
+      "seed": {
+        "anyOf": [
+          {
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "The same seed and the same prompt given to the same version of the model will output the same image every time."
+      },
+      "output_format": {
+        "default": "jpeg",
+        "type": "string",
+        "enum": [
+          "jpeg",
+          "png"
+        ],
+        "description": "The format of the generated image."
+      }
+    }
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "SensenovaU1InfographicInput",
+    "SensenovaU1InfographicOutput",
+    "Image"
+  ]
+}

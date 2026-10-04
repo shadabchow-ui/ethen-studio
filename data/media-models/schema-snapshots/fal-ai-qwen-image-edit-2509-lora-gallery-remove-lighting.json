@@ -1,0 +1,200 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/qwen-image-edit-2509-lora-gallery/remove-lighting",
+  "task": "image-generation",
+  "source_url": "https://fal.ai/models/fal-ai/qwen-image-edit-2509-lora-gallery/remove-lighting",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fqwen-image-edit-2509-lora-gallery%2Fremove-lighting",
+  "retrieved_at": "2026-10-04T19:50:46.647Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "image-to-image",
+  "bytes_sha256": "dbdb32f4e8ed5388f51ec94d9761d4637c1ba98e280cf983cca119ddb86bc0ba",
+  "queue_path": "/fal-ai/qwen-image-edit-2509-lora-gallery/remove-lighting",
+  "input_name": "QwenImageEdit2509LoraGalleryRemoveLightingInput",
+  "input": {
+    "$refName": "QwenImageEdit2509LoraGalleryRemoveLightingInput",
+    "required": [
+      "image_urls"
+    ],
+    "description": "Input model for Remove Lighting endpoint - Remove existing lighting and apply soft even lighting",
+    "type": "object",
+    "properties": {
+      "num_images": {
+        "minimum": 1,
+        "default": 1,
+        "type": "integer",
+        "description": "Number of images to generate",
+        "maximum": 4
+      },
+      "guidance_scale": {
+        "minimum": 0,
+        "default": 1,
+        "type": "number",
+        "description": "The CFG (Classifier Free Guidance) scale. Controls how closely the model follows the prompt.",
+        "maximum": 20
+      },
+      "acceleration": {
+        "default": "regular",
+        "type": "string",
+        "enum": [
+          "none",
+          "regular"
+        ],
+        "description": "Acceleration level for image generation. 'regular' balances speed and quality."
+      },
+      "image_urls": {
+        "description": "The URL of the image with lighting/shadows to remove.",
+        "items": {
+          "type": "string"
+        },
+        "type": "array",
+        "examples": [
+          [
+            "https://v3b.fal.media/files/b/panda/J0XyFgb0AAgyUzmVFd0nr_5363c66361d94cea89333795d700165d.png"
+          ]
+        ]
+      },
+      "num_inference_steps": {
+        "minimum": 2,
+        "default": 6,
+        "type": "integer",
+        "description": "The number of inference steps to perform.",
+        "maximum": 50
+      },
+      "sync_mode": {
+        "default": false,
+        "type": "boolean",
+        "description": "If `True`, the media will be returned as a data URI and won't be saved in history."
+      },
+      "output_format": {
+        "default": "png",
+        "type": "string",
+        "enum": [
+          "png",
+          "jpeg",
+          "webp"
+        ],
+        "description": "The format of the output image"
+      },
+      "enable_safety_checker": {
+        "default": true,
+        "type": "boolean",
+        "description": "Whether to enable the safety checker for the generated image. Disabling it requires account authorization; unauthorized requests are always checked."
+      },
+      "seed": {
+        "anyOf": [
+          {
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "Random seed for reproducibility. Same seed with same prompt will produce same result."
+      },
+      "image_size": {
+        "anyOf": [
+          {
+            "$refName": "ImageSize",
+            "type": "object",
+            "properties": {
+              "height": {
+                "maximum": 14142,
+                "default": 512,
+                "type": "integer",
+                "description": "The height of the generated image.",
+                "exclusiveMinimum": 0
+              },
+              "width": {
+                "maximum": 14142,
+                "default": 512,
+                "type": "integer",
+                "description": "The width of the generated image.",
+                "exclusiveMinimum": 0
+              }
+            }
+          },
+          {
+            "type": "string",
+            "enum": [
+              "square_hd",
+              "square",
+              "portrait_4_3",
+              "portrait_16_9",
+              "landscape_4_3",
+              "landscape_16_9"
+            ]
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "The size of the generated image. If not provided, the size of the final input image will be used."
+      },
+      "negative_prompt": {
+        "default": " ",
+        "type": "string",
+        "description": "The negative prompt for the generation",
+        "examples": [
+          " "
+        ]
+      }
+    }
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "QwenImageEdit2509LoraGalleryRemoveLightingInput",
+    "QwenImageEdit2509LoraGalleryRemoveLightingOutput",
+    "ImageSize",
+    "Image"
+  ]
+}

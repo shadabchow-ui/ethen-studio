@@ -1,0 +1,90 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/ideogram/remove-background",
+  "task": "unknown",
+  "source_url": "https://fal.ai/models/fal-ai/ideogram/remove-background",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fideogram%2Fremove-background",
+  "retrieved_at": "2026-10-04T19:45:53.204Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "image-to-image",
+  "bytes_sha256": "20a65966f81b36ab7c815f7e65f0294393156ee142e541796d1690396a7377f3",
+  "queue_path": "/fal-ai/ideogram/remove-background",
+  "input_name": "IdeogramRemoveBackgroundInput",
+  "input": {
+    "$refName": "IdeogramRemoveBackgroundInput",
+    "properties": {
+      "image_url": {
+        "description": "The image URL whose background needs to be removed. The foreground subject is preserved against a transparent background. JPEG, PNG and WebP formats are supported (maximum file size 10MB).",
+        "type": "string",
+        "examples": [
+          "https://v3.fal.media/files/rabbit/F6dvKPFL9VzKiM8asJOgm_MJj6yUB6rGjTsv_1YHIcA_image.webp"
+        ]
+      },
+      "sync_mode": {
+        "default": false,
+        "description": "If `True`, the media will be returned as a data URI and the output data won't be available in the request history.",
+        "type": "boolean"
+      }
+    },
+    "type": "object",
+    "required": [
+      "image_url"
+    ]
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "IdeogramRemoveBackgroundInput",
+    "IdeogramRemoveBackgroundOutput",
+    "File"
+  ]
+}

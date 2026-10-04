@@ -1,0 +1,161 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/ltx-video-v095/extend",
+  "task": "video-editing",
+  "source_url": "https://fal.ai/models/fal-ai/ltx-video-v095/extend",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fltx-video-v095%2Fextend",
+  "retrieved_at": "2026-10-04T19:48:36.068Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "video-to-video",
+  "bytes_sha256": "2888ea2db5fa7af29e5953bf62a93aff4ab333e190693bb7679820e2cab41ca2",
+  "queue_path": "/fal-ai/ltx-video-v095/extend",
+  "input_name": "LtxVideoV095ExtendInput",
+  "input": {
+    "$refName": "LtxVideoV095ExtendInput",
+    "properties": {
+      "aspect_ratio": {
+        "default": "16:9",
+        "enum": [
+          "9:16",
+          "16:9"
+        ],
+        "description": "Aspect ratio of the generated video (16:9 or 9:16).",
+        "type": "string"
+      },
+      "num_inference_steps": {
+        "default": 40,
+        "maximum": 50,
+        "description": "Number of inference steps",
+        "minimum": 2,
+        "type": "integer"
+      },
+      "negative_prompt": {
+        "default": "worst quality, inconsistent motion, blurry, jittery, distorted",
+        "description": "Negative prompt for generation",
+        "type": "string"
+      },
+      "video": {
+        "$refName": "VideoConditioningInput",
+        "properties": {
+          "start_frame_num": {
+            "multipleOf": 8,
+            "maximum": 120,
+            "description": "Frame number of the video from which the conditioning starts. Must be a multiple of 8.",
+            "minimum": 0,
+            "type": "integer"
+          },
+          "video_url": {
+            "description": "URL of video to be extended",
+            "type": "string"
+          }
+        },
+        "required": [
+          "video_url",
+          "start_frame_num"
+        ],
+        "type": "object",
+        "description": "Video to be extended.",
+        "examples": [
+          {
+            "start_frame_num": 24,
+            "video_url": "https://storage.googleapis.com/falserverless/web-examples/wan/t2v.mp4"
+          }
+        ]
+      },
+      "expand_prompt": {
+        "default": true,
+        "description": "Whether to expand the prompt using the model's own capabilities.",
+        "type": "boolean"
+      },
+      "prompt": {
+        "description": "Text prompt to guide generation",
+        "examples": [
+          "Woman walking on a street in Tokyo"
+        ],
+        "type": "string"
+      },
+      "resolution": {
+        "default": "720p",
+        "enum": [
+          "480p",
+          "720p"
+        ],
+        "description": "Resolution of the generated video (480p or 720p).",
+        "type": "string"
+      },
+      "seed": {
+        "anyOf": [
+          {
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "Random seed for generation"
+      }
+    },
+    "required": [
+      "prompt",
+      "video"
+    ],
+    "type": "object"
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "LtxVideoV095ExtendInput",
+    "LtxVideoV095ExtendOutput",
+    "VideoConditioningInput",
+    "File"
+  ]
+}

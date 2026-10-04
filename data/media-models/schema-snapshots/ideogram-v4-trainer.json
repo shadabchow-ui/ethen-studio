@@ -1,0 +1,120 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "ideogram/v4/trainer",
+  "task": "unknown",
+  "source_url": "https://fal.ai/models/ideogram/v4/trainer",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=ideogram%2Fv4%2Ftrainer",
+  "retrieved_at": "2026-10-04T19:53:51.189Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "training",
+  "bytes_sha256": "a1f584ab969bc3fa93a7e2309c808686f5e58613951f3a86fc45b54ba48cd99f",
+  "queue_path": "/ideogram/v4/trainer",
+  "input_name": "V4TrainerInput",
+  "input": {
+    "$refName": "V4TrainerInput",
+    "properties": {
+      "output_lora_format": {
+        "description": "Dictates the naming scheme for the output weights",
+        "enum": [
+          "fal",
+          "comfy"
+        ],
+        "type": "string",
+        "default": "fal"
+      },
+      "resolution": {
+        "description": "Training image size. Use auto to pick the largest common no-upscale crop from the dataset. Images are center-cropped without upscaling. Available presets: square 1024x1024, landscape 1536x1024, portrait 1024x1536, widescreen 1920x1088, ultrawide 2048x768, phone_wallpaper 1024x1792, social_banner 1584x400. You can also pass a custom WIDTHxHEIGHT string when both values are divisible by 16.",
+        "type": "string",
+        "default": "auto"
+      },
+      "default_caption": {
+        "description": "Caption to use when an image has no caption file. If force_default_caption is true, this caption replaces all caption files.",
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "steps": {
+        "maximum": 40000,
+        "description": "Number of LoRA training steps.",
+        "type": "integer",
+        "minimum": 100,
+        "default": 1000
+      },
+      "images_data_url": {
+        "description": "URL to a zip archive with training images and captions. The trainer uses the target-only dataset prepared by prepare_dataset_dir. Captions are read from same-stem .txt files.",
+        "type": "string"
+      },
+      "learning_rate": {
+        "maximum": 0.01,
+        "type": "number",
+        "minimum": 0.000001,
+        "default": 0.0001
+      }
+    },
+    "type": "object",
+    "required": [
+      "images_data_url"
+    ]
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "V4TrainerInput",
+    "V4TrainerOutput",
+    "File"
+  ]
+}

@@ -1,0 +1,147 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/vidu/q3/reference-to-video/mix",
+  "task": "reference-to-video",
+  "source_url": "https://fal.ai/models/fal-ai/vidu/q3/reference-to-video/mix",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fvidu%2Fq3%2Freference-to-video%2Fmix",
+  "retrieved_at": "2026-10-04T19:52:26.428Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "image-to-video",
+  "bytes_sha256": "74aec98f2eae32b07d132e31b1c500310505c5b2b3602d93fe01227d26e02ad0",
+  "queue_path": "/fal-ai/vidu/q3/reference-to-video/mix",
+  "input_name": "ViduQ3ReferenceToVideoMixInput",
+  "input": {
+    "$refName": "ViduQ3ReferenceToVideoMixInput",
+    "properties": {
+      "reference_image_urls": {
+        "examples": [
+          [
+            "https://storage.googleapis.com/falserverless/web-examples/vidu/new-examples/reference1.png",
+            "https://storage.googleapis.com/falserverless/web-examples/vidu/new-examples/reference2.png",
+            "https://storage.googleapis.com/falserverless/web-examples/vidu/new-examples/reference3.png"
+          ]
+        ],
+        "type": "array",
+        "description": "URLs of 1 to 4 reference images used to keep subjects or scenes consistent",
+        "items": {
+          "type": "string"
+        }
+      },
+      "prompt": {
+        "examples": [
+          "A character walking through a beach catching an apple."
+        ],
+        "type": "string",
+        "maxLength": 2000,
+        "description": "Text prompt for video generation, max 2000 characters"
+      },
+      "seed": {
+        "anyOf": [
+          {
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "Random seed for reproducibility. If None, a random seed is chosen."
+      },
+      "audio": {
+        "type": "boolean",
+        "description": "Whether to use direct audio-video generation. When true, outputs video with sound.",
+        "default": true
+      },
+      "aspect_ratio": {
+        "enum": [
+          "16:9",
+          "9:16",
+          "4:3",
+          "3:4",
+          "1:1"
+        ],
+        "type": "string",
+        "description": "The aspect ratio of the output video",
+        "default": "16:9"
+      },
+      "duration": {
+        "maximum": 16,
+        "type": "integer",
+        "description": "Duration of the video in seconds (1-16 for Q3 models)",
+        "minimum": 1,
+        "default": 5
+      },
+      "resolution": {
+        "enum": [
+          "360p",
+          "540p",
+          "720p",
+          "1080p"
+        ],
+        "type": "string",
+        "description": "Output video resolution",
+        "default": "720p"
+      }
+    },
+    "type": "object",
+    "required": [
+      "prompt",
+      "reference_image_urls"
+    ]
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "ViduQ3ReferenceToVideoMixInput",
+    "ViduQ3ReferenceToVideoMixOutput",
+    "File"
+  ]
+}

@@ -1,0 +1,212 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/firered-image-edit",
+  "task": "image-generation",
+  "source_url": "https://fal.ai/models/fal-ai/firered-image-edit",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Ffirered-image-edit",
+  "retrieved_at": "2026-10-04T19:43:48.443Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "image-to-image",
+  "bytes_sha256": "16f16726f7686a0e02822edf8abaa902bd89e3eec1f4ead594bf5378840ec9a5",
+  "queue_path": "/fal-ai/firered-image-edit",
+  "input_name": "FireredImageEditInput",
+  "input": {
+    "$refName": "FireredImageEditInput",
+    "required": [
+      "prompt",
+      "image_urls"
+    ],
+    "type": "object",
+    "properties": {
+      "image_size": {
+        "description": "The size of the generated image. If None, uses the input image dimensions.",
+        "anyOf": [
+          {
+            "$refName": "ImageSize",
+            "type": "object",
+            "properties": {
+              "height": {
+                "maximum": 14142,
+                "description": "The height of the generated image.",
+                "type": "integer",
+                "default": 512,
+                "exclusiveMinimum": 0
+              },
+              "width": {
+                "maximum": 14142,
+                "description": "The width of the generated image.",
+                "type": "integer",
+                "default": 512,
+                "exclusiveMinimum": 0
+              }
+            }
+          },
+          {
+            "enum": [
+              "square_hd",
+              "square",
+              "portrait_4_3",
+              "portrait_16_9",
+              "landscape_4_3",
+              "landscape_16_9"
+            ],
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "examples": [
+          {
+            "height": 768,
+            "width": 1536
+          }
+        ]
+      },
+      "prompt": {
+        "description": "The editing instruction describing what changes to make to the image. Supports both English and Chinese instructions.",
+        "type": "string",
+        "examples": [
+          "Move the whirling dervishes to this colorful room"
+        ]
+      },
+      "output_format": {
+        "description": "The format of the generated image.",
+        "enum": [
+          "jpeg",
+          "png"
+        ],
+        "type": "string",
+        "default": "png"
+      },
+      "num_images": {
+        "description": "The number of images to generate.",
+        "maximum": 4,
+        "type": "integer",
+        "default": 1,
+        "minimum": 1
+      },
+      "image_urls": {
+        "description": "The URLs of the images to edit. Supports single image editing and multi-image references (e.g., virtual try-on, style transfer from reference).",
+        "items": {
+          "_fal_ui_field": "image",
+          "type": "string"
+        },
+        "type": "array",
+        "examples": [
+          [
+            "https://v3b.fal.media/files/b/0a8ed7f7/ElaLDgkUJiEazYH90eqJ3.jpg",
+            "https://v3b.fal.media/files/b/0a8ed7f9/4keTvi5q_yV4pCIUzAyFR.jpg"
+          ]
+        ]
+      },
+      "seed": {
+        "description": "\n            The same seed and the same prompt given to the same version of the model\n            will output the same image every time.\n        ",
+        "anyOf": [
+          {
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "sync_mode": {
+        "description": "If `True`, the media will be returned as a data URI and the output data won't be available in the request history.",
+        "type": "boolean",
+        "default": false
+      },
+      "acceleration": {
+        "description": "The acceleration level to use for inference speed optimization.",
+        "enum": [
+          "none",
+          "regular",
+          "high"
+        ],
+        "type": "string",
+        "default": "regular"
+      },
+      "enable_safety_checker": {
+        "description": "If set to true, the safety checker will be enabled. Disabling it requires account authorization; unauthorized requests are always checked, and images flagged as unsafe are returned as black images.",
+        "type": "boolean",
+        "default": true
+      },
+      "negative_prompt": {
+        "description": "The negative prompt for the generation.",
+        "type": "string",
+        "default": ""
+      },
+      "guidance_scale": {
+        "description": "Classifier-free guidance scale. Higher values make the model follow the prompt more closely.",
+        "maximum": 10,
+        "type": "number",
+        "default": 4,
+        "minimum": 1
+      },
+      "num_inference_steps": {
+        "description": "The number of inference steps to perform. More steps generally produce higher quality results.",
+        "maximum": 50,
+        "type": "integer",
+        "default": 30,
+        "minimum": 2
+      }
+    }
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "FireredImageEditInput",
+    "FireredImageEditOutput",
+    "ImageSize",
+    "Image"
+  ]
+}

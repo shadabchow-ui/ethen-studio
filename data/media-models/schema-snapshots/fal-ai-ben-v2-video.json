@@ -1,0 +1,129 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/ben/v2/video",
+  "task": "video-editing",
+  "source_url": "https://fal.ai/models/fal-ai/ben/v2/video",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fben%2Fv2%2Fvideo",
+  "retrieved_at": "2026-10-04T19:42:36.766Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "video-to-video",
+  "bytes_sha256": "294f90925fee5e28dda79f023a54cc5373b45f9ffffa1878958a977306e93ef8",
+  "queue_path": "/fal-ai/ben/v2/video",
+  "input_name": "BenV2VideoInput",
+  "input": {
+    "$refName": "BenV2VideoInput",
+    "properties": {
+      "video_url": {
+        "type": "string",
+        "examples": [
+          "https://storage.googleapis.com/falserverless/gallery/Ben2/100063-video-2160.mp4"
+        ],
+        "description": "URL of video to be used for background removal."
+      },
+      "seed": {
+        "anyOf": [
+          {
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "Random seed for reproducible generation."
+      },
+      "output_format": {
+        "type": "string",
+        "default": "mp4",
+        "enum": [
+          "mp4",
+          "webm"
+        ],
+        "description": "Output video format. Use \"webm\" for true transparency support (VP9 codec with alpha channel). MP4 format does not support transparency and will render transparent areas as black."
+      },
+      "background_color": {
+        "anyOf": [
+          {
+            "prefixItems": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "integer"
+              },
+              {
+                "type": "integer"
+              }
+            ],
+            "minItems": 3,
+            "type": "array",
+            "maxItems": 3
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "Optional RGB values (0-255) for the background color. If not provided, the background will be transparent. For ex: [0, 0, 0]"
+      }
+    },
+    "required": [
+      "video_url"
+    ],
+    "type": "object"
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "BenV2VideoInput",
+    "BenV2VideoOutput",
+    "File"
+  ]
+}

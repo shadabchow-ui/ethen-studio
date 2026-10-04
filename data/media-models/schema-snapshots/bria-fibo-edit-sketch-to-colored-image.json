@@ -1,0 +1,85 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "bria/fibo-edit/sketch_to_colored_image",
+  "task": "unknown",
+  "source_url": "https://fal.ai/models/bria/fibo-edit/sketch_to_colored_image",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=bria%2Ffibo-edit%2Fsketch_to_colored_image",
+  "retrieved_at": "2026-10-04T19:41:45.067Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "image-to-image",
+  "bytes_sha256": "eb5ba1ac73f434276ad114994e910cdfe5ca97f98cbc4c40e98b3a8d58c46d37",
+  "queue_path": "/bria/fibo-edit/sketch_to_colored_image",
+  "input_name": "FiboEditSketch_to_colored_imageInput",
+  "input": {
+    "$refName": "FiboEditSketch_to_colored_imageInput",
+    "required": [
+      "image_url"
+    ],
+    "type": "object",
+    "properties": {
+      "image_url": {
+        "examples": [
+          "https://bria-datasets.s3.us-east-1.amazonaws.com/Liza/create_a_b_w_sketch_of_a_cat.png"
+        ],
+        "type": "string",
+        "description": "The source image."
+      }
+    }
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "FiboEditSketch_to_colored_imageInput",
+    "FiboEditSketch_to_colored_imageOutput",
+    "Image"
+  ]
+}

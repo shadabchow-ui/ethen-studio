@@ -1,0 +1,175 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/cat-vton",
+  "task": "unknown",
+  "source_url": "https://fal.ai/models/fal-ai/cat-vton",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fcat-vton",
+  "retrieved_at": "2026-10-04T19:43:00.878Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "image-to-image",
+  "bytes_sha256": "a94d24b45ec538002b0da3c0524b2aea73dd589e231ea9224e07df2b0dcc13b6",
+  "queue_path": "/fal-ai/cat-vton",
+  "input_name": "CatVtonInput",
+  "input": {
+    "$refName": "CatVtonInput",
+    "properties": {
+      "seed": {
+        "anyOf": [
+          {
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "\n            The same seed and the same input given to the same version of the model\n            will output the same image every time.\n        "
+      },
+      "garment_image_url": {
+        "description": "Url to the garment image.",
+        "type": "string",
+        "examples": [
+          "https://storage.googleapis.com/falserverless/catvton/tshirt.jpg"
+        ]
+      },
+      "num_inference_steps": {
+        "default": 30,
+        "minimum": 1,
+        "maximum": 50,
+        "description": "The number of inference steps to perform.",
+        "type": "integer"
+      },
+      "guidance_scale": {
+        "default": 2.5,
+        "minimum": 0,
+        "maximum": 20,
+        "description": "\n            The CFG (Classifier Free Guidance) scale is a measure of how close you want\n            the model to stick to your prompt when looking for a related image to show you.\n        ",
+        "type": "number"
+      },
+      "image_size": {
+        "anyOf": [
+          {
+            "$refName": "ImageSize",
+            "properties": {
+              "width": {
+                "default": 512,
+                "maximum": 14142,
+                "exclusiveMinimum": 0,
+                "type": "integer",
+                "description": "The width of the generated image."
+              },
+              "height": {
+                "default": 512,
+                "maximum": 14142,
+                "exclusiveMinimum": 0,
+                "type": "integer",
+                "description": "The height of the generated image."
+              }
+            },
+            "type": "object"
+          },
+          {
+            "type": "string",
+            "enum": [
+              "square_hd",
+              "square",
+              "portrait_4_3",
+              "portrait_16_9",
+              "landscape_4_3",
+              "landscape_16_9"
+            ]
+          }
+        ],
+        "default": "portrait_4_3",
+        "description": "The size of the generated image."
+      },
+      "human_image_url": {
+        "description": "Url for the human image.",
+        "type": "string",
+        "examples": [
+          "https://storage.googleapis.com/falserverless/catvton/man5.jpg"
+        ]
+      },
+      "cloth_type": {
+        "description": "\n        Type of the Cloth to be tried on.\n\n        Options:\n        upper: Upper body cloth\n        lower: Lower body cloth\n        overall: Full body cloth\n        inner: Inner cloth, like T-shirt inside a jacket\n        outer: Outer cloth, like a jacket over a T-shirt\n        ",
+        "type": "string",
+        "enum": [
+          "upper",
+          "lower",
+          "overall",
+          "inner",
+          "outer"
+        ],
+        "examples": [
+          "upper",
+          "lower",
+          "overall",
+          "inner",
+          "outer"
+        ]
+      }
+    },
+    "required": [
+      "human_image_url",
+      "garment_image_url",
+      "cloth_type"
+    ],
+    "type": "object"
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "CatVtonInput",
+    "CatVtonOutput",
+    "ImageSize",
+    "Image"
+  ]
+}

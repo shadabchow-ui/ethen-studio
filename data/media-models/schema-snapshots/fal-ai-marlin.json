@@ -1,0 +1,122 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/marlin",
+  "task": "unknown",
+  "source_url": "https://fal.ai/models/fal-ai/marlin",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fmarlin",
+  "retrieved_at": "2026-10-04T19:49:04.887Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "vision",
+  "bytes_sha256": "cd879239a8bb6296d32ffb4480af13e893ad813c8537e3e439d2611bbecdaa31",
+  "queue_path": "/fal-ai/marlin",
+  "input_name": "MarlinInput",
+  "input": {
+    "$refName": "MarlinInput",
+    "required": [
+      "video_url",
+      "prompt"
+    ],
+    "properties": {
+      "prompt": {
+        "examples": [
+          "Provide a spatial description of this clip followed by time-ranged events.\nFor each event, give the time range as <start - end> and a short description."
+        ],
+        "description": "Caption prompt sent to the model. The example value is Marlin's canonical training prompt — overriding usually degrades output quality.",
+        "maxLength": 2000,
+        "type": "string"
+      },
+      "video_url": {
+        "max_file_size": 524288000,
+        "_fal_ui_field": "video",
+        "examples": [
+          "https://v3b.fal.media/files/b/0a913346/ZbEaRKcU1dMNYkHl9g1Zz_T4QEyOJ3R3WzuQS9.mp4"
+        ],
+        "description": "URL of the video to caption. Up to ~2 minutes is supported.",
+        "type": "string"
+      },
+      "max_tokens": {
+        "minimum": 64,
+        "maximum": 4096,
+        "default": 2048,
+        "description": "Maximum number of tokens to generate for the caption.",
+        "type": "integer"
+      },
+      "top_p": {
+        "exclusiveMinimum": 0,
+        "default": 1,
+        "description": "Nucleus sampling threshold. Only used when do_sample is true.",
+        "maximum": 1,
+        "type": "number"
+      },
+      "do_sample": {
+        "default": false,
+        "description": "If true, sample with temperature/top_p; if false, use greedy decoding.",
+        "type": "boolean"
+      },
+      "temperature": {
+        "minimum": 0,
+        "maximum": 2,
+        "default": 1,
+        "description": "Sampling temperature. Only used when do_sample is true.",
+        "type": "number"
+      }
+    },
+    "type": "object"
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "MarlinInput",
+    "MarlinOutput",
+    "EventSegment"
+  ]
+}

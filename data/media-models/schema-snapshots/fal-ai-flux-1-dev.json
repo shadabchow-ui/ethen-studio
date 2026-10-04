@@ -1,0 +1,184 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/flux-1/dev",
+  "task": "unknown",
+  "source_url": "https://fal.ai/models/fal-ai/flux-1/dev",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fflux-1%2Fdev",
+  "retrieved_at": "2026-10-04T19:43:58.875Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "text-to-image",
+  "bytes_sha256": "b1c406cd94eafcd333cfe254dd75ff8b6a29e4e20fe3d8cf96d58592146dcea1",
+  "queue_path": "/fal-ai/flux-1/dev",
+  "input_name": "Flux1DevInput",
+  "input": {
+    "$refName": "Flux1DevInput",
+    "properties": {
+      "image_size": {
+        "description": "The size of the generated image.",
+        "anyOf": [
+          {
+            "$refName": "ImageSize",
+            "properties": {
+              "height": {
+                "description": "The height of the generated image.",
+                "exclusiveMinimum": 0,
+                "type": "integer",
+                "maximum": 14142,
+                "default": 512
+              },
+              "width": {
+                "description": "The width of the generated image.",
+                "exclusiveMinimum": 0,
+                "type": "integer",
+                "maximum": 14142,
+                "default": 512
+              }
+            },
+            "type": "object"
+          },
+          {
+            "enum": [
+              "square_hd",
+              "square",
+              "portrait_4_3",
+              "portrait_16_9",
+              "landscape_4_3",
+              "landscape_16_9"
+            ],
+            "type": "string"
+          }
+        ],
+        "default": "landscape_4_3"
+      },
+      "seed": {
+        "description": "\n        The same seed and the same prompt given to the same version of the model\n        will output the same image every time.\n    ",
+        "anyOf": [
+          {
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "prompt": {
+        "description": "The prompt to generate an image from.",
+        "type": "string",
+        "examples": [
+          "Extreme close-up of a single tiger eye, direct frontal view. Detailed iris and pupil. Sharp focus on eye texture and color. Natural lighting to capture authentic eye shine and depth. The word \"FLUX\" is painted over it in big, white brush strokes with visible texture."
+        ]
+      },
+      "output_format": {
+        "enum": [
+          "jpeg",
+          "png"
+        ],
+        "description": "The format of the generated image.",
+        "type": "string",
+        "default": "jpeg"
+      },
+      "enable_safety_checker": {
+        "description": "If set to true, the safety checker will be enabled. Disabling it requires account authorization; unauthorized requests are always checked, and images flagged as unsafe are returned as black images.",
+        "type": "boolean",
+        "default": true
+      },
+      "num_inference_steps": {
+        "description": "The number of inference steps to perform.",
+        "type": "integer",
+        "maximum": 50,
+        "minimum": 1,
+        "default": 28
+      },
+      "sync_mode": {
+        "description": "If `True`, the media will be returned as a data URI and the output data won't be available in the request history.",
+        "type": "boolean",
+        "default": false
+      },
+      "num_images": {
+        "description": "The number of images to generate.",
+        "type": "integer",
+        "maximum": 4,
+        "minimum": 1,
+        "default": 1
+      },
+      "acceleration": {
+        "enum": [
+          "none",
+          "regular",
+          "high"
+        ],
+        "description": "The speed of the generation. The higher the speed, the faster the generation.",
+        "type": "string",
+        "default": "none"
+      },
+      "guidance_scale": {
+        "description": "\n        The CFG (Classifier Free Guidance) scale is a measure of how close you want\n        the model to stick to your prompt when looking for a related image to show you.\n    ",
+        "type": "number",
+        "maximum": 20,
+        "minimum": 1,
+        "default": 3.5
+      }
+    },
+    "type": "object",
+    "required": [
+      "prompt"
+    ]
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "Flux1DevInput",
+    "Flux1DevOutput",
+    "ImageSize",
+    "Image"
+  ]
+}

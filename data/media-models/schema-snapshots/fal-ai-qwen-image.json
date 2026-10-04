@@ -1,0 +1,230 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/qwen-image",
+  "task": "image-generation",
+  "source_url": "https://fal.ai/models/fal-ai/qwen-image",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fqwen-image",
+  "retrieved_at": "2026-10-04T19:50:35.220Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "text-to-image",
+  "bytes_sha256": "5963e9e3432a9e2d6ec61b8dc9e3ee2742698f68375d9f823e3420ea2899854b",
+  "queue_path": "/fal-ai/qwen-image",
+  "input_name": "QwenImageInput",
+  "input": {
+    "$refName": "QwenImageInput",
+    "required": [
+      "prompt"
+    ],
+    "type": "object",
+    "properties": {
+      "num_images": {
+        "minimum": 1,
+        "description": "The number of images to generate.",
+        "type": "integer",
+        "maximum": 4,
+        "default": 1
+      },
+      "acceleration": {
+        "examples": [
+          "none"
+        ],
+        "description": "Acceleration level for image generation. Options: 'none', 'regular', 'high'. Higher acceleration increases speed. 'regular' balances speed and quality. 'high' is recommended for images without text.",
+        "type": "string",
+        "enum": [
+          "none",
+          "regular",
+          "high"
+        ],
+        "default": "none"
+      },
+      "guidance_scale": {
+        "minimum": 0,
+        "description": "\n            The CFG (Classifier Free Guidance) scale is a measure of how close you want\n            the model to stick to your prompt when looking for a related image to show you.\n        ",
+        "type": "number",
+        "maximum": 20,
+        "default": 2.5
+      },
+      "prompt": {
+        "description": "The prompt to generate the image with",
+        "type": "string",
+        "examples": [
+          "Mount Fuji with cherry blossoms in the foreground, clear sky, peaceful spring day, soft natural light, realistic landscape."
+        ]
+      },
+      "sync_mode": {
+        "description": "If `True`, the media will be returned as a data URI and the output data won't be available in the request history.",
+        "type": "boolean",
+        "default": false
+      },
+      "loras": {
+        "examples": [],
+        "type": "array",
+        "description": "\n            The LoRAs to use for the image generation. You can use up to 3 LoRAs\n            and they will be merged together to generate the final image.\n        ",
+        "items": {
+          "$refName": "LoraWeight",
+          "required": [
+            "path"
+          ],
+          "type": "object",
+          "properties": {
+            "path": {
+              "description": "URL or the path to the LoRA weights.",
+              "type": "string"
+            },
+            "scale": {
+              "minimum": 0,
+              "description": "\n            The scale of the LoRA weight. This is used to scale the LoRA weight\n            before merging it with the base model.\n        ",
+              "type": "number",
+              "maximum": 4,
+              "default": 1
+            }
+          }
+        },
+        "default": []
+      },
+      "num_inference_steps": {
+        "minimum": 2,
+        "description": "The number of inference steps to perform.",
+        "type": "integer",
+        "maximum": 250,
+        "default": 30
+      },
+      "enable_safety_checker": {
+        "description": "If set to true, the safety checker will be enabled. Disabling it requires account authorization; unauthorized requests are always checked, and images flagged as unsafe are returned as black images.",
+        "type": "boolean",
+        "default": true
+      },
+      "output_format": {
+        "description": "The format of the generated image.",
+        "type": "string",
+        "enum": [
+          "jpeg",
+          "png"
+        ],
+        "default": "png"
+      },
+      "seed": {
+        "anyOf": [
+          {
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "\n            The same seed and the same prompt given to the same version of the model\n            will output the same image every time.\n        "
+      },
+      "use_turbo": {
+        "type": "boolean",
+        "description": "Enable turbo mode for faster generation with high quality. When enabled, uses optimized settings (10 steps, CFG=1.2).",
+        "default": false,
+        "examples": [
+          true
+        ]
+      },
+      "image_size": {
+        "anyOf": [
+          {
+            "$refName": "ImageSize",
+            "type": "object",
+            "properties": {
+              "height": {
+                "default": 512,
+                "description": "The height of the generated image.",
+                "type": "integer",
+                "maximum": 14142,
+                "exclusiveMinimum": 0
+              },
+              "width": {
+                "default": 512,
+                "description": "The width of the generated image.",
+                "type": "integer",
+                "maximum": 14142,
+                "exclusiveMinimum": 0
+              }
+            }
+          },
+          {
+            "type": "string",
+            "enum": [
+              "square_hd",
+              "square",
+              "portrait_4_3",
+              "portrait_16_9",
+              "landscape_4_3",
+              "landscape_16_9"
+            ]
+          }
+        ],
+        "description": "The size of the generated image.",
+        "default": "landscape_4_3"
+      },
+      "negative_prompt": {
+        "description": "The negative prompt for the generation",
+        "type": "string",
+        "default": " ",
+        "examples": [
+          "blurry, ugly"
+        ]
+      }
+    }
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "QwenImageInput",
+    "QwenImageOutput",
+    "LoraWeight",
+    "ImageSize",
+    "Image"
+  ]
+}

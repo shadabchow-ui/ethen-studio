@@ -1,0 +1,321 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/fast-sdxl-controlnet-canny/image-to-image",
+  "task": "image-to-image",
+  "source_url": "https://fal.ai/models/fal-ai/fast-sdxl-controlnet-canny/image-to-image",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Ffast-sdxl-controlnet-canny%2Fimage-to-image",
+  "retrieved_at": "2026-10-04T19:43:36.711Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "image-to-image",
+  "bytes_sha256": "e555de68696e6e9fa75cfebd604d52b92a581c7d4c615e560271429280bee6b9",
+  "queue_path": "/fal-ai/fast-sdxl-controlnet-canny/image-to-image",
+  "input_name": "FastSdxlControlnetCannyImageToImageInput",
+  "input": {
+    "$refName": "FastSdxlControlnetCannyImageToImageInput",
+    "properties": {
+      "safety_checker_version": {
+        "default": "v1",
+        "type": "string",
+        "description": "The version of the safety checker to use. v1 is the default CompVis safety checker. v2 uses a custom ViT model.",
+        "enum": [
+          "v1",
+          "v2"
+        ]
+      },
+      "image_size": {
+        "anyOf": [
+          {
+            "$refName": "ImageSize",
+            "properties": {
+              "height": {
+                "exclusiveMinimum": 0,
+                "type": "integer",
+                "description": "The height of the generated image.",
+                "maximum": 14142,
+                "default": 512
+              },
+              "width": {
+                "exclusiveMinimum": 0,
+                "type": "integer",
+                "description": "The width of the generated image.",
+                "maximum": 14142,
+                "default": 512
+              }
+            },
+            "type": "object"
+          },
+          {
+            "type": "string",
+            "enum": [
+              "square_hd",
+              "square",
+              "portrait_4_3",
+              "portrait_16_9",
+              "landscape_4_3",
+              "landscape_16_9"
+            ]
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "examples": [
+          null
+        ],
+        "description": "The size of the generated image. Leave it none to automatically infer from the control image.",
+        "default": null
+      },
+      "crop_output": {
+        "type": "boolean",
+        "description": "\n        If set to true, the output cropped to the proper aspect ratio after generating.\n        ",
+        "default": false
+      },
+      "control_image_url": {
+        "examples": [
+          "https://fal-cdn.batuhan-941.workers.dev/files/rabbit/MiN_j3St9B8esJleCZKMU.jpeg"
+        ],
+        "type": "string",
+        "description": "The URL of the control image."
+      },
+      "enable_safety_checker": {
+        "type": "boolean",
+        "description": "If set to true, the safety checker will be enabled.",
+        "default": true
+      },
+      "image_url": {
+        "examples": [
+          "https://fal-cdn.batuhan-941.workers.dev/files/tiger/IExuP-WICqaIesLZAZPur.jpeg"
+        ],
+        "type": "string",
+        "description": "The URL of the image to use as a starting point for the generation."
+      },
+      "strength": {
+        "minimum": 0.05,
+        "type": "number",
+        "description": "determines how much the generated image resembles the initial image",
+        "maximum": 1,
+        "default": 0.95
+      },
+      "seed": {
+        "anyOf": [
+          {
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "\n            The same seed and the same prompt given to the same version of Stable Diffusion\n            will output the same image every time.\n        ",
+        "default": null
+      },
+      "expand_prompt": {
+        "type": "boolean",
+        "description": "If set to true, the prompt will be expanded with additional prompts.",
+        "default": false
+      },
+      "num_images": {
+        "minimum": 1,
+        "type": "integer",
+        "description": "The number of images to generate.",
+        "maximum": 8,
+        "default": 1
+      },
+      "negative_prompt": {
+        "examples": [
+          "cartoon, illustration, animation. face. male, female"
+        ],
+        "type": "string",
+        "description": "\n            The negative prompt to use.Use it to address details that you don't want\n            in the image. This could be colors, objects, scenery and even the small details\n            (e.g. moustache, blurry, low resolution).\n        ",
+        "default": ""
+      },
+      "guidance_scale": {
+        "minimum": 0,
+        "type": "number",
+        "description": "\n            The CFG (Classifier Free Guidance) scale is a measure of how close you want\n            the model to stick to your prompt when looking for a related image to show you.\n        ",
+        "maximum": 20,
+        "default": 7.5
+      },
+      "format": {
+        "default": "jpeg",
+        "type": "string",
+        "description": "The format of the generated image.",
+        "enum": [
+          "jpeg",
+          "png"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "\n            An id bound to a request, can be used with response to identify the request\n            itself.\n        ",
+        "default": ""
+      },
+      "embeddings": {
+        "items": {
+          "$refName": "Embedding",
+          "properties": {
+            "path": {
+              "examples": [
+                "https://civitai.com/api/download/models/135931",
+                "https://filebin.net/3chfqasxpqu21y8n/my-custom-lora-v1.safetensors"
+              ],
+              "type": "string",
+              "description": "URL or the path to the embedding weights."
+            },
+            "tokens": {
+              "anyOf": [
+                {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "\n            The list of tokens to use for the embedding. When omitted, tokens\n            are generated as <s0>, <s1>, ... to match the number of vectors in\n            the embedding file.\n        ",
+              "default": null
+            }
+          },
+          "type": "object",
+          "required": [
+            "path"
+          ]
+        },
+        "type": "array",
+        "description": "The list of embeddings to use.",
+        "default": []
+      },
+      "controlnet_conditioning_scale": {
+        "minimum": 0,
+        "type": "number",
+        "description": "The scale of the controlnet conditioning.",
+        "maximum": 1,
+        "default": 0.5
+      },
+      "loras": {
+        "items": {
+          "$refName": "LoraWeight",
+          "properties": {
+            "force": {
+              "type": "boolean",
+              "description": "If set to true, the embedding will be forced to be used.",
+              "default": false
+            },
+            "path": {
+              "examples": [
+                "https://civitai.com/api/download/models/135931",
+                "https://filebin.net/3chfqasxpqu21y8n/my-custom-lora-v1.safetensors"
+              ],
+              "type": "string",
+              "description": "URL or path to a LoRA safetensors file. Or HF model name that resolves to safetensors weights."
+            },
+            "scale": {
+              "minimum": 0,
+              "type": "number",
+              "description": "\n            The scale of the LoRA weight. This is used to scale the LoRA weight\n            before merging it with the base model.\n        ",
+              "maximum": 1,
+              "default": 1
+            }
+          },
+          "type": "object",
+          "required": [
+            "path"
+          ]
+        },
+        "type": "array",
+        "description": "The list of LoRA weights to use.",
+        "default": []
+      },
+      "preserve_aspect_ratio": {
+        "type": "boolean",
+        "description": "\n        If set to true, the aspect ratio of the generated image will be preserved even\n        if the image size is too large. However, if the image is not a multiple of 32\n        in width or height, it will be resized to the nearest multiple of 32. By default,\n        this snapping to the nearest multiple of 32 will not preserve the aspect ratio.\n        Set crop_output to True, to crop the output to the proper aspect ratio\n        after generating.\n        ",
+        "default": false
+      },
+      "prompt": {
+        "examples": [
+          "Ice fortress, aurora skies, polar wildlife, twilight"
+        ],
+        "type": "string",
+        "description": "The prompt to use for generating the image. Be as descriptive as possible for best results."
+      },
+      "sync_mode": {
+        "type": "boolean",
+        "description": "If `True`, the media will be returned as a data URI and the output data won't be available in the request history.",
+        "default": false
+      },
+      "num_inference_steps": {
+        "minimum": 1,
+        "type": "integer",
+        "description": "The number of inference steps to perform.",
+        "maximum": 70,
+        "default": 35
+      }
+    },
+    "type": "object",
+    "required": [
+      "image_url",
+      "prompt",
+      "control_image_url"
+    ]
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "FastSdxlControlnetCannyImageToImageInput",
+    "FastSdxlControlnetCannyImageToImageOutput",
+    "ImageSize",
+    "Embedding",
+    "LoraWeight",
+    "Image"
+  ]
+}

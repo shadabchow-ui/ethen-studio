@@ -1,0 +1,241 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "ideogram/v4/image-to-image/lora",
+  "task": "image-to-image",
+  "source_url": "https://fal.ai/models/ideogram/v4/image-to-image/lora",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=ideogram%2Fv4%2Fimage-to-image%2Flora",
+  "retrieved_at": "2026-10-04T19:53:45.290Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "image-to-image",
+  "bytes_sha256": "0b2be0fb8dcf6cc9257b17e3eade5678c3962b94042c76e4ed6a1956c967e1c5",
+  "queue_path": "/ideogram/v4/image-to-image/lora",
+  "input_name": "V4ImageToImageLoraInput",
+  "input": {
+    "$refName": "V4ImageToImageLoraInput",
+    "properties": {
+      "acceleration": {
+        "examples": [
+          "none"
+        ],
+        "enum": [
+          "none",
+          "low",
+          "regular",
+          "high"
+        ],
+        "default": "none",
+        "type": "string",
+        "description": "The acceleration level to use for the image generation."
+      },
+      "strength": {
+        "maximum": 1,
+        "default": 0.8,
+        "type": "number",
+        "description": "How much to transform the input image. 1.0 ignores the input image entirely; lower values stay closer to it.",
+        "minimum": 0
+      },
+      "expansion_model": {
+        "examples": [
+          "Large"
+        ],
+        "enum": [
+          "None",
+          "Medium",
+          "Large"
+        ],
+        "default": "Medium",
+        "type": "string",
+        "description": "Which model expands the prompt. 'None' disables prompt expansion and skips its fee; 'Medium' is fast; 'Large' uses Ideogram's Magic Prompt for the highest quality."
+      },
+      "rendering_speed": {
+        "enum": [
+          "TURBO",
+          "BALANCED",
+          "QUALITY"
+        ],
+        "default": "BALANCED",
+        "type": "string",
+        "description": "The rendering speed to use. Faster speeds use fewer denoising steps."
+      },
+      "enable_safety_checker": {
+        "default": true,
+        "type": "boolean",
+        "description": "If set to true, the safety checker will be enabled. Disabling it requires account authorization; unauthorized requests are always checked."
+      },
+      "seed": {
+        "description": "The seed to use for generation. If not provided, a random seed will be used.",
+        "anyOf": [
+          {
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "sync_mode": {
+        "default": false,
+        "type": "boolean",
+        "description": "If `True`, the image is returned as a data URI and is not stored."
+      },
+      "image_url": {
+        "examples": [
+          "https://storage.googleapis.com/falserverless/model_tests/svd/rocket.png"
+        ],
+        "type": "string",
+        "description": "URL of the input image for image-to-image generation."
+      },
+      "num_images": {
+        "maximum": 4,
+        "default": 1,
+        "type": "integer",
+        "description": "Number of images to generate.",
+        "minimum": 1
+      },
+      "prompt": {
+        "examples": [
+          "A red panda perched on a mossy branch in a misty forest at sunrise"
+        ],
+        "type": "string",
+        "description": "The prompt to generate an image from."
+      },
+      "output_format": {
+        "enum": [
+          "jpeg",
+          "png"
+        ],
+        "default": "jpeg",
+        "type": "string",
+        "description": "The format of the generated image."
+      },
+      "loras": {
+        "description": "List of LoRA weights to apply (maximum 3).",
+        "maxItems": 3,
+        "default": [],
+        "type": "array",
+        "items": {
+          "$refName": "LoRAInput",
+          "properties": {
+            "path": {
+              "type": "string",
+              "description": "URL to an Ideogram V4 LoRA weights file (.safetensors)."
+            },
+            "scale": {
+              "maximum": 4,
+              "default": 1,
+              "type": "number",
+              "description": "Scale factor for the LoRA weights.",
+              "minimum": 0
+            }
+          },
+          "required": [
+            "path"
+          ],
+          "type": "object",
+          "description": "A single LoRA weight to apply."
+        }
+      },
+      "image_size": {
+        "default": "auto",
+        "description": "The output image size. Use 'auto' to match the input image size (capped at ~25MP, up to 8192px per side).",
+        "anyOf": [
+          {
+            "$refName": "ImageSize",
+            "properties": {
+              "width": {
+                "exclusiveMinimum": 0,
+                "maximum": 14142,
+                "default": 512,
+                "type": "integer",
+                "description": "The width of the generated image."
+              },
+              "height": {
+                "exclusiveMinimum": 0,
+                "maximum": 14142,
+                "default": 512,
+                "type": "integer",
+                "description": "The height of the generated image."
+              }
+            },
+            "type": "object"
+          },
+          {
+            "enum": [
+              "square_hd",
+              "square",
+              "portrait_4_3",
+              "portrait_16_9",
+              "landscape_4_3",
+              "landscape_16_9",
+              "auto"
+            ],
+            "type": "string"
+          }
+        ]
+      }
+    },
+    "required": [
+      "prompt",
+      "image_url"
+    ],
+    "type": "object"
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "V4ImageToImageLoraInput",
+    "V4ImageToImageLoraOutput",
+    "LoRAInput",
+    "ImageSize",
+    "ImageFile"
+  ]
+}

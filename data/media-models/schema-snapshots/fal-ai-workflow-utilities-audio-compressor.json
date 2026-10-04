@@ -1,0 +1,140 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/workflow-utilities/audio-compressor",
+  "task": "unknown",
+  "source_url": "https://fal.ai/models/fal-ai/workflow-utilities/audio-compressor",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fworkflow-utilities%2Faudio-compressor",
+  "retrieved_at": "2026-10-04T19:53:13.343Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "audio-to-audio",
+  "bytes_sha256": "20e8eb8ba1da04a20dc96c37486af04ba982526393ceb9d1a15043271ee0f69f",
+  "queue_path": "/fal-ai/workflow-utilities/audio-compressor",
+  "input_name": "WorkflowUtilitiesAudioCompressorInput",
+  "input": {
+    "$refName": "WorkflowUtilitiesAudioCompressorInput",
+    "description": "Input model for audio dynamic range compression",
+    "properties": {
+      "audio_url": {
+        "description": "URL of the audio file to compress",
+        "type": "string",
+        "examples": [
+          "https://v3.fal.media/files/panda/1-0iezBUIePBa3Sz5YY5B_tmpy1jyshw9.wav"
+        ],
+        "max_file_size": 60000000
+      },
+      "makeup": {
+        "maximum": 64,
+        "description": "Makeup gain in dB to compensate for volume reduction",
+        "type": "number",
+        "minimum": 0,
+        "default": 8
+      },
+      "release": {
+        "maximum": 9000,
+        "description": "Release time in milliseconds (how fast compression stops)",
+        "type": "number",
+        "minimum": 0.01,
+        "default": 50
+      },
+      "attack": {
+        "maximum": 2000,
+        "description": "Attack time in milliseconds (how fast compression starts)",
+        "type": "number",
+        "minimum": 0.01,
+        "default": 5
+      },
+      "knee": {
+        "maximum": 8,
+        "description": "Knee width in dB for soft knee compression (0 = hard knee)",
+        "type": "number",
+        "minimum": 1,
+        "default": 2.83
+      },
+      "threshold": {
+        "maximum": 0,
+        "description": "Threshold level in dB above which compression is applied (-60 to 0)",
+        "type": "number",
+        "minimum": -60,
+        "default": -18
+      },
+      "output_bitrate": {
+        "description": "Output audio bitrate",
+        "enum": [
+          "128k",
+          "192k",
+          "256k",
+          "320k"
+        ],
+        "type": "string",
+        "default": "192k"
+      },
+      "ratio": {
+        "maximum": 20,
+        "description": "Compression ratio (1 = no compression, higher = more compression)",
+        "type": "number",
+        "minimum": 1,
+        "default": 3
+      }
+    },
+    "type": "object",
+    "required": [
+      "audio_url"
+    ]
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "WorkflowUtilitiesAudioCompressorInput",
+    "WorkflowUtilitiesAudioCompressorOutput",
+    "AudioFile"
+  ]
+}

@@ -1,0 +1,122 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/omnilottie/image-to-lottie",
+  "task": "image-generation",
+  "source_url": "https://fal.ai/models/fal-ai/omnilottie/image-to-lottie",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fomnilottie%2Fimage-to-lottie",
+  "retrieved_at": "2026-10-04T19:49:42.638Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "json",
+  "bytes_sha256": "09536be620ed699ac4ab8efef107da8189c8679a1a4b47602fcb96c871bfa016",
+  "queue_path": "/fal-ai/omnilottie/image-to-lottie",
+  "input_name": "OmnilottieImageToLottieInput",
+  "input": {
+    "$refName": "OmnilottieImageToLottieInput",
+    "properties": {
+      "prompt": {
+        "maxLength": 2000,
+        "description": "Text description guiding the animation of the image.",
+        "type": "string",
+        "examples": [
+          "A cyan-colored, elongated shape resembling a smiley face, consisting of two pink oval eyes with navy blue circular pupils positioned symmetrically. The shape rotates gradually around its horizontal axis, revealing small animated sparklesâpink and tealâthat appear sporadically near the eyes, enhancing the dynamic visual effect."
+        ]
+      },
+      "temperature": {
+        "description": "Sampling temperature for generation.",
+        "minimum": 0,
+        "default": 0.9,
+        "maximum": 2,
+        "type": "number"
+      },
+      "image_url": {
+        "description": "URL of the reference image to animate.",
+        "type": "string",
+        "examples": [
+          "https://storage.googleapis.com/falserverless/gallery/00de75e2c031cb3fc3f472e356aba5b6.png"
+        ]
+      },
+      "max_tokens": {
+        "description": "Maximum number of Lottie tokens to generate.",
+        "minimum": 256,
+        "default": 4096,
+        "maximum": 8192,
+        "type": "integer"
+      },
+      "top_p": {
+        "description": "Nucleus sampling probability threshold.",
+        "minimum": 0,
+        "default": 0.25,
+        "maximum": 1,
+        "type": "number"
+      },
+      "top_k": {
+        "description": "Top-k sampling parameter.",
+        "minimum": 1,
+        "default": 5,
+        "maximum": 100,
+        "type": "integer"
+      }
+    },
+    "required": [
+      "prompt",
+      "image_url"
+    ],
+    "type": "object"
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "OmnilottieImageToLottieInput",
+    "OmnilottieImageToLottieOutput",
+    "File"
+  ]
+}

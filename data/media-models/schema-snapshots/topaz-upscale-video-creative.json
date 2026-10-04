@@ -1,0 +1,155 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "topaz/upscale/video/creative",
+  "task": "image-editing",
+  "source_url": "https://fal.ai/models/topaz/upscale/video/creative",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=topaz%2Fupscale%2Fvideo%2Fcreative",
+  "retrieved_at": "2026-10-04T19:55:23.226Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "video-to-video",
+  "bytes_sha256": "59038e71b1712c53c5f5fb74c3254394419c9068e3ce431a343aed08935871bb",
+  "queue_path": "/topaz/upscale/video/creative",
+  "input_name": "UpscaleVideoCreativeInput",
+  "input": {
+    "$refName": "UpscaleVideoCreativeInput",
+    "properties": {
+      "creativity": {
+        "minimum": 0,
+        "type": "number",
+        "description": "How much new detail and texture Astra 2 invents. 0.0 stays faithful to the source, 1.0 is maximally creative.",
+        "maximum": 1,
+        "default": 0.5
+      },
+      "realism": {
+        "anyOf": [
+          {
+            "type": "number",
+            "maximum": 1,
+            "minimum": 0
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "Bias generated detail toward photorealism (0.0-1.0)."
+      },
+      "H264_output": {
+        "type": "boolean",
+        "description": "Whether to use H264 codec for output video. Default is H265.",
+        "default": false
+      },
+      "upscale_factor": {
+        "minimum": 1,
+        "type": "number",
+        "description": "Requested upscale factor (e.g. 2.0 doubles width and height). Note: Astra 2 snaps to its own supported output resolutions (typically 4K when upscaling) and may override the requested target. Billing is based on the delivered resolution.",
+        "maximum": 4,
+        "default": 2
+      },
+      "target_fps": {
+        "anyOf": [
+          {
+            "type": "integer",
+            "maximum": 60,
+            "minimum": 16
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "Target FPS for the output. Frame interpolation is enabled only when this differs from the source FPS."
+      },
+      "sharp": {
+        "anyOf": [
+          {
+            "type": "number",
+            "maximum": 1,
+            "minimum": 0
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "Output sharpness. 0.0 softens, 0.5 is neutral passthrough, 1.0 applies strong sharpening. Defaults to Topaz's neutral 0.5."
+      },
+      "prompt": {
+        "anyOf": [
+          {
+            "maxLength": 1024,
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "Optional text prompt guiding the detail Astra 2 generates. When set, the input video is limited to 450 frames."
+      },
+      "video_url": {
+        "examples": [
+          "https://v3.fal.media/files/kangaroo/y5-1YTGpun17eSeggZMzX_video-1733468228.mp4"
+        ],
+        "type": "string",
+        "description": "URL of the video to upscale"
+      }
+    },
+    "type": "object",
+    "required": [
+      "video_url"
+    ]
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "UpscaleVideoCreativeInput",
+    "UpscaleVideoCreativeOutput",
+    "File"
+  ]
+}

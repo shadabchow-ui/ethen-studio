@@ -1,0 +1,197 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/sam2/image",
+  "task": "image-generation",
+  "source_url": "https://fal.ai/models/fal-ai/sam2/image",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fsam2%2Fimage",
+  "retrieved_at": "2026-10-04T19:51:28.357Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "image-to-image",
+  "bytes_sha256": "be96995befa7c48ed586b1edf7f12406b9a1ae81c2cf313fad96a0c5f3295a7d",
+  "queue_path": "/fal-ai/sam2/image",
+  "input_name": "Sam2ImageInput",
+  "input": {
+    "$refName": "Sam2ImageInput",
+    "properties": {
+      "prompts": {
+        "description": "List of prompts to segment the image",
+        "items": {
+          "$refName": "PointPrompt",
+          "type": "object",
+          "properties": {
+            "label": {
+              "description": "Label of the prompt. 1 for foreground, 0 for background",
+              "enum": [
+                0,
+                1
+              ],
+              "type": "integer",
+              "default": 1
+            },
+            "x": {
+              "description": "X Coordinate of the prompt",
+              "type": "integer",
+              "default": 305
+            },
+            "frame_index": {
+              "description": "The frame index to interact with.",
+              "type": "integer",
+              "default": 0
+            },
+            "y": {
+              "description": "Y Coordinate of the prompt",
+              "type": "integer",
+              "default": 350
+            }
+          }
+        },
+        "type": "array",
+        "default": [],
+        "examples": [
+          [
+            {
+              "label": 1,
+              "x": 500,
+              "y": 375
+            }
+          ]
+        ]
+      },
+      "output_format": {
+        "description": "The format of the generated image.",
+        "enum": [
+          "jpeg",
+          "png",
+          "webp"
+        ],
+        "type": "string",
+        "default": "png"
+      },
+      "image_url": {
+        "description": "URL of the image to be segmented",
+        "type": "string",
+        "examples": [
+          "https://raw.githubusercontent.com/facebookresearch/segment-anything-2/main/notebooks/images/truck.jpg"
+        ]
+      },
+      "apply_mask": {
+        "description": "Apply the mask on the image.",
+        "type": "boolean",
+        "default": false
+      },
+      "box_prompts": {
+        "description": "Coordinates for boxes",
+        "items": {
+          "$refName": "BoxPrompt",
+          "type": "object",
+          "properties": {
+            "frame_index": {
+              "description": "The frame index to interact with.",
+              "type": "integer",
+              "default": 0
+            },
+            "y_min": {
+              "description": "Y Min Coordinate of the box",
+              "type": "integer",
+              "default": 0
+            },
+            "y_max": {
+              "description": "Y Max Coordinate of the prompt",
+              "type": "integer",
+              "default": 0
+            },
+            "x_min": {
+              "description": "X Min Coordinate of the box",
+              "type": "integer",
+              "default": 0
+            },
+            "x_max": {
+              "description": "X Max Coordinate of the prompt",
+              "type": "integer",
+              "default": 0
+            }
+          }
+        },
+        "type": "array",
+        "default": [],
+        "examples": [
+          [
+            {
+              "y_min": 600,
+              "y_max": 875,
+              "x_min": 425,
+              "x_max": 700
+            }
+          ]
+        ]
+      },
+      "sync_mode": {
+        "description": "If `True`, the media will be returned as a data URI and the output data won't be available in the request history.",
+        "type": "boolean",
+        "default": false
+      }
+    },
+    "type": "object",
+    "required": [
+      "image_url"
+    ]
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "Sam2ImageInput",
+    "Sam2ImageOutput",
+    "PointPrompt",
+    "BoxPrompt",
+    "Image"
+  ]
+}

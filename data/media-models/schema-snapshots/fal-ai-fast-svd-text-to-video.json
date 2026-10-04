@@ -1,0 +1,179 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/fast-svd/text-to-video",
+  "task": "text-to-video",
+  "source_url": "https://fal.ai/models/fal-ai/fast-svd/text-to-video",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Ffast-svd%2Ftext-to-video",
+  "retrieved_at": "2026-10-04T19:43:39.875Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "text-to-video",
+  "bytes_sha256": "94c156fd323c318efb4fe695d245609cd2338baa5d3035d9a8153c1381e68386",
+  "queue_path": "/fal-ai/fast-svd/text-to-video",
+  "input_name": "FastSvdTextToVideoInput",
+  "input": {
+    "$refName": "FastSvdTextToVideoInput",
+    "properties": {
+      "steps": {
+        "default": 20,
+        "maximum": 100,
+        "description": "\n            The number of steps to run the model for. The higher the number the better\n            the quality and longer it will take to generate.\n        ",
+        "minimum": 1,
+        "type": "integer"
+      },
+      "negative_prompt": {
+        "default": "unrealistic, saturated, high contrast, big nose, painting, drawing, sketch, cartoon, anime, manga, render, CG, 3d, watermark, signature, label",
+        "description": "The negative prompt to use as a starting point for the generation.",
+        "type": "string"
+      },
+      "motion_bucket_id": {
+        "default": 127,
+        "maximum": 255,
+        "description": "\n            The motion bucket id determines the motion of the generated video. The\n            higher the number, the more motion there will be.\n        ",
+        "minimum": 1,
+        "type": "integer"
+      },
+      "fps": {
+        "default": 10,
+        "maximum": 25,
+        "description": "\n            The FPS of the generated video. The higher the number, the faster the video will\n            play. Total video length is 25 frames.\n        ",
+        "minimum": 1,
+        "type": "integer"
+      },
+      "prompt": {
+        "description": "The prompt to use as a starting point for the generation.",
+        "examples": [
+          "A rocket flying that is about to take off"
+        ],
+        "type": "string"
+      },
+      "video_size": {
+        "anyOf": [
+          {
+            "$refName": "ImageSize",
+            "properties": {
+              "height": {
+                "default": 512,
+                "maximum": 14142,
+                "exclusiveMinimum": 0,
+                "description": "The height of the generated image.",
+                "type": "integer"
+              },
+              "width": {
+                "default": 512,
+                "maximum": 14142,
+                "exclusiveMinimum": 0,
+                "description": "The width of the generated image.",
+                "type": "integer"
+              }
+            },
+            "type": "object"
+          },
+          {
+            "enum": [
+              "square_hd",
+              "square",
+              "portrait_4_3",
+              "portrait_16_9",
+              "landscape_4_3",
+              "landscape_16_9"
+            ],
+            "type": "string"
+          }
+        ],
+        "description": "The size of the generated video.",
+        "default": "landscape_16_9"
+      },
+      "deep_cache": {
+        "default": "none",
+        "deprecated": true,
+        "description": "\n            This parameter is deprecated and has no effect. It is kept for backwards\n            compatibility.\n        ",
+        "enum": [
+          "none",
+          "minimum",
+          "medium",
+          "high"
+        ],
+        "type": "string"
+      },
+      "cond_aug": {
+        "default": 0.02,
+        "maximum": 10,
+        "description": "\n            The conditoning augmentation determines the amount of noise that will be\n            added to the conditioning frame. The higher the number, the more noise\n            there will be, and the less the video will look like the initial image.\n            Increase it for more motion.\n        ",
+        "minimum": 0,
+        "type": "number"
+      },
+      "seed": {
+        "anyOf": [
+          {
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "\n            The same seed and the same prompt given to the same version of Stable Diffusion\n            will output the same image every time.\n        "
+      }
+    },
+    "required": [
+      "prompt"
+    ],
+    "type": "object"
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "FastSvdTextToVideoInput",
+    "FastSvdTextToVideoOutput",
+    "ImageSize",
+    "File"
+  ]
+}

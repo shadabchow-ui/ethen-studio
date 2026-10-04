@@ -1,0 +1,192 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/pixverse/v5.6/transition",
+  "task": "unknown",
+  "source_url": "https://fal.ai/models/fal-ai/pixverse/v5.6/transition",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fpixverse%2Fv5.6%2Ftransition",
+  "retrieved_at": "2026-10-04T19:50:19.745Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "image-to-video",
+  "bytes_sha256": "bca741299faa42d859c1c826b69c33e7be7a5d9933983848000bf77c5c3f5d3b",
+  "queue_path": "/fal-ai/pixverse/v5.6/transition",
+  "input_name": "PixverseV56TransitionInput",
+  "input": {
+    "$refName": "PixverseV56TransitionInput",
+    "properties": {
+      "end_image_url": {
+        "examples": [
+          "https://v3.fal.media/files/kangaroo/RgedFs_WSnq5BgER7qDx1_ONrbTJ1YAGXz-9JnSsBoB_bdc8750387734bfe940319f469f7b0b2.jpg"
+        ],
+        "type": "string",
+        "description": "URL of the image to use as the last frame"
+      },
+      "seed": {
+        "description": "\n            The same seed and the same prompt given to the same version of the model\n            will output the same video every time.\n        ",
+        "anyOf": [
+          {
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "resolution": {
+        "enum": [
+          "360p",
+          "540p",
+          "720p",
+          "1080p"
+        ],
+        "default": "720p",
+        "description": "The resolution of the generated video",
+        "type": "string"
+      },
+      "generate_audio_switch": {
+        "type": "boolean",
+        "default": false,
+        "description": "Enable audio generation (BGM, SFX, dialogue)"
+      },
+      "first_image_url": {
+        "examples": [
+          "https://v3.fal.media/files/zebra/owQh2DAzk8UU7J02nr5RY_Co2P4boLv6meIZ5t9gKvL_8685da151df343ab8bf82165c928e2a5.jpg"
+        ],
+        "description": "URL of the image to use as the first frame",
+        "type": "string"
+      },
+      "style": {
+        "description": "The style of the generated video",
+        "anyOf": [
+          {
+            "enum": [
+              "anime",
+              "3d_animation",
+              "clay",
+              "comic",
+              "cyberpunk"
+            ],
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "thinking_type": {
+        "description": "Prompt optimization mode: 'enabled' to optimize, 'disabled' to turn off, 'auto' for model decision",
+        "anyOf": [
+          {
+            "enum": [
+              "enabled",
+              "disabled",
+              "auto"
+            ],
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "aspect_ratio": {
+        "enum": [
+          "16:9",
+          "4:3",
+          "1:1",
+          "3:4",
+          "9:16"
+        ],
+        "default": "16:9",
+        "description": "The aspect ratio of the generated video",
+        "type": "string"
+      },
+      "negative_prompt": {
+        "examples": [
+          "blurry, low quality, low resolution, pixelated, noisy, grainy, out of focus, poorly lit, poorly exposed, poorly composed, poorly framed, poorly cropped, poorly color corrected, poorly color graded"
+        ],
+        "default": "",
+        "description": "Negative prompt to be used for the generation. Limited to 2048 UTF-8 encoded bytes. Because the limit counts bytes rather than characters, emoji and non-Latin or accented characters (which use multiple bytes each) can push a visually short prompt over the cap.",
+        "type": "string"
+      },
+      "duration": {
+        "enum": [
+          "5",
+          "8",
+          "10"
+        ],
+        "default": "5",
+        "description": "The duration of the generated video in seconds. 1080p videos are limited to 5 or 8 seconds",
+        "type": "string"
+      },
+      "prompt": {
+        "examples": [
+          "Scene slowly transition into cat swimming under water"
+        ],
+        "description": "The prompt for the transition. Limited to 2048 UTF-8 encoded bytes. Because the limit counts bytes rather than characters, emoji and non-Latin or accented characters (which use multiple bytes each) can push a visually short prompt over the cap.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "prompt",
+      "first_image_url",
+      "end_image_url"
+    ],
+    "type": "object"
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "PixverseV56TransitionInput",
+    "PixverseV56TransitionOutput",
+    "File"
+  ]
+}

@@ -1,0 +1,351 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/stable-diffusion-v35-large",
+  "task": "unknown",
+  "source_url": "https://fal.ai/models/fal-ai/stable-diffusion-v35-large",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fstable-diffusion-v35-large",
+  "retrieved_at": "2026-10-04T19:51:51.831Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "text-to-image",
+  "bytes_sha256": "4777733f1f55d89a42526bc72b3a66983a466f2938cc1ab6bf0756905946134a",
+  "queue_path": "/fal-ai/stable-diffusion-v35-large",
+  "input_name": "StableDiffusionV35LargeInput",
+  "input": {
+    "$refName": "StableDiffusionV35LargeInput",
+    "properties": {
+      "loras": {
+        "description": "\n            The LoRAs to use for the image generation. You can use any number of LoRAs\n            and they will be merged together to generate the final image.\n        ",
+        "default": [],
+        "items": {
+          "$refName": "LoraWeight",
+          "properties": {
+            "path": {
+              "description": "URL or the path to the LoRA weights.",
+              "type": "string"
+            },
+            "scale": {
+              "maximum": 4,
+              "description": "\n            The scale of the LoRA weight. This is used to scale the LoRA weight\n            before merging it with the base model.\n        ",
+              "minimum": 0,
+              "default": 1,
+              "type": "number"
+            }
+          },
+          "required": [
+            "path"
+          ],
+          "type": "object"
+        },
+        "type": "array",
+        "examples": []
+      },
+      "num_inference_steps": {
+        "maximum": 50,
+        "description": "The number of inference steps to perform.",
+        "minimum": 1,
+        "default": 28,
+        "type": "integer"
+      },
+      "sync_mode": {
+        "description": "If `True`, the media will be returned as a data URI and the output data won't be available in the request history.",
+        "default": false,
+        "type": "boolean"
+      },
+      "image_size": {
+        "description": "The size of the generated image. Defaults to landscape_4_3 if no controlnet has been passed, otherwise defaults to the size of the controlnet conditioning image.",
+        "anyOf": [
+          {
+            "$refName": "ImageSize",
+            "properties": {
+              "height": {
+                "maximum": 14142,
+                "description": "The height of the generated image.",
+                "default": 512,
+                "type": "integer",
+                "exclusiveMinimum": 0
+              },
+              "width": {
+                "maximum": 14142,
+                "description": "The width of the generated image.",
+                "default": 512,
+                "type": "integer",
+                "exclusiveMinimum": 0
+              }
+            },
+            "type": "object"
+          },
+          {
+            "enum": [
+              "square_hd",
+              "square",
+              "portrait_4_3",
+              "portrait_16_9",
+              "landscape_4_3",
+              "landscape_16_9"
+            ],
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "num_images": {
+        "maximum": 4,
+        "description": "The number of images to generate.",
+        "minimum": 1,
+        "default": 1,
+        "type": "integer"
+      },
+      "prompt": {
+        "description": "The prompt to generate an image from.",
+        "type": "string",
+        "examples": [
+          "A dreamlike Japanese garden in perpetual twilight, bathed in bioluminescent cherry blossoms that emit a soft pink-purple glow. Floating paper lanterns drift lazily through the scene, their warm light creating dancing reflections in a mirror-like koi pond. Ethereal mist weaves between ancient stone pathways lined with glowing mushrooms in pastel blues and purples. A traditional wooden bridge arches gracefully over the water, dusted with fallen petals that sparkle like stardust. The scene is captured through a cinematic lens with perfect bokeh, creating an otherworldly atmosphere. In the background, a crescent moon hangs impossibly large in the sky, surrounded by a sea of stars and auroral wisps in teal and violet. Crystal formations emerge from the ground, refracting the ambient light into rainbow prisms. The entire composition follows the golden ratio, with moody film-like color grading reminiscent of Studio Ghibli, enhanced by volumetric god rays filtering through the luminous foliage. 8K resolution, masterful photography, hyperdetailed, magical realism."
+        ]
+      },
+      "seed": {
+        "description": "\n            The same seed and the same prompt given to the same version of the model\n            will output the same image every time.\n        ",
+        "anyOf": [
+          {
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "ip_adapter": {
+        "description": "\n            IP-Adapter to use during inference.\n        ",
+        "anyOf": [
+          {
+            "$refName": "IPAdapter",
+            "properties": {
+              "mask_threshold": {
+                "maximum": 0.99,
+                "description": "Threshold for mask.",
+                "minimum": 0.01,
+                "default": 0.5,
+                "type": "number"
+              },
+              "weight_name": {
+                "description": "Name of the safetensors file containing the ip-adapter weights",
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "image_url": {
+                "description": "URL of Image for IP-Adapter conditioning. ",
+                "type": "string"
+              },
+              "image_encoder_path": {
+                "description": "Path to the Image Encoder for the IP-Adapter, for example 'openai/clip-vit-large-patch14'",
+                "type": "string"
+              },
+              "image_encoder_subfolder": {
+                "description": "Subfolder in which the image encoder weights exist.",
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "subfolder": {
+                "description": "Subfolder in which the ip_adapter weights exist",
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "path": {
+                "description": "Hugging Face path to the IP-Adapter",
+                "type": "string"
+              },
+              "image_encoder_weight_name": {
+                "description": "Name of the image encoder.",
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "scale": {
+                "description": "Scale for ip adapter.",
+                "type": "number"
+              },
+              "mask_image_url": {
+                "description": "URL of the mask for the control image.",
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              }
+            },
+            "required": [
+              "path",
+              "image_encoder_path",
+              "image_url",
+              "scale"
+            ],
+            "type": "object"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "negative_prompt": {
+        "description": "\n            The negative prompt to use. Use it to address details that you don't want\n            in the image. This could be colors, objects, scenery and even the small details\n            (e.g. moustache, blurry, low resolution).\n        ",
+        "default": "",
+        "type": "string",
+        "examples": [
+          ""
+        ]
+      },
+      "enable_safety_checker": {
+        "description": "If set to true, the safety checker will be enabled. Disabling it requires account authorization; unauthorized requests are always checked, and images flagged as unsafe are returned as black images.",
+        "default": true,
+        "type": "boolean"
+      },
+      "output_format": {
+        "description": "The format of the generated image.",
+        "enum": [
+          "jpeg",
+          "png"
+        ],
+        "default": "jpeg",
+        "type": "string"
+      },
+      "guidance_scale": {
+        "maximum": 20,
+        "description": "\n            The CFG (Classifier Free Guidance) scale is a measure of how close you want\n            the model to stick to your prompt when looking for a related image to show you.\n        ",
+        "minimum": 0,
+        "default": 3.5,
+        "type": "number"
+      },
+      "controlnet": {
+        "$refName": "ControlNet",
+        "properties": {
+          "control_image_url": {
+            "description": "URL of the image to be used as the control image.",
+            "type": "string"
+          },
+          "end_percentage": {
+            "maximum": 1,
+            "description": "\n            The percentage of the image to end applying the controlnet in terms of the total timesteps.\n        ",
+            "minimum": 0,
+            "default": 1,
+            "type": "number"
+          },
+          "path": {
+            "description": "URL or the path to the control net weights.",
+            "type": "string"
+          },
+          "conditioning_scale": {
+            "maximum": 2,
+            "description": "\n            The scale of the control net weight. This is used to scale the control net weight\n            before merging it with the base model.\n        ",
+            "minimum": 0,
+            "default": 1,
+            "type": "number"
+          },
+          "start_percentage": {
+            "maximum": 1,
+            "description": "\n            The percentage of the image to start applying the controlnet in terms of the total timesteps.\n        ",
+            "minimum": 0,
+            "default": 0,
+            "type": "number"
+          }
+        },
+        "required": [
+          "path",
+          "control_image_url"
+        ],
+        "type": "object",
+        "description": "\n            ControlNet for inference.\n        "
+      }
+    },
+    "required": [
+      "prompt"
+    ],
+    "type": "object"
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "StableDiffusionV35LargeInput",
+    "StableDiffusionV35LargeOutput",
+    "LoraWeight",
+    "ImageSize",
+    "IPAdapter",
+    "ControlNet",
+    "Image"
+  ]
+}

@@ -1,0 +1,139 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/birefnet/v2",
+  "task": "unknown",
+  "source_url": "https://fal.ai/models/fal-ai/birefnet/v2",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fbirefnet%2Fv2",
+  "retrieved_at": "2026-10-04T19:42:41.118Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "image-to-image",
+  "bytes_sha256": "dd31918e9a3f12e02ff15bf6ff17d3b8696d6e6ecf4f3ecf665339819ec269dd",
+  "queue_path": "/fal-ai/birefnet/v2",
+  "input_name": "BirefnetV2Input",
+  "input": {
+    "$refName": "BirefnetV2Input",
+    "properties": {
+      "refine_foreground": {
+        "default": true,
+        "type": "boolean",
+        "description": "Whether to refine the foreground using the estimated mask"
+      },
+      "model": {
+        "enum": [
+          "General Use (Light)",
+          "General Use (Light 2K)",
+          "General Use (Heavy)",
+          "Matting",
+          "Portrait",
+          "General Use (Dynamic)"
+        ],
+        "default": "General Use (Light)",
+        "type": "string",
+        "description": "\n            Model to use for background removal.\n            The 'General Use (Light)' model is the original model used in the BiRefNet repository.\n            The 'General Use (Light 2K)' model is the original model used in the BiRefNet repository but trained with 2K images.\n            The 'General Use (Heavy)' model is a slower but more accurate model.\n            The 'Matting' model is a model trained specifically for matting images.\n            The 'Portrait' model is a model trained specifically for portrait images.\n            The 'General Use (Dynamic)' model supports dynamic resolutions from 256x256 to 2304x2304.\n            The 'General Use (Light)' model is recommended for most use cases.\n\n            The corresponding models are as follows:\n            - 'General Use (Light)': BiRefNet\n            - 'General Use (Light 2K)': BiRefNet_lite-2K\n            - 'General Use (Heavy)': BiRefNet_lite\n            - 'Matting': BiRefNet-matting\n            - 'Portrait': BiRefNet-portrait\n            - 'General Use (Dynamic)': BiRefNet_dynamic\n        "
+      },
+      "sync_mode": {
+        "default": false,
+        "type": "boolean",
+        "description": "If `True`, the media will be returned as a data URI and the output data won't be available in the request history."
+      },
+      "image_url": {
+        "examples": [
+          "https://storage.googleapis.com/falserverless/example_inputs/birefnet-input.jpeg"
+        ],
+        "description": "URL of the image to remove background from",
+        "type": "string",
+        "_fal_ui_field": "image"
+      },
+      "output_mask": {
+        "default": false,
+        "type": "boolean",
+        "description": "Whether to output the mask used to remove the background"
+      },
+      "output_format": {
+        "enum": [
+          "webp",
+          "png",
+          "gif"
+        ],
+        "default": "png",
+        "type": "string",
+        "description": "The format of the output image"
+      },
+      "mask_only": {
+        "default": false,
+        "type": "boolean",
+        "description": "Whether to return only the segmentation mask without applying it to the image. When set to `True`, only the mask will be returned and foreground refinement will be skipped. Useful for reducing computation and data transfer when only the mask is needed."
+      },
+      "operating_resolution": {
+        "enum": [
+          "1024x1024",
+          "2048x2048",
+          "2304x2304"
+        ],
+        "default": "1024x1024",
+        "type": "string",
+        "description": "The resolution to operate on. The higher the resolution, the more accurate the output will be for high res input images. The '2304x2304' option is only available for the 'General Use (Dynamic)' model."
+      }
+    },
+    "required": [
+      "image_url"
+    ],
+    "type": "object"
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "BirefnetV2Input",
+    "BirefnetV2Output",
+    "ImageFile"
+  ]
+}

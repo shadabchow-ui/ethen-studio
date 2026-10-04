@@ -1,0 +1,202 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/wan/v2.2-a14b/image-to-video/turbo",
+  "task": "image-to-video",
+  "source_url": "https://fal.ai/models/fal-ai/wan/v2.2-a14b/image-to-video/turbo",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fwan%2Fv2.2-a14b%2Fimage-to-video%2Fturbo",
+  "retrieved_at": "2026-10-04T19:53:00.841Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "image-to-video",
+  "bytes_sha256": "289fbb10c0657e92d449968d6f3d94054ed29301fbf90fb6a7d75ad7330b6c41",
+  "queue_path": "/fal-ai/wan/v2.2-a14b/image-to-video/turbo",
+  "input_name": "WanV22A14bImageToVideoTurboInput",
+  "input": {
+    "$refName": "WanV22A14bImageToVideoTurboInput",
+    "required": [
+      "prompt",
+      "image_url"
+    ],
+    "properties": {
+      "acceleration": {
+        "examples": [
+          "regular"
+        ],
+        "enum": [
+          "none",
+          "regular"
+        ],
+        "default": "regular",
+        "type": "string",
+        "description": "Acceleration level to use. The more acceleration, the faster the generation, but with lower quality. The recommended value is 'regular'."
+      },
+      "video_write_mode": {
+        "examples": [
+          "balanced"
+        ],
+        "enum": [
+          "fast",
+          "balanced",
+          "small"
+        ],
+        "default": "balanced",
+        "type": "string",
+        "description": "The write mode of the output video. Faster write mode means faster results but larger file size, balanced write mode is a good compromise between speed and quality, and small write mode is the slowest but produces the smallest file size."
+      },
+      "enable_safety_checker": {
+        "examples": [
+          true
+        ],
+        "default": false,
+        "type": "boolean",
+        "description": "If set to true, input data will be checked for safety before processing. Disabling it requires account authorization; unauthorized requests are always checked."
+      },
+      "video_quality": {
+        "examples": [
+          "high"
+        ],
+        "enum": [
+          "low",
+          "medium",
+          "high",
+          "maximum"
+        ],
+        "default": "high",
+        "type": "string",
+        "description": "The quality of the output video. Higher quality means better visual quality but larger file size."
+      },
+      "seed": {
+        "description": "Random seed for reproducibility. If None, a random seed is chosen.",
+        "anyOf": [
+          {
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "image_url": {
+        "examples": [
+          "https://storage.googleapis.com/falserverless/model_tests/wan/dragon-warrior.jpg"
+        ],
+        "type": "string",
+        "description": "URL of the input image. If the input image does not match the chosen aspect ratio, it is resized and center cropped."
+      },
+      "resolution": {
+        "examples": [
+          "720p"
+        ],
+        "enum": [
+          "480p",
+          "580p",
+          "720p"
+        ],
+        "default": "720p",
+        "type": "string",
+        "description": "Resolution of the generated video (480p, 580p, or 720p)."
+      },
+      "aspect_ratio": {
+        "enum": [
+          "auto",
+          "16:9",
+          "9:16",
+          "1:1"
+        ],
+        "default": "auto",
+        "type": "string",
+        "description": "Aspect ratio of the generated video. If 'auto', the aspect ratio will be determined automatically based on the input image."
+      },
+      "enable_output_safety_checker": {
+        "examples": [
+          false
+        ],
+        "default": false,
+        "type": "boolean",
+        "description": "If set to true, output video will be checked for safety after generation."
+      },
+      "end_image_url": {
+        "description": "URL of the end image.",
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "prompt": {
+        "examples": [
+          "The white dragon warrior stands still, eyes full of determination and strength. The camera slowly moves closer or circles around the warrior, highlighting the powerful presence and heroic spirit of the character."
+        ],
+        "type": "string",
+        "description": "The text prompt to guide video generation."
+      },
+      "enable_prompt_expansion": {
+        "examples": [
+          false
+        ],
+        "default": false,
+        "type": "boolean",
+        "description": "Whether to enable prompt expansion. This will use a large language model to expand the prompt with additional details while maintaining the original meaning."
+      }
+    },
+    "type": "object"
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "WanV22A14bImageToVideoTurboInput",
+    "WanV22A14bImageToVideoTurboOutput",
+    "File"
+  ]
+}

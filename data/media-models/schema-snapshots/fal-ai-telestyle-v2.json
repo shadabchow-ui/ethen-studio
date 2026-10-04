@@ -1,0 +1,233 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/telestyle-v2",
+  "task": "unknown",
+  "source_url": "https://fal.ai/models/fal-ai/telestyle-v2",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Ftelestyle-v2",
+  "retrieved_at": "2026-10-04T19:51:58.131Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "image-to-image",
+  "bytes_sha256": "7b2f9fcc58d4dd73abfeb193d60b1964faa687e9d211a10ff93692befbfc7cd7",
+  "queue_path": "/fal-ai/telestyle-v2",
+  "input_name": "TelestyleV2Input",
+  "input": {
+    "$refName": "TelestyleV2Input",
+    "properties": {
+      "style_image_url": {
+        "type": "string",
+        "examples": [
+          "https://v3.fal.media/files/penguin/BCOZp6teRhSQFuOXpbBOa_da8ef9b4982347a2a62a516b737d4f21.png"
+        ],
+        "description": "URL of the style reference image — the artistic style, material, lighting and color of this image are transferred onto the content image."
+      },
+      "enable_safety_checker": {
+        "type": "boolean",
+        "default": true,
+        "description": "If set to true, the safety checker will be enabled."
+      },
+      "lightning_lora_scale": {
+        "maximum": 4,
+        "type": "number",
+        "default": 1,
+        "minimum": 0,
+        "description": "Strength of the Lightning LoRA. 1.0 matches the reference implementation; lower values apply the style more subtly."
+      },
+      "seed": {
+        "anyOf": [
+          {
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "The same seed and the same inputs given to the same version of the model will output the same image every time."
+      },
+      "use_style_description": {
+        "type": "boolean",
+        "default": true,
+        "description": "If true, describe the style image with a VLM and add the description to the prompt."
+      },
+      "use_content_description": {
+        "type": "boolean",
+        "default": true,
+        "description": "If true, describe the content image with a VLM and add the description to the prompt."
+      },
+      "acceleration": {
+        "type": "string",
+        "default": "none",
+        "enum": [
+          "none",
+          "regular"
+        ],
+        "description": "Acceleration level for image generation. 'none' (the default) honors the requested num_inference_steps, so the default 4-step Lightning configuration runs in 4 steps. 'regular' engages the downstream accelerated path, which runs a fixed 10 steps regardless of num_inference_steps.",
+        "examples": [
+          "none"
+        ]
+      },
+      "image_size": {
+        "anyOf": [
+          {
+            "$refName": "ImageSize",
+            "properties": {
+              "height": {
+                "maximum": 14142,
+                "exclusiveMinimum": 0,
+                "default": 512,
+                "type": "integer",
+                "description": "The height of the generated image."
+              },
+              "width": {
+                "maximum": 14142,
+                "exclusiveMinimum": 0,
+                "default": 512,
+                "type": "integer",
+                "description": "The width of the generated image."
+              }
+            },
+            "type": "object"
+          },
+          {
+            "type": "string",
+            "enum": [
+              "square_hd",
+              "square",
+              "portrait_4_3",
+              "portrait_16_9",
+              "landscape_4_3",
+              "landscape_16_9"
+            ]
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "The size of the generated image. If not provided, the size of the content image is used."
+      },
+      "sync_mode": {
+        "type": "boolean",
+        "default": false,
+        "description": "If `True`, the media will be returned as a data URI and the output data won't be available in the request history."
+      },
+      "num_inference_steps": {
+        "maximum": 50,
+        "type": "integer",
+        "default": 4,
+        "minimum": 2,
+        "description": "The number of inference steps to perform."
+      },
+      "content_image_url": {
+        "type": "string",
+        "examples": [
+          "https://v3.fal.media/files/monkey/i3saq4bAPXSIl08nZtq9P_ec535747aefc4e31943136a6d8587075.png"
+        ],
+        "description": "URL of the content image — the image whose subject and structure are preserved while the style is applied."
+      },
+      "use_lightning_lora": {
+        "type": "boolean",
+        "default": true,
+        "description": "If true, use the Lightning LoRA in addition to the default LoRA."
+      },
+      "num_images": {
+        "maximum": 4,
+        "type": "integer",
+        "default": 1,
+        "minimum": 1,
+        "description": "The number of images to generate."
+      },
+      "guidance_scale": {
+        "maximum": 20,
+        "type": "number",
+        "default": 1,
+        "minimum": 0,
+        "description": "The CFG (Classifier Free Guidance) scale is a measure of how close you want the model to stick to your prompt."
+      },
+      "negative_prompt": {
+        "type": "string",
+        "default": "",
+        "description": "The negative prompt for the generation.",
+        "examples": [
+          ""
+        ]
+      },
+      "output_format": {
+        "type": "string",
+        "default": "png",
+        "enum": [
+          "jpeg",
+          "png"
+        ],
+        "description": "The format of the generated image."
+      },
+      "lora_scale": {
+        "maximum": 4,
+        "type": "number",
+        "default": 1,
+        "minimum": 0,
+        "description": "Strength of the TeleStyleV2 style adapter. 1.0 matches the reference implementation; lower values apply the style more subtly."
+      }
+    },
+    "required": [
+      "content_image_url",
+      "style_image_url"
+    ],
+    "type": "object"
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "TelestyleV2Input",
+    "TelestyleV2Output",
+    "ImageSize",
+    "ImageFile"
+  ]
+}

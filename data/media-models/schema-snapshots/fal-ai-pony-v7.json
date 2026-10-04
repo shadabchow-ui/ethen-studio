@@ -1,0 +1,186 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/pony-v7",
+  "task": "unknown",
+  "source_url": "https://fal.ai/models/fal-ai/pony-v7",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fpony-v7",
+  "retrieved_at": "2026-10-04T19:50:27.179Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "text-to-image",
+  "bytes_sha256": "7911396f16082b6cd5512b82237fce3dcdfde4f584b791be7cb13ebe3cb6a3fc",
+  "queue_path": "/fal-ai/pony-v7",
+  "input_name": "PonyV7Input",
+  "input": {
+    "$refName": "PonyV7Input",
+    "properties": {
+      "enable_safety_checker": {
+        "type": "boolean",
+        "examples": [
+          true
+        ],
+        "default": false,
+        "description": "If set to true, the safety checker will be enabled. Disabling it requires account authorization; unauthorized requests are always checked."
+      },
+      "sync_mode": {
+        "type": "boolean",
+        "default": false,
+        "description": "If `True`, the media will be returned as a data URI and the output data won't be available in the request history."
+      },
+      "noise_source": {
+        "type": "string",
+        "default": "gpu",
+        "enum": [
+          "gpu",
+          "cpu"
+        ],
+        "description": "\n            The source of the noise to use for generating images.\n            If set to 'gpu', the noise will be generated on the GPU.\n            If set to 'cpu', the noise will be generated on the CPU.\n        "
+      },
+      "num_inference_steps": {
+        "maximum": 50,
+        "type": "integer",
+        "minimum": 20,
+        "default": 40,
+        "description": "The number of inference steps to take"
+      },
+      "output_format": {
+        "type": "string",
+        "default": "jpeg",
+        "enum": [
+          "jpeg",
+          "png"
+        ],
+        "description": "The format of the generated image."
+      },
+      "guidance_scale": {
+        "maximum": 20,
+        "type": "number",
+        "minimum": 0,
+        "default": 3.5,
+        "description": "Classifier free guidance scale"
+      },
+      "seed": {
+        "description": "The seed to use for generating images",
+        "anyOf": [
+          {
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "prompt": {
+        "type": "string",
+        "examples": [
+          "Close-up portrait of a majestic iguana with vibrant blue-green scales, piercing amber eyes, and orange spiky crest. Intricate textures and details visible on scaly skin. Wrapped in dark hood, giving regal appearance. Dramatic lighting against black background. Hyper-realistic, high-resolution image showcasing the reptile's expressive features and coloration."
+        ],
+        "description": "The prompt to generate images from"
+      },
+      "num_images": {
+        "maximum": 2,
+        "type": "integer",
+        "minimum": 1,
+        "default": 1,
+        "description": "The number of images to generate"
+      },
+      "image_size": {
+        "default": "square_hd",
+        "anyOf": [
+          {
+            "$refName": "ImageSize",
+            "properties": {
+              "height": {
+                "maximum": 14142,
+                "type": "integer",
+                "exclusiveMinimum": 0,
+                "default": 512,
+                "description": "The height of the generated image."
+              },
+              "width": {
+                "maximum": 14142,
+                "type": "integer",
+                "exclusiveMinimum": 0,
+                "default": 512,
+                "description": "The width of the generated image."
+              }
+            },
+            "type": "object"
+          },
+          {
+            "type": "string",
+            "enum": [
+              "square_hd",
+              "square",
+              "portrait_4_3",
+              "portrait_16_9",
+              "landscape_4_3",
+              "landscape_16_9"
+            ]
+          }
+        ],
+        "description": "The size of the generated image."
+      }
+    },
+    "type": "object",
+    "required": [
+      "prompt"
+    ]
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "PonyV7Input",
+    "PonyV7Output",
+    "ImageSize",
+    "Image"
+  ]
+}

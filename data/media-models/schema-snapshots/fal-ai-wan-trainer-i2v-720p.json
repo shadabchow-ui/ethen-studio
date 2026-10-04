@@ -1,0 +1,109 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/wan-trainer/i2v-720p",
+  "task": "unknown",
+  "source_url": "https://fal.ai/models/fal-ai/wan-trainer/i2v-720p",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fwan-trainer%2Fi2v-720p",
+  "retrieved_at": "2026-10-04T19:52:45.666Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "training",
+  "bytes_sha256": "e2940568ccf0d662bd7b2f326fcca6a40c3c71fa85d1ee815a0e2e6d5886d44d",
+  "queue_path": "/fal-ai/wan-trainer/i2v-720p",
+  "input_name": "WanTrainerI2v720pInput",
+  "input": {
+    "$refName": "WanTrainerI2v720pInput",
+    "properties": {
+      "number_of_steps": {
+        "type": "integer",
+        "maximum": 20000,
+        "description": "The number of steps to train for.",
+        "minimum": 100,
+        "default": 400
+      },
+      "training_data_url": {
+        "description": "URL to zip archive with images of a consistent style. Try to use at least 10 images and/or videos, although more is better.\n\n        In addition to images the archive can contain text files with captions. Each text file should have the same name as the image/video file it corresponds to.",
+        "type": "string"
+      },
+      "auto_scale_input": {
+        "type": "boolean",
+        "description": "If true, the input will be automatically scale the video to 81 frames at 16fps.",
+        "examples": [
+          true
+        ],
+        "default": false
+      },
+      "trigger_phrase": {
+        "default": "",
+        "description": "The phrase that will trigger the model to generate an image.",
+        "type": "string"
+      },
+      "learning_rate": {
+        "type": "number",
+        "maximum": 1,
+        "description": "The rate at which the model learns. Higher values can lead to faster training, but over-fitting.",
+        "minimum": 0.000001,
+        "default": 0.0002
+      }
+    },
+    "required": [
+      "training_data_url"
+    ],
+    "type": "object"
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "WanTrainerI2v720pInput",
+    "WanTrainerI2v720pOutput",
+    "File"
+  ]
+}

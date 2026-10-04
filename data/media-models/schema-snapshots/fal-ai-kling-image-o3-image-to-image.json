@@ -1,0 +1,226 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/kling-image/o3/image-to-image",
+  "task": "image-to-image",
+  "source_url": "https://fal.ai/models/fal-ai/kling-image/o3/image-to-image",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fkling-image%2Fo3%2Fimage-to-image",
+  "retrieved_at": "2026-10-04T19:46:45.747Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "image-to-image",
+  "bytes_sha256": "49d3318642ef3d35ac95d87318d090092dd03ab0c683eb41191eca11dfe63b87",
+  "queue_path": "/fal-ai/kling-image/o3/image-to-image",
+  "input_name": "KlingImageO3ImageToImageInput",
+  "input": {
+    "$refName": "KlingImageO3ImageToImageInput",
+    "required": [
+      "prompt",
+      "image_urls"
+    ],
+    "properties": {
+      "prompt": {
+        "description": "Text prompt for image generation. Reference images using @Image1, @Image2, etc. (or @Image if only one image). Max 2500 characters.",
+        "examples": [
+          "Transform into photorealistic 3D render, add proper lighting and shadows, realistic materials and textures, maintain exact proportions and design from sketch, product visualization quality"
+        ],
+        "type": "string",
+        "maxLength": 2500
+      },
+      "series_amount": {
+        "description": "Number of images in series (2-9). Only used when result_type is 'series'.",
+        "anyOf": [
+          {
+            "minimum": 2,
+            "maximum": 9,
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "output_format": {
+        "enum": [
+          "jpeg",
+          "png",
+          "webp"
+        ],
+        "default": "png",
+        "description": "The format of the generated image.",
+        "type": "string"
+      },
+      "resolution": {
+        "enum": [
+          "1K",
+          "2K",
+          "4K"
+        ],
+        "default": "1K",
+        "description": "Image generation resolution. 1K: standard, 2K: high-res, 4K: ultra high-res.",
+        "type": "string"
+      },
+      "num_images": {
+        "minimum": 1,
+        "maximum": 9,
+        "description": "Number of images to generate (1-9). Only used when result_type is 'single'.",
+        "default": 1,
+        "type": "integer"
+      },
+      "elements": {
+        "description": "Optional: Elements (characters/objects) for face control. Reference in prompt as @Element1, @Element2, etc.",
+        "anyOf": [
+          {
+            "items": {
+              "$refName": "ElementInput",
+              "description": "Element input for image generation with face/character control.\n\nCreate an element by providing frontal_image_url (and optionally reference_image_urls).\nAll fields are optional - provide what you have available.",
+              "properties": {
+                "frontal_image_url": {
+                  "description": "The frontal image of the element (main view). Optional.",
+                  "anyOf": [
+                    {
+                      "_fal_ui_field": "image",
+                      "limit_description": "Max file size: 10.0MB, Min width: 300px, Min height: 300px, Min aspect ratio: 0.40, Max aspect ratio: 2.50, Timeout: 20.0s",
+                      "type": "string",
+                      "ui": {
+                        "field": "image"
+                      }
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "reference_image_urls": {
+                  "description": "Additional reference images from different angles. 0-3 images supported. Optional.",
+                  "anyOf": [
+                    {
+                      "items": {
+                        "_fal_ui_field": "image",
+                        "limit_description": "Max file size: 10.0MB, Min width: 300px, Min height: 300px, Min aspect ratio: 0.40, Max aspect ratio: 2.50, Timeout: 20.0s",
+                        "type": "string",
+                        "ui": {
+                          "unsupported": "depth-exceeded"
+                        }
+                      },
+                      "type": "array"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                }
+              },
+              "type": "object"
+            },
+            "type": "array"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "image_urls": {
+        "items": {
+          "_fal_ui_field": "image",
+          "limit_description": "Max file size: 10.0MB, Min width: 300px, Min height: 300px, Min aspect ratio: 0.40, Max aspect ratio: 2.50, Timeout: 20.0s",
+          "type": "string"
+        },
+        "description": "List of reference images. Reference images in prompt using @Image1, @Image2, etc. (1-indexed). Max 10 images.",
+        "examples": [
+          [
+            "https://v3b.fal.media/files/b/0a8d06d1/FTrwBsV9WI5twqMPkqvRh_19db9852c5ed4a109d81c52d27c9e433.png"
+          ]
+        ],
+        "type": "array"
+      },
+      "aspect_ratio": {
+        "enum": [
+          "16:9",
+          "9:16",
+          "1:1",
+          "4:3",
+          "3:4",
+          "3:2",
+          "2:3",
+          "21:9",
+          "auto"
+        ],
+        "default": "auto",
+        "description": "Aspect ratio of generated images. 'auto' intelligently determines based on input content.",
+        "type": "string"
+      },
+      "result_type": {
+        "enum": [
+          "single",
+          "series"
+        ],
+        "default": "single",
+        "description": "Result type. 'single' for one image, 'series' for a series of related images.",
+        "type": "string"
+      },
+      "sync_mode": {
+        "default": false,
+        "description": "If `True`, the media will be returned as a data URI.",
+        "type": "boolean"
+      }
+    },
+    "type": "object",
+    "description": "Request model for Kling O3 Image-to-Image Generation."
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "KlingImageO3ImageToImageInput",
+    "KlingImageO3ImageToImageOutput",
+    "ElementInput",
+    "Image"
+  ]
+}

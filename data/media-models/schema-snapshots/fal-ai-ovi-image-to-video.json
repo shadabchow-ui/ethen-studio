@@ -1,0 +1,121 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/ovi/image-to-video",
+  "task": "image-to-video",
+  "source_url": "https://fal.ai/models/fal-ai/ovi/image-to-video",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fovi%2Fimage-to-video",
+  "retrieved_at": "2026-10-04T19:49:45.132Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "image-to-video",
+  "bytes_sha256": "3d80e4bb14e25352c70673d924cef4e5ac75bf81408b2cc67a84a0688163a1b8",
+  "queue_path": "/fal-ai/ovi/image-to-video",
+  "input_name": "OviImageToVideoInput",
+  "input": {
+    "$refName": "OviImageToVideoInput",
+    "properties": {
+      "image_url": {
+        "type": "string",
+        "examples": [
+          "https://storage.googleapis.com/falserverless/example_inputs/ovi_i2v_input.png"
+        ],
+        "description": "The image URL to guide video generation."
+      },
+      "negative_prompt": {
+        "type": "string",
+        "default": "jitter, bad hands, blur, distortion",
+        "description": "Negative prompt for video generation."
+      },
+      "audio_negative_prompt": {
+        "type": "string",
+        "default": "robotic, muffled, echo, distorted",
+        "description": "Negative prompt for audio generation."
+      },
+      "seed": {
+        "anyOf": [
+          {
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "Random seed for reproducibility. If None, a random seed is chosen."
+      },
+      "prompt": {
+        "type": "string",
+        "examples": [
+          "An intimate close-up of a European woman with long dark hair as she gently brushes her hair in a softly lit bedroom, her delicate hand moving in the foreground. She looks directly into the camera with calm, focused eyes, a faint serene smile glowing in the warm lamp light. She says, <S>[soft whisper] I am an artificial intelligence.<E>.<AUDCAP>Soft whispering female voice, ASMR tone with gentle breaths, cozy room acoustics, subtle emphasis on \"I am an artificial intelligence\".<ENDAUDCAP>"
+        ],
+        "description": "The text prompt to guide video generation."
+      },
+      "num_inference_steps": {
+        "description": "The number of inference steps.",
+        "type": "integer",
+        "default": 30,
+        "minimum": 1,
+        "maximum": 50
+      }
+    },
+    "type": "object",
+    "required": [
+      "prompt",
+      "image_url"
+    ]
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "OviImageToVideoInput",
+    "OviImageToVideoOutput",
+    "File"
+  ]
+}

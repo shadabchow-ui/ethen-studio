@@ -1,0 +1,130 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/vidu/q2/video-extension/pro",
+  "task": "video-editing",
+  "source_url": "https://fal.ai/models/fal-ai/vidu/q2/video-extension/pro",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fvidu%2Fq2%2Fvideo-extension%2Fpro",
+  "retrieved_at": "2026-10-04T19:52:24.830Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "video-to-video",
+  "bytes_sha256": "acb60c144765e32e2e7b682b7ab5f90f6813e0329a08b6b113d0eb62e79c540f",
+  "queue_path": "/fal-ai/vidu/q2/video-extension/pro",
+  "input_name": "ViduQ2VideoExtensionProInput",
+  "input": {
+    "$refName": "ViduQ2VideoExtensionProInput",
+    "properties": {
+      "prompt": {
+        "anyOf": [
+          {
+            "maxLength": 3000,
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "text prompt to guide the video extension"
+      },
+      "seed": {
+        "anyOf": [
+          {
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "Random seed for reproducibility. If None, a random seed is chosen."
+      },
+      "video_url": {
+        "examples": [
+          "https://storage.googleapis.com/falserverless/model_tests/video_models/output-3.mp4"
+        ],
+        "type": "string",
+        "description": "URL of the video to extend"
+      },
+      "duration": {
+        "enum": [
+          2,
+          3,
+          4,
+          5,
+          6,
+          7
+        ],
+        "type": "integer",
+        "description": "Duration of the extension in seconds",
+        "default": 4
+      },
+      "resolution": {
+        "enum": [
+          "720p",
+          "1080p"
+        ],
+        "type": "string",
+        "description": "Output video resolution",
+        "default": "720p"
+      }
+    },
+    "type": "object",
+    "required": [
+      "video_url"
+    ]
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "ViduQ2VideoExtensionProInput",
+    "ViduQ2VideoExtensionProOutput",
+    "File"
+  ]
+}

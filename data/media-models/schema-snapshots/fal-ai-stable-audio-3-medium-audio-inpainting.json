@@ -1,0 +1,177 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/stable-audio-3/medium/audio-inpainting",
+  "task": "unknown",
+  "source_url": "https://fal.ai/models/fal-ai/stable-audio-3/medium/audio-inpainting",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fstable-audio-3%2Fmedium%2Faudio-inpainting",
+  "retrieved_at": "2026-10-04T19:51:41.914Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "audio-to-audio",
+  "bytes_sha256": "e81649e13d883458115f59d01be6fa0be5c6f926073cd9f27d14cd1f984e900f",
+  "queue_path": "/fal-ai/stable-audio-3/medium/audio-inpainting",
+  "input_name": "StableAudio3MediumAudioInpaintingInput",
+  "input": {
+    "$refName": "StableAudio3MediumAudioInpaintingInput",
+    "type": "object",
+    "properties": {
+      "bitrate": {
+        "type": "string",
+        "description": "Audio bitrate for compressed output formats (e.g., mp3, aac, opus). Format e.g. '192k' or '320k'. Ignored for lossless formats (wav, flac).",
+        "default": "192k"
+      },
+      "audio_url": {
+        "type": "string",
+        "examples": [
+          "https://storage.googleapis.com/falserverless/model_tests/diffrythm/rock_en.wav"
+        ],
+        "description": "Source audio. Only the masked region is regenerated."
+      },
+      "num_inference_steps": {
+        "minimum": 1,
+        "type": "integer",
+        "description": "Number of sampling steps. Post-trained (distilled) checkpoints look good with the default 8 and gain little from going higher.",
+        "maximum": 100,
+        "default": 8
+      },
+      "seed": {
+        "description": "Random seed for reproducible outputs. Omit for a random seed.",
+        "anyOf": [
+          {
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "enable_prompt_expansion": {
+        "type": "boolean",
+        "description": "If True, the prompt will be expanded using an LLM for more detailed and higher quality results.",
+        "default": false
+      },
+      "enable_safety_checker": {
+        "type": "boolean",
+        "description": "Enable NSFW content safety checking.",
+        "default": true
+      },
+      "sync_mode": {
+        "type": "boolean",
+        "description": "If True, the audio is returned inline as a data URI and the result is not saved to the request history.",
+        "default": false
+      },
+      "negative_prompt": {
+        "type": "string",
+        "description": "Text description of qualities to avoid in the output.",
+        "default": ""
+      },
+      "guidance_scale": {
+        "minimum": 0,
+        "type": "number",
+        "description": "Classifier-free guidance scale. Higher values follow the prompt more strictly. Only effective on base (non-distilled) checkpoints.",
+        "maximum": 25,
+        "default": 1
+      },
+      "output_format": {
+        "enum": [
+          "mp3",
+          "wav",
+          "flac",
+          "ogg",
+          "opus",
+          "m4a",
+          "aac"
+        ],
+        "type": "string",
+        "description": "Container format for the generated audio output.",
+        "default": "mp3"
+      },
+      "mask_end_seconds": {
+        "minimum": 0,
+        "type": "number",
+        "examples": [
+          8
+        ],
+        "maximum": 380,
+        "description": "End of the region to regenerate, in seconds."
+      },
+      "mask_start_seconds": {
+        "minimum": 0,
+        "type": "number",
+        "examples": [
+          4
+        ],
+        "maximum": 380,
+        "description": "Start of the region to regenerate, in seconds."
+      },
+      "prompt": {
+        "type": "string",
+        "examples": [
+          "punchy kick drum fill"
+        ],
+        "description": "Text description guiding how the masked region is regenerated."
+      }
+    },
+    "required": [
+      "prompt",
+      "audio_url",
+      "mask_start_seconds",
+      "mask_end_seconds"
+    ]
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "StableAudio3MediumAudioInpaintingInput",
+    "StableAudio3MediumAudioInpaintingOutput",
+    "File"
+  ]
+}

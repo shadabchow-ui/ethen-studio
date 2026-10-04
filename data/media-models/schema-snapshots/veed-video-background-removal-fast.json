@@ -1,0 +1,106 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "veed/video-background-removal/fast",
+  "task": "video-editing",
+  "source_url": "https://fal.ai/models/veed/video-background-removal/fast",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=veed%2Fvideo-background-removal%2Ffast",
+  "retrieved_at": "2026-10-04T19:55:33.420Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "video-to-video",
+  "bytes_sha256": "42eb601ccfa5f9bc7b7c0f3c4afd4d2eb03a95163226d7b14367cfbb70221b8b",
+  "queue_path": "/veed/video-background-removal/fast",
+  "input_name": "VideoBackgroundRemovalFastInput",
+  "input": {
+    "$refName": "VideoBackgroundRemovalFastInput",
+    "type": "object",
+    "properties": {
+      "output_codec": {
+        "type": "string",
+        "enum": [
+          "vp9",
+          "h264"
+        ],
+        "default": "vp9",
+        "description": "Single VP9 video with alpha channel or two videos (rgb and alpha) in H264 format. H264 is recommended for better RGB quality."
+      },
+      "video_url": {
+        "format": "uri",
+        "maxLength": 2083,
+        "examples": [
+          "https://v3b.fal.media/files/b/0a8479a0/3ngPszofrNpEvPaL9P5xR_generated.mp4"
+        ],
+        "type": "string",
+        "minLength": 1
+      },
+      "refine_foreground_edges": {
+        "type": "boolean",
+        "default": true,
+        "description": "Improves the quality of the extracted object's edges."
+      },
+      "subject_is_person": {
+        "type": "boolean",
+        "default": true,
+        "description": "Set to False if the subject is not a person."
+      }
+    },
+    "required": [
+      "video_url"
+    ]
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "VideoBackgroundRemovalFastInput",
+    "VideoBackgroundRemovalFastOutput",
+    "File"
+  ]
+}

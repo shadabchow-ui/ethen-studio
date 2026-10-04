@@ -1,0 +1,148 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "pixelcut/video-background-removal",
+  "task": "video-editing",
+  "source_url": "https://fal.ai/models/pixelcut/video-background-removal",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=pixelcut%2Fvideo-background-removal",
+  "retrieved_at": "2026-10-04T19:54:50.618Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "video-to-video",
+  "bytes_sha256": "9c41acb0286ac5fae7438ea1de5071dbe52220752bfd91091aa2f209dfde9a2d",
+  "queue_path": "/pixelcut/video-background-removal",
+  "input_name": "VideoBackgroundRemovalInput",
+  "input": {
+    "$refName": "VideoBackgroundRemovalInput",
+    "description": "Input model for video background removal.",
+    "type": "object",
+    "required": [
+      "video_url"
+    ],
+    "properties": {
+      "background_color": {
+        "$refName": "RGBColor",
+        "description": "Custom solid background color (only used when background='custom').",
+        "type": "object",
+        "properties": {
+          "g": {
+            "maximum": 255,
+            "type": "integer",
+            "minimum": 0,
+            "default": 0
+          },
+          "b": {
+            "maximum": 255,
+            "type": "integer",
+            "minimum": 0,
+            "default": 0
+          },
+          "r": {
+            "maximum": 255,
+            "type": "integer",
+            "minimum": 0,
+            "default": 0
+          }
+        }
+      },
+      "video_url": {
+        "description": "URL of the input video",
+        "examples": [
+          "https://cdn3.pixelcut.app/fal/video-background-removal/sample.mp4"
+        ],
+        "type": "string"
+      },
+      "output_format": {
+        "description": "Output video format. Auto-detected if not set (defaults to webm_vp9 for transparent).",
+        "anyOf": [
+          {
+            "enum": [
+              "webm_vp9",
+              "mp4_h264",
+              "mp4_h265",
+              "mov_proresks",
+              "mov_h265",
+              "mkv_h264",
+              "mkv_h265",
+              "mkv_vp9",
+              "gif"
+            ],
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "background": {
+        "enum": [
+          "transparent",
+          "black",
+          "white",
+          "green",
+          "blue",
+          "magenta",
+          "custom"
+        ],
+        "description": "Output background: transparent, a named preset color, or 'custom' to use the background_color color picker.",
+        "type": "string",
+        "default": "transparent"
+      }
+    }
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "VideoBackgroundRemovalInput",
+    "VideoBackgroundRemovalOutput",
+    "RGBColor",
+    "Video"
+  ]
+}

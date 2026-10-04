@@ -1,0 +1,128 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/kling-video/v2.5-turbo/pro/image-to-video",
+  "task": "image-to-video",
+  "source_url": "https://fal.ai/models/fal-ai/kling-video/v2.5-turbo/pro/image-to-video",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fkling-video%2Fv2.5-turbo%2Fpro%2Fimage-to-video",
+  "retrieved_at": "2026-10-04T19:47:08.665Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "image-to-video",
+  "bytes_sha256": "ba5d88b1f1b1b419b44f616ad53cc711b74de3dece9a70778af0c60ee7b3a988",
+  "queue_path": "/fal-ai/kling-video/v2.5-turbo/pro/image-to-video",
+  "input_name": "KlingVideoV25TurboProImageToVideoInput",
+  "input": {
+    "$refName": "KlingVideoV25TurboProImageToVideoInput",
+    "required": [
+      "prompt",
+      "image_url"
+    ],
+    "type": "object",
+    "properties": {
+      "image_url": {
+        "description": "URL of the image to be used for the video",
+        "type": "string",
+        "examples": [
+          "https://v3.fal.media/files/panda/HnY2yf-BbzlrVQxR-qP6m_9912d0932988453aadf3912fc1901f52.jpg"
+        ]
+      },
+      "negative_prompt": {
+        "type": "string",
+        "default": "blur, distort, and low quality",
+        "maxLength": 2500
+      },
+      "tail_image_url": {
+        "anyOf": [
+          {
+            "type": "string",
+            "ui": {
+              "field": "image"
+            }
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "URL of the image to be used for the end of the video"
+      },
+      "prompt": {
+        "type": "string",
+        "examples": [
+          "A stark starting line divides two powerful cars, engines revving for the challenge ahead. They surge forward in the heat of competition, a blur of speed and chrome. The finish line looms as they vie for victory."
+        ],
+        "maxLength": 2500
+      },
+      "duration": {
+        "description": "The duration of the generated video in seconds",
+        "type": "string",
+        "default": "5",
+        "enum": [
+          "5",
+          "10"
+        ]
+      },
+      "cfg_scale": {
+        "maximum": 1,
+        "description": "\n            The CFG (Classifier Free Guidance) scale is a measure of how close you want\n            the model to stick to your prompt.\n        ",
+        "type": "number",
+        "minimum": 0,
+        "default": 0.5
+      }
+    }
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "KlingVideoV25TurboProImageToVideoInput",
+    "KlingVideoV25TurboProImageToVideoOutput",
+    "File"
+  ]
+}

@@ -1,0 +1,242 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/video-prompt-generator",
+  "task": "video-editing",
+  "source_url": "https://fal.ai/models/fal-ai/video-prompt-generator",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fvideo-prompt-generator",
+  "retrieved_at": "2026-10-04T19:52:15.296Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "llm",
+  "bytes_sha256": "d489791e2b87af3a76d8b923e572acc57d21cb96465672b4b77a05ac24c89d36",
+  "queue_path": "/fal-ai/video-prompt-generator",
+  "input_name": "VideoPromptGeneratorInput",
+  "input": {
+    "$refName": "VideoPromptGeneratorInput",
+    "required": [
+      "input_concept"
+    ],
+    "type": "object",
+    "properties": {
+      "style": {
+        "default": "Simple",
+        "type": "string",
+        "enum": [
+          "Minimalist",
+          "Simple",
+          "Detailed",
+          "Descriptive",
+          "Dynamic",
+          "Cinematic",
+          "Documentary",
+          "Animation",
+          "Action",
+          "Experimental"
+        ],
+        "description": "Style of the video prompt"
+      },
+      "model": {
+        "default": "google/gemini-2.5-flash-lite",
+        "type": "string",
+        "enum": [
+          "anthropic/claude-3-haiku",
+          "google/gemini-2.5-flash",
+          "google/gemini-2.5-flash-lite",
+          "meta-llama/llama-3.1-8b-instruct",
+          "meta-llama/llama-3.1-70b-instruct",
+          "openai/gpt-4o-mini",
+          "openai/gpt-4o"
+        ],
+        "description": "Model to use"
+      },
+      "prompt_length": {
+        "default": "Medium",
+        "type": "string",
+        "enum": [
+          "Short",
+          "Medium",
+          "Long"
+        ],
+        "description": "Length of the prompt"
+      },
+      "camera_style": {
+        "default": "None",
+        "type": "string",
+        "enum": [
+          "None",
+          "Steadicam flow",
+          "Drone aerials",
+          "Handheld urgency",
+          "Crane elegance",
+          "Dolly precision",
+          "VR 360",
+          "Multi-angle rig",
+          "Static tripod",
+          "Gimbal smoothness",
+          "Slider motion",
+          "Jib sweep",
+          "POV immersion",
+          "Time-slice array",
+          "Macro extreme",
+          "Tilt-shift miniature",
+          "Snorricam character",
+          "Whip pan dynamics",
+          "Dutch angle tension",
+          "Underwater housing",
+          "Periscope lens"
+        ],
+        "description": "Camera movement style"
+      },
+      "custom_elements": {
+        "description": "Custom technical elements (optional)",
+        "type": "string",
+        "default": ""
+      },
+      "camera_direction": {
+        "default": "None",
+        "type": "string",
+        "enum": [
+          "None",
+          "Zoom in",
+          "Zoom out",
+          "Pan left",
+          "Pan right",
+          "Tilt up",
+          "Tilt down",
+          "Orbital rotation",
+          "Push in",
+          "Pull out",
+          "Track forward",
+          "Track backward",
+          "Spiral in",
+          "Spiral out",
+          "Arc movement",
+          "Diagonal traverse",
+          "Vertical rise",
+          "Vertical descent"
+        ],
+        "description": "Camera direction"
+      },
+      "input_concept": {
+        "description": "Core concept or thematic input for the video prompt",
+        "type": "string",
+        "examples": [
+          "A futuristic city at dusk"
+        ]
+      },
+      "special_effects": {
+        "default": "None",
+        "type": "string",
+        "enum": [
+          "None",
+          "Practical effects",
+          "CGI enhancement",
+          "Analog glitches",
+          "Light painting",
+          "Projection mapping",
+          "Nanosecond exposures",
+          "Double exposure",
+          "Smoke diffusion",
+          "Lens flare artistry",
+          "Particle systems",
+          "Holographic overlay",
+          "Chromatic aberration",
+          "Digital distortion",
+          "Wire removal",
+          "Motion capture",
+          "Miniature integration",
+          "Weather simulation",
+          "Color grading",
+          "Mixed media composite",
+          "Neural style transfer"
+        ],
+        "description": "Special effects approach"
+      },
+      "pacing": {
+        "default": "None",
+        "type": "string",
+        "enum": [
+          "None",
+          "Slow burn",
+          "Rhythmic pulse",
+          "Frantic energy",
+          "Ebb and flow",
+          "Hypnotic drift",
+          "Time-lapse rush",
+          "Stop-motion staccato",
+          "Gradual build",
+          "Quick cut rhythm",
+          "Long take meditation",
+          "Jump cut energy",
+          "Match cut flow",
+          "Cross-dissolve dreamscape",
+          "Parallel action",
+          "Slow motion impact",
+          "Ramping dynamics",
+          "Montage tempo",
+          "Continuous flow",
+          "Episodic breaks"
+        ],
+        "description": "Pacing rhythm"
+      },
+      "image_url": {
+        "description": "URL of an image to analyze and incorporate into the video prompt (optional)",
+        "type": "string"
+      }
+    }
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "VideoPromptGeneratorInput",
+    "VideoPromptGeneratorOutput"
+  ]
+}

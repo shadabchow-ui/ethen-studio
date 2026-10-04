@@ -1,0 +1,347 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/ideogram/v3",
+  "task": "unknown",
+  "source_url": "https://fal.ai/models/fal-ai/ideogram/v3",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fideogram%2Fv3",
+  "retrieved_at": "2026-10-04T19:46:00.275Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "text-to-image",
+  "bytes_sha256": "b7dd4de1fbe3071b527f1e5d481bc3045aa8caf7beb47f1cab414e89347482f1",
+  "queue_path": "/fal-ai/ideogram/v3",
+  "input_name": "IdeogramV3Input",
+  "input": {
+    "$refName": "IdeogramV3Input",
+    "properties": {
+      "sync_mode": {
+        "default": false,
+        "description": "If `True`, the media will be returned as a data URI and the output data won't be available in the request history.",
+        "type": "boolean"
+      },
+      "style_preset": {
+        "anyOf": [
+          {
+            "enum": [
+              "80S_ILLUSTRATION",
+              "90S_NOSTALGIA",
+              "ABSTRACT_ORGANIC",
+              "ANALOG_NOSTALGIA",
+              "ART_BRUT",
+              "ART_DECO",
+              "ART_POSTER",
+              "AURA",
+              "AVANT_GARDE",
+              "BAUHAUS",
+              "BLUEPRINT",
+              "BLURRY_MOTION",
+              "BRIGHT_ART",
+              "C4D_CARTOON",
+              "CHILDRENS_BOOK",
+              "COLLAGE",
+              "COLORING_BOOK_I",
+              "COLORING_BOOK_II",
+              "CUBISM",
+              "DARK_AURA",
+              "DOODLE",
+              "DOUBLE_EXPOSURE",
+              "DRAMATIC_CINEMA",
+              "EDITORIAL",
+              "EMOTIONAL_MINIMAL",
+              "ETHEREAL_PARTY",
+              "EXPIRED_FILM",
+              "FLAT_ART",
+              "FLAT_VECTOR",
+              "FOREST_REVERIE",
+              "GEO_MINIMALIST",
+              "GLASS_PRISM",
+              "GOLDEN_HOUR",
+              "GRAFFITI_I",
+              "GRAFFITI_II",
+              "HALFTONE_PRINT",
+              "HIGH_CONTRAST",
+              "HIPPIE_ERA",
+              "ICONIC",
+              "JAPANDI_FUSION",
+              "JAZZY",
+              "LONG_EXPOSURE",
+              "MAGAZINE_EDITORIAL",
+              "MINIMAL_ILLUSTRATION",
+              "MIXED_MEDIA",
+              "MONOCHROME",
+              "NIGHTLIFE",
+              "OIL_PAINTING",
+              "OLD_CARTOONS",
+              "PAINT_GESTURE",
+              "POP_ART",
+              "RETRO_ETCHING",
+              "RIVIERA_POP",
+              "SPOTLIGHT_80S",
+              "STYLIZED_RED",
+              "SURREAL_COLLAGE",
+              "TRAVEL_POSTER",
+              "VINTAGE_GEO",
+              "VINTAGE_POSTER",
+              "WATERCOLOR",
+              "WEIRD",
+              "WOODBLOCK_PRINT"
+            ],
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "Style preset for generation. The chosen style preset will guide the generation."
+      },
+      "rendering_speed": {
+        "enum": [
+          "TURBO",
+          "BALANCED",
+          "QUALITY"
+        ],
+        "default": "BALANCED",
+        "description": "The rendering speed to use.",
+        "type": "string"
+      },
+      "image_urls": {
+        "anyOf": [
+          {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "A set of images to use as style references (maximum total size 10MB across all style references). The images should be in JPEG, PNG or WebP format"
+      },
+      "expand_prompt": {
+        "default": true,
+        "description": "Determine if MagicPrompt should be used in generating the request or not.",
+        "type": "boolean"
+      },
+      "seed": {
+        "anyOf": [
+          {
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "Seed for the random number generator"
+      },
+      "image_size": {
+        "default": "square_hd",
+        "anyOf": [
+          {
+            "$refName": "ImageSize",
+            "properties": {
+              "width": {
+                "default": 512,
+                "exclusiveMinimum": 0,
+                "description": "The width of the generated image.",
+                "maximum": 14142,
+                "type": "integer"
+              },
+              "height": {
+                "default": 512,
+                "exclusiveMinimum": 0,
+                "description": "The height of the generated image.",
+                "maximum": 14142,
+                "type": "integer"
+              }
+            },
+            "type": "object"
+          },
+          {
+            "enum": [
+              "square_hd",
+              "square",
+              "portrait_4_3",
+              "portrait_16_9",
+              "landscape_4_3",
+              "landscape_16_9"
+            ],
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "The resolution of the generated image"
+      },
+      "color_palette": {
+        "anyOf": [
+          {
+            "$refName": "ColorPalette",
+            "properties": {
+              "name": {
+                "anyOf": [
+                  {
+                    "enum": [
+                      "EMBER",
+                      "FRESH",
+                      "JUNGLE",
+                      "MAGIC",
+                      "MELON",
+                      "MOSAIC",
+                      "PASTEL",
+                      "ULTRAMARINE"
+                    ],
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "description": "A color palette preset value"
+              },
+              "members": {
+                "anyOf": [
+                  {
+                    "type": "array",
+                    "items": {
+                      "$refName": "ColorPaletteMember",
+                      "properties": {
+                        "unsupported": "depth-exceeded"
+                      },
+                      "type": "object",
+                      "required": [
+                        "rgb"
+                      ]
+                    }
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "description": "A list of color palette members that define the color palette"
+              }
+            },
+            "type": "object"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "A color palette for generation, must EITHER be specified via one of the presets (name) or explicitly via hexadecimal representations of the color with optional weights (members)"
+      },
+      "num_images": {
+        "minimum": 1,
+        "default": 1,
+        "description": "Number of images to generate.",
+        "maximum": 8,
+        "type": "integer"
+      },
+      "negative_prompt": {
+        "default": "",
+        "description": "Description of what to exclude from an image. Descriptions in the prompt take precedence to descriptions in the negative prompt.",
+        "type": "string"
+      },
+      "style": {
+        "anyOf": [
+          {
+            "enum": [
+              "AUTO",
+              "GENERAL",
+              "REALISTIC",
+              "DESIGN"
+            ],
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "The style type to generate with. Cannot be used with style_codes."
+      },
+      "prompt": {
+        "examples": [
+          "The Bone Forest stretched across the horizon, its trees fashioned from the ossified remains of ancient leviathans that once swam through the sky. Shamans with antlers growing from their shoulders and eyes that revealed the true nature of any being they beheld conducted rituals to commune with the spirits that still inhabited the calcified grove. In sky writes \"Ideogram V3 in fal.ai\""
+        ],
+        "type": "string"
+      },
+      "style_codes": {
+        "anyOf": [
+          {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "A list of 8 character hexadecimal codes representing the style of the image. Cannot be used in conjunction with style_reference_images or style"
+      }
+    },
+    "type": "object",
+    "required": [
+      "prompt"
+    ]
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "IdeogramV3Input",
+    "IdeogramV3Output",
+    "ImageSize",
+    "ColorPalette",
+    "File",
+    "ColorPaletteMember",
+    "RGBColor"
+  ]
+}

@@ -1,0 +1,101 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/minimax/hailuo-2.3/pro/image-to-video",
+  "task": "image-to-video",
+  "source_url": "https://fal.ai/models/fal-ai/minimax/hailuo-2.3/pro/image-to-video",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fminimax%2Fhailuo-2.3%2Fpro%2Fimage-to-video",
+  "retrieved_at": "2026-10-04T19:49:15.708Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "image-to-video",
+  "bytes_sha256": "a6ef7caf4f24897baf171d7e0f5992410ead319d0fe098e310eb04263b33d10c",
+  "queue_path": "/fal-ai/minimax/hailuo-2.3/pro/image-to-video",
+  "input_name": "MinimaxHailuo23ProImageToVideoInput",
+  "input": {
+    "$refName": "MinimaxHailuo23ProImageToVideoInput",
+    "required": [
+      "prompt",
+      "image_url"
+    ],
+    "type": "object",
+    "properties": {
+      "image_url": {
+        "description": "URL of the image to use as the first frame",
+        "_fal_ui_field": "image",
+        "type": "string",
+        "examples": [
+          "https://storage.googleapis.com/falserverless/example_inputs/hailuo23/pro_i2v_in.jpg"
+        ]
+      },
+      "prompt_optimizer": {
+        "description": "Whether to use the model's prompt optimizer",
+        "type": "boolean",
+        "default": true
+      },
+      "prompt": {
+        "description": "Text prompt for video generation",
+        "type": "string",
+        "maxLength": 2000,
+        "examples": [
+          "The camera follows the mountain biker as they navigate a technical forest trail at high speed, wheels bouncing over roots and rocks. The rider approaches a jump, launching into the air with the bike, both rider and machine perfectly synchronized. They land smoothly and continue through tight turns, splashing through a stream crossing. Mud and water spray as the bike powers through challenging terrain. The atmosphere is wild and adventurous. Audio: Tires gripping dirt, gears shifting, heavy breathing, branches whipping past, and water splashing."
+        ],
+        "minLength": 1
+      }
+    }
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "MinimaxHailuo23ProImageToVideoInput",
+    "MinimaxHailuo23ProImageToVideoOutput",
+    "File"
+  ]
+}

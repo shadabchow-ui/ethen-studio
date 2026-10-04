@@ -1,0 +1,181 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/ffmpeg-api/loudnorm",
+  "task": "unknown",
+  "source_url": "https://fal.ai/models/fal-ai/ffmpeg-api/loudnorm",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fffmpeg-api%2Floudnorm",
+  "retrieved_at": "2026-10-04T19:43:42.388Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "json",
+  "bytes_sha256": "431a1e319219817f405e1cf4db3fb79847a2b7130cd486a2a2ee6efe92754e02",
+  "queue_path": "/fal-ai/ffmpeg-api/loudnorm",
+  "input_name": "FfmpegApiLoudnormInput",
+  "input": {
+    "$refName": "FfmpegApiLoudnormInput",
+    "properties": {
+      "dual_mono": {
+        "default": false,
+        "type": "boolean",
+        "description": "Treat mono input files as dual-mono for correct EBU R128 measurement on stereo systems"
+      },
+      "audio_url": {
+        "examples": [
+          "https://storage.googleapis.com/falserverless/example_inputs/ffmpeg-audio.wav"
+        ],
+        "type": "string",
+        "description": "URL of the audio file to normalize"
+      },
+      "linear": {
+        "default": false,
+        "type": "boolean",
+        "description": "Use linear normalization mode (single-pass). If false, uses dynamic mode (two-pass for better quality)."
+      },
+      "integrated_loudness": {
+        "default": -18,
+        "minimum": -70,
+        "type": "number",
+        "description": "Integrated loudness target in LUFS.",
+        "maximum": -5
+      },
+      "loudness_range": {
+        "default": 7,
+        "minimum": 1,
+        "type": "number",
+        "description": "Loudness range target in LU",
+        "maximum": 20
+      },
+      "print_summary": {
+        "default": false,
+        "type": "boolean",
+        "description": "Return loudness measurement summary with the normalized audio"
+      },
+      "true_peak": {
+        "default": -0.1,
+        "minimum": -9,
+        "type": "number",
+        "description": "Maximum true peak in dBTP.",
+        "maximum": 0
+      },
+      "offset": {
+        "default": 0,
+        "minimum": -99,
+        "type": "number",
+        "description": "Offset gain in dB applied before the true-peak limiter",
+        "maximum": 99
+      },
+      "measured_thresh": {
+        "anyOf": [
+          {
+            "minimum": -99,
+            "type": "number",
+            "maximum": 0
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "Measured threshold of input file in LUFS. Required for linear mode."
+      },
+      "measured_i": {
+        "anyOf": [
+          {
+            "minimum": -99,
+            "type": "number",
+            "maximum": 0
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "Measured integrated loudness of input file in LUFS. Required for linear mode."
+      },
+      "measured_tp": {
+        "anyOf": [
+          {
+            "minimum": -99,
+            "type": "number",
+            "maximum": 99
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "Measured true peak of input file in dBTP. Required for linear mode."
+      },
+      "measured_lra": {
+        "anyOf": [
+          {
+            "minimum": 0,
+            "type": "number",
+            "maximum": 99
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "Measured loudness range of input file in LU. Required for linear mode."
+      }
+    },
+    "required": [
+      "audio_url"
+    ],
+    "type": "object"
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "FfmpegApiLoudnormInput",
+    "FfmpegApiLoudnormOutput",
+    "File",
+    "LoudnormSummary"
+  ]
+}

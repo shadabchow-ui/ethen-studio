@@ -1,0 +1,165 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/zonos2",
+  "task": "unknown",
+  "source_url": "https://fal.ai/models/fal-ai/zonos2",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fzonos2",
+  "retrieved_at": "2026-10-04T19:53:30.346Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "text-to-speech",
+  "bytes_sha256": "ed4c717f1f60f0385b2ad010ca0510823a486cbe46e4a159d42512c490cfb594",
+  "queue_path": "/fal-ai/zonos2",
+  "input_name": "Zonos2Input",
+  "input": {
+    "$refName": "Zonos2Input",
+    "properties": {
+      "clean_speaker_background": {
+        "description": "Mark the reference audio as having a clean background.",
+        "type": "boolean",
+        "default": false
+      },
+      "temperature": {
+        "description": "Sampling temperature.",
+        "maximum": 2,
+        "type": "number",
+        "default": 1.15,
+        "minimum": 0
+      },
+      "seed": {
+        "description": "Seed for reproducibility. Random when omitted.",
+        "anyOf": [
+          {
+            "maximum": 2147483647,
+            "type": "integer",
+            "minimum": 0
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "reference_audio_url": {
+        "description": "Reference audio to clone the voice from.",
+        "type": "string",
+        "examples": [
+          "https://storage.googleapis.com/falserverless/model_tests/zonos/demo_voice_zonos.wav"
+        ]
+      },
+      "text": {
+        "description": "Text to synthesize in the cloned voice.",
+        "type": "string",
+        "default": "\"Fal\" is the fastest solution for your audio generation.",
+        "examples": [
+          "\"Fal\" is the fastest solution for your audio generation."
+        ]
+      },
+      "accurate_mode": {
+        "description": "True = closer voice match; False = more expressive.",
+        "type": "boolean",
+        "default": true
+      },
+      "top_p": {
+        "description": "Nucleus sampling probability (0 disables).",
+        "maximum": 1,
+        "type": "number",
+        "default": 0,
+        "minimum": 0
+      },
+      "top_k": {
+        "description": "Top-k sampling cutoff (0 disables).",
+        "maximum": 2048,
+        "type": "integer",
+        "default": 106,
+        "minimum": 0
+      },
+      "language": {
+        "description": "Text-normalization language code. Supported: en_us, en_gb, fr_fr, de, es, it, pt_br, ja, cmn, ko. Unsupported codes skip normalization.",
+        "type": "string",
+        "default": "en_us",
+        "examples": [
+          "en_us"
+        ]
+      },
+      "min_p": {
+        "description": "Minimum-probability sampling threshold.",
+        "maximum": 1,
+        "type": "number",
+        "default": 0.18,
+        "minimum": 0
+      },
+      "max_tokens": {
+        "description": "Maximum number of audio frames to generate. Defaults to the model context limit.",
+        "anyOf": [
+          {
+            "maximum": 6144,
+            "type": "integer",
+            "minimum": 1
+          },
+          {
+            "type": "null"
+          }
+        ]
+      }
+    },
+    "type": "object",
+    "required": [
+      "reference_audio_url"
+    ]
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "Zonos2Input",
+    "Zonos2Output",
+    "File"
+  ]
+}

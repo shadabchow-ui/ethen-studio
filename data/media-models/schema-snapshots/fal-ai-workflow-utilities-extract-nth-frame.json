@@ -1,0 +1,119 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/workflow-utilities/extract-nth-frame",
+  "task": "unknown",
+  "source_url": "https://fal.ai/models/fal-ai/workflow-utilities/extract-nth-frame",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fworkflow-utilities%2Fextract-nth-frame",
+  "retrieved_at": "2026-10-04T19:53:15.130Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "image-to-image",
+  "bytes_sha256": "133e665701d13aefb073c6d6c378cde151893459da252f4e381330fbc16b2cc8",
+  "queue_path": "/fal-ai/workflow-utilities/extract-nth-frame",
+  "input_name": "WorkflowUtilitiesExtractNthFrameInput",
+  "input": {
+    "$refName": "WorkflowUtilitiesExtractNthFrameInput",
+    "description": "Input model for extracting every Nth frame from a video",
+    "properties": {
+      "max_frames": {
+        "maximum": 500,
+        "description": "Maximum number of frames to extract",
+        "type": "integer",
+        "minimum": 1,
+        "default": 100
+      },
+      "output_format": {
+        "description": "Output format for extracted frames",
+        "enum": [
+          "png",
+          "jpg",
+          "jpeg",
+          "webp"
+        ],
+        "type": "string",
+        "default": "png"
+      },
+      "video_url": {
+        "description": "URL of the video file to extract frames from",
+        "type": "string",
+        "examples": [
+          "https://storage.googleapis.com/falserverless/example_outputs/wan-25-i2v-output.mp4"
+        ],
+        "max_file_size": 100000000
+      },
+      "quality": {
+        "maximum": 100,
+        "description": "Quality for jpg/webp output (1-100)",
+        "type": "integer",
+        "minimum": 1,
+        "default": 95
+      },
+      "frame_interval": {
+        "maximum": 300,
+        "description": "Extract every Nth frame (e.g., 3 = every 3rd frame, 12 = every 12th frame)",
+        "type": "integer",
+        "minimum": 1,
+        "default": 12
+      }
+    },
+    "type": "object",
+    "required": [
+      "video_url"
+    ]
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "WorkflowUtilitiesExtractNthFrameInput",
+    "WorkflowUtilitiesExtractNthFrameOutput",
+    "Image"
+  ]
+}

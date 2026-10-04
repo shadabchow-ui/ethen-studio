@@ -1,0 +1,108 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/moondream-next",
+  "task": "unknown",
+  "source_url": "https://fal.ai/models/fal-ai/moondream-next",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fmoondream-next",
+  "retrieved_at": "2026-10-04T19:49:23.586Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "vision",
+  "bytes_sha256": "573c6f5cb4fd7570f889a451591f4c3c2d04bea39b409ba4a27b4a3b400a2958",
+  "queue_path": "/fal-ai/moondream-next",
+  "input_name": "MoondreamNextInput",
+  "input": {
+    "$refName": "MoondreamNextInput",
+    "properties": {
+      "task_type": {
+        "default": "caption",
+        "enum": [
+          "caption",
+          "query"
+        ],
+        "description": "Type of task to perform",
+        "type": "string"
+      },
+      "image_url": {
+        "description": "Image URL to be processed",
+        "examples": [
+          "https://llava-vl.github.io/static/images/monalisa.jpg"
+        ],
+        "type": "string"
+      },
+      "max_tokens": {
+        "default": 64,
+        "maximum": 512,
+        "description": "Maximum number of tokens to generate",
+        "minimum": 1,
+        "type": "integer"
+      },
+      "prompt": {
+        "description": "Prompt for query task",
+        "examples": [
+          "Describe this image in detail."
+        ],
+        "type": "string"
+      }
+    },
+    "required": [
+      "image_url",
+      "prompt"
+    ],
+    "type": "object"
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "MoondreamNextInput",
+    "MoondreamNextOutput"
+  ]
+}

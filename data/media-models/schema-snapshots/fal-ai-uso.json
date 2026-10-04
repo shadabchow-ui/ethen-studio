@@ -1,0 +1,203 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/uso",
+  "task": "unknown",
+  "source_url": "https://fal.ai/models/fal-ai/uso",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fuso",
+  "retrieved_at": "2026-10-04T19:52:04.331Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "image-to-image",
+  "bytes_sha256": "f0faf29f3dda553b01e088143301fd6f6daf3352d9a5cce18032ed1ec516eb37",
+  "queue_path": "/fal-ai/uso",
+  "input_name": "UsoInput",
+  "input": {
+    "$refName": "UsoInput",
+    "properties": {
+      "keep_size": {
+        "description": "Preserve the layout and dimensions of the input content image. Useful for style transfer.",
+        "default": false,
+        "type": "boolean"
+      },
+      "num_inference_steps": {
+        "minimum": 1,
+        "description": "Number of denoising steps. More steps can improve quality but increase generation time.",
+        "maximum": 50,
+        "default": 28,
+        "type": "integer"
+      },
+      "sync_mode": {
+        "description": "If `True`, the media will be returned as a data URI and the output data won't be available in the request history.",
+        "default": false,
+        "type": "boolean"
+      },
+      "input_image_urls": {
+        "description": "List of image URLs in order: [content_image, style_image, extra_style_image].",
+        "items": {
+          "type": "string"
+        },
+        "type": "array",
+        "examples": [
+          [
+            "https://storage.googleapis.com/falserverless/USO/style3.webp",
+            "https://storage.googleapis.com/falserverless/USO/style4.webp"
+          ]
+        ]
+      },
+      "num_images": {
+        "minimum": 1,
+        "description": "Number of images to generate in parallel.",
+        "maximum": 4,
+        "default": 1,
+        "type": "integer"
+      },
+      "prompt": {
+        "description": "Text prompt for generation. Can be empty for pure style transfer.",
+        "default": "",
+        "type": "string",
+        "examples": [
+          "A handsome man."
+        ]
+      },
+      "seed": {
+        "description": "Random seed for reproducible generation. Use same seed for consistent results.",
+        "anyOf": [
+          {
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "image_size": {
+        "description": "The size of the generated image. ",
+        "default": "square_hd",
+        "anyOf": [
+          {
+            "$refName": "ImageSize",
+            "properties": {
+              "height": {
+                "maximum": 14142,
+                "description": "The height of the generated image.",
+                "default": 512,
+                "exclusiveMinimum": 0,
+                "type": "integer"
+              },
+              "width": {
+                "maximum": 14142,
+                "description": "The width of the generated image.",
+                "default": 512,
+                "exclusiveMinimum": 0,
+                "type": "integer"
+              }
+            },
+            "type": "object"
+          },
+          {
+            "enum": [
+              "square_hd",
+              "square",
+              "portrait_4_3",
+              "portrait_16_9",
+              "landscape_4_3",
+              "landscape_16_9"
+            ],
+            "type": "string"
+          }
+        ]
+      },
+      "enable_safety_checker": {
+        "description": "Enable NSFW content detection and filtering.",
+        "default": true,
+        "type": "boolean"
+      },
+      "output_format": {
+        "enum": [
+          "jpeg",
+          "png"
+        ],
+        "description": "Output image format. PNG preserves transparency, JPEG is smaller.",
+        "default": "png",
+        "type": "string"
+      },
+      "guidance_scale": {
+        "minimum": 1,
+        "description": "How closely to follow the prompt. Higher values stick closer to the prompt.",
+        "maximum": 10,
+        "default": 4,
+        "type": "number"
+      },
+      "negative_prompt": {
+        "description": "What you don't want in the image. Use it to exclude unwanted elements, styles, or artifacts.",
+        "default": "",
+        "type": "string",
+        "examples": [
+          "blurry, low quality, distorted, ugly, bad anatomy",
+          "cartoon, anime, illustration",
+          ""
+        ]
+      }
+    },
+    "required": [
+      "input_image_urls"
+    ],
+    "type": "object"
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "UsoInput",
+    "UsoOutput",
+    "ImageSize",
+    "Image"
+  ]
+}

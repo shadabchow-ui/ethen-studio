@@ -1,0 +1,140 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/finegrain-eraser/bbox",
+  "task": "unknown",
+  "source_url": "https://fal.ai/models/fal-ai/finegrain-eraser/bbox",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Ffinegrain-eraser%2Fbbox",
+  "retrieved_at": "2026-10-04T19:43:47.366Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "image-to-image",
+  "bytes_sha256": "9c015202560919fd2c6ad9dee7f1647d2ef5a97766ebd3bfab7bc5474a381290",
+  "queue_path": "/fal-ai/finegrain-eraser/bbox",
+  "input_name": "FinegrainEraserBboxInput",
+  "input": {
+    "$refName": "FinegrainEraserBboxInput",
+    "properties": {
+      "mode": {
+        "enum": [
+          "express",
+          "standard",
+          "premium"
+        ],
+        "default": "standard",
+        "type": "string",
+        "description": "Erase quality mode"
+      },
+      "box_prompts": {
+        "description": "List of bounding box coordinates to erase (only one box prompt is supported)",
+        "items": {
+          "$refName": "BoxPromptBase",
+          "properties": {
+            "y_min": {
+              "default": 0,
+              "type": "integer",
+              "description": "Y Min Coordinate of the box"
+            },
+            "x_min": {
+              "default": 0,
+              "type": "integer",
+              "description": "X Min Coordinate of the box"
+            },
+            "x_max": {
+              "default": 0,
+              "type": "integer",
+              "description": "X Max Coordinate of the prompt"
+            },
+            "y_max": {
+              "default": 0,
+              "type": "integer",
+              "description": "Y Max Coordinate of the prompt"
+            }
+          },
+          "type": "object"
+        },
+        "type": "array"
+      },
+      "seed": {
+        "description": "Random seed for reproducible generation",
+        "anyOf": [
+          {
+            "maximum": 999,
+            "type": "integer",
+            "minimum": 0
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "image_url": {
+        "examples": [
+          "https://v3.fal.media/files/elephant/IKqKIxDfRDK8fzeETCveO_erase_example01.jpg"
+        ],
+        "type": "string",
+        "description": "URL of the image to edit"
+      }
+    },
+    "required": [
+      "image_url",
+      "box_prompts"
+    ],
+    "type": "object"
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "FinegrainEraserBboxInput",
+    "FinegrainEraserBboxOutput",
+    "BoxPromptBase",
+    "File"
+  ]
+}

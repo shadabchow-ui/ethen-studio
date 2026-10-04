@@ -1,0 +1,90 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/minimax/video-01",
+  "task": "video-editing",
+  "source_url": "https://fal.ai/models/fal-ai/minimax/video-01",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fminimax%2Fvideo-01",
+  "retrieved_at": "2026-10-04T19:49:19.382Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "text-to-video",
+  "bytes_sha256": "cedd0f9976bca315f62e9b75dd7b3f248c72fd56287369818d7c7b616cc5fa31",
+  "queue_path": "/fal-ai/minimax/video-01",
+  "input_name": "MinimaxVideo01Input",
+  "input": {
+    "$refName": "MinimaxVideo01Input",
+    "required": [
+      "prompt"
+    ],
+    "type": "object",
+    "properties": {
+      "prompt_optimizer": {
+        "description": "Whether to use the model's prompt optimizer",
+        "type": "boolean",
+        "default": true
+      },
+      "prompt": {
+        "type": "string",
+        "maxLength": 2000,
+        "examples": [
+          "A stylish woman walks down a Tokyo street filled with warm glowing neon and animated city signage. She wears a black leather jacket, a long red dress, and black boots, and carries a black purse."
+        ]
+      }
+    }
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "MinimaxVideo01Input",
+    "MinimaxVideo01Output",
+    "File"
+  ]
+}

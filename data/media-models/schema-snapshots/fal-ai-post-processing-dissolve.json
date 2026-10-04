@@ -1,0 +1,102 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/post-processing/dissolve",
+  "task": "unknown",
+  "source_url": "https://fal.ai/models/fal-ai/post-processing/dissolve",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fpost-processing%2Fdissolve",
+  "retrieved_at": "2026-10-04T19:50:31.107Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "image-to-image",
+  "bytes_sha256": "4a00dc2080417cc7bcfddabf8a351e4f2bc690ae08b6d17114a2e04fe191a014",
+  "queue_path": "/fal-ai/post-processing/dissolve",
+  "input_name": "PostProcessingDissolveInput",
+  "input": {
+    "$refName": "PostProcessingDissolveInput",
+    "properties": {
+      "image_url": {
+        "description": "URL of image to process",
+        "_fal_ui_field": "image",
+        "type": "string",
+        "examples": [
+          "https://v3.fal.media/files/elephant/pLQKJXcFdmIVvB2qhw7vv_59578fb9-8178-4f24-82f0-ea7ec5bc5f2d.jpg"
+        ]
+      },
+      "dissolve_image_url": {
+        "description": "URL of second image for dissolve",
+        "_fal_ui_field": "image",
+        "type": "string",
+        "examples": [
+          "https://v3.fal.media/files/monkey/NJW5irDVP1qwoTMdwOcDV_39qXtqYS0zSUrFwbrJkOY.jpeg"
+        ]
+      },
+      "dissolve_factor": {
+        "description": "Dissolve blend factor",
+        "minimum": 0,
+        "maximum": 1,
+        "default": 0.5,
+        "type": "number"
+      }
+    },
+    "required": [
+      "image_url",
+      "dissolve_image_url"
+    ],
+    "type": "object"
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "PostProcessingDissolveInput",
+    "PostProcessingDissolveOutput",
+    "Image"
+  ]
+}

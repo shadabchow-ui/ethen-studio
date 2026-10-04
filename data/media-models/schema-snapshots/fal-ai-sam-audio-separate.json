@@ -1,0 +1,139 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/sam-audio/separate",
+  "task": "unknown",
+  "source_url": "https://fal.ai/models/fal-ai/sam-audio/separate",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fsam-audio%2Fseparate",
+  "retrieved_at": "2026-10-04T19:51:26.229Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "audio-to-audio",
+  "bytes_sha256": "e28d33a1cb98ee1cd1271c9ce2e1b1f238f50d14e9d3cd553a07f33d8d0b1058",
+  "queue_path": "/fal-ai/sam-audio/separate",
+  "input_name": "SamAudioSeparateInput",
+  "input": {
+    "$refName": "SamAudioSeparateInput",
+    "properties": {
+      "prompt": {
+        "type": "string",
+        "description": "Text prompt describing the sound to isolate.",
+        "examples": [
+          "piano playing"
+        ]
+      },
+      "audio_url": {
+        "type": "string",
+        "description": "URL of the audio file to process (WAV, MP3, FLAC supported)",
+        "examples": [
+          "https://v3b.fal.media/files/b/0a88511f/tUUCI9eDmeC2RqJEOXrZk_assets_avatar_multi_sing_woman.WAV"
+        ]
+      },
+      "reranking_candidates": {
+        "minimum": 1,
+        "type": "integer",
+        "default": 1,
+        "maximum": 7,
+        "description": "Number of candidates to generate and rank. Higher improves quality but increases latency and cost."
+      },
+      "max_chunk_duration": {
+        "minimum": 10,
+        "type": "number",
+        "default": 60,
+        "maximum": 60,
+        "description": "Maximum audio duration (in seconds) to process in a single pass. Longer audio will be chunked with overlap and blended."
+      },
+      "predict_spans": {
+        "type": "boolean",
+        "default": false,
+        "description": "Automatically predict temporal spans where the target sound occurs."
+      },
+      "chunk_overlap": {
+        "minimum": 0,
+        "type": "number",
+        "default": 5,
+        "maximum": 30,
+        "description": "Overlap duration (in seconds) between chunks for crossfade blending."
+      },
+      "output_format": {
+        "type": "string",
+        "default": "wav",
+        "enum": [
+          "wav",
+          "mp3"
+        ],
+        "description": "Output audio format."
+      },
+      "acceleration": {
+        "type": "string",
+        "default": "balanced",
+        "enum": [
+          "fast",
+          "balanced",
+          "quality"
+        ],
+        "description": "The acceleration level to use."
+      }
+    },
+    "type": "object",
+    "required": [
+      "audio_url",
+      "prompt"
+    ],
+    "description": "Input for text-based audio separation."
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "SamAudioSeparateInput",
+    "SamAudioSeparateOutput",
+    "File"
+  ]
+}

@@ -1,0 +1,113 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/llava-next",
+  "task": "unknown",
+  "source_url": "https://fal.ai/models/fal-ai/llava-next",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fllava-next",
+  "retrieved_at": "2026-10-04T19:47:31.818Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "vision",
+  "bytes_sha256": "0728ce4dcc2da7011d5a008a64a377ec82cf24af34d06c07c297e1fc78389337",
+  "queue_path": "/fal-ai/llava-next",
+  "input_name": "LlavaNextInput",
+  "input": {
+    "$refName": "LlavaNextInput",
+    "required": [
+      "image_url",
+      "prompt"
+    ],
+    "type": "object",
+    "properties": {
+      "temperature": {
+        "maximum": 1,
+        "description": "Temperature for sampling",
+        "type": "number",
+        "default": 0.2,
+        "exclusiveMinimum": 0
+      },
+      "prompt": {
+        "description": "Prompt to be used for the image",
+        "type": "string",
+        "examples": [
+          "Do you know who drew this painting?"
+        ]
+      },
+      "top_p": {
+        "maximum": 1,
+        "description": "Top P for sampling",
+        "type": "number",
+        "default": 1,
+        "minimum": 0
+      },
+      "image_url": {
+        "description": "URL of the image to be processed",
+        "type": "string",
+        "examples": [
+          "https://llava-vl.github.io/static/images/monalisa.jpg"
+        ]
+      },
+      "max_tokens": {
+        "description": "Maximum number of tokens to generate",
+        "type": "integer",
+        "default": 64,
+        "max": 1024,
+        "min": 32
+      }
+    }
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "LlavaNextInput",
+    "LlavaNextOutput"
+  ]
+}

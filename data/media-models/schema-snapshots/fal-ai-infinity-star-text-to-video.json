@@ -1,0 +1,143 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/infinity-star/text-to-video",
+  "task": "text-to-video",
+  "source_url": "https://fal.ai/models/fal-ai/infinity-star/text-to-video",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Finfinity-star%2Ftext-to-video",
+  "retrieved_at": "2026-10-04T19:46:39.694Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "text-to-video",
+  "bytes_sha256": "fb71069e918ee8a388c4a454ad1e78ee7194385a01f68af6a3c76a5bd916189a",
+  "queue_path": "/fal-ai/infinity-star/text-to-video",
+  "input_name": "InfinityStarTextToVideoInput",
+  "input": {
+    "$refName": "InfinityStarTextToVideoInput",
+    "properties": {
+      "tau_video": {
+        "maximum": 1,
+        "default": 0.4,
+        "minimum": 0.1,
+        "description": "Tau value for video scale",
+        "type": "number"
+      },
+      "negative_prompt": {
+        "default": "",
+        "description": "Negative prompt to guide what to avoid in generation",
+        "type": "string"
+      },
+      "num_inference_steps": {
+        "maximum": 100,
+        "default": 50,
+        "minimum": 1,
+        "description": "Number of inference steps",
+        "type": "integer"
+      },
+      "seed": {
+        "anyOf": [
+          {
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "Random seed for reproducibility. Leave empty for random generation."
+      },
+      "use_apg": {
+        "default": true,
+        "description": "Whether to use APG",
+        "type": "boolean"
+      },
+      "prompt": {
+        "examples": [
+          "A serene mountain landscape at sunset with flowing clouds"
+        ],
+        "description": "Text prompt for generating the video",
+        "type": "string"
+      },
+      "enhance_prompt": {
+        "default": true,
+        "description": "Whether to use an LLM to enhance the prompt.",
+        "type": "boolean"
+      },
+      "guidance_scale": {
+        "maximum": 40,
+        "default": 7.5,
+        "minimum": 1,
+        "description": "Guidance scale for generation",
+        "type": "number"
+      },
+      "aspect_ratio": {
+        "enum": [
+          "16:9",
+          "1:1",
+          "9:16"
+        ],
+        "default": "16:9",
+        "description": "Aspect ratio of the generated output",
+        "type": "string"
+      }
+    },
+    "required": [
+      "prompt"
+    ],
+    "description": "Input model for text-to-video generation",
+    "type": "object"
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "InfinityStarTextToVideoInput",
+    "InfinityStarTextToVideoOutput",
+    "File"
+  ]
+}

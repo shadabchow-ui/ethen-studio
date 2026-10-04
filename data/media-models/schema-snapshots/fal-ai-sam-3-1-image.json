@@ -1,0 +1,287 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/sam-3-1/image",
+  "task": "image-generation",
+  "source_url": "https://fal.ai/models/fal-ai/sam-3-1/image",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fsam-3-1%2Fimage",
+  "retrieved_at": "2026-10-04T19:51:21.248Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "image-to-image",
+  "bytes_sha256": "efe5f79c551daf317ebd9b7c6f64756cb7991806d982bd95ee361f59491fd914",
+  "queue_path": "/fal-ai/sam-3-1/image",
+  "input_name": "Sam31ImageInput",
+  "input": {
+    "$refName": "Sam31ImageInput",
+    "properties": {
+      "include_boxes": {
+        "type": "boolean",
+        "description": "Whether to include bounding boxes for each mask (when available).",
+        "default": false
+      },
+      "point_prompts": {
+        "type": "array",
+        "description": "List of point prompts",
+        "items": {
+          "$refName": "PointPrompt",
+          "properties": {
+            "object_id": {
+              "anyOf": [
+                {
+                  "type": "integer"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Optional object identifier. Prompts sharing an object id refine the same object. When a text prompt is also given, the id selects which detected object the points refine."
+            },
+            "y": {
+              "anyOf": [
+                {
+                  "type": "integer"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Y Coordinate of the prompt"
+            },
+            "label": {
+              "anyOf": [
+                {
+                  "enum": [
+                    0,
+                    1
+                  ],
+                  "type": "integer"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "1 for foreground, 0 for background"
+            },
+            "x": {
+              "anyOf": [
+                {
+                  "type": "integer"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "X Coordinate of the prompt"
+            },
+            "frame_index": {
+              "anyOf": [
+                {
+                  "type": "integer"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "The frame index to interact with."
+            }
+          },
+          "type": "object"
+        },
+        "default": []
+      },
+      "include_scores": {
+        "type": "boolean",
+        "description": "Whether to include mask confidence scores.",
+        "default": false
+      },
+      "image_url": {
+        "description": "URL of the image to be segmented",
+        "examples": [
+          "https://raw.githubusercontent.com/facebookresearch/segment-anything-2/main/notebooks/images/truck.jpg"
+        ],
+        "type": "string"
+      },
+      "max_masks": {
+        "default": 3,
+        "maximum": 32,
+        "description": "Maximum number of masks to return when `return_multiple_masks` is enabled.",
+        "minimum": 1,
+        "type": "integer"
+      },
+      "apply_mask": {
+        "type": "boolean",
+        "description": "Apply the mask on the image.",
+        "default": true
+      },
+      "prompt": {
+        "type": "string",
+        "description": "Text prompt for segmentation",
+        "examples": [
+          "wheel",
+          "person",
+          "car"
+        ],
+        "default": "wheel"
+      },
+      "return_multiple_masks": {
+        "type": "boolean",
+        "description": "If True, upload and return multiple generated masks as defined by `max_masks`.",
+        "default": false
+      },
+      "box_prompts": {
+        "type": "array",
+        "description": "Box prompt coordinates (x_min, y_min, x_max, y_max). Multiple boxes supported - use object_id to group boxes for the same object or leave empty for separate objects.",
+        "items": {
+          "$refName": "BoxPrompt",
+          "properties": {
+            "y_max": {
+              "anyOf": [
+                {
+                  "type": "integer"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Y Max Coordinate of the box"
+            },
+            "object_id": {
+              "anyOf": [
+                {
+                  "type": "integer"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Optional object identifier. Boxes sharing an object id refine the same object."
+            },
+            "x_max": {
+              "anyOf": [
+                {
+                  "type": "integer"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "X Max Coordinate of the box"
+            },
+            "y_min": {
+              "anyOf": [
+                {
+                  "type": "integer"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Y Min Coordinate of the box"
+            },
+            "x_min": {
+              "anyOf": [
+                {
+                  "type": "integer"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "X Min Coordinate of the box"
+            },
+            "frame_index": {
+              "anyOf": [
+                {
+                  "type": "integer"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "The frame index to interact with."
+            }
+          },
+          "type": "object"
+        },
+        "default": []
+      },
+      "sync_mode": {
+        "type": "boolean",
+        "description": "If True, the media will be returned as a data URI.",
+        "default": false
+      },
+      "output_format": {
+        "type": "string",
+        "description": "The format of the generated image.",
+        "enum": [
+          "jpeg",
+          "png",
+          "webp"
+        ],
+        "default": "png"
+      }
+    },
+    "required": [
+      "image_url"
+    ],
+    "type": "object"
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "Sam31ImageInput",
+    "Sam31ImageOutput",
+    "PointPrompt",
+    "BoxPrompt",
+    "MaskMetadata",
+    "Image"
+  ]
+}

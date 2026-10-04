@@ -1,0 +1,161 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/flux-1/krea/image-to-image",
+  "task": "image-to-image",
+  "source_url": "https://fal.ai/models/fal-ai/flux-1/krea/image-to-image",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fflux-1%2Fkrea%2Fimage-to-image",
+  "retrieved_at": "2026-10-04T19:44:01.444Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "image-to-image",
+  "bytes_sha256": "002dd0f670c1e94fcc8023da73a8e484c28b2e2f9a158fb284166e162d3a070e",
+  "queue_path": "/fal-ai/flux-1/krea/image-to-image",
+  "input_name": "Flux1KreaImageToImageInput",
+  "input": {
+    "$refName": "Flux1KreaImageToImageInput",
+    "properties": {
+      "seed": {
+        "description": "\n        The same seed and the same prompt given to the same version of the model\n        will output the same image every time.\n    ",
+        "anyOf": [
+          {
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "prompt": {
+        "description": "The prompt to generate an image from.",
+        "type": "string",
+        "examples": [
+          "A cat dressed as a wizard with a background of a mystic forest."
+        ]
+      },
+      "strength": {
+        "description": "The strength of the initial image. Higher strength values are better for this model.",
+        "type": "number",
+        "maximum": 1,
+        "minimum": 0.01,
+        "default": 0.95
+      },
+      "output_format": {
+        "enum": [
+          "jpeg",
+          "png"
+        ],
+        "description": "The format of the generated image.",
+        "type": "string",
+        "default": "jpeg"
+      },
+      "enable_safety_checker": {
+        "description": "If set to true, the safety checker will be enabled. Disabling it requires account authorization; unauthorized requests are always checked, and images flagged as unsafe are returned as black images.",
+        "type": "boolean",
+        "default": true
+      },
+      "num_inference_steps": {
+        "description": "The number of inference steps to perform.",
+        "type": "integer",
+        "maximum": 50,
+        "minimum": 10,
+        "default": 40
+      },
+      "sync_mode": {
+        "description": "If `True`, the media will be returned as a data URI and the output data won't be available in the request history.",
+        "type": "boolean",
+        "default": false
+      },
+      "num_images": {
+        "description": "The number of images to generate.",
+        "type": "integer",
+        "maximum": 4,
+        "minimum": 1,
+        "default": 1
+      },
+      "acceleration": {
+        "enum": [
+          "none",
+          "regular",
+          "high"
+        ],
+        "description": "The speed of the generation. The higher the speed, the faster the generation.",
+        "type": "string",
+        "default": "none"
+      },
+      "guidance_scale": {
+        "description": "\n        The CFG (Classifier Free Guidance) scale is a measure of how close you want\n        the model to stick to your prompt when looking for a related image to show you.\n    ",
+        "type": "number",
+        "maximum": 20,
+        "minimum": 1,
+        "default": 4.5
+      },
+      "image_url": {
+        "description": "The URL of the image to generate an image from.",
+        "type": "string",
+        "examples": [
+          "https://fal.media/files/koala/Chls9L2ZnvuipUTEwlnJC.png"
+        ]
+      }
+    },
+    "type": "object",
+    "required": [
+      "image_url",
+      "prompt"
+    ]
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "Flux1KreaImageToImageInput",
+    "Flux1KreaImageToImageOutput",
+    "Image"
+  ]
+}

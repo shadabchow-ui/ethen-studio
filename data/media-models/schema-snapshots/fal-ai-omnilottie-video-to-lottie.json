@@ -1,0 +1,125 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/omnilottie/video-to-lottie",
+  "task": "video-editing",
+  "source_url": "https://fal.ai/models/fal-ai/omnilottie/video-to-lottie",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fomnilottie%2Fvideo-to-lottie",
+  "retrieved_at": "2026-10-04T19:49:43.130Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "json",
+  "bytes_sha256": "35080ec4a1fc7d5f20f84dda95bfdb8365de2900499a078453867ee14c01363a",
+  "queue_path": "/fal-ai/omnilottie/video-to-lottie",
+  "input_name": "OmnilottieVideoToLottieInput",
+  "input": {
+    "$refName": "OmnilottieVideoToLottieInput",
+    "properties": {
+      "video_url": {
+        "description": "URL of the video to convert into a Lottie animation.",
+        "type": "string",
+        "examples": [
+          "https://storage.googleapis.com/falserverless/gallery/0dd62535b46d6f8ecf42f22dc0e148cd.mp4"
+        ]
+      },
+      "prompt": {
+        "description": "Optional text description guiding the conversion.",
+        "anyOf": [
+          {
+            "maxLength": 2000,
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "temperature": {
+        "description": "Sampling temperature for generation.",
+        "minimum": 0,
+        "default": 0.9,
+        "maximum": 2,
+        "type": "number"
+      },
+      "max_tokens": {
+        "description": "Maximum number of Lottie tokens to generate.",
+        "minimum": 256,
+        "default": 4096,
+        "maximum": 8192,
+        "type": "integer"
+      },
+      "top_p": {
+        "description": "Nucleus sampling probability threshold.",
+        "minimum": 0,
+        "default": 0.25,
+        "maximum": 1,
+        "type": "number"
+      },
+      "top_k": {
+        "description": "Top-k sampling parameter.",
+        "minimum": 1,
+        "default": 5,
+        "maximum": 100,
+        "type": "integer"
+      }
+    },
+    "required": [
+      "video_url"
+    ],
+    "type": "object"
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "OmnilottieVideoToLottieInput",
+    "OmnilottieVideoToLottieOutput",
+    "File"
+  ]
+}

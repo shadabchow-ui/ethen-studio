@@ -1,0 +1,229 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/fast-lightning-sdxl",
+  "task": "unknown",
+  "source_url": "https://fal.ai/models/fal-ai/fast-lightning-sdxl",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Ffast-lightning-sdxl",
+  "retrieved_at": "2026-10-04T19:43:34.153Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "text-to-image",
+  "bytes_sha256": "3f3af0d97a5f9197c5585f2378e3ad4771c90e212bc113a30c37a27313f8d334",
+  "queue_path": "/fal-ai/fast-lightning-sdxl",
+  "input_name": "FastLightningSdxlInput",
+  "input": {
+    "$refName": "FastLightningSdxlInput",
+    "properties": {
+      "request_id": {
+        "description": "\n            An id bound to a request, can be used with response to identify the request\n            itself.\n        ",
+        "default": "",
+        "type": "string"
+      },
+      "sync_mode": {
+        "description": "If `True`, the media will be returned as a data URI and the output data won't be available in the request history.",
+        "default": false,
+        "type": "boolean"
+      },
+      "embeddings": {
+        "description": "The list of embeddings to use.",
+        "default": [],
+        "items": {
+          "$refName": "Embedding",
+          "properties": {
+            "path": {
+              "description": "URL or the path to the embedding weights.",
+              "type": "string",
+              "examples": [
+                "https://civitai.com/api/download/models/135931",
+                "https://filebin.net/3chfqasxpqu21y8n/my-custom-lora-v1.safetensors"
+              ]
+            },
+            "tokens": {
+              "description": "\n            The list of tokens to use for the embedding. When omitted, tokens\n            are generated as <s0>, <s1>, ... to match the number of vectors in\n            the embedding file.\n        ",
+              "default": null,
+              "anyOf": [
+                {
+                  "items": {
+                    "type": "string"
+                  },
+                  "type": "array"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            }
+          },
+          "required": [
+            "path"
+          ],
+          "type": "object"
+        },
+        "type": "array"
+      },
+      "num_inference_steps": {
+        "description": "The number of inference steps to perform.",
+        "enum": [
+          1,
+          2,
+          4,
+          8
+        ],
+        "default": 4,
+        "type": "integer"
+      },
+      "num_images": {
+        "description": "The number of images to generate.",
+        "minimum": 1,
+        "default": 1,
+        "maximum": 8,
+        "type": "integer"
+      },
+      "prompt": {
+        "description": "The prompt to use for generating the image. Be as descriptive as possible for best results.",
+        "type": "string",
+        "examples": [
+          "photo of a girl smiling during a sunset, with lightnings in the background"
+        ]
+      },
+      "seed": {
+        "description": "\n            The same seed and the same prompt given to the same version of Stable Diffusion\n            will output the same image every time.\n        ",
+        "default": null,
+        "anyOf": [
+          {
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "format": {
+        "description": "The format of the generated image.",
+        "enum": [
+          "jpeg",
+          "png"
+        ],
+        "default": "jpeg",
+        "type": "string"
+      },
+      "expand_prompt": {
+        "description": "If set to true, the prompt will be expanded with additional prompts.",
+        "default": false,
+        "type": "boolean"
+      },
+      "image_size": {
+        "description": "The size of the generated image.",
+        "default": "square_hd",
+        "anyOf": [
+          {
+            "$refName": "ImageSize",
+            "properties": {
+              "height": {
+                "description": "The height of the generated image.",
+                "maximum": 14142,
+                "default": 512,
+                "exclusiveMinimum": 0,
+                "type": "integer"
+              },
+              "width": {
+                "description": "The width of the generated image.",
+                "maximum": 14142,
+                "default": 512,
+                "exclusiveMinimum": 0,
+                "type": "integer"
+              }
+            },
+            "type": "object"
+          },
+          {
+            "enum": [
+              "square_hd",
+              "square",
+              "portrait_4_3",
+              "portrait_16_9",
+              "landscape_4_3",
+              "landscape_16_9"
+            ],
+            "type": "string"
+          }
+        ]
+      },
+      "enable_safety_checker": {
+        "description": "If set to true, the safety checker will be enabled.",
+        "default": true,
+        "type": "boolean"
+      },
+      "safety_checker_version": {
+        "description": "The version of the safety checker to use. v1 is the default CompVis safety checker. v2 uses a custom ViT model.",
+        "enum": [
+          "v1",
+          "v2"
+        ],
+        "default": "v1",
+        "type": "string"
+      }
+    },
+    "required": [
+      "prompt"
+    ],
+    "type": "object"
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "FastLightningSdxlInput",
+    "FastLightningSdxlOutput",
+    "Embedding",
+    "ImageSize",
+    "Image"
+  ]
+}

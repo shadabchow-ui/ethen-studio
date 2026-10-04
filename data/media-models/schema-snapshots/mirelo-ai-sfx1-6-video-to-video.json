@@ -1,0 +1,123 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "mirelo-ai/sfx1.6/video-to-video",
+  "task": "video-to-video",
+  "source_url": "https://fal.ai/models/mirelo-ai/sfx1.6/video-to-video",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=mirelo-ai%2Fsfx1.6%2Fvideo-to-video",
+  "retrieved_at": "2026-10-04T19:54:31.983Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "video-to-video",
+  "bytes_sha256": "00864bc40454298cf55267f76912fa76e015e62cc050a774e7dc6992eb4f8df1",
+  "queue_path": "/mirelo-ai/sfx1.6/video-to-video",
+  "input_name": "Sfx16VideoToVideoInput",
+  "input": {
+    "$refName": "Sfx16VideoToVideoInput",
+    "required": [
+      "video_url"
+    ],
+    "properties": {
+      "seed": {
+        "description": "Seed for generation. -1 or None for random.",
+        "anyOf": [
+          {
+            "minimum": -1,
+            "type": "integer",
+            "maximum": 18446744073709552000
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "text_prompt": {
+        "description": "Optional text prompt guiding generation.",
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "duration": {
+        "minimum": 1,
+        "description": "Duration of the generated SFX in seconds. Values >10 use sliding-window extended generation.",
+        "type": "number",
+        "default": 10,
+        "maximum": 60
+      },
+      "num_samples": {
+        "minimum": 1,
+        "description": "Number of variations to generate.",
+        "type": "integer",
+        "default": 2,
+        "maximum": 4
+      },
+      "video_url": {
+        "examples": [
+          "https://di3otfzjg1gxa.cloudfront.net/cute_spider_silent.mp4"
+        ],
+        "description": "Video URL to add SFX to.",
+        "type": "string"
+      }
+    },
+    "type": "object"
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "Sfx16VideoToVideoInput",
+    "Sfx16VideoToVideoOutput",
+    "Video"
+  ]
+}

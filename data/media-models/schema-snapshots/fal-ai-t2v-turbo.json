@@ -1,0 +1,126 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/t2v-turbo",
+  "task": "unknown",
+  "source_url": "https://fal.ai/models/fal-ai/t2v-turbo",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Ft2v-turbo",
+  "retrieved_at": "2026-10-04T19:51:57.565Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "text-to-video",
+  "bytes_sha256": "1a706d48497842237840d6769b1807935dac14da732fa37c77fe7532fe0102c5",
+  "queue_path": "/fal-ai/t2v-turbo",
+  "input_name": "T2vTurboInput",
+  "input": {
+    "$refName": "T2vTurboInput",
+    "properties": {
+      "guidance_scale": {
+        "maximum": 30,
+        "description": "The guidance scale",
+        "default": 7.5,
+        "minimum": 0.1,
+        "type": "number"
+      },
+      "num_inference_steps": {
+        "maximum": 30,
+        "description": "The number of steps to sample",
+        "default": 4,
+        "minimum": 1,
+        "type": "integer"
+      },
+      "seed": {
+        "description": "The seed to use for the random number generator",
+        "anyOf": [
+          {
+            "maximum": 203279,
+            "minimum": 0,
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "num_frames": {
+        "maximum": 32,
+        "description": "The number of frames to generate",
+        "default": 16,
+        "minimum": 16,
+        "type": "integer"
+      },
+      "prompt": {
+        "description": "The prompt to generate images from",
+        "type": "string",
+        "examples": [
+          "a dog wearing vr goggles on a boat"
+        ]
+      },
+      "export_fps": {
+        "maximum": 24,
+        "description": "The FPS of the exported video",
+        "default": 8,
+        "minimum": 1,
+        "type": "integer"
+      }
+    },
+    "required": [
+      "prompt"
+    ],
+    "type": "object"
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "T2vTurboInput",
+    "T2vTurboOutput",
+    "File"
+  ]
+}

@@ -1,0 +1,159 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/vidu/q2/reference-to-video/pro",
+  "task": "reference-to-video",
+  "source_url": "https://fal.ai/models/fal-ai/vidu/q2/reference-to-video/pro",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fvidu%2Fq2%2Freference-to-video%2Fpro",
+  "retrieved_at": "2026-10-04T19:52:21.597Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "image-to-video",
+  "bytes_sha256": "070dcf71b647dfcf22eda3618d5f2d739ca409815bb1a8f755bb5f3641aacd60",
+  "queue_path": "/fal-ai/vidu/q2/reference-to-video/pro",
+  "input_name": "ViduQ2ReferenceToVideoProInput",
+  "input": {
+    "$refName": "ViduQ2ReferenceToVideoProInput",
+    "properties": {
+      "reference_image_urls": {
+        "examples": [
+          [
+            "https://storage.googleapis.com/falserverless/model_tests/video_models/vidu-image-3123041388101890.png"
+          ]
+        ],
+        "type": "array",
+        "description": "URLs of the reference images for subject appearance. If videos are provided, up to 4 images are allowed; otherwise up to 7 images.",
+        "items": {
+          "type": "string"
+        }
+      },
+      "aspect_ratio": {
+        "type": "string",
+        "description": "Aspect ratio of the output video (e.g., auto, 16:9, 9:16, 1:1, or any W:H)",
+        "default": "16:9"
+      },
+      "reference_video_urls": {
+        "examples": [
+          [
+            "https://storage.googleapis.com/falserverless/model_tests/video_models/vidu-video-3123002003131623.mp4"
+          ]
+        ],
+        "type": "array",
+        "description": "URLs of the reference videos for video editing or motion reference. Supports up to 2 videos.",
+        "items": {
+          "type": "string"
+        }
+      },
+      "bgm": {
+        "type": "boolean",
+        "description": "Whether to add background music to the generated video",
+        "default": false
+      },
+      "resolution": {
+        "enum": [
+          "540p",
+          "720p",
+          "1080p"
+        ],
+        "type": "string",
+        "description": "Output video resolution",
+        "default": "720p"
+      },
+      "prompt": {
+        "examples": [
+          "@Figure 1 Character Reference@Refer to the special effects, movements, and camera work of Video 1."
+        ],
+        "type": "string",
+        "maxLength": 2000,
+        "description": "Text prompt for video generation, max 2000 characters"
+      },
+      "seed": {
+        "anyOf": [
+          {
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "Random seed for reproducibility. If None, a random seed is chosen."
+      },
+      "movement_amplitude": {
+        "enum": [
+          "auto",
+          "small",
+          "medium",
+          "large"
+        ],
+        "type": "string",
+        "description": "The movement amplitude of objects in the frame",
+        "default": "auto"
+      },
+      "duration": {
+        "maximum": 8,
+        "type": "integer",
+        "description": "Duration of the video in seconds (0 for automatic duration)",
+        "minimum": 1,
+        "default": 4
+      }
+    },
+    "type": "object",
+    "required": [
+      "prompt"
+    ]
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "ViduQ2ReferenceToVideoProInput",
+    "ViduQ2ReferenceToVideoProOutput",
+    "File"
+  ]
+}

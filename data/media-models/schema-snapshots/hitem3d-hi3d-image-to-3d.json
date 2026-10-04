@@ -1,0 +1,158 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "hitem3d/hi3d/image-to-3d",
+  "task": "image-generation",
+  "source_url": "https://fal.ai/models/hitem3d/hi3d/image-to-3d",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=hitem3d%2Fhi3d%2Fimage-to-3d",
+  "retrieved_at": "2026-10-04T19:53:39.383Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "image-to-3d",
+  "bytes_sha256": "e2c7cb9f06384ee0123237730757991fe9045369812e56fa1be40ae0a6c11204",
+  "queue_path": "/hitem3d/hi3d/image-to-3d",
+  "input_name": "Hi3dImageTo3dInput",
+  "input": {
+    "$refName": "Hi3dImageTo3dInput",
+    "type": "object",
+    "properties": {
+      "export_format": {
+        "default": "glb",
+        "type": "string",
+        "description": "File format of the generated model.",
+        "enum": [
+          "glb",
+          "obj",
+          "stl",
+          "fbx",
+          "usdz"
+        ]
+      },
+      "face_count": {
+        "anyOf": [
+          {
+            "minimum": 100000,
+            "type": "integer",
+            "maximum": 2000000
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "Target face count of the generated model. When unset, the partner picks the recommended count for the resolution (e.g. 500k for 512, 1M for 1024, 2M for 1536)."
+      },
+      "enable_pbr": {
+        "default": true,
+        "type": "boolean",
+        "description": "Generate PBR material maps together with the texture. Only supported (and billed) for v2.0/v2.1 and v3.0 models when enable_texture is true; ignored otherwise."
+      },
+      "image_url": {
+        "examples": [
+          "https://storage.googleapis.com/falserverless/example_inputs/dog.png"
+        ],
+        "type": "string",
+        "description": "URL of the input image. PNG, JPEG and WebP formats are supported, up to 20MB."
+      },
+      "model": {
+        "default": "hitem3dv2.1",
+        "type": "string",
+        "description": "Model version used for generation. 'hitem3d*' are the general models; 'scene-portrait*' are tuned for portraits/characters.",
+        "enum": [
+          "hitem3dv1.5",
+          "hitem3dv2.0",
+          "hitem3dv2.1",
+          "scene-portraitv1.5",
+          "scene-portraitv2.0",
+          "scene-portraitv2.1"
+        ]
+      },
+      "enable_texture": {
+        "default": true,
+        "type": "boolean",
+        "description": "Whether to generate textures in addition to geometry. When false, only the geometry mesh is generated (and billed)."
+      },
+      "enable_safety_checker": {
+        "default": true,
+        "type": "boolean",
+        "description": "If set to true, input images are checked for safety before processing."
+      },
+      "resolution": {
+        "anyOf": [
+          {
+            "type": "string",
+            "enum": [
+              "512",
+              "1024",
+              "1536",
+              "1536pro",
+              "1536fast",
+              "1536profast"
+            ]
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "Generation resolution. Supported values depend on the model: v1.5/v2.0 accept 512, 1024, 1536 and 1536pro; v2.1 accepts 1536fast and 1536pro; scene-portraitv1.5 accepts 1536; scene-portraitv2.0 accepts 1536pro; scene-portraitv2.1 accepts 1536profast and 1536pro. Defaults to the model's recommended resolution (1024 for v1.5/v2.0, the fast tier otherwise)."
+      }
+    },
+    "required": [
+      "image_url"
+    ],
+    "description": "Input for single-image image-to-3D generation."
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "Hi3dImageTo3dInput",
+    "Hi3dImageTo3dOutput",
+    "File"
+  ]
+}

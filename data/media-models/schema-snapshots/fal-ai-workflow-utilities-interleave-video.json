@@ -1,0 +1,114 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/workflow-utilities/interleave-video",
+  "task": "video-editing",
+  "source_url": "https://fal.ai/models/fal-ai/workflow-utilities/interleave-video",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fworkflow-utilities%2Finterleave-video",
+  "retrieved_at": "2026-10-04T19:53:16.353Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "unknown",
+  "bytes_sha256": "8d9ac6be4fa8e16dbafc43aea75a7e329e6d4c451172ec323d1519dadefcafd7",
+  "queue_path": "/fal-ai/workflow-utilities/interleave-video",
+  "input_name": "WorkflowUtilitiesInterleaveVideoInput",
+  "input": {
+    "$refName": "WorkflowUtilitiesInterleaveVideoInput",
+    "description": "Input model for interleaving multiple videos",
+    "properties": {
+      "frames_per_second": {
+        "description": "Frame rate of the interleaved output video. When set, all interleaved frames are emitted at this rate, so lower values produce a longer output while higher values produce a shorter, faster one. Leave unset to preserve the legacy behavior, which derives the output rate from the input videos (this can yield non-standard rates such as 384.0098).",
+        "anyOf": [
+          {
+            "maximum": 120,
+            "type": "number",
+            "minimum": 1
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "examples": [
+          24
+        ]
+      },
+      "video_urls": {
+        "description": "List of video URLs to interleave in order",
+        "items": {
+          "_fal_ui_field": "video",
+          "type": "string"
+        },
+        "type": "array",
+        "examples": [
+          [
+            "https://storage.googleapis.com/falserverless/example_outputs/wan-25-i2v-output.mp4",
+            "https://storage.googleapis.com/falserverless/model_tests/kling/kling-v2.5-turbo-pro-image-to-video-output.mp4",
+            "https://storage.googleapis.com/falserverless/example_inputs/seedance_pro_i2v.mp4",
+            "https://storage.googleapis.com/falserverless/example_outputs/wan-25-i2v-output.mp4",
+            "https://storage.googleapis.com/falserverless/model_tests/kling/kling-v2.5-turbo-pro-image-to-video-output.mp4",
+            "https://storage.googleapis.com/falserverless/example_inputs/seedance_pro_i2v.mp4"
+          ]
+        ],
+        "max_file_size": 100000000
+      }
+    },
+    "type": "object",
+    "required": [
+      "video_urls"
+    ]
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "WorkflowUtilitiesInterleaveVideoInput",
+    "WorkflowUtilitiesInterleaveVideoOutput",
+    "File"
+  ]
+}

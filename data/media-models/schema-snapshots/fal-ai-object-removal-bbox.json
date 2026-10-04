@@ -1,0 +1,152 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/object-removal/bbox",
+  "task": "unknown",
+  "source_url": "https://fal.ai/models/fal-ai/object-removal/bbox",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fobject-removal%2Fbbox",
+  "retrieved_at": "2026-10-04T19:49:39.431Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "image-to-image",
+  "bytes_sha256": "5cbfcc41c0600d14e9756538295c2d4f3b37c498492dacd158a2ea042cbda65a",
+  "queue_path": "/fal-ai/object-removal/bbox",
+  "input_name": "ObjectRemovalBboxInput",
+  "input": {
+    "$refName": "ObjectRemovalBboxInput",
+    "properties": {
+      "image_url": {
+        "type": "string",
+        "description": "The URL of the image to remove objects from.",
+        "examples": [
+          "https://v3.fal.media/files/zebra/o0DORfJawy-T9P_-NsvLY.png"
+        ]
+      },
+      "box_prompts": {
+        "type": "array",
+        "default": [],
+        "items": {
+          "$refName": "BBoxPromptBase",
+          "properties": {
+            "y_max": {
+              "minimum": 0,
+              "type": "number",
+              "default": 0,
+              "maximum": 1,
+              "description": "Y Max Coordinate of the prompt (0-1)"
+            },
+            "x_min": {
+              "minimum": 0,
+              "type": "number",
+              "default": 0,
+              "maximum": 1,
+              "description": "X Min Coordinate of the box (0-1)"
+            },
+            "y_min": {
+              "minimum": 0,
+              "type": "number",
+              "default": 0,
+              "maximum": 1,
+              "description": "Y Min Coordinate of the box (0-1)"
+            },
+            "x_max": {
+              "minimum": 0,
+              "type": "number",
+              "default": 0,
+              "maximum": 1,
+              "description": "X Max Coordinate of the prompt (0-1)"
+            }
+          },
+          "type": "object"
+        },
+        "description": "List of bounding box coordinates to erase (only one box prompt is supported)",
+        "examples": [
+          [
+            {
+              "y_max": 0.8175,
+              "x_min": 0.3595,
+              "y_min": 0.0115,
+              "x_max": 0.6574
+            }
+          ]
+        ]
+      },
+      "mask_expansion": {
+        "minimum": 0,
+        "type": "integer",
+        "default": 15,
+        "maximum": 50,
+        "description": "Amount of pixels to expand the mask by. Range: 0-50"
+      },
+      "model": {
+        "type": "string",
+        "default": "best_quality",
+        "enum": [
+          "low_quality",
+          "medium_quality",
+          "high_quality",
+          "best_quality"
+        ]
+      }
+    },
+    "type": "object",
+    "required": [
+      "image_url"
+    ]
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "ObjectRemovalBboxInput",
+    "ObjectRemovalBboxOutput",
+    "BBoxPromptBase",
+    "Image"
+  ]
+}

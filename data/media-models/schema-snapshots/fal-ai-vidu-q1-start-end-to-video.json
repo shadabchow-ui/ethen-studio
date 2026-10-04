@@ -1,0 +1,124 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/vidu/q1/start-end-to-video",
+  "task": "video-editing",
+  "source_url": "https://fal.ai/models/fal-ai/vidu/q1/start-end-to-video",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fvidu%2Fq1%2Fstart-end-to-video",
+  "retrieved_at": "2026-10-04T19:52:18.592Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "image-to-video",
+  "bytes_sha256": "a94fe111ddeedf3e97a0a8dad12eacd955f12dcdd837c3c827ec3f3d185a1973",
+  "queue_path": "/fal-ai/vidu/q1/start-end-to-video",
+  "input_name": "ViduQ1StartEndToVideoInput",
+  "input": {
+    "$refName": "ViduQ1StartEndToVideoInput",
+    "properties": {
+      "end_image_url": {
+        "examples": [
+          "https://v3.fal.media/files/kangaroo/CASBu_OmOnZ8IafirarFL_last_frame_q1.png"
+        ],
+        "type": "string",
+        "description": "URL of the image to use as the last frame"
+      },
+      "start_image_url": {
+        "examples": [
+          "https://v3.fal.media/files/zebra/sgsdKvPigPhJ1S7Hl5bWc_first_frame_q1.png"
+        ],
+        "type": "string",
+        "description": "URL of the image to use as the first frame"
+      },
+      "prompt": {
+        "examples": [
+          "Dragon lands on a rock"
+        ],
+        "type": "string",
+        "maxLength": 1500,
+        "description": "Text prompt for video generation, max 1500 characters"
+      },
+      "seed": {
+        "anyOf": [
+          {
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "Seed for the random number generator"
+      },
+      "movement_amplitude": {
+        "enum": [
+          "auto",
+          "small",
+          "medium",
+          "large"
+        ],
+        "type": "string",
+        "description": "The movement amplitude of objects in the frame",
+        "default": "auto"
+      }
+    },
+    "type": "object",
+    "required": [
+      "prompt",
+      "start_image_url",
+      "end_image_url"
+    ]
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "ViduQ1StartEndToVideoInput",
+    "ViduQ1StartEndToVideoOutput",
+    "File"
+  ]
+}

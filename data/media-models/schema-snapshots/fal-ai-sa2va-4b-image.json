@@ -1,0 +1,93 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/sa2va/4b/image",
+  "task": "image-generation",
+  "source_url": "https://fal.ai/models/fal-ai/sa2va/4b/image",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fsa2va%2F4b%2Fimage",
+  "retrieved_at": "2026-10-04T19:51:16.846Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "vision",
+  "bytes_sha256": "8bb4d22ac87aa4a7e68d5df5a04b761dfc1dd7fb74d52cea3b4a6dac7e563b25",
+  "queue_path": "/fal-ai/sa2va/4b/image",
+  "input_name": "Sa2va4bImageInput",
+  "input": {
+    "$refName": "Sa2va4bImageInput",
+    "properties": {
+      "image_url": {
+        "description": "Url for the Input image.",
+        "type": "string",
+        "examples": [
+          "https://raw.githubusercontent.com/facebookresearch/segment-anything-2/main/notebooks/images/truck.jpg"
+        ]
+      },
+      "prompt": {
+        "description": "Prompt to be used for the chat completion",
+        "type": "string",
+        "examples": [
+          "Could you please give me a brief description of the image? Please respond with interleaved segmentation masks for the corresponding parts of the answer."
+        ]
+      }
+    },
+    "required": [
+      "prompt",
+      "image_url"
+    ],
+    "type": "object"
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "Sa2va4bImageInput",
+    "Sa2va4bImageOutput",
+    "Image"
+  ]
+}

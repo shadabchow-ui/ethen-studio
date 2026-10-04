@@ -1,0 +1,89 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/ddcolor",
+  "task": "unknown",
+  "source_url": "https://fal.ai/models/fal-ai/ddcolor",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fddcolor",
+  "retrieved_at": "2026-10-04T19:43:13.542Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "image-to-image",
+  "bytes_sha256": "477dbc28d07c8a9304fad929d2fbffcf4244fb4232a7d47d32bd73d6dbb70d5d",
+  "queue_path": "/fal-ai/ddcolor",
+  "input_name": "DdcolorInput",
+  "input": {
+    "$refName": "DdcolorInput",
+    "properties": {
+      "seed": {
+        "type": "integer",
+        "description": "seed to be used for generation"
+      },
+      "image_url": {
+        "examples": [
+          "https://storage.googleapis.com/falserverless/gallery/Screenshot%202025-02-26%20154226.png"
+        ],
+        "type": "string",
+        "description": "URL of image to be used for relighting"
+      }
+    },
+    "required": [
+      "image_url"
+    ],
+    "type": "object"
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "DdcolorInput",
+    "DdcolorOutput",
+    "Image"
+  ]
+}

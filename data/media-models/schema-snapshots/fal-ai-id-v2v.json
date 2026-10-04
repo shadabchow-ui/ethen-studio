@@ -1,0 +1,194 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/id-v2v",
+  "task": "unknown",
+  "source_url": "https://fal.ai/models/fal-ai/id-v2v",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fid-v2v",
+  "retrieved_at": "2026-10-04T19:45:48.458Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "video-to-video",
+  "bytes_sha256": "d5a1c2112b1d3d35cd8eca5afd01fff135e0b4311737821755c14291742c7d3f",
+  "queue_path": "/fal-ai/id-v2v",
+  "input_name": "IdV2vInput",
+  "input": {
+    "$refName": "IdV2vInput",
+    "required": [
+      "prompt",
+      "video_url",
+      "image_url"
+    ],
+    "type": "object",
+    "properties": {
+      "seed": {
+        "description": "Random seed for reproducibility. The same seed is used for every clip of a multi-clip generation.",
+        "anyOf": [
+          {
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "resolution": {
+        "description": "Output resolution tier. Orientation follows the source video (720p is 1280x720 or 720x1280; 480p is 832x480 or 480x832).",
+        "enum": [
+          "480p",
+          "720p"
+        ],
+        "type": "string",
+        "default": "720p"
+      },
+      "num_inference_steps": {
+        "description": "Number of diffusion sampling steps per clip. Higher improves quality but is slower.",
+        "maximum": 40,
+        "type": "integer",
+        "default": 30,
+        "minimum": 2
+      },
+      "video_url": {
+        "description": "URL of the source video whose motion and framing drive the generation.",
+        "type": "string",
+        "examples": [
+          "https://storage.googleapis.com/falserverless/model_tests/video_models/mmaudio_input.mp4"
+        ]
+      },
+      "num_frames": {
+        "description": "Maximum number of output frames. Capped at the source video's frame count.",
+        "maximum": 241,
+        "type": "integer",
+        "default": 81,
+        "minimum": 17
+      },
+      "keyframes": {
+        "description": "Optional restyled keyframes pinned at specific output frame indices to anchor identity over long videos.",
+        "items": {
+          "$refName": "Keyframe",
+          "required": [
+            "image_url",
+            "frame_index"
+          ],
+          "type": "object",
+          "properties": {
+            "frame_index": {
+              "description": "0-based output frame index for this keyframe. Must be >= 1 (frame 0 is the restyled first frame from `image_url`) and less than the output frame count.",
+              "type": "integer",
+              "minimum": 1,
+              "examples": [
+                80
+              ]
+            },
+            "image_url": {
+              "description": "URL of a restyled keyframe image. It is pinned verbatim at `frame_index` to anchor identity over long videos. Its aspect ratio must match the output aspect ratio within 0.1.",
+              "type": "string",
+              "examples": [
+                "https://storage.googleapis.com/falserverless/example_inputs/ltxv-image-input.jpg"
+              ]
+            }
+          }
+        },
+        "type": "array",
+        "maxItems": 5
+      },
+      "segmentation_prompt": {
+        "description": "Text prompt for SAM-3 subject segmentation. The segmented subject's pixels condition the generation; the rest of the frame is regenerated freely.",
+        "maxLength": 100,
+        "default": "person",
+        "examples": [
+          "person"
+        ],
+        "type": "string"
+      },
+      "image_url": {
+        "description": "URL of the restyled first frame. The video is regenerated in this frame's identity/style.",
+        "type": "string",
+        "examples": [
+          "https://storage.googleapis.com/falserverless/example_inputs/ltxv-image-input.jpg"
+        ]
+      },
+      "enable_safety_checker": {
+        "description": "Enable safety checking of inputs and outputs.",
+        "type": "boolean",
+        "default": true
+      },
+      "vace_scale": {
+        "description": "VACE conditioning scale. Controls how strongly the source video's structure constrains the generation.",
+        "maximum": 2,
+        "type": "number",
+        "default": 1,
+        "minimum": 0
+      },
+      "guidance_scale": {
+        "description": "Classifier-free guidance scale. Controls prompt adherence versus creativity.",
+        "maximum": 10,
+        "type": "number",
+        "default": 5,
+        "minimum": 1
+      },
+      "prompt": {
+        "description": "The prompt describing the restyled video to generate.",
+        "type": "string",
+        "examples": [
+          "An astronaut walking through an autumn forest"
+        ]
+      }
+    }
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "IdV2vInput",
+    "IdV2vOutput",
+    "Keyframe",
+    "File"
+  ]
+}

@@ -1,0 +1,105 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/image-apps-v2/portrait-enhance",
+  "task": "image-generation",
+  "source_url": "https://fal.ai/models/fal-ai/image-apps-v2/portrait-enhance",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fimage-apps-v2%2Fportrait-enhance",
+  "retrieved_at": "2026-10-04T19:46:10.894Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "image-to-image",
+  "bytes_sha256": "22498ef6ccb4a053c6351ca10648fee97174fa80e15269f242972af49cf77a52",
+  "queue_path": "/fal-ai/image-apps-v2/portrait-enhance",
+  "input_name": "ImageAppsV2PortraitEnhanceInput",
+  "input": {
+    "$refName": "ImageAppsV2PortraitEnhanceInput",
+    "type": "object",
+    "properties": {
+      "aspect_ratio": {
+        "$refName": "AspectRatio",
+        "type": "object",
+        "properties": {
+          "ratio": {
+            "enum": [
+              "1:1",
+              "16:9",
+              "9:16",
+              "4:3",
+              "3:4"
+            ],
+            "type": "string",
+            "description": "Aspect ratio for 4K resolution output",
+            "default": "1:1"
+          }
+        },
+        "description": "Aspect ratio for 4K output (default: 3:4 for portraits)"
+      },
+      "image_url": {
+        "type": "string",
+        "examples": [
+          "https://v3b.fal.media/files/b/monkey/VszUszGx2uzReqFvQzF26.jpg"
+        ],
+        "description": "Portrait image URL to enhance"
+      }
+    },
+    "required": [
+      "image_url"
+    ]
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "ImageAppsV2PortraitEnhanceInput",
+    "ImageAppsV2PortraitEnhanceOutput",
+    "AspectRatio",
+    "Image"
+  ]
+}

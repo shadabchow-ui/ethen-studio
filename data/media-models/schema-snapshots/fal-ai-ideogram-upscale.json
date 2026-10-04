@@ -1,0 +1,132 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/ideogram/upscale",
+  "task": "image-editing",
+  "source_url": "https://fal.ai/models/fal-ai/ideogram/upscale",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fideogram%2Fupscale",
+  "retrieved_at": "2026-10-04T19:45:53.736Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "image-to-image",
+  "bytes_sha256": "f1e22b147673449334011ebf109500d62e56cb7ee95e1443608822d9072f66e8",
+  "queue_path": "/fal-ai/ideogram/upscale",
+  "input_name": "IdeogramUpscaleInput",
+  "input": {
+    "$refName": "IdeogramUpscaleInput",
+    "properties": {
+      "expand_prompt": {
+        "default": false,
+        "description": "Whether to expand the prompt with MagicPrompt functionality.",
+        "type": "boolean"
+      },
+      "image_url": {
+        "description": "The image URL to upscale",
+        "type": "string",
+        "examples": [
+          "https://fal.media/files/monkey/e6RtJf_ue0vyWzeiEmTby.png"
+        ]
+      },
+      "sync_mode": {
+        "default": false,
+        "description": "If `True`, the media will be returned as a data URI and the output data won't be available in the request history.",
+        "type": "boolean"
+      },
+      "detail": {
+        "minimum": 1,
+        "default": 50,
+        "description": "The detail of the upscaled image",
+        "maximum": 100,
+        "type": "integer"
+      },
+      "seed": {
+        "anyOf": [
+          {
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "Seed for the random number generator"
+      },
+      "prompt": {
+        "default": "",
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "The prompt to upscale the image with"
+      },
+      "resemblance": {
+        "minimum": 1,
+        "default": 50,
+        "description": "The resemblance of the upscaled image to the original image",
+        "maximum": 100,
+        "type": "integer"
+      }
+    },
+    "type": "object",
+    "required": [
+      "image_url"
+    ]
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "IdeogramUpscaleInput",
+    "IdeogramUpscaleOutput",
+    "File"
+  ]
+}

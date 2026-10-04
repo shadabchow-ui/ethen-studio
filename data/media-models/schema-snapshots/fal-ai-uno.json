@@ -1,0 +1,191 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/uno",
+  "task": "unknown",
+  "source_url": "https://fal.ai/models/fal-ai/uno",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Funo",
+  "retrieved_at": "2026-10-04T19:52:03.848Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "image-to-image",
+  "bytes_sha256": "0010a58039560f5a68c47daaa5d990f945d82d96bcbfccf7f0fe0495a2edbf13",
+  "queue_path": "/fal-ai/uno",
+  "input_name": "UnoInput",
+  "input": {
+    "$refName": "UnoInput",
+    "properties": {
+      "guidance_scale": {
+        "maximum": 20,
+        "type": "number",
+        "description": "\n            The CFG (Classifier Free Guidance) scale is a measure of how close you want\n            the model to stick to your prompt when looking for a related image to show you.\n        ",
+        "minimum": 1,
+        "default": 3.5
+      },
+      "image_size": {
+        "anyOf": [
+          {
+            "$refName": "ImageSize",
+            "properties": {
+              "height": {
+                "exclusiveMinimum": 0,
+                "type": "integer",
+                "description": "The height of the generated image.",
+                "maximum": 14142,
+                "default": 512
+              },
+              "width": {
+                "exclusiveMinimum": 0,
+                "type": "integer",
+                "description": "The width of the generated image.",
+                "maximum": 14142,
+                "default": 512
+              }
+            },
+            "type": "object"
+          },
+          {
+            "type": "string",
+            "enum": [
+              "square_hd",
+              "square",
+              "portrait_4_3",
+              "portrait_16_9",
+              "landscape_4_3",
+              "landscape_16_9"
+            ]
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "\n            The size of the generated image. You can choose between some presets or custom height and width\n            that **must be multiples of 8**.\n        ",
+        "default": "square_hd"
+      },
+      "input_image_urls": {
+        "examples": [
+          [
+            "https://storage.googleapis.com/falserverless/UNO/figurine.png",
+            "https://storage.googleapis.com/falserverless/UNO/crystal_ball.png"
+          ]
+        ],
+        "type": "array",
+        "description": "URL of images to use while generating the image.",
+        "items": {
+          "type": "string"
+        }
+      },
+      "enable_safety_checker": {
+        "type": "boolean",
+        "description": "If set to true, the safety checker will be enabled. Disabling it requires account authorization; unauthorized requests are always checked.",
+        "default": true
+      },
+      "prompt": {
+        "examples": [
+          "The figurine is in the crystal ball"
+        ],
+        "type": "string",
+        "description": "The prompt to generate an image from."
+      },
+      "seed": {
+        "anyOf": [
+          {
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "Random seed for reproducible generation. If set none, a random seed will be used."
+      },
+      "output_format": {
+        "enum": [
+          "jpeg",
+          "png"
+        ],
+        "type": "string",
+        "description": "The format of the generated image.",
+        "default": "jpeg"
+      },
+      "sync_mode": {
+        "type": "boolean",
+        "description": "If `True`, the media will be returned as a data URI and the output data won't be available in the request history.",
+        "default": false
+      },
+      "num_images": {
+        "maximum": 4,
+        "type": "integer",
+        "description": "The number of images to generate.",
+        "minimum": 1,
+        "default": 1
+      },
+      "num_inference_steps": {
+        "maximum": 50,
+        "type": "integer",
+        "description": "The number of inference steps to perform.",
+        "minimum": 1,
+        "default": 28
+      }
+    },
+    "type": "object",
+    "required": [
+      "input_image_urls",
+      "prompt"
+    ]
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "UnoInput",
+    "UnoOutput",
+    "ImageSize",
+    "Image"
+  ]
+}

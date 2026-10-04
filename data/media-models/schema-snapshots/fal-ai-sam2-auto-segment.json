@@ -1,0 +1,119 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/sam2/auto-segment",
+  "task": "unknown",
+  "source_url": "https://fal.ai/models/fal-ai/sam2/auto-segment",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fsam2%2Fauto-segment",
+  "retrieved_at": "2026-10-04T19:51:27.860Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "image-to-image",
+  "bytes_sha256": "001aa72de2a6aef61784e8fdff63db3d31c84c26153099b32d0c6dd8986ef102",
+  "queue_path": "/fal-ai/sam2/auto-segment",
+  "input_name": "Sam2AutoSegmentInput",
+  "input": {
+    "$refName": "Sam2AutoSegmentInput",
+    "properties": {
+      "points_per_side": {
+        "description": "Number of points to sample along each side of the image.",
+        "type": "integer",
+        "default": 32
+      },
+      "sync_mode": {
+        "description": "If `True`, the media will be returned as a data URI and the output data won't be available in the request history.",
+        "type": "boolean",
+        "default": false
+      },
+      "output_format": {
+        "description": "The format of the generated image.",
+        "enum": [
+          "jpeg",
+          "png"
+        ],
+        "type": "string",
+        "default": "png"
+      },
+      "image_url": {
+        "description": "URL of the image to be automatically segmented",
+        "type": "string",
+        "examples": [
+          "https://raw.githubusercontent.com/facebookresearch/segment-anything-2/main/notebooks/images/truck.jpg"
+        ]
+      },
+      "min_mask_region_area": {
+        "description": "Minimum area of a mask region.",
+        "type": "integer",
+        "default": 100
+      },
+      "pred_iou_thresh": {
+        "description": "Threshold for predicted IOU score.",
+        "type": "number",
+        "default": 0.88
+      },
+      "stability_score_thresh": {
+        "description": "Threshold for stability score.",
+        "type": "number",
+        "default": 0.95
+      }
+    },
+    "type": "object",
+    "required": [
+      "image_url"
+    ]
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "Sam2AutoSegmentInput",
+    "Sam2AutoSegmentOutput",
+    "Image"
+  ]
+}

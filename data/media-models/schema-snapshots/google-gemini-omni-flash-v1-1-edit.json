@@ -1,0 +1,105 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "google/gemini-omni-flash/v1.1/edit",
+  "task": "image-editing",
+  "source_url": "https://fal.ai/models/google/gemini-omni-flash/v1.1/edit",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=google%2Fgemini-omni-flash%2Fv1.1%2Fedit",
+  "retrieved_at": "2026-10-04T19:53:33.666Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "video-to-video",
+  "bytes_sha256": "2ffe7b736fcadf82d1250668423d70f7895f153cf4f00ff9070fa1db42055ee8",
+  "queue_path": "/google/gemini-omni-flash/v1.1/edit",
+  "input_name": "GeminiOmniFlashV11EditInput",
+  "input": {
+    "$refName": "GeminiOmniFlashV11EditInput",
+    "properties": {
+      "video_url": {
+        "type": "string",
+        "examples": [
+          "https://storage.googleapis.com/falserverless/model_tests/video_models/mmaudio_input.mp4"
+        ],
+        "description": "URL of the video to edit."
+      },
+      "prompt": {
+        "type": "string",
+        "maxLength": 20000,
+        "examples": [
+          "Make this video anime. Keep everything else the same."
+        ],
+        "description": "A simple instruction describing the edit."
+      },
+      "resolution": {
+        "type": "string",
+        "default": "720p",
+        "enum": [
+          "360p",
+          "720p",
+          "1080p",
+          "4k"
+        ],
+        "description": "The resolution of the edited video."
+      }
+    },
+    "required": [
+      "prompt",
+      "video_url"
+    ],
+    "type": "object"
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "GeminiOmniFlashV11EditInput",
+    "GeminiOmniFlashV11EditOutput",
+    "File"
+  ]
+}

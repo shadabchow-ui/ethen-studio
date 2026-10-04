@@ -1,0 +1,274 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/realistic-vision",
+  "task": "unknown",
+  "source_url": "https://fal.ai/models/fal-ai/realistic-vision",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Frealistic-vision",
+  "retrieved_at": "2026-10-04T19:51:04.503Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "text-to-image",
+  "bytes_sha256": "7734dfbc027de56f52510de8357747139f43d2a28ee8ad5645987eaba7095dc9",
+  "queue_path": "/fal-ai/realistic-vision",
+  "input_name": "RealisticVisionInput",
+  "input": {
+    "$refName": "RealisticVisionInput",
+    "type": "object",
+    "properties": {
+      "request_id": {
+        "type": "string",
+        "description": "\n            An id bound to a request, can be used with response to identify the request\n            itself.\n        ",
+        "default": ""
+      },
+      "seed": {
+        "anyOf": [
+          {
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "\n            The same seed and the same prompt given to the same version of Stable Diffusion\n            will output the same image every time.\n        ",
+        "default": null
+      },
+      "num_inference_steps": {
+        "minimum": 1,
+        "type": "integer",
+        "maximum": 70,
+        "description": "The number of inference steps to perform.",
+        "default": 35
+      },
+      "guidance_scale": {
+        "minimum": 0,
+        "type": "number",
+        "maximum": 20,
+        "description": "The CFG (Classifier Free Guidance) scale is a measure of how close you want the model to stick to your prompt when looking for a related image to show you.",
+        "default": 5
+      },
+      "format": {
+        "enum": [
+          "jpeg",
+          "png"
+        ],
+        "type": "string",
+        "description": "The format of the generated image.",
+        "default": "jpeg"
+      },
+      "embeddings": {
+        "type": "array",
+        "items": {
+          "$refName": "Embedding",
+          "type": "object",
+          "properties": {
+            "tokens": {
+              "anyOf": [
+                {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "\n            The list of tokens to use for the embedding. When omitted, tokens\n            are generated as <s0>, <s1>, ... to match the number of vectors in\n            the embedding file.\n        ",
+              "default": null
+            },
+            "path": {
+              "type": "string",
+              "examples": [
+                "https://civitai.com/api/download/models/135931",
+                "https://filebin.net/3chfqasxpqu21y8n/my-custom-lora-v1.safetensors"
+              ],
+              "description": "URL or the path to the embedding weights."
+            }
+          },
+          "required": [
+            "path"
+          ]
+        },
+        "description": "The list of embeddings to use.",
+        "default": []
+      },
+      "enable_safety_checker": {
+        "type": "boolean",
+        "description": "If set to true, the safety checker will be enabled.",
+        "default": true
+      },
+      "sync_mode": {
+        "type": "boolean",
+        "description": "If `True`, the media will be returned as a data URI and the output data won't be available in the request history.",
+        "default": false
+      },
+      "image_size": {
+        "anyOf": [
+          {
+            "$refName": "ImageSize",
+            "type": "object",
+            "properties": {
+              "width": {
+                "exclusiveMinimum": 0,
+                "type": "integer",
+                "maximum": 14142,
+                "description": "The width of the generated image.",
+                "default": 512
+              },
+              "height": {
+                "exclusiveMinimum": 0,
+                "type": "integer",
+                "maximum": 14142,
+                "description": "The height of the generated image.",
+                "default": 512
+              }
+            }
+          },
+          {
+            "enum": [
+              "square_hd",
+              "square",
+              "portrait_4_3",
+              "portrait_16_9",
+              "landscape_4_3",
+              "landscape_16_9"
+            ],
+            "type": "string"
+          }
+        ],
+        "default": {
+          "width": 1024,
+          "height": 1024
+        }
+      },
+      "loras": {
+        "type": "array",
+        "items": {
+          "$refName": "LoraWeight",
+          "type": "object",
+          "properties": {
+            "force": {
+              "type": "boolean",
+              "description": "If set to true, the embedding will be forced to be used.",
+              "default": false
+            },
+            "path": {
+              "type": "string",
+              "examples": [
+                "https://civitai.com/api/download/models/135931",
+                "https://filebin.net/3chfqasxpqu21y8n/my-custom-lora-v1.safetensors"
+              ],
+              "description": "URL or path to a LoRA safetensors file. Or HF model name that resolves to safetensors weights."
+            },
+            "scale": {
+              "minimum": 0,
+              "type": "number",
+              "maximum": 1,
+              "description": "\n            The scale of the LoRA weight. This is used to scale the LoRA weight\n            before merging it with the base model.\n        ",
+              "default": 1
+            }
+          },
+          "required": [
+            "path"
+          ]
+        },
+        "description": "The list of LoRA weights to use.",
+        "default": []
+      },
+      "num_images": {
+        "minimum": 1,
+        "type": "integer",
+        "maximum": 8,
+        "description": "The number of images to generate.",
+        "default": 1
+      },
+      "negative_prompt": {
+        "type": "string",
+        "description": "The negative prompt to use. Use it to address details that you don't want in the image.",
+        "default": "(worst quality, low quality, normal quality, lowres, low details, oversaturated, undersaturated, overexposed, underexposed, grayscale, bw, bad photo, bad photography, bad art:1.4), (watermark, signature, text font, username, error, logo, words, letters, digits, autograph, trademark, name:1.2), (blur, blurry, grainy), morbid, ugly, asymmetrical, mutated malformed, mutilated, poorly lit, bad shadow, draft, cropped, out of frame, cut off, censored, jpeg artifacts, out of focus, glitch, duplicate, (airbrushed, cartoon, anime, semi-realistic, cgi, render, blender, digital art, manga, amateur:1.3), (3D ,3D Game, 3D Game Scene, 3D Character:1.1), (bad hands, bad anatomy, bad body, bad face, bad teeth, bad arms, bad legs, deformities:1.3)"
+      },
+      "safety_checker_version": {
+        "enum": [
+          "v1",
+          "v2"
+        ],
+        "type": "string",
+        "description": "The version of the safety checker to use. v1 is the default CompVis safety checker. v2 uses a custom ViT model.",
+        "default": "v1"
+      },
+      "expand_prompt": {
+        "type": "boolean",
+        "description": "If set to true, the prompt will be expanded with additional prompts.",
+        "default": false
+      },
+      "prompt": {
+        "type": "string",
+        "examples": [
+          "A hyperdetailed photograph of a Cat dressed as a mafia boss holding a fish walking down a Japanese fish market with an angry face, 8k resolution, best quality, beautiful photograph, dynamic lighting,"
+        ],
+        "description": "The prompt to use for generating the image. Be as descriptive as possible for best results."
+      }
+    },
+    "required": [
+      "prompt"
+    ]
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "RealisticVisionInput",
+    "RealisticVisionOutput",
+    "Embedding",
+    "ImageSize",
+    "LoraWeight",
+    "Image"
+  ]
+}

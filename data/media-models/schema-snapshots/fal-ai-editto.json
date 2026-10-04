@@ -1,0 +1,313 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/editto",
+  "task": "unknown",
+  "source_url": "https://fal.ai/models/fal-ai/editto",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Feditto",
+  "retrieved_at": "2026-10-04T19:43:20.710Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "video-to-video",
+  "bytes_sha256": "2f0a921cc7ea1f0a6e6e5203376d5c65b23dc8ef71e81b6451d2ccb96a8a446a",
+  "queue_path": "/fal-ai/editto",
+  "input_name": "EdittoInput",
+  "input": {
+    "$refName": "EdittoInput",
+    "properties": {
+      "acceleration": {
+        "examples": [
+          "regular"
+        ],
+        "description": "Acceleration to use for inference. Options are 'none' or 'regular'. Accelerated inference will very slightly affect output, but will be significantly faster.",
+        "default": "regular",
+        "anyOf": [
+          {
+            "enum": [
+              "none",
+              "low",
+              "regular"
+            ],
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "resolution": {
+        "enum": [
+          "auto",
+          "240p",
+          "360p",
+          "480p",
+          "580p",
+          "720p"
+        ],
+        "description": "Resolution of the generated video.",
+        "default": "auto",
+        "type": "string"
+      },
+      "num_interpolated_frames": {
+        "maximum": 5,
+        "minimum": 0,
+        "default": 0,
+        "description": "Number of frames to interpolate between the original frames. A value of 0 means no interpolation.",
+        "type": "integer",
+        "examples": [
+          0
+        ]
+      },
+      "seed": {
+        "description": "Random seed for reproducibility. If None, a random seed is chosen.",
+        "anyOf": [
+          {
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "temporal_downsample_factor": {
+        "maximum": 5,
+        "minimum": 0,
+        "default": 0,
+        "description": "Temporal downsample factor for the video. This is an integer value that determines how many frames to skip in the video. A value of 0 means no downsampling. For each downsample factor, one upsample factor will automatically be applied.",
+        "type": "integer",
+        "examples": [
+          0
+        ]
+      },
+      "video_quality": {
+        "enum": [
+          "low",
+          "medium",
+          "high",
+          "maximum"
+        ],
+        "description": "The quality of the generated video.",
+        "default": "high",
+        "type": "string",
+        "examples": [
+          "high"
+        ]
+      },
+      "shift": {
+        "maximum": 15,
+        "minimum": 1,
+        "default": 5,
+        "description": "Shift parameter for video generation.",
+        "type": "number"
+      },
+      "match_input_frames_per_second": {
+        "description": "If true, the frames per second of the generated video will match the input video. If false, the frames per second will be determined by the frames_per_second parameter.",
+        "default": false,
+        "type": "boolean",
+        "examples": [
+          true
+        ]
+      },
+      "num_frames": {
+        "maximum": 241,
+        "minimum": 17,
+        "default": 81,
+        "description": "Number of frames to generate. Must be between 81 to 241 (inclusive).",
+        "type": "integer"
+      },
+      "guidance_scale": {
+        "maximum": 10,
+        "minimum": 1,
+        "default": 5,
+        "description": "Guidance scale for classifier-free guidance. Higher values encourage the model to generate images closely related to the text prompt.",
+        "type": "number",
+        "examples": [
+          5
+        ]
+      },
+      "match_input_num_frames": {
+        "description": "If true, the number of frames in the generated video will match the number of frames in the input video. If false, the number of frames will be determined by the num_frames parameter.",
+        "default": false,
+        "type": "boolean",
+        "examples": [
+          true
+        ]
+      },
+      "enable_auto_downsample": {
+        "description": "If true, the model will automatically temporally downsample the video to an appropriate frame length for the model, then will interpolate it back to the original frame length.",
+        "default": false,
+        "type": "boolean",
+        "examples": [
+          false
+        ]
+      },
+      "sync_mode": {
+        "description": "If `True`, the media will be returned as a data URI and the output data won't be available in the request history.",
+        "default": false,
+        "type": "boolean",
+        "examples": [
+          false
+        ]
+      },
+      "num_inference_steps": {
+        "maximum": 50,
+        "minimum": 2,
+        "default": 30,
+        "description": "Number of inference steps for sampling. Higher values give better quality but take longer.",
+        "type": "integer",
+        "examples": [
+          50
+        ]
+      },
+      "aspect_ratio": {
+        "enum": [
+          "auto",
+          "16:9",
+          "1:1",
+          "9:16"
+        ],
+        "description": "Aspect ratio of the generated video.",
+        "default": "auto",
+        "type": "string"
+      },
+      "prompt": {
+        "description": "The text prompt to guide video generation.",
+        "type": "string",
+        "examples": [
+          "Make it a Pixel Art video."
+        ]
+      },
+      "sampler": {
+        "enum": [
+          "unipc",
+          "dpm++",
+          "euler"
+        ],
+        "description": "Sampler to use for video generation.",
+        "default": "unipc",
+        "type": "string",
+        "examples": [
+          "unipc"
+        ]
+      },
+      "video_url": {
+        "description": "URL to the source video file. Required for inpainting.",
+        "type": "string",
+        "examples": [
+          "https://storage.googleapis.com/falserverless/example_inputs/editto/example_in.mp4"
+        ]
+      },
+      "negative_prompt": {
+        "description": "Negative prompt for video generation.",
+        "default": "letterboxing, borders, black bars, bright colors, overexposed, static, blurred details, subtitles, style, artwork, painting, picture, still, overall gray, worst quality, low quality, JPEG compression residue, ugly, incomplete, extra fingers, poorly drawn hands, poorly drawn faces, deformed, disfigured, malformed limbs, fused fingers, still picture, cluttered background, three legs, many people in the background, walking backwards",
+        "type": "string",
+        "examples": [
+          "色调艳丽，过曝，静态，细节模糊不清，字幕，风格，作品，画作，画面，静止，整体发灰，最差质量，低质量，JPEG压缩残留，丑陋的，残缺的，多余的手指，画得不好的手部，画得不好的脸部，畸形的，毁容的，形态畸形的肢体，手指融合，静止不动的画面，杂乱的背景，三条腿，背景人很多，倒着走"
+        ]
+      },
+      "enable_safety_checker": {
+        "description": "If set to true, the safety checker will be enabled. Disabling it requires account authorization; unauthorized requests are always checked.",
+        "default": false,
+        "type": "boolean",
+        "examples": [
+          true
+        ]
+      },
+      "return_frames_zip": {
+        "description": "If true, also return a ZIP file containing all generated frames.",
+        "default": false,
+        "type": "boolean",
+        "examples": [
+          false
+        ]
+      },
+      "video_write_mode": {
+        "enum": [
+          "fast",
+          "balanced",
+          "small"
+        ],
+        "description": "The write mode of the generated video.",
+        "default": "balanced",
+        "type": "string",
+        "examples": [
+          "balanced"
+        ]
+      },
+      "frames_per_second": {
+        "description": "Frames per second of the generated video. Must be between 5 to 30. Ignored if match_input_frames_per_second is true.",
+        "default": 16,
+        "anyOf": [
+          {
+            "minimum": 5,
+            "maximum": 30,
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      }
+    },
+    "required": [
+      "prompt",
+      "video_url"
+    ],
+    "type": "object"
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "EdittoInput",
+    "EdittoOutput",
+    "File",
+    "VideoFile"
+  ]
+}

@@ -1,0 +1,217 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/qwen-image-edit-plus-lora-gallery/integrate-product",
+  "task": "image-generation",
+  "source_url": "https://fal.ai/models/fal-ai/qwen-image-edit-plus-lora-gallery/integrate-product",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fqwen-image-edit-plus-lora-gallery%2Fintegrate-product",
+  "retrieved_at": "2026-10-04T19:50:55.122Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "image-to-image",
+  "bytes_sha256": "04fc321e4170a5155b84e0773f264e3dea9172fff9422cce192f8c8d280ea652",
+  "queue_path": "/fal-ai/qwen-image-edit-plus-lora-gallery/integrate-product",
+  "input_name": "QwenImageEditPlusLoraGalleryIntegrateProductInput",
+  "input": {
+    "$refName": "QwenImageEditPlusLoraGalleryIntegrateProductInput",
+    "required": [
+      "image_urls"
+    ],
+    "description": "Input model for Integrate Product endpoint - Blend and integrate products/elements into backgrounds",
+    "type": "object",
+    "properties": {
+      "num_images": {
+        "minimum": 1,
+        "default": 1,
+        "type": "integer",
+        "description": "Number of images to generate",
+        "maximum": 4
+      },
+      "guidance_scale": {
+        "minimum": 0,
+        "default": 1,
+        "type": "number",
+        "description": "The CFG (Classifier Free Guidance) scale. Controls how closely the model follows the prompt.",
+        "maximum": 20
+      },
+      "acceleration": {
+        "default": "regular",
+        "type": "string",
+        "enum": [
+          "none",
+          "regular"
+        ],
+        "description": "Acceleration level for image generation. 'regular' balances speed and quality."
+      },
+      "prompt": {
+        "type": "string",
+        "default": "Blend and integrate the product into the background",
+        "description": "Describe how to blend and integrate the product/element into the background. The model will automatically correct perspective, lighting and shadows for natural integration.",
+        "examples": [
+          "Blend and integrate the product into the background with correct perspective and lighting",
+          "Seamlessly blend the object into the scene with natural shadows",
+          "Integrate the product naturally into the environment"
+        ]
+      },
+      "num_inference_steps": {
+        "minimum": 2,
+        "default": 6,
+        "type": "integer",
+        "description": "The number of inference steps to perform.",
+        "maximum": 50
+      },
+      "image_urls": {
+        "description": "The URL of the image with product to integrate into background.",
+        "items": {
+          "type": "string"
+        },
+        "type": "array",
+        "examples": [
+          [
+            "https://v3b.fal.media/files/b/koala/LFYeCtq2LB4s6IpmoI2iy_2fb7b46d1f3749db9f7bab679bc6c4f3.png"
+          ]
+        ]
+      },
+      "lora_scale": {
+        "minimum": 0,
+        "default": 1,
+        "type": "number",
+        "description": "The scale factor for the LoRA model. Controls the strength of the LoRA effect.",
+        "maximum": 4
+      },
+      "output_format": {
+        "default": "png",
+        "type": "string",
+        "enum": [
+          "png",
+          "jpeg",
+          "webp"
+        ],
+        "description": "The format of the output image"
+      },
+      "enable_safety_checker": {
+        "default": true,
+        "type": "boolean",
+        "description": "Whether to enable the safety checker for the generated image. Disabling it requires account authorization; unauthorized requests are always checked."
+      },
+      "seed": {
+        "anyOf": [
+          {
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "Random seed for reproducibility. Same seed with same prompt will produce same result."
+      },
+      "sync_mode": {
+        "default": false,
+        "type": "boolean",
+        "description": "If `True`, the media will be returned as a data URI and won't be saved in history."
+      },
+      "image_size": {
+        "anyOf": [
+          {
+            "$refName": "ImageSize",
+            "type": "object",
+            "properties": {
+              "height": {
+                "maximum": 14142,
+                "default": 512,
+                "type": "integer",
+                "description": "The height of the generated image.",
+                "exclusiveMinimum": 0
+              },
+              "width": {
+                "maximum": 14142,
+                "default": 512,
+                "type": "integer",
+                "description": "The width of the generated image.",
+                "exclusiveMinimum": 0
+              }
+            }
+          },
+          {
+            "type": "string",
+            "enum": [
+              "square_hd",
+              "square",
+              "portrait_4_3",
+              "portrait_16_9",
+              "landscape_4_3",
+              "landscape_16_9"
+            ]
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "The size of the generated image. If not provided, the size of the final input image will be used."
+      },
+      "negative_prompt": {
+        "default": " ",
+        "type": "string",
+        "description": "The negative prompt for the generation",
+        "examples": [
+          " "
+        ]
+      }
+    }
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "QwenImageEditPlusLoraGalleryIntegrateProductInput",
+    "QwenImageEditPlusLoraGalleryIntegrateProductOutput",
+    "ImageSize",
+    "Image"
+  ]
+}

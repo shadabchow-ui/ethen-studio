@@ -1,0 +1,187 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "minimax/h3/reference-to-video",
+  "task": "reference-to-video",
+  "source_url": "https://fal.ai/models/minimax/h3/reference-to-video",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=minimax%2Fh3%2Freference-to-video",
+  "retrieved_at": "2026-10-04T19:54:24.288Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "image-to-video",
+  "bytes_sha256": "f34e98e5e1af1c8ac8cb0be0720b645a19550455d16e124c51a087c3884fe004",
+  "queue_path": "/minimax/h3/reference-to-video",
+  "input_name": "H3ReferenceToVideoInput",
+  "input": {
+    "$refName": "H3ReferenceToVideoInput",
+    "required": [
+      "prompt"
+    ],
+    "type": "object",
+    "properties": {
+      "prompt_expansion_mode": {
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": "balanced",
+        "examples": [
+          "disabled",
+          "fast",
+          "balanced",
+          "quality"
+        ],
+        "description": "How much effort to spend rewriting the prompt before generation. 'disabled' skips prompt expansion. 'fast' returns in about a second. 'balanced' picks per request. 'quality' spends up to ~30s on a richer prompt."
+      },
+      "reference_image_urls": {
+        "examples": [
+          [
+            "https://storage.googleapis.com/falserverless/example_inputs/hailuo23/pro_i2v_in.jpg"
+          ]
+        ],
+        "maxItems": 9,
+        "description": "URLs of subject/style reference images, referenced in the prompt as Image 1, Image 2, and so on. Reference images, videos, and audio clips must add up to at most 12 files.",
+        "items": {
+          "type": "string"
+        },
+        "type": "array"
+      },
+      "aspect_ratio": {
+        "description": "The aspect ratio of the generated video.",
+        "default": "adaptive",
+        "enum": [
+          "adaptive",
+          "21:9",
+          "16:9",
+          "4:3",
+          "1:1",
+          "3:4",
+          "9:16"
+        ],
+        "type": "string"
+      },
+      "prompt": {
+        "maxLength": 50000,
+        "description": "Text prompt for video generation. Refer to reference assets by their modality and order in the reference lists: Image 1, Image 2, Video 1, Audio 1, and so on.",
+        "minLength": 1,
+        "type": "string",
+        "examples": [
+          "Image 1 is the female protagonist. Image 2 is her small dog. Keep the woman and dog consistent with their respective reference images while they walk together through a sunlit garden."
+        ]
+      },
+      "sync_mode": {
+        "default": false,
+        "type": "boolean",
+        "description": "Return the generated video as base64 instead of a CDN URL."
+      },
+      "duration": {
+        "minimum": 5,
+        "description": "The duration of the video in seconds.",
+        "default": 5,
+        "type": "integer",
+        "maximum": 15
+      },
+      "resolution": {
+        "description": "The resolution of the generated video. 480P and 768P are native generation modes; 2K and 4K upscale a 768P base result.",
+        "default": "2K",
+        "enum": [
+          "480P",
+          "768P",
+          "2K",
+          "4K"
+        ],
+        "type": "string"
+      },
+      "enable_safety_checker": {
+        "default": true,
+        "type": "boolean",
+        "description": "If set to true, the safety checker will be enabled."
+      },
+      "seed": {
+        "anyOf": [
+          {
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "Random seed. A random seed is selected when omitted."
+      },
+      "reference_audio_urls": {
+        "maxItems": 3,
+        "description": "URLs of reference audio clips (2-15 seconds each, combined duration at most 15 seconds), referenced in the prompt as Audio 1, Audio 2, and so on. Images, videos, and audio can be provided individually or together. Reference images, videos, and audio clips must add up to at most 12 files.",
+        "items": {
+          "type": "string"
+        },
+        "type": "array"
+      },
+      "reference_video_urls": {
+        "maxItems": 3,
+        "description": "URLs of motion/reference video clips (2-15 seconds each, combined duration at most 15 seconds), referenced in the prompt as Video 1, Video 2, and so on. Reference images, videos, and audio clips must add up to at most 12 files.",
+        "items": {
+          "type": "string"
+        },
+        "type": "array"
+      }
+    }
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "H3ReferenceToVideoInput",
+    "H3ReferenceToVideoOutput",
+    "File"
+  ]
+}

@@ -1,0 +1,125 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/hunyuan-video-foley",
+  "task": "video-editing",
+  "source_url": "https://fal.ai/models/fal-ai/hunyuan-video-foley",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fhunyuan-video-foley",
+  "retrieved_at": "2026-10-04T19:45:40.576Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "video-to-video",
+  "bytes_sha256": "4b6463cbbcfe2d903eaae72706bd0b7a414ad1515470d628404a368ec18bb7e6",
+  "queue_path": "/fal-ai/hunyuan-video-foley",
+  "input_name": "HunyuanVideoFoleyInput",
+  "input": {
+    "$refName": "HunyuanVideoFoleyInput",
+    "required": [
+      "video_url",
+      "text_prompt"
+    ],
+    "properties": {
+      "text_prompt": {
+        "type": "string",
+        "examples": [
+          "A person walks on frozen ice",
+          "The crackling of fire and whooshing of flames",
+          "Gentle footsteps on wooden floor"
+        ],
+        "description": "Text description of the desired audio (optional)."
+      },
+      "guidance_scale": {
+        "default": 4.5,
+        "maximum": 10,
+        "minimum": 1,
+        "type": "number",
+        "description": "Guidance scale for audio generation."
+      },
+      "seed": {
+        "anyOf": [
+          {
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "Random seed for reproducible generation."
+      },
+      "video_url": {
+        "type": "string",
+        "examples": [
+          "https://storage.googleapis.com/falserverless/model_tests/video_models/1_video.mp4"
+        ],
+        "description": "The URL of the video to generate audio for."
+      },
+      "num_inference_steps": {
+        "default": 50,
+        "maximum": 100,
+        "minimum": 10,
+        "type": "integer",
+        "description": "Number of inference steps for generation."
+      },
+      "negative_prompt": {
+        "default": "noisy, harsh",
+        "type": "string",
+        "description": "Negative prompt to avoid certain audio characteristics."
+      }
+    },
+    "type": "object"
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "HunyuanVideoFoleyInput",
+    "HunyuanVideoFoleyOutput",
+    "File"
+  ]
+}

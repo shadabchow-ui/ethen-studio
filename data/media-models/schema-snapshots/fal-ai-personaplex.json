@@ -1,0 +1,173 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/personaplex",
+  "task": "unknown",
+  "source_url": "https://fal.ai/models/fal-ai/personaplex",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fpersonaplex",
+  "retrieved_at": "2026-10-04T19:49:48.520Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "audio-to-audio",
+  "bytes_sha256": "46ee65b5c4c037cfe0341fcbe8156c7fd265c643ba2740024a49619a1be77a2c",
+  "queue_path": "/fal-ai/personaplex",
+  "input_name": "PersonaplexInput",
+  "input": {
+    "$refName": "PersonaplexInput",
+    "properties": {
+      "temperature_audio": {
+        "maximum": 2,
+        "minimum": 0,
+        "default": 0.8,
+        "description": "Audio sampling temperature. Higher values produce more diverse outputs.",
+        "type": "number"
+      },
+      "voice": {
+        "enum": [
+          "NATF0",
+          "NATF1",
+          "NATF2",
+          "NATF3",
+          "NATM0",
+          "NATM1",
+          "NATM2",
+          "NATM3",
+          "VARF0",
+          "VARF1",
+          "VARF2",
+          "VARF3",
+          "VARF4",
+          "VARM0",
+          "VARM1",
+          "VARM2",
+          "VARM3",
+          "VARM4"
+        ],
+        "description": "Voice ID for the AI response. NAT = natural, VAR = variety. F = female, M = male. Ignored when voice_audio_url is provided.",
+        "default": "NATF2",
+        "type": "string"
+      },
+      "prompt": {
+        "description": "Text prompt describing the AI persona and conversation context.",
+        "default": "You are a wise and friendly teacher. Answer questions or provide advice in a clear and engaging way.",
+        "type": "string",
+        "examples": [
+          "You work for SwiftPlex Appliances which is a appliance repair company and your name is Farhod Toshmatov. Information: The dishwasher model is out of stock for replacement parts; we can use an alternative part with a 3-day delay. Labor cost remains $60 per hour."
+        ]
+      },
+      "temperature_text": {
+        "maximum": 2,
+        "minimum": 0,
+        "default": 0.7,
+        "description": "Text sampling temperature. Higher values produce more diverse outputs.",
+        "type": "number"
+      },
+      "seed": {
+        "description": "Random seed for reproducibility.",
+        "anyOf": [
+          {
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "top_k_text": {
+        "maximum": 1000,
+        "minimum": 1,
+        "default": 25,
+        "description": "Top-K sampling for text tokens.",
+        "type": "integer"
+      },
+      "top_k_audio": {
+        "maximum": 2048,
+        "minimum": 1,
+        "default": 250,
+        "description": "Top-K sampling for audio tokens.",
+        "type": "integer"
+      },
+      "voice_audio_url": {
+        "description": "URL to a voice sample audio for on-the-fly voice cloning. When provided, the AI responds in the cloned voice instead of the preset 'voice'. 10+ seconds of clear speech recommended. Billed at 2x rate.",
+        "anyOf": [
+          {
+            "_fal_ui_field": "audio",
+            "ui": {
+              "field": "audio"
+            },
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "audio_url": {
+        "description": "URL to the input audio file (user's speech).",
+        "_fal_ui_field": "audio",
+        "type": "string",
+        "examples": [
+          "https://v3b.fal.media/files/b/0a8dd5a2/hS140ygvRuxn-eY_qPhlv_assets_test_input_service.wav"
+        ]
+      }
+    },
+    "required": [
+      "audio_url"
+    ],
+    "type": "object"
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "PersonaplexInput",
+    "PersonaplexOutput",
+    "File"
+  ]
+}

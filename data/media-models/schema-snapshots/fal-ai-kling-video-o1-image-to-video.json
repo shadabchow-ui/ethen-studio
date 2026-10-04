@@ -1,0 +1,127 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/kling-video/o1/image-to-video",
+  "task": "image-to-video",
+  "source_url": "https://fal.ai/models/fal-ai/kling-video/o1/image-to-video",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fkling-video%2Fo1%2Fimage-to-video",
+  "retrieved_at": "2026-10-04T19:46:50.202Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "image-to-video",
+  "bytes_sha256": "dd8a7739d9047bdec68e705b1ceff4223be7f898c6a095508e7793d5477ecc7a",
+  "queue_path": "/fal-ai/kling-video/o1/image-to-video",
+  "input_name": "KlingVideoO1ImageToVideoInput",
+  "input": {
+    "$refName": "KlingVideoO1ImageToVideoInput",
+    "required": [
+      "prompt",
+      "start_image_url"
+    ],
+    "type": "object",
+    "properties": {
+      "end_image_url": {
+        "anyOf": [
+          {
+            "type": "string",
+            "ui": {
+              "field": "image"
+            },
+            "limit_description": "Max file size: 50.0MB, Min width: 300px, Min height: 300px, Min aspect ratio: 0.40, Max aspect ratio: 2.50, Timeout: 20.0s"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "Image to use as the last frame of the video.",
+        "examples": [
+          "https://v3b.fal.media/files/b/tiger/BwHi22qoQnqaTNMMhe533.png"
+        ]
+      },
+      "prompt": {
+        "description": "Use @Image1 to reference the start frame, @Image2 to reference the end frame.",
+        "type": "string",
+        "examples": [
+          "Create a magical timelapse transition. The snow melts rapidly to reveal green grass, and the tree branches burst into bloom with pink flowers in real-time. The lighting shifts from cold winter light to warm spring sunshine. The camera pushes in slowly towards the tree. Disney-style magical transformation, cinematic, 8k."
+        ],
+        "maxLength": 2500
+      },
+      "duration": {
+        "description": "Video duration in seconds.",
+        "type": "string",
+        "default": "5",
+        "enum": [
+          "3",
+          "4",
+          "5",
+          "6",
+          "7",
+          "8",
+          "9",
+          "10"
+        ]
+      },
+      "start_image_url": {
+        "description": "Image to use as the first frame of the video.\n\nMax file size: 50.0MB, Min width: 300px, Min height: 300px, Min aspect ratio: 0.40, Max aspect ratio: 2.50, Timeout: 20.0s",
+        "type": "string",
+        "examples": [
+          "https://v3b.fal.media/files/b/rabbit/NaslJIC7F2WodS6DFZRRJ.png"
+        ]
+      }
+    }
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "KlingVideoO1ImageToVideoInput",
+    "KlingVideoO1ImageToVideoOutput",
+    "File"
+  ]
+}

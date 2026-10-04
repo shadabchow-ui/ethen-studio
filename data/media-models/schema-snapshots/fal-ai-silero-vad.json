@@ -1,0 +1,85 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/silero-vad",
+  "task": "unknown",
+  "source_url": "https://fal.ai/models/fal-ai/silero-vad",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fsilero-vad",
+  "retrieved_at": "2026-10-04T19:51:36.101Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "audio-to-text",
+  "bytes_sha256": "b399beb558321eef1f9c061ef53681ec3091050a218c51ea0742c026d1ea9047",
+  "queue_path": "/fal-ai/silero-vad",
+  "input_name": "SileroVadInput",
+  "input": {
+    "$refName": "SileroVadInput",
+    "properties": {
+      "audio_url": {
+        "examples": [
+          "https://v3b.fal.media/files/b/0a89994c/X3-06RFibRfBu-FS1AI8y_speech.mp3"
+        ],
+        "type": "string",
+        "description": "The URL of the audio to get speech timestamps from."
+      }
+    },
+    "required": [
+      "audio_url"
+    ],
+    "type": "object"
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "SileroVadInput",
+    "SileroVadOutput",
+    "SpeechTimestamp"
+  ]
+}

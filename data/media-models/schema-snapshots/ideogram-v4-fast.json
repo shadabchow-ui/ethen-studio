@@ -1,0 +1,182 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "ideogram/v4/fast",
+  "task": "unknown",
+  "source_url": "https://fal.ai/models/ideogram/v4/fast",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=ideogram%2Fv4%2Ffast",
+  "retrieved_at": "2026-10-04T19:53:43.803Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "text-to-image",
+  "bytes_sha256": "5a42f7cc21601cbefcfdd66a1f68cc44caed720004e082921780fb5038790f22",
+  "queue_path": "/ideogram/v4/fast",
+  "input_name": "V4FastInput",
+  "input": {
+    "$refName": "V4FastInput",
+    "properties": {
+      "expansion_model": {
+        "examples": [
+          "Medium"
+        ],
+        "enum": [
+          "None",
+          "Medium"
+        ],
+        "default": "Medium",
+        "type": "string",
+        "description": "Which model expands the prompt. 'None' disables expansion; 'Medium' uses the fast magic prompt model."
+      },
+      "rendering_speed": {
+        "enum": [
+          "TURBO",
+          "BALANCED",
+          "QUALITY"
+        ],
+        "default": "BALANCED",
+        "type": "string",
+        "description": "The rendering speed to use. Faster speeds use fewer denoising steps."
+      },
+      "enable_safety_checker": {
+        "default": true,
+        "type": "boolean",
+        "description": "If set to true, the safety checker will be enabled. Disabling it requires account authorization; unauthorized requests are always checked."
+      },
+      "seed": {
+        "description": "The seed to use for generation. If not provided, a random seed will be used.",
+        "anyOf": [
+          {
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "sync_mode": {
+        "default": false,
+        "type": "boolean",
+        "description": "If `True`, the image is returned as a data URI and is not stored."
+      },
+      "prompt": {
+        "examples": [
+          "A red panda perched on a mossy branch in a misty forest at sunrise"
+        ],
+        "type": "string",
+        "description": "The prompt to generate an image from."
+      },
+      "num_images": {
+        "maximum": 4,
+        "default": 1,
+        "type": "integer",
+        "description": "Number of images to generate.",
+        "minimum": 1
+      },
+      "output_format": {
+        "enum": [
+          "jpeg",
+          "png"
+        ],
+        "default": "jpeg",
+        "type": "string",
+        "description": "The format of the generated image."
+      },
+      "image_size": {
+        "default": "square_hd",
+        "description": "The resolution of the generated image.",
+        "anyOf": [
+          {
+            "$refName": "ImageSize",
+            "properties": {
+              "width": {
+                "exclusiveMinimum": 0,
+                "maximum": 14142,
+                "default": 512,
+                "type": "integer",
+                "description": "The width of the generated image."
+              },
+              "height": {
+                "exclusiveMinimum": 0,
+                "maximum": 14142,
+                "default": 512,
+                "type": "integer",
+                "description": "The height of the generated image."
+              }
+            },
+            "type": "object"
+          },
+          {
+            "enum": [
+              "square_hd",
+              "square",
+              "portrait_4_3",
+              "portrait_16_9",
+              "landscape_4_3",
+              "landscape_16_9"
+            ],
+            "type": "string"
+          }
+        ]
+      }
+    },
+    "required": [
+      "prompt"
+    ],
+    "type": "object"
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "V4FastInput",
+    "V4FastOutput",
+    "ImageSize",
+    "ImageFile"
+  ]
+}

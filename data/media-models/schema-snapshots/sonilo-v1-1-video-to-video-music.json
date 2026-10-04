@@ -1,0 +1,141 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "sonilo/v1.1/video-to-video-music",
+  "task": "video-to-video",
+  "source_url": "https://fal.ai/models/sonilo/v1.1/video-to-video-music",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=sonilo%2Fv1.1%2Fvideo-to-video-music",
+  "retrieved_at": "2026-10-04T19:55:12.881Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "video-to-video",
+  "bytes_sha256": "40e174d0c1c47bf602270acffd9acb2f628807d6308d1b6893304eac48a08819",
+  "queue_path": "/sonilo/v1.1/video-to-video-music",
+  "input_name": "V11VideoToVideoMusicInput",
+  "input": {
+    "$refName": "V11VideoToVideoMusicInput",
+    "required": [
+      "video_url"
+    ],
+    "type": "object",
+    "properties": {
+      "duration": {
+        "anyOf": [
+          {
+            "minimum": 1,
+            "maximum": 600,
+            "type": "number"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "Optional. Length (seconds) of the video segment to score. When set, scores a segment of this length starting at Start Offset (or from the beginning if Start Offset is unset). Defaults (None) to the rest of the video."
+      },
+      "video_url": {
+        "description": "Public http(s) URL of the source video to score.",
+        "type": "string",
+        "examples": [
+          "https://v3b.fal.media/files/b/0a9ddd00/2QssaYyFxstvVlmIraSns_Sonilo_Demo_Original_1.mp4"
+        ]
+      },
+      "num_samples": {
+        "minimum": 1,
+        "description": "How many distinct scored videos to generate.",
+        "maximum": 3,
+        "type": "integer",
+        "default": 1
+      },
+      "start_offset": {
+        "anyOf": [
+          {
+            "minimum": 0,
+            "maximum": 600,
+            "type": "number"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "Optional. Start scoring from this offset (seconds) into the video. Requires Start Offset + Duration <= Video Duration."
+      },
+      "prompt_influence": {
+        "minimum": 0,
+        "description": "Turn it up to match the text prompt",
+        "maximum": 1,
+        "default": 0.5,
+        "type": "number"
+      },
+      "keep_speech_vocal": {
+        "description": "Keep the original video's speech/vocals. When on, the source audio is separated (music source separation), and only the isolated vocals are blended over the generated music with automatic ducking (the music dips under speech). When off (default), the original soundtrack is dropped and the video carries only the generated music.",
+        "type": "boolean",
+        "default": false
+      },
+      "prompt": {
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "Optional text prompt steering the musical style. If omitted, a prompt is generated automatically from the video."
+      }
+    }
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "V11VideoToVideoMusicInput",
+    "V11VideoToVideoMusicOutput",
+    "Video"
+  ]
+}

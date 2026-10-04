@@ -1,0 +1,145 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/wan-22-image-trainer",
+  "task": "image-generation",
+  "source_url": "https://fal.ai/models/fal-ai/wan-22-image-trainer",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fwan-22-image-trainer",
+  "retrieved_at": "2026-10-04T19:52:31.544Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "training",
+  "bytes_sha256": "93cc8f2cc00ee53adfc5c55e12d6bbae1fc4da5e7c9c352d3b2f886870de15bb",
+  "queue_path": "/fal-ai/wan-22-image-trainer",
+  "input_name": "Wan22ImageTrainerInput",
+  "input": {
+    "$refName": "Wan22ImageTrainerInput",
+    "required": [
+      "training_data_url",
+      "trigger_phrase"
+    ],
+    "type": "object",
+    "properties": {
+      "use_masks": {
+        "description": "Whether to use masks for the training data.",
+        "type": "boolean",
+        "default": true,
+        "examples": [
+          true
+        ]
+      },
+      "include_synthetic_captions": {
+        "description": "Whether to include synthetic captions.",
+        "type": "boolean",
+        "default": false
+      },
+      "training_data_url": {
+        "description": "URL to the training data.",
+        "type": "string"
+      },
+      "learning_rate": {
+        "multipleOf": 0.000001,
+        "examples": [
+          0.0007
+        ],
+        "default": 0.0007,
+        "description": "Learning rate for training.",
+        "maximum": 0.1,
+        "type": "number",
+        "minimum": 0.000001
+      },
+      "steps": {
+        "default": 1000,
+        "examples": [
+          1000
+        ],
+        "description": "Number of training steps.",
+        "maximum": 6000,
+        "type": "integer",
+        "minimum": 10
+      },
+      "use_face_detection": {
+        "description": "Whether to use face detection for the training data. When enabled, images will use the center of the face as the center of the image when resizing.",
+        "type": "boolean",
+        "default": true,
+        "examples": [
+          true
+        ]
+      },
+      "use_face_cropping": {
+        "description": "Whether to use face cropping for the training data. When enabled, images will be cropped to the face before resizing.",
+        "type": "boolean",
+        "default": false,
+        "examples": [
+          false
+        ]
+      },
+      "trigger_phrase": {
+        "description": "Trigger phrase for the model.",
+        "type": "string"
+      },
+      "is_style": {
+        "description": "Whether the training data is style data. If true, face specific options like masking and face detection will be disabled.",
+        "type": "boolean",
+        "default": false,
+        "examples": [
+          false
+        ]
+      }
+    }
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "Wan22ImageTrainerInput",
+    "Wan22ImageTrainerOutput",
+    "File"
+  ]
+}

@@ -1,0 +1,128 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "argil/avatars/audio-to-video",
+  "task": "video-editing",
+  "source_url": "https://fal.ai/models/argil/avatars/audio-to-video",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=argil%2Favatars%2Faudio-to-video",
+  "retrieved_at": "2026-10-04T19:41:29.761Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "audio-to-video",
+  "bytes_sha256": "669b587f66c4eec10d83accb45bc8e0926b4d54cb2611ae1ba7864bb90eb7d9c",
+  "queue_path": "/argil/avatars/audio-to-video",
+  "input_name": "AvatarsAudioToVideoInput",
+  "input": {
+    "$refName": "AvatarsAudioToVideoInput",
+    "type": "object",
+    "properties": {
+      "avatar": {
+        "enum": [
+          "Mia outdoor (UGC)",
+          "Lara (Masterclass)",
+          "Ines (UGC)",
+          "Maria (Masterclass)",
+          "Emma (UGC)",
+          "Sienna (Masterclass)",
+          "Elena (UGC)",
+          "Jasmine (Masterclass)",
+          "Amara (Masterclass)",
+          "Ryan podcast (UGC)",
+          "Tyler (Masterclass)",
+          "Jayse (Masterclass)",
+          "Paul (Masterclass)",
+          "Matteo (UGC)",
+          "Daniel car (UGC)",
+          "Dario (Masterclass)",
+          "Viva (Masterclass)",
+          "Chen (Masterclass)",
+          "Alex (Masterclass)",
+          "Vanessa (UGC)",
+          "Laurent (UGC)",
+          "Noemie car (UGC)",
+          "Brandon (UGC)",
+          "Byron (Masterclass)",
+          "Calista (Masterclass)",
+          "Milo (Masterclass)",
+          "Fabien (Masterclass)",
+          "Rose (UGC)"
+        ],
+        "type": "string",
+        "examples": [
+          "Noemie car (UGC)"
+        ]
+      },
+      "remove_background": {
+        "type": "boolean",
+        "description": "Enabling the remove background feature will result in a 50% increase in the price.",
+        "default": false
+      },
+      "audio_url": {
+        "examples": [
+          {
+            "url": "https://argildotai.s3.us-east-1.amazonaws.com/fal-resource/example_fal.mp3"
+          }
+        ],
+        "type": "string"
+      }
+    },
+    "required": [
+      "avatar",
+      "audio_url"
+    ]
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "AvatarsAudioToVideoInput",
+    "AvatarsAudioToVideoOutput",
+    "Video"
+  ]
+}

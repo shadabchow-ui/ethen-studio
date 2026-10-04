@@ -1,0 +1,143 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/gpt-image-1-mini",
+  "task": "image-generation",
+  "source_url": "https://fal.ai/models/fal-ai/gpt-image-1-mini",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fgpt-image-1-mini",
+  "retrieved_at": "2026-10-04T19:45:20.710Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "text-to-image",
+  "bytes_sha256": "5a5e2db521be1c0e7b6ef32a0101efc8e49567c47b00b5dc7d38f1f1f1c45ca8",
+  "queue_path": "/fal-ai/gpt-image-1-mini",
+  "input_name": "GptImage1MiniInput",
+  "input": {
+    "$refName": "GptImage1MiniInput",
+    "properties": {
+      "image_size": {
+        "default": "auto",
+        "type": "string",
+        "description": "Aspect ratio for the generated image",
+        "enum": [
+          "auto",
+          "1024x1024",
+          "1536x1024",
+          "1024x1536"
+        ]
+      },
+      "prompt": {
+        "minLength": 2,
+        "type": "string",
+        "description": "The prompt for image generation",
+        "examples": [
+          "A serene landscape with mountains reflecting in a crystal-clear lake at sunset, photorealistic style"
+        ]
+      },
+      "background": {
+        "default": "auto",
+        "type": "string",
+        "description": "Background for the generated image",
+        "enum": [
+          "auto",
+          "transparent",
+          "opaque"
+        ]
+      },
+      "sync_mode": {
+        "default": false,
+        "type": "boolean",
+        "description": "If `True`, the media will be returned as a data URI and the output data won't be available in the request history."
+      },
+      "num_images": {
+        "default": 1,
+        "minimum": 1,
+        "type": "integer",
+        "description": "Number of images to generate",
+        "maximum": 4,
+        "examples": [
+          1
+        ]
+      },
+      "quality": {
+        "default": "auto",
+        "type": "string",
+        "description": "Quality for the generated image",
+        "enum": [
+          "auto",
+          "low",
+          "medium",
+          "high"
+        ]
+      },
+      "output_format": {
+        "default": "png",
+        "type": "string",
+        "description": "Output format for the images",
+        "enum": [
+          "jpeg",
+          "png",
+          "webp"
+        ]
+      }
+    },
+    "required": [
+      "prompt"
+    ],
+    "type": "object"
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "GptImage1MiniInput",
+    "GptImage1MiniOutput",
+    "ImageFile"
+  ]
+}

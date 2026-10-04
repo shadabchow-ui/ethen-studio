@@ -1,0 +1,122 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/codeformer",
+  "task": "unknown",
+  "source_url": "https://fal.ai/models/fal-ai/codeformer",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fcodeformer",
+  "retrieved_at": "2026-10-04T19:43:04.381Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "image-to-image",
+  "bytes_sha256": "55e4ec39e99a931fa61643fc8567c7318ef2873642e36c123f71e1b0af753a15",
+  "queue_path": "/fal-ai/codeformer",
+  "input_name": "CodeformerInput",
+  "input": {
+    "$refName": "CodeformerInput",
+    "properties": {
+      "image_url": {
+        "type": "string",
+        "examples": [
+          "https://storage.googleapis.com/falserverless/model_tests/codeformer/codeformer_poor_1.jpeg"
+        ],
+        "description": "URL of image to be used for relighting"
+      },
+      "fidelity": {
+        "type": "number",
+        "default": 0.5,
+        "description": "Weight of the fidelity factor."
+      },
+      "only_center_face": {
+        "type": "boolean",
+        "default": false,
+        "description": "Should only center face be restored"
+      },
+      "seed": {
+        "anyOf": [
+          {
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "Random seed for reproducible generation."
+      },
+      "aligned": {
+        "type": "boolean",
+        "default": false,
+        "description": "Should faces etc should be aligned."
+      },
+      "upscale_factor": {
+        "type": "number",
+        "minimum": 1,
+        "default": 2,
+        "description": "Upscaling factor"
+      },
+      "face_upscale": {
+        "type": "boolean",
+        "default": true,
+        "description": "Should faces be upscaled"
+      }
+    },
+    "type": "object",
+    "required": [
+      "image_url"
+    ]
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "CodeformerInput",
+    "CodeformerOutput",
+    "Image"
+  ]
+}

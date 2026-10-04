@@ -1,0 +1,249 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/iclight-v2",
+  "task": "unknown",
+  "source_url": "https://fal.ai/models/fal-ai/iclight-v2",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Ficlight-v2",
+  "retrieved_at": "2026-10-04T19:45:47.967Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "image-to-image",
+  "bytes_sha256": "af0f4d2f689a41ab274fa0d82348a38144e8e3c5e3c608b1f75c0c4893cfbee4",
+  "queue_path": "/fal-ai/iclight-v2",
+  "input_name": "IclightV2Input",
+  "input": {
+    "$refName": "IclightV2Input",
+    "properties": {
+      "enable_hr_fix": {
+        "description": "Use HR fix",
+        "default": false,
+        "type": "boolean"
+      },
+      "num_images": {
+        "description": "The number of images to generate.",
+        "minimum": 1,
+        "maximum": 4,
+        "default": 1,
+        "type": "integer"
+      },
+      "initial_latent": {
+        "description": "\n            Provide lighting conditions for the model\n        ",
+        "enum": [
+          "None",
+          "Left",
+          "Right",
+          "Top",
+          "Bottom"
+        ],
+        "default": "None",
+        "type": "string"
+      },
+      "seed": {
+        "description": "\n            The same seed and the same prompt given to the same version of the model\n            will output the same image every time.\n        ",
+        "anyOf": [
+          {
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "output_format": {
+        "description": "The format of the generated image.",
+        "enum": [
+          "jpeg",
+          "png"
+        ],
+        "default": "jpeg",
+        "type": "string"
+      },
+      "background_threshold": {
+        "description": "Threshold for the background removal algorithm. A high threshold will produce sharper masks. Note: This parameter is currently deprecated and has no effect on the output.",
+        "minimum": 0.01,
+        "maximum": 1,
+        "default": 0.67,
+        "type": "number"
+      },
+      "mask_image_url": {
+        "description": "URL of mask to be used for ic-light conditioning image",
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "highres_denoise": {
+        "description": "Strength for high-resolution pass. Only used if enable_hr_fix is True.",
+        "minimum": 0.01,
+        "maximum": 1,
+        "default": 0.95,
+        "type": "number"
+      },
+      "num_inference_steps": {
+        "description": "The number of inference steps to perform.",
+        "minimum": 1,
+        "maximum": 50,
+        "default": 28,
+        "type": "integer"
+      },
+      "sync_mode": {
+        "description": "If `True`, the media will be returned as a data URI and the output data won't be available in the request history.",
+        "default": false,
+        "type": "boolean"
+      },
+      "image_url": {
+        "description": "URL of image to be used for relighting",
+        "type": "string",
+        "examples": [
+          "https://storage.googleapis.com/falserverless/iclight-v2/bottle.png"
+        ]
+      },
+      "lowres_denoise": {
+        "description": "Strength for low-resolution pass.",
+        "minimum": 0.01,
+        "maximum": 1,
+        "default": 0.98,
+        "type": "number"
+      },
+      "guidance_scale": {
+        "description": "\n            The CFG (Classifier Free Guidance) scale is a measure of how close you want\n            the model to stick to your prompt when looking for a related image to show you.\n        ",
+        "minimum": 0,
+        "maximum": 20,
+        "default": 5,
+        "type": "number"
+      },
+      "prompt": {
+        "description": "The prompt to generate an image from.",
+        "type": "string",
+        "examples": [
+          "perfume bottle in a volcano surrounded by lava."
+        ]
+      },
+      "image_size": {
+        "description": "The size of the generated image.",
+        "anyOf": [
+          {
+            "$refName": "ImageSize",
+            "properties": {
+              "height": {
+                "description": "The height of the generated image.",
+                "maximum": 14142,
+                "default": 512,
+                "exclusiveMinimum": 0,
+                "type": "integer"
+              },
+              "width": {
+                "description": "The width of the generated image.",
+                "maximum": 14142,
+                "default": 512,
+                "exclusiveMinimum": 0,
+                "type": "integer"
+              }
+            },
+            "type": "object"
+          },
+          {
+            "enum": [
+              "square_hd",
+              "square",
+              "portrait_4_3",
+              "portrait_16_9",
+              "landscape_4_3",
+              "landscape_16_9"
+            ],
+            "type": "string"
+          }
+        ]
+      },
+      "enable_safety_checker": {
+        "description": "If set to true, the safety checker will be enabled. Disabling it requires account authorization; unauthorized requests are always checked.",
+        "default": true,
+        "type": "boolean"
+      },
+      "cfg": {
+        "description": "The real classifier-free-guidance scale for the generation.",
+        "minimum": 0.01,
+        "maximum": 5,
+        "default": 1,
+        "type": "number"
+      },
+      "hr_downscale": {
+        "description": "",
+        "minimum": 0.01,
+        "maximum": 1,
+        "default": 0.5,
+        "type": "number"
+      },
+      "negative_prompt": {
+        "description": "Negative Prompt for the image",
+        "default": "",
+        "type": "string"
+      }
+    },
+    "required": [
+      "prompt",
+      "image_url"
+    ],
+    "type": "object"
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "IclightV2Input",
+    "IclightV2Output",
+    "ImageSize",
+    "Image"
+  ]
+}

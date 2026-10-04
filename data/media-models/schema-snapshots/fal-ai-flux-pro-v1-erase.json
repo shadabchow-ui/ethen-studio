@@ -1,0 +1,115 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/flux-pro/v1/erase",
+  "task": "image-editing",
+  "source_url": "https://fal.ai/models/fal-ai/flux-pro/v1/erase",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fflux-pro%2Fv1%2Ferase",
+  "retrieved_at": "2026-10-04T19:44:58.415Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "image-to-image",
+  "bytes_sha256": "abfc00fce9ac722b0a4a08deef1a782d51ba9decc8d1b879a011a604b834f7b5",
+  "queue_path": "/fal-ai/flux-pro/v1/erase",
+  "input_name": "FluxProV1EraseInput",
+  "input": {
+    "$refName": "FluxProV1EraseInput",
+    "properties": {
+      "mask_url": {
+        "description": "The URL of a black/white mask image where white (255) marks pixels to erase and black (0) marks pixels to keep. Needs to match the dimensions of the input image.",
+        "examples": [
+          "https://storage.googleapis.com/falserverless/flux-lora/example-images/mask_knight.jpeg"
+        ],
+        "type": "string"
+      },
+      "image_url": {
+        "description": "The URL of the input image to erase content from.",
+        "examples": [
+          "https://storage.googleapis.com/falserverless/flux-lora/example-images/knight.jpeg"
+        ],
+        "type": "string"
+      },
+      "dilate_pixels": {
+        "default": 10,
+        "maximum": 100,
+        "description": "Number of pixels to expand the mask edges by. Higher values produce cleaner erase results around the masked region.",
+        "minimum": 0,
+        "type": "integer"
+      },
+      "sync_mode": {
+        "type": "boolean",
+        "description": "If `True`, the media will be returned as a data URI and the output data won't be available in the request history.",
+        "default": false
+      },
+      "output_format": {
+        "type": "string",
+        "enum": [
+          "jpeg",
+          "png"
+        ],
+        "description": "The format of the generated image.",
+        "default": "jpeg"
+      }
+    },
+    "required": [
+      "image_url",
+      "mask_url"
+    ],
+    "description": "Input for the FLUX Erase endpoint.\n\nFLUX Erase removes content from images using a black/white mask.",
+    "type": "object"
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "FluxProV1EraseInput",
+    "FluxProV1EraseOutput",
+    "registry__image__fast_sdxl__models__Image"
+  ]
+}

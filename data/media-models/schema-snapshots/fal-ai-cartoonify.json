@@ -1,0 +1,127 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/cartoonify",
+  "task": "unknown",
+  "source_url": "https://fal.ai/models/fal-ai/cartoonify",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fcartoonify",
+  "retrieved_at": "2026-10-04T19:43:00.196Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "image-to-image",
+  "bytes_sha256": "16650eacb6facabc15ef3788f61759cb18fa65928b04ff6c86b9e0b60c35bc2c",
+  "queue_path": "/fal-ai/cartoonify",
+  "input_name": "CartoonifyInput",
+  "input": {
+    "$refName": "CartoonifyInput",
+    "properties": {
+      "scale": {
+        "default": 1,
+        "maximum": 2,
+        "description": "Scale factor for the Cartoon effect",
+        "minimum": 0.1,
+        "type": "number"
+      },
+      "num_inference_steps": {
+        "default": 28,
+        "maximum": 50,
+        "description": "Number of inference steps",
+        "minimum": 1,
+        "type": "integer"
+      },
+      "enable_safety_checker": {
+        "default": true,
+        "description": "Whether to enable the safety checker",
+        "type": "boolean"
+      },
+      "image_url": {
+        "description": "URL of the image to apply cartoon style to",
+        "examples": [
+          "https://v3.fal.media/files/tiger/c8VSfX5XtJ3DCzV-4Bxg8_kid_image.png"
+        ],
+        "type": "string"
+      },
+      "use_cfg_zero": {
+        "default": false,
+        "description": "Whether to use CFG zero",
+        "type": "boolean"
+      },
+      "guidance_scale": {
+        "default": 3.5,
+        "maximum": 20,
+        "description": "Guidance scale for the generation",
+        "minimum": 0,
+        "type": "number"
+      },
+      "seed": {
+        "anyOf": [
+          {
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "The seed for image generation. Same seed with same parameters will generate same image."
+      }
+    },
+    "required": [
+      "image_url"
+    ],
+    "type": "object"
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "CartoonifyInput",
+    "CartoonifyOutput",
+    "Image"
+  ]
+}
