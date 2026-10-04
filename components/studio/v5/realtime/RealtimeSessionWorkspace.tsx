@@ -118,8 +118,8 @@ export function RealtimeSessionWorkspace(props: RealtimeWorkspaceProps) {
               <ul className="mt-3 space-y-2" aria-hidden>
                 {[0, 1].map((i) => (
                   <li key={i} className="rounded-[12px] border border-[var(--border-subtle)] px-3 py-2.5">
-                    <span className="block text-[12px] font-semibold text-[var(--text-tertiary)]">Voice session</span>
-                    <span className="mt-0.5 block text-[11px] text-[var(--text-tertiary)]">Select a project to list sessions.</span>
+                    <span className="block text-[12px] font-semibold text-[var(--text-primary)]">Voice session</span>
+                    <span className="mt-0.5 block text-[11px] text-[var(--text-secondary)]">Select a project to list sessions.</span>
                   </li>
                 ))}
               </ul>

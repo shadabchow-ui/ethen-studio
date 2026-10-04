@@ -191,3 +191,34 @@ P0_BLOCKERS=
 P1_BLOCKERS=
 UNRELATED_DIRTY_DELTA=
 ```
+
+## OPUS-FINAL-004 continuation — 2026-10-04
+
+Production remains on main@362d74bac728e5382a66affd4caaa7872b908aa7.
+Candidate branch: final-004/release. No merge or production promotion performed.
+Private-alpha enrollment policy remains fail-closed.
+
+The candidate preserves closure/hygiene/portfolio inputs, restores favorites,
+recents and project-availability comparison to the V5 model browser, and lazily
+loads checked-in provenance, license, pricing evidence and limits through the
+existing authenticated endpoint-detail route. Catalog metadata never grants
+execution. Current execution availability still comes from the project catalog;
+current quotes remain required. The full generated registry stays server-side.
+The loopback fixture detail lane returns metadata and no execution attestations.
+
+Voice Agents placeholder contrast and current V5 sidebar asset/mobile contracts
+were repaired. Final test, browser and source-SHA receipts are in the program
+pack at opus-final-polish-pack/evidence/OPUS-FINAL-004; consume its result for
+phase status. Earlier source-only and fixture evidence is not live certification.
+
+Remaining release gates: OPUS-FINAL-002 Studio staging consumer certification
+and STUDIO_PROD receipt; OA-05 promotion policy; authenticated preview generation,
+cancel, persistence and consent deny/revoke; real provider/voice substrate.
+The S1 staging receipt is APPLIED_NOT_CONSUMER_CERTIFIED. Tier-3 suite is absent;
+real DB consumer substitution is NOT_RUN and remains owned by 002/004.
+
+Rollback candidate re-observed during this run: dpl_5ahED5MVaVDvmHqe9HaqjK5r1o4Q
+(READY production, main@362d74b). Re-query immediately before any future promotion.
+Studio and Studio Voice launch status: NOT LIVE_CERTIFIED. Marketing job 008
+may use fixture screenshots as fixture evidence only; real-capture readiness
+requires authenticated preview certification and a matching release receipt.
