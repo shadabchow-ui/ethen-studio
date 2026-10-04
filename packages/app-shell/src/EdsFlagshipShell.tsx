@@ -52,6 +52,9 @@ const RUNTIME_TYPE_GROUPS: Readonly<
   "local-model-server": "Local",
   "platform-service": "Services",
   "data-layer": "Intelligence",
+  // MUSE-026 pin-compat: portfolio-contracts/v1 adds the "robot" runtime
+  // type (iBot program row). Label follows the plural-group convention.
+  robot: "Robots",
 };
 
 const LIFECYCLE_LABELS: Readonly<Record<ProductLifecycle, string>> = {
@@ -63,6 +66,10 @@ const LIFECYCLE_LABELS: Readonly<Record<ProductLifecycle, string>> = {
   "setup-required": "Setup required",
   unavailable: "Unavailable",
   retired: "Retired",
+  // MUSE-026 pin-compat: portfolio-contracts/v1 vocabulary additions.
+  live: "Live",
+  coming: "Coming soon",
+  internal: "Internal",
 };
 
 const USABLE_LIFECYCLES: ReadonlySet<ProductLifecycle> = new Set([

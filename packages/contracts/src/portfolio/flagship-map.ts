@@ -1,22 +1,52 @@
 /**
- * FOUNDATION-01 — Canonical Flagship Runtime Map
+ * MUSE-010 — Canonical Flagship Runtime Map, portfolio contract v1.
  *
- * Defines Ethen's fourteen flagship products, their canonical routes, and
- * their truthful runtime lifecycle. Discovery surfaces must project from this
- * map rather than reconstructing a product list from agent records.
+ * Defines Ethen's fourteen flagship products, their owning repository,
+ * their truthful runtime lifecycle, their canonical app route, their
+ * public marketing route, and their app URL. Discovery surfaces must
+ * project from this map rather than reconstructing a product list from
+ * agent records.
+ *
+ * v1 changes (Opus audit C-02/C-03/C-04/C-09/C-12):
+ * - owner is the owning REPO id (was: chat|platform deployment target).
+ * - lifecycle uses the v1 vocabulary (live|private-alpha|beta|preview|
+ *   coming|internal). Legacy literals (available, private-beta,
+ *   setup-required, unavailable, retired) stay in the shared union for
+ *   the portfolio registry; no map row uses them.
+ * - Voice has no standalone row: conversational voice is a Chat
+ *   capability and creation voice is a Studio capability (OD-02).
+ * - Flow's canonical surface is /connected-apps (never /flow, /apps, or
+ *   the retired /workflow-agent/* tree).
+ * - iBot is a separate program row (staging only, no public runtime).
+ *
+ * Exported function signatures are backward compatible with the
+ * pre-v1 map. Values changed; see
+ * platform/docs/contracts/PORTFOLIO_CONTRACT_RELEASE.md (release v1).
  */
 
 import type { ProductLifecycle } from "./types";
-import { getResearchPortfolioLifecycle } from "../research/capabilities";
 
 export type FlagshipRuntimeType =
   | "agent"
   | "gateway-adapter"
   | "local-model-server"
   | "platform-service"
-  | "data-layer";
+  | "data-layer"
+  | "robot";
 
-export type FlagshipOwner = "chat" | "platform";
+/**
+ * Owning repository id. `none` marks a row with no owning repo (reserved;
+ * unused in v1 — every row has an owner).
+ */
+export type FlagshipOwner =
+  | "chat"
+  | "platform"
+  | "ethen-studio"
+  | "code"
+  | "web"
+  | "ethen-founder"
+  | "ibot"
+  | "none";
 
 export interface FlagshipRuntimeMapping {
   id: string;
@@ -26,7 +56,12 @@ export interface FlagshipRuntimeMapping {
   owner: FlagshipOwner;
   agentSlug?: string;
   lifecycle: ProductLifecycle;
+  /** Canonical app route (in-app path; see appUrl for the host). */
   canonicalRoute: string;
+  /** Public marketing page for this flagship. */
+  marketingRoute: string;
+  /** Absolute URL of the running app, or null when undeployed. */
+  appUrl: string | null;
   description: string;
 }
 
@@ -36,11 +71,13 @@ export const CANONICAL_FLAGSHIP_RUNTIME_MAP: readonly FlagshipRuntimeMapping[] =
     displayName: "Ethen",
     registryId: "ethen-auto",
     runtimeType: "agent",
-    owner: "platform",
+    owner: "chat",
     agentSlug: "universal-composer-agent",
-    lifecycle: "preview",
-    canonicalRoute: "/console",
-    description: "Unified AI workspace for reasoning, tools, planning, and verified execution.",
+    lifecycle: "live",
+    canonicalRoute: "/chat",
+    marketingRoute: "/products/ethen",
+    appUrl: "https://chat.upcube.ai",
+    description: "Simple, general-purpose conversational product: core chat, model selector, files, artifacts, tools, memory.",
   },
   {
     id: "research",
@@ -49,31 +86,37 @@ export const CANONICAL_FLAGSHIP_RUNTIME_MAP: readonly FlagshipRuntimeMapping[] =
     runtimeType: "agent",
     owner: "chat",
     agentSlug: "research-agent",
-    lifecycle: getResearchPortfolioLifecycle(),
+    lifecycle: "coming",
     canonicalRoute: "/research",
-    description: "Exa-backed deep search, source analysis, and synthesis workspace.",
+    marketingRoute: "/products/research",
+    appUrl: null,
+    description: "Full research workspace is planned; limited Deep Research is available in Chat today.",
   },
   {
     id: "code",
     displayName: "Code",
     registryId: "code",
     runtimeType: "agent",
-    owner: "platform",
+    owner: "code",
     agentSlug: "coding-agent",
-    lifecycle: "beta",
+    lifecycle: "coming",
     canonicalRoute: "/code",
-    description: "Plan-first coding workspace with repository context and patch proposals.",
+    marketingRoute: "/products/code",
+    appUrl: null,
+    description: "Plan-first coding workspace with repository context and patch proposals. V2 locally certified, not yet deployed.",
   },
   {
     id: "local-models",
     displayName: "Local Models",
     registryId: "local-models",
     runtimeType: "local-model-server",
-    owner: "platform",
+    owner: "code",
     agentSlug: "compute-agent",
     lifecycle: "beta",
     canonicalRoute: "/local-models",
-    description: "Local model runtime management and Ollama integration.",
+    marketingRoute: "/products/local-models",
+    appUrl: null,
+    description: "Desktop capability: install, run, and inspect models on your machine via the Code desktop Ollama path.",
   },
   {
     id: "computer-use",
@@ -82,9 +125,11 @@ export const CANONICAL_FLAGSHIP_RUNTIME_MAP: readonly FlagshipRuntimeMapping[] =
     runtimeType: "agent",
     owner: "platform",
     agentSlug: "computer-use-agent",
-    lifecycle: "unavailable",
+    lifecycle: "coming",
     canonicalRoute: "/browser",
-    description: "Conversational browser and computer-use agent for supervised web tasks.",
+    marketingRoute: "/products/computer",
+    appUrl: null,
+    description: "Supervised browser and computer-use runtime for delegated web tasks. Platform-managed; no vendor yet.",
   },
   {
     id: "sentinel",
@@ -95,29 +140,22 @@ export const CANONICAL_FLAGSHIP_RUNTIME_MAP: readonly FlagshipRuntimeMapping[] =
     agentSlug: "sentinel-agent",
     lifecycle: "private-alpha",
     canonicalRoute: "/sentinel",
-    description: "Defensive security engineering, scanning, triage, and patching.",
+    marketingRoute: "/products/sentinel",
+    appUrl: "https://platform.upcube.ai/sentinel",
+    description: "Defensive security engineering, scanning, triage, and patching. Enrolled private alpha on the closed platform console.",
   },
   {
     id: "studio",
     displayName: "Studio",
     registryId: "studio",
     runtimeType: "agent",
-    owner: "chat",
+    owner: "ethen-studio",
     agentSlug: "media-agent",
-    lifecycle: "unavailable",
+    lifecycle: "private-alpha",
     canonicalRoute: "/studio",
-    description: "Image, video, and media generation workspace (private-alpha access boundary).",
-  },
-  {
-    id: "voice",
-    displayName: "Voice",
-    registryId: "voice",
-    runtimeType: "platform-service",
-    owner: "chat",
-    agentSlug: undefined,
-    lifecycle: "unavailable",
-    canonicalRoute: "/voice",
-    description: "Speech generation, transcription, dubbing, and realtime voice.",
+    marketingRoute: "/products/studio",
+    appUrl: "https://studio.upcube.ai",
+    description: "Creative model platform: catalog, canvas, cinema, and voices. Live private alpha.",
   },
   {
     id: "automation",
@@ -126,9 +164,11 @@ export const CANONICAL_FLAGSHIP_RUNTIME_MAP: readonly FlagshipRuntimeMapping[] =
     runtimeType: "agent",
     owner: "platform",
     agentSlug: "flow-agent",
-    lifecycle: "unavailable",
-    canonicalRoute: "/workflow-agent",
-    description: "Connected workflow automation and agent orchestration.",
+    lifecycle: "coming",
+    canonicalRoute: "/connected-apps",
+    marketingRoute: "/products/flow",
+    appUrl: null,
+    description: "Connected Apps and approval-gated automation. Source integrated and local-certified; providers not yet ready.",
   },
   {
     id: "designer",
@@ -137,20 +177,24 @@ export const CANONICAL_FLAGSHIP_RUNTIME_MAP: readonly FlagshipRuntimeMapping[] =
     runtimeType: "agent",
     owner: "chat",
     agentSlug: "designer-agent",
-    lifecycle: "unavailable",
+    lifecycle: "coming",
     canonicalRoute: "/designer",
-    description: "Design generation, iteration, export, and Code handoff workspace.",
+    marketingRoute: "/products/designer",
+    appUrl: null,
+    description: "Lightweight design generation in Chat today; full prompt-to-app builder workspace is coming (OD-15).",
   },
   {
     id: "founder",
     displayName: "Founder",
     registryId: "founder",
     runtimeType: "agent",
-    owner: "chat",
+    owner: "ethen-founder",
     agentSlug: "founder-agent",
-    lifecycle: "unavailable",
+    lifecycle: "coming",
     canonicalRoute: "/founder-agent",
-    description: "Company OS entry point for founder operations and autonomous business workflows.",
+    marketingRoute: "/products/founder",
+    appUrl: null,
+    description: "Autonomous-jobs product: give Ethen a job, get a verified outcome. Dedicated app, not yet built.",
   },
   {
     id: "gateway",
@@ -159,20 +203,24 @@ export const CANONICAL_FLAGSHIP_RUNTIME_MAP: readonly FlagshipRuntimeMapping[] =
     runtimeType: "gateway-adapter",
     owner: "platform",
     agentSlug: undefined,
-    lifecycle: "beta",
+    lifecycle: "preview",
     canonicalRoute: "/ai-gateway",
-    description: "Governed multi-model gateway with keys, routing, policy, and usage.",
+    marketingRoute: "/products/gateway",
+    appUrl: null,
+    description: "Governed multi-model gateway with keys, routing, policy, and usage. Implemented, not yet deployed.",
   },
   {
     id: "model-intelligence",
     displayName: "Model Intelligence",
     registryId: "model-intelligence",
     runtimeType: "data-layer",
-    owner: "platform",
+    owner: "web",
     agentSlug: undefined,
-    lifecycle: "beta",
+    lifecycle: "live",
     canonicalRoute: "/model-intelligence",
-    description: "Model directory, benchmarks, pricing, and evaluation intelligence.",
+    marketingRoute: "/products/model-intelligence",
+    appUrl: "https://upcube.ai/model-intelligence",
+    description: "Model directory, benchmarks, pricing, and evaluation intelligence. User-facing term is primarily Model Library.",
   },
   {
     id: "gpu-compute",
@@ -181,9 +229,24 @@ export const CANONICAL_FLAGSHIP_RUNTIME_MAP: readonly FlagshipRuntimeMapping[] =
     runtimeType: "platform-service",
     owner: "platform",
     agentSlug: "gpu-cloud-agent",
-    lifecycle: "preview",
+    lifecycle: "coming",
     canonicalRoute: "/compute",
-    description: "GPU provisioning, workload management, and cost control via Thunder Compute.",
+    marketingRoute: "/products/compute",
+    appUrl: null,
+    description: "GPU provisioning, workload management, and cost control. Undeployed; resale terms unresolved (OD-06).",
+  },
+  {
+    id: "ibot",
+    displayName: "iBot",
+    registryId: "ibot",
+    runtimeType: "robot",
+    owner: "ibot",
+    agentSlug: undefined,
+    lifecycle: "coming",
+    canonicalRoute: "/products/ibot",
+    marketingRoute: "/products/ibot",
+    appUrl: null,
+    description: "Separate program: robot OS and mission kernel, staging on Fly + Temporal. No public runtime.",
   },
 ] as const;
 
@@ -217,13 +280,16 @@ export function listFlagshipsByOwner(owner: FlagshipOwner): readonly FlagshipRun
  * `gpu-compute` here and `compute` in the registry).
  *
  * A product is available when its lifecycle is a usable one AND its routes are
- * not structurally frozen. `preview` and `beta` count as available: users can
- * reach them, so their provider credentials are real production requirements.
+ * not structurally frozen. `live`, `beta` and `preview` count as available:
+ * users can reach them, so their provider credentials are real production
+ * requirements. v1 truth change: Code and Compute left the usable set (both
+ * undeployed); Ethen and Model Intelligence are `live`.
  */
 export function getAvailableFlagshipProductIds(
   environment: Readonly<Record<string, string | undefined>> = process.env,
 ): readonly string[] {
   const usableLifecycles: ReadonlySet<ProductLifecycle> = new Set([
+    "live",
     "available",
     "beta",
     "preview",

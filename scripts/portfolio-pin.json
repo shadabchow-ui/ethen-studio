@@ -1,0 +1,21 @@
+{
+  "release": "portfolio-contracts/v1",
+  "publisher": "ethen-platform",
+  "publisherCommit": "535101e2f8162987208a4709f81d8a6e78899ed0",
+  "pinnedAt": "2026-10-03",
+  "pinnedBy": "MUSE-026",
+  "scope": "full 11-file v1 release in packages/contracts/src/portfolio; hashes must match platform/docs/contracts/PORTFOLIO_CONTRACT_RELEASE.md §4 exactly",
+  "files": {
+    "computer-use-guard.ts": "71fcff1ac2eb0e0cf1a2c4040d590eedf61d8bce691a078b4dc47001fff2601b",
+    "consumers.ts": "4df785ad1f61bbb4407d04728a5993c50ab43682f366203b2894c87eb96e4a4c",
+    "designer-guard.ts": "0aad88918b7c5648532f57312fddfd3d1877820b69b6916fbe190c14522b45df",
+    "flagship-map.ts": "9d8f9a0d87bb70018a5fe99f64249e40cfa17478f54f5767a09e503fdc1e1a32",
+    "founder-capability.ts": "d39dd9aff2f9fac496fd4f73b8267581ecabf2eac64f746b822b983a36c2009d",
+    "founder-guard.ts": "3ececec51d171ecaeaff77ddbb7b5006ae6d9f2972bbf01706ca205643093b30",
+    "index.ts": "5251fb489de2ec92bc92f90c109e977d5a4bb256e0643a133ad6b12195679cb3",
+    "lifecycle.ts": "2edd8d9e424cc8adbc69cdcc4b667bc3da767c1095f03b49cebc0ff76cda1c79",
+    "product-ownership.ts": "9acd0af2b7f72f62321b4027030e9ab8a84d51b677f33a804506a36d1ef18007",
+    "registry.ts": "b7c75141de3f751f340d4ba397ce1833b3bf4d87223a024728b3749b745d4d5a",
+    "types.ts": "4190cbcedea5663ce9601281c1a278305ac161147dff969a91e84cbfd8ed37ed"
+  }
+}
