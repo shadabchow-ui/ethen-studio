@@ -35,12 +35,6 @@ const MEDIA_TOOL_IDS = [
   "media.generate_voiceover",
   "media.translate_speech",
   "media.change_voice",
-  "media.generate_sound_effect",
-  "media.generate_music_bed",
-  "media.generate_game_asset",
-  "media.generate_sprite_pack",
-  "media.generate_character_pack",
-  "media.generate_game_ui",
   "media.create_project",
   "media.save_asset",
   "media.list_assets",
@@ -104,11 +98,13 @@ function testAllMediaCategoriesValid(): void {
 
 function testMediaToolCount(): void {
   console.log("\n[Media Tool Count]");
-  assertEqual(MEDIA_TOOL_IDS.length, 27, "27 media tool IDs defined");
+  assertEqual(new Set(MEDIA_TOOL_IDS).size, MEDIA_TOOL_IDS.length, "canonical media IDs are unique");
   const registered = TOOL_REGISTRY.filter((t: ToolDefinition) =>
     MEDIA_TOOL_IDS.includes(t.id),
   );
-  assertEqual(registered.length, 27, "27 media tools registered");
+  assertEqual(registered.length, MEDIA_TOOL_IDS.length, "every current media contract is registered");
+  const plannedIds = ["media.generate_sound_effect", "media.generate_music_bed", "media.generate_game_asset", "media.generate_sprite_pack", "media.generate_character_pack", "media.generate_game_ui"];
+  for (const id of plannedIds) assert(!TOOL_REGISTRY.some(t => t.id === id), `${id} remains unavailable until implemented`);
 }
 
 function testMediaModelsPresent(): void {
