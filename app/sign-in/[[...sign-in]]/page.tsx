@@ -1,4 +1,5 @@
 import { SignIn } from "@clerk/nextjs";
+import { AuthLegalLinks } from "../../auth-legal-links";
 
 /**
  * Studio standalone sign-in (canonical Clerk App Router pattern).
@@ -29,13 +30,14 @@ export default function StudioSignInPage() {
   }
 
   return (
-    <main className="flex min-h-screen items-center justify-center p-6">
+    <main className="flex min-h-screen flex-col items-center justify-center gap-4 p-6">
       <SignIn
         path="/sign-in"
         routing="path"
         signUpUrl="/sign-up"
         fallbackRedirectUrl="/studio"
       />
+      <AuthLegalLinks intent="sign-in" />
     </main>
   );
 }

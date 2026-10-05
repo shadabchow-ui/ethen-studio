@@ -1,4 +1,5 @@
 import { SignUp } from "@clerk/nextjs";
+import { AuthLegalLinks } from "../../auth-legal-links";
 
 /**
  * Studio standalone sign-up (canonical Clerk App Router pattern).
@@ -6,8 +7,8 @@ import { SignUp } from "@clerk/nextjs";
  * Standalone-deployable canonical Clerk App Router pattern (same shape as
  * the sibling chat deployable's sign-up route) with the monolith's
  * fail-closed unconfigured guard. Post-registration landing is
- * the Studio workbench (`/studio`); private-alpha enrollment is still
- * enforced at the edge proxy after authentication.
+ * the Studio workbench (`/studio`). Note (legal-v1 F-SU-02): the deployed
+ * edge proxy checks authentication and readiness flags, not enrollment.
  */
 
 const clerkConfigured = Boolean(
@@ -29,13 +30,14 @@ export default function StudioSignUpPage() {
   }
 
   return (
-    <main className="flex min-h-screen items-center justify-center p-6">
+    <main className="flex min-h-screen flex-col items-center justify-center gap-4 p-6">
       <SignUp
         path="/sign-up"
         routing="path"
         signInUrl="/sign-in"
         fallbackRedirectUrl="/studio"
       />
+      <AuthLegalLinks intent="sign-up" />
     </main>
   );
 }
