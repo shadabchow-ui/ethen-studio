@@ -1,0 +1,98 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/ideogram/object-removal",
+  "task": "unknown",
+  "source_url": "https://fal.ai/models/fal-ai/ideogram/object-removal",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fideogram%2Fobject-removal",
+  "retrieved_at": "2026-10-04T19:45:52.556Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "image-to-image",
+  "bytes_sha256": "ca2fdaefc6399abf9c953b7d585d554e7f4abf735d504ba603c9c689d22ff04a",
+  "queue_path": "/fal-ai/ideogram/object-removal",
+  "input_name": "IdeogramObjectRemovalInput",
+  "input": {
+    "$refName": "IdeogramObjectRemovalInput",
+    "properties": {
+      "mask_url": {
+        "description": "A black-and-white mask matching the source image dimensions. White pixels are removed and black pixels are preserved (maximum file size 10MB).",
+        "type": "string",
+        "examples": [
+          "https://v3.fal.media/files/kangaroo/1dd3zEL5MXQ3Kb4-mRi9d_indir%20(20).png"
+        ]
+      },
+      "image_url": {
+        "description": "The source image containing the object to remove (maximum file size 10MB).",
+        "type": "string",
+        "examples": [
+          "https://v3.fal.media/files/panda/-LC_gNNV3wUHaGMQT3klE_output.png"
+        ]
+      },
+      "sync_mode": {
+        "default": false,
+        "description": "If `True`, the media will be returned as a data URI and the output data won't be available in the request history.",
+        "type": "boolean"
+      }
+    },
+    "type": "object",
+    "required": [
+      "image_url",
+      "mask_url"
+    ]
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "IdeogramObjectRemovalInput",
+    "IdeogramObjectRemovalOutput",
+    "File"
+  ]
+}

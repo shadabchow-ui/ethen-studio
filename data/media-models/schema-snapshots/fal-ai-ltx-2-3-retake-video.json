@@ -1,0 +1,119 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/ltx-2.3/retake-video",
+  "task": "video-editing",
+  "source_url": "https://fal.ai/models/fal-ai/ltx-2.3/retake-video",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fltx-2.3%2Fretake-video",
+  "retrieved_at": "2026-10-04T19:48:29.128Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "video-to-video",
+  "bytes_sha256": "6baede6a1bafb9ef8c0a7d93b9ac23b3cbdeb56126c828dd3ae801ab6b200622",
+  "queue_path": "/fal-ai/ltx-2.3/retake-video",
+  "input_name": "Ltx23RetakeVideoInput",
+  "input": {
+    "$refName": "Ltx23RetakeVideoInput",
+    "required": [
+      "video_url",
+      "prompt"
+    ],
+    "type": "object",
+    "properties": {
+      "duration": {
+        "minimum": 2,
+        "default": 5,
+        "description": "The duration of the video to retake in seconds",
+        "maximum": 20,
+        "type": "number"
+      },
+      "video_url": {
+        "description": "The URL of the video to retake",
+        "examples": [
+          "https://v3b.fal.media/files/b/0a90e00e/eNWXGtaGyZO--e6KcJh-3_171_video.mp4"
+        ],
+        "type": "string"
+      },
+      "retake_mode": {
+        "description": "The retake mode to use for the retake",
+        "default": "replace_audio_and_video",
+        "type": "string",
+        "enum": [
+          "replace_audio",
+          "replace_video",
+          "replace_audio_and_video"
+        ]
+      },
+      "start_time": {
+        "minimum": 0,
+        "default": 0,
+        "description": "The start time of the video to retake in seconds",
+        "maximum": 20,
+        "type": "number"
+      },
+      "prompt": {
+        "maxLength": 5000,
+        "description": "The prompt to retake the video with",
+        "examples": [
+          "Change flower to red rose"
+        ],
+        "minLength": 1,
+        "type": "string"
+      }
+    }
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "Ltx23RetakeVideoInput",
+    "Ltx23RetakeVideoOutput",
+    "VideoFile"
+  ]
+}

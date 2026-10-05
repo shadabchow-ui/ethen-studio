@@ -1,0 +1,277 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/flux-lora-fill",
+  "task": "unknown",
+  "source_url": "https://fal.ai/models/fal-ai/flux-lora-fill",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fflux-lora-fill",
+  "retrieved_at": "2026-10-04T19:44:49.643Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "image-to-image",
+  "bytes_sha256": "259d8f9a1305bd7279bf6c8f1676b2b4995a667dcdd72959d7351d5fec5a4bce",
+  "queue_path": "/fal-ai/flux-lora-fill",
+  "input_name": "FluxLoraFillInput",
+  "input": {
+    "$refName": "FluxLoraFillInput",
+    "required": [
+      "image_url",
+      "mask_url"
+    ],
+    "type": "object",
+    "properties": {
+      "num_images": {
+        "minimum": 1,
+        "description": "The number of images to generate. This is always set to 1 for streaming output.",
+        "type": "integer",
+        "maximum": 4,
+        "default": 1
+      },
+      "sync_mode": {
+        "description": "If `True`, the media will be returned as a data URI and the output data won't be available in the request history.",
+        "type": "boolean",
+        "default": false
+      },
+      "paste_back": {
+        "description": "Specifies whether to paste-back the original image onto to the non-inpainted areas of the output",
+        "type": "boolean",
+        "default": true
+      },
+      "loras": {
+        "examples": [],
+        "default": [],
+        "description": "\n            The LoRAs to use for the image generation. You can use any number of LoRAs\n            and they will be merged together to generate the final image.\n        ",
+        "type": "array",
+        "items": {
+          "$refName": "LoraWeight",
+          "required": [
+            "path"
+          ],
+          "type": "object",
+          "properties": {
+            "path": {
+              "description": "URL or the path to the LoRA weights.",
+              "type": "string"
+            },
+            "scale": {
+              "minimum": 0,
+              "description": "\n            The scale of the LoRA weight. This is used to scale the LoRA weight\n            before merging it with the base model.\n        ",
+              "type": "number",
+              "maximum": 4,
+              "default": 1
+            }
+          }
+        }
+      },
+      "seed": {
+        "anyOf": [
+          {
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "\n            The same seed and the same prompt given to the same version of the model\n            will output the same image every time.\n        "
+      },
+      "image_size": {
+        "anyOf": [
+          {
+            "$refName": "ImageSize",
+            "type": "object",
+            "properties": {
+              "height": {
+                "default": 512,
+                "description": "The height of the generated image.",
+                "type": "integer",
+                "maximum": 14142,
+                "exclusiveMinimum": 0
+              },
+              "width": {
+                "default": 512,
+                "description": "The width of the generated image.",
+                "type": "integer",
+                "maximum": 14142,
+                "exclusiveMinimum": 0
+              }
+            }
+          },
+          {
+            "type": "string",
+            "enum": [
+              "square_hd",
+              "square",
+              "portrait_4_3",
+              "portrait_16_9",
+              "landscape_4_3",
+              "landscape_16_9"
+            ]
+          }
+        ],
+        "description": "The size of the generated image."
+      },
+      "image_url": {
+        "description": "URL of image to use for fill operation",
+        "type": "string",
+        "examples": [
+          "https://storage.googleapis.com/falserverless/flux-lora/example-images/knight.jpeg"
+        ]
+      },
+      "guidance_scale": {
+        "minimum": 28,
+        "description": "\n            The CFG (Classifier Free Guidance) scale is a measure of how close you want\n            the model to stick to your prompt when looking for a related image to show you.\n        ",
+        "type": "number",
+        "maximum": 35,
+        "default": 30
+      },
+      "acceleration": {
+        "description": "Acceleration level for image generation. 'regular' balances speed and quality.",
+        "type": "string",
+        "enum": [
+          "none",
+          "regular"
+        ],
+        "default": "none"
+      },
+      "prompt": {
+        "description": "The prompt to generate an image from.",
+        "type": "string",
+        "examples": [
+          "A knight in shining armour holding a greatshield with 'FAL' on it"
+        ],
+        "default": ""
+      },
+      "num_inference_steps": {
+        "minimum": 1,
+        "description": "The number of inference steps to perform.",
+        "type": "integer",
+        "maximum": 50,
+        "default": 28
+      },
+      "fill_image": {
+        "anyOf": [
+          {
+            "$refName": "ImageFillInput",
+            "type": "object",
+            "properties": {
+              "use_prompt": {
+                "description": "Whether to use the prompt as well in the generation, along with the redux image.",
+                "type": "boolean",
+                "default": false
+              },
+              "in_context_fill": {
+                "description": "Uses the provided fill image in context with the base image to fill in more faithfully. Will increase price.",
+                "type": "boolean",
+                "default": false
+              },
+              "fill_image_url": {
+                "anyOf": [
+                  {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "description": "URLs of images to be filled into the masked area."
+              }
+            }
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "Use an image fill input to fill in particular images into the masked area."
+      },
+      "resize_to_original": {
+        "description": "Resizes the image back to the original size. Use when you wish to preserve the exact image size as the originally provided image.",
+        "type": "boolean",
+        "default": false
+      },
+      "enable_safety_checker": {
+        "description": "If set to true, the safety checker will be enabled. Disabling it requires account authorization; unauthorized requests are always checked, and images flagged as unsafe are returned as black images.",
+        "type": "boolean",
+        "default": true
+      },
+      "mask_url": {
+        "description": "\n            The mask to area to Inpaint in.\n        ",
+        "type": "string",
+        "examples": [
+          "https://storage.googleapis.com/falserverless/flux-lora/example-images/mask_knight.jpeg"
+        ]
+      },
+      "output_format": {
+        "description": "The format of the generated image.",
+        "type": "string",
+        "enum": [
+          "jpeg",
+          "png"
+        ],
+        "default": "jpeg"
+      }
+    }
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "FluxLoraFillInput",
+    "FluxLoraFillOutput",
+    "LoraWeight",
+    "ImageSize",
+    "ImageFillInput",
+    "Image"
+  ]
+}

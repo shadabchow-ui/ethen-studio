@@ -1,0 +1,160 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/veo3.1/fast",
+  "task": "unknown",
+  "source_url": "https://fal.ai/models/fal-ai/veo3.1/fast",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fveo3.1%2Ffast",
+  "retrieved_at": "2026-10-04T19:52:06.665Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "text-to-video",
+  "bytes_sha256": "43cb8dbd88a8c7ba2750d866aab77ce8e0a0e412990cdaee12e24feb14dd9439",
+  "queue_path": "/fal-ai/veo3.1/fast",
+  "input_name": "Veo31FastInput",
+  "input": {
+    "$refName": "Veo31FastInput",
+    "properties": {
+      "seed": {
+        "anyOf": [
+          {
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "The seed for the random number generator."
+      },
+      "negative_prompt": {
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "A negative prompt to guide the video generation."
+      },
+      "duration": {
+        "default": "8s",
+        "description": "The duration of the generated video.",
+        "enum": [
+          "4s",
+          "6s",
+          "8s"
+        ],
+        "type": "string"
+      },
+      "safety_tolerance": {
+        "default": "4",
+        "description": "The safety tolerance level for content moderation. 1 is the most strict (blocks most content), 6 is the least strict.",
+        "enum": [
+          "1",
+          "2",
+          "3",
+          "4",
+          "5",
+          "6"
+        ],
+        "type": "string"
+      },
+      "prompt": {
+        "maxLength": 20000,
+        "examples": [
+          "Two person street interview in New York City.\nSample Dialogue:\nHost: \"Did you hear the news?\"\nPerson: \"Yes! Veo 3.1 is now available on fal. If you want to see it, go check their website.\""
+        ],
+        "description": "The text prompt describing the video you want to generate",
+        "type": "string"
+      },
+      "auto_fix": {
+        "default": true,
+        "description": "Whether to automatically attempt to fix prompts that fail content policy or other validation checks by rewriting them.",
+        "type": "boolean"
+      },
+      "resolution": {
+        "default": "720p",
+        "description": "The resolution of the generated video.",
+        "enum": [
+          "720p",
+          "1080p",
+          "4k"
+        ],
+        "type": "string"
+      },
+      "generate_audio": {
+        "default": true,
+        "description": "Whether to generate audio for the video.",
+        "type": "boolean"
+      },
+      "aspect_ratio": {
+        "default": "16:9",
+        "description": "Aspect ratio of the generated video",
+        "enum": [
+          "16:9",
+          "9:16"
+        ],
+        "type": "string"
+      }
+    },
+    "required": [
+      "prompt"
+    ],
+    "type": "object"
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "Veo31FastInput",
+    "Veo31FastOutput",
+    "File"
+  ]
+}

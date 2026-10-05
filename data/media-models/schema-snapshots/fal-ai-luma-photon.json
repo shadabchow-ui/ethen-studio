@@ -1,0 +1,100 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/luma-photon",
+  "task": "unknown",
+  "source_url": "https://fal.ai/models/fal-ai/luma-photon",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fluma-photon",
+  "retrieved_at": "2026-10-04T19:48:58.571Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "text-to-image",
+  "bytes_sha256": "c0ba45d8c614930983508611e1560d89ff3437b5ac5189a4ba7bfdd47be36e24",
+  "queue_path": "/fal-ai/luma-photon",
+  "input_name": "LumaPhotonInput",
+  "input": {
+    "$refName": "LumaPhotonInput",
+    "properties": {
+      "aspect_ratio": {
+        "default": "1:1",
+        "type": "string",
+        "description": "The aspect ratio of the generated video",
+        "enum": [
+          "16:9",
+          "9:16",
+          "1:1",
+          "4:3",
+          "3:4",
+          "21:9",
+          "9:21"
+        ]
+      },
+      "prompt": {
+        "minLength": 3,
+        "type": "string",
+        "maxLength": 5000,
+        "examples": [
+          "A teddy bear in sunglasses playing electric guitar and dancing"
+        ]
+      }
+    },
+    "required": [
+      "prompt"
+    ],
+    "type": "object"
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "LumaPhotonInput",
+    "LumaPhotonOutput",
+    "File"
+  ]
+}

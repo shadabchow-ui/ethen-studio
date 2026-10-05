@@ -1,0 +1,165 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/gpt-image-1/edit-image",
+  "task": "image-generation",
+  "source_url": "https://fal.ai/models/fal-ai/gpt-image-1/edit-image",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fgpt-image-1%2Fedit-image",
+  "retrieved_at": "2026-10-04T19:45:23.000Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "image-to-image",
+  "bytes_sha256": "ce2e50f72e4ccfcddd44a582e850087d0404cfa5e098935c4ad755d2a52aadf1",
+  "queue_path": "/fal-ai/gpt-image-1/edit-image",
+  "input_name": "GptImage1EditImageInput",
+  "input": {
+    "$refName": "GptImage1EditImageInput",
+    "type": "object",
+    "required": [
+      "prompt",
+      "image_urls"
+    ],
+    "properties": {
+      "sync_mode": {
+        "description": "If `True`, the media will be returned as a data URI and the output data won't be available in the request history.",
+        "type": "boolean",
+        "default": false
+      },
+      "quality": {
+        "description": "Quality for the generated image",
+        "type": "string",
+        "default": "auto",
+        "enum": [
+          "auto",
+          "low",
+          "medium",
+          "high"
+        ]
+      },
+      "image_urls": {
+        "description": "The URLs of the images to use as a reference for the generation.",
+        "type": "array",
+        "examples": [
+          [
+            "https://storage.googleapis.com/falserverless/model_tests/gpt-image-1/cyberpunk.png"
+          ]
+        ],
+        "items": {
+          "type": "string"
+        }
+      },
+      "background": {
+        "description": "Background for the generated image",
+        "type": "string",
+        "default": "auto",
+        "enum": [
+          "auto",
+          "transparent",
+          "opaque"
+        ]
+      },
+      "output_format": {
+        "description": "Output format for the images",
+        "type": "string",
+        "default": "png",
+        "enum": [
+          "jpeg",
+          "png",
+          "webp"
+        ]
+      },
+      "input_fidelity": {
+        "description": "Input fidelity for the generated image",
+        "type": "string",
+        "default": "high",
+        "enum": [
+          "low",
+          "high"
+        ]
+      },
+      "prompt": {
+        "description": "The prompt for image generation",
+        "minLength": 2,
+        "examples": [
+          "Make this pixel-art style."
+        ],
+        "type": "string"
+      },
+      "num_images": {
+        "maximum": 4,
+        "description": "Number of images to generate",
+        "type": "integer",
+        "examples": [
+          1
+        ],
+        "minimum": 1,
+        "default": 1
+      },
+      "image_size": {
+        "description": "Aspect ratio for the generated image",
+        "type": "string",
+        "default": "auto",
+        "enum": [
+          "auto",
+          "1024x1024",
+          "1536x1024",
+          "1024x1536"
+        ]
+      }
+    }
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "GptImage1EditImageInput",
+    "GptImage1EditImageOutput",
+    "ImageFile"
+  ]
+}

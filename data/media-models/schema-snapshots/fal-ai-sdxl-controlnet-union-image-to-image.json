@@ -1,0 +1,433 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/sdxl-controlnet-union/image-to-image",
+  "task": "image-to-image",
+  "source_url": "https://fal.ai/models/fal-ai/sdxl-controlnet-union/image-to-image",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fsdxl-controlnet-union%2Fimage-to-image",
+  "retrieved_at": "2026-10-04T19:51:32.886Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "image-to-image",
+  "bytes_sha256": "e27534291983f24c1dbaec114178add4af876169c70cc5a60e211d40d63b2048",
+  "queue_path": "/fal-ai/sdxl-controlnet-union/image-to-image",
+  "input_name": "SdxlControlnetUnionImageToImageInput",
+  "input": {
+    "$refName": "SdxlControlnetUnionImageToImageInput",
+    "required": [
+      "image_url",
+      "prompt"
+    ],
+    "type": "object",
+    "properties": {
+      "request_id": {
+        "description": "\n            An id bound to a request, can be used with response to identify the request\n            itself.\n        ",
+        "default": "",
+        "type": "string"
+      },
+      "preserve_aspect_ratio": {
+        "description": "\n        If set to true, the aspect ratio of the generated image will be preserved even\n        if the image size is too large. However, if the image is not a multiple of 32\n        in width or height, it will be resized to the nearest multiple of 32. By default,\n        this snapping to the nearest multiple of 32 will not preserve the aspect ratio.\n        Set crop_output to True, to crop the output to the proper aspect ratio\n        after generating.\n        ",
+        "default": false,
+        "type": "boolean"
+      },
+      "num_images": {
+        "minimum": 1,
+        "description": "The number of images to generate.",
+        "default": 1,
+        "type": "integer",
+        "maximum": 8
+      },
+      "loras": {
+        "description": "The list of LoRA weights to use.",
+        "items": {
+          "$refName": "LoraWeight",
+          "required": [
+            "path"
+          ],
+          "type": "object",
+          "properties": {
+            "force": {
+              "description": "If set to true, the embedding will be forced to be used.",
+              "default": false,
+              "type": "boolean"
+            },
+            "path": {
+              "description": "URL or path to a LoRA safetensors file. Or HF model name that resolves to safetensors weights.",
+              "examples": [
+                "https://civitai.com/api/download/models/135931",
+                "https://filebin.net/3chfqasxpqu21y8n/my-custom-lora-v1.safetensors"
+              ],
+              "type": "string"
+            },
+            "scale": {
+              "minimum": 0,
+              "description": "\n            The scale of the LoRA weight. This is used to scale the LoRA weight\n            before merging it with the base model.\n        ",
+              "default": 1,
+              "type": "number",
+              "maximum": 1
+            }
+          }
+        },
+        "default": [],
+        "type": "array"
+      },
+      "sync_mode": {
+        "description": "If `True`, the media will be returned as a data URI and the output data won't be available in the request history.",
+        "default": false,
+        "type": "boolean"
+      },
+      "image_size": {
+        "anyOf": [
+          {
+            "$refName": "ImageSize",
+            "type": "object",
+            "properties": {
+              "height": {
+                "type": "integer",
+                "description": "The height of the generated image.",
+                "default": 512,
+                "maximum": 14142,
+                "exclusiveMinimum": 0
+              },
+              "width": {
+                "type": "integer",
+                "description": "The width of the generated image.",
+                "default": 512,
+                "maximum": 14142,
+                "exclusiveMinimum": 0
+              }
+            }
+          },
+          {
+            "type": "string",
+            "enum": [
+              "square_hd",
+              "square",
+              "portrait_4_3",
+              "portrait_16_9",
+              "landscape_4_3",
+              "landscape_16_9"
+            ]
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "The size of the generated image. Leave it none to automatically infer from the control image.",
+        "examples": [
+          null
+        ],
+        "default": null
+      },
+      "negative_prompt": {
+        "description": "\n            The negative prompt to use.Use it to address details that you don't want\n            in the image. This could be colors, objects, scenery and even the small details\n            (e.g. moustache, blurry, low resolution).\n        ",
+        "examples": [
+          "cartoon, illustration, animation. face. male, female"
+        ],
+        "default": "",
+        "type": "string"
+      },
+      "normal_image_url": {
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "The URL of the control image.",
+        "examples": [
+          "https://fal-cdn.batuhan-941.workers.dev/files/rabbit/MiN_j3St9B8esJleCZKMU.jpeg"
+        ],
+        "default": null
+      },
+      "embeddings": {
+        "description": "The list of embeddings to use.",
+        "items": {
+          "$refName": "Embedding",
+          "required": [
+            "path"
+          ],
+          "type": "object",
+          "properties": {
+            "path": {
+              "description": "URL or the path to the embedding weights.",
+              "examples": [
+                "https://civitai.com/api/download/models/135931",
+                "https://filebin.net/3chfqasxpqu21y8n/my-custom-lora-v1.safetensors"
+              ],
+              "type": "string"
+            },
+            "tokens": {
+              "anyOf": [
+                {
+                  "items": {
+                    "type": "string"
+                  },
+                  "type": "array"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "\n            The list of tokens to use for the embedding. When omitted, tokens\n            are generated as <s0>, <s1>, ... to match the number of vectors in\n            the embedding file.\n        ",
+              "default": null
+            }
+          }
+        },
+        "default": [],
+        "type": "array"
+      },
+      "format": {
+        "description": "The format of the generated image.",
+        "default": "jpeg",
+        "enum": [
+          "jpeg",
+          "png"
+        ],
+        "type": "string"
+      },
+      "canny_image_url": {
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "The URL of the control image.",
+        "examples": [
+          "https://fal-cdn.batuhan-941.workers.dev/files/rabbit/MiN_j3St9B8esJleCZKMU.jpeg"
+        ],
+        "default": null
+      },
+      "guidance_scale": {
+        "minimum": 0,
+        "description": "\n            The CFG (Classifier Free Guidance) scale is a measure of how close you want\n            the model to stick to your prompt when looking for a related image to show you.\n        ",
+        "default": 7.5,
+        "type": "number",
+        "maximum": 20
+      },
+      "enable_safety_checker": {
+        "description": "If set to true, the safety checker will be enabled.",
+        "default": true,
+        "type": "boolean"
+      },
+      "openpose_image_url": {
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "The URL of the control image.",
+        "examples": [
+          "https://fal-cdn.batuhan-941.workers.dev/files/rabbit/MiN_j3St9B8esJleCZKMU.jpeg"
+        ],
+        "default": null
+      },
+      "depth_image_url": {
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "The URL of the control image.",
+        "examples": [
+          "https://fal-cdn.batuhan-941.workers.dev/files/rabbit/MiN_j3St9B8esJleCZKMU.jpeg"
+        ],
+        "default": null
+      },
+      "canny_preprocess": {
+        "description": "Whether to preprocess the canny image.",
+        "default": true,
+        "type": "boolean"
+      },
+      "expand_prompt": {
+        "description": "If set to true, the prompt will be expanded with additional prompts.",
+        "default": false,
+        "type": "boolean"
+      },
+      "segmentation_image_url": {
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "The URL of the control image.",
+        "examples": [
+          "https://fal-cdn.batuhan-941.workers.dev/files/rabbit/MiN_j3St9B8esJleCZKMU.jpeg"
+        ],
+        "default": null
+      },
+      "controlnet_conditioning_scale": {
+        "minimum": 0,
+        "description": "The scale of the controlnet conditioning.",
+        "default": 0.5,
+        "type": "number",
+        "maximum": 1
+      },
+      "seed": {
+        "anyOf": [
+          {
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "\n            The same seed and the same prompt given to the same version of Stable Diffusion\n            will output the same image every time.\n        ",
+        "default": null
+      },
+      "openpose_preprocess": {
+        "description": "Whether to preprocess the openpose image.",
+        "default": true,
+        "type": "boolean"
+      },
+      "image_url": {
+        "description": "The URL of the image to use as a starting point for the generation.",
+        "examples": [
+          "https://fal-cdn.batuhan-941.workers.dev/files/tiger/IExuP-WICqaIesLZAZPur.jpeg"
+        ],
+        "type": "string"
+      },
+      "segmentation_preprocess": {
+        "description": "Whether to preprocess the segmentation image.",
+        "default": true,
+        "type": "boolean"
+      },
+      "teed_image_url": {
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "The URL of the control image.",
+        "examples": [
+          "https://fal-cdn.batuhan-941.workers.dev/files/rabbit/MiN_j3St9B8esJleCZKMU.jpeg"
+        ],
+        "default": null
+      },
+      "teed_preprocess": {
+        "description": "Whether to preprocess the teed image.",
+        "default": true,
+        "type": "boolean"
+      },
+      "crop_output": {
+        "description": "\n        If set to true, the output cropped to the proper aspect ratio after generating.\n        ",
+        "default": false,
+        "type": "boolean"
+      },
+      "prompt": {
+        "description": "The prompt to use for generating the image. Be as descriptive as possible for best results.",
+        "examples": [
+          "Ice fortress, aurora skies, polar wildlife, twilight"
+        ],
+        "type": "string"
+      },
+      "depth_preprocess": {
+        "description": "Whether to preprocess the depth image.",
+        "default": true,
+        "type": "boolean"
+      },
+      "strength": {
+        "minimum": 0.05,
+        "description": "determines how much the generated image resembles the initial image",
+        "default": 0.95,
+        "type": "number",
+        "maximum": 1
+      },
+      "num_inference_steps": {
+        "minimum": 1,
+        "description": "The number of inference steps to perform.",
+        "default": 35,
+        "type": "integer",
+        "maximum": 70
+      },
+      "normal_preprocess": {
+        "description": "Whether to preprocess the normal image.",
+        "default": true,
+        "type": "boolean"
+      },
+      "safety_checker_version": {
+        "description": "The version of the safety checker to use. v1 is the default CompVis safety checker. v2 uses a custom ViT model.",
+        "default": "v1",
+        "enum": [
+          "v1",
+          "v2"
+        ],
+        "type": "string"
+      }
+    }
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "SdxlControlnetUnionImageToImageInput",
+    "SdxlControlnetUnionImageToImageOutput",
+    "LoraWeight",
+    "ImageSize",
+    "Embedding",
+    "Image"
+  ]
+}

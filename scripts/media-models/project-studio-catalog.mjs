@@ -16,6 +16,31 @@ const COVERAGE = join(ROOT, "data/media-models/schema-coverage.json");
 const CHECKPOINT = join(ROOT, "data/media-models/schema-import-checkpoint.json");
 const OUT = join(ROOT, "lib/media/generated/fal-catalog.json");
 
+const OPENNESS_VALUES = new Set(["open-weights", "mixed", "unknown"]);
+
+// MUSE-004: summarize snapshot-declared input bounds as endpoint limits.
+// Pure derivation from the verified snapshot; null when no snapshot.
+function summarizeLimits(snapPath) {
+  if (!snapPath) return null;
+  try {
+    const snapDoc = JSON.parse(readFileSync(join(ROOT, snapPath), "utf8"));
+    const props = snapDoc.input?.properties ?? {};
+    const limits = {};
+    for (const [name, prop] of Object.entries(props)) {
+      if (typeof prop !== "object" || prop === null) continue;
+      const bound = {};
+      for (const key of ["minimum", "maximum", "minLength", "maxLength", "minItems", "maxItems"]) {
+        if (typeof prop[key] === "number") bound[key] = prop[key];
+      }
+      if (Array.isArray(prop.enum)) bound.options = prop.enum.length;
+      if (Object.keys(bound).length > 0) limits[name] = bound;
+    }
+    return Object.keys(limits).length > 0 ? limits : null;
+  } catch {
+    return null;
+  }
+}
+
 const TASK_LABELS = {
   "text-to-image": "Text to Image", "image-generation": "Image Generation",
   "image-editing": "Image Editing", "image-to-image": "Image to Image",
@@ -45,16 +70,20 @@ const records = raw.trim().split("\n").map((l) => JSON.parse(l)).map((r) => {
   // Modality is a browse grouping only; execution stays gated by qualified routes.
   const modality = r.media.category === "video" || tasks.some((t) => t.includes("video")) ? "video"
     : AUDIO_CATEGORIES.has(r.media.category) ? "audio" : "image";
+  const openness = OPENNESS_VALUES.has(r.media.openness) ? r.media.openness : "unknown";
   return {
     family_id: r.identity.repo_id,
     name: r.identity.name,
     display_name: `fal · ${r.identity.name}`,
+    provider: "fal.ai",
     modality,
     category: r.media.category,
     tasks: tasks.map((t) => TASK_LABELS[t] ?? t),
     task_ids: tasks,
     tier: r.media.tier,
     route: r.media.route,
+    openness,
+    license: r.media.license ?? null,
     supports_fine_tuning: tasks.includes("lora-training"),
     endpoints: r.media.member_endpoints.map((e) => {
       const row = byId.get(e.endpoint_id);
@@ -80,11 +109,15 @@ const records = raw.trim().split("\n").map((l) => JSON.parse(l)).map((r) => {
         developer_clues: (row?.developer_clues ?? []).map((c) => `${c.kind ?? "clue"}:${c.value ?? ""}`),
         page_url: row?.url ?? null,
         row_sha256: row?.row_sha256 ?? null,
+        license: e.license ?? null,
         pricing: {
           status: row?.pricing?.normalized?.status === "known" ? "known" : "unknown",
           sentences: row?.pricing?.price_sentences ?? [],
           raw_hash: row?.pricing?.raw_hash ?? null,
+          unit: row?.pricing?.normalized?.unit ?? null,
+          amount: row?.pricing?.normalized?.amount ?? null,
         },
+        limits: summarizeLimits(snapPath),
         schema: snapPath
           ? { status: "supported", snapshot: snapPath, verified_at: snap.at ?? null }
           : {

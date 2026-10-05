@@ -1,0 +1,114 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/hunyuan_world/image-to-world",
+  "task": "image-generation",
+  "source_url": "https://fal.ai/models/fal-ai/hunyuan_world/image-to-world",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fhunyuan_world%2Fimage-to-world",
+  "retrieved_at": "2026-10-04T19:45:35.216Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "image-to-3d",
+  "bytes_sha256": "285837596b5466966b12263ef43d543d2404327226065e2dbec55d4bb765aa6b",
+  "queue_path": "/fal-ai/hunyuan_world/image-to-world",
+  "input_name": "Hunyuan_worldImageToWorldInput",
+  "input": {
+    "$refName": "Hunyuan_worldImageToWorldInput",
+    "type": "object",
+    "required": [
+      "image_url",
+      "labels_fg1",
+      "labels_fg2",
+      "classes"
+    ],
+    "properties": {
+      "image_url": {
+        "description": "The URL of the image to convert to a world.",
+        "type": "string",
+        "examples": [
+          "https://v3.fal.media/files/penguin/_4oXlxt85dr0WY2o0I894_output.png"
+        ]
+      },
+      "labels_fg1": {
+        "description": "Labels for the first foreground object.",
+        "type": "string",
+        "examples": [
+          "tree, grass, sky"
+        ]
+      },
+      "export_drc": {
+        "description": "Whether to export DRC (Dynamic Resource Configuration).",
+        "type": "boolean",
+        "default": false
+      },
+      "labels_fg2": {
+        "description": "Labels for the second foreground object.",
+        "type": "string",
+        "examples": [
+          "mountain, water"
+        ]
+      },
+      "classes": {
+        "description": "Classes to use for the world generation.",
+        "type": "string",
+        "examples": [
+          "nature, landscape"
+        ]
+      }
+    }
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "Hunyuan_worldImageToWorldInput",
+    "Hunyuan_worldImageToWorldOutput",
+    "File"
+  ]
+}

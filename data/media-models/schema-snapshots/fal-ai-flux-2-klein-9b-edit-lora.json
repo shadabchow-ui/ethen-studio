@@ -1,0 +1,215 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/flux-2/klein/9b/edit/lora",
+  "task": "image-editing",
+  "source_url": "https://fal.ai/models/fal-ai/flux-2/klein/9b/edit/lora",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fflux-2%2Fklein%2F9b%2Fedit%2Flora",
+  "retrieved_at": "2026-10-04T19:44:33.041Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "image-to-image",
+  "bytes_sha256": "bd7e25f67bd0b79a3666a6bdcee10f1593bc730818768a4ed1d6e0f31da9252c",
+  "queue_path": "/fal-ai/flux-2/klein/9b/edit/lora",
+  "input_name": "Flux2Klein9bEditLoraInput",
+  "input": {
+    "$refName": "Flux2Klein9bEditLoraInput",
+    "required": [
+      "prompt",
+      "image_urls"
+    ],
+    "properties": {
+      "image_urls": {
+        "examples": [
+          [
+            "https://v3b.fal.media/files/b/0a8a69d5/kkXxFfj1QeVtw35kxy5Py_1a7e3511-bd2c-46be-923a-8e6be2496f12.png"
+          ]
+        ],
+        "type": "array",
+        "items": {
+          "type": "string"
+        },
+        "description": "The URLs of the images for editing. A maximum of 4 images are allowed."
+      },
+      "enable_safety_checker": {
+        "default": true,
+        "type": "boolean",
+        "description": "If set to true, the safety checker will be enabled. Disabling it requires account authorization; unauthorized requests are always checked, and images flagged as unsafe are returned as black images."
+      },
+      "seed": {
+        "description": "The seed to use for the generation. If not provided, a random seed will be used.",
+        "anyOf": [
+          {
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "sync_mode": {
+        "default": false,
+        "type": "boolean",
+        "description": "If `True`, the media will be returned as a data URI. Output is not stored when this is True."
+      },
+      "num_inference_steps": {
+        "description": "The number of inference steps to perform.",
+        "maximum": 8,
+        "default": 4,
+        "type": "integer",
+        "minimum": 4
+      },
+      "num_images": {
+        "description": "The number of images to generate.",
+        "maximum": 4,
+        "default": 1,
+        "type": "integer",
+        "minimum": 1
+      },
+      "prompt": {
+        "examples": [
+          "Turn this into a realistic image"
+        ],
+        "type": "string",
+        "description": "The prompt to edit the image."
+      },
+      "output_format": {
+        "enum": [
+          "jpeg",
+          "png",
+          "webp"
+        ],
+        "default": "png",
+        "type": "string",
+        "description": "The format of the generated image."
+      },
+      "loras": {
+        "description": "List of LoRA weights to apply (maximum 3).",
+        "default": [],
+        "type": "array",
+        "items": {
+          "$refName": "fal-ai_flux-2-klein_LoRAInput",
+          "required": [
+            "path"
+          ],
+          "properties": {
+            "path": {
+              "type": "string",
+              "description": "URL, HuggingFace repo ID (owner/repo), or local path to LoRA weights."
+            },
+            "scale": {
+              "description": "Scale factor for LoRA application (0.0 to 4.0).",
+              "maximum": 4,
+              "default": 1,
+              "type": "number",
+              "minimum": 0
+            }
+          },
+          "type": "object"
+        }
+      },
+      "image_size": {
+        "examples": [
+          {
+            "width": 2016,
+            "height": 1152
+          }
+        ],
+        "description": "The size of the generated image. If not provided, uses the input image size.",
+        "anyOf": [
+          {
+            "$refName": "ImageSize",
+            "properties": {
+              "width": {
+                "default": 512,
+                "type": "integer",
+                "exclusiveMinimum": 0,
+                "maximum": 14142,
+                "description": "The width of the generated image."
+              },
+              "height": {
+                "default": 512,
+                "type": "integer",
+                "exclusiveMinimum": 0,
+                "maximum": 14142,
+                "description": "The height of the generated image."
+              }
+            },
+            "type": "object"
+          },
+          {
+            "enum": [
+              "square_hd",
+              "square",
+              "portrait_4_3",
+              "portrait_16_9",
+              "landscape_4_3",
+              "landscape_16_9"
+            ],
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      }
+    },
+    "type": "object"
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "Flux2Klein9bEditLoraInput",
+    "Flux2Klein9bEditLoraOutput",
+    "fal-ai_flux-2-klein_LoRAInput",
+    "ImageSize",
+    "ImageFile"
+  ]
+}

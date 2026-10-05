@@ -1,0 +1,110 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/image-apps-v2/object-removal",
+  "task": "image-generation",
+  "source_url": "https://fal.ai/models/fal-ai/image-apps-v2/object-removal",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fimage-apps-v2%2Fobject-removal",
+  "retrieved_at": "2026-10-04T19:46:08.517Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "image-to-image",
+  "bytes_sha256": "9de082c28c45f72a9b6b35ebfb78e3c557c85cc493dfb30210c7c37563f1c48f",
+  "queue_path": "/fal-ai/image-apps-v2/object-removal",
+  "input_name": "ImageAppsV2ObjectRemovalInput",
+  "input": {
+    "$refName": "ImageAppsV2ObjectRemovalInput",
+    "type": "object",
+    "properties": {
+      "aspect_ratio": {
+        "$refName": "AspectRatio",
+        "type": "object",
+        "properties": {
+          "ratio": {
+            "enum": [
+              "1:1",
+              "16:9",
+              "9:16",
+              "4:3",
+              "3:4"
+            ],
+            "type": "string",
+            "description": "Aspect ratio for 4K resolution output",
+            "default": "1:1"
+          }
+        },
+        "description": "Aspect ratio for 4K output"
+      },
+      "image_url": {
+        "type": "string",
+        "examples": [
+          "https://v3.fal.media/files/zebra/L_YMy6H5r_HYMacZX1qne_74a8fb6130164a18930af55370a1c9b2.png"
+        ],
+        "description": "Image URL containing object to remove"
+      },
+      "object_to_remove": {
+        "type": "string",
+        "description": "Object to remove"
+      }
+    },
+    "required": [
+      "image_url",
+      "object_to_remove"
+    ]
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "ImageAppsV2ObjectRemovalInput",
+    "ImageAppsV2ObjectRemovalOutput",
+    "AspectRatio",
+    "Image"
+  ]
+}

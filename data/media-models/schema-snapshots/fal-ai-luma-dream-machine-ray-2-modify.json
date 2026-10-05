@@ -1,0 +1,128 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/luma-dream-machine/ray-2/modify",
+  "task": "unknown",
+  "source_url": "https://fal.ai/models/fal-ai/luma-dream-machine/ray-2/modify",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fluma-dream-machine%2Fray-2%2Fmodify",
+  "retrieved_at": "2026-10-04T19:48:57.496Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "video-to-video",
+  "bytes_sha256": "f1623979f82fc92fd62d8fbd7761a710cfb14806016b71d01856362703619e37",
+  "queue_path": "/fal-ai/luma-dream-machine/ray-2/modify",
+  "input_name": "LumaDreamMachineRay2ModifyInput",
+  "input": {
+    "$refName": "LumaDreamMachineRay2ModifyInput",
+    "required": [
+      "video_url"
+    ],
+    "properties": {
+      "image_url": {
+        "examples": [
+          "https://fal.media/files/koala/Kv2821G03ggpKK2AiZX71_d5fa7bacf06049cfaeb9588f6003b6d5.jpg"
+        ],
+        "description": "Optional URL of the first frame image for modification",
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "mode": {
+        "enum": [
+          "adhere_1",
+          "adhere_2",
+          "adhere_3",
+          "flex_1",
+          "flex_2",
+          "flex_3",
+          "reimagine_1",
+          "reimagine_2",
+          "reimagine_3"
+        ],
+        "default": "flex_1",
+        "description": "Amount of modification to apply to the video, adhere_1 is the least amount of modification, reimagine_3 is the most",
+        "type": "string"
+      },
+      "prompt": {
+        "description": "Instruction for modifying the video",
+        "anyOf": [
+          {
+            "maxLength": 5000,
+            "minLength": 3,
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "video_url": {
+        "examples": [
+          "https://v3.fal.media/files/zebra/9aDde3Te2kuJYHdR0Kz8R_output.mp4"
+        ],
+        "description": "URL of the input video to modify",
+        "type": "string"
+      }
+    },
+    "type": "object"
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "LumaDreamMachineRay2ModifyInput",
+    "LumaDreamMachineRay2ModifyOutput",
+    "File"
+  ]
+}

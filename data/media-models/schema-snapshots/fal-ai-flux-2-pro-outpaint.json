@@ -1,0 +1,161 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/flux-2-pro/outpaint",
+  "task": "image-editing",
+  "source_url": "https://fal.ai/models/fal-ai/flux-2-pro/outpaint",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fflux-2-pro%2Foutpaint",
+  "retrieved_at": "2026-10-04T19:44:16.148Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "image-to-image",
+  "bytes_sha256": "cb8f9a4d866ce8dc7e9c574e48fcc4e7302bb3a3adc51d91193b27cf4e7d9276",
+  "queue_path": "/fal-ai/flux-2-pro/outpaint",
+  "input_name": "Flux2ProOutpaintInput",
+  "input": {
+    "$refName": "Flux2ProOutpaintInput",
+    "type": "object",
+    "properties": {
+      "expand_bottom": {
+        "default": 0,
+        "minimum": 0,
+        "maximum": 2048,
+        "type": "integer",
+        "description": "Pixels to expand at the bottom of the image.",
+        "examples": [
+          200
+        ]
+      },
+      "expand_top": {
+        "default": 0,
+        "minimum": 0,
+        "maximum": 2048,
+        "type": "integer",
+        "description": "Pixels to expand at the top of the image.",
+        "examples": [
+          0
+        ]
+      },
+      "image_url": {
+        "examples": [
+          "https://v3b.fal.media/files/b/0a9a3ba3/s-Z4TGRh9EQwXWTWrvzaB_Nbqhm4Fl.png"
+        ],
+        "type": "string",
+        "description": "The image URL to expand using outpainting."
+      },
+      "expand_left": {
+        "default": 0,
+        "minimum": 0,
+        "maximum": 2048,
+        "type": "integer",
+        "description": "Pixels to expand on the left of the image.",
+        "examples": [
+          200
+        ]
+      },
+      "sync_mode": {
+        "default": false,
+        "type": "boolean",
+        "description": "If `True`, the media will be returned as a data URI and the output data won't be available in the request history."
+      },
+      "mode": {
+        "default": "high",
+        "examples": [
+          "high"
+        ],
+        "type": "string",
+        "description": "Quality/speed trade-off for outpainting. `high` (default) delivers the highest-fidelity results; `fast` is significantly faster and extends most scenes well but may produce lower fidelity.",
+        "enum": [
+          "high",
+          "fast"
+        ]
+      },
+      "output_format": {
+        "default": "jpeg",
+        "type": "string",
+        "description": "The format of the generated image.",
+        "enum": [
+          "jpeg",
+          "png"
+        ]
+      },
+      "enable_safety_checker": {
+        "default": true,
+        "type": "boolean",
+        "description": "Whether to enable the safety checker. Disabling it requires account authorization; unauthorized requests are always checked."
+      },
+      "expand_right": {
+        "default": 0,
+        "minimum": 0,
+        "maximum": 2048,
+        "type": "integer",
+        "description": "Pixels to expand on the right of the image.",
+        "examples": [
+          200
+        ]
+      },
+      "auto_crop": {
+        "default": false,
+        "type": "boolean",
+        "description": "Whether to automatically crop the reference image when the expanded canvas does not fully contain it."
+      }
+    },
+    "required": [
+      "image_url"
+    ]
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "Flux2ProOutpaintInput",
+    "Flux2ProOutpaintOutput",
+    "ImageFile"
+  ]
+}

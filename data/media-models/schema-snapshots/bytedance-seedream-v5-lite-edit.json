@@ -1,0 +1,168 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "bytedance/seedream/v5/lite/edit",
+  "task": "image-editing",
+  "source_url": "https://fal.ai/models/bytedance/seedream/v5/lite/edit",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=bytedance%2Fseedream%2Fv5%2Flite%2Fedit",
+  "retrieved_at": "2026-10-04T19:42:14.783Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "image-to-image",
+  "bytes_sha256": "039e142d5f82071cb18f42d6fb501ab76deeeacee4321735adac8e954c5ac6db",
+  "queue_path": "/bytedance/seedream/v5/lite/edit",
+  "input_name": "SeedreamV5LiteEditInput",
+  "input": {
+    "$refName": "SeedreamV5LiteEditInput",
+    "type": "object",
+    "properties": {
+      "enable_safety_checker": {
+        "type": "boolean",
+        "examples": [
+          true
+        ],
+        "description": "If set to true, the safety checker will be enabled. Disabling it requires account authorization; unauthorized requests are always checked.",
+        "default": true
+      },
+      "sync_mode": {
+        "type": "boolean",
+        "description": "If `True`, the media will be returned as a data URI and the output data won't be available in the request history.",
+        "default": false
+      },
+      "num_images": {
+        "minimum": 1,
+        "type": "integer",
+        "maximum": 6,
+        "description": "Number of separate model generations to be run with the prompt.",
+        "default": 1
+      },
+      "image_size": {
+        "default": "auto_2K",
+        "description": "The size of the generated image. Total pixels must be between 2560x1440 and 4096x4096. In case the image size does not fall within these parameters, the image size will be adjusted to by scaling.",
+        "anyOf": [
+          {
+            "$refName": "ImageSize",
+            "properties": {
+              "height": {
+                "description": "The height of the generated image.",
+                "maximum": 14142,
+                "default": 512,
+                "type": "integer",
+                "exclusiveMinimum": 0
+              },
+              "width": {
+                "description": "The width of the generated image.",
+                "maximum": 14142,
+                "default": 512,
+                "type": "integer",
+                "exclusiveMinimum": 0
+              }
+            },
+            "type": "object"
+          },
+          {
+            "enum": [
+              "square_hd",
+              "square",
+              "portrait_4_3",
+              "portrait_16_9",
+              "landscape_4_3",
+              "landscape_16_9",
+              "auto_2K",
+              "auto_3K",
+              "auto_4K"
+            ],
+            "type": "string"
+          }
+        ]
+      },
+      "prompt": {
+        "type": "string",
+        "examples": [
+          "Replace the product in Figure 1 with that in Figure 2. Seamlessly render logo in Figure 3 into the product design, in frosted glass texture. Remove any extra text in Figure 1, and design a catchy tagline for the perfume."
+        ],
+        "description": "The text prompt used to edit the image"
+      },
+      "max_images": {
+        "minimum": 1,
+        "type": "integer",
+        "maximum": 6,
+        "description": "If set to a number greater than one, enables multi-image generation. The model will potentially return up to `max_images` images every generation, and in total, `num_images` generations will be carried out. In total, the number of images generated will be between `num_images` and `max_images*num_images`.",
+        "default": 1
+      },
+      "image_urls": {
+        "type": "array",
+        "examples": [
+          [
+            "https://v3b.fal.media/files/b/0a8f9936/KOsb_qPB_W0ZJ0Ee2OsnU_586e2892841d46f09049ee7199b303d3.png",
+            "https://v3b.fal.media/files/b/0a8f994e/JroWTogO6jOTFk9b6B3XM_591ca38cef2f44bbba2843cbf80fb1b2.png",
+            "https://v3b.fal.media/files/b/0a8f9960/Q6pzwXAiFaFPOpSScoE-D_0eca5db19e5242739f127efe49b38922.png"
+          ]
+        ],
+        "items": {
+          "type": "string"
+        },
+        "description": "List of URLs of input images for editing. Presently, up to 10 image inputs are allowed. If over 10 images are sent, only the last 10 will be used."
+      }
+    },
+    "required": [
+      "prompt",
+      "image_urls"
+    ]
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "SeedreamV5LiteEditInput",
+    "SeedreamV5LiteEditOutput",
+    "ImageSize",
+    "Image"
+  ]
+}

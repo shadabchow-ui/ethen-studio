@@ -1,0 +1,126 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/flux-pro/v1/vto",
+  "task": "unknown",
+  "source_url": "https://fal.ai/models/fal-ai/flux-pro/v1/vto",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fflux-pro%2Fv1%2Fvto",
+  "retrieved_at": "2026-10-04T19:45:00.329Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "image-to-image",
+  "bytes_sha256": "0075f06a89281b4004dcc5dd3fdbb10e91b432f54a26974ee971f17c14b25e44",
+  "queue_path": "/fal-ai/flux-pro/v1/vto",
+  "input_name": "FluxProV1VtoInput",
+  "input": {
+    "$refName": "FluxProV1VtoInput",
+    "properties": {
+      "output_format": {
+        "type": "string",
+        "enum": [
+          "jpeg",
+          "png"
+        ],
+        "description": "The format of the generated image.",
+        "default": "jpeg"
+      },
+      "seed": {
+        "anyOf": [
+          {
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "The same seed and the same input will output the same image every time. If not provided, a random seed is used."
+      },
+      "sync_mode": {
+        "type": "boolean",
+        "description": "If `True`, the media will be returned as a data URI and the output data won't be available in the request history.",
+        "default": false
+      },
+      "human_image_url": {
+        "description": "The URL of the person image that the garment will be applied onto. The output keeps this image's aspect ratio. Maximum 2 megapixels; recommended under 1 MP.",
+        "examples": [
+          "https://storage.googleapis.com/falserverless/model_tests/leffa/person_image.jpg"
+        ],
+        "type": "string"
+      },
+      "garment_image_url": {
+        "description": "The URL of the garment reference image. Maximum 1 megapixel; recommended around 0.5 MP. Multiple garments must be merged into a single composite image before submission.",
+        "examples": [
+          "https://storage.googleapis.com/falserverless/model_tests/leffa/tshirt_image.jpg"
+        ],
+        "type": "string"
+      },
+      "prompt": {
+        "description": "Natural-language styling instructions describing how the garment should be worn on the person (e.g. tucked in, layered, sleeves rolled up).",
+        "examples": [
+          "A natural front-facing studio shot. The t-shirt is worn tucked in."
+        ],
+        "type": "string"
+      }
+    },
+    "required": [
+      "prompt",
+      "human_image_url",
+      "garment_image_url"
+    ],
+    "type": "object"
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "FluxProV1VtoInput",
+    "FluxProV1VtoOutput",
+    "registry__image__fast_sdxl__models__Image"
+  ]
+}

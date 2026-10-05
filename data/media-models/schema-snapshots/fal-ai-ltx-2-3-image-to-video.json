@@ -1,0 +1,152 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/ltx-2.3/image-to-video",
+  "task": "image-to-video",
+  "source_url": "https://fal.ai/models/fal-ai/ltx-2.3/image-to-video",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fltx-2.3%2Fimage-to-video",
+  "retrieved_at": "2026-10-04T19:48:27.264Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "image-to-video",
+  "bytes_sha256": "18d24faf55259ed5cfc048d78794fc3ac85129c5aacdb9f07205e238834c323b",
+  "queue_path": "/fal-ai/ltx-2.3/image-to-video",
+  "input_name": "Ltx23ImageToVideoInput",
+  "input": {
+    "$refName": "Ltx23ImageToVideoInput",
+    "required": [
+      "prompt",
+      "image_url"
+    ],
+    "type": "object",
+    "properties": {
+      "end_image_url": {
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "The URL of the end image to use for the generated video. When provided, generates a transition video between start and end frames."
+      },
+      "fps": {
+        "default": 25,
+        "type": "integer",
+        "enum": [
+          24,
+          25,
+          48,
+          50
+        ],
+        "description": "The frames per second of the generated video"
+      },
+      "aspect_ratio": {
+        "default": "auto",
+        "type": "string",
+        "enum": [
+          "auto",
+          "16:9",
+          "9:16"
+        ],
+        "description": "The aspect ratio of the generated video. If 'auto', the aspect ratio will be determined automatically based on the input image."
+      },
+      "prompt": {
+        "maxLength": 5000,
+        "description": "The prompt to use for the generated video",
+        "examples": [
+          "Periscope-level shot from behind tall grass of two Maasai warriors mid-leap during an adumu jumping dance, bodies fully airborne against a golden savanna sunset, red shuka robes frozen in motion, dust kicked up from the earth catching backlight, 85mm f/1.4 isolating the pair from a blurred circle of onlookers, Steve McCurry meets Emmanuel Lubezki"
+        ],
+        "minLength": 1,
+        "type": "string"
+      },
+      "resolution": {
+        "default": "1080p",
+        "type": "string",
+        "enum": [
+          "1080p",
+          "1440p",
+          "2160p"
+        ],
+        "description": "The resolution of the generated video"
+      },
+      "duration": {
+        "default": 6,
+        "type": "integer",
+        "enum": [
+          6,
+          8,
+          10
+        ],
+        "description": "The duration of the generated video in seconds"
+      },
+      "generate_audio": {
+        "default": true,
+        "type": "boolean",
+        "description": "Whether to generate audio for the generated video"
+      },
+      "image_url": {
+        "description": "The URL of the start image to use for the generated video.",
+        "examples": [
+          "https://v3b.fal.media/files/b/0a90dd31/uJG2pMMJMcnVeC4PmwnAF_image_004.png"
+        ],
+        "type": "string"
+      }
+    }
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "Ltx23ImageToVideoInput",
+    "Ltx23ImageToVideoOutput",
+    "VideoFile"
+  ]
+}

@@ -6,7 +6,7 @@ import { SupabaseGatewayStore } from "../../_lib/supabase-gateway";
 export const dynamic = "force-dynamic";
 
 /**
- * STUDIO_19 — V1 gateway delivery status. Lists webhook delivery
+ * STUDIO_19 — Studio Media API delivery status. Lists webhook delivery
  * attempts (pending/delivered/retrying/dead_letter) with attempt
  * counts and next-retry instants. Errors are redacted reason strings.
  */

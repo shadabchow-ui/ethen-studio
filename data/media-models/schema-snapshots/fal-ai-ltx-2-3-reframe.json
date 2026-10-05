@@ -1,0 +1,106 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/ltx-2.3/reframe",
+  "task": "unknown",
+  "source_url": "https://fal.ai/models/fal-ai/ltx-2.3/reframe",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fltx-2.3%2Freframe",
+  "retrieved_at": "2026-10-04T19:48:28.521Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "video-to-video",
+  "bytes_sha256": "15046e048f6aeb4931654747d850444b30f388daef6cd6f39f8837efa27669be",
+  "queue_path": "/fal-ai/ltx-2.3/reframe",
+  "input_name": "Ltx23ReframeInput",
+  "input": {
+    "$refName": "Ltx23ReframeInput",
+    "required": [
+      "video_url"
+    ],
+    "type": "object",
+    "properties": {
+      "video_url": {
+        "description": "The URL of the video to reframe. Must be publicly accessible or a base64 data URI. The video is re-cropped to the target aspect ratio and the newly exposed areas are filled with generated content that matches the original. Max duration 60 seconds.",
+        "examples": [
+          "https://storage.googleapis.com/falserverless/example_outputs/ltxv-2-t2v-output.mp4"
+        ],
+        "type": "string"
+      },
+      "aspect_ratio": {
+        "description": "The target aspect ratio to reframe the video to.",
+        "default": "16:9",
+        "type": "string",
+        "enum": [
+          "1:1",
+          "4:5",
+          "5:4",
+          "9:16",
+          "16:9"
+        ]
+      },
+      "resolution": {
+        "description": "The target output resolution tier. Combined with the aspect ratio to determine the output size.",
+        "default": "1080p",
+        "type": "string",
+        "enum": [
+          "720p",
+          "1080p"
+        ]
+      }
+    }
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "Ltx23ReframeInput",
+    "Ltx23ReframeOutput",
+    "VideoFile"
+  ]
+}

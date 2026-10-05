@@ -1,0 +1,149 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/veo3.1/fast/reference-to-video",
+  "task": "reference-to-video",
+  "source_url": "https://fal.ai/models/fal-ai/veo3.1/fast/reference-to-video",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fveo3.1%2Ffast%2Freference-to-video",
+  "retrieved_at": "2026-10-04T19:52:09.350Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "image-to-video",
+  "bytes_sha256": "2d39e8161a6330ea735ca43cdcf132cf6a6e72b5f0347d07e629025d3555ad0b",
+  "queue_path": "/fal-ai/veo3.1/fast/reference-to-video",
+  "input_name": "Veo31FastReferenceToVideoInput",
+  "input": {
+    "$refName": "Veo31FastReferenceToVideoInput",
+    "properties": {
+      "duration": {
+        "default": "8s",
+        "const": "8s",
+        "description": "The duration of the generated video.",
+        "type": "string"
+      },
+      "safety_tolerance": {
+        "default": "4",
+        "description": "The safety tolerance level for content moderation. 1 is the most strict (blocks most content), 6 is the least strict.",
+        "enum": [
+          "1",
+          "2",
+          "3",
+          "4",
+          "5",
+          "6"
+        ],
+        "type": "string"
+      },
+      "prompt": {
+        "maxLength": 20000,
+        "examples": [
+          "A chimpanzee wearing overalls frolics in the grassy field, gently playing with the butterflies. In the background, a circus tent and carousel beckon."
+        ],
+        "description": "The text prompt describing the video you want to generate",
+        "type": "string"
+      },
+      "auto_fix": {
+        "default": false,
+        "description": "Whether to automatically attempt to fix prompts that fail content policy or other validation checks by rewriting them.",
+        "type": "boolean"
+      },
+      "resolution": {
+        "default": "720p",
+        "description": "The resolution of the generated video.",
+        "enum": [
+          "720p",
+          "1080p",
+          "4k"
+        ],
+        "type": "string"
+      },
+      "generate_audio": {
+        "default": true,
+        "description": "Whether to generate audio for the video.",
+        "type": "boolean"
+      },
+      "image_urls": {
+        "description": "URLs of the reference images to use for consistent subject appearance",
+        "examples": [
+          [
+            "https://storage.googleapis.com/falserverless/example_inputs/veo31-r2v-input-1.png",
+            "https://storage.googleapis.com/falserverless/example_inputs/veo31-r2v-input-2.png",
+            "https://storage.googleapis.com/falserverless/example_inputs/veo31-r2v-input-3.png"
+          ]
+        ],
+        "items": {
+          "type": "string"
+        },
+        "type": "array"
+      },
+      "aspect_ratio": {
+        "default": "16:9",
+        "description": "The aspect ratio of the generated video.",
+        "enum": [
+          "16:9",
+          "9:16"
+        ],
+        "type": "string"
+      }
+    },
+    "required": [
+      "prompt",
+      "image_urls"
+    ],
+    "type": "object"
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "Veo31FastReferenceToVideoInput",
+    "Veo31FastReferenceToVideoOutput",
+    "File"
+  ]
+}

@@ -1,0 +1,169 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/kling-video/o1/video-to-video/edit",
+  "task": "video-to-video",
+  "source_url": "https://fal.ai/models/fal-ai/kling-video/o1/video-to-video/edit",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fkling-video%2Fo1%2Fvideo-to-video%2Fedit",
+  "retrieved_at": "2026-10-04T19:46:53.949Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "video-to-video",
+  "bytes_sha256": "6d0a5585c70ac4ce7efb8d02f54325402fca29c39c013e99437978e56d1009cd",
+  "queue_path": "/fal-ai/kling-video/o1/video-to-video/edit",
+  "input_name": "KlingVideoO1VideoToVideoEditInput",
+  "input": {
+    "$refName": "KlingVideoO1VideoToVideoEditInput",
+    "description": "Input for video editing or video-as-reference generation.",
+    "required": [
+      "prompt",
+      "video_url"
+    ],
+    "type": "object",
+    "properties": {
+      "video_url": {
+        "description": "Reference video URL. Only .mp4/.mov formats supported, 3-10 seconds duration, 720-2160px resolution, max 200MB.\n\nMax file size: 200.0MB, Min width: 720px, Min height: 720px, Max width: 2160px, Max height: 2160px, Min duration: 3.0s, Max duration: 10.05s, Min FPS: 24.0, Max FPS: 60.0, Timeout: 30.0s",
+        "type": "string",
+        "examples": [
+          "https://v3b.fal.media/files/b/rabbit/ku8_Wdpf-oTbGRq4lB5DU_output.mp4"
+        ]
+      },
+      "image_urls": {
+        "anyOf": [
+          {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "_fal_ui_field": "image",
+              "ui": {
+                "field": "image"
+              },
+              "limit_description": "Max file size: 50.0MB, Min width: 300px, Min height: 300px, Min aspect ratio: 0.40, Max aspect ratio: 2.50, Timeout: 20.0s"
+            }
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "Reference images for style/appearance. Reference in prompt as @Image1, @Image2, etc. Maximum 4 total (elements + reference images) when using video.",
+        "examples": [
+          [
+            "https://v3b.fal.media/files/b/lion/MKvhFko5_wYnfORYacNII_AgPt8v25Wt4oyKhjnhVK5.png"
+          ]
+        ]
+      },
+      "elements": {
+        "anyOf": [
+          {
+            "type": "array",
+            "items": {
+              "$refName": "OmniVideoElementInput",
+              "required": [
+                "frontal_image_url"
+              ],
+              "type": "object",
+              "properties": {
+                "reference_image_urls": {
+                  "description": "Additional reference images from different angles. 1-3 images supported. At least one image is required.",
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "_fal_ui_field": "image",
+                    "limit_description": "Max file size: 50.0MB, Min width: 300px, Min height: 300px, Min aspect ratio: 0.40, Max aspect ratio: 2.50, Timeout: 20.0s"
+                  }
+                },
+                "frontal_image_url": {
+                  "description": "The frontal image of the element (main view).\n\nMax file size: 50.0MB, Min width: 300px, Min height: 300px, Min aspect ratio: 0.40, Max aspect ratio: 2.50, Timeout: 20.0s",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "Elements (characters/objects) to include. Reference in prompt as @Element1, @Element2, etc. Maximum 4 total (elements + reference images) when using video.",
+        "examples": [
+          [
+            {
+              "reference_image_urls": [
+                "https://v3b.fal.media/files/b/kangaroo/YMpmQkYt9xugpOTQyZW0O.png",
+                "https://v3b.fal.media/files/b/zebra/d6ywajNyJ6bnpa_xBue-K.png"
+              ],
+              "frontal_image_url": "https://v3b.fal.media/files/b/panda/MQp-ghIqshvMZROKh9lW3.png"
+            }
+          ]
+        ]
+      },
+      "prompt": {
+        "description": "Use @Element1, @Element2 to reference elements and @Image1, @Image2 to reference images in order.",
+        "type": "string",
+        "examples": [
+          "Replace the character in the video with @Element1, maintaining the same movements and camera angles. Transform the landscape into @Image1"
+        ],
+        "maxLength": 2500
+      },
+      "keep_audio": {
+        "description": "Whether to keep the original audio from the video.",
+        "type": "boolean",
+        "default": false
+      }
+    }
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "KlingVideoO1VideoToVideoEditInput",
+    "KlingVideoO1VideoToVideoEditOutput",
+    "OmniVideoElementInput",
+    "File"
+  ]
+}

@@ -1,0 +1,95 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "clarityai/crystal-video-upscaler",
+  "task": "video-editing",
+  "source_url": "https://fal.ai/models/clarityai/crystal-video-upscaler",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=clarityai%2Fcrystal-video-upscaler",
+  "retrieved_at": "2026-10-04T19:42:21.516Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "video-to-video",
+  "bytes_sha256": "5b0453cd8205a5a0f2e18a3f93e56a91152e13460751f4a11d60eb9219983551",
+  "queue_path": "/clarityai/crystal-video-upscaler",
+  "input_name": "CrystalVideoUpscalerInput",
+  "input": {
+    "$refName": "CrystalVideoUpscalerInput",
+    "properties": {
+      "video_url": {
+        "description": "URL to the input video.",
+        "type": "string",
+        "examples": [
+          "https://storage.googleapis.com/falserverless/example_inputs/crystal_upscaler/video_upscaling/video_in.mp4"
+        ]
+      },
+      "scale_factor": {
+        "maximum": 200,
+        "description": "Scale factor. The scale factor must be chosen such that the upscaled video does not exceed 5K resolution.",
+        "type": "number",
+        "minimum": 1,
+        "examples": [
+          2
+        ],
+        "default": 2
+      }
+    },
+    "type": "object",
+    "required": [
+      "video_url"
+    ]
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "CrystalVideoUpscalerInput",
+    "CrystalVideoUpscalerOutput",
+    "VideoFile"
+  ]
+}

@@ -1,0 +1,149 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/magi-distilled",
+  "task": "unknown",
+  "source_url": "https://fal.ai/models/fal-ai/magi-distilled",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fmagi-distilled",
+  "retrieved_at": "2026-10-04T19:49:03.483Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "text-to-video",
+  "bytes_sha256": "35f2cda5328f7399c8701fc7c7dbee2918f019348d21d73af62e0bda5a96511e",
+  "queue_path": "/fal-ai/magi-distilled",
+  "input_name": "MagiDistilledInput",
+  "input": {
+    "$refName": "MagiDistilledInput",
+    "required": [
+      "prompt"
+    ],
+    "type": "object",
+    "properties": {
+      "resolution": {
+        "description": "Resolution of the generated video (480p or 720p). 480p is 0.5 billing units, and 720p is 1 billing unit.",
+        "type": "string",
+        "default": "720p",
+        "enum": [
+          "480p",
+          "720p"
+        ]
+      },
+      "num_frames": {
+        "anyOf": [
+          {
+            "minimum": 96,
+            "type": "integer",
+            "maximum": 192
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "Number of frames to generate. Must be between 96 and 192 (inclusive). Each additional 24 frames beyond 96 incurs an additional billing unit.",
+        "default": 96
+      },
+      "enable_safety_checker": {
+        "description": "If set to true, the safety checker will be enabled. Disabling it requires account authorization; unauthorized requests are always checked.",
+        "type": "boolean",
+        "default": true,
+        "examples": [
+          true
+        ]
+      },
+      "aspect_ratio": {
+        "description": "Aspect ratio of the generated video. If 'auto', the aspect ratio will be determined automatically based on the input image.",
+        "type": "string",
+        "default": "auto",
+        "enum": [
+          "auto",
+          "16:9",
+          "9:16",
+          "1:1"
+        ]
+      },
+      "seed": {
+        "anyOf": [
+          {
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "Random seed for reproducibility. If None, a random seed is chosen."
+      },
+      "prompt": {
+        "description": "The text prompt to guide video generation.",
+        "type": "string",
+        "examples": [
+          "Close-up shot: the old sea captain stares intently, pipe in mouth, wisps of smoke curling around his weathered face. The camera begins a slow clockwise orbit, pulling back. Finally, the camera rises high above, revealing the entire wooden sailing ship cutting through the waves, the captain unmoved, gazing toward the distant horizon."
+        ]
+      },
+      "num_inference_steps": {
+        "description": "Number of inference steps for sampling. Higher values give better quality but take longer.",
+        "type": "integer",
+        "default": 16,
+        "enum": [
+          4,
+          8,
+          16,
+          32
+        ]
+      }
+    }
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "MagiDistilledInput",
+    "MagiDistilledOutput",
+    "File"
+  ]
+}

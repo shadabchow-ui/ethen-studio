@@ -1,0 +1,151 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/emu-3.5-image/edit-image",
+  "task": "image-generation",
+  "source_url": "https://fal.ai/models/fal-ai/emu-3.5-image/edit-image",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Femu-3.5-image%2Fedit-image",
+  "retrieved_at": "2026-10-04T19:43:21.814Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "image-to-image",
+  "bytes_sha256": "625b6008cee9cbeac885a1bc8b2147ecbd3e212a60ebf037c63d40f64b8ba425",
+  "queue_path": "/fal-ai/emu-3.5-image/edit-image",
+  "input_name": "Emu35ImageEditImageInput",
+  "input": {
+    "$refName": "Emu35ImageEditImageInput",
+    "properties": {
+      "sync_mode": {
+        "description": "Whether to return the image in sync mode.",
+        "default": false,
+        "type": "boolean"
+      },
+      "image_url": {
+        "description": "The image to edit.",
+        "max_file_size": 104857600,
+        "type": "string",
+        "examples": [
+          "https://v3b.fal.media/files/b/lion/iC4LKAESSVo4ug-XzmR11_e9cafdab-c8b4-4267-804e-230e3d0d0814.png"
+        ]
+      },
+      "aspect_ratio": {
+        "enum": [
+          "auto",
+          "21:9",
+          "16:9",
+          "4:3",
+          "3:2",
+          "1:1",
+          "2:3",
+          "3:4",
+          "9:16",
+          "9:21"
+        ],
+        "description": "The aspect ratio of the output image.",
+        "default": "auto",
+        "type": "string"
+      },
+      "prompt": {
+        "description": "The prompt to edit the image.",
+        "type": "string",
+        "examples": [
+          "Recreate this image in ukiyo-e style"
+        ]
+      },
+      "seed": {
+        "description": "The seed for the inference.",
+        "anyOf": [
+          {
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "resolution": {
+        "enum": [
+          "480p",
+          "720p"
+        ],
+        "description": "The resolution of the output image.",
+        "default": "720p",
+        "type": "string"
+      },
+      "enable_safety_checker": {
+        "description": "Whether to enable the safety checker.",
+        "default": true,
+        "type": "boolean"
+      },
+      "output_format": {
+        "enum": [
+          "jpeg",
+          "png",
+          "webp"
+        ],
+        "description": "The format of the output image.",
+        "default": "png",
+        "type": "string"
+      }
+    },
+    "required": [
+      "prompt",
+      "image_url"
+    ],
+    "type": "object"
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "Emu35ImageEditImageInput",
+    "Emu35ImageEditImageOutput",
+    "ImageFile"
+  ]
+}

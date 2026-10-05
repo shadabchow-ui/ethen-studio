@@ -1,0 +1,171 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/stable-audio-3/medium/audio-to-audio",
+  "task": "unknown",
+  "source_url": "https://fal.ai/models/fal-ai/stable-audio-3/medium/audio-to-audio",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fstable-audio-3%2Fmedium%2Faudio-to-audio",
+  "retrieved_at": "2026-10-04T19:51:43.200Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "audio-to-audio",
+  "bytes_sha256": "5198f7fd12401d343b2c86cdc529af2251283fb6b5ab191d22a12d4f7b962240",
+  "queue_path": "/fal-ai/stable-audio-3/medium/audio-to-audio",
+  "input_name": "StableAudio3MediumAudioToAudioInput",
+  "input": {
+    "$refName": "StableAudio3MediumAudioToAudioInput",
+    "type": "object",
+    "properties": {
+      "bitrate": {
+        "type": "string",
+        "description": "Audio bitrate for compressed output formats (e.g., mp3, aac, opus). Format e.g. '192k' or '320k'. Ignored for lossless formats (wav, flac).",
+        "default": "192k"
+      },
+      "audio_url": {
+        "type": "string",
+        "examples": [
+          "https://storage.googleapis.com/falserverless/model_tests/diffrythm/rock_en.wav"
+        ],
+        "description": "Source audio to transform."
+      },
+      "num_inference_steps": {
+        "minimum": 1,
+        "type": "integer",
+        "description": "Number of sampling steps. Post-trained (distilled) checkpoints look good with the default 8 and gain little from going higher.",
+        "maximum": 100,
+        "default": 8
+      },
+      "seed": {
+        "description": "Random seed for reproducible outputs. Omit for a random seed.",
+        "anyOf": [
+          {
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "enable_prompt_expansion": {
+        "type": "boolean",
+        "description": "If True, the prompt will be expanded using an LLM for more detailed and higher quality results.",
+        "default": false
+      },
+      "enable_safety_checker": {
+        "type": "boolean",
+        "description": "Enable NSFW content safety checking.",
+        "default": true
+      },
+      "sync_mode": {
+        "type": "boolean",
+        "description": "If True, the audio is returned inline as a data URI and the result is not saved to the request history.",
+        "default": false
+      },
+      "init_noise_level": {
+        "minimum": 0,
+        "type": "number",
+        "description": "How much noise to add to the source audio. 1.0 fully replaces the audio with noise (pure generation); 0.1 keeps the source close to the input. 0.5 sits halfway between.",
+        "maximum": 1,
+        "default": 0.9
+      },
+      "output_format": {
+        "enum": [
+          "mp3",
+          "wav",
+          "flac",
+          "ogg",
+          "opus",
+          "m4a",
+          "aac"
+        ],
+        "type": "string",
+        "description": "Container format for the generated audio output.",
+        "default": "mp3"
+      },
+      "guidance_scale": {
+        "minimum": 0,
+        "type": "number",
+        "description": "Classifier-free guidance scale. Higher values follow the prompt more strictly. Only effective on base (non-distilled) checkpoints.",
+        "maximum": 25,
+        "default": 1
+      },
+      "prompt": {
+        "type": "string",
+        "examples": [
+          "bossa nova bassline"
+        ],
+        "description": "Text description guiding how the source audio should be transformed."
+      },
+      "duration": {
+        "minimum": 1,
+        "type": "number",
+        "description": "Duration of the generated audio in seconds. The medium model supports up to 380 seconds (~6m20s).",
+        "maximum": 380,
+        "default": 30
+      },
+      "negative_prompt": {
+        "type": "string",
+        "description": "Text description of qualities to avoid in the output.",
+        "default": ""
+      }
+    },
+    "required": [
+      "prompt",
+      "audio_url"
+    ]
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "StableAudio3MediumAudioToAudioInput",
+    "StableAudio3MediumAudioToAudioOutput",
+    "File"
+  ]
+}

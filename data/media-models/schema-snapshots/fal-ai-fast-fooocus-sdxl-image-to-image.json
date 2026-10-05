@@ -1,0 +1,271 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/fast-fooocus-sdxl/image-to-image",
+  "task": "image-to-image",
+  "source_url": "https://fal.ai/models/fal-ai/fast-fooocus-sdxl/image-to-image",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Ffast-fooocus-sdxl%2Fimage-to-image",
+  "retrieved_at": "2026-10-04T19:43:32.183Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "text-to-image",
+  "bytes_sha256": "ef925b3ccfa729ac0b2e9d68ee8ac354c7affc354cd45eeeb70fcb0971508abc",
+  "queue_path": "/fal-ai/fast-fooocus-sdxl/image-to-image",
+  "input_name": "FastFooocusSdxlImageToImageInput",
+  "input": {
+    "$refName": "FastFooocusSdxlImageToImageInput",
+    "properties": {
+      "negative_prompt": {
+        "default": "",
+        "description": "\n            The negative prompt to use.Use it to address details that you don't want\n            in the image. This could be colors, objects, scenery and even the small details\n            (e.g. moustache, blurry, low resolution).\n        ",
+        "type": "string",
+        "examples": [
+          "cartoon, illustration, animation. face. male, female"
+        ]
+      },
+      "guidance_scale": {
+        "default": 2,
+        "minimum": 0,
+        "description": "\n            The CFG (Classifier Free Guidance) scale is a measure of how close you want\n            the model to stick to your prompt when looking for a related image to show you.\n        ",
+        "type": "number",
+        "maximum": 20
+      },
+      "request_id": {
+        "default": "",
+        "description": "\n            An id bound to a request, can be used with response to identify the request\n            itself.\n        ",
+        "type": "string"
+      },
+      "image_url": {
+        "description": "The URL of the image to use as a starting point for the generation.",
+        "type": "string",
+        "examples": [
+          "https://fal-cdn.batuhan-941.workers.dev/files/tiger/IExuP-WICqaIesLZAZPur.jpeg"
+        ]
+      },
+      "image_size": {
+        "default": null,
+        "anyOf": [
+          {
+            "$refName": "ImageSize",
+            "type": "object",
+            "properties": {
+              "width": {
+                "default": 512,
+                "description": "The width of the generated image.",
+                "exclusiveMinimum": 0,
+                "type": "integer",
+                "maximum": 14142
+              },
+              "height": {
+                "default": 512,
+                "description": "The height of the generated image.",
+                "exclusiveMinimum": 0,
+                "type": "integer",
+                "maximum": 14142
+              }
+            }
+          },
+          {
+            "type": "string",
+            "enum": [
+              "square_hd",
+              "square",
+              "portrait_4_3",
+              "portrait_16_9",
+              "landscape_4_3",
+              "landscape_16_9"
+            ]
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "The size of the generated image. Leave it none to automatically infer from the prompt image.",
+        "examples": [
+          null
+        ]
+      },
+      "enable_safety_checker": {
+        "default": true,
+        "description": "If set to true, the safety checker will be enabled.",
+        "type": "boolean"
+      },
+      "strength": {
+        "default": 0.95,
+        "minimum": 0.05,
+        "description": "determines how much the generated image resembles the initial image",
+        "type": "number",
+        "maximum": 1
+      },
+      "enable_refiner": {
+        "default": true,
+        "description": "If set to true, a smaller model will try to refine the output after it was processed.",
+        "type": "boolean"
+      },
+      "expand_prompt": {
+        "default": true,
+        "description": "If set to true, the prompt will be expanded with additional prompts.",
+        "type": "boolean"
+      },
+      "format": {
+        "default": "jpeg",
+        "description": "The format of the generated image.",
+        "type": "string",
+        "enum": [
+          "jpeg",
+          "png"
+        ]
+      },
+      "preserve_aspect_ratio": {
+        "default": false,
+        "description": "\n        If set to true, the aspect ratio of the generated image will be preserved even\n        if the image size is too large. However, if the image is not a multiple of 32\n        in width or height, it will be resized to the nearest multiple of 32. By default,\n        this snapping to the nearest multiple of 32 will not preserve the aspect ratio.\n        Set crop_output to True, to crop the output to the proper aspect ratio\n        after generating.\n        ",
+        "type": "boolean"
+      },
+      "prompt": {
+        "description": "The prompt to use for generating the image. Be as descriptive as possible for best results.",
+        "type": "string",
+        "examples": [
+          "an island near sea, with seagulls, moon shining over the sea, light house, boats int he background, fish flying over the sea"
+        ]
+      },
+      "num_images": {
+        "default": 1,
+        "minimum": 1,
+        "description": "The number of images to generate.",
+        "type": "integer",
+        "maximum": 8
+      },
+      "embeddings": {
+        "default": [],
+        "items": {
+          "$refName": "Embedding",
+          "properties": {
+            "tokens": {
+              "default": null,
+              "anyOf": [
+                {
+                  "items": {
+                    "type": "string"
+                  },
+                  "type": "array"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "\n            The list of tokens to use for the embedding. When omitted, tokens\n            are generated as <s0>, <s1>, ... to match the number of vectors in\n            the embedding file.\n        "
+            },
+            "path": {
+              "description": "URL or the path to the embedding weights.",
+              "type": "string",
+              "examples": [
+                "https://civitai.com/api/download/models/135931",
+                "https://filebin.net/3chfqasxpqu21y8n/my-custom-lora-v1.safetensors"
+              ]
+            }
+          },
+          "required": [
+            "path"
+          ],
+          "type": "object"
+        },
+        "description": "The list of embeddings to use.",
+        "type": "array"
+      },
+      "crop_output": {
+        "default": false,
+        "description": "\n        If set to true, the output cropped to the proper aspect ratio after generating.\n        ",
+        "type": "boolean"
+      },
+      "safety_checker_version": {
+        "default": "v1",
+        "description": "The version of the safety checker to use. v1 is the default CompVis safety checker. v2 uses a custom ViT model.",
+        "type": "string",
+        "enum": [
+          "v1",
+          "v2"
+        ]
+      },
+      "num_inference_steps": {
+        "default": 8,
+        "minimum": 1,
+        "description": "The number of inference steps to perform.",
+        "type": "integer",
+        "maximum": 24
+      },
+      "seed": {
+        "default": null,
+        "anyOf": [
+          {
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "\n            The same seed and the same prompt given to the same version of Stable Diffusion\n            will output the same image every time.\n        "
+      }
+    },
+    "required": [
+      "image_url",
+      "prompt"
+    ],
+    "type": "object"
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "FastFooocusSdxlImageToImageInput",
+    "FastFooocusSdxlImageToImageOutput",
+    "ImageSize",
+    "Embedding",
+    "Image"
+  ]
+}

@@ -1,0 +1,151 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "rundiffusion-fal/juggernaut-flux/pro/image-to-image",
+  "task": "image-to-image",
+  "source_url": "https://fal.ai/models/rundiffusion-fal/juggernaut-flux/pro/image-to-image",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=rundiffusion-fal%2Fjuggernaut-flux%2Fpro%2Fimage-to-image",
+  "retrieved_at": "2026-10-04T19:55:09.810Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "image-to-image",
+  "bytes_sha256": "d467f27abf5e67506cf3cf22fecd52db99d2c49d3aba2c37a29dd2c355d676df",
+  "queue_path": "/rundiffusion-fal/juggernaut-flux/pro/image-to-image",
+  "input_name": "JuggernautFluxProImageToImageInput",
+  "input": {
+    "$refName": "JuggernautFluxProImageToImageInput",
+    "properties": {
+      "strength": {
+        "type": "number",
+        "maximum": 1,
+        "default": 0.95,
+        "description": "The strength of the initial image. Higher strength values are better for this model.",
+        "minimum": 0.01
+      },
+      "enable_safety_checker": {
+        "default": true,
+        "description": "If set to true, the safety checker will be enabled. Disabling it requires account authorization; unauthorized requests are always checked, and images flagged as unsafe are returned as black images.",
+        "type": "boolean"
+      },
+      "seed": {
+        "description": "\n            The same seed and the same prompt given to the same version of the model\n            will output the same image every time.\n        ",
+        "anyOf": [
+          {
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "sync_mode": {
+        "default": false,
+        "description": "If `True`, the media will be returned as a data URI and the output data won't be available in the request history.",
+        "type": "boolean"
+      },
+      "num_inference_steps": {
+        "type": "integer",
+        "maximum": 50,
+        "default": 40,
+        "description": "The number of inference steps to perform.",
+        "minimum": 10
+      },
+      "num_images": {
+        "type": "integer",
+        "maximum": 4,
+        "default": 1,
+        "description": "The number of images to generate.",
+        "minimum": 1
+      },
+      "image_url": {
+        "examples": [
+          "https://fal.media/files/koala/Chls9L2ZnvuipUTEwlnJC.png"
+        ],
+        "description": "The URL of the image to generate an image from.",
+        "type": "string"
+      },
+      "output_format": {
+        "enum": [
+          "jpeg",
+          "png"
+        ],
+        "default": "png",
+        "description": "The format of the generated image.",
+        "type": "string"
+      },
+      "guidance_scale": {
+        "type": "number",
+        "maximum": 20,
+        "default": 3.5,
+        "description": "\n            The CFG (Classifier Free Guidance) scale is a measure of how close you want\n            the model to stick to your prompt when looking for a related image to show you.\n        ",
+        "minimum": 1
+      },
+      "prompt": {
+        "examples": [
+          "a cat dressed as a wizard with a background of a mystic forest."
+        ],
+        "description": "The prompt to generate an image from.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "prompt",
+      "image_url"
+    ],
+    "type": "object"
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "JuggernautFluxProImageToImageInput",
+    "JuggernautFluxProImageToImageOutput",
+    "Image"
+  ]
+}

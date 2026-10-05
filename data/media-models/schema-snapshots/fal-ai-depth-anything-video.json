@@ -1,0 +1,154 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/depth-anything-video",
+  "task": "video-editing",
+  "source_url": "https://fal.ai/models/fal-ai/depth-anything-video",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fdepth-anything-video",
+  "retrieved_at": "2026-10-04T19:43:15.716Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "video-to-video",
+  "bytes_sha256": "61d9b0d7392d2dfd16416f2ef9894df1515847becee4f8a4fd02a97166c78684",
+  "queue_path": "/fal-ai/depth-anything-video",
+  "input_name": "DepthAnythingVideoInput",
+  "input": {
+    "$refName": "DepthAnythingVideoInput",
+    "type": "object",
+    "properties": {
+      "include_raw_depths": {
+        "type": "boolean",
+        "description": "Export raw float32 depths as .npz file with: 'depths' [N,H,W], 'min_depth', 'max_depth', 'fps', 'model', 'shape'.",
+        "default": false
+      },
+      "colormap": {
+        "enum": [
+          "grayscale",
+          "turbo",
+          "inferno",
+          "magma",
+          "viridis"
+        ],
+        "type": "string",
+        "description": "Colormap for depth visualization. 'turbo' (recommended) shows near=warm, far=cool. 'grayscale' for raw normalized depth. 'inferno'/'magma' for perceptually uniform. 'viridis' for colorblind-friendly.",
+        "default": "grayscale"
+      },
+      "max_frames": {
+        "description": "Max frames to process (max 2400). None = up to 2400.",
+        "anyOf": [
+          {
+            "exclusiveMinimum": 0,
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "side_by_side": {
+        "type": "boolean",
+        "description": "Output original | depth comparison video.",
+        "default": false
+      },
+      "video_url": {
+        "type": "string",
+        "examples": [
+          "https://v3b.fal.media/files/b/0a8fb1c1/xNTrr7wtczzLBkJdyE5_f_7JTYCmQe.mp4"
+        ],
+        "description": "URL of the input video to estimate depth for."
+      },
+      "output_fps": {
+        "description": "Output video FPS. None = same as input.",
+        "anyOf": [
+          {
+            "exclusiveMinimum": 0,
+            "type": "number"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "model": {
+        "enum": [
+          "VDA-Small",
+          "VDA-Base",
+          "VDA-Large"
+        ],
+        "type": "string",
+        "description": "Depth estimation model size. VDA-Large = best quality, VDA-Small = fastest.",
+        "default": "VDA-Large"
+      },
+      "resolution": {
+        "enum": [
+          "auto",
+          "360p",
+          "480p",
+          "720p",
+          "1080p"
+        ],
+        "type": "string",
+        "description": "Output resolution. 'auto' preserves input (max 1080p). Options: 'auto', '360p', '480p', '720p', '1080p'.",
+        "default": "auto"
+      }
+    },
+    "description": "Input schema for video depth estimation.",
+    "required": [
+      "video_url"
+    ]
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "DepthAnythingVideoInput",
+    "DepthAnythingVideoOutput",
+    "File"
+  ]
+}

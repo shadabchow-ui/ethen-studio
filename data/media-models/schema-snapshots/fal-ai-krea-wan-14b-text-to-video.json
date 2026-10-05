@@ -1,0 +1,111 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/krea-wan-14b/text-to-video",
+  "task": "text-to-video",
+  "source_url": "https://fal.ai/models/fal-ai/krea-wan-14b/text-to-video",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fkrea-wan-14b%2Ftext-to-video",
+  "retrieved_at": "2026-10-04T19:47:25.771Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "text-to-video",
+  "bytes_sha256": "615f2e2a7cd26397f7a26282a078720ef69a8bd31c63d040ac066db805bd4616",
+  "queue_path": "/fal-ai/krea-wan-14b/text-to-video",
+  "input_name": "KreaWan14bTextToVideoInput",
+  "input": {
+    "$refName": "KreaWan14bTextToVideoInput",
+    "required": [
+      "prompt"
+    ],
+    "type": "object",
+    "properties": {
+      "seed": {
+        "anyOf": [
+          {
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "Seed for the video-to-video generation."
+      },
+      "prompt": {
+        "description": "Prompt for the video-to-video generation.",
+        "type": "string",
+        "examples": [
+          "A powerful, matte black jeep, its robust frame contrasting with the lush green surroundings, navigates a winding jungle road, kicking up small clouds of dust and loose earth from its tires."
+        ]
+      },
+      "num_frames": {
+        "maximum": 162,
+        "type": "integer",
+        "minimum": 18,
+        "default": 78,
+        "description": "Number of frames to generate. Must be a multiple of 12 plus 6, for example 6, 18, 30, 42, etc."
+      },
+      "enable_prompt_expansion": {
+        "description": "Whether to enable prompt expansion. This will use a large language model to expand the prompt with additional details while maintaining the original meaning.",
+        "type": "boolean",
+        "examples": [
+          true
+        ],
+        "default": false
+      }
+    }
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "KreaWan14bTextToVideoInput",
+    "KreaWan14bTextToVideoOutput",
+    "File"
+  ]
+}

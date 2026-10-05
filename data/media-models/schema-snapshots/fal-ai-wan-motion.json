@@ -1,0 +1,136 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/wan-motion",
+  "task": "unknown",
+  "source_url": "https://fal.ai/models/fal-ai/wan-motion",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fwan-motion",
+  "retrieved_at": "2026-10-04T19:52:43.055Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "video-to-video",
+  "bytes_sha256": "e29e089faeaf8e0a6d6cb92d756e1941c2bc908c19b0877c17d2c6c27f7440c8",
+  "queue_path": "/fal-ai/wan-motion",
+  "input_name": "WanMotionInput",
+  "input": {
+    "$refName": "WanMotionInput",
+    "required": [
+      "video_url",
+      "image_url"
+    ],
+    "properties": {
+      "acceleration": {
+        "enum": [
+          "none",
+          "regular"
+        ],
+        "default": "regular",
+        "type": "string",
+        "description": "Acceleration level to use. 'regular' enables caching for faster generation, 'none' disables it."
+      },
+      "enhance_identity": {
+        "default": false,
+        "type": "boolean",
+        "description": "Enhances identity preservation by preprocessing the reference image with Flux Kontext Edit before animation. Produces more faithful face and appearance transfer at the cost of slightly longer processing time."
+      },
+      "enable_safety_checker": {
+        "default": true,
+        "type": "boolean",
+        "description": "If set to true, input and output will be checked for safety. Disabling it requires account authorization; unauthorized requests are always checked."
+      },
+      "seed": {
+        "description": "Random seed for reproducibility.",
+        "anyOf": [
+          {
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "image_url": {
+        "examples": [
+          "https://v3b.fal.media/files/b/0a8f0995/slF9l2eNL_YSD7SqU7tUz_i35fsR92.jpg"
+        ],
+        "type": "string",
+        "description": "URL of the reference image (provides the character appearance)."
+      },
+      "prompt": {
+        "examples": [
+          "woman dancing"
+        ],
+        "default": "",
+        "type": "string",
+        "description": "Optional text prompt to guide the generation."
+      },
+      "adapt_motion": {
+        "default": true,
+        "type": "boolean",
+        "description": "Adapts the driving video's motion to match the reference image's body proportions. Recommended when the driving video subject and reference image have different body shapes or sizes."
+      },
+      "video_url": {
+        "examples": [
+          "https://v3b.fal.media/files/b/0a8f0997/JuDW2xl0mr6sJ_Kjz3Vxe_vidoeook.mp4"
+        ],
+        "type": "string",
+        "description": "URL of the driving video (provides the motion)."
+      }
+    },
+    "type": "object"
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "WanMotionInput",
+    "WanMotionOutput",
+    "File"
+  ]
+}

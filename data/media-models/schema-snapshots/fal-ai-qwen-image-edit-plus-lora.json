@@ -1,0 +1,239 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/qwen-image-edit-plus-lora",
+  "task": "image-generation",
+  "source_url": "https://fal.ai/models/fal-ai/qwen-image-edit-plus-lora",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fqwen-image-edit-plus-lora",
+  "retrieved_at": "2026-10-04T19:50:51.224Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "image-to-image",
+  "bytes_sha256": "9483034bd84982ae7f240a6a5bd77a322228b4e91308deeb3e1ca127a21ea950",
+  "queue_path": "/fal-ai/qwen-image-edit-plus-lora",
+  "input_name": "QwenImageEditPlusLoraInput",
+  "input": {
+    "$refName": "QwenImageEditPlusLoraInput",
+    "properties": {
+      "output_format": {
+        "default": "png",
+        "description": "The format of the generated image.",
+        "enum": [
+          "jpeg",
+          "png"
+        ],
+        "type": "string"
+      },
+      "num_inference_steps": {
+        "default": 28,
+        "maximum": 50,
+        "description": "The number of inference steps to perform.",
+        "minimum": 2,
+        "type": "integer"
+      },
+      "negative_prompt": {
+        "default": " ",
+        "description": "The negative prompt for the generation",
+        "examples": [
+          " "
+        ],
+        "type": "string"
+      },
+      "image_size": {
+        "anyOf": [
+          {
+            "$refName": "ImageSize",
+            "properties": {
+              "height": {
+                "default": 512,
+                "description": "The height of the generated image.",
+                "exclusiveMinimum": 0,
+                "maximum": 14142,
+                "type": "integer"
+              },
+              "width": {
+                "default": 512,
+                "description": "The width of the generated image.",
+                "exclusiveMinimum": 0,
+                "maximum": 14142,
+                "type": "integer"
+              }
+            },
+            "type": "object"
+          },
+          {
+            "enum": [
+              "square_hd",
+              "square",
+              "portrait_4_3",
+              "portrait_16_9",
+              "landscape_4_3",
+              "landscape_16_9"
+            ],
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "The size of the generated image. If not provided, the size of the final input image will be used to calculate the size of the output image."
+      },
+      "image_urls": {
+        "description": "The URLs of the images to edit.",
+        "examples": [
+          [
+            "https://v3.fal.media/files/monkey/i3saq4bAPXSIl08nZtq9P_ec535747aefc4e31943136a6d8587075.png",
+            "https://v3.fal.media/files/penguin/BCOZp6teRhSQFuOXpbBOa_da8ef9b4982347a2a62a516b737d4f21.png",
+            "https://v3.fal.media/files/tiger/sCoZhBksx9DvwSR4_U3_C_3d1f581441874005908addeae9c10d0f.png"
+          ]
+        ],
+        "items": {
+          "_fal_ui_field": "image",
+          "type": "string"
+        },
+        "type": "array"
+      },
+      "sync_mode": {
+        "default": false,
+        "description": "If `True`, the media will be returned as a data URI and the output data won't be available in the request history.",
+        "type": "boolean"
+      },
+      "num_images": {
+        "default": 1,
+        "maximum": 4,
+        "description": "The number of images to generate.",
+        "minimum": 1,
+        "type": "integer"
+      },
+      "prompt": {
+        "description": "The prompt to generate the image with",
+        "examples": [
+          "Close shot of a woman standing in next to this car on this highway"
+        ],
+        "type": "string"
+      },
+      "loras": {
+        "default": [],
+        "description": "\n            The LoRAs to use for the image generation. You can use up to 3 LoRAs\n            and they will be merged together to generate the final image.\n        ",
+        "examples": [],
+        "items": {
+          "$refName": "LoraWeight",
+          "properties": {
+            "scale": {
+              "default": 1,
+              "maximum": 4,
+              "description": "\n            The scale of the LoRA weight. This is used to scale the LoRA weight\n            before merging it with the base model.\n        ",
+              "minimum": 0,
+              "type": "number"
+            },
+            "path": {
+              "description": "URL or the path to the LoRA weights.",
+              "type": "string"
+            }
+          },
+          "required": [
+            "path"
+          ],
+          "type": "object"
+        },
+        "type": "array"
+      },
+      "enable_safety_checker": {
+        "default": true,
+        "description": "If set to true, the safety checker will be enabled. Disabling it requires account authorization; unauthorized requests are always checked, and images flagged as unsafe are returned as black images.",
+        "type": "boolean"
+      },
+      "acceleration": {
+        "default": "regular",
+        "enum": [
+          "none",
+          "regular"
+        ],
+        "examples": [
+          "regular"
+        ],
+        "description": "Acceleration level for image generation. Options: 'none', 'regular'. Higher acceleration increases speed. 'regular' balances speed and quality.",
+        "type": "string"
+      },
+      "guidance_scale": {
+        "default": 4,
+        "maximum": 20,
+        "description": "\n            The CFG (Classifier Free Guidance) scale is a measure of how close you want\n            the model to stick to your prompt when looking for a related image to show you.\n        ",
+        "minimum": 0,
+        "type": "number"
+      },
+      "seed": {
+        "anyOf": [
+          {
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "\n            The same seed and the same prompt given to the same version of the model\n            will output the same image every time.\n        "
+      }
+    },
+    "required": [
+      "prompt",
+      "image_urls"
+    ],
+    "type": "object"
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "QwenImageEditPlusLoraInput",
+    "QwenImageEditPlusLoraOutput",
+    "ImageSize",
+    "LoraWeight",
+    "Image"
+  ]
+}

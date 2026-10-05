@@ -1,0 +1,99 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/bagel",
+  "task": "unknown",
+  "source_url": "https://fal.ai/models/fal-ai/bagel",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fbagel",
+  "retrieved_at": "2026-10-04T19:42:34.811Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "text-to-image",
+  "bytes_sha256": "4bca2d779bbe1a4fbbc703c23281d83ebc1046c8bbfad5859ba5f33398a96dc0",
+  "queue_path": "/fal-ai/bagel",
+  "input_name": "BagelInput",
+  "input": {
+    "$refName": "BagelInput",
+    "type": "object",
+    "properties": {
+      "prompt": {
+        "examples": [
+          "A luminous ancient temple floating among cosmic clouds, with impossible architecture of twisted spires and inverted arches. The structure is half-built from crystalline white marble and half from living bioluminescent coral in vibrant teal and purple. Ethereal light filters through stained glass windows depicting mythological scenes. Tiny cloaked figures with glowing lanterns traverse impossible staircases. In the foreground, a massive ornate door stands slightly ajar, revealing a glimpse of swirling golden energy within. The scene is lit by two moons of different colors, casting overlapping shadows. Cinematic lighting, hyper-detailed textures, 8K resolution."
+        ],
+        "type": "string",
+        "description": "The prompt to generate an image from."
+      },
+      "use_thought": {
+        "default": false,
+        "type": "boolean",
+        "description": "Whether to use thought tokens for generation. If set to true, the model will \"think\" to potentially improve generation quality. Increases generation time and increases the cost by 20%."
+      },
+      "enable_safety_checker": {
+        "default": true,
+        "type": "boolean",
+        "description": "If set to true, the safety checker will be enabled."
+      },
+      "seed": {
+        "type": "integer",
+        "description": "The seed to use for the generation."
+      }
+    },
+    "required": [
+      "prompt"
+    ]
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "BagelInput",
+    "BagelOutput",
+    "Image"
+  ]
+}

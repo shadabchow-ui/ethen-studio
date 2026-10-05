@@ -1,0 +1,32 @@
+{
+ "authSkippable": false,
+ "category": "image-to-image",
+ "date": "2026-10-02T20:43:52.460Z",
+ "deprecated": false,
+ "description": "Estimate monocular depth from a single image with Marigold V2 by Huawei Bayer Lab. The model runs one deterministic forward pass and returns a colorized depth visualization (Spectral colormap) as a PNG. By default, the output matches the input image's dimensions rounded to the nearest multiple of 16. Optionally set image_size as a preset or an explicit width and height: both must be multiples of 16, at most 2048 pixels per side, with an aspect ratio between 1:16 and 16:1. Input images are limited to 2048 x 2048 pixels. The seed only affects the VAE encoder's latent sampling; the same seed and image reproduce the same output.",
+ "examples": [
+  "2213d0cd-6c56-4202-8ca1-a3f62aaf58a9"
+ ],
+ "githubUrl": "",
+ "hidePricing": false,
+ "id": "fal-ai/marigold-v2",
+ "isFavorited": false,
+ "kind": "inference",
+ "licenseType": "commercial",
+ "machineType": null,
+ "modelId": "db01f24regj97j0s75kg",
+ "modelUrl": "https://fal.run/fal-ai/marigold-v2",
+ "pricingInfoOverride": "Your request will cost **$0.03** per image. The output size does not change the price.",
+ "publishedAt": "2026-10-02T20:43:52.461Z",
+ "removed": false,
+ "resultComparison": false,
+ "shortDescription": "Estimate depth from a single image with Marigold V2, a diffusion-based depth model built on Qwen-Image-Edit, returning a colorized depth map.",
+ "status": "public",
+ "tags": [
+  "depth",
+  "utility"
+ ],
+ "thumbnailUrl": "https://v3b.fal.media/files/b/0aaccf1f/kT4jHOzU-1GoNpXUKQ1EP.jpg",
+ "title": "Marigold V2 Depth",
+ "trainingEndpoints": []
+}

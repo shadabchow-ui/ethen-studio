@@ -1,0 +1,168 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/film",
+  "task": "unknown",
+  "source_url": "https://fal.ai/models/fal-ai/film",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Ffilm",
+  "retrieved_at": "2026-10-04T19:43:45.833Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "image-to-image",
+  "bytes_sha256": "e803e3352b647cc4b2de96b8b55fe31e2593ec75f2eb38a22ef43423c3566651",
+  "queue_path": "/fal-ai/film",
+  "input_name": "FilmInput",
+  "input": {
+    "$refName": "FilmInput",
+    "required": [
+      "start_image_url",
+      "end_image_url"
+    ],
+    "type": "object",
+    "properties": {
+      "image_format": {
+        "description": "The format of the output images. Only applicable if output_type is 'images'.",
+        "enum": [
+          "png",
+          "jpeg"
+        ],
+        "type": "string",
+        "default": "jpeg"
+      },
+      "output_type": {
+        "description": "The type of output to generate; either individual images or a video.",
+        "enum": [
+          "images",
+          "video"
+        ],
+        "type": "string",
+        "default": "images"
+      },
+      "fps": {
+        "description": "Frames per second for the output video. Only applicable if output_type is 'video'.",
+        "maximum": 60,
+        "type": "integer",
+        "minimum": 1,
+        "default": 8
+      },
+      "video_write_mode": {
+        "description": "The write mode of the output video. Only applicable if output_type is 'video'.",
+        "enum": [
+          "fast",
+          "balanced",
+          "small"
+        ],
+        "type": "string",
+        "default": "balanced",
+        "examples": [
+          "balanced"
+        ]
+      },
+      "sync_mode": {
+        "description": "If `True`, the media will be returned as a data URI and the output data won't be available in the request history.",
+        "type": "boolean",
+        "default": false
+      },
+      "video_quality": {
+        "description": "The quality of the output video. Only applicable if output_type is 'video'.",
+        "enum": [
+          "low",
+          "medium",
+          "high",
+          "maximum"
+        ],
+        "type": "string",
+        "default": "high",
+        "examples": [
+          "high"
+        ]
+      },
+      "num_frames": {
+        "description": "The number of frames to generate between the input images.",
+        "maximum": 64,
+        "type": "integer",
+        "minimum": 1,
+        "default": 1
+      },
+      "end_image_url": {
+        "description": "The URL of the second image to use as the ending point for interpolation.",
+        "type": "string",
+        "examples": [
+          "https://storage.googleapis.com/falserverless/example_inputs/interpolate-end-frame.png"
+        ]
+      },
+      "include_start": {
+        "description": "Whether to include the start image in the output.",
+        "type": "boolean",
+        "default": false
+      },
+      "include_end": {
+        "description": "Whether to include the end image in the output.",
+        "type": "boolean",
+        "default": false
+      },
+      "start_image_url": {
+        "description": "The URL of the first image to use as the starting point for interpolation.",
+        "type": "string",
+        "examples": [
+          "https://storage.googleapis.com/falserverless/example_inputs/interpolate-start-frame.png"
+        ]
+      }
+    }
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "FilmInput",
+    "FilmOutput",
+    "ImageFile",
+    "VideoFile"
+  ]
+}

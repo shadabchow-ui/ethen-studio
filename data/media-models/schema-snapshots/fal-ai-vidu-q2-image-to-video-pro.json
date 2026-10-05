@@ -1,0 +1,155 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/vidu/q2/image-to-video/pro",
+  "task": "image-to-video",
+  "source_url": "https://fal.ai/models/fal-ai/vidu/q2/image-to-video/pro",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fvidu%2Fq2%2Fimage-to-video%2Fpro",
+  "retrieved_at": "2026-10-04T19:52:19.641Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "image-to-video",
+  "bytes_sha256": "359721f1883c508d79422b6b6b916b899a81b1a04c13ddc6c746a8db04042912",
+  "queue_path": "/fal-ai/vidu/q2/image-to-video/pro",
+  "input_name": "ViduQ2ImageToVideoProInput",
+  "input": {
+    "$refName": "ViduQ2ImageToVideoProInput",
+    "properties": {
+      "end_image_url": {
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "URL of the image to use as the ending frame. When provided, generates a transition video between start and end frames."
+      },
+      "resolution": {
+        "enum": [
+          "720p",
+          "1080p"
+        ],
+        "type": "string",
+        "description": "Output video resolution",
+        "default": "720p"
+      },
+      "bgm": {
+        "type": "boolean",
+        "description": "Whether to add background music to the video (only for 4-second videos)",
+        "default": false
+      },
+      "image_url": {
+        "examples": [
+          "https://storage.googleapis.com/falserverless/web-examples/vidu/stylish_woman.webp"
+        ],
+        "type": "string",
+        "description": "URL of the image to use as the starting frame"
+      },
+      "prompt": {
+        "examples": [
+          "A woman walking through a vibrant city street at night, neon lights reflecting off wet pavement."
+        ],
+        "type": "string",
+        "maxLength": 3000,
+        "description": "Text prompt for video generation, max 3000 characters"
+      },
+      "seed": {
+        "anyOf": [
+          {
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "Random seed for reproducibility. If None, a random seed is chosen."
+      },
+      "movement_amplitude": {
+        "enum": [
+          "auto",
+          "small",
+          "medium",
+          "large"
+        ],
+        "type": "string",
+        "description": "The movement amplitude of objects in the frame",
+        "default": "auto"
+      },
+      "duration": {
+        "enum": [
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8
+        ],
+        "type": "integer",
+        "description": "Duration of the video in seconds",
+        "default": 4
+      }
+    },
+    "type": "object",
+    "required": [
+      "prompt",
+      "image_url"
+    ]
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "ViduQ2ImageToVideoProInput",
+    "ViduQ2ImageToVideoProOutput",
+    "File"
+  ]
+}

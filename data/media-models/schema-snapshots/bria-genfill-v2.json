@@ -1,0 +1,118 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "bria/genfill/v2",
+  "task": "unknown",
+  "source_url": "https://fal.ai/models/bria/genfill/v2",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=bria%2Fgenfill%2Fv2",
+  "retrieved_at": "2026-10-04T19:41:48.161Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "image-to-image",
+  "bytes_sha256": "f27dd04911108ed6998b275faed70f0bee629956dd3df5e124ae82143e5c72c5",
+  "queue_path": "/bria/genfill/v2",
+  "input_name": "GenfillV2Input",
+  "input": {
+    "$refName": "GenfillV2Input",
+    "required": [
+      "image_url",
+      "mask_url",
+      "instruction"
+    ],
+    "type": "object",
+    "properties": {
+      "mask_url": {
+        "examples": [
+          "https://bria-datasets.s3.us-east-1.amazonaws.com/Fibo_edit/flower_input_mask.png"
+        ],
+        "type": "string",
+        "description": "The mask image."
+      },
+      "seed": {
+        "type": "integer",
+        "default": 5555,
+        "description": "Random seed for reproducibility."
+      },
+      "sync_mode": {
+        "type": "boolean",
+        "default": false,
+        "description": "If true, returns the image directly in the response (increases latency)."
+      },
+      "steps_num": {
+        "type": "integer",
+        "default": 30,
+        "description": "Number of inference steps.",
+        "maximum": 50,
+        "minimum": 20
+      },
+      "image_url": {
+        "examples": [
+          "https://bria-datasets.s3.us-east-1.amazonaws.com/Fibo_edit/flower.png"
+        ],
+        "type": "string",
+        "description": "The source image."
+      },
+      "instruction": {
+        "examples": [
+          "A beautiful colorful butterfly"
+        ],
+        "type": "string",
+        "description": "Instruct what elements you would like to fill in your image based on the mask."
+      }
+    }
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "GenfillV2Input",
+    "GenfillV2Output",
+    "Image"
+  ]
+}

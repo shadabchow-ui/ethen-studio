@@ -1,0 +1,114 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/rife/video",
+  "task": "video-editing",
+  "source_url": "https://fal.ai/models/fal-ai/rife/video",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Frife%2Fvideo",
+  "retrieved_at": "2026-10-04T19:51:16.331Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "video-to-video",
+  "bytes_sha256": "b6fde7d9cf7afe5556a6f8843995cd4db1e37d220abeb429c03a666e13ff1fcc",
+  "queue_path": "/fal-ai/rife/video",
+  "input_name": "RifeVideoInput",
+  "input": {
+    "$refName": "RifeVideoInput",
+    "properties": {
+      "video_url": {
+        "type": "string",
+        "examples": [
+          "https://storage.googleapis.com/falserverless/example_inputs/interpolation-video-input.mp4"
+        ],
+        "description": "The URL of the video to use for interpolation."
+      },
+      "fps": {
+        "maximum": 60,
+        "type": "integer",
+        "default": 8,
+        "minimum": 1,
+        "description": "Frames per second for the output video. Only applicable if use_calculated_fps is False."
+      },
+      "num_frames": {
+        "maximum": 4,
+        "type": "integer",
+        "default": 1,
+        "minimum": 1,
+        "description": "The number of frames to generate between the input video frames."
+      },
+      "use_scene_detection": {
+        "type": "boolean",
+        "default": false,
+        "description": "If True, the input video will be split into scenes before interpolation. This removes smear frames between scenes, but can result in false positives if the scene detection is not accurate. If False, the entire video will be treated as a single scene."
+      },
+      "loop": {
+        "type": "boolean",
+        "default": false,
+        "description": "If True, the final frame will be looped back to the first frame to create a seamless loop. If False, the final frame will not loop back."
+      },
+      "use_calculated_fps": {
+        "type": "boolean",
+        "default": true,
+        "description": "If True, the function will use the calculated FPS of the input video multiplied by the number of frames to determine the output FPS. If False, the passed FPS will be used."
+      }
+    },
+    "type": "object",
+    "required": [
+      "video_url"
+    ]
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "RifeVideoInput",
+    "RifeVideoOutput",
+    "File"
+  ]
+}

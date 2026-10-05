@@ -1,0 +1,296 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/trellis-2",
+  "task": "unknown",
+  "source_url": "https://fal.ai/models/fal-ai/trellis-2",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Ftrellis-2",
+  "retrieved_at": "2026-10-04T19:52:00.198Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "image-to-3d",
+  "bytes_sha256": "2061b91ca955cd9ed132714a360b907c26fffb2ee208579b6de8a09058ebe10e",
+  "queue_path": "/fal-ai/trellis-2",
+  "input_name": "Trellis2Input",
+  "input": {
+    "$refName": "Trellis2Input",
+    "properties": {
+      "ss_guidance_rescale": {
+        "maximum": 1,
+        "type": "number",
+        "default": 0.7,
+        "minimum": 0,
+        "description": "Dampens artifacts from high guidance in stage 1. Lower values allow stronger guidance effects, higher values stabilize the output."
+      },
+      "ss_guidance_interval_end": {
+        "maximum": 1,
+        "type": "number",
+        "default": 1,
+        "minimum": 0,
+        "description": "Fraction of the denoising process at which classifier-free guidance ends for stage 1 (sparse structure). Must be >= ss_guidance_interval_start."
+      },
+      "ss_guidance_interval_start": {
+        "maximum": 1,
+        "type": "number",
+        "default": 0.6,
+        "minimum": 0,
+        "description": "Fraction of the denoising process at which classifier-free guidance starts for stage 1 (sparse structure). Guidance is only applied between interval_start and interval_end; outside this window the model runs unguided. Lower values apply guidance earlier."
+      },
+      "resolution": {
+        "type": "integer",
+        "default": 1024,
+        "enum": [
+          512,
+          1024,
+          1536
+        ],
+        "description": "Output resolution; higher is slower but more detailed"
+      },
+      "seed": {
+        "anyOf": [
+          {
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "Random seed for reproducibility"
+      },
+      "shape_slat_guidance_rescale": {
+        "maximum": 1,
+        "type": "number",
+        "default": 0.5,
+        "minimum": 0,
+        "description": "Dampens artifacts from high guidance in the shape stage. Increase if you see noisy geometry."
+      },
+      "shape_slat_guidance_interval_end": {
+        "maximum": 1,
+        "type": "number",
+        "default": 1,
+        "minimum": 0,
+        "description": "Fraction of the denoising process at which classifier-free guidance ends for stage 2 (shape refinement). Must be >= shape_slat_guidance_interval_start."
+      },
+      "decimation_target": {
+        "maximum": 2000000,
+        "type": "integer",
+        "default": 500000,
+        "minimum": 5000,
+        "description": "Target number of vertices in the final mesh. Lower values produce smaller files but less detail. 500k is good for most uses, reduce to 20k-50k for web/mobile."
+      },
+      "image_url": {
+        "type": "string",
+        "examples": [
+          "https://v3b.fal.media/files/b/0a86b60d/xkpao5B0uxmH0tmJm0HVL_2fe35ce1-fe44-475b-b582-6846a149537c.png"
+        ],
+        "description": "URL of the input image to convert to 3D"
+      },
+      "uv_unwrap_smooth_strength": {
+        "maximum": 10,
+        "type": "number",
+        "default": 1,
+        "minimum": 0,
+        "description": "Smoothing strength applied to UV chart boundaries. Higher values reduce visible seams but may introduce UV distortion."
+      },
+      "ss_sampling_steps": {
+        "maximum": 50,
+        "type": "integer",
+        "default": 12,
+        "minimum": 1,
+        "description": "Number of denoising steps for the initial structure. More steps = slower but potentially higher quality."
+      },
+      "remesh": {
+        "type": "boolean",
+        "default": true,
+        "description": "Rebuild the mesh topology for cleaner triangles. Slower but usually produces better results for downstream use (animation, 3D printing, etc)."
+      },
+      "remesh_band": {
+        "maximum": 4,
+        "type": "number",
+        "default": 1,
+        "minimum": 0,
+        "description": "Controls how far remeshing can move vertices from the original surface. Higher values allow more smoothing but may lose fine details."
+      },
+      "remesh_project": {
+        "maximum": 1,
+        "type": "number",
+        "default": 0,
+        "minimum": 0,
+        "description": "How much to project remeshed vertices back onto the original surface. 0 = no projection (smoother), 1 = full projection (preserves detail)."
+      },
+      "shape_slat_rescale_t": {
+        "maximum": 6,
+        "type": "number",
+        "default": 3,
+        "minimum": 1,
+        "description": "Controls noise schedule sharpness for shape refinement. Higher values produce sharper geometric details."
+      },
+      "shape_slat_guidance_strength": {
+        "maximum": 10,
+        "type": "number",
+        "default": 7.5,
+        "minimum": 0,
+        "description": "How closely the detailed geometry follows the input image. Higher values add more detail but may introduce noise."
+      },
+      "tex_slat_guidance_interval_end": {
+        "maximum": 1,
+        "type": "number",
+        "default": 0.9,
+        "minimum": 0,
+        "description": "Fraction of the denoising process at which classifier-free guidance ends for stage 3 (texture). Must be >= tex_slat_guidance_interval_start."
+      },
+      "tex_slat_rescale_t": {
+        "maximum": 6,
+        "type": "number",
+        "default": 3,
+        "minimum": 1,
+        "description": "Controls noise schedule sharpness for texture generation. Higher values produce sharper texture details."
+      },
+      "uv_unwrap_angle_threshold_deg": {
+        "maximum": 180,
+        "type": "number",
+        "default": 90,
+        "minimum": 0,
+        "description": "Maximum angle (in degrees) between adjacent face normals allowed within a single UV chart. Lower values produce more charts with less distortion; higher values produce fewer, larger charts with potentially more stretching."
+      },
+      "tex_slat_sampling_steps": {
+        "maximum": 50,
+        "type": "integer",
+        "default": 12,
+        "minimum": 1,
+        "description": "Number of denoising steps for texture generation. More steps = slower but potentially cleaner textures."
+      },
+      "ss_guidance_strength": {
+        "maximum": 10,
+        "type": "number",
+        "default": 7.5,
+        "minimum": 0,
+        "description": "How closely the initial 3D structure follows the input image. Higher values produce more faithful but potentially noisier results."
+      },
+      "shape_slat_sampling_steps": {
+        "maximum": 50,
+        "type": "integer",
+        "default": 12,
+        "minimum": 1,
+        "description": "Number of denoising steps for shape refinement. More steps = slower but potentially smoother geometry."
+      },
+      "uv_unwrap_refine_iterations": {
+        "maximum": 10,
+        "type": "integer",
+        "default": 0,
+        "minimum": 0,
+        "description": "Number of local refinement passes during UV chart computation. Higher values produce cleaner chart boundaries at the cost of additional UV-unwrap time."
+      },
+      "texture_size": {
+        "type": "integer",
+        "default": 2048,
+        "enum": [
+          1024,
+          2048,
+          4096
+        ],
+        "description": "Resolution of the texture image baked onto the mesh. Higher values capture finer surface details but produce larger files."
+      },
+      "tex_slat_guidance_interval_start": {
+        "maximum": 1,
+        "type": "number",
+        "default": 0.6,
+        "minimum": 0,
+        "description": "Fraction of the denoising process at which classifier-free guidance starts for stage 3 (texture). Guidance is only applied between interval_start and interval_end."
+      },
+      "ss_rescale_t": {
+        "maximum": 6,
+        "type": "number",
+        "default": 5,
+        "minimum": 1,
+        "description": "Controls noise schedule sharpness for structure generation. Higher values produce sharper transitions."
+      },
+      "shape_slat_guidance_interval_start": {
+        "maximum": 1,
+        "type": "number",
+        "default": 0.6,
+        "minimum": 0,
+        "description": "Fraction of the denoising process at which classifier-free guidance starts for stage 2 (shape refinement). Guidance is only applied between interval_start and interval_end."
+      },
+      "tex_slat_guidance_strength": {
+        "maximum": 10,
+        "type": "number",
+        "default": 1,
+        "minimum": 0,
+        "description": "How closely the texture follows the input image colors. Higher values produce more vivid but potentially oversaturated textures."
+      },
+      "uv_unwrap_global_iterations": {
+        "maximum": 10,
+        "type": "integer",
+        "default": 1,
+        "minimum": 1,
+        "description": "Number of global clustering passes during UV chart computation. More passes produce more balanced charts."
+      },
+      "tex_slat_guidance_rescale": {
+        "maximum": 1,
+        "type": "number",
+        "default": 0,
+        "minimum": 0,
+        "description": "Dampens artifacts from high guidance in the texture stage. Increase if textures look noisy or have color banding."
+      }
+    },
+    "required": [
+      "image_url"
+    ],
+    "type": "object"
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "Trellis2Input",
+    "Trellis2Output",
+    "File"
+  ]
+}

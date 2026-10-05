@@ -1,0 +1,125 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "recraft/v4/pro/create-style",
+  "task": "unknown",
+  "source_url": "https://fal.ai/models/recraft/v4/pro/create-style",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=recraft%2Fv4%2Fpro%2Fcreate-style",
+  "retrieved_at": "2026-10-04T19:54:51.930Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "training",
+  "bytes_sha256": "41938f4bbd7e285967b10286ba6e1eb7fe24e8757cfd3f9de72929c578fcf0e7",
+  "queue_path": "/recraft/v4/pro/create-style",
+  "input_name": "V4ProCreateStyleInput",
+  "input": {
+    "$refName": "V4ProCreateStyleInput",
+    "properties": {
+      "image_weights": {
+        "description": "One weight per image URL, in the same order as `image_urls`.",
+        "anyOf": [
+          {
+            "maxItems": 10,
+            "type": "array",
+            "items": {
+              "type": "number"
+            },
+            "minItems": 1
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "base_style": {
+        "enum": [
+          "any",
+          "vector_illustration"
+        ],
+        "description": "The base style of the generated images.",
+        "type": "string",
+        "default": "any"
+      },
+      "match": {
+        "description": "How closely generated images should follow the style.",
+        "type": "string",
+        "default": "precise",
+        "enum": [
+          "precise",
+          "flexible"
+        ]
+      },
+      "image_urls": {
+        "examples": [
+          [
+            "https://storage.googleapis.com/falserverless/example_inputs/recraft-styles-reference.png"
+          ]
+        ],
+        "minItems": 1,
+        "maxItems": 10,
+        "type": "array",
+        "items": {
+          "type": "string"
+        },
+        "description": "The URLs of the style reference images. Supports PNG, JPG, and WEBP; provide between 1 and 10 images."
+      }
+    },
+    "type": "object",
+    "required": [
+      "image_urls"
+    ]
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "V4ProCreateStyleInput",
+    "V4ProCreateStyleOutput"
+  ]
+}

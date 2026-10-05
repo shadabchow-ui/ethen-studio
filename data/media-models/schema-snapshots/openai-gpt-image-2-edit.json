@@ -1,0 +1,197 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "openai/gpt-image-2/edit",
+  "task": "image-editing",
+  "source_url": "https://fal.ai/models/openai/gpt-image-2/edit",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=openai%2Fgpt-image-2%2Fedit",
+  "retrieved_at": "2026-10-04T19:54:42.234Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "image-to-image",
+  "bytes_sha256": "08f420a07936e3fbccb7da3bb0afc67dc3a9faf2f729f9f711944f1743b64469",
+  "queue_path": "/openai/gpt-image-2/edit",
+  "input_name": "GptImage2EditInput",
+  "input": {
+    "$refName": "GptImage2EditInput",
+    "required": [
+      "prompt",
+      "image_urls"
+    ],
+    "type": "object",
+    "properties": {
+      "mask_url": {
+        "description": "The URL of the mask image to use for the generation. This indicates what part of the image to edit.",
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "image_size": {
+        "description": "The size of the generated image. Use 'auto' to infer from input images.",
+        "anyOf": [
+          {
+            "$refName": "ImageSize",
+            "type": "object",
+            "properties": {
+              "height": {
+                "maximum": 14142,
+                "description": "The height of the generated image.",
+                "type": "integer",
+                "default": 512,
+                "exclusiveMinimum": 0
+              },
+              "width": {
+                "maximum": 14142,
+                "description": "The width of the generated image.",
+                "type": "integer",
+                "default": 512,
+                "exclusiveMinimum": 0
+              }
+            }
+          },
+          {
+            "enum": [
+              "square_hd",
+              "square",
+              "portrait_4_3",
+              "portrait_16_9",
+              "landscape_4_3",
+              "landscape_16_9",
+              "auto"
+            ],
+            "type": "string"
+          }
+        ],
+        "default": "auto"
+      },
+      "output_format": {
+        "description": "Output format for the images",
+        "enum": [
+          "jpeg",
+          "png",
+          "webp"
+        ],
+        "type": "string",
+        "default": "png"
+      },
+      "num_images": {
+        "maximum": 4,
+        "description": "Number of images to generate",
+        "type": "integer",
+        "default": 1,
+        "examples": [
+          1
+        ],
+        "minimum": 1
+      },
+      "quality": {
+        "description": "Quality for the generated image. Use 'auto' to let the model pick the best quality for the prompt.",
+        "enum": [
+          "auto",
+          "low",
+          "medium",
+          "high"
+        ],
+        "type": "string",
+        "default": "high"
+      },
+      "background": {
+        "description": "Background for the generated image",
+        "enum": [
+          "auto",
+          "transparent",
+          "opaque"
+        ],
+        "type": "string",
+        "default": "auto"
+      },
+      "sync_mode": {
+        "description": "If `True`, the media will be returned as a data URI and the output data won't be available in the request history.",
+        "type": "boolean",
+        "default": false
+      },
+      "image_urls": {
+        "description": "The URLs of the images to use as a reference for the generation. A maximum of 16 images are allowed.",
+        "items": {
+          "type": "string"
+        },
+        "type": "array",
+        "maxItems": 16,
+        "examples": [
+          [
+            "https://v3b.fal.media/files/b/0a8691af/9Se_1_VX1wzTjjTOpWbs9_bb39c2eb-1a41-4749-b1d0-cf134abc8bbf.png"
+          ]
+        ]
+      },
+      "prompt": {
+        "description": "The prompt for image generation",
+        "type": "string",
+        "maxLength": 32000,
+        "examples": [
+          "Same workers, same beam, same lunch boxes - but they're all on their phones now. One is taking a selfie. One is on a call looking annoyed. Same danger, new priorities. A hard hat has AirPods."
+        ],
+        "minLength": 2
+      }
+    }
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "GptImage2EditInput",
+    "GptImage2EditOutput",
+    "ImageSize",
+    "ImageFile"
+  ]
+}

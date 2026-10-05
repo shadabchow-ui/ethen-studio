@@ -1,0 +1,115 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/image-apps-v2/headshot-photo",
+  "task": "image-generation",
+  "source_url": "https://fal.ai/models/fal-ai/image-apps-v2/headshot-photo",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fimage-apps-v2%2Fheadshot-photo",
+  "retrieved_at": "2026-10-04T19:46:07.305Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "image-to-image",
+  "bytes_sha256": "433168b0ec1932e2c05b807e90bf323fe2ccc37e53001f21c605b1c12505cb4b",
+  "queue_path": "/fal-ai/image-apps-v2/headshot-photo",
+  "input_name": "ImageAppsV2HeadshotPhotoInput",
+  "input": {
+    "$refName": "ImageAppsV2HeadshotPhotoInput",
+    "type": "object",
+    "properties": {
+      "aspect_ratio": {
+        "$refName": "AspectRatio",
+        "type": "object",
+        "properties": {
+          "ratio": {
+            "enum": [
+              "1:1",
+              "16:9",
+              "9:16",
+              "4:3",
+              "3:4"
+            ],
+            "type": "string",
+            "description": "Aspect ratio for 4K resolution output",
+            "default": "1:1"
+          }
+        },
+        "description": "Aspect ratio for 4K output (default: 3:4 for portraits)"
+      },
+      "background_style": {
+        "enum": [
+          "professional",
+          "corporate",
+          "clean",
+          "gradient"
+        ],
+        "type": "string",
+        "default": "professional"
+      },
+      "image_url": {
+        "type": "string",
+        "examples": [
+          "https://v3.fal.media/files/panda/oMob58qZJRtbDs5l45QKT_e3a1512c455d425fab2d62e07a51c506.png"
+        ],
+        "description": "Portrait image URL to convert to professional headshot"
+      }
+    },
+    "required": [
+      "image_url"
+    ]
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "ImageAppsV2HeadshotPhotoInput",
+    "ImageAppsV2HeadshotPhotoOutput",
+    "AspectRatio",
+    "Image"
+  ]
+}

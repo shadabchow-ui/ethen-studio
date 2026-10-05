@@ -1,0 +1,317 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/wan-vace-apps/long-reframe",
+  "task": "unknown",
+  "source_url": "https://fal.ai/models/fal-ai/wan-vace-apps/long-reframe",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fwan-vace-apps%2Flong-reframe",
+  "retrieved_at": "2026-10-04T19:52:51.417Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "video-to-video",
+  "bytes_sha256": "224a400d8180930fc36319f8b6cb02488e69f8aa93f6cd0ca3e755d81d2ba8e3",
+  "queue_path": "/fal-ai/wan-vace-apps/long-reframe",
+  "input_name": "WanVaceAppsLongReframeInput",
+  "input": {
+    "$refName": "WanVaceAppsLongReframeInput",
+    "properties": {
+      "acceleration": {
+        "examples": [
+          "regular"
+        ],
+        "default": "regular",
+        "description": "Acceleration to use for inference. Options are 'none' or 'regular'. Accelerated inference will very slightly affect output, but will be significantly faster.",
+        "anyOf": [
+          {
+            "enum": [
+              "none",
+              "low",
+              "regular"
+            ],
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "return_frames_zip": {
+        "examples": [
+          false
+        ],
+        "default": false,
+        "description": "If true, also return a ZIP file containing all generated frames.",
+        "type": "boolean"
+      },
+      "seed": {
+        "description": "Random seed for reproducibility. If None, a random seed is chosen.",
+        "anyOf": [
+          {
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "sync_mode": {
+        "examples": [
+          false
+        ],
+        "default": false,
+        "description": "If `True`, the media will be returned as a data URI and the output data won't be available in the request history.",
+        "type": "boolean"
+      },
+      "scene_threshold": {
+        "type": "number",
+        "maximum": 100,
+        "default": 30,
+        "description": "Threshold for scene detection sensitivity (0-100). Lower values detect more scenes.",
+        "minimum": 0
+      },
+      "aspect_ratio": {
+        "enum": [
+          "auto",
+          "16:9",
+          "1:1",
+          "9:16"
+        ],
+        "default": "auto",
+        "description": "Aspect ratio of the generated video.",
+        "type": "string"
+      },
+      "prompt": {
+        "examples": [
+          ""
+        ],
+        "default": "",
+        "description": "The text prompt to guide video generation. Optional for reframing.",
+        "type": "string"
+      },
+      "transparency_mode": {
+        "examples": [
+          "content_aware"
+        ],
+        "enum": [
+          "content_aware",
+          "white",
+          "black"
+        ],
+        "default": "content_aware",
+        "description": "The transparency mode to apply to the first and last frames. This controls how the transparent areas of the first and last frames are filled.",
+        "type": "string"
+      },
+      "auto_downsample_min_fps": {
+        "examples": [
+          6
+        ],
+        "type": "number",
+        "maximum": 60,
+        "default": 6,
+        "description": "Minimum FPS for auto downsample.",
+        "minimum": 1
+      },
+      "shift": {
+        "type": "number",
+        "maximum": 15,
+        "default": 5,
+        "description": "Shift parameter for video generation.",
+        "minimum": 1
+      },
+      "video_url": {
+        "examples": [
+          "https://storage.googleapis.com/falserverless/web-examples/wan/t2v.mp4"
+        ],
+        "description": "URL to the source video file. This video will be used as a reference for the reframe task.",
+        "type": "string"
+      },
+      "trim_borders": {
+        "examples": [
+          true
+        ],
+        "default": true,
+        "description": "Whether to trim borders from the video.",
+        "type": "boolean"
+      },
+      "video_write_mode": {
+        "examples": [
+          "balanced"
+        ],
+        "enum": [
+          "fast",
+          "balanced",
+          "small"
+        ],
+        "default": "balanced",
+        "description": "The write mode of the generated video.",
+        "type": "string"
+      },
+      "enable_safety_checker": {
+        "examples": [
+          true
+        ],
+        "default": false,
+        "description": "If set to true, the safety checker will be enabled. Disabling it requires account authorization; unauthorized requests are always checked.",
+        "type": "boolean"
+      },
+      "sampler": {
+        "examples": [
+          "unipc"
+        ],
+        "enum": [
+          "unipc",
+          "dpm++",
+          "euler"
+        ],
+        "default": "unipc",
+        "description": "Sampler to use for video generation.",
+        "type": "string"
+      },
+      "video_quality": {
+        "examples": [
+          "high"
+        ],
+        "enum": [
+          "low",
+          "medium",
+          "high",
+          "maximum"
+        ],
+        "default": "high",
+        "description": "The quality of the generated video.",
+        "type": "string"
+      },
+      "resolution": {
+        "enum": [
+          "auto",
+          "240p",
+          "360p",
+          "480p",
+          "580p",
+          "720p"
+        ],
+        "default": "auto",
+        "description": "Resolution of the generated video.",
+        "type": "string"
+      },
+      "num_inference_steps": {
+        "type": "integer",
+        "maximum": 50,
+        "default": 30,
+        "description": "Number of inference steps for sampling. Higher values give better quality but take longer.",
+        "minimum": 2
+      },
+      "zoom_factor": {
+        "examples": [
+          0
+        ],
+        "type": "number",
+        "maximum": 0.9,
+        "default": 0,
+        "description": "Zoom factor for the video. When this value is greater than 0, the video will be zoomed in by this factor (in relation to the canvas size,) cutting off the edges of the video. A value of 0 means no zoom.",
+        "minimum": 0
+      },
+      "enable_auto_downsample": {
+        "examples": [
+          true
+        ],
+        "default": true,
+        "description": "Whether to enable auto downsample.",
+        "type": "boolean"
+      },
+      "guidance_scale": {
+        "examples": [
+          5
+        ],
+        "type": "number",
+        "maximum": 10,
+        "default": 5,
+        "description": "Guidance scale for classifier-free guidance. Higher values encourage the model to generate images closely related to the text prompt.",
+        "minimum": 1
+      },
+      "negative_prompt": {
+        "examples": [
+          "letterboxing, borders, black bars, bright colors, overexposed, static, blurred details, subtitles, style, artwork, painting, picture, still, overall gray, worst quality, low quality, JPEG compression residue, ugly, incomplete, extra fingers, poorly drawn hands, poorly drawn faces, deformed, disfigured, malformed limbs, fused fingers, still picture, cluttered background, three legs, many people in the background, walking backwards"
+        ],
+        "default": "letterboxing, borders, black bars, bright colors, overexposed, static, blurred details, subtitles, style, artwork, painting, picture, still, overall gray, worst quality, low quality, JPEG compression residue, ugly, incomplete, extra fingers, poorly drawn hands, poorly drawn faces, deformed, disfigured, malformed limbs, fused fingers, still picture, cluttered background, three legs, many people in the background, walking backwards",
+        "description": "Negative prompt for video generation.",
+        "type": "string"
+      },
+      "paste_back": {
+        "default": true,
+        "description": "Whether to paste back the reframed scene to the original video.",
+        "type": "boolean"
+      },
+      "interpolator_model": {
+        "examples": [
+          "film"
+        ],
+        "enum": [
+          "rife",
+          "film"
+        ],
+        "default": "film",
+        "description": "The model to use for frame interpolation. Options are 'rife' or 'film'.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "video_url"
+    ],
+    "type": "object"
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "WanVaceAppsLongReframeInput",
+    "WanVaceAppsLongReframeOutput",
+    "VideoFile"
+  ]
+}

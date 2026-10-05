@@ -1,0 +1,181 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/luma-photon/flash/reframe",
+  "task": "unknown",
+  "source_url": "https://fal.ai/models/fal-ai/luma-photon/flash/reframe",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fluma-photon%2Fflash%2Freframe",
+  "retrieved_at": "2026-10-04T19:49:00.034Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "image-to-image",
+  "bytes_sha256": "dbebb64a83c9c22662b93573a25105a98f131868595f491b05b58b9becc8f03c",
+  "queue_path": "/fal-ai/luma-photon/flash/reframe",
+  "input_name": "LumaPhotonFlashReframeInput",
+  "input": {
+    "$refName": "LumaPhotonFlashReframeInput",
+    "properties": {
+      "y_end": {
+        "anyOf": [
+          {
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "End Y coordinate for reframing"
+      },
+      "prompt": {
+        "anyOf": [
+          {
+            "type": "string",
+            "maxLength": 5000,
+            "minLength": 3
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "Optional prompt for reframing"
+      },
+      "image_url": {
+        "type": "string",
+        "description": "URL of the input image to reframe",
+        "examples": [
+          "https://storage.googleapis.com/falserverless/gallery/example_inputs_liuyifei.png"
+        ]
+      },
+      "aspect_ratio": {
+        "type": "string",
+        "description": "The aspect ratio of the reframed image",
+        "enum": [
+          "1:1",
+          "16:9",
+          "9:16",
+          "4:3",
+          "3:4",
+          "21:9",
+          "9:21"
+        ],
+        "examples": [
+          "16:9"
+        ]
+      },
+      "y_start": {
+        "anyOf": [
+          {
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "Start Y coordinate for reframing"
+      },
+      "x_end": {
+        "anyOf": [
+          {
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "End X coordinate for reframing"
+      },
+      "grid_position_x": {
+        "anyOf": [
+          {
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "X position of the grid for reframing"
+      },
+      "x_start": {
+        "anyOf": [
+          {
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "Start X coordinate for reframing"
+      },
+      "grid_position_y": {
+        "anyOf": [
+          {
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "Y position of the grid for reframing"
+      }
+    },
+    "required": [
+      "image_url",
+      "aspect_ratio"
+    ],
+    "type": "object"
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "LumaPhotonFlashReframeInput",
+    "LumaPhotonFlashReframeOutput",
+    "File"
+  ]
+}

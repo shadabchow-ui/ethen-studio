@@ -1,0 +1,211 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/stable-audio-3-trainer",
+  "task": "lora-training",
+  "source_url": "https://fal.ai/models/fal-ai/stable-audio-3-trainer",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fstable-audio-3-trainer",
+  "retrieved_at": "2026-10-04T19:51:40.789Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "training",
+  "bytes_sha256": "1edfc2c6169af32a70e721907b04d99e45856eff6157b9c8090da1571c5ac835",
+  "queue_path": "/fal-ai/stable-audio-3-trainer",
+  "input_name": "StableAudio3TrainerInput",
+  "input": {
+    "$refName": "StableAudio3TrainerInput",
+    "properties": {
+      "learning_rate": {
+        "exclusiveMinimum": 0,
+        "type": "number",
+        "description": "AdamW learning rate for LoRA parameters.",
+        "maximum": 0.01,
+        "default": 0.0001
+      },
+      "include": {
+        "anyOf": [
+          {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "Only add LoRA to modules whose names contain these substrings."
+      },
+      "adapter_type": {
+        "default": "dora-rows",
+        "type": "string",
+        "description": "LoRA adapter family to train.",
+        "enum": [
+          "lora",
+          "dora",
+          "dora-rows",
+          "dora-cols",
+          "bora",
+          "lora-xs",
+          "dora-rows-xs",
+          "dora-cols-xs",
+          "bora-xs"
+        ]
+      },
+      "model": {
+        "default": "medium-base",
+        "type": "string",
+        "description": "Stable Audio 3 base checkpoint to fine-tune.",
+        "enum": [
+          "medium-base",
+          "small-music-base",
+          "small-sfx-base"
+        ]
+      },
+      "audio_data_url": {
+        "type": "string",
+        "description": "URL to a zip archive containing audio files and matching `.txt` captions. Each audio file must have a sibling caption file with the same basename, for example `clip.wav` and `clip.txt`."
+      },
+      "pre_encode": {
+        "type": "boolean",
+        "description": "Pre-encode the audio archive to SAME latents before LoRA training.",
+        "default": false
+      },
+      "seed": {
+        "minimum": 0,
+        "type": "integer",
+        "description": "Random seed.",
+        "maximum": 2147483647,
+        "default": 42
+      },
+      "lora_checkpoint_url": {
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "Optional `.safetensors` LoRA checkpoint URL to resume from."
+      },
+      "rank": {
+        "minimum": 1,
+        "type": "integer",
+        "description": "LoRA rank.",
+        "maximum": 256,
+        "default": 16
+      },
+      "base_precision": {
+        "default": "bf16",
+        "type": "string",
+        "description": "Precision for frozen base weights; LoRA params stay fp32.",
+        "enum": [
+          "bf16",
+          "bfloat16",
+          "fp16",
+          "float16"
+        ]
+      },
+      "number_of_steps": {
+        "minimum": 1,
+        "type": "integer",
+        "description": "Number of LoRA training steps.",
+        "maximum": 20000,
+        "default": 1000
+      },
+      "batch_size": {
+        "minimum": 1,
+        "type": "integer",
+        "description": "Training batch size. Runs with batch_size > 1 are billed additional units proportional to batch_size x clip duration.",
+        "maximum": 8,
+        "default": 1
+      },
+      "duration": {
+        "anyOf": [
+          {
+            "type": "number",
+            "maximum": 380,
+            "minimum": 1
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "Clip duration in seconds for crop/pad sizing. Leave unset to auto-detect from the dataset (the longest clip). Always capped at the chosen model's native training length."
+      },
+      "exclude": {
+        "anyOf": [
+          {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "Skip modules whose names contain these substrings."
+      }
+    },
+    "type": "object",
+    "required": [
+      "audio_data_url"
+    ]
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "StableAudio3TrainerInput",
+    "StableAudio3TrainerOutput",
+    "File"
+  ]
+}

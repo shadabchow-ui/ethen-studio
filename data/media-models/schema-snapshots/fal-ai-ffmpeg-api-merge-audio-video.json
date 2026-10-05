@@ -1,0 +1,99 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/ffmpeg-api/merge-audio-video",
+  "task": "video-editing",
+  "source_url": "https://fal.ai/models/fal-ai/ffmpeg-api/merge-audio-video",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fffmpeg-api%2Fmerge-audio-video",
+  "retrieved_at": "2026-10-04T19:43:43.129Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "video-to-video",
+  "bytes_sha256": "8696f32eec2bc80cb1320866b0bb5e16c7776eace492687cb7015ffcbbeb4021",
+  "queue_path": "/fal-ai/ffmpeg-api/merge-audio-video",
+  "input_name": "FfmpegApiMergeAudioVideoInput",
+  "input": {
+    "$refName": "FfmpegApiMergeAudioVideoInput",
+    "properties": {
+      "video_url": {
+        "examples": [
+          "https://storage.googleapis.com/falserverless/example_inputs/ffmpeg-video.mp4"
+        ],
+        "type": "string",
+        "description": "URL of the video file to use as the video track"
+      },
+      "audio_url": {
+        "examples": [
+          "https://storage.googleapis.com/falserverless/example_inputs/ffmpeg-audio.wav"
+        ],
+        "type": "string",
+        "description": "URL of the audio file to use as the audio track"
+      },
+      "start_offset": {
+        "default": 0,
+        "minimum": 0,
+        "type": "number",
+        "description": "Offset in seconds for when the audio should start relative to the video"
+      }
+    },
+    "required": [
+      "video_url",
+      "audio_url"
+    ],
+    "type": "object"
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "FfmpegApiMergeAudioVideoInput",
+    "FfmpegApiMergeAudioVideoOutput",
+    "File"
+  ]
+}

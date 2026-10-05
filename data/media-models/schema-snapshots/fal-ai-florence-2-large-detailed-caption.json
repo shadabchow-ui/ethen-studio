@@ -1,0 +1,85 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/florence-2-large/detailed-caption",
+  "task": "unknown",
+  "source_url": "https://fal.ai/models/fal-ai/florence-2-large/detailed-caption",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fflorence-2-large%2Fdetailed-caption",
+  "retrieved_at": "2026-10-04T19:43:52.629Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "vision",
+  "bytes_sha256": "5dbea40bba0f6d20a47d04411a79858f0a4a162a6943a689bc1f3a8b810be90c",
+  "queue_path": "/fal-ai/florence-2-large/detailed-caption",
+  "input_name": "Florence2LargeDetailedCaptionInput",
+  "input": {
+    "$refName": "Florence2LargeDetailedCaptionInput",
+    "properties": {
+      "image_url": {
+        "description": "The URL of the image to be processed.",
+        "type": "string",
+        "examples": [
+          "https://huggingface.co/datasets/huggingface/documentation-images/resolve/main/transformers/tasks/car.jpg",
+          "http://ecx.images-amazon.com/images/I/51UUzBDAMsL.jpg"
+        ]
+      }
+    },
+    "type": "object",
+    "required": [
+      "image_url"
+    ]
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "Florence2LargeDetailedCaptionInput",
+    "Florence2LargeDetailedCaptionOutput"
+  ]
+}

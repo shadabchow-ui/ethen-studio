@@ -1,0 +1,161 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "creatify/boreal",
+  "task": "unknown",
+  "source_url": "https://fal.ai/models/creatify/boreal",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=creatify%2Fboreal",
+  "retrieved_at": "2026-10-04T19:42:22.210Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "text-to-video",
+  "bytes_sha256": "0ff6d33a84684c186447ada644dc546fb92e603addb67d1386ea6f59763e774c",
+  "queue_path": "/creatify/boreal",
+  "input_name": "BorealInput",
+  "input": {
+    "$refName": "BorealInput",
+    "required": [
+      "prompt"
+    ],
+    "properties": {
+      "resolution": {
+        "description": "Delivery tier. `2k` is 2016 px on the long edge for 16:9 and 9:16, and the 1440p row for 1:1, 4:3 and 3:4.",
+        "default": "720p",
+        "enum": [
+          "720p",
+          "1080p",
+          "2k"
+        ],
+        "type": "string"
+      },
+      "duration": {
+        "description": "Length of the generated video in seconds at 24 FPS, rounded by the model to the nearest legal frame count (5 s -> 121 frames, 10 s -> 241, 15 s -> 361). With `audio_url`, the first `duration` seconds of the audio are used; shorter audio is padded with silence.",
+        "maximum": 20,
+        "default": 10,
+        "type": "number",
+        "minimum": 1
+      },
+      "prompt": {
+        "description": "Direction for the visuals, spoken dialogue, sounds, and on-screen text. Structure it with `[VISUAL]`, `[SPEECH]`, `[SOUNDS]`, and `[TEXT]` sections for best results. English is the validated language.",
+        "maxLength": 5000,
+        "minLength": 1,
+        "examples": [
+          "[VISUAL]\nA cinematic product close-up of a sparkling-water can on wet black stone.\nCondensation rolls down the can as the camera makes a slow half-orbit.\n\n[SPEECH]\n\"Clean flavor. Bright finish. Nothing extra.\"\n\n[SOUNDS]\nA crisp can opening, gentle fizz, and restrained electronic music.\n\n[TEXT]\nNone."
+        ],
+        "type": "string"
+      },
+      "image_url": {
+        "description": "Optional reference image to animate. Guides identity, composition, and appearance; the output follows this image's aspect ratio.",
+        "anyOf": [
+          {
+            "ui": {
+              "field": "image"
+            },
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "examples": [
+          "https://storage.googleapis.com/falserverless/example_inputs/creatify/aurora/input_.png"
+        ]
+      },
+      "audio_url": {
+        "description": "Optional driving audio (narration, dialogue, or a soundtrack). When provided it is preserved in the output instead of generated speech.",
+        "anyOf": [
+          {
+            "ui": {
+              "field": "audio"
+            },
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "examples": [
+          "https://storage.googleapis.com/falserverless/example_inputs/creatify/aurora/input.wav"
+        ]
+      },
+      "manifest_disclosure": {
+        "description": "Add a visible `AI-generated` disclosure label to the video. Invisible C2PA metadata and watermarking are always applied.",
+        "default": false,
+        "type": "boolean"
+      },
+      "negative_prompt": {
+        "description": "Content or artifacts to avoid in the generated video.",
+        "default": "",
+        "type": "string"
+      },
+      "aspect_ratio": {
+        "description": "Frame ratio. `auto` follows the reference image's own ratio, and is landscape (16:9) when there is no image. A named ratio renders that ratio; with an image it centre-crops the image to it.",
+        "default": "auto",
+        "enum": [
+          "auto",
+          "16:9",
+          "9:16",
+          "1:1",
+          "4:3",
+          "3:4"
+        ],
+        "type": "string"
+      }
+    },
+    "type": "object"
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "BorealInput",
+    "BorealOutput",
+    "VideoFile"
+  ]
+}

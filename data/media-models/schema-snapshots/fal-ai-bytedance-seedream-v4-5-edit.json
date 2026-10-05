@@ -1,0 +1,184 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/bytedance/seedream/v4.5/edit",
+  "task": "image-editing",
+  "source_url": "https://fal.ai/models/fal-ai/bytedance/seedream/v4.5/edit",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fbytedance%2Fseedream%2Fv4.5%2Fedit",
+  "retrieved_at": "2026-10-04T19:42:58.143Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "image-to-image",
+  "bytes_sha256": "351b7aeda752b0c8f164479447b7792d6ef458d4a0a4ca034be0f1364ee1ac80",
+  "queue_path": "/fal-ai/bytedance/seedream/v4.5/edit",
+  "input_name": "BytedanceSeedreamV45EditInput",
+  "input": {
+    "$refName": "BytedanceSeedreamV45EditInput",
+    "type": "object",
+    "properties": {
+      "seed": {
+        "description": "Random seed to control the stochasticity of image generation.",
+        "anyOf": [
+          {
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "image_urls": {
+        "type": "array",
+        "examples": [
+          [
+            "https://storage.googleapis.com/falserverless/example_inputs/seedreamv45/seedream_v45_edit_input_1.png",
+            "https://storage.googleapis.com/falserverless/example_inputs/seedreamv45/seedream_v45_edit_input_2.png",
+            "https://storage.googleapis.com/falserverless/example_inputs/seedreamv45/seedream_v45_edit_input_3.png"
+          ]
+        ],
+        "items": {
+          "type": "string"
+        },
+        "description": "List of URLs of input images for editing. Presently, up to 10 image inputs are allowed. If over 10 images are sent, only the last 10 will be used."
+      },
+      "enable_safety_checker": {
+        "type": "boolean",
+        "examples": [
+          true
+        ],
+        "description": "If set to true, the safety checker will be enabled. Disabling it requires account authorization; unauthorized requests are always checked.",
+        "default": true
+      },
+      "num_images": {
+        "minimum": 1,
+        "type": "integer",
+        "maximum": 6,
+        "description": "Number of separate model generations to be run with the prompt.",
+        "default": 1
+      },
+      "sync_mode": {
+        "type": "boolean",
+        "description": "If `True`, the media will be returned as a data URI and the output data won't be available in the request history.",
+        "default": false
+      },
+      "image_size": {
+        "default": {
+          "width": 2048,
+          "height": 2048
+        },
+        "examples": [
+          "auto_4K"
+        ],
+        "description": "The size of the generated image. Width and height must be between 1920 and 4096, or total number of pixels must be between 2560*1440 and 4096*4096.",
+        "anyOf": [
+          {
+            "$refName": "ImageSize",
+            "type": "object",
+            "properties": {
+              "width": {
+                "exclusiveMinimum": 0,
+                "type": "integer",
+                "maximum": 14142,
+                "description": "The width of the generated image.",
+                "default": 512
+              },
+              "height": {
+                "exclusiveMinimum": 0,
+                "type": "integer",
+                "maximum": 14142,
+                "description": "The height of the generated image.",
+                "default": 512
+              }
+            }
+          },
+          {
+            "enum": [
+              "square_hd",
+              "square",
+              "portrait_4_3",
+              "portrait_16_9",
+              "landscape_4_3",
+              "landscape_16_9",
+              "auto_2K",
+              "auto_4K"
+            ],
+            "type": "string"
+          }
+        ]
+      },
+      "prompt": {
+        "type": "string",
+        "examples": [
+          "Replace the product in Figure 1 with that in Figure 2. For the title copy the text in Figure 3 to the top of the screen, the title should have a clear contrast with the background but not be overly eye-catching."
+        ],
+        "description": "The text prompt used to edit the image"
+      },
+      "max_images": {
+        "minimum": 1,
+        "type": "integer",
+        "maximum": 6,
+        "description": "If set to a number greater than one, enables multi-image generation. The model will potentially return up to `max_images` images every generation, and in total, `num_images` generations will be carried out. In total, the number of images generated will be between `num_images` and `max_images*num_images`. The total number of images (image inputs + image outputs) must not exceed 15",
+        "default": 1
+      }
+    },
+    "required": [
+      "prompt",
+      "image_urls"
+    ]
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "BytedanceSeedreamV45EditInput",
+    "BytedanceSeedreamV45EditOutput",
+    "ImageSize",
+    "Image"
+  ]
+}

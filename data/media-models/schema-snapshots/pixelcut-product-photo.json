@@ -1,0 +1,466 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "pixelcut/product-photo",
+  "task": "unknown",
+  "source_url": "https://fal.ai/models/pixelcut/product-photo",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=pixelcut%2Fproduct-photo",
+  "retrieved_at": "2026-10-04T19:54:50.082Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "image-to-image",
+  "bytes_sha256": "c8a412789063037574fb4333312adfbd91133789a1c13952d5b58c7b1eaa537f",
+  "queue_path": "/pixelcut/product-photo",
+  "input_name": "ProductPhotoInput",
+  "input": {
+    "$refName": "ProductPhotoInput",
+    "required": [
+      "image_url"
+    ],
+    "type": "object",
+    "properties": {
+      "image_url": {
+        "examples": [
+          "https://cdn3.pixelcut.app/fal/product-photos/input.png"
+        ],
+        "type": "string",
+        "description": "URL of the product image to be processed."
+      },
+      "shadow": {
+        "$refName": "Shadow",
+        "type": "object",
+        "description": "Shadow: choose a type ('Generative'/'Drop'; unset = no shadow) and set its params.",
+        "properties": {
+          "generative": {
+            "$refName": "GenerativeShadow",
+            "type": "object",
+            "description": "Generative AI-shadow params (used when type is 'Generative').",
+            "properties": {
+              "light_source": {
+                "anyOf": [
+                  {
+                    "$refName": "ShadowLightSource",
+                    "unsupported": "depth-exceeded"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "description": "Virtual light used to synthesize the shadow. When omitted, the light direction is estimated from the image."
+              },
+              "opacity": {
+                "maximum": 1,
+                "minimum": 0,
+                "type": "number",
+                "default": 0.2,
+                "description": "Final composited shadow opacity (0–1)."
+              }
+            }
+          },
+          "drop": {
+            "$refName": "DropShadow",
+            "type": "object",
+            "description": "Drop-shadow params (used when type is 'Drop').",
+            "properties": {
+              "horizontal": {
+                "maximum": 100,
+                "minimum": -100,
+                "type": "number",
+                "default": 50,
+                "description": "Horizontal shadow offset strength (-100 to 100). Positive moves the shadow right, negative moves it left. 100 is the maximum offset, 10% of the canvas width."
+              },
+              "opacity": {
+                "maximum": 1,
+                "minimum": 0,
+                "type": "number",
+                "default": 0.25,
+                "description": "Shadow opacity (0–1)."
+              },
+              "blur": {
+                "maximum": 100,
+                "minimum": 0,
+                "type": "number",
+                "default": 24,
+                "description": "Shadow blur strength (0 to 100). 0 is a hard-edged shadow; 100 is the softest, a radius of 5% of the smaller canvas dimension."
+              },
+              "vertical": {
+                "maximum": 100,
+                "minimum": -100,
+                "type": "number",
+                "default": 8,
+                "description": "Vertical shadow offset strength (-100 to 100). Positive moves the shadow down, negative moves it up. 100 is the maximum offset, 10% of the canvas height."
+              },
+              "color": {
+                "$refName": "RGBColor",
+                "unsupported": "depth-exceeded"
+              }
+            }
+          },
+          "type": {
+            "anyOf": [
+              {
+                "type": "string",
+                "enum": [
+                  "Generative",
+                  "Drop"
+                ]
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Shadow style: 'Generative' (generative AI shadow) or 'Drop' (deterministic drop shadow). Leave unset for no shadow."
+          }
+        },
+        "examples": [
+          {
+            "type": "Generative"
+          }
+        ]
+      },
+      "watermark": {
+        "anyOf": [
+          {
+            "$refName": "Watermark",
+            "type": "object",
+            "description": "A logo/watermark image overlaid on top of the output.",
+            "properties": {
+              "position": {
+                "examples": [
+                  "bottom_right"
+                ],
+                "type": "string",
+                "default": "bottom_right",
+                "description": "Where to place the watermark.",
+                "enum": [
+                  "top_left",
+                  "top_right",
+                  "bottom_left",
+                  "bottom_right",
+                  "center"
+                ]
+              },
+              "opacity": {
+                "maximum": 1,
+                "minimum": 0,
+                "type": "number",
+                "default": 1,
+                "description": "Watermark opacity (0–1)."
+              },
+              "image_url": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "description": "Logo/watermark image URL. If empty, no watermark is added."
+              },
+              "scale": {
+                "examples": [
+                  0.1
+                ],
+                "maximum": 1,
+                "minimum": 0.01,
+                "type": "number",
+                "default": 0.1,
+                "description": "Watermark width as a fraction of the canvas width."
+              },
+              "margin": {
+                "examples": [
+                  "3%"
+                ],
+                "type": "string",
+                "default": "3%",
+                "description": "Inset from the edge. '%' (0–49%) of the canvas, or 'px'."
+              },
+              "remove_background": {
+                "type": "boolean",
+                "default": false,
+                "description": "Remove the watermark image's own background (via background removal) before overlaying it."
+              }
+            }
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "Optional logo/watermark image overlaid on top of the output. Off by default; omit for no watermark."
+      },
+      "sync_mode": {
+        "type": "boolean",
+        "default": true,
+        "description": "When true, return the result as a data URL instead of uploading to storage."
+      },
+      "image_size": {
+        "anyOf": [
+          {
+            "$refName": "ImageSize",
+            "type": "object",
+            "properties": {
+              "height": {
+                "exclusiveMinimum": 0,
+                "maximum": 14142,
+                "type": "integer",
+                "default": 512,
+                "description": "The height of the generated image."
+              },
+              "width": {
+                "exclusiveMinimum": 0,
+                "maximum": 14142,
+                "type": "integer",
+                "default": 512,
+                "description": "The width of the generated image."
+              }
+            }
+          },
+          {
+            "type": "string",
+            "enum": [
+              "square_hd",
+              "square",
+              "portrait_4_3",
+              "portrait_16_9",
+              "landscape_4_3",
+              "landscape_16_9"
+            ]
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": "square_hd",
+        "description": "Output canvas size. A preset (square_hd, square, portrait_4_3, portrait_16_9, landscape_4_3, landscape_16_9) or a custom {width, height}. Defaults to square_hd (1024x1024)."
+      },
+      "background": {
+        "$refName": "Background",
+        "type": "object",
+        "description": "Output background: solid color (default white), transparent, or an image.",
+        "properties": {
+          "mode": {
+            "type": "string",
+            "default": "Color",
+            "description": "'Color' fills with `color` (white by default); 'Transparent' leaves it transparent (always PNG); 'Image' composites onto `image_url`.",
+            "enum": [
+              "Transparent",
+              "Color",
+              "Image"
+            ]
+          },
+          "image_fit": {
+            "examples": [
+              "Cover"
+            ],
+            "type": "string",
+            "default": "Cover",
+            "description": "How the background image fills the canvas: 'Cover' fills and crops, 'Contain' fits and letterboxes onto `color`, 'Stretch' distorts to fit.",
+            "enum": [
+              "Cover",
+              "Contain",
+              "Stretch"
+            ]
+          },
+          "image_url": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Background image URL. Required when mode is 'Image'."
+          },
+          "color": {
+            "$refName": "RGBColor",
+            "required": [
+              "r",
+              "g",
+              "b"
+            ],
+            "type": "object",
+            "properties": {
+              "g": {
+                "maximum": 255,
+                "minimum": 0,
+                "type": "integer"
+              },
+              "r": {
+                "maximum": 255,
+                "minimum": 0,
+                "type": "integer"
+              },
+              "b": {
+                "maximum": 255,
+                "minimum": 0,
+                "type": "integer"
+              }
+            },
+            "description": "Solid background color (R/G/B, 0–255). Applies when mode is 'Color'. Defaults to white.",
+            "default": {
+              "g": 255,
+              "r": 255,
+              "b": 255
+            }
+          }
+        },
+        "examples": [
+          {
+            "mode": "Color",
+            "image_fit": "Cover",
+            "color": {
+              "g": 255,
+              "r": 255,
+              "b": 255
+            }
+          }
+        ]
+      },
+      "output_format": {
+        "anyOf": [
+          {
+            "type": "string",
+            "enum": [
+              "png",
+              "jpeg"
+            ]
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "The format of the resultant image (PNG or JPEG). When not set, matches the input format. JPEG cannot be combined with a transparent background."
+      },
+      "margin": {
+        "$refName": "Margin",
+        "type": "object",
+        "description": "Canvas margins around the product: `all` for every side plus optional per-side overrides. Defaults to 20% on all sides.",
+        "properties": {
+          "top": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Top-side override of `all`. '%' (0–49%) or 'px' (>=0px)."
+          },
+          "right": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Right-side override of `all`. '%' (0–49%) or 'px' (>=0px)."
+          },
+          "bottom": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Bottom-side override of `all`. '%' (0–49%) or 'px' (>=0px)."
+          },
+          "all": {
+            "examples": [
+              "20%"
+            ],
+            "type": "string",
+            "default": "20%",
+            "description": "Margin applied to all sides. '%' (0–49%) of the canvas dimension, or 'px' (>=0px)."
+          },
+          "left": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Left-side override of `all`. '%' (0–49%) or 'px' (>=0px)."
+          }
+        },
+        "examples": [
+          {
+            "all": "20%"
+          }
+        ]
+      }
+    }
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "ProductPhotoInput",
+    "ProductPhotoOutput",
+    "Shadow",
+    "Watermark",
+    "ImageSize",
+    "Background",
+    "Margin",
+    "Image",
+    "GenerativeShadow",
+    "DropShadow",
+    "RGBColor",
+    "ShadowLightSource",
+    "ShadowLightSourcePosition"
+  ]
+}

@@ -1,0 +1,143 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "blackforestlabs/flux-3/extend-video/draft",
+  "task": "video-editing",
+  "source_url": "https://fal.ai/models/blackforestlabs/flux-3/extend-video/draft",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=blackforestlabs%2Fflux-3%2Fextend-video%2Fdraft",
+  "retrieved_at": "2026-10-04T19:41:32.126Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "video-to-video",
+  "bytes_sha256": "4f37b15207ff2d1f00045a2a7ed5664c95031bc5eac10b655e8e7f1bdfdbc80e",
+  "queue_path": "/blackforestlabs/flux-3/extend-video/draft",
+  "input_name": "Flux3ExtendVideoDraftInput",
+  "input": {
+    "$refName": "Flux3ExtendVideoDraftInput",
+    "type": "object",
+    "properties": {
+      "duration": {
+        "default": "auto",
+        "description": "Draft duration in whole seconds from 5 through 20, or `auto`.",
+        "enum": [
+          "auto",
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20
+        ]
+      },
+      "prompt": {
+        "examples": [
+          "A red panda walks along a mossy log in a sunlit forest, one continuous unbroken shot."
+        ],
+        "description": "The text prompt describing the draft video.",
+        "type": "string"
+      },
+      "safety_tolerance": {
+        "default": 2,
+        "minimum": 0,
+        "description": "The safety tolerance level for the generated video. 0 is the strictest and 4 is the most permissive.",
+        "maximum": 4,
+        "type": "integer"
+      },
+      "video_url": {
+        "examples": [
+          "https://storage.googleapis.com/falserverless/example_inputs/flux-3-red-panda.mp4"
+        ],
+        "description": "URL or data URI of the source MP4, at most 50 MiB.",
+        "type": "string"
+      },
+      "generate_audio": {
+        "default": true,
+        "description": "Whether to generate audio for the draft video.",
+        "type": "boolean"
+      },
+      "aspect_ratio": {
+        "default": "auto",
+        "description": "Aspect ratio of the generated draft. `auto` lets the model choose.",
+        "type": "string",
+        "enum": [
+          "auto",
+          "21:9",
+          "2:1",
+          "16:9",
+          "4:3",
+          "1:1",
+          "3:4",
+          "9:16"
+        ]
+      }
+    },
+    "required": [
+      "prompt",
+      "video_url"
+    ]
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "Flux3ExtendVideoDraftInput",
+    "Flux3ExtendVideoDraftOutput",
+    "File"
+  ]
+}

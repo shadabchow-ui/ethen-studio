@@ -1,0 +1,110 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "google/gemini-omni-flash/image-to-video",
+  "task": "image-to-video",
+  "source_url": "https://fal.ai/models/google/gemini-omni-flash/image-to-video",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=google%2Fgemini-omni-flash%2Fimage-to-video",
+  "retrieved_at": "2026-10-04T19:53:32.286Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "image-to-video",
+  "bytes_sha256": "e061fe7db07e21be751c225d0260287e4a4fb2ce556dd672ffb090f92888eac7",
+  "queue_path": "/google/gemini-omni-flash/image-to-video",
+  "input_name": "GeminiOmniFlashImageToVideoInput",
+  "input": {
+    "$refName": "GeminiOmniFlashImageToVideoInput",
+    "properties": {
+      "prompt": {
+        "maxLength": 20000,
+        "examples": [
+          "The dog turns its head and wags its tail in warm sunlight."
+        ],
+        "description": "The text prompt describing how the image should be animated.",
+        "type": "string"
+      },
+      "image_url": {
+        "type": "string",
+        "description": "URL of the input image to animate.",
+        "examples": [
+          "https://storage.googleapis.com/falserverless/example_inputs/dog.png"
+        ]
+      },
+      "duration": {
+        "type": "integer",
+        "default": 8,
+        "maximum": 10,
+        "description": "The duration of the generated video, in seconds.",
+        "minimum": 3
+      },
+      "aspect_ratio": {
+        "type": "string",
+        "default": "16:9",
+        "description": "The aspect ratio of the generated video.",
+        "enum": [
+          "16:9",
+          "9:16"
+        ]
+      }
+    },
+    "required": [
+      "prompt",
+      "image_url"
+    ],
+    "type": "object"
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "GeminiOmniFlashImageToVideoInput",
+    "GeminiOmniFlashImageToVideoOutput",
+    "File"
+  ]
+}

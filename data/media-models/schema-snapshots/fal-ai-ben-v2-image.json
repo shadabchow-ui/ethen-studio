@@ -1,0 +1,96 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/ben/v2/image",
+  "task": "image-generation",
+  "source_url": "https://fal.ai/models/fal-ai/ben/v2/image",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fben%2Fv2%2Fimage",
+  "retrieved_at": "2026-10-04T19:42:36.302Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "image-to-image",
+  "bytes_sha256": "764bed857549c61a873b4578c0ec20761bb39d5fba2a33258556ddd4dabcbdd6",
+  "queue_path": "/fal-ai/ben/v2/image",
+  "input_name": "BenV2ImageInput",
+  "input": {
+    "$refName": "BenV2ImageInput",
+    "properties": {
+      "image_url": {
+        "type": "string",
+        "examples": [
+          "https://storage.googleapis.com/falserverless/gallery/Ben2/arduino-uno-board-electronics-hand-600nw-1869855883.webp"
+        ],
+        "description": "URL of image to be used for background removal"
+      },
+      "seed": {
+        "anyOf": [
+          {
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "Random seed for reproducible generation."
+      }
+    },
+    "required": [
+      "image_url"
+    ],
+    "type": "object"
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "BenV2ImageInput",
+    "BenV2ImageOutput",
+    "Image"
+  ]
+}

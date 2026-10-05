@@ -1,0 +1,114 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/post-processing/grain",
+  "task": "unknown",
+  "source_url": "https://fal.ai/models/fal-ai/post-processing/grain",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fpost-processing%2Fgrain",
+  "retrieved_at": "2026-10-04T19:50:32.149Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "image-to-image",
+  "bytes_sha256": "2c76d0d227738b3f6ba0ed1aaaf8e3cbdc1f645f414d4372f54ce88e5d18ebbe",
+  "queue_path": "/fal-ai/post-processing/grain",
+  "input_name": "PostProcessingGrainInput",
+  "input": {
+    "$refName": "PostProcessingGrainInput",
+    "properties": {
+      "grain_intensity": {
+        "description": "Film grain intensity",
+        "minimum": 0,
+        "maximum": 1,
+        "multipleOf": 0.01,
+        "default": 0.4,
+        "type": "number"
+      },
+      "image_url": {
+        "description": "URL of image to process",
+        "_fal_ui_field": "image",
+        "type": "string",
+        "examples": [
+          "https://storage.googleapis.com/falserverless/web-examples/post-process/postpro-input.jpg"
+        ]
+      },
+      "grain_scale": {
+        "description": "Film grain scale",
+        "minimum": 1,
+        "maximum": 100,
+        "default": 10,
+        "type": "number"
+      },
+      "grain_style": {
+        "description": "Style of film grain to apply",
+        "enum": [
+          "modern",
+          "analog",
+          "kodak",
+          "fuji",
+          "cinematic",
+          "newspaper"
+        ],
+        "default": "modern",
+        "type": "string"
+      }
+    },
+    "required": [
+      "image_url"
+    ],
+    "type": "object"
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "PostProcessingGrainInput",
+    "PostProcessingGrainOutput",
+    "Image"
+  ]
+}

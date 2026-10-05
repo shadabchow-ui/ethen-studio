@@ -1,0 +1,128 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/luma-photon/flash/modify",
+  "task": "unknown",
+  "source_url": "https://fal.ai/models/fal-ai/luma-photon/flash/modify",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fluma-photon%2Fflash%2Fmodify",
+  "retrieved_at": "2026-10-04T19:48:59.578Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "image-to-image",
+  "bytes_sha256": "0674f790c96af8d2a19c2f3bea5a6e84ae5149fca01a4fe9afe9b1b65285553e",
+  "queue_path": "/fal-ai/luma-photon/flash/modify",
+  "input_name": "LumaPhotonFlashModifyInput",
+  "input": {
+    "$refName": "LumaPhotonFlashModifyInput",
+    "properties": {
+      "aspect_ratio": {
+        "type": "string",
+        "description": "The aspect ratio of the reframed image",
+        "enum": [
+          "1:1",
+          "16:9",
+          "9:16",
+          "4:3",
+          "3:4",
+          "21:9",
+          "9:21"
+        ],
+        "examples": [
+          "16:9"
+        ]
+      },
+      "prompt": {
+        "anyOf": [
+          {
+            "type": "string",
+            "maxLength": 5000,
+            "minLength": 3
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "Instruction for modifying the image",
+        "examples": [
+          "Make the image look like a painting"
+        ]
+      },
+      "image_url": {
+        "type": "string",
+        "description": "URL of the input image to reframe",
+        "examples": [
+          "https://storage.googleapis.com/falserverless/gallery/example_inputs_liuyifei.png"
+        ]
+      },
+      "strength": {
+        "minimum": 0,
+        "type": "number",
+        "maximum": 1,
+        "description": "The strength of the initial image. Higher strength values are corresponding to more influence of the initial image on the output.",
+        "examples": [
+          0.8
+        ]
+      }
+    },
+    "required": [
+      "image_url",
+      "strength",
+      "aspect_ratio"
+    ],
+    "type": "object"
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "LumaPhotonFlashModifyInput",
+    "LumaPhotonFlashModifyOutput",
+    "File"
+  ]
+}

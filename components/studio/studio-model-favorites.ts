@@ -13,10 +13,18 @@
 
 import { useCallback, useEffect, useSyncExternalStore } from "react";
 import { useStudioIdentity } from "./studio-project-scope";
+import {
+  MAX_MODEL_FAVORITES,
+  MAX_MODEL_RECENTS as SHARED_MAX_RECENTS,
+  pushRecentId as sharedPushRecentId,
+  toggleFavoriteId as sharedToggleFavoriteId,
+} from "./studio-model-lists";
+
+export { pushRecentId, toggleFavoriteId } from "./studio-model-lists";
 
 export const STUDIO_MODEL_FAVORITES_KEY = "ethen.studio.model-favorites.v1";
 export const STUDIO_MODEL_RECENTS_KEY = "ethen.studio.model-recents.v1";
-const MAX_RECENTS = 8;
+const MAX_RECENTS = SHARED_MAX_RECENTS;
 const EMPTY_LIST: readonly string[] = [];
 const LEGACY_KEYS = ["ethen-studio-model-favorites-v1", "ethen-studio-model-recents-v1"];
 
@@ -45,7 +53,7 @@ function readLegacyCache(kind: ListKind): string[] {
     if (!raw) return [];
     const parsed: unknown = JSON.parse(raw);
     if (!Array.isArray(parsed)) return [];
-    return parsed.filter((entry): entry is string => typeof entry === "string" && entry.length > 0).slice(0, 64);
+    return parsed.filter((entry): entry is string => typeof entry === "string" && entry.length > 0).slice(0, MAX_MODEL_FAVORITES);
   } catch {
     return [];
   }
@@ -94,13 +102,7 @@ function emitModelsChanged(): void {
   window.dispatchEvent(new CustomEvent("ethen:studio-models"));
 }
 
-export function toggleFavoriteId(ids: readonly string[], id: string): string[] {
-  return ids.includes(id) ? ids.filter((entry) => entry !== id) : [...ids, id];
-}
 
-export function pushRecentId(ids: readonly string[], id: string): string[] {
-  return [id, ...ids.filter((entry) => entry !== id)].slice(0, MAX_RECENTS);
-}
 
 async function fetchPreferences(projectId: string): Promise<{ favorites: string[]; recents: string[] } | null> {
   try {
@@ -159,7 +161,7 @@ function usePreferenceList(kind: ListKind): {
       for (const id of local) {
         if (!merged.includes(id)) merged.push(id);
       }
-      const capped = kind === "recents" ? merged.slice(0, MAX_RECENTS) : merged.slice(0, 64);
+      const capped = kind === "recents" ? merged.slice(0, MAX_RECENTS) : merged.slice(0, MAX_MODEL_FAVORITES);
       setSnapshot(kind, projectId, capped);
       if (!migrated.has(projectId)) {
         migrated.add(projectId);
@@ -171,9 +173,9 @@ function usePreferenceList(kind: ListKind): {
         for (const id of otherLocal) {
           if (!otherMerged.includes(id)) otherMerged.push(id);
         }
-        setSnapshot(other, projectId, other === "recents" ? otherMerged.slice(0, MAX_RECENTS) : otherMerged.slice(0, 64));
+        setSnapshot(other, projectId, other === "recents" ? otherMerged.slice(0, MAX_RECENTS) : otherMerged.slice(0, MAX_MODEL_FAVORITES));
         await putPreferences(projectId, {
-          favorites: kind === "favorites" ? capped : otherMerged.slice(0, 64),
+          favorites: kind === "favorites" ? capped : otherMerged.slice(0, MAX_MODEL_FAVORITES),
           recents: kind === "recents" ? capped : otherMerged.slice(0, MAX_RECENTS),
         });
         removeLegacyStorage();
@@ -198,7 +200,7 @@ export function useModelFavorites(): { favorites: readonly string[]; toggleFavor
   const { ids, replace, projectId } = usePreferenceList("favorites");
   const toggleFavorite = useCallback(
     (id: string) => {
-      replace(toggleFavoriteId(snapshot("favorites", projectId), id));
+      replace(sharedToggleFavoriteId(snapshot("favorites", projectId), id));
     },
     [replace, projectId],
   );
@@ -209,7 +211,7 @@ export function useModelRecents(): { recents: readonly string[]; pushRecent: (id
   const { ids, replace, projectId } = usePreferenceList("recents");
   const pushRecent = useCallback(
     (id: string) => {
-      replace(pushRecentId(snapshot("recents", projectId), id));
+      replace(sharedPushRecentId(snapshot("recents", projectId), id));
     },
     [replace, projectId],
   );

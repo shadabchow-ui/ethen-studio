@@ -1,0 +1,114 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/kandinsky5/text-to-video/distill",
+  "task": "text-to-video",
+  "source_url": "https://fal.ai/models/fal-ai/kandinsky5/text-to-video/distill",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fkandinsky5%2Ftext-to-video%2Fdistill",
+  "retrieved_at": "2026-10-04T19:46:44.584Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "text-to-video",
+  "bytes_sha256": "dafac453f2a05e230834e99081d203614195fb8569d3e7837a87521e4619aa97",
+  "queue_path": "/fal-ai/kandinsky5/text-to-video/distill",
+  "input_name": "Kandinsky5TextToVideoDistillInput",
+  "input": {
+    "$refName": "Kandinsky5TextToVideoDistillInput",
+    "properties": {
+      "duration": {
+        "enum": [
+          "5s",
+          "10s"
+        ],
+        "description": "The length of the video to generate (5s or 10s)",
+        "default": "5s",
+        "type": "string",
+        "examples": [
+          "5s",
+          "10s"
+        ]
+      },
+      "resolution": {
+        "description": "Resolution of the generated video in W:H format. Will be calculated based on the aspect ratio(768x512, 512x512, 512x768).",
+        "default": "768x512",
+        "const": "768x512",
+        "type": "string"
+      },
+      "prompt": {
+        "description": "The text prompt to guide video generation.",
+        "type": "string",
+        "examples": [
+          "A dog in red hat"
+        ]
+      },
+      "aspect_ratio": {
+        "enum": [
+          "3:2",
+          "1:1",
+          "2:3"
+        ],
+        "description": "Aspect ratio of the generated video. One of (3:2, 1:1, 2:3).",
+        "default": "3:2",
+        "type": "string"
+      }
+    },
+    "required": [
+      "prompt"
+    ],
+    "type": "object"
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "Kandinsky5TextToVideoDistillInput",
+    "Kandinsky5TextToVideoDistillOutput",
+    "File"
+  ]
+}

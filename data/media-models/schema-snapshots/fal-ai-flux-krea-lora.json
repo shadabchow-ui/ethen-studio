@@ -1,0 +1,210 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/flux-krea-lora",
+  "task": "unknown",
+  "source_url": "https://fal.ai/models/fal-ai/flux-krea-lora",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fflux-krea-lora",
+  "retrieved_at": "2026-10-04T19:44:45.543Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "text-to-image",
+  "bytes_sha256": "c6369b5a25eddcbb24b8b6ee258f31c55f35f1431f8d6fbb779497f92d26f3dc",
+  "queue_path": "/fal-ai/flux-krea-lora",
+  "input_name": "FluxKreaLoraInput",
+  "input": {
+    "$refName": "FluxKreaLoraInput",
+    "properties": {
+      "prompt": {
+        "examples": [
+          "Extreme close-up of a single tiger eye, direct frontal view. Detailed iris and pupil. Sharp focus on eye texture and color. Natural lighting to capture authentic eye shine and depth. The word \"FLUX\" is painted over it in big, white brush strokes with visible texture."
+        ],
+        "description": "The prompt to generate an image from.",
+        "type": "string"
+      },
+      "guidance_scale": {
+        "default": 3.5,
+        "minimum": 0,
+        "type": "number",
+        "description": "\n            The CFG (Classifier Free Guidance) scale is a measure of how close you want\n            the model to stick to your prompt when looking for a related image to show you.\n        ",
+        "maximum": 35
+      },
+      "sync_mode": {
+        "default": false,
+        "description": "If `True`, the media will be returned as a data URI and the output data won't be available in the request history.",
+        "type": "boolean"
+      },
+      "loras": {
+        "default": [],
+        "description": "\n            The LoRAs to use for the image generation. You can use any number of LoRAs\n            and they will be merged together to generate the final image.\n        ",
+        "items": {
+          "$refName": "LoraWeight",
+          "properties": {
+            "scale": {
+              "default": 1,
+              "minimum": 0,
+              "type": "number",
+              "description": "\n            The scale of the LoRA weight. This is used to scale the LoRA weight\n            before merging it with the base model.\n        ",
+              "maximum": 4
+            },
+            "path": {
+              "description": "URL or the path to the LoRA weights.",
+              "type": "string"
+            }
+          },
+          "required": [
+            "path"
+          ],
+          "type": "object"
+        },
+        "type": "array",
+        "examples": []
+      },
+      "image_size": {
+        "default": "landscape_4_3",
+        "anyOf": [
+          {
+            "$refName": "ImageSize",
+            "properties": {
+              "width": {
+                "default": 512,
+                "description": "The width of the generated image.",
+                "exclusiveMinimum": 0,
+                "type": "integer",
+                "maximum": 14142
+              },
+              "height": {
+                "default": 512,
+                "description": "The height of the generated image.",
+                "exclusiveMinimum": 0,
+                "type": "integer",
+                "maximum": 14142
+              }
+            },
+            "type": "object"
+          },
+          {
+            "type": "string",
+            "enum": [
+              "square_hd",
+              "square",
+              "portrait_4_3",
+              "portrait_16_9",
+              "landscape_4_3",
+              "landscape_16_9"
+            ]
+          }
+        ],
+        "description": "The size of the generated image."
+      },
+      "output_format": {
+        "default": "jpeg",
+        "description": "The format of the generated image.",
+        "type": "string",
+        "enum": [
+          "jpeg",
+          "png"
+        ]
+      },
+      "num_inference_steps": {
+        "default": 28,
+        "minimum": 1,
+        "type": "integer",
+        "description": "The number of inference steps to perform.",
+        "maximum": 50
+      },
+      "enable_safety_checker": {
+        "default": true,
+        "description": "If set to true, the safety checker will be enabled. Disabling it requires account authorization; unauthorized requests are always checked, and images flagged as unsafe are returned as black images.",
+        "type": "boolean"
+      },
+      "acceleration": {
+        "default": "none",
+        "description": "Acceleration level for image generation. 'regular' balances speed and quality.",
+        "type": "string",
+        "enum": [
+          "none",
+          "regular"
+        ]
+      },
+      "num_images": {
+        "default": 1,
+        "minimum": 1,
+        "type": "integer",
+        "description": "The number of images to generate. This is always set to 1 for streaming output.",
+        "maximum": 4
+      },
+      "seed": {
+        "anyOf": [
+          {
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "\n            The same seed and the same prompt given to the same version of the model\n            will output the same image every time.\n        "
+      }
+    },
+    "required": [
+      "prompt"
+    ],
+    "type": "object"
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "FluxKreaLoraInput",
+    "FluxKreaLoraOutput",
+    "LoraWeight",
+    "ImageSize",
+    "Image"
+  ]
+}

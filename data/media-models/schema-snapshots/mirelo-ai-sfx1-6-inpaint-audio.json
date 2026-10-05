@@ -1,0 +1,158 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "mirelo-ai/sfx1.6/inpaint-audio",
+  "task": "unknown",
+  "source_url": "https://fal.ai/models/mirelo-ai/sfx1.6/inpaint-audio",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=mirelo-ai%2Fsfx1.6%2Finpaint-audio",
+  "retrieved_at": "2026-10-04T19:54:31.481Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "audio-to-audio",
+  "bytes_sha256": "23f3877c80816625982f2e1c14a6134cf95dbb4879d798789da60f7a215c93f9",
+  "queue_path": "/mirelo-ai/sfx1.6/inpaint-audio",
+  "input_name": "Sfx16InpaintAudioInput",
+  "input": {
+    "$refName": "Sfx16InpaintAudioInput",
+    "required": [
+      "audio_url",
+      "segment"
+    ],
+    "properties": {
+      "seed": {
+        "description": "Seed for generation. -1 or None for random.",
+        "anyOf": [
+          {
+            "minimum": -1,
+            "type": "integer",
+            "maximum": 18446744073709552000
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "text_prompt": {
+        "description": "Optional text prompt guiding the regenerated segment.",
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "upload_audio_format": {
+        "description": "Audio format for the returned files.",
+        "type": "string",
+        "default": "wav",
+        "enum": [
+          "wav",
+          "mp3",
+          "aac",
+          "flac"
+        ]
+      },
+      "audio_url": {
+        "examples": [
+          "https://di3otfzjg1gxa.cloudfront.net/forest-ambience-10s.wav"
+        ],
+        "description": "URL of the source audio. Maximum 10 seconds — longer clips are rejected. The model regenerates only the region defined by `segment`; everything outside it is preserved.",
+        "type": "string"
+      },
+      "num_samples": {
+        "minimum": 1,
+        "description": "Number of variations to generate.",
+        "type": "integer",
+        "default": 2,
+        "maximum": 4
+      },
+      "segment": {
+        "$refName": "AudioSegmentSpec",
+        "required": [
+          "start_s",
+          "end_s"
+        ],
+        "properties": {
+          "start_s": {
+            "minimum": 1,
+            "description": "Start of the inpaint region in seconds. Must leave a 1s left gap (>= 1.0).",
+            "type": "number",
+            "maximum": 9
+          },
+          "end_s": {
+            "minimum": 2,
+            "description": "End of the inpaint region in seconds. Must be <= 10.0.",
+            "type": "number",
+            "maximum": 10
+          }
+        },
+        "description": "Region [start_s, end_s] (in seconds, 1s ≤ start < end ≤ 10s, 1–8s span) to regenerate. The audio outside this region is preserved.",
+        "type": "object",
+        "examples": [
+          {
+            "start_s": 2,
+            "end_s": 6
+          }
+        ]
+      }
+    },
+    "type": "object"
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "Sfx16InpaintAudioInput",
+    "Sfx16InpaintAudioOutput",
+    "AudioSegmentSpec",
+    "Audio"
+  ]
+}

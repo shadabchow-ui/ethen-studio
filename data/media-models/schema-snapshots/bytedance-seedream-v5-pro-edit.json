@@ -1,0 +1,184 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "bytedance/seedream/v5/pro/edit",
+  "task": "image-editing",
+  "source_url": "https://fal.ai/models/bytedance/seedream/v5/pro/edit",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=bytedance%2Fseedream%2Fv5%2Fpro%2Fedit",
+  "retrieved_at": "2026-10-04T19:42:16.073Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "image-to-image",
+  "bytes_sha256": "f772adc435c92fbf7b15a86d92536014f3f103e8ea95427945085e5e3801813c",
+  "queue_path": "/bytedance/seedream/v5/pro/edit",
+  "input_name": "SeedreamV5ProEditInput",
+  "input": {
+    "$refName": "SeedreamV5ProEditInput",
+    "properties": {
+      "sync_mode": {
+        "description": "If `True`, the media will be returned as a data URI and the output data won't be available in the request history.",
+        "default": false,
+        "type": "boolean"
+      },
+      "num_images": {
+        "description": "Number of separate model generations to run with the prompt.",
+        "minimum": 1,
+        "default": 1,
+        "maximum": 6,
+        "type": "integer"
+      },
+      "prompt": {
+        "description": "The text prompt used to edit the image.",
+        "type": "string",
+        "examples": [
+          "Replace the product in Figure 1 with that in Figure 2. Seamlessly render the logo in Figure 3 into the product design, in a frosted glass texture."
+        ]
+      },
+      "enhance_prompt_mode": {
+        "description": "Prompt optimization mode. `standard` prioritizes image quality; `fast` reduces generation time.",
+        "enum": [
+          "standard",
+          "fast"
+        ],
+        "default": "standard",
+        "type": "string"
+      },
+      "image_size": {
+        "description": "The size of the generated image. Total pixels must be between 1024x1024 and 2048x2048, with aspect ratio between 1/16 and 16.",
+        "anyOf": [
+          {
+            "$refName": "ImageSize",
+            "properties": {
+              "height": {
+                "description": "The height of the generated image.",
+                "maximum": 14142,
+                "default": 512,
+                "type": "integer",
+                "exclusiveMinimum": 0
+              },
+              "width": {
+                "description": "The width of the generated image.",
+                "maximum": 14142,
+                "default": 512,
+                "type": "integer",
+                "exclusiveMinimum": 0
+              }
+            },
+            "type": "object"
+          },
+          {
+            "enum": [
+              "square_hd",
+              "square",
+              "portrait_4_3",
+              "portrait_16_9",
+              "landscape_4_3",
+              "landscape_16_9",
+              "auto_1K",
+              "auto_2K"
+            ],
+            "type": "string"
+          }
+        ],
+        "default": "auto_2K",
+        "examples": [
+          "auto_2K"
+        ]
+      },
+      "enable_safety_checker": {
+        "description": "If set to true, the safety checker will be enabled. Disabling it requires account authorization; unauthorized requests are always checked.",
+        "default": true,
+        "type": "boolean",
+        "examples": [
+          true
+        ]
+      },
+      "output_format": {
+        "description": "The file format of the generated image.",
+        "enum": [
+          "jpeg",
+          "png"
+        ],
+        "default": "jpeg",
+        "type": "string",
+        "examples": [
+          "jpeg"
+        ]
+      },
+      "image_urls": {
+        "description": "List of URLs of input reference images. Up to 10 images are supported; if more are sent, only the last 10 are used.",
+        "items": {
+          "type": "string"
+        },
+        "type": "array",
+        "examples": [
+          [
+            "https://storage.googleapis.com/falserverless/example_inputs/seedreamv45/seedream_v45_edit_input_1.png",
+            "https://storage.googleapis.com/falserverless/example_inputs/seedreamv45/seedream_v45_edit_input_2.png",
+            "https://storage.googleapis.com/falserverless/example_inputs/seedreamv45/seedream_v45_edit_input_3.png"
+          ]
+        ]
+      }
+    },
+    "required": [
+      "prompt",
+      "image_urls"
+    ],
+    "type": "object"
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "SeedreamV5ProEditInput",
+    "SeedreamV5ProEditOutput",
+    "ImageSize",
+    "Image"
+  ]
+}

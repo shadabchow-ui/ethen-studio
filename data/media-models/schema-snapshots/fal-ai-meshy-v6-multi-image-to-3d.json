@@ -1,0 +1,214 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/meshy/v6/multi-image-to-3d",
+  "task": "image-generation",
+  "source_url": "https://fal.ai/models/fal-ai/meshy/v6/multi-image-to-3d",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fmeshy%2Fv6%2Fmulti-image-to-3d",
+  "retrieved_at": "2026-10-04T19:49:09.821Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "image-to-3d",
+  "bytes_sha256": "5c74aa984384e395c3d7b109fa6e84d61a76cd1cb54e6090b75eb9835002b442",
+  "queue_path": "/fal-ai/meshy/v6/multi-image-to-3d",
+  "input_name": "MeshyV6MultiImageTo3dInput",
+  "input": {
+    "$refName": "MeshyV6MultiImageTo3dInput",
+    "description": "Input for Multi-Image to 3D conversion",
+    "properties": {
+      "target_polycount": {
+        "description": "Target number of polygons in the generated model",
+        "maximum": 300000,
+        "default": 30000,
+        "minimum": 100,
+        "type": "integer"
+      },
+      "should_remesh": {
+        "description": "Whether to enable the remesh phase. When false, returns triangular mesh ignoring topology and target_polycount.",
+        "default": true,
+        "type": "boolean"
+      },
+      "enable_animation": {
+        "description": "Apply an animation preset to the rigged model. Requires enable_rigging to be true.",
+        "default": false,
+        "type": "boolean"
+      },
+      "enable_rigging": {
+        "description": "Automatically rig the generated model as a humanoid character. Includes basic walking and running animations. Best results with humanoid characters that have clearly defined limbs.",
+        "default": false,
+        "type": "boolean"
+      },
+      "is_a_t_pose": {
+        "description": "Deprecated: use pose_mode instead. When true, generates a T-pose model.",
+        "deprecated": true,
+        "default": false,
+        "type": "boolean"
+      },
+      "topology": {
+        "description": "Specify the topology of the generated model. Quad for smooth surfaces, Triangle for detailed geometry.",
+        "enum": [
+          "quad",
+          "triangle"
+        ],
+        "default": "triangle",
+        "type": "string"
+      },
+      "texture_prompt": {
+        "description": "Text prompt to guide the texturing process. Requires should_texture to be true.",
+        "anyOf": [
+          {
+            "maxLength": 600,
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "image_urls": {
+        "description": "1 to 4 images for 3D model creation. All images should depict the same object from different angles. Supports .jpg, .jpeg, .png formats, and AVIF/HEIF which will be automatically converted. If more than 4 images are provided, only the first 4 will be used.",
+        "max_file_size": 20971520,
+        "items": {
+          "_fal_ui_field": "image",
+          "type": "string"
+        },
+        "max_pixels": 178956970,
+        "type": "array",
+        "examples": [
+          [
+            "https://v3b.fal.media/files/b/kangaroo/cPyD3-por0XI7jDa9F9vP_image%20(3).png",
+            "https://v3b.fal.media/files/b/elephant/9sd5JWAOJBcR7G3NMjPVs_image%20(2).png",
+            "https://v3b.fal.media/files/b/tiger/TP4sTzPATX_w1Tn4m6kYM_image%20(1).png"
+          ]
+        ]
+      },
+      "enable_pbr": {
+        "description": "Generate PBR Maps (metallic, roughness, normal) in addition to base color. Requires should_texture to be true.",
+        "default": false,
+        "type": "boolean"
+      },
+      "symmetry_mode": {
+        "description": "Controls symmetry behavior during model generation.",
+        "enum": [
+          "off",
+          "auto",
+          "on"
+        ],
+        "default": "auto",
+        "type": "string"
+      },
+      "animation_action_id": {
+        "description": "Animation preset ID from Meshy's library. Only used when enable_animation is true; in that case it must be in [0, 696] (``0`` is the \"Idle\" preset) and is otherwise rejected with a 422. See https://docs.meshy.ai/en/api/animation-library for available action IDs.",
+        "default": 92,
+        "type": "integer",
+        "examples": [
+          92
+        ]
+      },
+      "should_texture": {
+        "description": "Whether to generate textures.",
+        "default": true,
+        "type": "boolean"
+      },
+      "texture_image_url": {
+        "description": "2D image to guide the texturing process. Requires should_texture to be true.",
+        "max_file_size": 20971520,
+        "max_pixels": 178956970,
+        "anyOf": [
+          {
+            "_fal_ui_field": "image",
+            "ui": {
+              "field": "image"
+            },
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "rigging_height_meters": {
+        "description": "Approximate height of the character in meters. Only used when enable_rigging is true.",
+        "default": 1.7,
+        "type": "number",
+        "exclusiveMinimum": 0
+      },
+      "pose_mode": {
+        "description": "Pose mode for the generated model. 'a-pose' generates an A-pose, 't-pose' generates a T-pose, empty string for no specific pose.",
+        "enum": [
+          "a-pose",
+          "t-pose",
+          ""
+        ],
+        "default": "",
+        "type": "string"
+      },
+      "enable_safety_checker": {
+        "description": "If set to true, input data will be checked for safety before processing.",
+        "default": true,
+        "type": "boolean"
+      }
+    },
+    "required": [
+      "image_urls"
+    ],
+    "type": "object"
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "MeshyV6MultiImageTo3dInput",
+    "MeshyV6MultiImageTo3dOutput",
+    "File",
+    "BasicAnimations",
+    "TextureFiles",
+    "ModelUrls"
+  ]
+}

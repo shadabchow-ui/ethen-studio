@@ -1,0 +1,178 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/hidream-i1-fast",
+  "task": "unknown",
+  "source_url": "https://fal.ai/models/fal-ai/hidream-i1-fast",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fhidream-i1-fast",
+  "retrieved_at": "2026-10-04T19:45:31.391Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "text-to-image",
+  "bytes_sha256": "cfc13db1b94542a086082fb3059efc9c5147c63f141f6a7bc79f3ffbe636e7eb",
+  "queue_path": "/fal-ai/hidream-i1-fast",
+  "input_name": "HidreamI1FastInput",
+  "input": {
+    "$refName": "HidreamI1FastInput",
+    "properties": {
+      "negative_prompt": {
+        "default": "",
+        "type": "string",
+        "description": "\n            The negative prompt to use. Use it to address details that you don't want\n            in the image. This could be colors, objects, scenery and even the small details\n            (e.g. moustache, blurry, low resolution).\n        ",
+        "examples": [
+          ""
+        ]
+      },
+      "prompt": {
+        "type": "string",
+        "description": "The prompt to generate an image from.",
+        "examples": [
+          "a cat holding a skateboard which has 'fal' written on it in red spray paint"
+        ]
+      },
+      "sync_mode": {
+        "default": false,
+        "type": "boolean",
+        "description": "If `True`, the media will be returned as a data URI and the output data won't be available in the request history."
+      },
+      "image_size": {
+        "anyOf": [
+          {
+            "$refName": "ImageSize",
+            "properties": {
+              "width": {
+                "default": 512,
+                "type": "integer",
+                "exclusiveMinimum": 0,
+                "maximum": 14142,
+                "description": "The width of the generated image."
+              },
+              "height": {
+                "default": 512,
+                "type": "integer",
+                "exclusiveMinimum": 0,
+                "maximum": 14142,
+                "description": "The height of the generated image."
+              }
+            },
+            "type": "object"
+          },
+          {
+            "type": "string",
+            "enum": [
+              "square_hd",
+              "square",
+              "portrait_4_3",
+              "portrait_16_9",
+              "landscape_4_3",
+              "landscape_16_9"
+            ]
+          }
+        ],
+        "default": {
+          "width": 1024,
+          "height": 1024
+        },
+        "description": "The size of the generated image."
+      },
+      "output_format": {
+        "default": "jpeg",
+        "type": "string",
+        "description": "The format of the generated image.",
+        "enum": [
+          "jpeg",
+          "png"
+        ]
+      },
+      "num_inference_steps": {
+        "default": 16,
+        "minimum": 1,
+        "maximum": 50,
+        "type": "integer",
+        "description": "The number of inference steps to perform."
+      },
+      "enable_safety_checker": {
+        "default": true,
+        "type": "boolean",
+        "description": "If set to true, the safety checker will be enabled. Disabling it requires account authorization; unauthorized requests are always checked, and images flagged as unsafe are returned as black images."
+      },
+      "num_images": {
+        "default": 1,
+        "minimum": 1,
+        "maximum": 4,
+        "type": "integer",
+        "description": "The number of images to generate."
+      },
+      "seed": {
+        "anyOf": [
+          {
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "\n            The same seed and the same prompt given to the same version of the model\n            will output the same image every time.\n        "
+      }
+    },
+    "required": [
+      "prompt"
+    ],
+    "type": "object"
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "HidreamI1FastInput",
+    "HidreamI1FastOutput",
+    "ImageSize",
+    "Image"
+  ]
+}

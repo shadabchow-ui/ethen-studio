@@ -1,0 +1,91 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/minimax/video-01-director",
+  "task": "video-editing",
+  "source_url": "https://fal.ai/models/fal-ai/minimax/video-01-director",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fminimax%2Fvideo-01-director",
+  "retrieved_at": "2026-10-04T19:49:20.080Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "text-to-video",
+  "bytes_sha256": "a14ea57d35e13f790160520eded3ab58cc1218a6ce88a633d6a8ebafea24cc45",
+  "queue_path": "/fal-ai/minimax/video-01-director",
+  "input_name": "MinimaxVideo01DirectorInput",
+  "input": {
+    "$refName": "MinimaxVideo01DirectorInput",
+    "required": [
+      "prompt"
+    ],
+    "type": "object",
+    "properties": {
+      "prompt_optimizer": {
+        "description": "Whether to use the model's prompt optimizer",
+        "type": "boolean",
+        "default": true
+      },
+      "prompt": {
+        "description": "Text prompt for video generation. Camera movement instructions can be added using square brackets (e.g. [Pan left] or [Zoom in]). You can use up to 3 combined movements per prompt. Supported movements: Truck left/right, Pan left/right, Push in/Pull out, Pedestal up/down, Tilt up/down, Zoom in/out, Shake, Tracking shot, Static shot. For example: [Truck left, Pan right, Zoom in]. For a more detailed guide, refer https://sixth-switch-2ac.notion.site/T2V-01-Director-Model-Tutorial-with-camera-movement-1886c20a98eb80f395b8e05291ad8645",
+        "type": "string",
+        "maxLength": 2000,
+        "examples": [
+          "[Push in]Close up of a tense woman looks to the left, startled by a sound, in a darkened kitchen, Pots and pans hang ominously, the window in the kitchen is open and the wind softly blows the pans and creates an ominous mood. [Shake]the woman's shock turns to fear. Black-and-white film noir shot dimly lit, 1950s-style, with dramatic, high-contrast shadows. The overall atmosphere is reminiscent of Alfred Hitchcock's suspenseful storytelling, evoking a looming sense of dread with stark chiaroscuro lighting and a slight film-grain texture."
+        ]
+      }
+    }
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "MinimaxVideo01DirectorInput",
+    "MinimaxVideo01DirectorOutput",
+    "File"
+  ]
+}

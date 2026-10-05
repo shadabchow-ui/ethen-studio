@@ -1,0 +1,132 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "bria/video/background-removal/realtime",
+  "task": "image-editing",
+  "source_url": "https://fal.ai/models/bria/video/background-removal/realtime",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=bria%2Fvideo%2Fbackground-removal%2Frealtime",
+  "retrieved_at": "2026-10-04T19:41:52.041Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "video-to-video",
+  "bytes_sha256": "a384bed9c36fffac9418e899484e013257167bed24899b115b04c2a590061e0f",
+  "queue_path": "/bria/video/background-removal/realtime",
+  "input_name": "VideoBackgroundRemovalRealtimeInput",
+  "input": {
+    "$refName": "VideoBackgroundRemovalRealtimeInput",
+    "properties": {
+      "blur_strength": {
+        "minimum": 0,
+        "description": "Background blur strength, 0-100 (used when background_type is 'blur').",
+        "type": "integer",
+        "default": 50,
+        "maximum": 100
+      },
+      "background_color": {
+        "enum": [
+          "Black",
+          "White",
+          "Gray",
+          "Red",
+          "Green",
+          "Blue",
+          "Yellow",
+          "Cyan",
+          "Magenta",
+          "Orange"
+        ],
+        "description": "Solid background colour (used when background_type is 'color').",
+        "type": "string",
+        "default": "Black"
+      },
+      "background_type": {
+        "enum": [
+          "color",
+          "image",
+          "blur"
+        ],
+        "description": "How to replace the background: 'color', 'image', or 'blur'.",
+        "type": "string",
+        "default": "color"
+      },
+      "image_url": {
+        "description": "Playground webcam/video source. Media is sent over WebRTC.",
+        "type": "string",
+        "default": ""
+      },
+      "background_image_url": {
+        "description": "Background image URL or data URI (used when background_type is 'image').",
+        "default": null,
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      }
+    },
+    "additionalProperties": true,
+    "description": "Playground input: webcam/video source (inherited ``image_url``) plus the\nbackground to composite the subject onto — a solid colour, a custom image,\nor a blurred copy of the frame.",
+    "type": "object"
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "VideoBackgroundRemovalRealtimeInput",
+    "VideoBackgroundRemovalRealtimeOutput",
+    "IceServersOutput",
+    "AnswerOutput",
+    "IceCandidateOutput",
+    "ErrorOutput",
+    "IceCandidate"
+  ]
+}

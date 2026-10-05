@@ -1,0 +1,169 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "bytedance/seedream/v5/pro/text-to-image",
+  "task": "text-to-image",
+  "source_url": "https://fal.ai/models/bytedance/seedream/v5/pro/text-to-image",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=bytedance%2Fseedream%2Fv5%2Fpro%2Ftext-to-image",
+  "retrieved_at": "2026-10-04T19:42:17.396Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "text-to-image",
+  "bytes_sha256": "8cc41e2c7a28ee2d0ce9ad8e37bb2df19cd444db200ab3e489a77a4444b5e7b6",
+  "queue_path": "/bytedance/seedream/v5/pro/text-to-image",
+  "input_name": "SeedreamV5ProTextToImageInput",
+  "input": {
+    "$refName": "SeedreamV5ProTextToImageInput",
+    "properties": {
+      "output_format": {
+        "description": "The file format of the generated image.",
+        "enum": [
+          "jpeg",
+          "png"
+        ],
+        "default": "jpeg",
+        "type": "string",
+        "examples": [
+          "jpeg"
+        ]
+      },
+      "sync_mode": {
+        "description": "If `True`, the media will be returned as a data URI and the output data won't be available in the request history.",
+        "default": false,
+        "type": "boolean"
+      },
+      "image_size": {
+        "description": "The size of the generated image. Total pixels must be between 1024x1024 and 2048x2048, with aspect ratio between 1/16 and 16.",
+        "anyOf": [
+          {
+            "$refName": "ImageSize",
+            "properties": {
+              "height": {
+                "description": "The height of the generated image.",
+                "maximum": 14142,
+                "default": 512,
+                "type": "integer",
+                "exclusiveMinimum": 0
+              },
+              "width": {
+                "description": "The width of the generated image.",
+                "maximum": 14142,
+                "default": 512,
+                "type": "integer",
+                "exclusiveMinimum": 0
+              }
+            },
+            "type": "object"
+          },
+          {
+            "enum": [
+              "square_hd",
+              "square",
+              "portrait_4_3",
+              "portrait_16_9",
+              "landscape_4_3",
+              "landscape_16_9",
+              "auto_1K",
+              "auto_2K"
+            ],
+            "type": "string"
+          }
+        ],
+        "default": "auto_2K",
+        "examples": [
+          "auto_2K"
+        ]
+      },
+      "enable_safety_checker": {
+        "description": "If set to true, the safety checker will be enabled. Disabling it requires account authorization; unauthorized requests are always checked.",
+        "default": true,
+        "type": "boolean",
+        "examples": [
+          true
+        ]
+      },
+      "enhance_prompt_mode": {
+        "description": "Prompt optimization mode. `standard` prioritizes image quality; `fast` reduces generation time.",
+        "enum": [
+          "standard",
+          "fast"
+        ],
+        "default": "standard",
+        "type": "string"
+      },
+      "prompt": {
+        "description": "The text prompt used to generate the image.",
+        "type": "string",
+        "examples": [
+          "Vibrant editorial of a model in contemporary fashion fused with West African textile patterns and beadwork, Campbell Addy bold aesthetic, saturated palette, dramatic studio lighting, celebratory cultural richness, striking contemporary portraiture"
+        ]
+      },
+      "num_images": {
+        "description": "Number of separate model generations to run with the prompt.",
+        "minimum": 1,
+        "default": 1,
+        "maximum": 6,
+        "type": "integer"
+      }
+    },
+    "required": [
+      "prompt"
+    ],
+    "type": "object"
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "SeedreamV5ProTextToImageInput",
+    "SeedreamV5ProTextToImageOutput",
+    "ImageSize",
+    "Image"
+  ]
+}

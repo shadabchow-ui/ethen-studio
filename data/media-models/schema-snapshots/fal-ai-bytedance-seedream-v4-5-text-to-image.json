@@ -1,0 +1,169 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/bytedance/seedream/v4.5/text-to-image",
+  "task": "text-to-image",
+  "source_url": "https://fal.ai/models/fal-ai/bytedance/seedream/v4.5/text-to-image",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fbytedance%2Fseedream%2Fv4.5%2Ftext-to-image",
+  "retrieved_at": "2026-10-04T19:42:58.664Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "text-to-image",
+  "bytes_sha256": "14e35b03778cb2c9ff9e0de07d57146e88e08ba5eafb98ad9f0a54e62d89e117",
+  "queue_path": "/fal-ai/bytedance/seedream/v4.5/text-to-image",
+  "input_name": "BytedanceSeedreamV45TextToImageInput",
+  "input": {
+    "$refName": "BytedanceSeedreamV45TextToImageInput",
+    "type": "object",
+    "properties": {
+      "enable_safety_checker": {
+        "type": "boolean",
+        "examples": [
+          true
+        ],
+        "description": "If set to true, the safety checker will be enabled. Disabling it requires account authorization; unauthorized requests are always checked.",
+        "default": true
+      },
+      "sync_mode": {
+        "type": "boolean",
+        "description": "If `True`, the media will be returned as a data URI and the output data won't be available in the request history.",
+        "default": false
+      },
+      "seed": {
+        "description": "Random seed to control the stochasticity of image generation.",
+        "anyOf": [
+          {
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "num_images": {
+        "minimum": 1,
+        "type": "integer",
+        "maximum": 6,
+        "description": "Number of separate model generations to be run with the prompt.",
+        "default": 1
+      },
+      "image_size": {
+        "default": {
+          "width": 2048,
+          "height": 2048
+        },
+        "examples": [
+          "auto_2K"
+        ],
+        "description": "The size of the generated image. Width and height must be between 1920 and 4096, or total number of pixels must be between 2560*1440 and 4096*4096.",
+        "anyOf": [
+          {
+            "$refName": "ImageSize",
+            "type": "object",
+            "properties": {
+              "width": {
+                "exclusiveMinimum": 0,
+                "type": "integer",
+                "maximum": 14142,
+                "description": "The width of the generated image.",
+                "default": 512
+              },
+              "height": {
+                "exclusiveMinimum": 0,
+                "type": "integer",
+                "maximum": 14142,
+                "description": "The height of the generated image.",
+                "default": 512
+              }
+            }
+          },
+          {
+            "enum": [
+              "square_hd",
+              "square",
+              "portrait_4_3",
+              "portrait_16_9",
+              "landscape_4_3",
+              "landscape_16_9",
+              "auto_2K",
+              "auto_4K"
+            ],
+            "type": "string"
+          }
+        ]
+      },
+      "prompt": {
+        "type": "string",
+        "examples": [
+          "A selfie of a cat, with the cat as the protagonist. The setting is twilight at the Eiffel Tower. The cat is happy, holding a piece of baklava in its paw. The photo has a slight motion blur and is slightly overexposed. From a selfie angle, with a bit of motion blur, the overall image presents a sense of calm madness. The text \"Seedream 4.5 is on fal\" should be written on the picture at the top in clearly visible font and crisp lettering. The image has a 4:3 aspect ratio"
+        ],
+        "description": "The text prompt used to generate the image"
+      },
+      "max_images": {
+        "minimum": 1,
+        "type": "integer",
+        "maximum": 6,
+        "description": "If set to a number greater than one, enables multi-image generation. The model will potentially return up to `max_images` images every generation, and in total, `num_images` generations will be carried out. In total, the number of images generated will be between `num_images` and `max_images*num_images`.",
+        "default": 1
+      }
+    },
+    "required": [
+      "prompt"
+    ]
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "BytedanceSeedreamV45TextToImageInput",
+    "BytedanceSeedreamV45TextToImageOutput",
+    "ImageSize",
+    "Image"
+  ]
+}

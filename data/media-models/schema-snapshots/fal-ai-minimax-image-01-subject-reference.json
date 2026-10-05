@@ -1,0 +1,122 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/minimax/image-01/subject-reference",
+  "task": "image-generation",
+  "source_url": "https://fal.ai/models/fal-ai/minimax/image-01/subject-reference",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fminimax%2Fimage-01%2Fsubject-reference",
+  "retrieved_at": "2026-10-04T19:49:18.854Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "image-to-image",
+  "bytes_sha256": "14c6bffd8873a0310b444281ec5b06e10da3a5f7397b94eb1e1b981607fb77c2",
+  "queue_path": "/fal-ai/minimax/image-01/subject-reference",
+  "input_name": "MinimaxImage01SubjectReferenceInput",
+  "input": {
+    "$refName": "MinimaxImage01SubjectReferenceInput",
+    "required": [
+      "prompt",
+      "image_url"
+    ],
+    "type": "object",
+    "properties": {
+      "num_images": {
+        "maximum": 9,
+        "description": "Number of images to generate (1-9)",
+        "type": "integer",
+        "minimum": 1,
+        "default": 1
+      },
+      "prompt_optimizer": {
+        "description": "Whether to enable automatic prompt optimization",
+        "type": "boolean",
+        "default": false
+      },
+      "aspect_ratio": {
+        "description": "Aspect ratio of the generated image",
+        "enum": [
+          "1:1",
+          "16:9",
+          "4:3",
+          "3:2",
+          "2:3",
+          "3:4",
+          "9:16",
+          "21:9"
+        ],
+        "type": "string",
+        "default": "1:1"
+      },
+      "image_url": {
+        "description": "URL of the subject reference image to use for consistent character appearance",
+        "type": "string",
+        "examples": [
+          "https://v3.fal.media/files/koala/hQwSnkWm8FDjou5SwLNuX_c223cf93-0036-4b18-bbea-bf6d0da7f210.png"
+        ]
+      },
+      "prompt": {
+        "description": "Text prompt for image generation (max 1500 characters)",
+        "type": "string",
+        "maxLength": 1500,
+        "examples": [
+          "A beautiful woman with a crown on her head."
+        ],
+        "minLength": 1
+      }
+    }
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "MinimaxImage01SubjectReferenceInput",
+    "MinimaxImage01SubjectReferenceOutput",
+    "File"
+  ]
+}

@@ -32,6 +32,12 @@ jobs:
       - name: Install
         run: pnpm install --frozen-lockfile
 
+      - name: Shared-drift gate (MUSE-026)
+        run: pnpm check:shared-drift
+
+      - name: Portfolio pin check (MUSE-026)
+        run: pnpm check:portfolio-pin
+
       - name: Independence smoke (no outside-repo references)
         run: |
           set -euo pipefail

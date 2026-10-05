@@ -1,0 +1,233 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "minimax/h3/ref2va/trainer",
+  "task": "unknown",
+  "source_url": "https://fal.ai/models/minimax/h3/ref2va/trainer",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=minimax%2Fh3%2Fref2va%2Ftrainer",
+  "retrieved_at": "2026-10-04T19:54:23.537Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "training",
+  "bytes_sha256": "46cecad1f8c92420ea69b7749f2ac020e30c4eecb4eef4c960a654f4c34cbe9d",
+  "queue_path": "/minimax/h3/ref2va/trainer",
+  "input_name": "H3Ref2vaTrainerInput",
+  "input": {
+    "$refName": "H3Ref2vaTrainerInput",
+    "description": "Input for the ``minimax-h3-ref2va-trainer``\n``/reference-to-video-audio`` endpoint.",
+    "required": [
+      "training_data_url"
+    ],
+    "type": "object",
+    "properties": {
+      "number_of_frames": {
+        "description": "Number of frames per training sample. Must satisfy frames % 17 == 5 (e.g., 22, 39, 56, 73, 90, 107, 124).",
+        "type": "integer",
+        "examples": [
+          73
+        ],
+        "minimum": 22,
+        "default": 73,
+        "maximum": 124
+      },
+      "training_data_url": {
+        "description": "URL to zip archive with video clips of your subject. Try to use at least 10 clips, although more is better.\n\n        **Supported video formats:** .mp4, .mov, .avi, .mkv\n\n        Note: The dataset must contain ONLY videos. Image datasets are not supported - images cannot serve as training media (provide them as reference sidecars instead, see below). Mixed image/video archives are also rejected.\n\n        Optional per-clip extras, matched by base name: a caption text file (`clip01.txt`), and ORDERED reference sidecars `clip01.ref_1.<ext>` .. `clip01.ref_4.<ext>` where the extension picks the modality — images (.png/.jpg/.jpeg), videos (.mp4/.mov/.avi/.mkv/.webm; their soundtrack becomes an audio reference too), or audio (.wav/.mp3/.flac/.m4a/.ogg/.aac). Clips without reference sidecars train against a frame of the clip itself as the reference.",
+        "type": "string"
+      },
+      "split_input_into_scenes": {
+        "description": "If true, videos above a certain duration threshold will be split into scenes. Note: reference sidecars are dropped for clips that get split.",
+        "type": "boolean",
+        "examples": [
+          true
+        ],
+        "default": true
+      },
+      "trigger_phrase": {
+        "description": "A phrase that will trigger the LoRA style. Will be prepended to captions during training.",
+        "type": "string",
+        "examples": [
+          ""
+        ],
+        "default": ""
+      },
+      "resume_from_lora_url": {
+        "description": "URL of a previously trained LoRA (.safetensors) from this trainer to WARM-START from: its weights initialize the adapter and training continues for number_of_steps more steps. Weights only — the optimizer and learning-rate schedule start fresh.",
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "learning_rate": {
+        "examples": [
+          0.0002
+        ],
+        "default": 0.0002,
+        "step": 0.0001,
+        "maximum": 1,
+        "type": "number",
+        "minimum": 0.000001,
+        "description": "Learning rate for optimization. Higher values can lead to faster training but may cause overfitting."
+      },
+      "frame_rate": {
+        "description": "Target frames per second for the video.",
+        "type": "integer",
+        "examples": [
+          24
+        ],
+        "minimum": 8,
+        "default": 24,
+        "maximum": 60
+      },
+      "aspect_ratio": {
+        "description": "Aspect ratio to use for training. Matches the aspect ratios supported by the MiniMax H3 API.",
+        "type": "string",
+        "examples": [
+          "16:9"
+        ],
+        "default": "16:9",
+        "enum": [
+          "21:9",
+          "16:9",
+          "4:3",
+          "1:1",
+          "3:4",
+          "9:16"
+        ]
+      },
+      "rank": {
+        "description": "The rank of the LoRA adaptation. Higher values increase capacity but use more memory.",
+        "type": "integer",
+        "examples": [
+          32
+        ],
+        "default": 32,
+        "enum": [
+          8,
+          16,
+          32,
+          64,
+          128
+        ]
+      },
+      "auto_scale_input": {
+        "description": "If true, videos will be automatically scaled to the target frame count and fps.",
+        "type": "boolean",
+        "examples": [
+          false
+        ],
+        "default": false
+      },
+      "reference_conditioning_p": {
+        "description": "Probability of conditioning on the reference images during training. The remaining probability mass trains unconditioned text-to-video-audio, which keeps prompt-only generation stable.",
+        "type": "number",
+        "minimum": 0,
+        "default": 0.9,
+        "maximum": 1
+      },
+      "strict_dataset": {
+        "description": "Reject dataset-quality fallbacks during preprocessing, including captions that would use a blank prompt, missing reference sidecars, and videos without a readable audio track. By default these cases are reported in logs and use the documented fallback.",
+        "type": "boolean",
+        "examples": [
+          false
+        ],
+        "default": false
+      },
+      "split_input_duration_threshold": {
+        "description": "The duration threshold in seconds. If a video is longer than this, it will be split into scenes.",
+        "type": "number",
+        "examples": [
+          30
+        ],
+        "minimum": 1,
+        "default": 30,
+        "maximum": 60
+      },
+      "number_of_steps": {
+        "description": "The number of training steps.",
+        "type": "integer",
+        "examples": [
+          2000
+        ],
+        "minimum": 1,
+        "default": 2000,
+        "maximum": 15000
+      },
+      "debug_dataset": {
+        "description": "When enabled, the trainer returns a downloadable archive of your preprocessed training data for manual inspection. Use this to verify that your videos, images, captions and reference images were processed correctly before committing to a full training run.",
+        "type": "boolean",
+        "default": false
+      },
+      "resolution": {
+        "description": "Resolution to use for training. Higher resolutions require more memory.",
+        "type": "string",
+        "examples": [
+          "medium"
+        ],
+        "default": "medium",
+        "enum": [
+          "low",
+          "medium",
+          "high"
+        ]
+      }
+    }
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "H3Ref2vaTrainerInput",
+    "H3Ref2vaTrainerOutput",
+    "File"
+  ]
+}

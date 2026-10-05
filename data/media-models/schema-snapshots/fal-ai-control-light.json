@@ -1,0 +1,142 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/control-light",
+  "task": "unknown",
+  "source_url": "https://fal.ai/models/fal-ai/control-light",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fcontrol-light",
+  "retrieved_at": "2026-10-04T19:43:07.331Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "image-to-image",
+  "bytes_sha256": "b186a1e84176ad836e309942fdd9598a022de698906b3b5b508ddeec1218f1f6",
+  "queue_path": "/fal-ai/control-light",
+  "input_name": "ControlLightInput",
+  "input": {
+    "$refName": "ControlLightInput",
+    "type": "object",
+    "properties": {
+      "seed": {
+        "description": "Random seed for reproducible generation. If not set, a random seed is used.",
+        "anyOf": [
+          {
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "image_url": {
+        "type": "string",
+        "examples": [
+          "https://v3b.fal.media/files/b/0a9be5e2/6SUJmL4nvMUZi4M4UyK1s_f0cb8034-3c86-4c16-8eb5-eee7503c16af.png"
+        ],
+        "description": "URL of the image to enhance."
+      },
+      "num_inference_steps": {
+        "minimum": 4,
+        "type": "integer",
+        "description": "Number of denoising steps.",
+        "maximum": 8,
+        "default": 4
+      },
+      "guidance_scale": {
+        "minimum": 0,
+        "type": "number",
+        "description": "Classifier-free guidance scale.",
+        "maximum": 20,
+        "default": 1
+      },
+      "enable_safety_checker": {
+        "type": "boolean",
+        "description": "Enable the safety checker for the output image.",
+        "default": true
+      },
+      "sync_mode": {
+        "type": "boolean",
+        "description": "If True, return images as data URIs instead of CDN URLs.",
+        "default": false
+      },
+      "lighting_level": {
+        "minimum": 0,
+        "type": "number",
+        "description": "Strength of the lighting enhancement (LoRA adapter scale). 0.0 leaves the image essentially untouched; 1.0 applies the strongest exposure lift the LoRA was trained for.",
+        "maximum": 1,
+        "default": 0.75
+      },
+      "output_format": {
+        "enum": [
+          "jpeg",
+          "png",
+          "webp"
+        ],
+        "type": "string",
+        "description": "Output image format.",
+        "default": "png"
+      },
+      "prompt": {
+        "type": "string",
+        "description": "Restoration prompt fed to FLUX.2 [klein].",
+        "default": "Enhance this low-light image by lifting exposure and recovering visible details while preserving identity, geometry, atmosphere, natural colors, and avoiding halos, noise, over-sharpening, or overexposure."
+      }
+    },
+    "required": [
+      "image_url"
+    ]
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "ControlLightInput",
+    "ControlLightOutput",
+    "ImageFile"
+  ]
+}

@@ -1,0 +1,225 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/pixal3d",
+  "task": "unknown",
+  "source_url": "https://fal.ai/models/fal-ai/pixal3d",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fpixal3d",
+  "retrieved_at": "2026-10-04T19:49:57.846Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "image-to-3d",
+  "bytes_sha256": "8a9f9d83f01c34d37ed527f3828101ef9b28cac9b7a39f641b06a574ec415440",
+  "queue_path": "/fal-ai/pixal3d",
+  "input_name": "Pixal3dInput",
+  "input": {
+    "$refName": "Pixal3dInput",
+    "properties": {
+      "mesh_scale": {
+        "description": "Scale factor applied to the inferred mesh. Affects the camera distance estimation used by the model.",
+        "maximum": 4,
+        "default": 1,
+        "type": "number",
+        "minimum": 0.1
+      },
+      "ss_guidance_rescale": {
+        "description": "Dampens artifacts from high guidance in stage 1. Lower values allow stronger guidance effects, higher values stabilize the output.",
+        "maximum": 1,
+        "default": 0.7,
+        "type": "number",
+        "minimum": 0
+      },
+      "remesh": {
+        "default": true,
+        "type": "boolean",
+        "description": "Rebuild the mesh topology for cleaner triangles. Slower but usually produces better results for downstream use."
+      },
+      "tex_slat_guidance_strength": {
+        "description": "How closely the texture follows the input image colors. Higher values produce more vivid but potentially oversaturated textures.",
+        "maximum": 10,
+        "default": 1,
+        "type": "number",
+        "minimum": 0
+      },
+      "shape_slat_guidance_rescale": {
+        "description": "Dampens artifacts from high guidance in the shape stage. Increase if you see noisy geometry.",
+        "maximum": 1,
+        "default": 0.5,
+        "type": "number",
+        "minimum": 0
+      },
+      "seed": {
+        "description": "Random seed for reproducibility",
+        "anyOf": [
+          {
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "decimation_target": {
+        "description": "Target number of vertices in the final mesh. Lower values produce smaller files but less detail.",
+        "maximum": 1586021,
+        "default": 200000,
+        "type": "integer",
+        "minimum": 5000
+      },
+      "tex_slat_guidance_rescale": {
+        "description": "Dampens artifacts from high guidance in the texture stage. Increase if textures look noisy or have color banding.",
+        "maximum": 1,
+        "default": 0,
+        "type": "number",
+        "minimum": 0
+      },
+      "tex_slat_rescale_t": {
+        "description": "Controls noise schedule sharpness for texture generation. Higher values produce sharper texture details.",
+        "maximum": 6,
+        "default": 3,
+        "type": "number",
+        "minimum": 1
+      },
+      "ss_rescale_t": {
+        "description": "Controls noise schedule sharpness for structure generation. Higher values produce sharper transitions.",
+        "maximum": 6,
+        "default": 5,
+        "type": "number",
+        "minimum": 1
+      },
+      "shape_slat_guidance_strength": {
+        "description": "How closely the detailed geometry follows the input image. Higher values add more detail but may introduce noise.",
+        "maximum": 10,
+        "default": 7.5,
+        "type": "number",
+        "minimum": 0
+      },
+      "shape_slat_sampling_steps": {
+        "description": "Number of denoising steps for shape refinement. More steps = slower but potentially smoother geometry.",
+        "maximum": 50,
+        "default": 12,
+        "type": "integer",
+        "minimum": 1
+      },
+      "ss_guidance_strength": {
+        "description": "How closely the initial 3D structure follows the input image. Higher values produce more faithful but potentially noisier results.",
+        "maximum": 10,
+        "default": 7.5,
+        "type": "number",
+        "minimum": 0
+      },
+      "shape_slat_rescale_t": {
+        "description": "Controls noise schedule sharpness for shape refinement. Higher values produce sharper geometric details.",
+        "maximum": 6,
+        "default": 3,
+        "type": "number",
+        "minimum": 1
+      },
+      "ss_sampling_steps": {
+        "description": "Number of denoising steps for the initial structure. More steps = slower but potentially higher quality.",
+        "maximum": 50,
+        "default": 12,
+        "type": "integer",
+        "minimum": 1
+      },
+      "tex_slat_sampling_steps": {
+        "description": "Number of denoising steps for texture generation. More steps = slower but potentially cleaner textures.",
+        "maximum": 50,
+        "default": 12,
+        "type": "integer",
+        "minimum": 1
+      },
+      "max_num_tokens": {
+        "description": "Maximum number of HR tokens used by the cascaded shape sampler. Higher values allow finer geometry; lower values reduce memory and time.",
+        "maximum": 131072,
+        "default": 49152,
+        "type": "integer",
+        "minimum": 4096
+      },
+      "image_url": {
+        "examples": [
+          "https://storage.googleapis.com/falserverless/example_inputs/dog.png"
+        ],
+        "type": "string",
+        "description": "URL of the input image to convert to 3D"
+      },
+      "resolution": {
+        "enum": [
+          1024,
+          1536
+        ],
+        "default": 1024,
+        "type": "integer",
+        "description": "Output resolution; higher is slower but more detailed"
+      },
+      "texture_size": {
+        "enum": [
+          1024,
+          2048,
+          4096
+        ],
+        "default": 2048,
+        "type": "integer",
+        "description": "Resolution of the texture image baked onto the mesh. Higher values capture finer surface details but produce larger files."
+      }
+    },
+    "required": [
+      "image_url"
+    ],
+    "type": "object"
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "Pixal3dInput",
+    "Pixal3dOutput",
+    "File"
+  ]
+}

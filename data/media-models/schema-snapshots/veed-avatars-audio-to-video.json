@@ -1,0 +1,122 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "veed/avatars/audio-to-video",
+  "task": "video-editing",
+  "source_url": "https://fal.ai/models/veed/avatars/audio-to-video",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=veed%2Favatars%2Faudio-to-video",
+  "retrieved_at": "2026-10-04T19:55:28.805Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "audio-to-video",
+  "bytes_sha256": "32750d0efef25095da9bd0802fc0aa43d2c64f33520530296bd28922457ad2af",
+  "queue_path": "/veed/avatars/audio-to-video",
+  "input_name": "AvatarsAudioToVideoInput",
+  "input": {
+    "$refName": "AvatarsAudioToVideoInput",
+    "type": "object",
+    "properties": {
+      "audio_url": {
+        "examples": [
+          "https://v3.fal.media/files/lion/OXiM5_Cve4kQ0ZcXmVzq4_product_presentation.mp3"
+        ],
+        "maxLength": 2083,
+        "type": "string",
+        "minLength": 1,
+        "format": "uri"
+      },
+      "avatar_id": {
+        "enum": [
+          "emily_vertical_primary",
+          "emily_vertical_secondary",
+          "marcus_vertical_primary",
+          "marcus_vertical_secondary",
+          "mira_vertical_primary",
+          "mira_vertical_secondary",
+          "jasmine_vertical_primary",
+          "jasmine_vertical_secondary",
+          "jasmine_vertical_walking",
+          "aisha_vertical_walking",
+          "elena_vertical_primary",
+          "elena_vertical_secondary",
+          "any_male_vertical_primary",
+          "any_female_vertical_primary",
+          "any_male_vertical_secondary",
+          "any_female_vertical_secondary",
+          "any_female_vertical_walking",
+          "emily_primary",
+          "emily_side",
+          "marcus_primary",
+          "marcus_side",
+          "aisha_walking",
+          "elena_primary",
+          "elena_side",
+          "any_male_primary",
+          "any_female_primary",
+          "any_male_side",
+          "any_female_side"
+        ],
+        "description": "The avatar to use for the video",
+        "type": "string"
+      }
+    },
+    "required": [
+      "avatar_id",
+      "audio_url"
+    ]
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "AvatarsAudioToVideoInput",
+    "AvatarsAudioToVideoOutput",
+    "File"
+  ]
+}

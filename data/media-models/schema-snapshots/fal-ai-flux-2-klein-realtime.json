@@ -1,0 +1,136 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/flux-2/klein/realtime",
+  "task": "unknown",
+  "source_url": "https://fal.ai/models/fal-ai/flux-2/klein/realtime",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fflux-2%2Fklein%2Frealtime",
+  "retrieved_at": "2026-10-04T19:44:34.495Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "image-to-image",
+  "bytes_sha256": "00399e06ba0370d3c9c6cda8259c32fcd662082e1522be8151b8ed93a1e8c953",
+  "queue_path": "/fal-ai/flux-2/klein/realtime",
+  "input_name": "Flux2KleinRealtimeInput",
+  "input": {
+    "$refName": "Flux2KleinRealtimeInput",
+    "type": "object",
+    "properties": {
+      "schedule_mu": {
+        "minimum": 0.3,
+        "type": "number",
+        "maximum": 2.5,
+        "description": "Schedule mu for time shift. 2.3=default, lower=more even denoising, 0.3=nearly linear.",
+        "default": 2.3
+      },
+      "seed": {
+        "anyOf": [
+          {
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "Random seed for reproducibility.",
+        "default": 35
+      },
+      "image_url": {
+        "type": "string",
+        "description": "Base64-encoded image data URI for editing. CDN URLs are not supported for realtime. For optimal performance, use 704x704 JPEG images with 50% quality. Other sizes will be resized automatically."
+      },
+      "num_inference_steps": {
+        "minimum": 1,
+        "type": "integer",
+        "maximum": 8,
+        "default": 3
+      },
+      "enable_interpolation": {
+        "type": "boolean",
+        "description": "Enable RIFE frame interpolation between consecutive frames (doubles output frames).",
+        "default": false
+      },
+      "output_feedback_strength": {
+        "minimum": 0,
+        "type": "number",
+        "maximum": 1,
+        "description": "Output feedback loop. 1.0 = pure noise (no feedback), 0.9 = 90% noise + 10% previous output latent.",
+        "default": 1
+      },
+      "image_size": {
+        "enum": [
+          "square",
+          "square_hd"
+        ],
+        "type": "string",
+        "description": "The size of the generated image. square=768x768, square_hd=1024x1024.",
+        "default": "square"
+      },
+      "prompt": {
+        "type": "string",
+        "examples": [
+          "Turn this into a watercolor painting"
+        ],
+        "description": "The prompt to guide image editing.",
+        "default": "Turn this into \"Living oil painting, melting gold and sapphire\""
+      }
+    },
+    "required": [
+      "image_url"
+    ]
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "Flux2KleinRealtimeInput",
+    "Flux2KleinRealtimeOutput",
+    "RawImage"
+  ]
+}

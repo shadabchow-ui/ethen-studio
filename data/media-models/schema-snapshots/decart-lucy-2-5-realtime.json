@@ -1,0 +1,119 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "decart/lucy-2-5/realtime",
+  "task": "unknown",
+  "source_url": "https://fal.ai/models/decart/lucy-2-5/realtime",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=decart%2Flucy-2-5%2Frealtime",
+  "retrieved_at": "2026-10-04T19:42:22.668Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "video-to-video",
+  "bytes_sha256": "66726ff0b6f7ad8e9ebf8cd744a482f888d488896cb9553fb2509b47f57042bd",
+  "queue_path": "/decart/lucy-2-5/realtime",
+  "input_name": "Lucy25RealtimeInput",
+  "input": {
+    "$refName": "Lucy25RealtimeInput",
+    "type": "object",
+    "properties": {
+      "enable_prompt_expansion": {
+        "default": true,
+        "description": "Whether Decart should expand/enhance the prompt before applying it.",
+        "type": "boolean"
+      },
+      "image_url": {
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "description": "Live camera frame source (enables the webcam widget; unused in WebRTC mode)."
+      },
+      "prompt": {
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "examples": [
+          "Change the background to a sunlit tropical beach."
+        ],
+        "description": "Edit instruction. Drives every capability: add / replace / remove / background swap / style / VFX / change-attribute (prompt only), and character-swap / virtual-try-on (together with a reference image).",
+        "default": null
+      },
+      "reference_image_url": {
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "description": "Reference image (data URI, JPEG/PNG/WebP, min 512x512) for character swap or virtual try-on. Optional for other capabilities."
+      }
+    },
+    "additionalProperties": true
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "Lucy25RealtimeInput",
+    "Lucy25RealtimeOutput"
+  ]
+}

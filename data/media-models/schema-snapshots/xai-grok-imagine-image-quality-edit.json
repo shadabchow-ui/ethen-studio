@@ -1,0 +1,150 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "xai/grok-imagine-image/quality/edit",
+  "task": "image-editing",
+  "source_url": "https://fal.ai/models/xai/grok-imagine-image/quality/edit",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=xai%2Fgrok-imagine-image%2Fquality%2Fedit",
+  "retrieved_at": "2026-10-04T19:55:40.071Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "image-to-image",
+  "bytes_sha256": "d49c52666edce2682d8e6ea0f74d15429efada36a256cb33d877648a5290f0f6",
+  "queue_path": "/xai/grok-imagine-image/quality/edit",
+  "input_name": "GrokImagineImageQualityEditInput",
+  "input": {
+    "$refName": "GrokImagineImageQualityEditInput",
+    "properties": {
+      "output_format": {
+        "description": "The format of the generated image.",
+        "enum": [
+          "jpeg",
+          "png",
+          "webp"
+        ],
+        "default": "jpeg",
+        "type": "string"
+      },
+      "num_images": {
+        "minimum": 1,
+        "description": "Number of images to generate.",
+        "default": 1,
+        "maximum": 4,
+        "type": "integer"
+      },
+      "sync_mode": {
+        "description": "If `True`, the media will be returned as a data URI and the output data won't be available in the request history.",
+        "default": false,
+        "type": "boolean"
+      },
+      "resolution": {
+        "enum": [
+          "1k",
+          "2k"
+        ],
+        "description": "Resolution of the generated image. `1k` for standard resolution, `2k` for high resolution.",
+        "default": "1k",
+        "type": "string"
+      },
+      "aspect_ratio": {
+        "description": "Aspect ratio of the edited image. When set to `auto` (the default), the output preserves the aspect ratio of the first input image.",
+        "enum": [
+          "auto",
+          "2:1",
+          "20:9",
+          "19.5:9",
+          "16:9",
+          "4:3",
+          "3:2",
+          "1:1",
+          "2:3",
+          "3:4",
+          "9:16",
+          "9:19.5",
+          "9:20",
+          "1:2"
+        ],
+        "default": "auto",
+        "type": "string"
+      },
+      "prompt": {
+        "maxLength": 8000,
+        "description": "Text description of the desired image.",
+        "type": "string",
+        "examples": [
+          "Make this scene more realistic but still keep the game vibes"
+        ]
+      },
+      "image_urls": {
+        "description": "List of URLs of the images to edit. A maximum of 3 images are supported.",
+        "items": {
+          "type": "string"
+        },
+        "type": "array",
+        "examples": [
+          [
+            "https://v3b.fal.media/files/b/0a8b911d/Abk8vStrvmSPlzUqI_NN3_image_043.png"
+          ]
+        ]
+      }
+    },
+    "required": [
+      "prompt"
+    ],
+    "type": "object"
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "GrokImagineImageQualityEditInput",
+    "GrokImagineImageQualityEditOutput",
+    "ImageFile"
+  ]
+}

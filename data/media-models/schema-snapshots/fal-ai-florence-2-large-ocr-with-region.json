@@ -1,0 +1,88 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/florence-2-large/ocr-with-region",
+  "task": "unknown",
+  "source_url": "https://fal.ai/models/fal-ai/florence-2-large/ocr-with-region",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fflorence-2-large%2Focr-with-region",
+  "retrieved_at": "2026-10-04T19:43:54.570Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "image-to-image",
+  "bytes_sha256": "30c201aee304c0bac39d50a5d12165c23e1135127b093d79c20edd341cf22b70",
+  "queue_path": "/fal-ai/florence-2-large/ocr-with-region",
+  "input_name": "Florence2LargeOcrWithRegionInput",
+  "input": {
+    "$refName": "Florence2LargeOcrWithRegionInput",
+    "properties": {
+      "image_url": {
+        "description": "The URL of the image to be processed.",
+        "type": "string",
+        "examples": [
+          "https://huggingface.co/datasets/huggingface/documentation-images/resolve/main/transformers/tasks/car.jpg",
+          "http://ecx.images-amazon.com/images/I/51UUzBDAMsL.jpg"
+        ]
+      }
+    },
+    "type": "object",
+    "required": [
+      "image_url"
+    ]
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "Florence2LargeOcrWithRegionInput",
+    "Florence2LargeOcrWithRegionOutput",
+    "OCRBoundingBox",
+    "Image",
+    "OCRBoundingBoxSingle"
+  ]
+}

@@ -1,0 +1,100 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/kling-video/v1/standard/ai-avatar",
+  "task": "video-editing",
+  "source_url": "https://fal.ai/models/fal-ai/kling-video/v1/standard/ai-avatar",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fkling-video%2Fv1%2Fstandard%2Fai-avatar",
+  "retrieved_at": "2026-10-04T19:47:07.262Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "image-to-video",
+  "bytes_sha256": "81ca4cc837a846a45b0297f8d02f8b74070c8d560a53b7ddb2ea9e951d3c8495",
+  "queue_path": "/fal-ai/kling-video/v1/standard/ai-avatar",
+  "input_name": "KlingVideoV1StandardAiAvatarInput",
+  "input": {
+    "$refName": "KlingVideoV1StandardAiAvatarInput",
+    "required": [
+      "image_url",
+      "audio_url"
+    ],
+    "type": "object",
+    "properties": {
+      "image_url": {
+        "description": "The URL of the image to use as your avatar",
+        "type": "string",
+        "_fal_ui_field": "image",
+        "examples": [
+          "https://storage.googleapis.com/falserverless/example_inputs/kling_ai_avatar_input.jpg"
+        ]
+      },
+      "audio_url": {
+        "description": "The URL of the audio file.",
+        "type": "string",
+        "_fal_ui_field": "audio",
+        "examples": [
+          "https://v3.fal.media/files/rabbit/9_0ZG_geiWjZOmn9yscO6_output.mp3"
+        ]
+      },
+      "prompt": {
+        "description": "The prompt to use for the video generation.",
+        "type": "string",
+        "default": "."
+      }
+    }
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "KlingVideoV1StandardAiAvatarInput",
+    "KlingVideoV1StandardAiAvatarOutput",
+    "File"
+  ]
+}

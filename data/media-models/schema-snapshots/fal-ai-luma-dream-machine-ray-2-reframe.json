@@ -1,0 +1,192 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/luma-dream-machine/ray-2/reframe",
+  "task": "unknown",
+  "source_url": "https://fal.ai/models/fal-ai/luma-dream-machine/ray-2/reframe",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fluma-dream-machine%2Fray-2%2Freframe",
+  "retrieved_at": "2026-10-04T19:48:57.982Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "video-to-video",
+  "bytes_sha256": "f1741543a0d946371a3a6b036c41ec5c62d8500e4fd2181f76fb7771f2878534",
+  "queue_path": "/fal-ai/luma-dream-machine/ray-2/reframe",
+  "input_name": "LumaDreamMachineRay2ReframeInput",
+  "input": {
+    "$refName": "LumaDreamMachineRay2ReframeInput",
+    "required": [
+      "video_url",
+      "aspect_ratio"
+    ],
+    "properties": {
+      "video_url": {
+        "examples": [
+          "https://v3.fal.media/files/zebra/9aDde3Te2kuJYHdR0Kz8R_output.mp4"
+        ],
+        "description": "URL of the input video to reframe",
+        "type": "string"
+      },
+      "y_end": {
+        "description": "End Y coordinate for reframing",
+        "anyOf": [
+          {
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "y_start": {
+        "description": "Start Y coordinate for reframing",
+        "anyOf": [
+          {
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "x_end": {
+        "description": "End X coordinate for reframing",
+        "anyOf": [
+          {
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "grid_position_x": {
+        "description": "X position of the grid for reframing",
+        "anyOf": [
+          {
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "prompt": {
+        "description": "Optional prompt for reframing",
+        "anyOf": [
+          {
+            "maxLength": 5000,
+            "minLength": 1,
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "aspect_ratio": {
+        "examples": [
+          "9:16"
+        ],
+        "enum": [
+          "1:1",
+          "16:9",
+          "9:16",
+          "4:3",
+          "3:4",
+          "21:9",
+          "9:21"
+        ],
+        "description": "The aspect ratio of the reframed video",
+        "type": "string"
+      },
+      "x_start": {
+        "description": "Start X coordinate for reframing",
+        "anyOf": [
+          {
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "image_url": {
+        "description": "Optional URL of the first frame image for reframing",
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "grid_position_y": {
+        "description": "Y position of the grid for reframing",
+        "anyOf": [
+          {
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      }
+    },
+    "type": "object"
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "LumaDreamMachineRay2ReframeInput",
+    "LumaDreamMachineRay2ReframeOutput",
+    "File"
+  ]
+}

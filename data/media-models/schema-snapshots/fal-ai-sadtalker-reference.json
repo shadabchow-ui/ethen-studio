@@ -1,0 +1,157 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/sadtalker/reference",
+  "task": "unknown",
+  "source_url": "https://fal.ai/models/fal-ai/sadtalker/reference",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fsadtalker%2Freference",
+  "retrieved_at": "2026-10-04T19:51:20.356Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "image-to-video",
+  "bytes_sha256": "f15aed1c0a28ef2ed80def9b94045f9aac9a03b0c2d73822818be61d67558ce1",
+  "queue_path": "/fal-ai/sadtalker/reference",
+  "input_name": "SadtalkerReferenceInput",
+  "input": {
+    "$refName": "SadtalkerReferenceInput",
+    "properties": {
+      "expression_scale": {
+        "default": 1,
+        "multipleOf": 0.1,
+        "description": "The scale of the expression",
+        "maximum": 3,
+        "minimum": 0,
+        "type": "number"
+      },
+      "pose_style": {
+        "default": 0,
+        "description": "The style of the pose",
+        "maximum": 45,
+        "minimum": 0,
+        "type": "integer"
+      },
+      "face_model_resolution": {
+        "default": "256",
+        "enum": [
+          "256",
+          "512"
+        ],
+        "description": "The resolution of the face model",
+        "type": "string"
+      },
+      "face_enhancer": {
+        "anyOf": [
+          {
+            "const": "gfpgan",
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "The type of face enhancer to use",
+        "examples": [
+          null
+        ]
+      },
+      "still_mode": {
+        "default": false,
+        "description": "Whether to use still mode. Fewer head motion, works with preprocess `full`.",
+        "type": "boolean"
+      },
+      "source_image_url": {
+        "description": "URL of the source image",
+        "examples": [
+          "https://storage.googleapis.com/falserverless/model_tests/sadtalker/anime_girl.png"
+        ],
+        "type": "string"
+      },
+      "preprocess": {
+        "default": "crop",
+        "enum": [
+          "crop",
+          "extcrop",
+          "resize",
+          "full",
+          "extfull"
+        ],
+        "description": "The type of preprocessing to use",
+        "type": "string"
+      },
+      "driven_audio_url": {
+        "description": "URL of the driven audio",
+        "examples": [
+          "https://storage.googleapis.com/falserverless/model_tests/sadtalker/deyu.wav"
+        ],
+        "type": "string"
+      },
+      "reference_pose_video_url": {
+        "description": "URL of the reference video",
+        "examples": [
+          "https://github.com/OpenTalker/SadTalker/raw/main/examples/ref_video/WDA_AlexandriaOcasioCortez_000.mp4"
+        ],
+        "type": "string"
+      }
+    },
+    "required": [
+      "source_image_url",
+      "driven_audio_url",
+      "reference_pose_video_url"
+    ],
+    "type": "object"
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "SadtalkerReferenceInput",
+    "SadtalkerReferenceOutput",
+    "File"
+  ]
+}

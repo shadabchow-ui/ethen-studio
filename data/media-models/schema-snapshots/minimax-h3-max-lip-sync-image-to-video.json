@@ -1,0 +1,121 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "minimax/h3-max/lip-sync/image-to-video",
+  "task": "image-to-video",
+  "source_url": "https://fal.ai/models/minimax/h3-max/lip-sync/image-to-video",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=minimax%2Fh3-max%2Flip-sync%2Fimage-to-video",
+  "retrieved_at": "2026-10-04T19:54:16.450Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "image-to-video",
+  "bytes_sha256": "40acc49dc38c4a2e513d68eb5861e8bd6860059420f1bf6204b47d28e3c3e7aa",
+  "queue_path": "/minimax/h3-max/lip-sync/image-to-video",
+  "input_name": "H3MaxLipSyncImageToVideoInput",
+  "input": {
+    "$refName": "H3MaxLipSyncImageToVideoInput",
+    "properties": {
+      "image_url": {
+        "type": "string",
+        "description": "Image to animate. The aspect ratio must be between 0.4 and 2.5."
+      },
+      "enable_safety_checker": {
+        "type": "boolean",
+        "default": true,
+        "description": "Enable content safety checks."
+      },
+      "seed": {
+        "anyOf": [
+          {
+            "minimum": 0,
+            "type": "integer",
+            "maximum": 2147483647
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "Random seed; selected randomly if omitted."
+      },
+      "audio_url": {
+        "type": "string",
+        "description": "Audio to synchronize the mouth movements to, at least 5 seconds long. Supports up to 15 minutes. The output video matches the supplied audio duration."
+      },
+      "resolution": {
+        "type": "string",
+        "default": "768P",
+        "enum": [
+          "480P",
+          "768P",
+          "1080P",
+          "2K"
+        ],
+        "description": "Output resolution. Uses the supported aspect ratio nearest the image."
+      },
+      "enable_transcription": {
+        "type": "boolean",
+        "default": false,
+        "description": "Transcribe the supplied audio to guide lip synchronization. When disabled, synchronize to the audio without a transcript."
+      }
+    },
+    "type": "object",
+    "required": [
+      "image_url",
+      "audio_url"
+    ]
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "H3MaxLipSyncImageToVideoInput",
+    "H3MaxLipSyncImageToVideoOutput",
+    "File"
+  ]
+}

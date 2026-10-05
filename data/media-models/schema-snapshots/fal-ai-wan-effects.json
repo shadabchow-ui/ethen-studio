@@ -1,0 +1,202 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/wan-effects",
+  "task": "unknown",
+  "source_url": "https://fal.ai/models/fal-ai/wan-effects",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fwan-effects",
+  "retrieved_at": "2026-10-04T19:52:41.422Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "image-to-video",
+  "bytes_sha256": "9a749edf3819617c437e778e752401c2bf5b50cf6d5ab78516892ade1a71eb12",
+  "queue_path": "/fal-ai/wan-effects",
+  "input_name": "WanEffectsInput",
+  "input": {
+    "$refName": "WanEffectsInput",
+    "properties": {
+      "image_url": {
+        "type": "string",
+        "examples": [
+          "https://storage.googleapis.com/falserverless/web-examples/wan-effects/cat.jpg",
+          "https://storage.googleapis.com/falserverless/web-examples/wan-effects/man_1.png",
+          "https://storage.googleapis.com/falserverless/web-examples/wan-effects/woman_2.png"
+        ],
+        "description": "URL of the input image."
+      },
+      "num_inference_steps": {
+        "maximum": 40,
+        "type": "integer",
+        "default": 30,
+        "minimum": 2,
+        "description": "Number of inference steps for sampling. Higher values give better quality but take longer."
+      },
+      "aspect_ratio": {
+        "type": "string",
+        "default": "16:9",
+        "enum": [
+          "16:9",
+          "9:16",
+          "1:1"
+        ],
+        "description": "Aspect ratio of the output video."
+      },
+      "frames_per_second": {
+        "maximum": 24,
+        "type": "integer",
+        "default": 16,
+        "minimum": 5,
+        "description": "Frames per second of the generated video."
+      },
+      "turbo_mode": {
+        "type": "boolean",
+        "default": false,
+        "description": "Whether to use turbo mode. If True, the video will be generated faster but with lower quality."
+      },
+      "seed": {
+        "anyOf": [
+          {
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "Random seed for reproducibility. If None, a random seed is chosen."
+      },
+      "num_frames": {
+        "maximum": 100,
+        "type": "integer",
+        "default": 81,
+        "minimum": 81,
+        "description": "Number of frames to generate."
+      },
+      "subject": {
+        "type": "string",
+        "examples": [
+          "a cute kitten",
+          "Donald Trump",
+          "a tank",
+          "a ceramic vase"
+        ],
+        "description": "The subject to insert into the predefined prompt template for the selected effect."
+      },
+      "lora_scale": {
+        "maximum": 2,
+        "type": "number",
+        "default": 1,
+        "minimum": 0.1,
+        "description": "The scale of the LoRA weight. Used to adjust effect intensity."
+      },
+      "effect_type": {
+        "type": "string",
+        "default": "cakeify",
+        "enum": [
+          "squish",
+          "muscle",
+          "inflate",
+          "crush",
+          "rotate",
+          "gun-shooting",
+          "deflate",
+          "cakeify",
+          "hulk",
+          "baby",
+          "bride",
+          "classy",
+          "puppy",
+          "snow-white",
+          "disney-princess",
+          "mona-lisa",
+          "painting",
+          "pirate-captain",
+          "princess",
+          "jungle",
+          "samurai",
+          "vip",
+          "warrior",
+          "zen",
+          "assassin",
+          "timelapse",
+          "tsunami",
+          "fire",
+          "zoom-call",
+          "doom-fps",
+          "fus-ro-dah",
+          "hug-jesus",
+          "robot-face-reveal",
+          "super-saiyan",
+          "jumpscare",
+          "laughing",
+          "cartoon-jaw-drop",
+          "crying",
+          "kissing",
+          "angry-face",
+          "selfie-younger-self",
+          "animeify",
+          "blast"
+        ],
+        "description": "The type of effect to apply to the video."
+      }
+    },
+    "type": "object",
+    "required": [
+      "subject",
+      "image_url"
+    ]
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "WanEffectsInput",
+    "WanEffectsOutput",
+    "File"
+  ]
+}

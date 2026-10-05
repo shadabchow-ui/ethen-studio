@@ -1,0 +1,122 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/vidu/q2/reference-to-image",
+  "task": "image-generation",
+  "source_url": "https://fal.ai/models/fal-ai/vidu/q2/reference-to-image",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fvidu%2Fq2%2Freference-to-image",
+  "retrieved_at": "2026-10-04T19:52:20.739Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "image-to-image",
+  "bytes_sha256": "f48ad3c63ac383dbe29665b4e65216d8ccd611a0896c0f14ceb83acd1aa50628",
+  "queue_path": "/fal-ai/vidu/q2/reference-to-image",
+  "input_name": "ViduQ2ReferenceToImageInput",
+  "input": {
+    "$refName": "ViduQ2ReferenceToImageInput",
+    "properties": {
+      "reference_image_urls": {
+        "examples": [
+          [
+            "https://storage.googleapis.com/falserverless/web-examples/vidu/new-examples/reference1.png",
+            "https://storage.googleapis.com/falserverless/web-examples/vidu/new-examples/reference2.png",
+            "https://storage.googleapis.com/falserverless/web-examples/vidu/new-examples/reference3.png"
+          ]
+        ],
+        "type": "array",
+        "description": "URLs of the reference images to use for consistent subject appearance",
+        "items": {
+          "type": "string"
+        }
+      },
+      "prompt": {
+        "examples": [
+          "The little devil is looking at the apple on the beach and walking around it."
+        ],
+        "type": "string",
+        "maxLength": 1500,
+        "description": "Text prompt for video generation, max 1500 characters"
+      },
+      "seed": {
+        "anyOf": [
+          {
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "Random seed for generation"
+      },
+      "aspect_ratio": {
+        "enum": [
+          "16:9",
+          "9:16",
+          "1:1"
+        ],
+        "type": "string",
+        "description": "The aspect ratio of the output video",
+        "default": "16:9"
+      }
+    },
+    "type": "object",
+    "required": [
+      "prompt",
+      "reference_image_urls"
+    ]
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "ViduQ2ReferenceToImageInput",
+    "ViduQ2ReferenceToImageOutput",
+    "Image"
+  ]
+}

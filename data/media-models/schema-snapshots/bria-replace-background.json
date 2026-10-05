@@ -1,0 +1,121 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "bria/replace-background",
+  "task": "unknown",
+  "source_url": "https://fal.ai/models/bria/replace-background",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=bria%2Freplace-background",
+  "retrieved_at": "2026-10-04T19:41:50.643Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "image-to-image",
+  "bytes_sha256": "80f1ef730207f8b151b5a3967ad9de99f780fd503c1a625d6849b1cde056f07c",
+  "queue_path": "/bria/replace-background",
+  "input_name": "ReplaceBackgroundInput",
+  "input": {
+    "$refName": "ReplaceBackgroundInput",
+    "properties": {
+      "steps_num": {
+        "default": 30,
+        "type": "integer",
+        "description": "Number of inference steps."
+      },
+      "negative_prompt": {
+        "default": "",
+        "type": "string",
+        "description": "Negative prompt for background replacement."
+      },
+      "seed": {
+        "default": 4925634,
+        "type": "integer",
+        "description": "Random seed for reproducibility."
+      },
+      "prompt": {
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "Prompt for background replacement.",
+        "examples": [
+          "On a smooth kitchen counter in front of a blue and white patterned ceramic tile wall. A yellow ceramic mug sits to the right. Shot from a straight-on front angle."
+        ]
+      },
+      "sync_mode": {
+        "default": false,
+        "type": "boolean",
+        "description": "If true, returns the image directly in the response (increases latency)."
+      },
+      "image_url": {
+        "default": "https://v3b.fal.media/files/b/0a8bea8c/Mztgx0NG3HPdby-4iPqwH_a_coffee_machine_standing_in_the_kitchen.png",
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "Reference image (file or URL)."
+      }
+    },
+    "type": "object"
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "ReplaceBackgroundInput",
+    "ReplaceBackgroundOutput",
+    "Image"
+  ]
+}

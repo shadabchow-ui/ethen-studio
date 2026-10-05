@@ -1,0 +1,157 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/ltx-2.3/image-to-video/fast",
+  "task": "image-to-video",
+  "source_url": "https://fal.ai/models/fal-ai/ltx-2.3/image-to-video/fast",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fltx-2.3%2Fimage-to-video%2Ffast",
+  "retrieved_at": "2026-10-04T19:48:27.872Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "image-to-video",
+  "bytes_sha256": "947c2b5a53637dc7c0656abbab4aaaefbb1cca206b9ba4a330955eb5595a61a4",
+  "queue_path": "/fal-ai/ltx-2.3/image-to-video/fast",
+  "input_name": "Ltx23ImageToVideoFastInput",
+  "input": {
+    "$refName": "Ltx23ImageToVideoFastInput",
+    "required": [
+      "prompt",
+      "image_url"
+    ],
+    "type": "object",
+    "properties": {
+      "end_image_url": {
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "The URL of the end image to use for the generated video. When provided, generates a transition video between start and end frames."
+      },
+      "fps": {
+        "default": 25,
+        "type": "integer",
+        "enum": [
+          24,
+          25,
+          48,
+          50
+        ],
+        "description": "The frames per second of the generated video"
+      },
+      "aspect_ratio": {
+        "default": "auto",
+        "type": "string",
+        "enum": [
+          "auto",
+          "16:9",
+          "9:16"
+        ],
+        "description": "The aspect ratio of the generated video"
+      },
+      "prompt": {
+        "maxLength": 5000,
+        "description": "The prompt to generate the video from",
+        "examples": [
+          "Snorkel lens ground-scraping tracking shot following a barefoot Ethiopian long-distance runner training on a dirt road at dawn, camera inches from the ground racing alongside, her feet kicking up red dust in slow motion at 240fps, Rift Valley landscape blurred in the background, the texture of earth and callused skin in hyper-detail, 40mm snorkel lens at ground height, Nike Running documentary meets Lubezki natural light, the poetry of human endurance"
+        ],
+        "minLength": 1,
+        "type": "string"
+      },
+      "resolution": {
+        "default": "1080p",
+        "type": "string",
+        "enum": [
+          "1080p",
+          "1440p",
+          "2160p"
+        ],
+        "description": "The resolution of the generated video"
+      },
+      "duration": {
+        "default": 6,
+        "type": "integer",
+        "enum": [
+          6,
+          8,
+          10,
+          12,
+          14,
+          16,
+          18,
+          20
+        ],
+        "description": "The duration of the generated video in seconds. The fast model supports 6-20 seconds. Note: Durations longer than 10 seconds (12, 14, 16, 18, 20) are only supported with 25 FPS and 1080p resolution."
+      },
+      "generate_audio": {
+        "default": true,
+        "type": "boolean",
+        "description": "Whether to generate audio for the generated video"
+      },
+      "image_url": {
+        "description": "URL of the image to generate the video from. Must be publicly accessible or base64 data URI. Supports PNG, JPEG, WebP, AVIF, and HEIF formats.",
+        "examples": [
+          "https://v3b.fal.media/files/b/0a90dd09/SnnnNct-o_zpGVEHDNVQ0_image_049.png"
+        ],
+        "type": "string"
+      }
+    }
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "Ltx23ImageToVideoFastInput",
+    "Ltx23ImageToVideoFastOutput",
+    "VideoFile"
+  ]
+}

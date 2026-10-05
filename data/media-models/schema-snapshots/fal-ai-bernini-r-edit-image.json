@@ -1,0 +1,134 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/bernini-r/edit-image",
+  "task": "image-generation",
+  "source_url": "https://fal.ai/models/fal-ai/bernini-r/edit-image",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fbernini-r%2Fedit-image",
+  "retrieved_at": "2026-10-04T19:42:37.419Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "image-to-image",
+  "bytes_sha256": "e522e010b312d896428a3661c37afe2f45b921742a4ddd27f91a7303bf3d4ffd",
+  "queue_path": "/fal-ai/bernini-r/edit-image",
+  "input_name": "BerniniREditImageInput",
+  "input": {
+    "$refName": "BerniniREditImageInput",
+    "properties": {
+      "image_url": {
+        "type": "string",
+        "examples": [
+          "https://storage.googleapis.com/falserverless/example_inputs/birefnet-input.jpeg"
+        ],
+        "description": "Source image to edit."
+      },
+      "negative_prompt": {
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "Negative prompt. Defaults to the standard Wan2.2 negative prompt."
+      },
+      "seed": {
+        "anyOf": [
+          {
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "Seed for reproducibility. Random when omitted."
+      },
+      "prompt": {
+        "type": "string",
+        "examples": [
+          "A cute corgi leaping in a sunny park, Van Gogh oil-painting style."
+        ],
+        "description": "Text prompt or editing instruction."
+      },
+      "enable_prompt_expansion": {
+        "type": "boolean",
+        "default": false,
+        "description": "Rewrite the prompt with an LLM before generation. The model is tuned on enhanced prompts; off by default."
+      },
+      "num_inference_steps": {
+        "maximum": 50,
+        "type": "integer",
+        "default": 30,
+        "minimum": 1,
+        "description": "Number of denoising steps."
+      },
+      "max_image_size": {
+        "maximum": 1280,
+        "type": "integer",
+        "default": 848,
+        "minimum": 256,
+        "description": "Long-edge size (px). Sets the output size for generation tasks and caps source/reference media for editing tasks."
+      }
+    },
+    "type": "object",
+    "required": [
+      "prompt",
+      "image_url"
+    ]
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "BerniniREditImageInput",
+    "BerniniREditImageOutput",
+    "Image"
+  ]
+}

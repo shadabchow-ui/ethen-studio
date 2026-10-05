@@ -1,0 +1,132 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "google/gemini-omni-flash/v1.1/image-to-video",
+  "task": "image-to-video",
+  "source_url": "https://fal.ai/models/google/gemini-omni-flash/v1.1/image-to-video",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=google%2Fgemini-omni-flash%2Fv1.1%2Fimage-to-video",
+  "retrieved_at": "2026-10-04T19:53:34.275Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "image-to-video",
+  "bytes_sha256": "71cea5aa398cc483c2350232061ddd61d324c204e4403aec5550117b087d98b1",
+  "queue_path": "/google/gemini-omni-flash/v1.1/image-to-video",
+  "input_name": "GeminiOmniFlashV11ImageToVideoInput",
+  "input": {
+    "$refName": "GeminiOmniFlashV11ImageToVideoInput",
+    "properties": {
+      "image_url": {
+        "type": "string",
+        "examples": [
+          "https://storage.googleapis.com/falserverless/example_inputs/dog.png"
+        ],
+        "description": "URL of the first frame to animate."
+      },
+      "prompt": {
+        "type": "string",
+        "maxLength": 20000,
+        "examples": [
+          "The dog turns its head and wags its tail in warm sunlight."
+        ],
+        "description": "The text prompt describing how the first image should be animated or interpolated into the optional end image."
+      },
+      "aspect_ratio": {
+        "type": "string",
+        "default": "16:9",
+        "enum": [
+          "16:9",
+          "9:16"
+        ],
+        "description": "The aspect ratio of the generated video."
+      },
+      "duration": {
+        "minimum": 3,
+        "type": "integer",
+        "default": 8,
+        "maximum": 10,
+        "description": "The duration of the generated video, in seconds."
+      },
+      "end_image_url": {
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "Optional URL of the end frame. When provided, the model interpolates between the two images in their listed order."
+      },
+      "resolution": {
+        "type": "string",
+        "default": "720p",
+        "enum": [
+          "360p",
+          "720p",
+          "1080p",
+          "4k"
+        ],
+        "description": "The resolution of the generated video."
+      }
+    },
+    "required": [
+      "prompt",
+      "image_url"
+    ],
+    "type": "object"
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "GeminiOmniFlashV11ImageToVideoInput",
+    "GeminiOmniFlashV11ImageToVideoOutput",
+    "File"
+  ]
+}

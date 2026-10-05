@@ -1,0 +1,194 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/flux-2-lora-gallery/satellite-view-style",
+  "task": "unknown",
+  "source_url": "https://fal.ai/models/fal-ai/flux-2-lora-gallery/satellite-view-style",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fflux-2-lora-gallery%2Fsatellite-view-style",
+  "retrieved_at": "2026-10-04T19:44:12.632Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "text-to-image",
+  "bytes_sha256": "313b03471f80f2e6b7f2291b1cbd5373ec5e3f2e345021f391b60a344ee12f26",
+  "queue_path": "/fal-ai/flux-2-lora-gallery/satellite-view-style",
+  "input_name": "Flux2LoraGallerySatelliteViewStyleInput",
+  "input": {
+    "$refName": "Flux2LoraGallerySatelliteViewStyleInput",
+    "description": "Input model for Satellite View Style endpoint - Generate satellite/aerial view style images",
+    "required": [
+      "prompt"
+    ],
+    "type": "object",
+    "properties": {
+      "image_size": {
+        "description": "The size of the generated image.",
+        "anyOf": [
+          {
+            "$refName": "ImageSize",
+            "type": "object",
+            "properties": {
+              "height": {
+                "description": "The height of the generated image.",
+                "maximum": 14142,
+                "type": "integer",
+                "default": 512,
+                "exclusiveMinimum": 0
+              },
+              "width": {
+                "description": "The width of the generated image.",
+                "maximum": 14142,
+                "type": "integer",
+                "default": 512,
+                "exclusiveMinimum": 0
+              }
+            }
+          },
+          {
+            "enum": [
+              "square_hd",
+              "square",
+              "portrait_4_3",
+              "portrait_16_9",
+              "landscape_4_3",
+              "landscape_16_9"
+            ],
+            "type": "string"
+          }
+        ],
+        "default": "landscape_4_3"
+      },
+      "num_inference_steps": {
+        "description": "The number of inference steps to perform.",
+        "maximum": 50,
+        "type": "integer",
+        "minimum": 4,
+        "default": 40
+      },
+      "output_format": {
+        "description": "The format of the output image",
+        "enum": [
+          "png",
+          "jpeg",
+          "webp"
+        ],
+        "type": "string",
+        "default": "png"
+      },
+      "num_images": {
+        "description": "Number of images to generate",
+        "maximum": 4,
+        "type": "integer",
+        "minimum": 1,
+        "default": 1
+      },
+      "seed": {
+        "description": "Random seed for reproducibility. Same seed with same prompt will produce same result.",
+        "anyOf": [
+          {
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "sync_mode": {
+        "description": "If `True`, the media will be returned as a data URI and won't be saved in history.",
+        "type": "boolean",
+        "default": false
+      },
+      "acceleration": {
+        "description": "Acceleration level for image generation. 'regular' balances speed and quality.",
+        "enum": [
+          "none",
+          "regular"
+        ],
+        "type": "string",
+        "default": "regular"
+      },
+      "enable_safety_checker": {
+        "description": "Whether to enable the safety checker for the generated image. Disabling it requires account authorization; unauthorized requests are always checked.",
+        "type": "boolean",
+        "default": true
+      },
+      "lora_scale": {
+        "description": "The strength of the satellite view style effect.",
+        "maximum": 2,
+        "type": "number",
+        "minimum": 0,
+        "default": 1
+      },
+      "guidance_scale": {
+        "description": "The CFG (Classifier Free Guidance) scale. Controls how closely the model follows the prompt.",
+        "maximum": 20,
+        "type": "number",
+        "minimum": 0,
+        "default": 2.5
+      },
+      "prompt": {
+        "description": "The prompt to generate a satellite/aerial view style image.",
+        "type": "string",
+        "examples": [
+          "Aerial view of a city from above, satellite style",
+          "Satellite view of mountains and valleys",
+          "Bird's eye view of a coastal town"
+        ]
+      }
+    }
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "Flux2LoraGallerySatelliteViewStyleInput",
+    "Flux2LoraGallerySatelliteViewStyleOutput",
+    "ImageSize",
+    "Image"
+  ]
+}

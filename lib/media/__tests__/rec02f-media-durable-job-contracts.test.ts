@@ -278,7 +278,7 @@ async function testMissingProviderRoutingReceipt(): Promise<void> {
       "test-project",
       "test-actor",
       "test-org",
-      makeRequest({ prompt: "routing receipt test", providerId: "nonexistent" }),
+      makeRequest({ prompt: "routing receipt test", providerId: "nonexistent", capability: "unsupported-test-capability" as never }),
       repo,
     );
   } catch (err) {

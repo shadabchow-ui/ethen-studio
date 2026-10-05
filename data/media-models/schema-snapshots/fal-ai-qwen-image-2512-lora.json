@@ -1,0 +1,216 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/qwen-image-2512/lora",
+  "task": "lora-training",
+  "source_url": "https://fal.ai/models/fal-ai/qwen-image-2512/lora",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fqwen-image-2512%2Flora",
+  "retrieved_at": "2026-10-04T19:50:36.785Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "text-to-image",
+  "bytes_sha256": "0017acfcf7374db80b964ac56b3a97e5ea08f8da503d3271c9e49afc468fc34c",
+  "queue_path": "/fal-ai/qwen-image-2512/lora",
+  "input_name": "QwenImage2512LoraInput",
+  "input": {
+    "$refName": "QwenImage2512LoraInput",
+    "properties": {
+      "enable_safety_checker": {
+        "type": "boolean",
+        "default": true,
+        "description": "If set to true, the safety checker will be enabled. Disabling it requires account authorization; unauthorized requests are always checked, and images flagged as unsafe are returned as black images."
+      },
+      "negative_prompt": {
+        "type": "string",
+        "default": "",
+        "description": "The negative prompt to generate an image from."
+      },
+      "sync_mode": {
+        "type": "boolean",
+        "default": false,
+        "description": "If `True`, the media will be returned as a data URI and the output data won't be available in the request history."
+      },
+      "acceleration": {
+        "type": "string",
+        "default": "regular",
+        "enum": [
+          "none",
+          "regular",
+          "high"
+        ],
+        "description": "The acceleration level to use."
+      },
+      "loras": {
+        "type": "array",
+        "items": {
+          "$refName": "LoraWeight",
+          "properties": {
+            "path": {
+              "description": "URL or the path to the LoRA weights.",
+              "type": "string"
+            },
+            "scale": {
+              "description": "\n            The scale of the LoRA weight. This is used to scale the LoRA weight\n            before merging it with the base model.\n        ",
+              "type": "number",
+              "minimum": 0,
+              "default": 1,
+              "maximum": 4
+            }
+          },
+          "type": "object",
+          "required": [
+            "path"
+          ]
+        },
+        "default": [],
+        "description": "\n            The LoRAs to use for the image generation. You can use up to 3 LoRAs\n            and they will be merged together to generate the final image.\n        "
+      },
+      "num_inference_steps": {
+        "description": "The number of inference steps to perform.",
+        "type": "integer",
+        "minimum": 1,
+        "default": 28,
+        "maximum": 50
+      },
+      "output_format": {
+        "type": "string",
+        "default": "png",
+        "enum": [
+          "jpeg",
+          "png",
+          "webp"
+        ],
+        "description": "The format of the generated image."
+      },
+      "guidance_scale": {
+        "description": "The guidance scale to use for the image generation.",
+        "type": "number",
+        "minimum": 0,
+        "default": 4,
+        "maximum": 20
+      },
+      "seed": {
+        "description": "\n            The same seed and the same prompt given to the same version of the model\n            will output the same image every time.\n        ",
+        "anyOf": [
+          {
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "prompt": {
+        "description": "The prompt to generate an image from.",
+        "type": "string",
+        "examples": [
+          "Single red rose in a clear glass vase on white marble streaked with black and gold veins, harsh directional shadow, high contrast, editorial style, clean negative space."
+        ]
+      },
+      "num_images": {
+        "description": "The number of images to generate.",
+        "type": "integer",
+        "minimum": 1,
+        "default": 1,
+        "maximum": 4
+      },
+      "image_size": {
+        "default": "landscape_4_3",
+        "anyOf": [
+          {
+            "$refName": "ImageSize",
+            "properties": {
+              "height": {
+                "description": "The height of the generated image.",
+                "type": "integer",
+                "exclusiveMinimum": 0,
+                "default": 512,
+                "maximum": 14142
+              },
+              "width": {
+                "description": "The width of the generated image.",
+                "type": "integer",
+                "exclusiveMinimum": 0,
+                "default": 512,
+                "maximum": 14142
+              }
+            },
+            "type": "object"
+          },
+          {
+            "type": "string",
+            "enum": [
+              "square_hd",
+              "square",
+              "portrait_4_3",
+              "portrait_16_9",
+              "landscape_4_3",
+              "landscape_16_9"
+            ]
+          }
+        ],
+        "description": "The size of the generated image."
+      }
+    },
+    "type": "object",
+    "required": [
+      "prompt"
+    ]
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "QwenImage2512LoraInput",
+    "QwenImage2512LoraOutput",
+    "LoraWeight",
+    "ImageSize",
+    "Image"
+  ]
+}

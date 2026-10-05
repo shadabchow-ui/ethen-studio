@@ -1,0 +1,228 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/ltx-2.3-quality/ingredient",
+  "task": "unknown",
+  "source_url": "https://fal.ai/models/fal-ai/ltx-2.3-quality/ingredient",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fltx-2.3-quality%2Fingredient",
+  "retrieved_at": "2026-10-04T19:48:17.447Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "image-to-video",
+  "bytes_sha256": "ce1ae0242b306d1cb9cdaf304bf4b08ac2464f667f8d5a1d9baa44e802738d16",
+  "queue_path": "/fal-ai/ltx-2.3-quality/ingredient",
+  "input_name": "Ltx23QualityIngredientInput",
+  "input": {
+    "$refName": "Ltx23QualityIngredientInput",
+    "type": "object",
+    "properties": {
+      "seed": {
+        "description": "Random seed for reproducibility. If None, a random seed is chosen.",
+        "anyOf": [
+          {
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "reference_strength": {
+        "minimum": 0,
+        "type": "number",
+        "description": "Strength of the reference-sheet guide. 1.0 uses the sheet fully; lower values give the model more freedom.",
+        "maximum": 2,
+        "default": 1
+      },
+      "video_quality": {
+        "enum": [
+          "low",
+          "medium",
+          "high",
+          "maximum"
+        ],
+        "type": "string",
+        "description": "The quality preset of the generated video.",
+        "default": "high"
+      },
+      "image_url": {
+        "type": "string",
+        "examples": [
+          "https://storage.googleapis.com/falserverless/example_inputs/ltxv-2-i2v-input.jpg"
+        ],
+        "description": "URL of the Ingredient reference sheet image. The sheet should contain clean panels for the characters, props, and location to preserve."
+      },
+      "guidance_scale": {
+        "minimum": 1,
+        "type": "number",
+        "description": "Classifier-free guidance scale.",
+        "maximum": 20,
+        "default": 1
+      },
+      "enable_safety_checker": {
+        "type": "boolean",
+        "description": "Whether to enable the safety checker.",
+        "default": true
+      },
+      "sync_mode": {
+        "type": "boolean",
+        "description": "If True, the media is returned as a data URI inline in the response. Useful for short-lived requests and tests.",
+        "default": false
+      },
+      "enable_prompt_expansion": {
+        "type": "boolean",
+        "description": "Whether to enable prompt expansion.",
+        "default": true
+      },
+      "ingredient_strength": {
+        "minimum": 0,
+        "type": "number",
+        "description": "Strength of the built-in Ingredient IC-LoRA. Higher values make the reference sheet identities and props more dominant.",
+        "maximum": 2,
+        "default": 1
+      },
+      "video_write_mode": {
+        "enum": [
+          "fast",
+          "balanced",
+          "small"
+        ],
+        "type": "string",
+        "description": "The write mode of the generated video.",
+        "default": "balanced"
+      },
+      "frames_per_second": {
+        "minimum": 1,
+        "type": "number",
+        "description": "Frames per second of the generated video.",
+        "maximum": 60,
+        "default": 24
+      },
+      "generate_audio": {
+        "type": "boolean",
+        "description": "Whether to include audio in the returned video. When disabled, the final MP4 is returned without an audio track.",
+        "default": true
+      },
+      "num_frames": {
+        "minimum": 9,
+        "type": "integer",
+        "description": "The number of frames to generate.",
+        "maximum": 481,
+        "default": 121
+      },
+      "negative_prompt": {
+        "type": "string",
+        "description": "The negative prompt to steer generation away from.",
+        "default": "worst quality, inconsistent motion, blurry, jittery, distorted"
+      },
+      "resolution": {
+        "default": {
+          "width": 1536,
+          "height": 896
+        },
+        "description": "The final generated video size. The default keeps the workflow's first stage at the Ingredient LoRA's trained 768x448 bucket before the official 2x refinement stage.",
+        "anyOf": [
+          {
+            "$refName": "ImageSize",
+            "type": "object",
+            "properties": {
+              "width": {
+                "exclusiveMinimum": 0,
+                "type": "integer",
+                "description": "The width of the generated image.",
+                "maximum": 14142,
+                "default": 512
+              },
+              "height": {
+                "exclusiveMinimum": 0,
+                "type": "integer",
+                "description": "The height of the generated image.",
+                "maximum": 14142,
+                "default": 512
+              }
+            }
+          },
+          {
+            "enum": [
+              "auto",
+              "square_hd",
+              "square",
+              "portrait_4_3",
+              "portrait_16_9",
+              "landscape_4_3",
+              "landscape_16_9"
+            ],
+            "type": "string"
+          }
+        ]
+      },
+      "prompt": {
+        "type": "string",
+        "examples": [
+          "Reference sheet: a chef in a white jacket, a copper pan, fresh basil, and a bright studio kitchen. Generated video: the chef tosses pasta in the copper pan, steam rising, cinematic food commercial."
+        ],
+        "description": "The prompt to guide the generated video. For best results, use a 'Reference sheet: ... Generated video: ...' structure."
+      }
+    },
+    "description": "Image-to-video generation conditioned on an Ingredient reference sheet.",
+    "required": [
+      "prompt",
+      "image_url"
+    ]
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "Ltx23QualityIngredientInput",
+    "Ltx23QualityIngredientOutput",
+    "ImageSize",
+    "File"
+  ]
+}

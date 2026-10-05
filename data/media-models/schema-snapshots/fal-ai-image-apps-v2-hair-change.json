@@ -1,0 +1,153 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/image-apps-v2/hair-change",
+  "task": "image-generation",
+  "source_url": "https://fal.ai/models/fal-ai/image-apps-v2/hair-change",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fimage-apps-v2%2Fhair-change",
+  "retrieved_at": "2026-10-04T19:46:06.828Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "image-to-image",
+  "bytes_sha256": "45e16e5d3793787b65e85e69a4542d0f013e38cf0b699ad1702c6830b6f645e3",
+  "queue_path": "/fal-ai/image-apps-v2/hair-change",
+  "input_name": "ImageAppsV2HairChangeInput",
+  "input": {
+    "$refName": "ImageAppsV2HairChangeInput",
+    "type": "object",
+    "properties": {
+      "aspect_ratio": {
+        "$refName": "AspectRatio",
+        "type": "object",
+        "properties": {
+          "ratio": {
+            "enum": [
+              "1:1",
+              "16:9",
+              "9:16",
+              "4:3",
+              "3:4"
+            ],
+            "type": "string",
+            "description": "Aspect ratio for 4K resolution output",
+            "default": "1:1"
+          }
+        },
+        "description": "Aspect ratio for 4K output (default: 3:4 for portraits)"
+      },
+      "target_hairstyle": {
+        "enum": [
+          "short_hair",
+          "medium_long_hair",
+          "long_hair",
+          "curly_hair",
+          "wavy_hair",
+          "high_ponytail",
+          "bun",
+          "bob_cut",
+          "pixie_cut",
+          "braids",
+          "straight_hair",
+          "afro",
+          "dreadlocks",
+          "buzz_cut",
+          "mohawk",
+          "bangs",
+          "side_part",
+          "middle_part"
+        ],
+        "type": "string",
+        "default": "long_hair"
+      },
+      "image_url": {
+        "type": "string",
+        "examples": [
+          "https://v3.fal.media/files/zebra/1ois7lqES78dLualcytmS_1e088ef24f474972824cffcfdd7ff291.png"
+        ],
+        "description": "Portrait image URL for hair change"
+      },
+      "hair_color": {
+        "enum": [
+          "black",
+          "dark_brown",
+          "light_brown",
+          "blonde",
+          "platinum_blonde",
+          "red",
+          "auburn",
+          "gray",
+          "silver",
+          "blue",
+          "green",
+          "purple",
+          "pink",
+          "rainbow",
+          "natural",
+          "highlights",
+          "ombre",
+          "balayage"
+        ],
+        "type": "string",
+        "default": "natural"
+      }
+    },
+    "required": [
+      "image_url"
+    ]
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "ImageAppsV2HairChangeInput",
+    "ImageAppsV2HairChangeOutput",
+    "AspectRatio",
+    "Image"
+  ]
+}

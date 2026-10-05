@@ -1,0 +1,95 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/image-preprocessors/midas",
+  "task": "image-generation",
+  "source_url": "https://fal.ai/models/fal-ai/image-preprocessors/midas",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fimage-preprocessors%2Fmidas",
+  "retrieved_at": "2026-10-04T19:46:31.402Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "image-to-image",
+  "bytes_sha256": "61e634ba083f37584b9803a1e662812686ec1d3c6d51916644ebead5cd2fd64b",
+  "queue_path": "/fal-ai/image-preprocessors/midas",
+  "input_name": "ImagePreprocessorsMidasInput",
+  "input": {
+    "$refName": "ImagePreprocessorsMidasInput",
+    "required": [
+      "image_url"
+    ],
+    "type": "object",
+    "properties": {
+      "background_threshold": {
+        "default": 0.1,
+        "type": "number",
+        "description": "Background threshold for the MiDaS detector"
+      },
+      "a": {
+        "default": 6.283185307179586,
+        "type": "number",
+        "description": "A parameter for the MiDaS detector"
+      },
+      "image_url": {
+        "description": "URL of the image to process",
+        "type": "string",
+        "examples": [
+          "https://storage.googleapis.com/falserverless/model_tests/image_preprocessors/cat.png"
+        ]
+      }
+    }
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "ImagePreprocessorsMidasInput",
+    "ImagePreprocessorsMidasOutput",
+    "Image"
+  ]
+}

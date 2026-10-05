@@ -1,0 +1,135 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/pixverse/lipsync",
+  "task": "unknown",
+  "source_url": "https://fal.ai/models/fal-ai/pixverse/lipsync",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fpixverse%2Flipsync",
+  "retrieved_at": "2026-10-04T19:50:02.424Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "video-to-video",
+  "bytes_sha256": "0a141de5a9f3c9d59e09832dc8a4c6927cfee6c76ccd20e5cd49df2050056363",
+  "queue_path": "/fal-ai/pixverse/lipsync",
+  "input_name": "PixverseLipsyncInput",
+  "input": {
+    "$refName": "PixverseLipsyncInput",
+    "properties": {
+      "audio_url": {
+        "examples": [
+          "https://v3.fal.media/files/monkey/k4iyN8bJZWwJXMKH-pO9r_speech.mp3"
+        ],
+        "description": "URL of the input audio. If not provided, TTS will be used.",
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "voice_id": {
+        "enum": [
+          "Emily",
+          "James",
+          "Isabella",
+          "Liam",
+          "Chloe",
+          "Adrian",
+          "Harper",
+          "Ava",
+          "Sophia",
+          "Julia",
+          "Mason",
+          "Jack",
+          "Oliver",
+          "Ethan",
+          "Auto"
+        ],
+        "default": "Auto",
+        "description": "Voice to use for TTS when audio_url is not provided",
+        "type": "string"
+      },
+      "text": {
+        "examples": [
+          "Hello, this is a test message."
+        ],
+        "description": "Text content for TTS when audio_url is not provided",
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "video_url": {
+        "examples": [
+          "https://v3.fal.media/files/penguin/T-ONORYMYLoEOB9lXryA2_IKEy3yAyi1evJGBAkXGZx_output.mp4"
+        ],
+        "description": "URL of the input video",
+        "type": "string"
+      }
+    },
+    "required": [
+      "video_url"
+    ],
+    "type": "object"
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "PixverseLipsyncInput",
+    "PixverseLipsyncOutput",
+    "File"
+  ]
+}

@@ -1,0 +1,116 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/finegrain-eraser/mask",
+  "task": "unknown",
+  "source_url": "https://fal.ai/models/fal-ai/finegrain-eraser/mask",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Ffinegrain-eraser%2Fmask",
+  "retrieved_at": "2026-10-04T19:43:47.975Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "image-to-image",
+  "bytes_sha256": "a859244b9056266365c7d6018b7ceb58304f6755255a22ff6fe9d858ff7a9167",
+  "queue_path": "/fal-ai/finegrain-eraser/mask",
+  "input_name": "FinegrainEraserMaskInput",
+  "input": {
+    "$refName": "FinegrainEraserMaskInput",
+    "properties": {
+      "mode": {
+        "enum": [
+          "express",
+          "standard",
+          "premium"
+        ],
+        "default": "standard",
+        "type": "string",
+        "description": "Erase quality mode"
+      },
+      "mask_url": {
+        "examples": [
+          "https://v3.fal.media/files/panda/-31cZrsoy-8BrLqOEFmST_indir%20(18).png"
+        ],
+        "type": "string",
+        "description": "URL of the mask image. Should be a binary mask where white (255) indicates areas to erase"
+      },
+      "seed": {
+        "description": "Random seed for reproducible generation",
+        "anyOf": [
+          {
+            "maximum": 999,
+            "type": "integer",
+            "minimum": 0
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "image_url": {
+        "examples": [
+          "https://v3.fal.media/files/elephant/IKqKIxDfRDK8fzeETCveO_erase_example01.jpg"
+        ],
+        "type": "string",
+        "description": "URL of the image to edit"
+      }
+    },
+    "required": [
+      "image_url",
+      "mask_url"
+    ],
+    "type": "object"
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "FinegrainEraserMaskInput",
+    "FinegrainEraserMaskOutput",
+    "File"
+  ]
+}

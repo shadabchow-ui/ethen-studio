@@ -1,0 +1,119 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "veed/avatars/text-to-video",
+  "task": "text-to-video",
+  "source_url": "https://fal.ai/models/veed/avatars/text-to-video",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=veed%2Favatars%2Ftext-to-video",
+  "retrieved_at": "2026-10-04T19:55:29.270Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "text-to-video",
+  "bytes_sha256": "85c9c39833f82142c68f7869c1abbf068f6b242cf962b7b11627d5dc3aa9f0a9",
+  "queue_path": "/veed/avatars/text-to-video",
+  "input_name": "AvatarsTextToVideoInput",
+  "input": {
+    "$refName": "AvatarsTextToVideoInput",
+    "type": "object",
+    "properties": {
+      "text": {
+        "examples": [
+          "\nEver wondered how to get that flawless glow? \nIntroducing our new skincare line, designed for real life. \nStep one: Cleanse with our gentle, nourishing formula. \nStep two: Apply our hydrating serum for that dewy look. \nStep three: Lock it in with our lightweight moisturizer. \nFeel the difference with every application. \nSee the glow? That's the magic of our skincare. \nUse code 'GLOW20' for an exclusive discount. \nJoin the skincare revolution today!\n"
+        ],
+        "type": "string"
+      },
+      "avatar_id": {
+        "enum": [
+          "emily_vertical_primary",
+          "emily_vertical_secondary",
+          "marcus_vertical_primary",
+          "marcus_vertical_secondary",
+          "mira_vertical_primary",
+          "mira_vertical_secondary",
+          "jasmine_vertical_primary",
+          "jasmine_vertical_secondary",
+          "jasmine_vertical_walking",
+          "aisha_vertical_walking",
+          "elena_vertical_primary",
+          "elena_vertical_secondary",
+          "any_male_vertical_primary",
+          "any_female_vertical_primary",
+          "any_male_vertical_secondary",
+          "any_female_vertical_secondary",
+          "any_female_vertical_walking",
+          "emily_primary",
+          "emily_side",
+          "marcus_primary",
+          "marcus_side",
+          "aisha_walking",
+          "elena_primary",
+          "elena_side",
+          "any_male_primary",
+          "any_female_primary",
+          "any_male_side",
+          "any_female_side"
+        ],
+        "description": "The avatar to use for the video",
+        "type": "string"
+      }
+    },
+    "required": [
+      "avatar_id",
+      "text"
+    ]
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "AvatarsTextToVideoInput",
+    "AvatarsTextToVideoOutput",
+    "File"
+  ]
+}

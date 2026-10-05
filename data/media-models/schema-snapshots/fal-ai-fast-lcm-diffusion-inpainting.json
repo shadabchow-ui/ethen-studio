@@ -1,0 +1,225 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/fast-lcm-diffusion/inpainting",
+  "task": "unknown",
+  "source_url": "https://fal.ai/models/fal-ai/fast-lcm-diffusion/inpainting",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Ffast-lcm-diffusion%2Finpainting",
+  "retrieved_at": "2026-10-04T19:43:33.685Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "image-to-image",
+  "bytes_sha256": "2d41191970737e659b9b51621a80d38b4fb662d6610a30508607e04b39e97cdc",
+  "queue_path": "/fal-ai/fast-lcm-diffusion/inpainting",
+  "input_name": "FastLcmDiffusionInpaintingInput",
+  "input": {
+    "$refName": "FastLcmDiffusionInpaintingInput",
+    "properties": {
+      "format": {
+        "enum": [
+          "jpeg",
+          "png"
+        ],
+        "default": "jpeg",
+        "type": "string",
+        "description": "The format of the generated image."
+      },
+      "expand_prompt": {
+        "default": false,
+        "type": "boolean",
+        "description": "If set to true, the prompt will be expanded with additional prompts."
+      },
+      "seed": {
+        "default": null,
+        "description": "\n            The same seed and the same prompt given to the same version of Stable Diffusion\n            will output the same image every time.\n        ",
+        "anyOf": [
+          {
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "sync_mode": {
+        "default": true,
+        "type": "boolean",
+        "description": "If `True`, the media will be returned as a data URI and the output data won't be available in the request history."
+      },
+      "prompt": {
+        "examples": [
+          "a tiger sitting on a park bench"
+        ],
+        "type": "string",
+        "description": "The prompt to use for generating the image. Be as descriptive as possible for best results."
+      },
+      "num_images": {
+        "description": "The number of images to generate.",
+        "maximum": 8,
+        "default": 1,
+        "type": "integer",
+        "minimum": 1
+      },
+      "mask_url": {
+        "examples": [
+          "https://raw.githubusercontent.com/CompVis/latent-diffusion/main/data/inpainting_examples/overture-creations-5sI6fQgYIuo_mask.png"
+        ],
+        "type": "string",
+        "description": "The URL of the mask to use for inpainting."
+      },
+      "strength": {
+        "description": "determines how much the generated image resembles the initial image",
+        "maximum": 1,
+        "default": 0.95,
+        "type": "number",
+        "minimum": 0.01
+      },
+      "enable_safety_checker": {
+        "default": true,
+        "type": "boolean",
+        "description": "If set to true, the safety checker will be enabled."
+      },
+      "safety_checker_version": {
+        "enum": [
+          "v1",
+          "v2"
+        ],
+        "default": "v1",
+        "type": "string",
+        "description": "The version of the safety checker to use. v1 is the default CompVis safety checker. v2 uses a custom ViT model."
+      },
+      "image_url": {
+        "examples": [
+          "https://raw.githubusercontent.com/CompVis/latent-diffusion/main/data/inpainting_examples/overture-creations-5sI6fQgYIuo.png"
+        ],
+        "type": "string",
+        "description": "The URL of the image to use as a starting point for the generation."
+      },
+      "num_inference_steps": {
+        "description": "The number of inference steps to perform.",
+        "maximum": 32,
+        "default": 6,
+        "type": "integer",
+        "minimum": 1
+      },
+      "request_id": {
+        "default": "",
+        "type": "string",
+        "description": "\n            An id bound to a request, can be used with response to identify the request\n            itself.\n        "
+      },
+      "guidance_scale": {
+        "description": "\n            The CFG (Classifier Free Guidance) scale is a measure of how close you want\n            the model to stick to your prompt when looking for a related image to show you.\n        ",
+        "maximum": 20,
+        "default": 1.5,
+        "type": "number",
+        "minimum": 0
+      },
+      "negative_prompt": {
+        "examples": [
+          "cartoon, illustration, animation. face. male, female"
+        ],
+        "default": "",
+        "type": "string",
+        "description": "\n            The negative prompt to use.Use it to address details that you don't want\n            in the image. This could be colors, objects, scenery and even the small details\n            (e.g. moustache, blurry, low resolution).\n        "
+      },
+      "image_size": {
+        "default": "square_hd",
+        "description": "The size of the generated image.",
+        "anyOf": [
+          {
+            "$refName": "ImageSize",
+            "properties": {
+              "width": {
+                "exclusiveMinimum": 0,
+                "maximum": 14142,
+                "default": 512,
+                "type": "integer",
+                "description": "The width of the generated image."
+              },
+              "height": {
+                "exclusiveMinimum": 0,
+                "maximum": 14142,
+                "default": 512,
+                "type": "integer",
+                "description": "The height of the generated image."
+              }
+            },
+            "type": "object"
+          },
+          {
+            "enum": [
+              "square_hd",
+              "square",
+              "portrait_4_3",
+              "portrait_16_9",
+              "landscape_4_3",
+              "landscape_16_9"
+            ],
+            "type": "string"
+          }
+        ]
+      }
+    },
+    "required": [
+      "image_url",
+      "mask_url",
+      "prompt"
+    ],
+    "type": "object"
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "FastLcmDiffusionInpaintingInput",
+    "FastLcmDiffusionInpaintingOutput",
+    "ImageSize",
+    "Image"
+  ]
+}

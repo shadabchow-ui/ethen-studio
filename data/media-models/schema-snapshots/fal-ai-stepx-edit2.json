@@ -1,0 +1,155 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/stepx-edit2",
+  "task": "unknown",
+  "source_url": "https://fal.ai/models/fal-ai/stepx-edit2",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fstepx-edit2",
+  "retrieved_at": "2026-10-04T19:51:53.298Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "image-to-image",
+  "bytes_sha256": "f24404edf7d31e05566a100926959d259d14ad138611bfe6ca17b2009275a921",
+  "queue_path": "/fal-ai/stepx-edit2",
+  "input_name": "StepxEdit2Input",
+  "input": {
+    "$refName": "StepxEdit2Input",
+    "properties": {
+      "sync_mode": {
+        "default": false,
+        "description": "If `True`, the media will be returned as a data URI and the output data won't be available in the request history.",
+        "type": "boolean"
+      },
+      "num_inference_steps": {
+        "default": 50,
+        "maximum": 100,
+        "description": "The number of inference steps to perform. Recommended: 50.",
+        "minimum": 1,
+        "type": "integer"
+      },
+      "negative_prompt": {
+        "default": "",
+        "description": "\n            The negative prompt to use. Use it to address details that you don't want\n            in the image. This could be colors, objects, scenery and even the small details\n            (e.g. moustache, blurry, low resolution).\n        ",
+        "examples": [
+          ""
+        ],
+        "type": "string"
+      },
+      "image_url": {
+        "description": "The image URL to generate an image from. Needs to match the dimensions of the mask.",
+        "examples": [
+          "https://storage.googleapis.com/falserverless/example_inputs/girl_2.png"
+        ],
+        "type": "string"
+      },
+      "output_format": {
+        "default": "jpeg",
+        "enum": [
+          "jpeg",
+          "png"
+        ],
+        "description": "The format of the generated image.",
+        "type": "string"
+      },
+      "enable_thinking_mode": {
+        "default": true,
+        "description": "Enable thinking mode. Uses multimodal language model knowledge to interpret abstract editing instructions.",
+        "type": "boolean"
+      },
+      "enable_safety_checker": {
+        "default": true,
+        "description": "If set to true, the safety checker will be enabled.",
+        "type": "boolean"
+      },
+      "prompt": {
+        "description": "The prompt to generate an image from.",
+        "examples": [
+          "make head band red"
+        ],
+        "type": "string"
+      },
+      "enable_reflection_mode": {
+        "default": true,
+        "description": "Enable reflection mode. Reviews outputs, corrects unintended changes, and determines when editing is complete.",
+        "type": "boolean"
+      },
+      "guidance_scale": {
+        "default": 6,
+        "maximum": 20,
+        "description": "\n            The true CFG scale. Controls how closely the model follows the prompt.\n        ",
+        "minimum": 0,
+        "type": "number"
+      },
+      "seed": {
+        "anyOf": [
+          {
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "\n            The same seed and the same prompt given to the same version of the model\n            will output the same image every time.\n        "
+      }
+    },
+    "required": [
+      "prompt",
+      "image_url"
+    ],
+    "type": "object"
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "StepxEdit2Input",
+    "StepxEdit2Output",
+    "Image"
+  ]
+}

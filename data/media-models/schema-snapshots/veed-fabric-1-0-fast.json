@@ -1,0 +1,106 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "veed/fabric-1.0/fast",
+  "task": "unknown",
+  "source_url": "https://fal.ai/models/veed/fabric-1.0/fast",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=veed%2Ffabric-1.0%2Ffast",
+  "retrieved_at": "2026-10-04T19:55:30.260Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "image-to-video",
+  "bytes_sha256": "3b06c6e188f831fd410b1b9ba24ee0827b4d3c7ea91ba1fd4272feb03a68cd97",
+  "queue_path": "/veed/fabric-1.0/fast",
+  "input_name": "Fabric10FastInput",
+  "input": {
+    "$refName": "Fabric10FastInput",
+    "required": [
+      "image_url",
+      "audio_url",
+      "resolution"
+    ],
+    "type": "object",
+    "properties": {
+      "audio_url": {
+        "minLength": 1,
+        "format": "uri",
+        "maxLength": 2083,
+        "type": "string",
+        "examples": [
+          "https://v3.fal.media/files/elephant/Oz_g4AwQvXtXpUHL3Pa7u_Hope.mp3"
+        ]
+      },
+      "image_url": {
+        "minLength": 1,
+        "format": "uri",
+        "maxLength": 2083,
+        "type": "string",
+        "examples": [
+          "https://v3.fal.media/files/koala/NLVPfOI4XL1cWT2PmmqT3_Hope.png"
+        ]
+      },
+      "resolution": {
+        "enum": [
+          "720p",
+          "480p"
+        ],
+        "type": "string",
+        "description": "Resolution"
+      }
+    }
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "Fabric10FastInput",
+    "Fabric10FastOutput",
+    "File"
+  ]
+}

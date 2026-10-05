@@ -1,0 +1,108 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "hitem3d/hi3d/multicolor",
+  "task": "unknown",
+  "source_url": "https://fal.ai/models/hitem3d/hi3d/multicolor",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=hitem3d%2Fhi3d%2Fmulticolor",
+  "retrieved_at": "2026-10-04T19:53:40.565Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "3d-to-3d",
+  "bytes_sha256": "19460eddbb990c20ab28388cad40b8312020e061c4e27701093f84717e5c001e",
+  "queue_path": "/hitem3d/hi3d/multicolor",
+  "input_name": "Hi3dMulticolorInput",
+  "input": {
+    "$refName": "Hi3dMulticolorInput",
+    "type": "object",
+    "properties": {
+      "export_format": {
+        "default": "glb",
+        "type": "string",
+        "description": "File format of the generated model. STL, USDZ and 3MF are not currently supported by the partner.",
+        "enum": [
+          "glb",
+          "obj",
+          "fbx"
+        ]
+      },
+      "enable_safety_checker": {
+        "default": true,
+        "type": "boolean",
+        "description": "If set to true, inputs are checked for safety before processing."
+      },
+      "mesh_url": {
+        "examples": [
+          "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Models/master/2.0/DamagedHelmet/glTF-Binary/DamagedHelmet.glb"
+        ],
+        "type": "string",
+        "description": "URL of the input textured model. Only GLB format is supported, up to 200MB."
+      },
+      "number_of_colors": {
+        "default": 4,
+        "minimum": 0,
+        "type": "integer",
+        "description": "Number of colors in the generated model (1-8), or 0 for the maximum. Use 0 if you plan to edit the colors later.",
+        "maximum": 8
+      }
+    },
+    "required": [
+      "mesh_url"
+    ],
+    "description": "Input for converting a textured model into a multicolor model."
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "Hi3dMulticolorInput",
+    "Hi3dMulticolorOutput",
+    "File"
+  ]
+}

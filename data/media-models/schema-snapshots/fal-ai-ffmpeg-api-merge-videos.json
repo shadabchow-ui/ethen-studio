@@ -1,0 +1,151 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/ffmpeg-api/merge-videos",
+  "task": "unknown",
+  "source_url": "https://fal.ai/models/fal-ai/ffmpeg-api/merge-videos",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fffmpeg-api%2Fmerge-videos",
+  "retrieved_at": "2026-10-04T19:43:44.279Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "video-to-video",
+  "bytes_sha256": "ec63beb9f1f6997a4b30b05004655a65ac43f8bdc8449f5e813058fe4437e547",
+  "queue_path": "/fal-ai/ffmpeg-api/merge-videos",
+  "input_name": "FfmpegApiMergeVideosInput",
+  "input": {
+    "$refName": "FfmpegApiMergeVideosInput",
+    "properties": {
+      "resolution_aspect_ratio_video_index": {
+        "anyOf": [
+          {
+            "minimum": 0,
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "Zero-based index of the input video whose aspect ratio should be used when resolution is not provided. If omitted, preserves the default behavior of using the minimum width and minimum height across input videos."
+      },
+      "target_fps": {
+        "anyOf": [
+          {
+            "minimum": 1,
+            "type": "number",
+            "maximum": 60
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "Target FPS for the output video. If not provided, uses the lowest FPS from input videos."
+      },
+      "resolution": {
+        "anyOf": [
+          {
+            "$refName": "ImageSize",
+            "properties": {
+              "width": {
+                "default": 512,
+                "type": "integer",
+                "exclusiveMinimum": 0,
+                "description": "The width of the generated image.",
+                "maximum": 14142
+              },
+              "height": {
+                "default": 512,
+                "type": "integer",
+                "exclusiveMinimum": 0,
+                "description": "The height of the generated image.",
+                "maximum": 14142
+              }
+            },
+            "type": "object"
+          },
+          {
+            "type": "string",
+            "enum": [
+              "square_hd",
+              "square",
+              "portrait_4_3",
+              "portrait_16_9",
+              "landscape_4_3",
+              "landscape_16_9"
+            ]
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "Resolution of the final video. Width and height must be between 512 and 2048."
+      },
+      "video_urls": {
+        "items": {
+          "type": "string"
+        },
+        "type": "array",
+        "minItems": 2,
+        "description": "List of video URLs to merge in order"
+      }
+    },
+    "required": [
+      "video_urls"
+    ],
+    "type": "object"
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "FfmpegApiMergeVideosInput",
+    "FfmpegApiMergeVideosOutput",
+    "ImageSize",
+    "File"
+  ]
+}

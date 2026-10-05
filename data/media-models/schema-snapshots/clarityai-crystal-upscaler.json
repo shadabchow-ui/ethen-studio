@@ -1,0 +1,109 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "clarityai/crystal-upscaler",
+  "task": "unknown",
+  "source_url": "https://fal.ai/models/clarityai/crystal-upscaler",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=clarityai%2Fcrystal-upscaler",
+  "retrieved_at": "2026-10-04T19:42:20.990Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "image-to-image",
+  "bytes_sha256": "6aebadfdfbc5db59bd22995e13b27b00f7f3857bd67522c720a6f552fddc81ca",
+  "queue_path": "/clarityai/crystal-upscaler",
+  "input_name": "CrystalUpscalerInput",
+  "input": {
+    "$refName": "CrystalUpscalerInput",
+    "properties": {
+      "output_format": {
+        "description": "Output image format",
+        "enum": [
+          "png",
+          "jpg"
+        ],
+        "type": "string",
+        "default": "jpg"
+      },
+      "image_url": {
+        "description": "URL to the input image",
+        "type": "string",
+        "max_file_size": 104857600,
+        "examples": [
+          "https://v3b.fal.media/files/b/zebra/eW3waMFDT-2_7Pq8j3r9d_upscaled.png"
+        ]
+      },
+      "creativity": {
+        "maximum": 10,
+        "description": "Creativity level for upscaling",
+        "type": "number",
+        "minimum": 0,
+        "default": 0
+      },
+      "scale_factor": {
+        "maximum": 200,
+        "description": "Scale factor",
+        "type": "number",
+        "minimum": 1,
+        "default": 2
+      }
+    },
+    "type": "object",
+    "required": [
+      "image_url"
+    ]
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "CrystalUpscalerInput",
+    "CrystalUpscalerOutput",
+    "Image"
+  ]
+}

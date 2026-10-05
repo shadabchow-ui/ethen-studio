@@ -1,0 +1,134 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "luma/agent/uni-1/v1/max/edit",
+  "task": "image-editing",
+  "source_url": "https://fal.ai/models/luma/agent/uni-1/v1/max/edit",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=luma%2Fagent%2Funi-1%2Fv1%2Fmax%2Fedit",
+  "retrieved_at": "2026-10-04T19:54:05.287Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "image-to-image",
+  "bytes_sha256": "ecc7c673e6fd5aeec3d6436a43c99c15ca0e38f8aced612e1de75e70f19911e7",
+  "queue_path": "/luma/agent/uni-1/v1/max/edit",
+  "input_name": "AgentUni1V1MaxEditInput",
+  "input": {
+    "$refName": "AgentUni1V1MaxEditInput",
+    "properties": {
+      "prompt": {
+        "maxLength": 6000,
+        "examples": [
+          "Replace the background with a sunset over the ocean."
+        ],
+        "description": "Text prompt describing the edit to apply.",
+        "minLength": 1,
+        "type": "string"
+      },
+      "reference_image_urls": {
+        "anyOf": [
+          {
+            "maxItems": 8,
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "Optional list of reference image URLs used to guide the edit."
+      },
+      "image_url": {
+        "description": "URL of the source image to edit.",
+        "examples": [
+          "https://storage.googleapis.com/falserverless/gallery/example_inputs_liuyifei.png"
+        ],
+        "type": "string"
+      },
+      "style": {
+        "type": "string",
+        "enum": [
+          "auto",
+          "manga"
+        ],
+        "description": "Visual style of the edited image.",
+        "default": "auto"
+      },
+      "output_format": {
+        "anyOf": [
+          {
+            "enum": [
+              "png",
+              "jpeg"
+            ],
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "Encoding format of the edited image."
+      }
+    },
+    "required": [
+      "prompt",
+      "image_url"
+    ],
+    "type": "object"
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "AgentUni1V1MaxEditInput",
+    "AgentUni1V1MaxEditOutput",
+    "File"
+  ]
+}

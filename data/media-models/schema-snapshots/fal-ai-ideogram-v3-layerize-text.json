@@ -1,0 +1,200 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/ideogram/v3/layerize-text",
+  "task": "unknown",
+  "source_url": "https://fal.ai/models/fal-ai/ideogram/v3/layerize-text",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fideogram%2Fv3%2Flayerize-text",
+  "retrieved_at": "2026-10-04T19:46:02.095Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "image-to-image",
+  "bytes_sha256": "7e51c2ed6e8a3ad025db33c5e58b030ae8448cd3f26b050980d82554b71ab6ba",
+  "queue_path": "/fal-ai/ideogram/v3/layerize-text",
+  "input_name": "IdeogramV3LayerizeTextInput",
+  "input": {
+    "$refName": "IdeogramV3LayerizeTextInput",
+    "properties": {
+      "font_name_h1": {
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "Name of the font to use for h1 text. Cannot be used with font_file_h1_url."
+      },
+      "font_file_h2_url": {
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "URL of the font file to use for h2 text. Cannot be used with font_name_h2."
+      },
+      "font_name_small": {
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "Name of the font to use for small text. Cannot be used with font_file_small_url."
+      },
+      "font_file_small_url": {
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "URL of the font file to use for small text. Cannot be used with font_name_small."
+      },
+      "font_file_body_url": {
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "URL of the font file to use for body text. Cannot be used with font_name_body."
+      },
+      "seed": {
+        "anyOf": [
+          {
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "Seed for the random number generator."
+      },
+      "font_name_h2": {
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "Name of the font to use for h2 text. Cannot be used with font_file_h2_url."
+      },
+      "font_name_body": {
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "Name of the font to use for body text. Cannot be used with font_file_body_url."
+      },
+      "font_file_h1_url": {
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "URL of the font file to use for h1 text. Cannot be used with font_name_h1."
+      },
+      "image_url": {
+        "description": "URL of the flat graphic image to layerize. Must be JPEG, PNG, or WebP (max 10MB).",
+        "type": "string",
+        "examples": [
+          "https://v3.fal.media/files/lion/0qJs_qW8nz0wYsXhFa6Tk.png"
+        ]
+      },
+      "sync_mode": {
+        "default": false,
+        "description": "If `True`, the media will be returned as a data URI and the output data won't be available in the request history.",
+        "type": "boolean"
+      },
+      "prompt": {
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "Optional prompt to guide the layerization."
+      }
+    },
+    "type": "object",
+    "required": [
+      "image_url"
+    ]
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "IdeogramV3LayerizeTextInput",
+    "IdeogramV3LayerizeTextOutput",
+    "File"
+  ]
+}

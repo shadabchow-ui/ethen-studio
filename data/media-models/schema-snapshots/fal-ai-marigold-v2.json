@@ -1,0 +1,132 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/marigold-v2",
+  "task": "image-to-image",
+  "source_url": "https://fal.ai/models/fal-ai/marigold-v2",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fmarigold-v2",
+  "retrieved_at": "2026-10-03T04:46:17Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "image-to-image",
+  "bytes_sha256": "9c94873b9b6dde158bbaabefdc3bd73327c1f8509dc408194b3caf875019801f",
+  "queue_path": "/fal-ai/marigold-v2",
+  "input_name": "MarigoldV2Input",
+  "input": {
+    "$refName": "MarigoldV2Input",
+    "properties": {
+      "image_url": {
+        "type": "string",
+        "description": "Input image url."
+      },
+      "seed": {
+        "description": "Random seed. Only affects the VAE encoder's latent sampling (the forward pass itself is a single deterministic step); the same seed and image reproduce the same output.",
+        "anyOf": [
+          {
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "image_size": {
+        "description": "Inference size as an explicit `{width, height}` object or a preset string (e.g. `\"square_hd\"`, `\"landscape_4_3\"`). Both dimensions must be multiples of 16 and no larger than 2048 pixels on either side, with an aspect ratio between 1:16 and 16:1. Defaults to the input image's dimensions rounded to the nearest multiple of 16.",
+        "anyOf": [
+          {
+            "properties": {
+              "width": {
+                "exclusiveMinimum": 0,
+                "maximum": 14142,
+                "default": 512,
+                "type": "integer",
+                "description": "The width of the generated image."
+              },
+              "height": {
+                "exclusiveMinimum": 0,
+                "maximum": 14142,
+                "default": 512,
+                "type": "integer",
+                "description": "The height of the generated image."
+              }
+            },
+            "type": "object"
+          },
+          {
+            "enum": [
+              "square_hd",
+              "square",
+              "portrait_4_3",
+              "portrait_16_9",
+              "landscape_4_3",
+              "landscape_16_9"
+            ],
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      }
+    },
+    "required": [
+      "image_url"
+    ],
+    "type": "object"
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "Image",
+    "ImageSize",
+    "MarigoldV2Input",
+    "MarigoldV2Output",
+    "QueueStatus"
+  ]
+}

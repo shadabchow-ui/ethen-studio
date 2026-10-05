@@ -1,0 +1,91 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/minimax/hailuo-02/pro/text-to-video",
+  "task": "text-to-video",
+  "source_url": "https://fal.ai/models/fal-ai/minimax/hailuo-02/pro/text-to-video",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fminimax%2Fhailuo-02%2Fpro%2Ftext-to-video",
+  "retrieved_at": "2026-10-04T19:49:12.118Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "text-to-video",
+  "bytes_sha256": "ba78069c7b42f7f0c1026bca30bc3dc1f1dd1d05ae577593f0e89f4c7edaf03d",
+  "queue_path": "/fal-ai/minimax/hailuo-02/pro/text-to-video",
+  "input_name": "MinimaxHailuo02ProTextToVideoInput",
+  "input": {
+    "$refName": "MinimaxHailuo02ProTextToVideoInput",
+    "required": [
+      "prompt"
+    ],
+    "type": "object",
+    "properties": {
+      "prompt_optimizer": {
+        "description": "Whether to use the model's prompt optimizer",
+        "type": "boolean",
+        "default": true
+      },
+      "prompt": {
+        "type": "string",
+        "maxLength": 2000,
+        "examples": [
+          "A Galactic Smuggler is a rogue figure with a cybernetic arm and a well-worn coat that hints at many dangerous escapades across the galaxy. Their ship is filled with rare and exotic treasures from distant planets, concealed in hidden compartments, showing their expertise in illicit trade. Their belt is adorned with energy-based weapons, ready to be drawn at any moment to protect themselves or escape from tight situations. This character thrives in the shadows of space, navigating between the law and chaos with stealth and wit, always seeking the next big score while evading bounty hunters and law enforcement. The rogue's ship, rugged yet efficient, serves as both a home and a tool for their dangerous lifestyle. The treasures they collect reflect the diverse and intriguing worlds they've encountered—alien artifacts, rare minerals, and artifacts of unknown origin. Their reputation precedes them, with whispers of their dealings and the deadly encounters that often follow. A master of negotiation and deception, the Galactic Smuggler navigates the cosmos with an eye on the horizon, always one step ahead of those who pursue them."
+        ],
+        "minLength": 1
+      }
+    }
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "MinimaxHailuo02ProTextToVideoInput",
+    "MinimaxHailuo02ProTextToVideoOutput",
+    "File"
+  ]
+}

@@ -1,0 +1,165 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/pasd",
+  "task": "unknown",
+  "source_url": "https://fal.ai/models/fal-ai/pasd",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fpasd",
+  "retrieved_at": "2026-10-04T19:49:46.095Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "image-to-image",
+  "bytes_sha256": "05ea30813ce401292d037989ab352e2812f0eb301d93083899be9313400c2e4b",
+  "queue_path": "/fal-ai/pasd",
+  "input_name": "PasdInput",
+  "input": {
+    "$refName": "PasdInput",
+    "properties": {
+      "scale": {
+        "anyOf": [
+          {
+            "maximum": 4,
+            "minimum": 1,
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "Upscaling factor (1-4x)",
+        "default": 2
+      },
+      "steps": {
+        "anyOf": [
+          {
+            "maximum": 50,
+            "minimum": 10,
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "Number of inference steps (10-50)",
+        "default": 25
+      },
+      "negative_prompt": {
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "Negative prompt to avoid unwanted artifacts",
+        "default": "blurry, dirty, messy, frames, deformed, dotted, noise, raster lines, unclear, lowres, over-smoothed, painting, ai generated"
+      },
+      "image_url": {
+        "description": "Input image to super-resolve",
+        "examples": [
+          "https://storage.googleapis.com/falserverless/model_tests/svd/rocket.png"
+        ],
+        "type": "string"
+      },
+      "conditioning_scale": {
+        "anyOf": [
+          {
+            "maximum": 1,
+            "minimum": 0.1,
+            "type": "number"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "ControlNet conditioning scale (0.1-1.0)",
+        "default": 0.8
+      },
+      "guidance_scale": {
+        "anyOf": [
+          {
+            "maximum": 20,
+            "minimum": 1,
+            "type": "number"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "Guidance scale for diffusion (1.0-20.0)",
+        "default": 7
+      },
+      "prompt": {
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "Additional prompt to guide super-resolution",
+        "default": ""
+      }
+    },
+    "required": [
+      "image_url"
+    ],
+    "type": "object"
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "PasdInput",
+    "PasdOutput",
+    "Image"
+  ]
+}

@@ -1,0 +1,194 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/moondream3-preview/segment",
+  "task": "unknown",
+  "source_url": "https://fal.ai/models/fal-ai/moondream3-preview/segment",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fmoondream3-preview%2Fsegment",
+  "retrieved_at": "2026-10-04T19:49:32.174Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "image-to-image",
+  "bytes_sha256": "210ca6bc547732200485963b7a1f9be06f04f5546488a111555e098bac94e665",
+  "queue_path": "/fal-ai/moondream3-preview/segment",
+  "input_name": "Moondream3PreviewSegmentInput",
+  "input": {
+    "$refName": "Moondream3PreviewSegmentInput",
+    "properties": {
+      "preview": {
+        "description": "Whether to preview the output and return a binary mask of the image",
+        "default": false,
+        "type": "boolean",
+        "examples": [
+          true
+        ]
+      },
+      "settings": {
+        "description": "Sampling settings for the segmentation model",
+        "anyOf": [
+          {
+            "$refName": "SegmentSamplingSettings",
+            "properties": {
+              "temperature": {
+                "maximum": 1,
+                "minimum": 0,
+                "default": 1,
+                "description": "Sampling temperature to use. Higher values will make the output more random, while lower values will make it more focused and deterministic.",
+                "type": "number"
+              },
+              "max_tokens": {
+                "description": "Maximum number of tokens to generate.",
+                "anyOf": [
+                  {
+                    "minimum": 1,
+                    "type": "integer"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "top_p": {
+                "maximum": 1,
+                "minimum": 0,
+                "default": 1,
+                "description": "Nucleus sampling probability mass to use, between 0 and 1.",
+                "type": "number"
+              }
+            },
+            "type": "object"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "spatial_references": {
+        "anyOf": [
+          {
+            "items": {
+              "anyOf": [
+                {
+                  "$refName": "Point",
+                  "properties": {
+                    "y": {
+                      "description": "Y coordinate of the point in normalized format (0 to 1)",
+                      "type": "number"
+                    },
+                    "x": {
+                      "description": "X coordinate of the point in normalized format (0 to 1)",
+                      "type": "number"
+                    }
+                  },
+                  "required": [
+                    "x",
+                    "y"
+                  ],
+                  "type": "object"
+                },
+                {
+                  "items": {
+                    "type": "number"
+                  },
+                  "type": "array"
+                }
+              ]
+            },
+            "type": "array"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "Spatial references to guide the segmentation. By feeding in references you can help the segmentation process. Must be either list of Point object with x and y members, or list of arrays containing either 2 floats (x,y) or 4 floats (x1,y1,x2,y2). \n**NOTE**: You can also use the [**point endpoint**](https://fal.ai/models/fal-ai/moondream3-preview/point) to get points for the objects, and pass them in here.",
+        "examples": [
+          [
+            {
+              "y": 0.40762463343108507,
+              "x": 0.6402737047898338
+            }
+          ]
+        ]
+      },
+      "object": {
+        "description": "Object to be segmented in the image",
+        "type": "string",
+        "examples": [
+          "mango"
+        ]
+      },
+      "image_url": {
+        "description": "URL of the image to be processed",
+        "max_width": 7000,
+        "max_height": 7000,
+        "type": "string",
+        "examples": [
+          "https://storage.googleapis.com/falserverless/example_inputs/moondream-3-preview/segmentation_in.png"
+        ]
+      }
+    },
+    "required": [
+      "image_url",
+      "object"
+    ],
+    "type": "object"
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "Moondream3PreviewSegmentInput",
+    "Moondream3PreviewSegmentOutput",
+    "SegmentSamplingSettings",
+    "Point",
+    "ImageFile",
+    "Object",
+    "UsageInfo"
+  ]
+}

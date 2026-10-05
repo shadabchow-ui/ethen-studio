@@ -1,0 +1,221 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/hunyuan-3d/v3.1/pro/image-to-3d",
+  "task": "image-generation",
+  "source_url": "https://fal.ai/models/fal-ai/hunyuan-3d/v3.1/pro/image-to-3d",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fhunyuan-3d%2Fv3.1%2Fpro%2Fimage-to-3d",
+  "retrieved_at": "2026-10-04T19:45:36.081Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "image-to-3d",
+  "bytes_sha256": "53f847599ad33786163478e355f849ef909f6828ffb5d0f0737c86817bac0c89",
+  "queue_path": "/fal-ai/hunyuan-3d/v3.1/pro/image-to-3d",
+  "input_name": "Hunyuan3dV31ProImageTo3dInput",
+  "input": {
+    "$refName": "Hunyuan3dV31ProImageTo3dInput",
+    "required": [
+      "input_image_url"
+    ],
+    "properties": {
+      "generate_type": {
+        "enum": [
+          "Normal",
+          "Geometry"
+        ],
+        "default": "Normal",
+        "type": "string",
+        "description": "Generation task type. Normal: textured model. Geometry: geometry-only white model (no textures). LowPoly/Sketch are not available in v3.1."
+      },
+      "back_image_url": {
+        "description": "Optional back/rear view image URL (JPG/PNG recommended).",
+        "max_file_size": 8388608,
+        "anyOf": [
+          {
+            "_fal_ui_field": "image",
+            "type": "string",
+            "ui": {
+              "field": "image"
+            }
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "left_front_image_url": {
+        "description": "Optional left-front 45 degree angle view image URL (v3.1 exclusive, JPG/PNG recommended).",
+        "max_file_size": 8388608,
+        "anyOf": [
+          {
+            "_fal_ui_field": "image",
+            "type": "string",
+            "ui": {
+              "field": "image"
+            }
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "right_front_image_url": {
+        "description": "Optional right-front 45 degree angle view image URL (v3.1 exclusive, JPG/PNG recommended).",
+        "max_file_size": 8388608,
+        "anyOf": [
+          {
+            "_fal_ui_field": "image",
+            "type": "string",
+            "ui": {
+              "field": "image"
+            }
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "enable_pbr": {
+        "default": false,
+        "type": "boolean",
+        "description": "Enable PBR material generation (metallic, roughness, normal textures). Ignored when generate_type is Geometry."
+      },
+      "top_image_url": {
+        "description": "Optional top view image URL (v3.1 exclusive, JPG/PNG recommended).",
+        "max_file_size": 8388608,
+        "anyOf": [
+          {
+            "_fal_ui_field": "image",
+            "type": "string",
+            "ui": {
+              "field": "image"
+            }
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "right_image_url": {
+        "description": "Optional right side view image URL (JPG/PNG recommended).",
+        "max_file_size": 8388608,
+        "anyOf": [
+          {
+            "_fal_ui_field": "image",
+            "type": "string",
+            "ui": {
+              "field": "image"
+            }
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "input_image_url": {
+        "examples": [
+          "https://v3b.fal.media/files/b/0a8c3155/BTXNRrzOFsO6OvdSxdXmv_6ZcaGmrY.png"
+        ],
+        "type": "string",
+        "description": "Front view image URL. Resolution: 128-5000px, max 8MB, formats: JPG/PNG/WEBP. Tips: simple background, single object, object >50% of frame.",
+        "_fal_ui_field": "image",
+        "max_file_size": 8388608
+      },
+      "face_count": {
+        "description": "Target polygon face count. Range: 40,000-1,500,000. Default: 500,000.",
+        "maximum": 1500000,
+        "default": 500000,
+        "type": "integer",
+        "minimum": 40000
+      },
+      "left_image_url": {
+        "description": "Optional left side view image URL (JPG/PNG recommended).",
+        "max_file_size": 8388608,
+        "anyOf": [
+          {
+            "_fal_ui_field": "image",
+            "type": "string",
+            "ui": {
+              "field": "image"
+            }
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "bottom_image_url": {
+        "description": "Optional bottom view image URL (v3.1 exclusive, JPG/PNG recommended).",
+        "max_file_size": 8388608,
+        "anyOf": [
+          {
+            "_fal_ui_field": "image",
+            "type": "string",
+            "ui": {
+              "field": "image"
+            }
+          },
+          {
+            "type": "null"
+          }
+        ]
+      }
+    },
+    "type": "object"
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "Hunyuan3dV31ProImageTo3dInput",
+    "Hunyuan3dV31ProImageTo3dOutput",
+    "File",
+    "ModelUrls"
+  ]
+}

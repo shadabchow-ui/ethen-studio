@@ -1,0 +1,302 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/heygen/avatar4/image-to-video",
+  "task": "image-to-video",
+  "source_url": "https://fal.ai/models/fal-ai/heygen/avatar4/image-to-video",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fheygen%2Favatar4%2Fimage-to-video",
+  "retrieved_at": "2026-10-04T19:45:25.413Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "image-to-video",
+  "bytes_sha256": "2258f186eba47222fb7cb12861b4e60d48195939b7c0d023b6a8684a8eb8d405",
+  "queue_path": "/fal-ai/heygen/avatar4/image-to-video",
+  "input_name": "HeygenAvatar4ImageToVideoInput",
+  "input": {
+    "$refName": "HeygenAvatar4ImageToVideoInput",
+    "properties": {
+      "background": {
+        "$refName": "AvatarIVBackground",
+        "properties": {
+          "value": {
+            "description": "Background value - hex color for 'color' type, URL for 'image' or 'video' type",
+            "default": "#FFFFFF",
+            "type": "string"
+          },
+          "type": {
+            "description": "Type of background",
+            "enum": [
+              "color",
+              "image",
+              "video"
+            ],
+            "default": "color",
+            "type": "string"
+          }
+        },
+        "type": "object",
+        "description": "Background configuration"
+      },
+      "expression": {
+        "description": "Facial expression",
+        "anyOf": [
+          {
+            "const": "happy",
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "image_url": {
+        "description": "URL of the image to animate. The image should contain a clear face.",
+        "type": "string",
+        "examples": [
+          "https://v3b.fal.media/files/b/0a90062c/A7EIviZqNxZ2HAs0yHeZ6_77a05b99-8588-4ffc-90aa-be7f9d34e9d3.png"
+        ]
+      },
+      "voice": {
+        "description": "Name of the voice to use for the avatar",
+        "enum": [
+          "Warm Pro Narrator",
+          "Chill Brian",
+          "Ivy",
+          "John Doe",
+          "Monika Sogam",
+          "Hope ",
+          "Archer ",
+          "Brittney",
+          "Patrick",
+          "David Castlemore",
+          "Michael C",
+          "Adam Stone ",
+          "Juniper",
+          "Cassidy ",
+          "Jessica Anne Bogart",
+          "Arabella",
+          "Andrew",
+          "Spuds Oxley ",
+          "Grace Elder",
+          "Helen",
+          "Canyon Rivers",
+          "Derya - Lifelike - Excited 🤩",
+          "Mellow Marcus",
+          "Jack Sterling - Broadcaster 🎙️",
+          "Brenda - UGC - 1.mp4",
+          "Reid",
+          "Reagan",
+          "Terry",
+          "Jenny",
+          "Radio Rick",
+          "Denise",
+          "Tim in car - Excited 🤩",
+          "Iskander",
+          "Thompson",
+          "Delicate Daisy - Excited 🤩",
+          "Kingston",
+          "George UGC 1",
+          "Bold Blake",
+          "Jane",
+          "Expressive Evan",
+          "Marianne - IA",
+          "Aaron",
+          "Modern Recipe Host - Voice 1",
+          "Willow",
+          "Cute Chloe - Friendly 😊",
+          "Rafael",
+          "June - Lifelike",
+          "Crisp Chloe",
+          "Slick Simon",
+          "Nassim - Informative",
+          "Baritone Ben",
+          "Maxwell",
+          "Ellie Faye - Excited 🤩",
+          "Milani",
+          "Feisty Fiona - Excited 🤩",
+          "Professor Dean",
+          "Rose - UGC - 1.mp4",
+          "Shona",
+          "Hudson Wilder",
+          "Ann - IA",
+          "Alastair Kensington",
+          "Oxley",
+          "Christina",
+          "Andrew Rizz ",
+          "Peyton",
+          "Gerardo - Outdoor",
+          "Chloe - Lifelike",
+          "Stephanie",
+          "Anthony - IA",
+          "Signal - Voice 1",
+          "Luca",
+          "Lisa - Voice 1",
+          "T.W.Tucker",
+          "Jack Sullivan - Serious 😐",
+          "Winter",
+          "Mireia - Lifelike",
+          "Georgia",
+          "Stella",
+          "Masha - Lifelike",
+          "Charming Charles - Friendly 😊",
+          "Serenity",
+          "Annie - Excited",
+          "Ralph",
+          "Bethany",
+          "Dominic",
+          "Mason Finn",
+          "Leena",
+          "Veteran Victor",
+          "Tamara",
+          "Nik Public",
+          "Calm Chloe",
+          "Sevik",
+          "Reilly",
+          "Raul",
+          "Imposing Ian",
+          "Relaxed Ray",
+          "Dexter - Professional",
+          "Relaxed Rick",
+          "Edwin",
+          "Rupert Blackwood",
+          "Ginny",
+          "Hope"
+        ],
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "examples": [
+          "Melissa"
+        ]
+      },
+      "aspect_ratio": {
+        "description": "Aspect ratio of the output video. Supported values: '16:9', '9:16', '4:5', '5:4', '1:1', and 'auto'. 'auto' preserves the source aspect ratio when HeyGen can read it, falling back to '16:9' otherwise.",
+        "enum": [
+          "16:9",
+          "9:16",
+          "4:5",
+          "5:4",
+          "1:1",
+          "auto"
+        ],
+        "default": "16:9",
+        "type": "string"
+      },
+      "prompt": {
+        "description": "The text the avatar will speak",
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "examples": [
+          "Hey friends! Welcome to the GPU force podcast and today we are going to discuss about the rising GPU cost!"
+        ]
+      },
+      "resolution": {
+        "description": "Video resolution preset. Options: 360p, 480p, 540p, 720p, 1080p",
+        "enum": [
+          "360p",
+          "480p",
+          "540p",
+          "720p",
+          "1080p"
+        ],
+        "default": "720p",
+        "type": "string"
+      },
+      "talking_style": {
+        "description": "Talking style - 'stable' for minimal movement, 'expressive' for more animation",
+        "enum": [
+          "stable",
+          "expressive"
+        ],
+        "default": "stable",
+        "type": "string"
+      },
+      "caption": {
+        "description": "Whether to add captions to the video",
+        "default": false,
+        "type": "boolean"
+      },
+      "audio_url": {
+        "description": "URL of an audio file for the avatar to lip-sync to. When provided, overrides prompt and voice.",
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      }
+    },
+    "required": [
+      "image_url"
+    ],
+    "type": "object"
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "HeygenAvatar4ImageToVideoInput",
+    "HeygenAvatar4ImageToVideoOutput",
+    "AvatarIVBackground",
+    "File"
+  ]
+}

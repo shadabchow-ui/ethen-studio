@@ -1,0 +1,120 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/workflow-utilities/trim-video",
+  "task": "video-editing",
+  "source_url": "https://fal.ai/models/fal-ai/workflow-utilities/trim-video",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fworkflow-utilities%2Ftrim-video",
+  "retrieved_at": "2026-10-04T19:53:19.713Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "video-to-video",
+  "bytes_sha256": "ffa3eefa9fc7e635894572912d57de25db7412d09f2faa634845645fac5f1334",
+  "queue_path": "/fal-ai/workflow-utilities/trim-video",
+  "input_name": "WorkflowUtilitiesTrimVideoInput",
+  "input": {
+    "$refName": "WorkflowUtilitiesTrimVideoInput",
+    "description": "Input model for trimming a video to a specified time range",
+    "properties": {
+      "duration": {
+        "description": "Duration in seconds from start_time. Ignored if end_time is provided.",
+        "anyOf": [
+          {
+            "type": "number",
+            "exclusiveMinimum": 0
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": 2
+      },
+      "start_time": {
+        "description": "Start time in seconds",
+        "type": "number",
+        "minimum": 0,
+        "default": 1
+      },
+      "video_url": {
+        "description": "URL of the video file to trim",
+        "type": "string",
+        "examples": [
+          "https://storage.googleapis.com/falserverless/example_outputs/wan-25-i2v-output.mp4"
+        ],
+        "max_file_size": 500000000
+      },
+      "end_time": {
+        "description": "End time in seconds. If not provided, uses duration instead.",
+        "anyOf": [
+          {
+            "type": "number"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "examples": [
+          3
+        ]
+      }
+    },
+    "type": "object",
+    "required": [
+      "video_url"
+    ]
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "WorkflowUtilitiesTrimVideoInput",
+    "WorkflowUtilitiesTrimVideoOutput",
+    "File"
+  ]
+}

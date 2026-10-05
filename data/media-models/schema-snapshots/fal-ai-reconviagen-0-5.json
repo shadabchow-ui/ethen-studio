@@ -1,0 +1,267 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/reconviagen-0.5",
+  "task": "unknown",
+  "source_url": "https://fal.ai/models/fal-ai/reconviagen-0.5",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Freconviagen-0.5",
+  "retrieved_at": "2026-10-04T19:51:04.980Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "image-to-3d",
+  "bytes_sha256": "5c2293745a858963809ab948aeae474adb3b06cfed04faf9daf9b63ee5672447",
+  "queue_path": "/fal-ai/reconviagen-0.5",
+  "input_name": "Reconviagen05Input",
+  "input": {
+    "$refName": "Reconviagen05Input",
+    "type": "object",
+    "properties": {
+      "decimation_target": {
+        "minimum": 5000,
+        "type": "integer",
+        "description": "Target number of vertices in the final mesh.",
+        "maximum": 2000000,
+        "default": 500000
+      },
+      "seed": {
+        "description": "Random seed for reproducibility",
+        "anyOf": [
+          {
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "tex_slat_sampling_steps": {
+        "minimum": 1,
+        "type": "integer",
+        "description": "Number of denoising steps for texture generation.",
+        "maximum": 50,
+        "default": 12
+      },
+      "ss_rescale_t": {
+        "minimum": 1,
+        "type": "number",
+        "description": "Controls noise schedule sharpness for structure generation.",
+        "maximum": 6,
+        "default": 5
+      },
+      "shape_slat_guidance_strength": {
+        "minimum": 0,
+        "type": "number",
+        "description": "How closely the detailed geometry follows the input.",
+        "maximum": 10,
+        "default": 7.5
+      },
+      "image_urls": {
+        "maxItems": 16,
+        "type": "array",
+        "examples": [
+          [
+            "https://storage.googleapis.com/falserverless/model_tests/video_models/front.png",
+            "https://storage.googleapis.com/falserverless/model_tests/video_models/back.png",
+            "https://storage.googleapis.com/falserverless/model_tests/video_models/left.png"
+          ]
+        ],
+        "items": {
+          "type": "string"
+        },
+        "description": "One or more views of the same object. Multiple views yield higher-quality 3D reconstruction.",
+        "minItems": 1
+      },
+      "tex_slat_rescale_t": {
+        "minimum": 1,
+        "type": "number",
+        "description": "Controls noise schedule sharpness for texture generation.",
+        "maximum": 6,
+        "default": 3
+      },
+      "ss_guidance_rescale": {
+        "minimum": 0,
+        "type": "number",
+        "description": "Dampens artifacts from high guidance in stage 1.",
+        "maximum": 1,
+        "default": 0.7
+      },
+      "multi_image_strategy": {
+        "enum": [
+          "average_right",
+          "weighted_average",
+          "sequential",
+          "average",
+          "adaptive_guidance_weight",
+          "fixed_guidance_rescale"
+        ],
+        "type": "string",
+        "description": "Strategy for combining multi-view conditioning. 'adaptive_guidance_weight' works best in most cases. Only used when more than one image is provided.",
+        "default": "adaptive_guidance_weight"
+      },
+      "shape_slat_sampling_steps": {
+        "minimum": 1,
+        "type": "integer",
+        "description": "Number of denoising steps for shape refinement.",
+        "maximum": 50,
+        "default": 12
+      },
+      "slat_guidance_strength": {
+        "minimum": 0,
+        "type": "number",
+        "description": "Guidance strength for SLat stage (only used when ss_source='mesh').",
+        "maximum": 10,
+        "default": 7.5
+      },
+      "texture_size": {
+        "enum": [
+          1024,
+          2048,
+          4096
+        ],
+        "type": "integer",
+        "description": "Resolution of the texture image baked onto the mesh.",
+        "default": 2048
+      },
+      "ss_source": {
+        "enum": [
+          "direct",
+          "mesh",
+          "mvtrellis2"
+        ],
+        "type": "string",
+        "description": "Sparse structure source. 'mesh' gives best quality, 'direct' is fastest, 'mvtrellis2' uses multi-view TRELLIS.2.",
+        "default": "mesh"
+      },
+      "slat_rescale_t": {
+        "minimum": 1,
+        "type": "number",
+        "description": "Rescale T for SLat stage (only used when ss_source='mesh').",
+        "maximum": 6,
+        "default": 3
+      },
+      "ss_guidance_strength": {
+        "minimum": 0,
+        "type": "number",
+        "description": "How closely the initial 3D structure follows the input. Higher values produce more faithful but potentially noisier results.",
+        "maximum": 10,
+        "default": 7.5
+      },
+      "ss_sampling_steps": {
+        "minimum": 1,
+        "type": "integer",
+        "description": "Number of denoising steps for the initial structure.",
+        "maximum": 50,
+        "default": 12
+      },
+      "slat_guidance_rescale": {
+        "minimum": 0,
+        "type": "number",
+        "description": "Guidance rescale for SLat stage (only used when ss_source='mesh').",
+        "maximum": 1,
+        "default": 0.5
+      },
+      "slat_sampling_steps": {
+        "minimum": 1,
+        "type": "integer",
+        "description": "Sampling steps for SLat stage (only used when ss_source='mesh').",
+        "maximum": 50,
+        "default": 12
+      },
+      "shape_slat_guidance_rescale": {
+        "minimum": 0,
+        "type": "number",
+        "description": "Dampens artifacts from high guidance in the shape stage.",
+        "maximum": 1,
+        "default": 0.5
+      },
+      "tex_slat_guidance_strength": {
+        "minimum": 0,
+        "type": "number",
+        "description": "How closely the texture follows the input colors.",
+        "maximum": 10,
+        "default": 1
+      },
+      "tex_slat_guidance_rescale": {
+        "minimum": 0,
+        "type": "number",
+        "description": "Dampens artifacts from high guidance in the texture stage.",
+        "maximum": 1,
+        "default": 0
+      },
+      "resolution": {
+        "enum": [
+          512,
+          1024,
+          1536
+        ],
+        "type": "integer",
+        "description": "Output resolution; higher is slower but more detailed",
+        "default": 1024
+      },
+      "shape_slat_rescale_t": {
+        "minimum": 1,
+        "type": "number",
+        "description": "Controls noise schedule sharpness for shape refinement.",
+        "maximum": 6,
+        "default": 3
+      }
+    },
+    "required": [
+      "image_urls"
+    ]
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "Reconviagen05Input",
+    "Reconviagen05Output",
+    "File"
+  ]
+}

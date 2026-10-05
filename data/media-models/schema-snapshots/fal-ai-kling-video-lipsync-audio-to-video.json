@@ -1,0 +1,95 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/kling-video/lipsync/audio-to-video",
+  "task": "video-editing",
+  "source_url": "https://fal.ai/models/fal-ai/kling-video/lipsync/audio-to-video",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fkling-video%2Flipsync%2Faudio-to-video",
+  "retrieved_at": "2026-10-04T19:46:49.077Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "text-to-video",
+  "bytes_sha256": "4007f7bfb15a571b9530ae96f96ce6c82a23c95b0e657e32370b4118c6cd39c4",
+  "queue_path": "/fal-ai/kling-video/lipsync/audio-to-video",
+  "input_name": "KlingVideoLipsyncAudioToVideoInput",
+  "input": {
+    "$refName": "KlingVideoLipsyncAudioToVideoInput",
+    "required": [
+      "video_url",
+      "audio_url"
+    ],
+    "type": "object",
+    "properties": {
+      "video_url": {
+        "description": "The URL of the video to generate the lip sync for. Supports .mp4/.mov, ≤100MB, 2–10s, 720p/1080p only, width/height 720–1920px.",
+        "type": "string",
+        "_fal_ui_field": "video",
+        "examples": [
+          "https://fal.media/files/koala/8teUPbRRMtAUTORDvqy0l.mp4"
+        ]
+      },
+      "audio_url": {
+        "description": "The URL of the audio to generate the lip sync for. Minimum duration is 2s and maximum duration is 60s. Maximum file size is 5MB.",
+        "type": "string",
+        "_fal_ui_field": "audio",
+        "examples": [
+          "https://storage.googleapis.com/falserverless/kling/kling-audio.mp3"
+        ]
+      }
+    }
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "KlingVideoLipsyncAudioToVideoInput",
+    "KlingVideoLipsyncAudioToVideoOutput",
+    "File"
+  ]
+}

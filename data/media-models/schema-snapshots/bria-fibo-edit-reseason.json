@@ -1,0 +1,99 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "bria/fibo-edit/reseason",
+  "task": "unknown",
+  "source_url": "https://fal.ai/models/bria/fibo-edit/reseason",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=bria%2Ffibo-edit%2Freseason",
+  "retrieved_at": "2026-10-04T19:41:42.499Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "image-to-image",
+  "bytes_sha256": "478a290402c6eab51e1ce7ba34ae353c46c9f5a7e54bbea1753367eed878a74b",
+  "queue_path": "/bria/fibo-edit/reseason",
+  "input_name": "FiboEditReseasonInput",
+  "input": {
+    "$refName": "FiboEditReseasonInput",
+    "required": [
+      "image_url",
+      "season"
+    ],
+    "type": "object",
+    "properties": {
+      "season": {
+        "examples": [
+          "winter"
+        ],
+        "type": "string",
+        "enum": [
+          "spring",
+          "summer",
+          "autumn",
+          "winter"
+        ],
+        "description": "The desired season."
+      },
+      "image_url": {
+        "examples": [
+          "https://bria-datasets.s3.us-east-1.amazonaws.com/Liza/create_a_realistic_image_of_a_green_field_in_the_spring__also_add_trees.png"
+        ],
+        "type": "string",
+        "description": "The source image."
+      }
+    }
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "FiboEditReseasonInput",
+    "FiboEditReseasonOutput",
+    "Image"
+  ]
+}

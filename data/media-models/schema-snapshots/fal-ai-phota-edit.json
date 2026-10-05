@@ -1,0 +1,161 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/phota/edit",
+  "task": "image-editing",
+  "source_url": "https://fal.ai/models/fal-ai/phota/edit",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fphota%2Fedit",
+  "retrieved_at": "2026-10-04T19:49:52.391Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "image-to-image",
+  "bytes_sha256": "8ec292c07fa5c109c24159ee40eea97313915d28f0ebdd92fb3736095689f4cd",
+  "queue_path": "/fal-ai/phota/edit",
+  "input_name": "PhotaEditInput",
+  "input": {
+    "$refName": "PhotaEditInput",
+    "properties": {
+      "aspect_ratio": {
+        "enum": [
+          "auto",
+          "1:1",
+          "16:9",
+          "4:3",
+          "3:4",
+          "9:16"
+        ],
+        "type": "string",
+        "description": "Aspect ratio of the generated image.",
+        "default": "auto"
+      },
+      "resolution": {
+        "enum": [
+          "1K",
+          "4K"
+        ],
+        "type": "string",
+        "description": "Resolution of the generated image.",
+        "default": "1K"
+      },
+      "profile_ids": {
+        "type": "array",
+        "description": "List of profile IDs to use for the image generation. Profiles may be tagged in the prompt as @Profile1, @Profile2, etc.",
+        "items": {
+          "type": "string"
+        }
+      },
+      "image_urls": {
+        "examples": [
+          [
+            "https://v3b.fal.media/files/b/0a8b911d/Abk8vStrvmSPlzUqI_NN3_image_043.png"
+          ]
+        ],
+        "type": "array",
+        "minItems": 1,
+        "description": "List of URLs/ Base64 data URIs of the images to edit. At least one image is required; for pure text-to-image generation use the `/` endpoint instead. A maximum of 10 images are supported, additional images will be ignored.",
+        "items": {
+          "type": "string"
+        }
+      },
+      "output_format": {
+        "enum": [
+          "jpeg",
+          "png"
+        ],
+        "type": "string",
+        "description": "The format of the generated image.",
+        "default": "jpeg"
+      },
+      "prompt": {
+        "maxLength": 8000,
+        "type": "string",
+        "examples": [
+          "Make this scene more realistic but still keep the game vibes"
+        ],
+        "description": "Text description of the desired image. To refer to specific profiles, use [[profile_id_1]], [[profile_id_2]], etc."
+      },
+      "sync_mode": {
+        "type": "boolean",
+        "description": "If `True`, the media will be returned as a data URI and the output data won't be available in the request history.",
+        "default": false
+      },
+      "num_images": {
+        "minimum": 1,
+        "type": "integer",
+        "description": "Number of images to generate.",
+        "maximum": 4,
+        "default": 1
+      },
+      "base_model": {
+        "enum": [
+          "nb2",
+          "qwen-image-2",
+          "flux-2",
+          "seedream-5-pro"
+        ],
+        "type": "string",
+        "description": "Base model used to render the image. Identity composes on top of whichever base model is selected, so trained profiles work with all of them. Only `nb2` supports `4K`.",
+        "default": "nb2"
+      }
+    },
+    "type": "object",
+    "required": [
+      "prompt",
+      "image_urls"
+    ]
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "PhotaEditInput",
+    "PhotaEditOutput",
+    "ImageFile"
+  ]
+}

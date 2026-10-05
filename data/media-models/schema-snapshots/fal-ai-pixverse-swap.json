@@ -1,0 +1,135 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/pixverse/swap",
+  "task": "unknown",
+  "source_url": "https://fal.ai/models/fal-ai/pixverse/swap",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fpixverse%2Fswap",
+  "retrieved_at": "2026-10-04T19:50:03.590Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "image-to-video",
+  "bytes_sha256": "af8f128ed6f3e2776b04275739e594cab647e0442b8d8c6d7a7b75fd949cacd3",
+  "queue_path": "/fal-ai/pixverse/swap",
+  "input_name": "PixverseSwapInput",
+  "input": {
+    "$refName": "PixverseSwapInput",
+    "properties": {
+      "original_sound_switch": {
+        "default": true,
+        "description": "Whether to keep the original audio",
+        "type": "boolean"
+      },
+      "keyframe_id": {
+        "type": "integer",
+        "default": 1,
+        "description": "The keyframe ID to use for face/object mapping. The input video is normalized to 24 FPS before processing, so keyframe 1 = first frame, keyframe 24 = 1 second in, etc. Valid range: 1 to (duration_seconds * 24).",
+        "minimum": 1
+      },
+      "mode": {
+        "enum": [
+          "person",
+          "object",
+          "background"
+        ],
+        "default": "person",
+        "description": "The swap mode to use",
+        "type": "string"
+      },
+      "image_url": {
+        "examples": [
+          "https://v3b.fal.media/files/b/elephant/Lu7lo2dpxVPD-NrNZzx42_56dc797a1f764c98a4f075a8c0332bf0.jpg"
+        ],
+        "description": "URL of the target image for swapping",
+        "type": "string"
+      },
+      "video_url": {
+        "examples": [
+          "https://v3b.fal.media/files/b/lion/k_RpEIZ4YZtwZklzXz7Gb_output.mp4"
+        ],
+        "description": "URL of the external video to swap",
+        "type": "string"
+      },
+      "seed": {
+        "description": "Random seed for generation",
+        "anyOf": [
+          {
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "resolution": {
+        "enum": [
+          "360p",
+          "540p",
+          "720p"
+        ],
+        "default": "720p",
+        "description": "The output resolution (1080p not supported)",
+        "type": "string"
+      }
+    },
+    "required": [
+      "video_url",
+      "image_url"
+    ],
+    "type": "object"
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "PixverseSwapInput",
+    "PixverseSwapOutput",
+    "File"
+  ]
+}

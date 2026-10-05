@@ -1,0 +1,168 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/flashvsr/upscale/video",
+  "task": "image-editing",
+  "source_url": "https://fal.ai/models/fal-ai/flashvsr/upscale/video",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fflashvsr%2Fupscale%2Fvideo",
+  "retrieved_at": "2026-10-04T19:43:50.594Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "video-to-video",
+  "bytes_sha256": "217ae373e39361795f6c541a344c1c3690a29ca460a2ed2cb4d52816c77290e8",
+  "queue_path": "/fal-ai/flashvsr/upscale/video",
+  "input_name": "FlashvsrUpscaleVideoInput",
+  "input": {
+    "$refName": "FlashvsrUpscaleVideoInput",
+    "properties": {
+      "video_url": {
+        "type": "string",
+        "_fal_ui_field": "video",
+        "examples": [
+          "https://v3b.fal.media/files/b/0a959993/ev11uf0rrsKkBafCw9QKe_video.mp4"
+        ],
+        "description": "The input video to be upscaled"
+      },
+      "quality": {
+        "minimum": 0,
+        "type": "integer",
+        "default": 70,
+        "maximum": 100,
+        "description": "Quality level for tile blending (0-100). Controls overlap between tiles to prevent grid artifacts. Higher values provide better quality with more overlap. Recommended: 70-85 for high-res videos, 50-70 for faster processing."
+      },
+      "preserve_audio": {
+        "type": "boolean",
+        "default": false,
+        "description": "Copy the original audio tracks into the upscaled video using FFmpeg when possible."
+      },
+      "output_write_mode": {
+        "type": "string",
+        "default": "balanced",
+        "enum": [
+          "fast",
+          "balanced",
+          "small"
+        ],
+        "description": "The write mode of the output video."
+      },
+      "output_quality": {
+        "type": "string",
+        "default": "high",
+        "enum": [
+          "low",
+          "medium",
+          "high",
+          "maximum"
+        ],
+        "description": "The quality of the output video."
+      },
+      "upscale_factor": {
+        "minimum": 1,
+        "type": "number",
+        "default": 2,
+        "maximum": 4,
+        "description": "Upscaling factor to be used."
+      },
+      "color_fix": {
+        "type": "boolean",
+        "default": true,
+        "description": "Color correction enabled."
+      },
+      "seed": {
+        "anyOf": [
+          {
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "The random seed used for the generation process."
+      },
+      "output_format": {
+        "type": "string",
+        "default": "X264 (.mp4)",
+        "enum": [
+          "X264 (.mp4)",
+          "VP9 (.webm)",
+          "PRORES4444 (.mov)",
+          "GIF (.gif)"
+        ],
+        "description": "The format of the output video."
+      },
+      "acceleration": {
+        "type": "string",
+        "default": "regular",
+        "enum": [
+          "regular",
+          "high",
+          "full"
+        ],
+        "description": "Acceleration mode for VAE decoding. Options: regular (best quality), high (balanced), full (fastest). More accerleation means longer duration videos can be processed too."
+      },
+      "sync_mode": {
+        "type": "boolean",
+        "default": false,
+        "description": "If `True`, the media will be returned inline and not stored in history."
+      }
+    },
+    "type": "object",
+    "required": [
+      "video_url"
+    ]
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "FlashvsrUpscaleVideoInput",
+    "FlashvsrUpscaleVideoOutput",
+    "File"
+  ]
+}

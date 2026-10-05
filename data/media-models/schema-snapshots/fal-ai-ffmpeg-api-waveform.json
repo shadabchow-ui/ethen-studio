@@ -1,0 +1,102 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/ffmpeg-api/waveform",
+  "task": "unknown",
+  "source_url": "https://fal.ai/models/fal-ai/ffmpeg-api/waveform",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fffmpeg-api%2Fwaveform",
+  "retrieved_at": "2026-10-04T19:43:45.352Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "json",
+  "bytes_sha256": "2b91750af95404ec1921066addb945c3029333303d491c3e4bfc1dbb35a6c1b8",
+  "queue_path": "/fal-ai/ffmpeg-api/waveform",
+  "input_name": "FfmpegApiWaveformInput",
+  "input": {
+    "$refName": "FfmpegApiWaveformInput",
+    "properties": {
+      "media_url": {
+        "type": "string",
+        "description": "URL of the audio file to analyze"
+      },
+      "precision": {
+        "default": 2,
+        "minimum": 1,
+        "type": "integer",
+        "description": "Number of decimal places for the waveform values. Higher values provide more precision but increase payload size.",
+        "maximum": 6
+      },
+      "points_per_second": {
+        "default": 4,
+        "minimum": 1,
+        "type": "number",
+        "description": "Controls how many points are sampled per second of audio. Lower values (e.g. 1-2) create a coarser waveform, higher values (e.g. 4-10) create a more detailed one.",
+        "maximum": 10
+      },
+      "smoothing_window": {
+        "default": 3,
+        "minimum": 1,
+        "type": "integer",
+        "description": "Size of the smoothing window. Higher values create a smoother waveform. Must be an odd number.",
+        "maximum": 21
+      }
+    },
+    "required": [
+      "media_url"
+    ],
+    "type": "object"
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "FfmpegApiWaveformInput",
+    "FfmpegApiWaveformOutput"
+  ]
+}

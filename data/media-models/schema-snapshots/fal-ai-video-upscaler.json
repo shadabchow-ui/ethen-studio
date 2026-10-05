@@ -1,0 +1,92 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/video-upscaler",
+  "task": "video-editing",
+  "source_url": "https://fal.ai/models/fal-ai/video-upscaler",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fvideo-upscaler",
+  "retrieved_at": "2026-10-04T19:52:16.244Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "video-to-video",
+  "bytes_sha256": "4b129986432eba2600afe9a07166e3d9c67dbe145ffbbfbc8d832c5246378f12",
+  "queue_path": "/fal-ai/video-upscaler",
+  "input_name": "VideoUpscalerInput",
+  "input": {
+    "$refName": "VideoUpscalerInput",
+    "properties": {
+      "video_url": {
+        "examples": [
+          "https://storage.googleapis.com/falserverless/videos/_o3VmzjOytBwRjCVPFX6i_output.mp4"
+        ],
+        "description": "The URL of the video to upscale",
+        "type": "string"
+      },
+      "scale": {
+        "default": 2,
+        "description": "The scale factor",
+        "type": "number",
+        "minimum": 1,
+        "maximum": 8
+      }
+    },
+    "required": [
+      "video_url"
+    ],
+    "type": "object"
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "VideoUpscalerInput",
+    "VideoUpscalerOutput",
+    "File"
+  ]
+}

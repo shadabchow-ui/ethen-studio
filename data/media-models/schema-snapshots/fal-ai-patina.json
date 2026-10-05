@@ -1,0 +1,137 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/patina",
+  "task": "unknown",
+  "source_url": "https://fal.ai/models/fal-ai/patina",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fpatina",
+  "retrieved_at": "2026-10-04T19:49:46.747Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "image-to-image",
+  "bytes_sha256": "e90bf0f3c91493cf0566dfe7082e9d97ca7f33393f9a60cba7573deefd8f8924",
+  "queue_path": "/fal-ai/patina",
+  "input_name": "PatinaInput",
+  "input": {
+    "$refName": "PatinaInput",
+    "properties": {
+      "maps": {
+        "description": "Which PBR maps to predict. Defaults to all five.",
+        "type": "array",
+        "default": [
+          "basecolor",
+          "normal",
+          "roughness",
+          "metalness",
+          "height"
+        ],
+        "items": {
+          "enum": [
+            "basecolor",
+            "normal",
+            "roughness",
+            "metalness",
+            "height"
+          ],
+          "type": "string"
+        }
+      },
+      "output_format": {
+        "description": "Output image format.",
+        "enum": [
+          "jpeg",
+          "png",
+          "webp"
+        ],
+        "type": "string",
+        "default": "png"
+      },
+      "image_url": {
+        "description": "URL of the input image (photograph or render).",
+        "type": "string",
+        "examples": [
+          "https://storage.googleapis.com/falserverless/gallery/patina-blog-hero-render.png"
+        ]
+      },
+      "enable_safety_checker": {
+        "description": "Enable the safety checker for images.",
+        "type": "boolean",
+        "default": true
+      },
+      "sync_mode": {
+        "description": "If True, return images as data URIs instead of CDN URLs.",
+        "type": "boolean",
+        "default": false
+      },
+      "seed": {
+        "description": "Random seed for reproducible denoising. If not set, a random seed is used.",
+        "anyOf": [
+          {
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      }
+    },
+    "type": "object",
+    "required": [
+      "image_url"
+    ]
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "PatinaInput",
+    "PatinaOutput",
+    "MapImageFile"
+  ]
+}

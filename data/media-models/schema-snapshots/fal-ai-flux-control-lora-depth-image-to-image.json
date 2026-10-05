@@ -1,0 +1,230 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/flux-control-lora-depth/image-to-image",
+  "task": "image-to-image",
+  "source_url": "https://fal.ai/models/fal-ai/flux-control-lora-depth/image-to-image",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fflux-control-lora-depth%2Fimage-to-image",
+  "retrieved_at": "2026-10-04T19:44:39.435Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "image-to-image",
+  "bytes_sha256": "20da292ab2ca5136d168990753f4cfc51fceba7e1057901f98dbf519f21304c4",
+  "queue_path": "/fal-ai/flux-control-lora-depth/image-to-image",
+  "input_name": "FluxControlLoraDepthImageToImageInput",
+  "input": {
+    "$refName": "FluxControlLoraDepthImageToImageInput",
+    "type": "object",
+    "properties": {
+      "strength": {
+        "minimum": 0.01,
+        "type": "number",
+        "description": "The strength to use for inpainting/image-to-image. Only used if the image_url is provided. 1.0 is completely remakes the image while 0.0 preserves the original.",
+        "maximum": 1,
+        "default": 0.85
+      },
+      "control_lora_strength": {
+        "minimum": 0,
+        "type": "number",
+        "description": "The strength of the control lora.",
+        "maximum": 2,
+        "default": 1
+      },
+      "loras": {
+        "type": "array",
+        "examples": [],
+        "items": {
+          "$refName": "LoraWeight",
+          "type": "object",
+          "properties": {
+            "path": {
+              "type": "string",
+              "description": "URL or the path to the LoRA weights."
+            },
+            "scale": {
+              "minimum": 0,
+              "type": "number",
+              "description": "\n            The scale of the LoRA weight. This is used to scale the LoRA weight\n            before merging it with the base model.\n        ",
+              "maximum": 4,
+              "default": 1
+            }
+          },
+          "required": [
+            "path"
+          ]
+        },
+        "description": "\n            The LoRAs to use for the image generation. You can use any number of LoRAs\n            and they will be merged together to generate the final image.\n        ",
+        "default": []
+      },
+      "image_url": {
+        "type": "string",
+        "examples": [
+          "https://raw.githubusercontent.com/CompVis/latent-diffusion/main/data/inpainting_examples/overture-creations-5sI6fQgYIuo.png"
+        ],
+        "description": "URL of image to use for inpainting. or img2img"
+      },
+      "seed": {
+        "description": "\n            The same seed and the same prompt given to the same version of the model\n            will output the same image every time.\n        ",
+        "anyOf": [
+          {
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "control_lora_image_url": {
+        "type": "string",
+        "examples": [
+          "https://storage.googleapis.com/falserverless/flux-lora/example-images/knight.jpeg"
+        ],
+        "description": "\n            The image to use for control lora. This is used to control the style of the generated image.\n        "
+      },
+      "num_inference_steps": {
+        "minimum": 1,
+        "type": "integer",
+        "description": "The number of inference steps to perform.",
+        "maximum": 50,
+        "default": 28
+      },
+      "output_format": {
+        "enum": [
+          "jpeg",
+          "png"
+        ],
+        "type": "string",
+        "description": "The format of the generated image.",
+        "default": "jpeg"
+      },
+      "enable_safety_checker": {
+        "type": "boolean",
+        "description": "If set to true, the safety checker will be enabled. Disabling it requires account authorization; unauthorized requests are always checked, and images flagged as unsafe are returned as black images.",
+        "default": true
+      },
+      "num_images": {
+        "minimum": 1,
+        "type": "integer",
+        "description": "The number of images to generate.",
+        "maximum": 4,
+        "default": 1
+      },
+      "sync_mode": {
+        "type": "boolean",
+        "description": "If `True`, the media will be returned as a data URI and the output data won't be available in the request history.",
+        "default": false
+      },
+      "guidance_scale": {
+        "minimum": 0,
+        "type": "number",
+        "description": "\n            The CFG (Classifier Free Guidance) scale is a measure of how close you want\n            the model to stick to your prompt when looking for a related image to show you.\n        ",
+        "maximum": 35,
+        "default": 3.5
+      },
+      "image_size": {
+        "description": "The size of the generated image.",
+        "anyOf": [
+          {
+            "$refName": "ImageSize",
+            "type": "object",
+            "properties": {
+              "width": {
+                "exclusiveMinimum": 0,
+                "type": "integer",
+                "description": "The width of the generated image.",
+                "maximum": 14142,
+                "default": 512
+              },
+              "height": {
+                "exclusiveMinimum": 0,
+                "type": "integer",
+                "description": "The height of the generated image.",
+                "maximum": 14142,
+                "default": 512
+              }
+            }
+          },
+          {
+            "enum": [
+              "square_hd",
+              "square",
+              "portrait_4_3",
+              "portrait_16_9",
+              "landscape_4_3",
+              "landscape_16_9"
+            ],
+            "type": "string"
+          }
+        ]
+      },
+      "prompt": {
+        "type": "string",
+        "examples": [
+          "A photo of a lion sitting on a stone bench"
+        ],
+        "description": "The prompt to generate an image from."
+      }
+    },
+    "required": [
+      "prompt",
+      "image_url",
+      "control_lora_image_url"
+    ]
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "FluxControlLoraDepthImageToImageInput",
+    "FluxControlLoraDepthImageToImageOutput",
+    "LoraWeight",
+    "ImageSize",
+    "Image"
+  ]
+}

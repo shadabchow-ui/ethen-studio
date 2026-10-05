@@ -1,0 +1,145 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/stable-audio-25/audio-to-audio",
+  "task": "unknown",
+  "source_url": "https://fal.ai/models/fal-ai/stable-audio-25/audio-to-audio",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fstable-audio-25%2Faudio-to-audio",
+  "retrieved_at": "2026-10-04T19:51:37.981Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "audio-to-audio",
+  "bytes_sha256": "395a761d04115355a703e6aba155d08ac8f2f469b0b0f16e1793529125469ce5",
+  "queue_path": "/fal-ai/stable-audio-25/audio-to-audio",
+  "input_name": "StableAudio25AudioToAudioInput",
+  "input": {
+    "$refName": "StableAudio25AudioToAudioInput",
+    "properties": {
+      "strength": {
+        "minimum": 0.01,
+        "type": "number",
+        "default": 0.8,
+        "maximum": 1,
+        "description": "Sometimes referred to as denoising, this parameter controls how much influence the `audio_url` parameter has on the generated audio. A value of 0 would yield audio that is identical to the input. A value of 1 would be as if you passed in no audio at all."
+      },
+      "prompt": {
+        "type": "string",
+        "examples": [
+          "Post rock, guitars, bass, strings, euphoric, up-lifting, moody, flowing, raw, epic"
+        ],
+        "description": "The prompt to guide the audio generation"
+      },
+      "total_seconds": {
+        "anyOf": [
+          {
+            "minimum": 1,
+            "type": "integer",
+            "maximum": 190
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "examples": [
+          45
+        ],
+        "description": "The duration of the audio clip to generate. If not provided, it will be set to the duration of the input audio."
+      },
+      "num_inference_steps": {
+        "minimum": 4,
+        "type": "integer",
+        "default": 8,
+        "maximum": 8,
+        "description": "The number of steps to denoise the audio for"
+      },
+      "audio_url": {
+        "type": "string",
+        "examples": [
+          "https://v3.fal.media/files/panda/1-0iezBUIePBa3Sz5YY5B_tmpy1jyshw9.wav"
+        ],
+        "description": "The audio clip to transform"
+      },
+      "guidance_scale": {
+        "minimum": 1,
+        "type": "number",
+        "default": 1,
+        "maximum": 25,
+        "description": "How strictly the diffusion process adheres to the prompt text (higher values make your audio closer to your prompt). "
+      },
+      "seed": {
+        "anyOf": [
+          {
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "sync_mode": {
+        "type": "boolean",
+        "default": false,
+        "description": "If `True`, the media will be returned as a data URI and the output data won't be available in the request history."
+      }
+    },
+    "required": [
+      "prompt",
+      "audio_url"
+    ],
+    "type": "object"
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "StableAudio25AudioToAudioInput",
+    "StableAudio25AudioToAudioOutput",
+    "File"
+  ]
+}

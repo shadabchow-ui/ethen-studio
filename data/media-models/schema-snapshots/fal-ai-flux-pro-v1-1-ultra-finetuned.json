@@ -1,0 +1,193 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/flux-pro/v1.1-ultra-finetuned",
+  "task": "unknown",
+  "source_url": "https://fal.ai/models/fal-ai/flux-pro/v1.1-ultra-finetuned",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fflux-pro%2Fv1.1-ultra-finetuned",
+  "retrieved_at": "2026-10-04T19:44:56.746Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "text-to-image",
+  "bytes_sha256": "100dd514aa1ed9debb450a92bb68e35fb5d7625633fcdc5c176a435f03ca777d",
+  "queue_path": "/fal-ai/flux-pro/v1.1-ultra-finetuned",
+  "input_name": "FluxProV11UltraFinetunedInput",
+  "input": {
+    "$refName": "FluxProV11UltraFinetunedInput",
+    "properties": {
+      "enhance_prompt": {
+        "type": "boolean",
+        "description": "Whether to enhance the prompt for better results.",
+        "default": false
+      },
+      "output_format": {
+        "type": "string",
+        "enum": [
+          "jpeg",
+          "png"
+        ],
+        "description": "The format of the generated image.",
+        "default": "jpeg"
+      },
+      "finetune_strength": {
+        "maximum": 2,
+        "description": "\n        Controls finetune influence.\n        Increase this value if your target concept isn't showing up strongly enough.\n        The optimal setting depends on your finetune and prompt\n        ",
+        "minimum": 0,
+        "type": "number"
+      },
+      "image_url": {
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "The image URL to generate an image from."
+      },
+      "finetune_id": {
+        "description": "References your specific model",
+        "type": "string"
+      },
+      "raw": {
+        "type": "boolean",
+        "description": "Generate less processed, more natural-looking images.",
+        "default": false
+      },
+      "num_images": {
+        "default": 1,
+        "maximum": 4,
+        "description": "The number of images to generate.",
+        "minimum": 1,
+        "type": "integer"
+      },
+      "prompt": {
+        "description": "The prompt to generate an image from.",
+        "examples": [
+          "Extreme close-up of a single tiger eye, direct frontal view. Detailed iris and pupil. Sharp focus on eye texture and color. Natural lighting to capture authentic eye shine and depth. The word \"FLUX\" is painted over it in big, white brush strokes with visible texture."
+        ],
+        "type": "string"
+      },
+      "seed": {
+        "anyOf": [
+          {
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "\n            The same seed and the same prompt given to the same version of the model\n            will output the same image every time.\n        "
+      },
+      "safety_tolerance": {
+        "default": "2",
+        "type": "string",
+        "enum": [
+          "1",
+          "2",
+          "3",
+          "4",
+          "5",
+          "6"
+        ],
+        "description": "The safety tolerance level for the generated image. 1 being the most strict and 5 being the most permissive."
+      },
+      "image_prompt_strength": {
+        "default": 0.1,
+        "maximum": 1,
+        "description": "The strength of the image prompt, between 0 and 1.",
+        "minimum": 0,
+        "type": "number"
+      },
+      "sync_mode": {
+        "type": "boolean",
+        "description": "If `True`, the media will be returned as a data URI and the output data won't be available in the request history.",
+        "default": false
+      },
+      "aspect_ratio": {
+        "anyOf": [
+          {
+            "enum": [
+              "21:9",
+              "16:9",
+              "4:3",
+              "3:2",
+              "1:1",
+              "2:3",
+              "3:4",
+              "9:16",
+              "9:21"
+            ],
+            "type": "string"
+          },
+          {
+            "type": "string"
+          }
+        ],
+        "description": "The aspect ratio of the generated image.",
+        "default": "16:9"
+      }
+    },
+    "required": [
+      "prompt",
+      "finetune_id",
+      "finetune_strength"
+    ],
+    "type": "object"
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "FluxProV11UltraFinetunedInput",
+    "FluxProV11UltraFinetunedOutput",
+    "registry__image__fast_sdxl__models__Image"
+  ]
+}

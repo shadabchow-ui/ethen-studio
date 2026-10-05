@@ -1,0 +1,123 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/moondream3-preview/caption",
+  "task": "unknown",
+  "source_url": "https://fal.ai/models/fal-ai/moondream3-preview/caption",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fmoondream3-preview%2Fcaption",
+  "retrieved_at": "2026-10-04T19:49:29.529Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "vision",
+  "bytes_sha256": "a1c675982cc6bbfc1c1cda37fda68060500d2c4282c0de0cc66303c43bcc3375",
+  "queue_path": "/fal-ai/moondream3-preview/caption",
+  "input_name": "Moondream3PreviewCaptionInput",
+  "input": {
+    "$refName": "Moondream3PreviewCaptionInput",
+    "properties": {
+      "temperature": {
+        "description": "Sampling temperature to use, between 0 and 1. Higher values like 0.8 will make the output more random, while lower values like 0.2 will make it more focused and deterministic. If not set, defaults to 0.",
+        "anyOf": [
+          {
+            "maximum": 1,
+            "minimum": 0,
+            "type": "number"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "length": {
+        "enum": [
+          "short",
+          "normal",
+          "long"
+        ],
+        "description": "Length of the caption to generate",
+        "default": "normal",
+        "type": "string"
+      },
+      "image_url": {
+        "description": "URL of the image to be processed",
+        "max_width": 7000,
+        "max_height": 7000,
+        "type": "string",
+        "examples": [
+          "https://storage.googleapis.com/falserverless/example_inputs/moondream-3-preview/caption_in.jpg"
+        ]
+      },
+      "top_p": {
+        "description": "Nucleus sampling probability mass to use, between 0 and 1.",
+        "anyOf": [
+          {
+            "maximum": 1,
+            "minimum": 0,
+            "type": "number"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      }
+    },
+    "required": [
+      "image_url"
+    ],
+    "type": "object"
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "Moondream3PreviewCaptionInput",
+    "Moondream3PreviewCaptionOutput",
+    "UsageInfo"
+  ]
+}

@@ -1,0 +1,182 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/cogview4",
+  "task": "unknown",
+  "source_url": "https://fal.ai/models/fal-ai/cogview4",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fcogview4",
+  "retrieved_at": "2026-10-04T19:43:06.376Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "text-to-image",
+  "bytes_sha256": "882a4d652afc472b9be5e8c5d9e2b19c48873c341c116e853a56e306f7afbc37",
+  "queue_path": "/fal-ai/cogview4",
+  "input_name": "Cogview4Input",
+  "input": {
+    "$refName": "Cogview4Input",
+    "type": "object",
+    "properties": {
+      "enable_safety_checker": {
+        "description": "If set to true, the safety checker will be enabled.",
+        "type": "boolean",
+        "default": true
+      },
+      "negative_prompt": {
+        "description": "\n            The negative prompt to use. Use it to address details that you don't want\n            in the image. This could be colors, objects, scenery and even the small details\n            (e.g. moustache, blurry, low resolution).\n        ",
+        "type": "string",
+        "examples": [
+          ""
+        ],
+        "default": ""
+      },
+      "sync_mode": {
+        "description": "If `True`, the media will be returned as a data URI and the output data won't be available in the request history.",
+        "type": "boolean",
+        "default": false
+      },
+      "num_inference_steps": {
+        "description": "The number of inference steps to perform.",
+        "type": "integer",
+        "minimum": 1,
+        "default": 50,
+        "maximum": 50
+      },
+      "output_format": {
+        "description": "The format of the generated image.",
+        "type": "string",
+        "default": "jpeg",
+        "enum": [
+          "jpeg",
+          "png"
+        ]
+      },
+      "guidance_scale": {
+        "description": "\n            The CFG (Classifier Free Guidance) scale is a measure of how close you want\n            the model to stick to your prompt when looking for a related image to show you.\n        ",
+        "type": "number",
+        "minimum": 0,
+        "default": 3.5,
+        "maximum": 20
+      },
+      "seed": {
+        "anyOf": [
+          {
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "\n            The same seed and the same prompt given to the same version of the model\n            will output the same image every time.\n        "
+      },
+      "prompt": {
+        "type": "string",
+        "examples": [
+          "A vibrant and artistic digital composition featuring colorful splashes of paint in the background, creating an energetic and dynamic effect. The text 'CogView4 on Fal' is elegantly integrated into the scene, standing out with a modern, bold, and slightly futuristic font. The colors are bright and varied, including neon blues, purples, pinks, and oranges, blending seamlessly in a fluid, abstract style. The text appears slightly illuminated, complementing the vivid splashes around it."
+        ],
+        "description": "The prompt to generate an image from."
+      },
+      "num_images": {
+        "description": "The number of images to generate.",
+        "type": "integer",
+        "minimum": 1,
+        "default": 1,
+        "maximum": 4
+      },
+      "image_size": {
+        "description": "The size of the generated image.",
+        "default": "landscape_4_3",
+        "anyOf": [
+          {
+            "$refName": "ImageSize",
+            "type": "object",
+            "properties": {
+              "height": {
+                "maximum": 14142,
+                "description": "The height of the generated image.",
+                "type": "integer",
+                "exclusiveMinimum": 0,
+                "default": 512
+              },
+              "width": {
+                "maximum": 14142,
+                "description": "The width of the generated image.",
+                "type": "integer",
+                "exclusiveMinimum": 0,
+                "default": 512
+              }
+            }
+          },
+          {
+            "type": "string",
+            "enum": [
+              "square_hd",
+              "square",
+              "portrait_4_3",
+              "portrait_16_9",
+              "landscape_4_3",
+              "landscape_16_9"
+            ]
+          }
+        ]
+      }
+    },
+    "required": [
+      "prompt"
+    ]
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "Cogview4Input",
+    "Cogview4Output",
+    "ImageSize",
+    "Image"
+  ]
+}

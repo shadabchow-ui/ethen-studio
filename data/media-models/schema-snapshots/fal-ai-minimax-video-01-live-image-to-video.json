@@ -1,0 +1,98 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/minimax/video-01-live/image-to-video",
+  "task": "image-to-video",
+  "source_url": "https://fal.ai/models/fal-ai/minimax/video-01-live/image-to-video",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fminimax%2Fvideo-01-live%2Fimage-to-video",
+  "retrieved_at": "2026-10-04T19:49:21.981Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "image-to-video",
+  "bytes_sha256": "64a8f9d620c53d924fe9d68fba5c3ac659eb9b698e092d3dadc7895d79e73ad0",
+  "queue_path": "/fal-ai/minimax/video-01-live/image-to-video",
+  "input_name": "MinimaxVideo01LiveImageToVideoInput",
+  "input": {
+    "$refName": "MinimaxVideo01LiveImageToVideoInput",
+    "required": [
+      "prompt",
+      "image_url"
+    ],
+    "type": "object",
+    "properties": {
+      "image_url": {
+        "description": "URL of the image to use as the first frame",
+        "type": "string",
+        "examples": [
+          "https://storage.googleapis.com/falserverless/model_tests/wan/dragon-warrior.jpg"
+        ]
+      },
+      "prompt_optimizer": {
+        "description": "Whether to use the model's prompt optimizer",
+        "type": "boolean",
+        "default": true
+      },
+      "prompt": {
+        "type": "string",
+        "maxLength": 2000,
+        "examples": [
+          "A stylish woman walks down a Tokyo street filled with warm glowing neon and animated city signage."
+        ]
+      }
+    }
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "MinimaxVideo01LiveImageToVideoInput",
+    "MinimaxVideo01LiveImageToVideoOutput",
+    "File"
+  ]
+}

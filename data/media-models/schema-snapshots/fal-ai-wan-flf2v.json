@@ -1,0 +1,254 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/wan-flf2v",
+  "task": "unknown",
+  "source_url": "https://fal.ai/models/fal-ai/wan-flf2v",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fwan-flf2v",
+  "retrieved_at": "2026-10-04T19:52:41.998Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "image-to-video",
+  "bytes_sha256": "559e551b9e5fe80a23451fd2c932a97f4ac1d36d1c1baf2b4cd2bb704cca1ee1",
+  "queue_path": "/fal-ai/wan-flf2v",
+  "input_name": "WanFlf2vInput",
+  "input": {
+    "$refName": "WanFlf2vInput",
+    "required": [
+      "prompt",
+      "start_image_url",
+      "end_image_url"
+    ],
+    "type": "object",
+    "properties": {
+      "end_image_url": {
+        "description": "URL of the ending image. If the input image does not match the chosen aspect ratio, it is resized and center cropped.",
+        "type": "string",
+        "examples": [
+          "https://storage.googleapis.com/falserverless/web-examples/wan_flf/last_frame.png"
+        ]
+      },
+      "loras": {
+        "type": "array",
+        "description": "LoRA weights to be used in the inference.",
+        "items": {
+          "$refName": "LoraWeight",
+          "required": [
+            "path"
+          ],
+          "type": "object",
+          "properties": {
+            "weight_name": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Name of the LoRA weight. Used only if `path` is a Hugging Face repository, and required only if you have more than 1 safetensors file in the repo."
+            },
+            "path": {
+              "description": "URL or the path to the LoRA weights.",
+              "type": "string"
+            },
+            "scale": {
+              "minimum": 0,
+              "description": "\n            The scale of the LoRA weight. This is used to scale the LoRA weight\n            before merging it with the base model.\n        ",
+              "type": "number",
+              "maximum": 4,
+              "default": 1
+            }
+          }
+        },
+        "default": []
+      },
+      "enable_prompt_expansion": {
+        "description": "Whether to enable prompt expansion.",
+        "type": "boolean",
+        "examples": [
+          false
+        ],
+        "default": false
+      },
+      "frames_per_second": {
+        "anyOf": [
+          {
+            "minimum": 5,
+            "type": "integer",
+            "maximum": 24
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "Frames per second of the generated video. Must be between 5 to 24.",
+        "default": 16
+      },
+      "seed": {
+        "anyOf": [
+          {
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "Random seed for reproducibility. If None, a random seed is chosen."
+      },
+      "negative_prompt": {
+        "description": "Negative prompt for video generation.",
+        "type": "string",
+        "examples": [
+          "bright colors, overexposed, static, blurred details, subtitles, style, artwork, painting, picture, still, overall gray, worst quality, low quality, JPEG compression residue, ugly, incomplete, extra fingers, poorly drawn hands, poorly drawn faces, deformed, disfigured, malformed limbs, fused fingers, still picture, cluttered background, three legs, many people in the background, walking backwards"
+        ],
+        "default": "bright colors, overexposed, static, blurred details, subtitles, style, artwork, painting, picture, still, overall gray, worst quality, low quality, JPEG compression residue, ugly, incomplete, extra fingers, poorly drawn hands, poorly drawn faces, deformed, disfigured, malformed limbs, fused fingers, still picture, cluttered background, three legs, many people in the background, walking backwards"
+      },
+      "start_image_url": {
+        "description": "URL of the starting image. If the input image does not match the chosen aspect ratio, it is resized and center cropped.",
+        "type": "string",
+        "examples": [
+          "https://storage.googleapis.com/falserverless/web-examples/wan_flf/first_frame.png"
+        ]
+      },
+      "aspect_ratio": {
+        "description": "Aspect ratio of the generated video. If 'auto', the aspect ratio will be determined automatically based on the input image.",
+        "type": "string",
+        "enum": [
+          "auto",
+          "16:9",
+          "9:16",
+          "1:1"
+        ],
+        "default": "auto"
+      },
+      "acceleration": {
+        "examples": [
+          "regular"
+        ],
+        "description": "Acceleration level to use. The more acceleration, the faster the generation, but with lower quality. The recommended value is 'regular'.",
+        "type": "string",
+        "enum": [
+          "none",
+          "regular"
+        ],
+        "default": "regular"
+      },
+      "prompt": {
+        "description": "The text prompt to guide video generation.",
+        "type": "string",
+        "examples": [
+          "A tabby cat is confidely strolling toward the camera, when it spins and with a flash of magic reveals itself to be a cat-dragon hybrid with glistening amber scales."
+        ]
+      },
+      "num_inference_steps": {
+        "minimum": 2,
+        "description": "Number of inference steps for sampling. Higher values give better quality but take longer.",
+        "type": "integer",
+        "maximum": 40,
+        "default": 30
+      },
+      "resolution": {
+        "description": "Resolution of the generated video (480p or 720p). 480p is 0.5 billing units, and 720p is 1 billing unit.",
+        "type": "string",
+        "enum": [
+          "480p",
+          "720p"
+        ],
+        "default": "720p"
+      },
+      "num_frames": {
+        "anyOf": [
+          {
+            "minimum": 81,
+            "type": "integer",
+            "maximum": 100
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "Number of frames to generate. Must be between 81 to 100 (inclusive). If the number of frames is greater than 81, the video will be generated with 1.25x more billing units.",
+        "default": 81
+      },
+      "enable_safety_checker": {
+        "description": "If set to true, the safety checker will be enabled. Disabling it requires account authorization; unauthorized requests are always checked.",
+        "type": "boolean",
+        "examples": [
+          true
+        ],
+        "default": false
+      },
+      "guide_scale": {
+        "minimum": 1,
+        "description": "Classifier-free guidance scale. Higher values give better adherence to the prompt but may decrease quality.",
+        "type": "number",
+        "maximum": 10,
+        "default": 5
+      },
+      "shift": {
+        "minimum": 1,
+        "description": "Shift parameter for video generation.",
+        "type": "number",
+        "maximum": 10,
+        "default": 5
+      }
+    }
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "WanFlf2vInput",
+    "WanFlf2vOutput",
+    "LoraWeight",
+    "File"
+  ]
+}

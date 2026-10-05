@@ -1,0 +1,179 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "bria/embed-product",
+  "task": "unknown",
+  "source_url": "https://fal.ai/models/bria/embed-product",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=bria%2Fembed-product",
+  "retrieved_at": "2026-10-04T19:41:36.654Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "image-to-image",
+  "bytes_sha256": "43938d42968d6928c52bbf9ff1a1519e9e3ff9bffcd587e4ef439dcb337c7100",
+  "queue_path": "/bria/embed-product",
+  "input_name": "EmbedProductInput",
+  "input": {
+    "$refName": "EmbedProductInput",
+    "required": [
+      "image_source"
+    ],
+    "type": "object",
+    "properties": {
+      "sync_mode": {
+        "default": false,
+        "description": "If true, returns the image directly in the response (increases latency).",
+        "type": "boolean"
+      },
+      "seed": {
+        "default": 5555,
+        "description": "Random seed for reproducibility.",
+        "type": "integer"
+      },
+      "image_source": {
+        "description": "URL of the image.",
+        "examples": [
+          "https://bria-datasets.s3.us-east-1.amazonaws.com/embed-product/an_empty_living_room_0.png"
+        ],
+        "type": "string"
+      },
+      "products": {
+        "items": {
+          "$refName": "EmbedItem",
+          "required": [
+            "image_source",
+            "coordinates"
+          ],
+          "type": "object",
+          "properties": {
+            "image_source": {
+              "description": "URL of the image.",
+              "type": "string"
+            },
+            "coordinates": {
+              "$refName": "Coordinates",
+              "required": [
+                "x",
+                "y",
+                "width",
+                "height"
+              ],
+              "type": "object",
+              "properties": {
+                "height": {
+                  "description": "Height of the product in the image.",
+                  "examples": [
+                    30
+                  ],
+                  "type": "number"
+                },
+                "y": {
+                  "description": "Y coordinate of the product in the image.",
+                  "examples": [
+                    100
+                  ],
+                  "type": "number"
+                },
+                "x": {
+                  "description": "X coordinate of the product in the image.",
+                  "examples": [
+                    100
+                  ],
+                  "type": "number"
+                },
+                "width": {
+                  "description": "Width of the product in the image.",
+                  "examples": [
+                    10
+                  ],
+                  "type": "number"
+                }
+              }
+            }
+          }
+        },
+        "description": "List of products to embed in the image.",
+        "examples": [
+          [
+            {
+              "image_source": "https://bria-datasets.s3.us-east-1.amazonaws.com/embed-product/a_standing_lamp_over_white_background_0.png",
+              "coordinates": {
+                "height": 300,
+                "y": 317,
+                "x": 300,
+                "width": 100
+              }
+            },
+            {
+              "image_source": "https://bria-datasets.s3.us-east-1.amazonaws.com/embed-product/a_wall_picture_on_white_background_0.png",
+              "coordinates": {
+                "height": 156,
+                "y": 287,
+                "x": 646,
+                "width": 120
+              }
+            }
+          ]
+        ],
+        "type": "array",
+        "maxItems": 10,
+        "minItems": 1
+      }
+    }
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "EmbedProductInput",
+    "EmbedProductOutput",
+    "EmbedItem",
+    "Image",
+    "Coordinates"
+  ]
+}

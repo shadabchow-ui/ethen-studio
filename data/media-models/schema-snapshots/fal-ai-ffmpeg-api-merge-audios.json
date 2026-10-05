@@ -1,0 +1,125 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/ffmpeg-api/merge-audios",
+  "task": "unknown",
+  "source_url": "https://fal.ai/models/fal-ai/ffmpeg-api/merge-audios",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fffmpeg-api%2Fmerge-audios",
+  "retrieved_at": "2026-10-04T19:43:43.801Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "audio-to-audio",
+  "bytes_sha256": "b142fd48cd8b7edc0e9988bfedfbaf78169261ea23cb637da64bdcbbe7d3d3b1",
+  "queue_path": "/fal-ai/ffmpeg-api/merge-audios",
+  "input_name": "FfmpegApiMergeAudiosInput",
+  "input": {
+    "$refName": "FfmpegApiMergeAudiosInput",
+    "properties": {
+      "audio_urls": {
+        "examples": [
+          [
+            "https://storage.googleapis.com/falserverless/example_inputs/ffmpeg_api/merge_audios/first.mp3",
+            "https://storage.googleapis.com/falserverless/example_inputs/ffmpeg_api/merge_audios/second.mp3"
+          ]
+        ],
+        "items": {
+          "type": "string"
+        },
+        "type": "array",
+        "minItems": 2,
+        "description": "List of audio URLs to merge in order. The 0th stream of the audio will be considered as the merge candidate.",
+        "maxItems": 5
+      },
+      "output_format": {
+        "anyOf": [
+          {
+            "type": "string",
+            "enum": [
+              "mp3_22050_32",
+              "mp3_44100_32",
+              "mp3_44100_64",
+              "mp3_44100_96",
+              "mp3_44100_128",
+              "mp3_44100_192",
+              "pcm_8000",
+              "pcm_16000",
+              "pcm_22050",
+              "pcm_24000",
+              "pcm_44100",
+              "pcm_48000",
+              "ulaw_8000",
+              "alaw_8000",
+              "opus_48000_32",
+              "opus_48000_64",
+              "opus_48000_96",
+              "opus_48000_128",
+              "opus_48000_192"
+            ]
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "Output format of the combined audio. If not used, will be determined automatically using FFMPEG. Formatted as codec_sample_rate_bitrate."
+      }
+    },
+    "required": [
+      "audio_urls"
+    ],
+    "type": "object"
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "FfmpegApiMergeAudiosInput",
+    "FfmpegApiMergeAudiosOutput",
+    "File"
+  ]
+}

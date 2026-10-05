@@ -1,0 +1,171 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/fashn/tryon/v1.6",
+  "task": "unknown",
+  "source_url": "https://fal.ai/models/fal-ai/fashn/tryon/v1.6",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Ffashn%2Ftryon%2Fv1.6",
+  "retrieved_at": "2026-10-04T19:43:29.641Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "image-to-image",
+  "bytes_sha256": "a5ccc5fa828e148b4019617e949bb481f354d742d628b8465b03b7dc307b2a30",
+  "queue_path": "/fal-ai/fashn/tryon/v1.6",
+  "input_name": "FashnTryonV16Input",
+  "input": {
+    "$refName": "FashnTryonV16Input",
+    "properties": {
+      "model_image": {
+        "description": "URL or base64 of the model image",
+        "examples": [
+          "https://storage.googleapis.com/falserverless/example_inputs/model.png"
+        ],
+        "type": "string"
+      },
+      "garment_photo_type": {
+        "default": "auto",
+        "enum": [
+          "auto",
+          "model",
+          "flat-lay"
+        ],
+        "description": "Specifies the type of garment photo to optimize internal parameters for better performance. 'model' is for photos of garments on a model, 'flat-lay' is for flat-lay or ghost mannequin images, and 'auto' attempts to automatically detect the photo type.",
+        "type": "string"
+      },
+      "category": {
+        "default": "auto",
+        "enum": [
+          "tops",
+          "bottoms",
+          "one-pieces",
+          "auto"
+        ],
+        "description": "Category of the garment to try-on. 'auto' will attempt to automatically detect the category of the garment.",
+        "type": "string"
+      },
+      "output_format": {
+        "default": "png",
+        "enum": [
+          "png",
+          "jpeg"
+        ],
+        "description": "Output format of the generated images. 'png' is highest quality, while 'jpeg' is faster",
+        "type": "string"
+      },
+      "num_samples": {
+        "default": 1,
+        "description": "Number of images to generate in a single run. Image generation has a random element in it, so trying multiple images at once increases the chances of getting a good result.",
+        "maximum": 4,
+        "minimum": 1,
+        "type": "integer"
+      },
+      "garment_image": {
+        "description": "URL or base64 of the garment image",
+        "examples": [
+          "https://storage.googleapis.com/falserverless/example_inputs/garment.webp"
+        ],
+        "type": "string"
+      },
+      "mode": {
+        "default": "balanced",
+        "enum": [
+          "performance",
+          "balanced",
+          "quality"
+        ],
+        "description": "Specifies the mode of operation. 'performance' mode is faster but may sacrifice quality, 'balanced' mode is a balance between speed and quality, and 'quality' mode is slower but produces higher quality results.",
+        "type": "string"
+      },
+      "moderation_level": {
+        "default": "permissive",
+        "enum": [
+          "none",
+          "permissive",
+          "conservative"
+        ],
+        "description": "Content moderation level for garment images. 'permissive' blocks only explicit content; 'conservative' also blocks underwear and swimwear. 'none' disables moderation only for accounts authorized to disable safety filters; for all other accounts it is treated as 'permissive'.",
+        "type": "string"
+      },
+      "segmentation_free": {
+        "default": true,
+        "description": "Disables human parsing on the model image.",
+        "type": "boolean"
+      },
+      "sync_mode": {
+        "default": false,
+        "description": "If `True`, the media will be returned as a data URI and the output data won't be available in the request history.",
+        "type": "boolean"
+      },
+      "seed": {
+        "anyOf": [
+          {
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "Sets random operations to a fixed state. Use the same seed to reproduce results with the same inputs, or different seed to force different results."
+      }
+    },
+    "required": [
+      "model_image",
+      "garment_image"
+    ],
+    "type": "object"
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "FashnTryonV16Input",
+    "FashnTryonV16Output",
+    "File"
+  ]
+}

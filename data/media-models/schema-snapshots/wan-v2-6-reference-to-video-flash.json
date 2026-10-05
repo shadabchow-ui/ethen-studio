@@ -1,0 +1,217 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "wan/v2.6/reference-to-video/flash",
+  "task": "reference-to-video",
+  "source_url": "https://fal.ai/models/wan/v2.6/reference-to-video/flash",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=wan%2Fv2.6%2Freference-to-video%2Fflash",
+  "retrieved_at": "2026-10-04T19:55:37.755Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "video-to-video",
+  "bytes_sha256": "aa62c8c22f21f2bcbbb8c9e08c63ed4ec21dae70c870261aa6ad7a39302a09ce",
+  "queue_path": "/wan/v2.6/reference-to-video/flash",
+  "input_name": "V26ReferenceToVideoFlashInput",
+  "input": {
+    "$refName": "V26ReferenceToVideoFlashInput",
+    "properties": {
+      "duration": {
+        "default": "5",
+        "examples": [
+          "5",
+          "10"
+        ],
+        "description": "Duration of the generated video in seconds. R2V Flash supports only 5 or 10 seconds.",
+        "type": "string",
+        "enum": [
+          "5",
+          "10"
+        ]
+      },
+      "prompt": {
+        "examples": [
+          "Dance battle between Character1 and Character2."
+        ],
+        "description": "Use Character1, Character2, etc. to reference subjects from your reference files. Works for people, animals, or objects. For multi-shot prompts: '[0-3s] Shot 1. [3-6s] Shot 2.' Max 1500 characters. Reference order: video_urls first, then image_urls.",
+        "type": "string",
+        "minLength": 1
+      },
+      "negative_prompt": {
+        "default": "",
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "Negative prompt to describe content to avoid. Max 500 characters.",
+        "examples": [
+          "low resolution, error, worst quality, low quality, defects"
+        ]
+      },
+      "enable_prompt_expansion": {
+        "default": true,
+        "description": "Whether to enable prompt rewriting using LLM.",
+        "type": "boolean"
+      },
+      "generate_audio": {
+        "default": true,
+        "description": "Whether to generate a video with audio. Set to false for silent video generation. Silent videos are faster and cost 25% of the audio version price.",
+        "type": "boolean"
+      },
+      "multi_shots": {
+        "default": true,
+        "description": "When true (default), enables intelligent multi-shot segmentation for coherent narrative videos with multiple shots. When false, generates single continuous shot. Only active when enable_prompt_expansion is True.",
+        "type": "boolean"
+      },
+      "video_urls": {
+        "anyOf": [
+          {
+            "items": {
+              "ui": {
+                "field": "video"
+              },
+              "_fal_ui_field": "video",
+              "type": "string",
+              "limit_description": "Max file size: 100.0MB, Min duration: 2s, Max duration: 30s, Timeout: 30.0s"
+            },
+            "type": "array"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "examples": [
+          [
+            "https://v3b.fal.media/files/b/0a8d6d47/FtSBJGfZuivKfBIrRuWxa_video.mp4"
+          ]
+        ],
+        "description": "Reference videos for subject consistency (0-3 videos). Videos' FPS must be at least 16 FPS. Combined with image_urls, total references cannot exceed 5. Reference order: video_urls are numbered first (Character1, Character2...), then image_urls continue the sequence."
+      },
+      "aspect_ratio": {
+        "default": "16:9",
+        "description": "The aspect ratio of the generated video.",
+        "type": "string",
+        "enum": [
+          "16:9",
+          "9:16",
+          "1:1",
+          "4:3",
+          "3:4"
+        ]
+      },
+      "image_urls": {
+        "anyOf": [
+          {
+            "items": {
+              "ui": {
+                "field": "image"
+              },
+              "_fal_ui_field": "image",
+              "type": "string"
+            },
+            "type": "array"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "examples": [
+          [
+            "https://v3b.fal.media/files/b/0a8d6d49/4XDgJcWQHLgkmUOL2JlPt_iXGPlm9y.png"
+          ]
+        ],
+        "description": "Reference images for subject consistency (0-5 images). Combined with video_urls, total references cannot exceed 5. Formats: JPEG, JPG, PNG (no alpha), BMP, WEBP. Resolution: 240-5000px. Max 10MB each. Reference order: image_urls continue numbering after video_urls."
+      },
+      "enable_safety_checker": {
+        "default": true,
+        "examples": [
+          true
+        ],
+        "description": "If set to true, the safety checker will be enabled. Disabling it requires account authorization; unauthorized requests are always checked.",
+        "type": "boolean"
+      },
+      "resolution": {
+        "default": "1080p",
+        "description": "Video resolution tier. R2V Flash only supports 720p and 1080p.",
+        "type": "string",
+        "enum": [
+          "720p",
+          "1080p"
+        ]
+      },
+      "seed": {
+        "anyOf": [
+          {
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "Random seed for reproducibility. If None, a random seed is chosen."
+      }
+    },
+    "required": [
+      "prompt"
+    ],
+    "description": "Input for Wan 2.6 R2V Flash reference-to-video generation\n\nThe flash model is 10-20 seconds faster than the standard R2V model\nand supports generating videos with or without audio. It also supports\nboth images and videos as reference inputs.",
+    "type": "object"
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "V26ReferenceToVideoFlashInput",
+    "V26ReferenceToVideoFlashOutput",
+    "VideoFile"
+  ]
+}

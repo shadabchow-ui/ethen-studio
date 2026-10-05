@@ -1,0 +1,104 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/ghiblify",
+  "task": "unknown",
+  "source_url": "https://fal.ai/models/fal-ai/ghiblify",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fghiblify",
+  "retrieved_at": "2026-10-04T19:45:17.885Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "image-to-image",
+  "bytes_sha256": "39388e4457ae42bdbd2889063c7d1823d21887ab260b81ee0ebaf5de977a2950",
+  "queue_path": "/fal-ai/ghiblify",
+  "input_name": "GhiblifyInput",
+  "input": {
+    "$refName": "GhiblifyInput",
+    "properties": {
+      "enable_safety_checker": {
+        "default": true,
+        "type": "boolean",
+        "description": "Whether to enable the safety checker."
+      },
+      "seed": {
+        "examples": [
+          null
+        ],
+        "description": "The seed to use for the upscale. If not provided, a random seed will be used.",
+        "anyOf": [
+          {
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "image_url": {
+        "examples": [
+          "https://storage.googleapis.com/falserverless/example_inputs/girl.jpg"
+        ],
+        "type": "string",
+        "description": "The URL of the image to upscale."
+      }
+    },
+    "required": [
+      "image_url"
+    ],
+    "type": "object"
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "GhiblifyInput",
+    "GhiblifyOutput",
+    "Image"
+  ]
+}

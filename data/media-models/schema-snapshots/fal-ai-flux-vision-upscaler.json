@@ -1,0 +1,129 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/flux-vision-upscaler",
+  "task": "unknown",
+  "source_url": "https://fal.ai/models/fal-ai/flux-vision-upscaler",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fflux-vision-upscaler",
+  "retrieved_at": "2026-10-04T19:45:01.760Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "image-to-image",
+  "bytes_sha256": "e4e6cf527937a6ee191e1da4fdecfae61de2a4c87b6640383f6edcd3467e37d5",
+  "queue_path": "/fal-ai/flux-vision-upscaler",
+  "input_name": "FluxVisionUpscalerInput",
+  "input": {
+    "$refName": "FluxVisionUpscalerInput",
+    "properties": {
+      "steps": {
+        "minimum": 4,
+        "type": "integer",
+        "description": "Number of inference steps (4-50).",
+        "maximum": 50,
+        "default": 20
+      },
+      "image_url": {
+        "examples": [
+          "https://storage.googleapis.com/falserverless/gallery/NOCA_Mick-Thompson.resized.resized.jpg"
+        ],
+        "type": "string",
+        "description": "The URL of the image to upscale."
+      },
+      "enable_safety_checker": {
+        "type": "boolean",
+        "description": "Whether to enable the safety checker.",
+        "default": true
+      },
+      "seed": {
+        "anyOf": [
+          {
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "The seed to use for the upscale. If not provided, a random seed will be used."
+      },
+      "creativity": {
+        "minimum": 0,
+        "type": "number",
+        "description": "The creativity of the model. The higher the creativity, the more the model will deviate from the original. Refers to the denoise strength of the sampling.",
+        "maximum": 1,
+        "default": 0.3
+      },
+      "guidance": {
+        "minimum": 1,
+        "type": "number",
+        "description": "CFG/guidance scale (1-4). Controls how closely the model follows the prompt.",
+        "maximum": 4,
+        "default": 1
+      },
+      "upscale_factor": {
+        "minimum": 1,
+        "type": "number",
+        "description": "The upscale factor (1-4x).",
+        "maximum": 4,
+        "default": 2
+      }
+    },
+    "type": "object",
+    "required": [
+      "image_url"
+    ]
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "FluxVisionUpscalerInput",
+    "FluxVisionUpscalerOutput",
+    "Image"
+  ]
+}

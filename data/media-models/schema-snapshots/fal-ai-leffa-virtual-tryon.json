@@ -1,0 +1,152 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/leffa/virtual-tryon",
+  "task": "unknown",
+  "source_url": "https://fal.ai/models/fal-ai/leffa/virtual-tryon",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fleffa%2Fvirtual-tryon",
+  "retrieved_at": "2026-10-04T19:47:28.180Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "image-to-image",
+  "bytes_sha256": "82e3617e5b92a10c13b472f5d47e34af30eaa7d72492d2194e1c62c75b46926a",
+  "queue_path": "/fal-ai/leffa/virtual-tryon",
+  "input_name": "LeffaVirtualTryonInput",
+  "input": {
+    "$refName": "LeffaVirtualTryonInput",
+    "type": "object",
+    "properties": {
+      "seed": {
+        "description": "\n            The same seed and the same input given to the same version of the model\n            will output the same image every time.\n        ",
+        "anyOf": [
+          {
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "num_inference_steps": {
+        "minimum": 1,
+        "type": "integer",
+        "maximum": 50,
+        "description": "The number of inference steps to perform.",
+        "default": 50
+      },
+      "human_image_url": {
+        "type": "string",
+        "examples": [
+          "https://storage.googleapis.com/falserverless/model_tests/leffa/person_image.jpg"
+        ],
+        "description": "Url for the human image."
+      },
+      "output_format": {
+        "enum": [
+          "jpeg",
+          "png"
+        ],
+        "type": "string",
+        "description": "The format of the generated image.",
+        "default": "png"
+      },
+      "enable_safety_checker": {
+        "type": "boolean",
+        "description": "If set to true, the safety checker will be enabled. Disabling it requires account authorization; unauthorized requests are always checked, and images flagged as unsafe are returned as black images.",
+        "default": true
+      },
+      "sync_mode": {
+        "type": "boolean",
+        "description": "If `True`, the media will be returned as a data URI and the output data won't be available in the request history.",
+        "default": false
+      },
+      "garment_type": {
+        "enum": [
+          "upper_body",
+          "lower_body",
+          "dresses"
+        ],
+        "type": "string",
+        "examples": [
+          "upper_body",
+          "lower_body",
+          "dresses"
+        ],
+        "description": "The type of the garment used for virtual try-on."
+      },
+      "guidance_scale": {
+        "minimum": 0,
+        "type": "number",
+        "maximum": 20,
+        "description": "\n            The CFG (Classifier Free Guidance) scale is a measure of how close you want\n            the model to stick to your input when generating the image.\n        ",
+        "default": 2.5
+      },
+      "garment_image_url": {
+        "type": "string",
+        "examples": [
+          "https://storage.googleapis.com/falserverless/model_tests/leffa/tshirt_image.jpg"
+        ],
+        "description": "Url to the garment image."
+      }
+    },
+    "required": [
+      "human_image_url",
+      "garment_image_url",
+      "garment_type"
+    ]
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "LeffaVirtualTryonInput",
+    "LeffaVirtualTryonOutput",
+    "Image"
+  ]
+}

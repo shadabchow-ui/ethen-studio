@@ -1,0 +1,115 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/flux-2-klein-9b-base-trainer/edit",
+  "task": "image-editing",
+  "source_url": "https://fal.ai/models/fal-ai/flux-2-klein-9b-base-trainer/edit",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fflux-2-klein-9b-base-trainer%2Fedit",
+  "retrieved_at": "2026-10-04T19:44:07.326Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "training",
+  "bytes_sha256": "8796c0057ee63244fb38369fcdfbe367ec993ba0c2193a75cd5b44133e5011a7",
+  "queue_path": "/fal-ai/flux-2-klein-9b-base-trainer/edit",
+  "input_name": "Flux2Klein9bBaseTrainerEditInput",
+  "input": {
+    "$refName": "Flux2Klein9bBaseTrainerEditInput",
+    "type": "object",
+    "properties": {
+      "output_lora_format": {
+        "default": "fal",
+        "type": "string",
+        "description": "Dictates the naming scheme for the output weights",
+        "enum": [
+          "fal",
+          "comfy"
+        ]
+      },
+      "default_caption": {
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "Default caption to use when caption files are missing. If None, missing captions will cause an error."
+      },
+      "steps": {
+        "maximum": 20000,
+        "default": 1000,
+        "type": "integer",
+        "description": "Total number of training steps.",
+        "multipleOf": 100,
+        "minimum": 100
+      },
+      "image_data_url": {
+        "description": "\n    URL to the input data zip archive.\n\n    The zip should contain pairs of images. The images should be named:\n\n    ROOT_start.EXT and ROOT_end.EXT\n    For example:\n    photo_start.jpg and photo_end.jpg\n\n    The zip can also contain up to four reference image for each image pair. The reference images should be named:\n    ROOT_start.EXT, ROOT_start2.EXT, ROOT_start3.EXT, ROOT_start4.EXT, ROOT_end.EXT\n    For example:\n    photo_start.jpg, photo_start2.jpg, photo_end.jpg\n\n    The zip can also contain a text file for each image pair. The text file should be named:\n    ROOT.txt\n    For example:\n    photo.txt\n\n    This text file can be used to specify the edit instructions for the image pair.\n\n    If no text file is provided, the default_caption will be used.\n\n    If no default_caption is provided, the training will fail.\n    ",
+        "type": "string"
+      },
+      "learning_rate": {
+        "default": 0.00005,
+        "type": "number",
+        "description": "Learning rate applied to trainable parameters."
+      }
+    },
+    "required": [
+      "image_data_url"
+    ]
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "Flux2Klein9bBaseTrainerEditInput",
+    "Flux2Klein9bBaseTrainerEditOutput",
+    "File"
+  ]
+}

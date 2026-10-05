@@ -1,0 +1,127 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/pixverse/c1/image-to-video",
+  "task": "image-to-video",
+  "source_url": "https://fal.ai/models/fal-ai/pixverse/c1/image-to-video",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fpixverse%2Fc1%2Fimage-to-video",
+  "retrieved_at": "2026-10-04T19:49:58.815Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "image-to-video",
+  "bytes_sha256": "eb8fe84f3017488f8ce1249ec65ea2905d0ad88d7aeb7e052f0cb65462509ec2",
+  "queue_path": "/fal-ai/pixverse/c1/image-to-video",
+  "input_name": "PixverseC1ImageToVideoInput",
+  "input": {
+    "$refName": "PixverseC1ImageToVideoInput",
+    "properties": {
+      "prompt": {
+        "examples": [
+          "A woman warrior with her hammer walking with his glacier wolf."
+        ],
+        "description": "Text prompt for the video generation. Limited to 2048 UTF-8 encoded bytes. Because the limit counts bytes rather than characters, emoji and non-Latin or accented characters (which use multiple bytes each) can push a visually short prompt over the cap.",
+        "type": "string"
+      },
+      "seed": {
+        "description": "\n            The same seed and the same prompt given to the same version of the model\n            will output the same video every time.\n        ",
+        "anyOf": [
+          {
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "duration": {
+        "type": "integer",
+        "maximum": 15,
+        "default": 5,
+        "description": "The duration of the generated video in seconds (1-15)",
+        "minimum": 1
+      },
+      "image_url": {
+        "examples": [
+          "https://v3.fal.media/files/zebra/qL93Je8ezvzQgDOEzTjKF_KhGKZTEebZcDw6T5rwQPK_output.png"
+        ],
+        "description": "URL of the image to use as the first frame",
+        "type": "string"
+      },
+      "generate_audio_switch": {
+        "type": "boolean",
+        "default": false,
+        "description": "Enable audio generation (BGM, SFX, dialogue)"
+      },
+      "resolution": {
+        "enum": [
+          "360p",
+          "540p",
+          "720p",
+          "1080p"
+        ],
+        "default": "720p",
+        "description": "The resolution of the generated video",
+        "type": "string"
+      }
+    },
+    "required": [
+      "prompt",
+      "image_url"
+    ],
+    "type": "object"
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "PixverseC1ImageToVideoInput",
+    "PixverseC1ImageToVideoOutput",
+    "File"
+  ]
+}

@@ -1,0 +1,213 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/pulid",
+  "task": "unknown",
+  "source_url": "https://fal.ai/models/fal-ai/pulid",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fpulid",
+  "retrieved_at": "2026-10-04T19:50:34.742Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "image-to-image",
+  "bytes_sha256": "1b11dbb6faee31b0ba5f3a82e13a73d94995c20293d9f56937005bc0e44d4059",
+  "queue_path": "/fal-ai/pulid",
+  "input_name": "PulidInput",
+  "input": {
+    "$refName": "PulidInput",
+    "required": [
+      "reference_images",
+      "prompt"
+    ],
+    "type": "object",
+    "properties": {
+      "prompt": {
+        "description": "Prompt to generate the face from",
+        "type": "string",
+        "examples": [
+          "portrait, impressionist painting, loose brushwork, vibrant color, light and shadow play"
+        ]
+      },
+      "reference_images": {
+        "description": "List of reference faces, ideally 4 images.",
+        "items": {
+          "$refName": "ReferenceFace",
+          "required": [
+            "image_url"
+          ],
+          "type": "object",
+          "properties": {
+            "image_url": {
+              "description": "URL of the reference face image",
+              "type": "string"
+            }
+          }
+        },
+        "type": "array",
+        "examples": [
+          [
+            {
+              "image_url": "https://storage.googleapis.com/falserverless/pulid/img2.png"
+            },
+            {
+              "image_url": "https://storage.googleapis.com/falserverless/pulid/img1.png"
+            }
+          ]
+        ]
+      },
+      "num_inference_steps": {
+        "maximum": 12,
+        "description": "Number of steps to take",
+        "type": "integer",
+        "minimum": 1,
+        "default": 4
+      },
+      "num_images": {
+        "maximum": 8,
+        "description": "Number of images to generate",
+        "type": "integer",
+        "minimum": 1,
+        "default": 1
+      },
+      "id_scale": {
+        "maximum": 5,
+        "description": "ID scale",
+        "type": "number",
+        "default": 0.8,
+        "exclusiveMinimum": 0
+      },
+      "image_size": {
+        "description": "Size of the generated image",
+        "anyOf": [
+          {
+            "$refName": "ImageSize",
+            "type": "object",
+            "properties": {
+              "height": {
+                "maximum": 14142,
+                "description": "The height of the generated image.",
+                "type": "integer",
+                "default": 512,
+                "exclusiveMinimum": 0
+              },
+              "width": {
+                "maximum": 14142,
+                "description": "The width of the generated image.",
+                "type": "integer",
+                "default": 512,
+                "exclusiveMinimum": 0
+              }
+            }
+          },
+          {
+            "enum": [
+              "square_hd",
+              "square",
+              "portrait_4_3",
+              "portrait_16_9",
+              "landscape_4_3",
+              "landscape_16_9"
+            ],
+            "type": "string"
+          }
+        ],
+        "default": {
+          "height": 1024,
+          "width": 768
+        }
+      },
+      "mode": {
+        "description": "Mode of generation",
+        "enum": [
+          "fidelity",
+          "extreme style"
+        ],
+        "type": "string",
+        "default": "fidelity"
+      },
+      "negative_prompt": {
+        "description": "Negative prompt to generate the face from",
+        "type": "string",
+        "default": "flaws in the eyes, flaws in the face, flaws, lowres, non-HDRi, low quality, worst quality,artifacts noise, text, watermark, glitch, deformed, mutated, ugly, disfigured, hands, low resolution, partially rendered objects,  deformed or partially rendered eyes, deformed, deformed eyeballs, cross-eyed,blurry"
+      },
+      "id_mix": {
+        "description": "if you want to mix two ID image, please turn this on, otherwise, turn this off",
+        "type": "boolean",
+        "default": false
+      },
+      "guidance_scale": {
+        "maximum": 1.5,
+        "description": "Guidance scale",
+        "type": "number",
+        "minimum": 1,
+        "default": 1.2
+      },
+      "seed": {
+        "description": "Random seed for reproducibility",
+        "anyOf": [
+          {
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      }
+    }
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "PulidInput",
+    "PulidOutput",
+    "ReferenceFace",
+    "ImageSize",
+    "Image"
+  ]
+}

@@ -1,0 +1,100 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/docres",
+  "task": "unknown",
+  "source_url": "https://fal.ai/models/fal-ai/docres",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fdocres",
+  "retrieved_at": "2026-10-04T19:43:16.209Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "image-to-image",
+  "bytes_sha256": "6784ffedab791394804ec36bdeb6c09ce436a59b198834f2982c2cb469f26090",
+  "queue_path": "/fal-ai/docres",
+  "input_name": "DocresInput",
+  "input": {
+    "$refName": "DocresInput",
+    "properties": {
+      "task": {
+        "enum": [
+          "deshadowing",
+          "appearance",
+          "deblurring",
+          "binarization"
+        ],
+        "description": "Task to perform",
+        "type": "string"
+      },
+      "image_url": {
+        "description": "URL of image to be used for relighting",
+        "examples": [
+          "https://storage.googleapis.com/falserverless/docres_ckpt/218_in.png"
+        ],
+        "type": "string"
+      },
+      "seed": {
+        "description": "\n            The same seed and the same prompt given to the same version of the model\n            will output the same image every time.\n        ",
+        "type": "integer"
+      }
+    },
+    "required": [
+      "image_url",
+      "task"
+    ],
+    "type": "object"
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "DocresInput",
+    "DocresOutput",
+    "Image"
+  ]
+}

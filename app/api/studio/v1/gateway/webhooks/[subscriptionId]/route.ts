@@ -5,7 +5,7 @@ import { SupabaseGatewayStore } from "../../../_lib/supabase-gateway";
 export const dynamic = "force-dynamic";
 
 /**
- * STUDIO_19 — V1 gateway single-subscription adapter. GET reads one
+ * STUDIO_19 — Studio Media API single-subscription adapter. GET reads one
  * subscription; DELETE removes it (deliveries cascade).
  */
 export async function GET(

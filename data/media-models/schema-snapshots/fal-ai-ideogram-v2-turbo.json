@@ -1,0 +1,141 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/ideogram/v2/turbo",
+  "task": "unknown",
+  "source_url": "https://fal.ai/models/fal-ai/ideogram/v2/turbo",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fideogram%2Fv2%2Fturbo",
+  "retrieved_at": "2026-10-04T19:45:56.031Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "text-to-image",
+  "bytes_sha256": "7d3b2c65dbb064b196ddcda83e4b696dd3786ec9e8d11c1bda6583c87b71f315",
+  "queue_path": "/fal-ai/ideogram/v2/turbo",
+  "input_name": "IdeogramV2TurboInput",
+  "input": {
+    "$refName": "IdeogramV2TurboInput",
+    "properties": {
+      "negative_prompt": {
+        "default": "",
+        "description": "A negative prompt to avoid in the generated image",
+        "type": "string"
+      },
+      "seed": {
+        "anyOf": [
+          {
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "Seed for the random number generator"
+      },
+      "sync_mode": {
+        "default": false,
+        "description": "If `True`, the media will be returned as a data URI and the output data won't be available in the request history.",
+        "type": "boolean"
+      },
+      "expand_prompt": {
+        "default": true,
+        "description": "Whether to expand the prompt with MagicPrompt functionality.",
+        "type": "boolean"
+      },
+      "style": {
+        "enum": [
+          "auto",
+          "general",
+          "realistic",
+          "design",
+          "render_3D",
+          "anime"
+        ],
+        "default": "auto",
+        "description": "The style of the generated image",
+        "type": "string"
+      },
+      "prompt": {
+        "examples": [
+          "A comic style illustration of a skeleton sitting on a toilet in a bathroom. The bathroom has a Halloween decoration with a pumpkin jack-o-lantern and bats flying around. There is a text above the skeleton that says \"Just Waiting for Halloween with Ideogram 2.0 at fal.ai\""
+        ],
+        "type": "string"
+      },
+      "aspect_ratio": {
+        "enum": [
+          "10:16",
+          "16:10",
+          "9:16",
+          "16:9",
+          "4:3",
+          "3:4",
+          "1:1",
+          "1:3",
+          "3:1",
+          "3:2",
+          "2:3"
+        ],
+        "default": "1:1",
+        "description": "The aspect ratio of the generated image",
+        "type": "string"
+      }
+    },
+    "type": "object",
+    "required": [
+      "prompt"
+    ]
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "IdeogramV2TurboInput",
+    "IdeogramV2TurboOutput",
+    "File"
+  ]
+}

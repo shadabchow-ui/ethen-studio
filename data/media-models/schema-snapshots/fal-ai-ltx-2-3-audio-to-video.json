@@ -1,0 +1,138 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/ltx-2.3/audio-to-video",
+  "task": "video-editing",
+  "source_url": "https://fal.ai/models/fal-ai/ltx-2.3/audio-to-video",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fltx-2.3%2Faudio-to-video",
+  "retrieved_at": "2026-10-04T19:48:26.239Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "audio-to-video",
+  "bytes_sha256": "d7857f81696addb4a17caee8dbd082214faa17d28d5f0bb5332c5553d8f25c7f",
+  "queue_path": "/fal-ai/ltx-2.3/audio-to-video",
+  "input_name": "Ltx23AudioToVideoInput",
+  "input": {
+    "$refName": "Ltx23AudioToVideoInput",
+    "required": [
+      "audio_url"
+    ],
+    "type": "object",
+    "properties": {
+      "audio_url": {
+        "description": "URL of the audio file to generate a video from. Duration must be between 2 and 20 seconds; pro models support a maximum of 10 seconds. Must be publicly accessible or base64 data URI.",
+        "examples": [
+          "https://v3b.fal.media/files/b/0a90dfe7/3a-DUXzO79XWIYwUDfHZX_output.mp3"
+        ],
+        "type": "string"
+      },
+      "aspect_ratio": {
+        "default": "auto",
+        "type": "string",
+        "enum": [
+          "auto",
+          "16:9",
+          "9:16"
+        ],
+        "description": "The aspect ratio of the generated video. If 'auto', the aspect ratio will be determined automatically based on the input image, or defaults to 16:9 if no image is provided."
+      },
+      "guidance_scale": {
+        "anyOf": [
+          {
+            "minimum": 1,
+            "maximum": 50,
+            "type": "number"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "Guidance scale for video generation. Higher values make the output more closely follow the prompt. Defaults to 5 for text-to-video, or 9 when providing an image."
+      },
+      "prompt": {
+        "anyOf": [
+          {
+            "maxLength": 5000,
+            "type": "string",
+            "minLength": 1
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "Text description of how the video should be generated. Required if image_url is not provided. When image_url is provided, this describes how the image should be animated.",
+        "examples": [
+          "A woman whispering to the microphone"
+        ]
+      },
+      "image_url": {
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "URL of an image to use as the first frame of the video. If not provided, prompt is required.",
+        "examples": [
+          "https://v3b.fal.media/files/b/0a90dfd2/G1zBOgd-17yqZ-2S5TN4j_M3nzt3Sp.png"
+        ]
+      }
+    }
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "Ltx23AudioToVideoInput",
+    "Ltx23AudioToVideoOutput",
+    "VideoFile"
+  ]
+}

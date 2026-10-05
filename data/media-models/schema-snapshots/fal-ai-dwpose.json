@@ -1,0 +1,102 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/dwpose",
+  "task": "unknown",
+  "source_url": "https://fal.ai/models/fal-ai/dwpose",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fdwpose",
+  "retrieved_at": "2026-10-04T19:43:18.693Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "image-to-image",
+  "bytes_sha256": "1e1522ad746b738ac88db2a31ae89776f6ebeda3c4e6fe4886dc8ee5c08e4556",
+  "queue_path": "/fal-ai/dwpose",
+  "input_name": "DwposeInput",
+  "input": {
+    "$refName": "DwposeInput",
+    "properties": {
+      "draw_mode": {
+        "description": "Mode of drawing the pose on the image. Options are: 'full-pose', 'body-pose', 'face-pose', 'hand-pose', 'face-hand-mask', 'face-mask', 'hand-mask'.",
+        "enum": [
+          "full-pose",
+          "body-pose",
+          "face-pose",
+          "hand-pose",
+          "face-hand-mask",
+          "face-mask",
+          "hand-mask"
+        ],
+        "default": "body-pose",
+        "type": "string",
+        "examples": [
+          "body-pose"
+        ]
+      },
+      "image_url": {
+        "description": "URL of the image to be processed",
+        "type": "string",
+        "examples": [
+          "https://github.com/badayvedat/sane-controlnet-aux/blob/main/tests/data/pose_sample.jpg?raw=true"
+        ]
+      }
+    },
+    "required": [
+      "image_url"
+    ],
+    "type": "object"
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "DwposeInput",
+    "DwposeOutput",
+    "Image"
+  ]
+}

@@ -1,0 +1,151 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/moondream/batched",
+  "task": "unknown",
+  "source_url": "https://fal.ai/models/fal-ai/moondream/batched",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fmoondream%2Fbatched",
+  "retrieved_at": "2026-10-04T19:49:26.296Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "vision",
+  "bytes_sha256": "7fe67a9ba58c9b748defa8b2de62e402fd211ce9fa666fd56285cddcc2bd30d0",
+  "queue_path": "/fal-ai/moondream/batched",
+  "input_name": "MoondreamBatchedInput",
+  "input": {
+    "$refName": "MoondreamBatchedInput",
+    "properties": {
+      "temperature": {
+        "default": 0.2,
+        "maximum": 1,
+        "exclusiveMinimum": 0,
+        "description": "Temperature for sampling",
+        "type": "number"
+      },
+      "repetition_penalty": {
+        "default": 1,
+        "maximum": 2,
+        "description": "Repetition penalty for sampling",
+        "minimum": 1,
+        "type": "number"
+      },
+      "top_p": {
+        "default": 1,
+        "maximum": 1,
+        "description": "Top P for sampling",
+        "minimum": 0,
+        "type": "number"
+      },
+      "max_tokens": {
+        "default": 64,
+        "maximum": 1024,
+        "description": "Maximum number of new tokens to generate",
+        "minimum": 32,
+        "type": "integer"
+      },
+      "inputs": {
+        "description": "List of input prompts and image URLs",
+        "examples": [
+          [
+            {
+              "image_url": "https://github.com/vikhyat/moondream/raw/main/assets/demo-1.jpg",
+              "prompt": "What is the girl doing?"
+            }
+          ]
+        ],
+        "items": {
+          "$refName": "MoondreamInputParam",
+          "properties": {
+            "image_url": {
+              "description": "URL of the image to be processed",
+              "examples": [
+                "https://llava-vl.github.io/static/images/monalisa.jpg"
+              ],
+              "type": "string"
+            },
+            "prompt": {
+              "default": "Describe this image.",
+              "description": "Prompt to be used for the image",
+              "examples": [
+                "Do you know who drew this painting?"
+              ],
+              "type": "string"
+            }
+          },
+          "required": [
+            "image_url"
+          ],
+          "type": "object"
+        },
+        "type": "array"
+      },
+      "model_id": {
+        "default": "vikhyatk/moondream2",
+        "enum": [
+          "vikhyatk/moondream2",
+          "fal-ai/moondream2-docci"
+        ],
+        "description": "Model ID to use for inference",
+        "type": "string"
+      }
+    },
+    "required": [
+      "inputs"
+    ],
+    "type": "object"
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "MoondreamBatchedInput",
+    "MoondreamBatchedOutput",
+    "MoondreamInputParam"
+  ]
+}

@@ -1,0 +1,146 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "mirage-api/avatar-x/reference-to-video",
+  "task": "reference-to-video",
+  "source_url": "https://fal.ai/models/mirage-api/avatar-x/reference-to-video",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=mirage-api%2Favatar-x%2Freference-to-video",
+  "retrieved_at": "2026-10-04T19:54:27.364Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "image-to-video",
+  "bytes_sha256": "bd05ec5e8a609ced9c7ddc635e588d7dbc79059e81e18a83190f9dc27ac980f9",
+  "queue_path": "/mirage-api/avatar-x/reference-to-video",
+  "input_name": "AvatarXReferenceToVideoInput",
+  "input": {
+    "$refName": "AvatarXReferenceToVideoInput",
+    "type": "object",
+    "required": [
+      "audio_url"
+    ],
+    "description": "Inputs for driving a stock or caller-supplied visual with audio.",
+    "properties": {
+      "video_reference_url": {
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "Publicly fetchable HTTPS URL of the reference video; no cookies or authorization headers. Takes precedence over image_reference_url when both are supplied. Supports H.264, H.265/HEVC, or ProRes in .mp4, .mov, or .m4v and VP8 or VP9 in .webm, from 1 to 120 seconds and up to 1 GiB, with exactly one video stream and a 9:16 or 16:9 display aspect ratio (within 5%). The video must contain a usable one-second reference window; any audio track is ignored.",
+        "examples": [
+          "https://v3b.fal.media/files/b/0aa596d5/q8taheXQ-KlmtoC-uKViG_mirage-avatar-x-luke-reference-to-video-demo.mp4"
+        ]
+      },
+      "image_reference_url": {
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "Publicly fetchable HTTPS URL of the reference image; no cookies or authorization headers. Ignored when video_reference_url is also supplied. Supports one static .jpg, .jpeg, .png, or .webp image up to 25 MiB, with a short edge of at least 512 px, no edge over 8192 px, at most 25 megapixels, and a 9:16 or 16:9 aspect ratio (within 5%)."
+      },
+      "avatar": {
+        "anyOf": [
+          {
+            "type": "string",
+            "enum": [
+              "None",
+              "Ayesha",
+              "Ayesha (16:9)",
+              "Farhan",
+              "Farhan (16:9)",
+              "Giulia",
+              "Giulia (16:9)",
+              "Jasmine",
+              "Jasmine (16:9)",
+              "Luke",
+              "Luke (16:9)",
+              "Maya",
+              "Maya (16:9)",
+              "Michael",
+              "Michael (16:9)",
+              "Neha",
+              "Neha (16:9)",
+              "Tariq",
+              "Tariq (16:9)",
+              "Valerie",
+              "Valerie (16:9)"
+            ]
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "Stock visual that can be used instead of an image or video reference; it does not supply audio. Browse the [avatar catalog](https://captions.ai/help/docs/api/actor-catalog) to preview the available visuals and copy the exact Avatar value. Default and None both mean no avatar. Any supplied image or video reference overrides the selection, and audio always comes from audio_url."
+      },
+      "audio_url": {
+        "type": "string",
+        "description": "Publicly fetchable HTTPS URL of the driving audio; no cookies or authorization headers. Supports MP3, PCM WAV or AIFF, AAC or ALAC, Opus or Vorbis, and FLAC audio from 3 to 180 seconds and up to 64 MiB, with one mono or stereo stream sampled from 8 to 48 kHz. The generated video follows this audio.",
+        "examples": [
+          "https://v3b.fal.media/files/b/0aa596e6/ko0yoMiCNRRAnMU5PQAHK_mirage-avatar-x-luke-reference-audio.wav"
+        ]
+      }
+    },
+    "additionalProperties": false
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "AvatarXReferenceToVideoInput",
+    "AvatarXReferenceToVideoOutput",
+    "Video"
+  ]
+}

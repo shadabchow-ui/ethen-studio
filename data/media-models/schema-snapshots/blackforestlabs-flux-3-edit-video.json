@@ -1,0 +1,101 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "blackforestlabs/flux-3/edit-video",
+  "task": "video-editing",
+  "source_url": "https://fal.ai/models/blackforestlabs/flux-3/edit-video",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=blackforestlabs%2Fflux-3%2Fedit-video",
+  "retrieved_at": "2026-10-04T19:41:30.904Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "video-to-video",
+  "bytes_sha256": "9611c3f5ecbf78e8ca9e2d6a0145ca017e3ac79982f209de173a874af1baa340",
+  "queue_path": "/blackforestlabs/flux-3/edit-video",
+  "input_name": "Flux3EditVideoInput",
+  "input": {
+    "$refName": "Flux3EditVideoInput",
+    "type": "object",
+    "properties": {
+      "prompt": {
+        "description": "The text prompt describing how to change the input video. The clip is re-rendered preserving motion, timing, and framing.",
+        "type": "string",
+        "maxLength": 4096,
+        "examples": [
+          "Make it snow heavily; give the scene a cold winter palette."
+        ]
+      },
+      "safety_tolerance": {
+        "default": 2,
+        "minimum": 0,
+        "description": "The safety tolerance level for the generated video. 0 is the strictest and 4 is the most permissive.",
+        "maximum": 4,
+        "type": "integer"
+      },
+      "video_url": {
+        "examples": [
+          "https://storage.googleapis.com/falserverless/example_inputs/flux-3-red-panda.mp4"
+        ],
+        "description": "URL of the input video. MP4, under 50 MB and under 15 seconds.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "prompt",
+      "video_url"
+    ]
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "Flux3EditVideoInput",
+    "Flux3EditVideoOutput",
+    "File"
+  ]
+}

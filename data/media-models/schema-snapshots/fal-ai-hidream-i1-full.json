@@ -1,0 +1,229 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/hidream-i1-full",
+  "task": "unknown",
+  "source_url": "https://fal.ai/models/fal-ai/hidream-i1-full",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fhidream-i1-full",
+  "retrieved_at": "2026-10-04T19:45:31.909Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "text-to-image",
+  "bytes_sha256": "e2ebc3eda7eb8c6e22f70093c415d958e9ea1a4749b7513a346e151632969557",
+  "queue_path": "/fal-ai/hidream-i1-full",
+  "input_name": "HidreamI1FullInput",
+  "input": {
+    "$refName": "HidreamI1FullInput",
+    "properties": {
+      "num_images": {
+        "minimum": 1,
+        "type": "integer",
+        "description": "The number of images to generate.",
+        "maximum": 4,
+        "default": 1
+      },
+      "image_size": {
+        "anyOf": [
+          {
+            "$refName": "ImageSize",
+            "properties": {
+              "height": {
+                "exclusiveMinimum": 0,
+                "type": "integer",
+                "description": "The height of the generated image.",
+                "maximum": 14142,
+                "default": 512
+              },
+              "width": {
+                "exclusiveMinimum": 0,
+                "type": "integer",
+                "description": "The width of the generated image.",
+                "maximum": 14142,
+                "default": 512
+              }
+            },
+            "type": "object"
+          },
+          {
+            "type": "string",
+            "enum": [
+              "square_hd",
+              "square",
+              "portrait_4_3",
+              "portrait_16_9",
+              "landscape_4_3",
+              "landscape_16_9"
+            ]
+          }
+        ],
+        "description": "The size of the generated image.",
+        "default": {
+          "height": 1024,
+          "width": 1024
+        }
+      },
+      "num_inference_steps": {
+        "minimum": 1,
+        "type": "integer",
+        "description": "The number of inference steps to perform.",
+        "maximum": 50,
+        "default": 50
+      },
+      "enable_safety_checker": {
+        "type": "boolean",
+        "description": "If set to true, the safety checker will be enabled. Disabling it requires account authorization; unauthorized requests are always checked, and images flagged as unsafe are returned as black images.",
+        "default": true
+      },
+      "loras": {
+        "anyOf": [
+          {
+            "type": "array",
+            "items": {
+              "$refName": "LoraWeight",
+              "properties": {
+                "weight_name": {
+                  "anyOf": [
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ],
+                  "description": "Name of the LoRA weight. Used only if `path` is a Hugging Face repository, and required only if you have more than 1 safetensors file in the repo."
+                },
+                "path": {
+                  "type": "string",
+                  "description": "URL or the path to the LoRA weights."
+                },
+                "scale": {
+                  "minimum": 0,
+                  "type": "number",
+                  "description": "\n            The scale of the LoRA weight. This is used to scale the LoRA weight\n            before merging it with the base model.\n        ",
+                  "maximum": 4,
+                  "default": 1
+                }
+              },
+              "type": "object",
+              "required": [
+                "path"
+              ]
+            }
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "A list of LoRAs to apply to the model. Each LoRA specifies its path, scale, and optional weight name.",
+        "default": []
+      },
+      "output_format": {
+        "default": "jpeg",
+        "type": "string",
+        "description": "The format of the generated image.",
+        "enum": [
+          "jpeg",
+          "png"
+        ]
+      },
+      "seed": {
+        "anyOf": [
+          {
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "\n            The same seed and the same prompt given to the same version of the model\n            will output the same image every time.\n        "
+      },
+      "prompt": {
+        "examples": [
+          "a cat holding a skateboard which has 'fal' written on it in red spray paint"
+        ],
+        "type": "string",
+        "description": "The prompt to generate an image from."
+      },
+      "sync_mode": {
+        "type": "boolean",
+        "description": "If `True`, the media will be returned as a data URI and the output data won't be available in the request history.",
+        "default": false
+      },
+      "negative_prompt": {
+        "examples": [
+          ""
+        ],
+        "type": "string",
+        "description": "\n            The negative prompt to use. Use it to address details that you don't want\n            in the image. This could be colors, objects, scenery and even the small details\n            (e.g. moustache, blurry, low resolution).\n        ",
+        "default": ""
+      },
+      "guidance_scale": {
+        "minimum": 0,
+        "type": "number",
+        "description": "\n            The CFG (Classifier Free Guidance) scale is a measure of how close you want\n            the model to stick to your prompt when looking for a related image to show you.\n        ",
+        "maximum": 20,
+        "default": 5
+      }
+    },
+    "type": "object",
+    "required": [
+      "prompt"
+    ]
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "HidreamI1FullInput",
+    "HidreamI1FullOutput",
+    "ImageSize",
+    "LoraWeight",
+    "Image"
+  ]
+}

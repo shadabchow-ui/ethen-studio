@@ -2,6 +2,8 @@ import { requireProject, requireUserSession } from "@ethen/ai/platform/auth/guar
 import { NextRequest } from "next/server";
 import { studioError, studioSuccess } from "@/lib/media/api-v1";
 import { setupRequiredResponse } from "@/lib/media/studio-setup";
+import { getRegistryEndpointById } from "@/lib/media/fal-catalog";
+import { isStudioLocalRequest } from "@/lib/studio-local-project";
 import { ENDPOINT_ID_PATTERN as SHARED_ID_PATTERN } from "@/lib/media/endpoint-registry";
 import { resolveProjectScope } from "../../_lib/supabase-data";
 import { getEndpointSpec, listAttestations } from "../../_lib/supabase-catalog";
@@ -28,13 +30,20 @@ export async function GET(
     if (!projectId) return studioError("VALIDATION_ERROR", "projectId is required.");
     const authorization = await requireProject({ api: true, projectId });
     if (authorization.response) return authorization.response;
+    // Source metadata is independent of qualified project availability.
+    // The existing loopback fixture lane has no hosted endpoint-spec rows.
+    const metadata = getRegistryEndpointById(decoded) ?? null;
+    if (await isStudioLocalRequest()) {
+      if (!metadata) return studioError("NOT_FOUND", `Endpoint ${decoded} is not in the catalog.`);
+      return studioSuccess({ endpoint: null, attestations: [], metadata });
+    }
     const resolved = await resolveProjectScope(projectId);
     if (!resolved) return studioError("SETUP_REQUIRED", "Project has no Studio data scope yet.");
 
     const spec = await getEndpointSpec(decoded);
     if (!spec) return studioError("NOT_FOUND", `Endpoint ${decoded} is not in the catalog.`);
     const attestations = await listAttestations([decoded]);
-    return studioSuccess({ endpoint: spec, attestations });
+    return studioSuccess({ endpoint: spec, attestations, metadata });
   } catch (error) {
     const setup = setupRequiredResponse(error, "The model catalog needs the Studio data service.");
     if (setup) return setup;

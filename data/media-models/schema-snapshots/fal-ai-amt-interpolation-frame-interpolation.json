@@ -1,0 +1,120 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/amt-interpolation/frame-interpolation",
+  "task": "unknown",
+  "source_url": "https://fal.ai/models/fal-ai/amt-interpolation/frame-interpolation",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Famt-interpolation%2Fframe-interpolation",
+  "retrieved_at": "2026-10-04T19:42:31.911Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "image-to-video",
+  "bytes_sha256": "fb2c4154dcece23ff7ae42631d8834c7f15fd319d70c2e18e138ce0aa62e240a",
+  "queue_path": "/fal-ai/amt-interpolation/frame-interpolation",
+  "input_name": "AmtInterpolationFrameInterpolationInput",
+  "input": {
+    "$refName": "AmtInterpolationFrameInterpolationInput",
+    "properties": {
+      "frames": {
+        "description": "Frames to interpolate",
+        "items": {
+          "$refName": "Frame",
+          "properties": {
+            "url": {
+              "description": "URL of the frame",
+              "type": "string"
+            }
+          },
+          "type": "object",
+          "required": [
+            "url"
+          ]
+        },
+        "type": "array",
+        "examples": [
+          [
+            {
+              "url": "https://storage.googleapis.com/falserverless/model_tests/amt-interpolation/start.png"
+            },
+            {
+              "url": "https://storage.googleapis.com/falserverless/model_tests/amt-interpolation/end.png"
+            }
+          ]
+        ]
+      },
+      "recursive_interpolation_passes": {
+        "description": "Number of recursive interpolation passes",
+        "type": "integer",
+        "default": 4,
+        "max": 10,
+        "min": 1
+      },
+      "output_fps": {
+        "description": "Output frames per second",
+        "type": "integer",
+        "default": 24,
+        "max": 60,
+        "min": 1
+      }
+    },
+    "type": "object",
+    "required": [
+      "frames"
+    ]
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "AmtInterpolationFrameInterpolationInput",
+    "AmtInterpolationFrameInterpolationOutput",
+    "Frame",
+    "File"
+  ]
+}

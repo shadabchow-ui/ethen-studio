@@ -1,0 +1,131 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/ffmpeg-api/images-to-video",
+  "task": "video-editing",
+  "source_url": "https://fal.ai/models/fal-ai/ffmpeg-api/images-to-video",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fffmpeg-api%2Fimages-to-video",
+  "retrieved_at": "2026-10-04T19:43:41.860Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "image-to-video",
+  "bytes_sha256": "fd50774827227608b7338bb3ff8447a63d3607308eec0c490259e8268a98cf71",
+  "queue_path": "/fal-ai/ffmpeg-api/images-to-video",
+  "input_name": "FfmpegApiImagesToVideoInput",
+  "input": {
+    "$refName": "FfmpegApiImagesToVideoInput",
+    "properties": {
+      "images": {
+        "examples": [
+          [
+            {
+              "frames": 4,
+              "url": "https://v3.fal.media/files/koala/oei_-iPIYFnhdB8SxojND_qwen-edit-res.png"
+            },
+            {
+              "frames": 2,
+              "url": "https://v3.fal.media/files/tiger/c8VSfX5XtJ3DCzV-4Bxg8_kid_image.png"
+            },
+            {
+              "frames": 4,
+              "url": "https://v3.fal.media/files/koala/oei_-iPIYFnhdB8SxojND_qwen-edit-res.png"
+            }
+          ]
+        ],
+        "items": {
+          "$refName": "ImageFrame",
+          "properties": {
+            "frames": {
+              "minimum": 1,
+              "type": "integer",
+              "description": "Number of frames this image is held for in the output video. The on-screen duration is `frames / fps` seconds.",
+              "maximum": 1000
+            },
+            "url": {
+              "examples": [
+                "https://v3.fal.media/files/koala/oei_-iPIYFnhdB8SxojND_qwen-edit-res.png"
+              ],
+              "type": "string",
+              "description": "URL where the image file can be accessed"
+            }
+          },
+          "required": [
+            "url",
+            "frames"
+          ],
+          "type": "object"
+        },
+        "type": "array",
+        "minItems": 1,
+        "description": "Ordered list of images to play as video frames. Each image is held for its specified number of frames before cutting to the next image.",
+        "maxItems": 200
+      },
+      "fps": {
+        "default": 24,
+        "minimum": 1,
+        "type": "number",
+        "description": "Frames per second of the output video.",
+        "maximum": 120
+      }
+    },
+    "required": [
+      "images"
+    ],
+    "type": "object"
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "FfmpegApiImagesToVideoInput",
+    "FfmpegApiImagesToVideoOutput",
+    "ImageFrame",
+    "File"
+  ]
+}

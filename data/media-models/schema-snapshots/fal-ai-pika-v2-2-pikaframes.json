@@ -1,0 +1,169 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/pika/v2.2/pikaframes",
+  "task": "unknown",
+  "source_url": "https://fal.ai/models/fal-ai/pika/v2.2/pikaframes",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fpika%2Fv2.2%2Fpikaframes",
+  "retrieved_at": "2026-10-04T19:49:55.881Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "image-to-video",
+  "bytes_sha256": "37f966fb414ce78761b4ff7c2676ef128b316f0ef91d36eccacd12a1af6d20fe",
+  "queue_path": "/fal-ai/pika/v2.2/pikaframes",
+  "input_name": "PikaV22PikaframesInput",
+  "input": {
+    "$refName": "PikaV22PikaframesInput",
+    "properties": {
+      "negative_prompt": {
+        "default": "",
+        "description": "A negative prompt to guide the model",
+        "type": "string"
+      },
+      "prompt": {
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "Default prompt for all transitions. Individual transition prompts override this.",
+        "examples": [
+          "smooth cinematic transition",
+          "seamless blend between scenes"
+        ]
+      },
+      "image_urls": {
+        "items": {
+          "type": "string"
+        },
+        "description": "URLs of keyframe images (2-5 images) to create transitions between",
+        "type": "array",
+        "examples": [
+          [
+            "https://v3b.fal.media/files/b/tiger/-YohU0xcPcWe_eiUB9_i6_keyframes-apple-start.png",
+            "https://v3b.fal.media/files/b/tiger/LarvwQGEFqEmF8fkgDB8R_keyframes-apple-end.png"
+          ]
+        ]
+      },
+      "transitions": {
+        "items": {
+          "$refName": "KeyframeTransition",
+          "properties": {
+            "duration": {
+              "default": 5,
+              "minimum": 1,
+              "description": "Duration of this transition in seconds",
+              "maximum": 25,
+              "type": "integer"
+            },
+            "prompt": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Specific prompt for this transition. Overrides the global prompt if provided.",
+              "examples": [
+                null
+              ]
+            }
+          },
+          "description": "Configuration for a transition between two keyframes",
+          "type": "object"
+        },
+        "description": "Configuration for each transition. Length must be len(image_urls) - 1. Total duration of all transitions must not exceed 25 seconds. If not provided, uses default 5-second transitions with the global prompt.",
+        "type": "array",
+        "examples": []
+      },
+      "resolution": {
+        "default": "720p",
+        "description": "The resolution of the generated video",
+        "type": "string",
+        "enum": [
+          "720p",
+          "1080p"
+        ],
+        "examples": [
+          "1080p",
+          "720p"
+        ]
+      },
+      "seed": {
+        "anyOf": [
+          {
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "The seed for the random number generator"
+      }
+    },
+    "required": [
+      "image_urls"
+    ],
+    "type": "object"
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "PikaV22PikaframesInput",
+    "PikaV22PikaframesOutput",
+    "KeyframeTransition",
+    "File"
+  ]
+}

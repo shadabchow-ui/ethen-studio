@@ -1,0 +1,96 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/recraft/upscale/creative",
+  "task": "image-editing",
+  "source_url": "https://fal.ai/models/fal-ai/recraft/upscale/creative",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Frecraft%2Fupscale%2Fcreative",
+  "retrieved_at": "2026-10-04T19:51:06.028Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "image-to-image",
+  "bytes_sha256": "8af616306e611610ed831f1c20ba83f84aa3500023c16253724946f19dd9411c",
+  "queue_path": "/fal-ai/recraft/upscale/creative",
+  "input_name": "RecraftUpscaleCreativeInput",
+  "input": {
+    "$refName": "RecraftUpscaleCreativeInput",
+    "properties": {
+      "image_url": {
+        "description": "The URL of the image to be upscaled. Must be in PNG format.",
+        "type": "string",
+        "_fal_ui_field": "image",
+        "examples": [
+          "https://storage.googleapis.com/falserverless/model_tests/recraft/recraft-upscaler-1.jpeg"
+        ]
+      },
+      "sync_mode": {
+        "description": "If `True`, the media will be returned as a data URI and the output data won't be available in the request history.",
+        "type": "boolean",
+        "default": false
+      },
+      "enable_safety_checker": {
+        "description": "If set to true, the safety checker will be enabled. Disabling it requires account authorization; unauthorized requests are always checked.",
+        "type": "boolean",
+        "default": false
+      }
+    },
+    "type": "object",
+    "required": [
+      "image_url"
+    ]
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "RecraftUpscaleCreativeInput",
+    "RecraftUpscaleCreativeOutput",
+    "File"
+  ]
+}

@@ -1,0 +1,110 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/minimax/hailuo-2.3/standard/image-to-video",
+  "task": "image-to-video",
+  "source_url": "https://fal.ai/models/fal-ai/minimax/hailuo-2.3/standard/image-to-video",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fminimax%2Fhailuo-2.3%2Fstandard%2Fimage-to-video",
+  "retrieved_at": "2026-10-04T19:49:17.112Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "image-to-video",
+  "bytes_sha256": "d357dc9c6e983dc2f771ca530aa9d40bc179798e81c8caed6bd830a6131afaf7",
+  "queue_path": "/fal-ai/minimax/hailuo-2.3/standard/image-to-video",
+  "input_name": "MinimaxHailuo23StandardImageToVideoInput",
+  "input": {
+    "$refName": "MinimaxHailuo23StandardImageToVideoInput",
+    "required": [
+      "prompt",
+      "image_url"
+    ],
+    "type": "object",
+    "properties": {
+      "duration": {
+        "description": "The duration of the video in seconds.",
+        "enum": [
+          "6",
+          "10"
+        ],
+        "type": "string",
+        "default": "6"
+      },
+      "image_url": {
+        "description": "URL of the image to use as the first frame",
+        "_fal_ui_field": "image",
+        "type": "string",
+        "examples": [
+          "https://storage.googleapis.com/falserverless/example_inputs/hailuo23/standard_i2v_in.jpg"
+        ]
+      },
+      "prompt_optimizer": {
+        "description": "Whether to use the model's prompt optimizer",
+        "type": "boolean",
+        "default": true
+      },
+      "prompt": {
+        "description": "Text prompt for video generation",
+        "type": "string",
+        "maxLength": 2000,
+        "examples": [
+          "The space station slowly rotates in orbit, its solar panels tracking the sun. Earth rotates majestically in the background with weather patterns and landmasses drifting by. The station's communication arrays adjust position. A small spacecraft approaches one of the docking ports. The scene captures the silent majesty of space and human engineering."
+        ],
+        "minLength": 1
+      }
+    }
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "MinimaxHailuo23StandardImageToVideoInput",
+    "MinimaxHailuo23StandardImageToVideoOutput",
+    "File"
+  ]
+}

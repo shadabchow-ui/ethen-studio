@@ -1,0 +1,141 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/rife",
+  "task": "unknown",
+  "source_url": "https://fal.ai/models/fal-ai/rife",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Frife",
+  "retrieved_at": "2026-10-04T19:51:15.799Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "image-to-image",
+  "bytes_sha256": "ca599f8c63462dcc9f7592a342e08ab8e9419dcdbb19c3a44efdc43b55883eb9",
+  "queue_path": "/fal-ai/rife",
+  "input_name": "RifeInput",
+  "input": {
+    "$refName": "RifeInput",
+    "properties": {
+      "fps": {
+        "maximum": 60,
+        "type": "integer",
+        "default": 8,
+        "minimum": 1,
+        "description": "Frames per second for the output video. Only applicable if output_type is 'video'."
+      },
+      "output_type": {
+        "type": "string",
+        "default": "images",
+        "enum": [
+          "images",
+          "video"
+        ],
+        "description": "The type of output to generate; either individual images or a video."
+      },
+      "include_end": {
+        "type": "boolean",
+        "default": false,
+        "description": "Whether to include the end image in the output."
+      },
+      "include_start": {
+        "type": "boolean",
+        "default": false,
+        "description": "Whether to include the start image in the output."
+      },
+      "end_image_url": {
+        "type": "string",
+        "examples": [
+          "https://storage.googleapis.com/falserverless/example_inputs/interpolate-end-frame.png"
+        ],
+        "description": "The URL of the second image to use as the ending point for interpolation."
+      },
+      "output_format": {
+        "type": "string",
+        "default": "jpeg",
+        "enum": [
+          "png",
+          "jpeg"
+        ],
+        "description": "The format of the output images. Only applicable if output_type is 'images'."
+      },
+      "num_frames": {
+        "maximum": 64,
+        "type": "integer",
+        "default": 1,
+        "minimum": 1,
+        "description": "The number of frames to generate between the input images."
+      },
+      "start_image_url": {
+        "type": "string",
+        "examples": [
+          "https://storage.googleapis.com/falserverless/example_inputs/interpolate-start-frame.png"
+        ],
+        "description": "The URL of the first image to use as the starting point for interpolation."
+      },
+      "sync_mode": {
+        "type": "boolean",
+        "default": false,
+        "description": "If `True`, the media will be returned as a data URI and the output data won't be available in the request history."
+      }
+    },
+    "type": "object",
+    "required": [
+      "start_image_url",
+      "end_image_url"
+    ]
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "RifeInput",
+    "RifeOutput",
+    "File",
+    "Image"
+  ]
+}

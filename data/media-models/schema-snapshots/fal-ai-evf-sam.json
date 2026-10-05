@@ -1,0 +1,143 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/evf-sam",
+  "task": "unknown",
+  "source_url": "https://fal.ai/models/fal-ai/evf-sam",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fevf-sam",
+  "retrieved_at": "2026-10-04T19:43:27.345Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "image-to-image",
+  "bytes_sha256": "f26e8af404fdc9b6efed104453bc507d5c18c1c7a50d6ac37603a11940727ec0",
+  "queue_path": "/fal-ai/evf-sam",
+  "input_name": "EvfSamInput",
+  "input": {
+    "$refName": "EvfSamInput",
+    "properties": {
+      "image_url": {
+        "description": "URL of the input image",
+        "type": "string",
+        "examples": [
+          "https://storage.googleapis.com/falserverless/web-examples/evf-sam2/evfsam2-cat.png"
+        ]
+      },
+      "revert_mask": {
+        "description": "Invert the mask (background becomes foreground and vice versa)",
+        "default": false,
+        "type": "boolean"
+      },
+      "prompt": {
+        "description": "The prompt to generate segmentation from.",
+        "type": "string",
+        "examples": [
+          "Cat in the middle of the image"
+        ]
+      },
+      "semantic_type": {
+        "description": "Enable semantic level segmentation for body parts, background or multi objects",
+        "default": false,
+        "type": "boolean"
+      },
+      "expand_mask": {
+        "description": "Expand/dilate the mask by specified pixels",
+        "minimum": 0,
+        "default": 0,
+        "maximum": 20,
+        "type": "integer"
+      },
+      "negative_prompt": {
+        "description": "Areas to exclude from segmentation (will be subtracted from prompt results)",
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "mask_only": {
+        "description": "Output only the binary mask instead of masked image",
+        "default": true,
+        "type": "boolean"
+      },
+      "blur_mask": {
+        "description": "Apply Gaussian blur to the mask. Value determines kernel size (must be odd number)",
+        "minimum": 0,
+        "default": 0,
+        "maximum": 50,
+        "type": "integer"
+      },
+      "fill_holes": {
+        "description": "Fill holes in the mask using morphological operations",
+        "default": false,
+        "type": "boolean"
+      },
+      "use_grounding_dino": {
+        "description": "Use GroundingDINO instead of SAM for segmentation",
+        "default": false,
+        "type": "boolean"
+      }
+    },
+    "required": [
+      "prompt",
+      "image_url"
+    ],
+    "type": "object"
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "EvfSamInput",
+    "EvfSamOutput",
+    "File"
+  ]
+}

@@ -1,0 +1,100 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "google/virtual-try-on",
+  "task": "unknown",
+  "source_url": "https://fal.ai/models/google/virtual-try-on",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=google%2Fvirtual-try-on",
+  "retrieved_at": "2026-10-04T19:53:38.005Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "image-to-image",
+  "bytes_sha256": "8a4d73cb68a9e9122020c714acaa3daf88421d90a567b561344333b7d6af3932",
+  "queue_path": "/google/virtual-try-on",
+  "input_name": "VirtualTryOnInput",
+  "input": {
+    "$refName": "VirtualTryOnInput",
+    "properties": {
+      "product_image_url": {
+        "description": "The URL of the product image to try on.",
+        "type": "string",
+        "examples": [
+          "https://storage.googleapis.com/falserverless/model_tests/leffa/tshirt_image.jpg"
+        ]
+      },
+      "num_images": {
+        "minimum": 1,
+        "description": "The number of virtual try-on images to generate.",
+        "default": 1,
+        "maximum": 4,
+        "type": "integer"
+      },
+      "person_image_url": {
+        "description": "The URL of the image of the person trying on the product.",
+        "type": "string",
+        "examples": [
+          "https://storage.googleapis.com/falserverless/model_tests/leffa/person_image.jpg"
+        ]
+      }
+    },
+    "required": [
+      "person_image_url",
+      "product_image_url"
+    ],
+    "type": "object"
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "VirtualTryOnInput",
+    "VirtualTryOnOutput",
+    "ImageFile"
+  ]
+}

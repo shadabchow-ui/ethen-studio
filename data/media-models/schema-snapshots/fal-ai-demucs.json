@@ -1,0 +1,181 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/demucs",
+  "task": "unknown",
+  "source_url": "https://fal.ai/models/fal-ai/demucs",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fdemucs",
+  "retrieved_at": "2026-10-04T19:43:15.235Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "audio-to-audio",
+  "bytes_sha256": "70f635ce9559f2eff66fc9e34e21d1425dd5af987ab93a0a1b362141702ee3da",
+  "queue_path": "/fal-ai/demucs",
+  "input_name": "DemucsInput",
+  "input": {
+    "$refName": "DemucsInput",
+    "type": "object",
+    "properties": {
+      "shifts": {
+        "default": 1,
+        "minimum": 1,
+        "type": "integer",
+        "maximum": 10,
+        "description": "Number of random shifts for equivariant stabilization. Higher values improve quality but increase processing time."
+      },
+      "model": {
+        "default": "htdemucs_6s",
+        "examples": [
+          "htdemucs_6s"
+        ],
+        "type": "string",
+        "description": "Demucs model to use for separation",
+        "enum": [
+          "htdemucs",
+          "htdemucs_ft",
+          "htdemucs_6s",
+          "hdemucs_mmi",
+          "mdx",
+          "mdx_extra",
+          "mdx_q",
+          "mdx_extra_q"
+        ]
+      },
+      "audio_url": {
+        "examples": [
+          "https://storage.googleapis.com/falserverless/model_tests/audio-understanding/Title_%20Running%20on%20Fal.mp3"
+        ],
+        "type": "string",
+        "description": "URL of the audio file to separate into stems"
+      },
+      "segment_length": {
+        "anyOf": [
+          {
+            "minimum": 1,
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "Length in seconds of each segment for processing (minimum 1). Smaller values use less memory but may reduce quality. Default is model-specific."
+      },
+      "overlap": {
+        "default": 0.25,
+        "minimum": 0,
+        "type": "number",
+        "maximum": 1,
+        "description": "Overlap between segments (0.0 to 1.0). Higher values may improve quality but increase processing time."
+      },
+      "stems": {
+        "default": [
+          "vocals",
+          "drums",
+          "bass",
+          "other",
+          "guitar",
+          "piano"
+        ],
+        "description": "Specific stems to extract. If None, extracts all available stems. Available stems depend on model: vocals, drums, bass, other, guitar, piano (for 6s model)",
+        "examples": [
+          [
+            "vocals",
+            "drums",
+            "bass",
+            "other",
+            "guitar",
+            "piano"
+          ]
+        ],
+        "anyOf": [
+          {
+            "items": {
+              "type": "string",
+              "enum": [
+                "vocals",
+                "drums",
+                "bass",
+                "other",
+                "guitar",
+                "piano"
+              ]
+            },
+            "type": "array"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "output_format": {
+        "default": "mp3",
+        "examples": [
+          "mp3"
+        ],
+        "type": "string",
+        "description": "Output audio format for the separated stems",
+        "enum": [
+          "wav",
+          "mp3"
+        ]
+      }
+    },
+    "required": [
+      "audio_url"
+    ]
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "DemucsInput",
+    "DemucsOutput",
+    "File"
+  ]
+}

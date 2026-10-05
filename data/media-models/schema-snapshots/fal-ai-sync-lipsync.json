@@ -1,0 +1,115 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/sync-lipsync",
+  "task": "unknown",
+  "source_url": "https://fal.ai/models/fal-ai/sync-lipsync",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fsync-lipsync",
+  "retrieved_at": "2026-10-04T19:51:54.253Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "video-to-video",
+  "bytes_sha256": "df0ba41ee4ade90c46bb8e047b0410afd599eb833da545369838c201bf16ff01",
+  "queue_path": "/fal-ai/sync-lipsync",
+  "input_name": "SyncLipsyncInput",
+  "input": {
+    "$refName": "SyncLipsyncInput",
+    "properties": {
+      "video_url": {
+        "type": "string",
+        "description": "URL of the input video",
+        "examples": [
+          "https://fal.media/files/koala/8teUPbRRMtAUTORDvqy0l.mp4"
+        ]
+      },
+      "sync_mode": {
+        "type": "string",
+        "default": "cut_off",
+        "enum": [
+          "cut_off",
+          "loop",
+          "bounce",
+          "silence",
+          "remap"
+        ],
+        "description": "Lipsync mode when audio and video durations are out of sync."
+      },
+      "audio_url": {
+        "type": "string",
+        "description": "URL of the input audio",
+        "examples": [
+          "https://fal.media/files/lion/vyFWygmZsIZlUO4s0nr2n.wav"
+        ]
+      },
+      "model": {
+        "type": "string",
+        "default": "lipsync-1.9.0-beta",
+        "enum": [
+          "lipsync-1.8.0",
+          "lipsync-1.7.1",
+          "lipsync-1.9.0-beta"
+        ],
+        "description": "The model to use for lipsyncing"
+      }
+    },
+    "type": "object",
+    "required": [
+      "video_url",
+      "audio_url"
+    ]
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "SyncLipsyncInput",
+    "SyncLipsyncOutput",
+    "File"
+  ]
+}

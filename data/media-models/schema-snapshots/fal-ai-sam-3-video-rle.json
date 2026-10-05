@@ -1,0 +1,276 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/sam-3/video-rle",
+  "task": "video-editing",
+  "source_url": "https://fal.ai/models/fal-ai/sam-3/video-rle",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fsam-3%2Fvideo-rle",
+  "retrieved_at": "2026-10-04T19:51:25.713Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "video-to-video",
+  "bytes_sha256": "8cc1668b017d30ce3d7d08e9049779836e1505af2fd97d34ee225e71dc233005",
+  "queue_path": "/fal-ai/sam-3/video-rle",
+  "input_name": "Sam3VideoRleInput",
+  "input": {
+    "$refName": "Sam3VideoRleInput",
+    "properties": {
+      "boundingbox_zip": {
+        "description": "Return per-frame bounding box overlays as a zip archive.",
+        "default": false,
+        "type": "boolean"
+      },
+      "detection_threshold": {
+        "maximum": 1,
+        "minimum": 0.01,
+        "default": 0.5,
+        "description": "Detection confidence threshold (0.0-1.0). Lower = more detections but less precise. Defaults: 0.5 for existing, 0.7 for new objects. Try 0.2-0.3 if text prompts fail.",
+        "type": "number"
+      },
+      "mask_url": {
+        "description": "The URL of the mask to be applied initially.",
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "point_prompts": {
+        "description": "List of point prompts with frame indices.",
+        "default": [],
+        "items": {
+          "$refName": "PointPrompt",
+          "properties": {
+            "frame_index": {
+              "description": "The frame index to interact with.",
+              "anyOf": [
+                {
+                  "type": "integer"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "y": {
+              "description": "Y Coordinate of the prompt",
+              "anyOf": [
+                {
+                  "type": "integer"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "label": {
+              "description": "1 for foreground, 0 for background",
+              "anyOf": [
+                {
+                  "enum": [
+                    0,
+                    1
+                  ],
+                  "type": "integer"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "x": {
+              "description": "X Coordinate of the prompt",
+              "anyOf": [
+                {
+                  "type": "integer"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "object_id": {
+              "description": "Optional object identifier. Prompts sharing an object id refine the same object. When a text prompt is also given, the id selects which detected object the points refine.",
+              "anyOf": [
+                {
+                  "type": "integer"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            }
+          },
+          "type": "object"
+        },
+        "type": "array"
+      },
+      "prompt": {
+        "description": "Text prompt for segmentation. Use commas to track multiple objects (e.g., 'person, cloth').",
+        "default": "",
+        "type": "string",
+        "examples": [
+          "person",
+          "person, cloth"
+        ]
+      },
+      "video_url": {
+        "description": "The URL of the video to be segmented.",
+        "type": "string",
+        "examples": [
+          "https://v3b.fal.media/files/b/elephant/NQdDxB0Ddfo82SPLbhYDp_bedroom.mp4"
+        ]
+      },
+      "apply_mask": {
+        "description": "Apply the mask on the video.",
+        "default": false,
+        "type": "boolean"
+      },
+      "frame_index": {
+        "description": "Frame index used for initial interaction when mask_url is provided.",
+        "default": 0,
+        "type": "integer"
+      },
+      "box_prompts": {
+        "description": "List of box prompts with optional frame_index.",
+        "default": [],
+        "items": {
+          "$refName": "BoxPrompt",
+          "properties": {
+            "x_min": {
+              "description": "X Min Coordinate of the box",
+              "anyOf": [
+                {
+                  "type": "integer"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "object_id": {
+              "description": "Optional object identifier. Boxes sharing an object id refine the same object.",
+              "anyOf": [
+                {
+                  "type": "integer"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "frame_index": {
+              "description": "The frame index to interact with.",
+              "anyOf": [
+                {
+                  "type": "integer"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "y_min": {
+              "description": "Y Min Coordinate of the box",
+              "anyOf": [
+                {
+                  "type": "integer"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "x_max": {
+              "description": "X Max Coordinate of the box",
+              "anyOf": [
+                {
+                  "type": "integer"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "y_max": {
+              "description": "Y Max Coordinate of the box",
+              "anyOf": [
+                {
+                  "type": "integer"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            }
+          },
+          "type": "object"
+        },
+        "type": "array"
+      }
+    },
+    "required": [
+      "video_url"
+    ],
+    "type": "object"
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "Sam3VideoRleInput",
+    "Sam3VideoRleOutput",
+    "PointPrompt",
+    "BoxPrompt",
+    "File"
+  ]
+}

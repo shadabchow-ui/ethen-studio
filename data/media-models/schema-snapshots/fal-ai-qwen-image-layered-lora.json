@@ -1,0 +1,189 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/qwen-image-layered/lora",
+  "task": "lora-training",
+  "source_url": "https://fal.ai/models/fal-ai/qwen-image-layered/lora",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fqwen-image-layered%2Flora",
+  "retrieved_at": "2026-10-04T19:51:02.597Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "image-to-image",
+  "bytes_sha256": "34cbb0fa2fe30faa1549ee11b1b9870718cd70650d4cbde7879c590607b15a03",
+  "queue_path": "/fal-ai/qwen-image-layered/lora",
+  "input_name": "QwenImageLayeredLoraInput",
+  "input": {
+    "$refName": "QwenImageLayeredLoraInput",
+    "type": "object",
+    "properties": {
+      "num_layers": {
+        "minimum": 1,
+        "type": "integer",
+        "maximum": 10,
+        "description": "The number of layers to generate.",
+        "default": 4
+      },
+      "acceleration": {
+        "enum": [
+          "none",
+          "regular",
+          "high"
+        ],
+        "type": "string",
+        "description": "The acceleration level to use.",
+        "default": "regular"
+      },
+      "image_url": {
+        "type": "string",
+        "examples": [
+          "https://v3b.fal.media/files/b/0a86d421/6xSMYtyW-fm2ciM6dHEgB.png"
+        ],
+        "description": "The URL of the input image."
+      },
+      "num_inference_steps": {
+        "minimum": 1,
+        "type": "integer",
+        "maximum": 50,
+        "description": "The number of inference steps to perform.",
+        "default": 28
+      },
+      "seed": {
+        "description": "\n            The same seed and the same prompt given to the same version of the model\n            will output the same image every time.\n        ",
+        "anyOf": [
+          {
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "loras": {
+        "type": "array",
+        "items": {
+          "$refName": "LoRAInput",
+          "type": "object",
+          "properties": {
+            "path": {
+              "type": "string",
+              "description": "URL, HuggingFace repo ID (owner/repo) to lora weights."
+            },
+            "scale": {
+              "minimum": 0,
+              "type": "number",
+              "maximum": 4,
+              "description": "Scale factor for LoRA application (0.0 to 4.0).",
+              "default": 1
+            }
+          },
+          "description": "LoRA weight configuration.",
+          "required": [
+            "path"
+          ]
+        },
+        "description": "List of LoRA weights to apply (maximum 3).",
+        "default": []
+      },
+      "output_format": {
+        "enum": [
+          "png",
+          "webp"
+        ],
+        "type": "string",
+        "description": "The format of the generated image.",
+        "default": "png"
+      },
+      "enable_safety_checker": {
+        "type": "boolean",
+        "description": "If set to true, the safety checker will be enabled. Disabling it requires account authorization; unauthorized requests are always checked, and images flagged as unsafe are returned as black images.",
+        "default": true
+      },
+      "sync_mode": {
+        "type": "boolean",
+        "description": "If `True`, the media will be returned as a data URI and the output data won't be available in the request history.",
+        "default": false
+      },
+      "negative_prompt": {
+        "type": "string",
+        "description": "The negative prompt to generate an image from.",
+        "default": ""
+      },
+      "guidance_scale": {
+        "minimum": 1,
+        "type": "number",
+        "maximum": 20,
+        "description": "The guidance scale to use for the image generation.",
+        "default": 5
+      },
+      "prompt": {
+        "description": "A caption for the input image.",
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      }
+    },
+    "required": [
+      "image_url"
+    ]
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "QwenImageLayeredLoraInput",
+    "QwenImageLayeredLoraOutput",
+    "LoRAInput",
+    "ImageFile"
+  ]
+}

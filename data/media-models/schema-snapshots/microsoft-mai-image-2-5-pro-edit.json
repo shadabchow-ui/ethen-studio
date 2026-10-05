@@ -1,0 +1,132 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "microsoft/mai-image-2.5-pro/edit",
+  "task": "image-editing",
+  "source_url": "https://fal.ai/models/microsoft/mai-image-2.5-pro/edit",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=microsoft%2Fmai-image-2.5-pro%2Fedit",
+  "retrieved_at": "2026-10-04T19:54:10.727Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "image-to-image",
+  "bytes_sha256": "66123160800398a8efea3ea47319542a284bbcdcd8f1c5156d8639ad0cfaee4c",
+  "queue_path": "/microsoft/mai-image-2.5-pro/edit",
+  "input_name": "MaiImage25ProEditInput",
+  "input": {
+    "$refName": "MaiImage25ProEditInput",
+    "properties": {
+      "sync_mode": {
+        "description": "If `True`, the media will be returned as a data URI and the output data won't be available in the request history.",
+        "type": "boolean",
+        "default": false
+      },
+      "output_format": {
+        "description": "The format of the generated image.",
+        "type": "string",
+        "default": "png",
+        "enum": [
+          "jpeg",
+          "png",
+          "webp"
+        ]
+      },
+      "image_url": {
+        "type": "string",
+        "examples": [
+          "https://storage.googleapis.com/falserverless/example_inputs/nano-banana-edit-input.png"
+        ],
+        "default": "",
+        "description": "The URL of the image to edit. Provide one http(s) or data: URL."
+      },
+      "prompt": {
+        "description": "The instruction describing how to edit the input image(s).",
+        "type": "string",
+        "examples": [
+          "Turn this into a clean, futuristic product shot with soft studio lighting."
+        ],
+        "maxLength": 5000,
+        "minLength": 3
+      },
+      "num_images": {
+        "description": "The number of images to generate.",
+        "type": "integer",
+        "minimum": 1,
+        "default": 1,
+        "maximum": 4
+      },
+      "aspect_ratio": {
+        "type": "string",
+        "default": "auto",
+        "enum": [
+          "auto",
+          "1:1",
+          "4:3",
+          "3:4",
+          "16:9",
+          "9:16",
+          "3:2",
+          "2:3"
+        ],
+        "description": "The aspect ratio of the generated image. Use \"auto\" to match the input or let the model decide."
+      }
+    },
+    "type": "object",
+    "required": [
+      "prompt"
+    ]
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "MaiImage25ProEditInput",
+    "MaiImage25ProEditOutput",
+    "ImageFile"
+  ]
+}

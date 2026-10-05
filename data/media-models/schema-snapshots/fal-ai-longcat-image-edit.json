@@ -1,0 +1,155 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/longcat-image/edit",
+  "task": "image-editing",
+  "source_url": "https://fal.ai/models/fal-ai/longcat-image/edit",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Flongcat-image%2Fedit",
+  "retrieved_at": "2026-10-04T19:47:32.794Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "image-to-image",
+  "bytes_sha256": "ebe6ca0415b52a9658acbe0aee2fc39f85be964a91b7d6511fb05ad171dd2df9",
+  "queue_path": "/fal-ai/longcat-image/edit",
+  "input_name": "LongcatImageEditInput",
+  "input": {
+    "$refName": "LongcatImageEditInput",
+    "properties": {
+      "prompt": {
+        "type": "string",
+        "description": "The prompt to edit the image with.",
+        "examples": [
+          "Add the text \"Fal is fast\" in elegant cursive font with lightning streaks at the top of the image."
+        ]
+      },
+      "guidance_scale": {
+        "default": 4.5,
+        "minimum": 1,
+        "type": "number",
+        "maximum": 20,
+        "description": "The guidance scale to use for the image generation."
+      },
+      "image_url": {
+        "type": "string",
+        "description": "The URL of the image to edit.",
+        "examples": [
+          "https://storage.googleapis.com/falserverless/example_inputs/longcat_image/edit_input.png"
+        ]
+      },
+      "sync_mode": {
+        "default": false,
+        "type": "boolean",
+        "description": "If `True`, the media will be returned as a data URI and the output data won't be available in the request history."
+      },
+      "output_format": {
+        "default": "png",
+        "type": "string",
+        "description": "The format of the generated image.",
+        "enum": [
+          "jpeg",
+          "png",
+          "webp"
+        ]
+      },
+      "num_inference_steps": {
+        "default": 28,
+        "minimum": 1,
+        "type": "integer",
+        "maximum": 50,
+        "description": "The number of inference steps to perform."
+      },
+      "enable_safety_checker": {
+        "default": true,
+        "type": "boolean",
+        "description": "If set to true, the safety checker will be enabled. Disabling it requires account authorization; unauthorized requests are always checked, and images flagged as unsafe are returned as black images."
+      },
+      "acceleration": {
+        "default": "regular",
+        "type": "string",
+        "description": "The acceleration level to use.",
+        "enum": [
+          "none",
+          "regular",
+          "high"
+        ]
+      },
+      "num_images": {
+        "default": 1,
+        "minimum": 1,
+        "type": "integer",
+        "maximum": 4,
+        "description": "The number of images to generate."
+      },
+      "seed": {
+        "anyOf": [
+          {
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "\n            The same seed and the same prompt given to the same version of the model\n            will output the same image every time.\n        "
+      }
+    },
+    "required": [
+      "prompt",
+      "image_url"
+    ],
+    "type": "object"
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "LongcatImageEditInput",
+    "LongcatImageEditOutput",
+    "Image"
+  ]
+}

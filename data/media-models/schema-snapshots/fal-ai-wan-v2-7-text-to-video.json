@@ -1,0 +1,183 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/wan/v2.7/text-to-video",
+  "task": "text-to-video",
+  "source_url": "https://fal.ai/models/fal-ai/wan/v2.7/text-to-video",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fwan%2Fv2.7%2Ftext-to-video",
+  "retrieved_at": "2026-10-04T19:53:12.312Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "text-to-video",
+  "bytes_sha256": "6dab04f9487c0fe03eab151d1915a8ad5c7f2c50393cd2ed3b2c3fcd4760b8b5",
+  "queue_path": "/fal-ai/wan/v2.7/text-to-video",
+  "input_name": "WanV27TextToVideoInput",
+  "input": {
+    "$refName": "WanV27TextToVideoInput",
+    "description": "Input for Wan 2.7 text-to-video generation.",
+    "properties": {
+      "duration": {
+        "description": "Output video duration in seconds (2-15).",
+        "enum": [
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15
+        ],
+        "type": "integer",
+        "default": 5,
+        "examples": [
+          5,
+          10,
+          15
+        ]
+      },
+      "resolution": {
+        "description": "Output video resolution tier.",
+        "enum": [
+          "720p",
+          "1080p"
+        ],
+        "type": "string",
+        "default": "1080p"
+      },
+      "audio_url": {
+        "description": "URL of driving audio. Supports WAV and MP3. Duration: 3-30s. Max 15 MB. If not provided, the model auto-generates matching background music.",
+        "anyOf": [
+          {
+            "ui": {
+              "field": "audio"
+            },
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "enable_prompt_expansion": {
+        "description": "Enable intelligent prompt rewriting.",
+        "type": "boolean",
+        "default": true
+      },
+      "prompt": {
+        "description": "Text prompt describing the desired video. Max 5000 characters.",
+        "type": "string",
+        "examples": [
+          "A kitten running in a meadow, cinematic lighting, smooth camera movement."
+        ],
+        "minLength": 1
+      },
+      "aspect_ratio": {
+        "description": "Aspect ratio of the generated video.",
+        "enum": [
+          "16:9",
+          "9:16",
+          "1:1",
+          "4:3",
+          "3:4"
+        ],
+        "type": "string",
+        "default": "16:9"
+      },
+      "enable_safety_checker": {
+        "description": "Enable content moderation for input and output. Disabling it requires account authorization; unauthorized requests are always checked.",
+        "type": "boolean",
+        "default": true
+      },
+      "negative_prompt": {
+        "description": "Content to avoid in the video. Max 500 characters.",
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "examples": [
+          "low resolution, errors, worst quality, low quality"
+        ]
+      },
+      "seed": {
+        "description": "Random seed for reproducibility (0-2147483647).",
+        "anyOf": [
+          {
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      }
+    },
+    "type": "object",
+    "required": [
+      "prompt"
+    ]
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "WanV27TextToVideoInput",
+    "WanV27TextToVideoOutput",
+    "VideoFile"
+  ]
+}

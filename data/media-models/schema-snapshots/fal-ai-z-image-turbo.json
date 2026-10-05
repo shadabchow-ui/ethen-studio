@@ -1,0 +1,183 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/z-image/turbo",
+  "task": "image-generation",
+  "source_url": "https://fal.ai/models/fal-ai/z-image/turbo",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fz-image%2Fturbo",
+  "retrieved_at": "2026-10-04T19:53:23.162Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "text-to-image",
+  "bytes_sha256": "0e3b909f7e2aafd4c281fa5e94e633f52262e52c82865f099d3d2fad4bae8bda",
+  "queue_path": "/fal-ai/z-image/turbo",
+  "input_name": "ZImageTurboInput",
+  "input": {
+    "$refName": "ZImageTurboInput",
+    "properties": {
+      "prompt": {
+        "description": "The prompt to generate an image from.",
+        "type": "string",
+        "examples": [
+          "A hyper-realistic, close-up portrait of a tribal elder from the Omo Valley, painted with intricate white chalk patterns and adorned with a headdress made of dried flowers, seed pods, and rusted bottle caps. The focus is razor-sharp on the texture of the skin, showing every pore, wrinkle, and scar that tells a story of survival. The background is a blurred, smoky hut interior, with the warm glow of a cooking fire reflecting in the subject's dark, soulful eyes. Shot on a Leica M6 with Kodak Portra 400 film grain aesthetic."
+        ]
+      },
+      "enable_prompt_expansion": {
+        "description": "Whether to enable prompt expansion. Note: this will increase the price by 0.0025 credits per request.",
+        "type": "boolean",
+        "default": false
+      },
+      "output_format": {
+        "description": "The format of the generated image.",
+        "enum": [
+          "jpeg",
+          "png",
+          "webp"
+        ],
+        "type": "string",
+        "default": "png"
+      },
+      "num_images": {
+        "maximum": 4,
+        "description": "The number of images to generate.",
+        "type": "integer",
+        "minimum": 1,
+        "default": 1
+      },
+      "num_inference_steps": {
+        "maximum": 8,
+        "description": "The number of inference steps to perform.",
+        "type": "integer",
+        "minimum": 1,
+        "default": 8
+      },
+      "image_size": {
+        "description": "The size of the generated image.",
+        "anyOf": [
+          {
+            "$refName": "ImageSize",
+            "type": "object",
+            "properties": {
+              "height": {
+                "maximum": 14142,
+                "description": "The height of the generated image.",
+                "type": "integer",
+                "default": 512,
+                "exclusiveMinimum": 0
+              },
+              "width": {
+                "maximum": 14142,
+                "description": "The width of the generated image.",
+                "type": "integer",
+                "default": 512,
+                "exclusiveMinimum": 0
+              }
+            }
+          },
+          {
+            "enum": [
+              "square_hd",
+              "square",
+              "portrait_4_3",
+              "portrait_16_9",
+              "landscape_4_3",
+              "landscape_16_9"
+            ],
+            "type": "string"
+          }
+        ],
+        "default": "landscape_4_3"
+      },
+      "sync_mode": {
+        "description": "If `True`, the media will be returned as a data URI and the output data won't be available in the request history.",
+        "type": "boolean",
+        "default": false
+      },
+      "acceleration": {
+        "description": "The acceleration level to use.",
+        "enum": [
+          "none",
+          "regular",
+          "high"
+        ],
+        "type": "string",
+        "default": "regular"
+      },
+      "enable_safety_checker": {
+        "description": "If set to true, the safety checker will be enabled. Disabling it requires account authorization; unauthorized requests are always checked, and images flagged as unsafe are returned as black images.",
+        "type": "boolean",
+        "default": true
+      },
+      "seed": {
+        "description": "\n            The same seed and the same prompt given to the same version of the model\n            will output the same image every time.\n        ",
+        "anyOf": [
+          {
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      }
+    },
+    "type": "object",
+    "required": [
+      "prompt"
+    ]
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "ZImageTurboInput",
+    "ZImageTurboOutput",
+    "ImageSize",
+    "ImageFile"
+  ]
+}

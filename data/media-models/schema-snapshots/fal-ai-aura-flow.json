@@ -1,0 +1,132 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/aura-flow",
+  "task": "unknown",
+  "source_url": "https://fal.ai/models/fal-ai/aura-flow",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Faura-flow",
+  "retrieved_at": "2026-10-04T19:42:33.109Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "text-to-image",
+  "bytes_sha256": "77d53234a79e1db3a5c39998891575407b1593ee0a049f39ec88218396f81363",
+  "queue_path": "/fal-ai/aura-flow",
+  "input_name": "AuraFlowInput",
+  "input": {
+    "$refName": "AuraFlowInput",
+    "type": "object",
+    "properties": {
+      "seed": {
+        "description": "The seed to use for generating images",
+        "anyOf": [
+          {
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "num_inference_steps": {
+        "minimum": 20,
+        "type": "integer",
+        "description": "The number of inference steps to take",
+        "maximum": 50,
+        "default": 50
+      },
+      "guidance_scale": {
+        "minimum": 0,
+        "type": "number",
+        "description": "Classifier free guidance scale",
+        "maximum": 20,
+        "default": 3.5
+      },
+      "enable_safety_checker": {
+        "type": "boolean",
+        "description": "If set to true, the safety checker will be enabled. Disabling it requires account authorization; unauthorized requests are always checked, and images flagged as unsafe are returned as black images.",
+        "default": true
+      },
+      "sync_mode": {
+        "type": "boolean",
+        "description": "If `True`, the media will be returned as a data URI and the output data won't be available in the request history.",
+        "default": false
+      },
+      "num_images": {
+        "minimum": 1,
+        "type": "integer",
+        "description": "The number of images to generate",
+        "maximum": 2,
+        "default": 1
+      },
+      "expand_prompt": {
+        "type": "boolean",
+        "description": "Whether to perform prompt expansion (recommended)",
+        "default": true
+      },
+      "prompt": {
+        "type": "string",
+        "examples": [
+          "Close-up portrait of a majestic iguana with vibrant blue-green scales, piercing amber eyes, and orange spiky crest. Intricate textures and details visible on scaly skin. Wrapped in dark hood, giving regal appearance. Dramatic lighting against black background. Hyper-realistic, high-resolution image showcasing the reptile's expressive features and coloration."
+        ],
+        "description": "The prompt to generate images from"
+      }
+    },
+    "required": [
+      "prompt"
+    ]
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "AuraFlowInput",
+    "AuraFlowOutput",
+    "Image"
+  ]
+}

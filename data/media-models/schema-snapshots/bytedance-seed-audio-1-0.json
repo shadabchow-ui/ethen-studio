@@ -1,0 +1,190 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "bytedance/seed-audio-1.0",
+  "task": "unknown",
+  "source_url": "https://fal.ai/models/bytedance/seed-audio-1.0",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=bytedance%2Fseed-audio-1.0",
+  "retrieved_at": "2026-10-04T19:41:56.865Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "text-to-audio",
+  "bytes_sha256": "acf4568a7cd4fa0c6f6feb11c3ff7fa0151e6ccf7f5e1bfc025606ef92d91631",
+  "queue_path": "/bytedance/seed-audio-1.0",
+  "input_name": "SeedAudio10Input",
+  "input": {
+    "$refName": "SeedAudio10Input",
+    "required": [
+      "prompt"
+    ],
+    "properties": {
+      "volume": {
+        "default": 1,
+        "type": "number",
+        "maximum": 2,
+        "description": "Volume. 1.0 is normal volume, 0.5 is half, 2.0 is double.",
+        "minimum": 0.5
+      },
+      "speed": {
+        "default": 1,
+        "type": "number",
+        "maximum": 2,
+        "description": "Speech speed. 1.0 is normal speed, 0.5 is half speed, 2.0 is double speed.",
+        "minimum": 0.5
+      },
+      "multilingual": {
+        "default": false,
+        "type": "boolean",
+        "description": "Use the multilingual model variant, which handles non-English and mixed-language prompts better."
+      },
+      "image_url": {
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "A single reference image URL (jpeg/png/webp, up to 10MB). Cannot be combined with audio references."
+      },
+      "voice": {
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "Voice to use for synthesis: either a preset voice name or a cloned voice id.",
+        "examples": [
+          "stokie_en",
+          "vivi_mixed_en_zh_ja_es_id",
+          "mindy_en_es_id_pt_zh",
+          "kian_en_zh",
+          "cedric_en_zh",
+          "sophie_en_zh",
+          "jean_en_zh",
+          "magnus_en_zh",
+          "mabel_en_zh",
+          "nadia_en_zh",
+          "opal_en_zh",
+          "pearl_en_zh",
+          "quentin_en_zh",
+          "corinne_mixed_en_zh",
+          "esther_mixed_en_zh",
+          "lyla_mixed_en_zh",
+          "tracy_es_zh",
+          "sandy_es_mixed_en_zh",
+          "felix_zh",
+          "celeste_zh",
+          "monkey_king_zh",
+          null
+        ]
+      },
+      "prompt": {
+        "maxLength": 2048,
+        "type": "string",
+        "description": "Prompt or text to synthesize. Reference audio inputs by order with @Audio1, @Audio2, @Audio3.",
+        "examples": [
+          "Here's a quick look at your day: you've got three meetings, one lunch, and just enough time in between to grab a coffee and relax."
+        ]
+      },
+      "output_format": {
+        "default": "mp3",
+        "enum": [
+          "wav",
+          "mp3",
+          "pcm",
+          "ogg_opus"
+        ],
+        "type": "string",
+        "description": "Output audio format."
+      },
+      "pitch": {
+        "default": 0,
+        "type": "integer",
+        "maximum": 12,
+        "description": "Voice pitch shift in semitones. 0 is normal pitch, -12 lowers by one octave, 12 raises by one octave.",
+        "minimum": -12
+      },
+      "sample_rate": {
+        "default": 24000,
+        "enum": [
+          8000,
+          16000,
+          24000,
+          32000,
+          44100,
+          48000
+        ],
+        "type": "integer",
+        "description": "Sample rate of the output audio in Hz."
+      },
+      "audio_urls": {
+        "items": {
+          "type": "string"
+        },
+        "type": "array",
+        "maxItems": 3,
+        "description": "Up to 3 reference audio URLs, referenced in prompt as @Audio1, @Audio2, @Audio3. Each clip: up to 30s, 10MB, wav/mp3/pcm/ogg_opus."
+      }
+    },
+    "type": "object"
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "SeedAudio10Input",
+    "SeedAudio10Output",
+    "AudioFile"
+  ]
+}

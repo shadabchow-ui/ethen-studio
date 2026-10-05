@@ -1,0 +1,177 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/gemini-25-flash-image/edit",
+  "task": "image-editing",
+  "source_url": "https://fal.ai/models/fal-ai/gemini-25-flash-image/edit",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fgemini-25-flash-image%2Fedit",
+  "retrieved_at": "2026-10-04T19:45:12.791Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "image-to-image",
+  "bytes_sha256": "b4cc8cf43181cda167329a8006b6491a814bb16d2e7d77afede9418dded4e655",
+  "queue_path": "/fal-ai/gemini-25-flash-image/edit",
+  "input_name": "Gemini25FlashImageEditInput",
+  "input": {
+    "$refName": "Gemini25FlashImageEditInput",
+    "properties": {
+      "prompt": {
+        "description": "The prompt for image editing.",
+        "type": "string",
+        "maxLength": 50000,
+        "minLength": 3,
+        "examples": [
+          "make a photo of the man driving the car down the california coastline"
+        ]
+      },
+      "aspect_ratio": {
+        "anyOf": [
+          {
+            "type": "string",
+            "enum": [
+              "auto",
+              "21:9",
+              "16:9",
+              "3:2",
+              "4:3",
+              "5:4",
+              "1:1",
+              "4:5",
+              "3:4",
+              "2:3",
+              "9:16"
+            ]
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": "auto",
+        "description": "The aspect ratio of the generated image."
+      },
+      "safety_tolerance": {
+        "type": "string",
+        "default": "4",
+        "enum": [
+          "1",
+          "2",
+          "3",
+          "4",
+          "5",
+          "6"
+        ],
+        "description": "The safety tolerance level for content moderation. 1 is the most strict (blocks most content), 6 is the least strict."
+      },
+      "image_urls": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        },
+        "examples": [
+          [
+            "https://storage.googleapis.com/falserverless/example_inputs/nano-banana-edit-input.png",
+            "https://storage.googleapis.com/falserverless/example_inputs/nano-banana-edit-input-2.png"
+          ]
+        ],
+        "description": "The URLs of the images to use for image-to-image generation or image editing."
+      },
+      "num_images": {
+        "minimum": 1,
+        "type": "integer",
+        "default": 1,
+        "maximum": 4,
+        "description": "The number of images to generate."
+      },
+      "seed": {
+        "anyOf": [
+          {
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "The seed for the random number generator."
+      },
+      "output_format": {
+        "type": "string",
+        "default": "png",
+        "enum": [
+          "jpeg",
+          "png",
+          "webp"
+        ],
+        "description": "The format of the generated image."
+      },
+      "limit_generations": {
+        "type": "boolean",
+        "default": true,
+        "description": "Experimental parameter to limit the number of generations from each round of prompting to 1. Set to `True` to to disregard any instructions in the prompt regarding the number of images to generate."
+      },
+      "sync_mode": {
+        "type": "boolean",
+        "default": false,
+        "description": "If `True`, the media will be returned as a data URI and the output data won't be available in the request history."
+      }
+    },
+    "required": [
+      "prompt",
+      "image_urls"
+    ],
+    "type": "object"
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "Gemini25FlashImageEditInput",
+    "Gemini25FlashImageEditOutput",
+    "ImageFile"
+  ]
+}

@@ -1,0 +1,153 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/clarity-upscaler",
+  "task": "unknown",
+  "source_url": "https://fal.ai/models/fal-ai/clarity-upscaler",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fclarity-upscaler",
+  "retrieved_at": "2026-10-04T19:43:03.884Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "image-to-image",
+  "bytes_sha256": "41ec89c1cd46533918a387d42cc40770099517011aaaebc9bf3db303116b188b",
+  "queue_path": "/fal-ai/clarity-upscaler",
+  "input_name": "ClarityUpscalerInput",
+  "input": {
+    "$refName": "ClarityUpscalerInput",
+    "required": [
+      "image_url"
+    ],
+    "type": "object",
+    "properties": {
+      "num_inference_steps": {
+        "maximum": 50,
+        "description": "The number of inference steps to perform.",
+        "type": "integer",
+        "minimum": 4,
+        "default": 18
+      },
+      "seed": {
+        "description": "\n            The same seed and the same prompt given to the same version of Stable Diffusion\n            will output the same image every time.\n        ",
+        "anyOf": [
+          {
+            "type": "integer",
+            "minimum": 0
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "creativity": {
+        "maximum": 1,
+        "description": "\n            The creativity of the model. The higher the creativity, the more the model will deviate from the prompt.\n            Refers to the denoise strength of the sampling.\n        ",
+        "type": "number",
+        "minimum": 0,
+        "default": 0.35
+      },
+      "resemblance": {
+        "maximum": 1,
+        "description": "\n            The resemblance of the upscaled image to the original image. The higher the resemblance, the more the model will try to keep the original image.\n            Refers to the strength of the ControlNet.\n        ",
+        "type": "number",
+        "minimum": 0,
+        "default": 0.6
+      },
+      "upscale_factor": {
+        "maximum": 4,
+        "description": "The upscale factor",
+        "type": "number",
+        "minimum": 1,
+        "default": 2
+      },
+      "image_url": {
+        "description": "The URL of the image to upscale.",
+        "type": "string",
+        "examples": [
+          "https://storage.googleapis.com/falserverless/gallery/NOCA_Mick-Thompson.resized.resized.jpg"
+        ]
+      },
+      "enable_safety_checker": {
+        "description": "If set to false, the safety checker will be disabled.",
+        "type": "boolean",
+        "default": true
+      },
+      "negative_prompt": {
+        "description": "The negative prompt to use. Use it to address details that you don't want in the image.",
+        "type": "string",
+        "default": "(worst quality, low quality, normal quality:2)",
+        "examples": [
+          "(worst quality, low quality, normal quality:2)"
+        ]
+      },
+      "guidance_scale": {
+        "maximum": 20,
+        "description": "\n            The CFG (Classifier Free Guidance) scale is a measure of how close you want\n            the model to stick to your prompt when looking for a related image to show you.\n        ",
+        "type": "number",
+        "minimum": 0,
+        "default": 4
+      },
+      "prompt": {
+        "description": "The prompt to use for generating the image. Be as descriptive as possible for best results.",
+        "type": "string",
+        "default": "masterpiece, best quality, highres",
+        "examples": [
+          "masterpiece, best quality, highres"
+        ]
+      }
+    }
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "ClarityUpscalerInput",
+    "ClarityUpscalerOutput",
+    "Image"
+  ]
+}

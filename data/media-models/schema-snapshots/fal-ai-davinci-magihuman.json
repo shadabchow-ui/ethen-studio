@@ -1,0 +1,159 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/davinci-magihuman",
+  "task": "unknown",
+  "source_url": "https://fal.ai/models/fal-ai/davinci-magihuman",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fdavinci-magihuman",
+  "retrieved_at": "2026-10-04T19:43:13.017Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "image-to-video",
+  "bytes_sha256": "8228917b4df8d28cc2a9ed4858c60c80a4a80df800d807115bccb842330a29ec",
+  "queue_path": "/fal-ai/davinci-magihuman",
+  "input_name": "DavinciMagihumanInput",
+  "input": {
+    "$refName": "DavinciMagihumanInput",
+    "properties": {
+      "enable_safety_checker": {
+        "description": "If enabled, runs safety checks on the prompt and input image.",
+        "type": "boolean",
+        "default": true
+      },
+      "audio_url": {
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "Optional URL of the driving audio for lipsync mode. If omitted, audio is generated from the prompt."
+      },
+      "num_inference_steps": {
+        "description": "Number of denoising steps. Defaults to 8 for 256p and 32 for 540p/720p/1080p (base + SR).",
+        "anyOf": [
+          {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 50
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "image_url": {
+        "description": "URL of the reference image for image-to-video generation.",
+        "type": "string",
+        "examples": [
+          "https://v3b.fal.media/files/b/0a93a275/W1Nnkr552fPfcTuE2UgKL_Zmt1dxWICl_oX5nbuMVLQ.jpeg"
+        ]
+      },
+      "guidance_scale": {
+        "maximum": 20,
+        "description": "Classifier-free guidance scale.",
+        "type": "number",
+        "minimum": 0,
+        "default": 5
+      },
+      "resolution": {
+        "description": "Output resolution. '256p' uses the official base-model 448x256 path. '1080p' uses the official base + 1080p super-resolution pipeline. '540p' and '720p' reuse that sharper 1080p SR path and downsample to the requested output size.",
+        "type": "string",
+        "default": "256p",
+        "enum": [
+          "256p",
+          "540p",
+          "720p",
+          "1080p"
+        ]
+      },
+      "prompt": {
+        "description": "Text prompt describing the desired video content.",
+        "type": "string",
+        "examples": [
+          "A woman is walking through a metro station and says, 'I love walking through this station, it always feels so alive.'"
+        ],
+        "minLength": 1
+      },
+      "seed": {
+        "description": "Random seed for reproducibility.",
+        "anyOf": [
+          {
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "duration": {
+        "maximum": 30,
+        "description": "Duration of the generated video in seconds.",
+        "type": "integer",
+        "minimum": 1,
+        "default": 5
+      }
+    },
+    "type": "object",
+    "required": [
+      "prompt",
+      "image_url"
+    ]
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "DavinciMagihumanInput",
+    "DavinciMagihumanOutput",
+    "File"
+  ]
+}

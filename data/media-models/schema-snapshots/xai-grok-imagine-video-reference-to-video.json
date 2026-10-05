@@ -1,0 +1,131 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "xai/grok-imagine-video/reference-to-video",
+  "task": "reference-to-video",
+  "source_url": "https://fal.ai/models/xai/grok-imagine-video/reference-to-video",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=xai%2Fgrok-imagine-video%2Freference-to-video",
+  "retrieved_at": "2026-10-04T19:55:44.248Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "image-to-video",
+  "bytes_sha256": "8bf8e8e80a5c8d086770e6467cb0c246ff81837ed967fe514ec3064910a9e5ef",
+  "queue_path": "/xai/grok-imagine-video/reference-to-video",
+  "input_name": "GrokImagineVideoReferenceToVideoInput",
+  "input": {
+    "$refName": "GrokImagineVideoReferenceToVideoInput",
+    "properties": {
+      "reference_image_urls": {
+        "description": "One or more reference image URLs to guide the video generation as style and content references. Reference in prompt as @Image1, @Image2, etc. Maximum 7 images.",
+        "maxItems": 7,
+        "minItems": 1,
+        "items": {
+          "type": "string"
+        },
+        "type": "array",
+        "examples": [
+          [
+            "https://v3b.fal.media/files/b/0a8b90e0/BFLE9VDlZqsryU-UA3BoD_image_004.png"
+          ]
+        ]
+      },
+      "duration": {
+        "minimum": 1,
+        "description": "Video duration in seconds.",
+        "default": 8,
+        "maximum": 10,
+        "type": "integer"
+      },
+      "aspect_ratio": {
+        "enum": [
+          "16:9",
+          "4:3",
+          "3:2",
+          "1:1",
+          "2:3",
+          "3:4",
+          "9:16"
+        ],
+        "description": "Aspect ratio of the generated video.",
+        "default": "16:9",
+        "type": "string"
+      },
+      "prompt": {
+        "maxLength": 4096,
+        "description": "Text prompt describing the video to generate. Use @Image1, @Image2, etc. to reference specific images from reference_image_urls in order.",
+        "type": "string",
+        "examples": [
+          "A @Image1 running through a sunlit meadow, cinematic slow motion"
+        ]
+      },
+      "resolution": {
+        "enum": [
+          "480p",
+          "720p"
+        ],
+        "description": "Resolution of the output video.",
+        "default": "480p",
+        "type": "string"
+      }
+    },
+    "required": [
+      "prompt",
+      "reference_image_urls"
+    ],
+    "type": "object"
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "GrokImagineVideoReferenceToVideoInput",
+    "GrokImagineVideoReferenceToVideoOutput",
+    "VideoFile"
+  ]
+}

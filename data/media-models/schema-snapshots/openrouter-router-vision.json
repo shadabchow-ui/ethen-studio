@@ -1,0 +1,337 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "openrouter/router/vision",
+  "task": "unknown",
+  "source_url": "https://fal.ai/models/openrouter/router/vision",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=openrouter%2Frouter%2Fvision",
+  "retrieved_at": "2026-10-04T19:54:47.832Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "vision",
+  "bytes_sha256": "913c455765c34f043a3d89f6b62cdf8f24750691912c18ed7c6adce56399631e",
+  "queue_path": "/openrouter/router/vision",
+  "input_name": "RouterVisionInput",
+  "input": {
+    "$refName": "RouterVisionInput",
+    "properties": {
+      "system_prompt": {
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "examples": [
+          "Only answer the question, do not provide any additional information or add any prefix/suffix other than the answer of the original question. Don't use markdown."
+        ],
+        "description": "System prompt to provide context or instructions to the model"
+      },
+      "max_tokens": {
+        "anyOf": [
+          {
+            "type": "integer",
+            "minimum": 1
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "This sets the upper limit for the number of tokens the model can generate in response. It won't produce more than this limit. The maximum value is the context length minus the prompt length."
+      },
+      "model": {
+        "examples": [
+          "openai/gpt-6-sol",
+          "anthropic/claude-opus-5.5",
+          "anthropic/claude-sonnet-5",
+          "google/gemini-3.8-flash",
+          "x-ai/grok-4.7",
+          "deepseek/deepseek-v4.1-flash",
+          "qwen/qwen3.8-max-0902",
+          "z-ai/glm-5.3-flash",
+          "moonshotai/kimi-k3",
+          "minimax/minimax-m3",
+          "mistralai/mistral-medium-3-5",
+          "google/gemini-2.5-flash"
+        ],
+        "type": "string",
+        "description": "Name of the model to use. Charged based on actual token usage."
+      },
+      "temperature": {
+        "minimum": 0,
+        "type": "number",
+        "description": "This setting influences the variety in the model's responses. Lower values lead to more predictable and typical responses, while higher values encourage more diverse and less common responses. At 0, the model always gives the same response for a given input.",
+        "maximum": 2,
+        "default": 1
+      },
+      "image_urls": {
+        "anyOf": [
+          {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "examples": [
+          [
+            "https://fal.media/files/tiger/4Ew1xYW6oZCs6STQVC7V8_86440216d0fe42e4b826d03a2121468e.jpg"
+          ]
+        ],
+        "description": "List of image URLs to be processed."
+      },
+      "pdf_urls": {
+        "anyOf": [
+          {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "examples": [
+          [
+            "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf"
+          ]
+        ],
+        "description": "List of PDF document URLs to be processed. Only PDF files are accepted: http(s) URLs must point to a .pdf file and data URIs must be data:application/pdf;base64,... Models without native PDF support fall back to OpenRouter's document parsing."
+      },
+      "prompt": {
+        "examples": [
+          "Caption this image for a text-to-image model with as much detail as possible."
+        ],
+        "type": "string",
+        "description": "Prompt to be used for the image"
+      },
+      "reasoning": {
+        "type": "boolean",
+        "description": "Should reasoning be the part of the final answer.",
+        "default": false
+      },
+      "web_search_options": {
+        "anyOf": [
+          {
+            "$refName": "WebSearchOptions",
+            "properties": {
+              "max_characters": {
+                "anyOf": [
+                  {
+                    "type": "integer",
+                    "maximum": 100000,
+                    "minimum": 1
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "description": "Exact maximum characters of content per result (1-100,000). Applies to the Exa engine; ignored with native provider search. Takes precedence over search_context_size when both are set."
+              },
+              "search_context_size": {
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "enum": [
+                      "low",
+                      "medium",
+                      "high"
+                    ]
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "description": "How much content to retrieve per result. For Exa: low=5K, medium=15K, high=30K characters per result; when omitted, Exa picks adaptively (~2-4K per result). Ignored with native provider search. Overridden by max_characters when both are set."
+              },
+              "excluded_domains": {
+                "anyOf": [
+                  {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "description": "Exclude results from these domains. Supported by Exa and some native providers (not OpenAI or Google native search)."
+              },
+              "max_results": {
+                "anyOf": [
+                  {
+                    "type": "integer",
+                    "maximum": 25,
+                    "minimum": 1
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "description": "Maximum results per search call (1-25). Applies to the Exa engine; ignored with native provider search. Defaults to 5."
+              },
+              "engine": {
+                "default": "auto",
+                "type": "string",
+                "description": "Search engine to use. 'auto' uses native provider search when available and falls back to Exa. 'native' prefers the provider's built-in web search (OpenAI, Anthropic, Google, xAI, Perplexity), falling back to Exa for models without native support. 'exa' always uses Exa's search API.",
+                "enum": [
+                  "auto",
+                  "native",
+                  "exa"
+                ]
+              },
+              "max_total_results": {
+                "anyOf": [
+                  {
+                    "type": "integer",
+                    "minimum": 1
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "description": "Maximum total results across all search calls in a single request. Useful for controlling cost and context size in agentic loops."
+              },
+              "allowed_domains": {
+                "anyOf": [
+                  {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "description": "Limit results to these domains. Supported by Exa and most native providers (not Google native search)."
+              },
+              "max_uses": {
+                "anyOf": [
+                  {
+                    "type": "integer",
+                    "minimum": 1
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "description": "Maximum number of searches the model may perform in a single request. Once reached, further search calls return an error result instead of executing. With native provider search, forwarded only to Anthropic; other native providers ignore it."
+              },
+              "user_location": {
+                "anyOf": [
+                  {
+                    "$refName": "WebSearchUserLocation",
+                    "properties": {
+                      "timezone": {
+                        "unsupported": "depth-exceeded"
+                      },
+                      "type": {
+                        "unsupported": "depth-exceeded"
+                      },
+                      "city": {
+                        "unsupported": "depth-exceeded"
+                      },
+                      "region": {
+                        "unsupported": "depth-exceeded"
+                      },
+                      "country": {
+                        "unsupported": "depth-exceeded"
+                      }
+                    },
+                    "type": "object",
+                    "description": "Approximate user location to bias web search results geographically.\n\nOnly honored by native provider search; ignored by the Exa engine.\nAll fields are optional."
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "description": "Approximate user location for location-biased results. Only supported by native provider search; ignored by Exa."
+              }
+            },
+            "type": "object",
+            "description": "Options for the OpenRouter ``openrouter:web_search`` server tool."
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "Options for web search (engine, result limits, domain filters, ...). Ignored unless enable_web_search is true."
+      },
+      "enable_web_search": {
+        "type": "boolean",
+        "description": "Give the model access to real-time web information via OpenRouter's web search server tool. When enabled, the model decides when to search and may search multiple times per request. Search costs are charged in addition to token usage.",
+        "default": false
+      }
+    },
+    "type": "object",
+    "required": [
+      "prompt",
+      "model"
+    ]
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "RouterVisionInput",
+    "RouterVisionOutput",
+    "WebSearchOptions",
+    "UsageInfo",
+    "WebSearchUserLocation",
+    "PromptTokensDetails"
+  ]
+}

@@ -1,0 +1,173 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/workflow-utilities/scale-video",
+  "task": "video-editing",
+  "source_url": "https://fal.ai/models/fal-ai/workflow-utilities/scale-video",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fworkflow-utilities%2Fscale-video",
+  "retrieved_at": "2026-10-04T19:53:18.117Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "video-to-video",
+  "bytes_sha256": "ddb11bac79b80d894338fcd030dbabf95df8e8ec5135b07a6ba4faf3d8d62ec9",
+  "queue_path": "/fal-ai/workflow-utilities/scale-video",
+  "input_name": "WorkflowUtilitiesScaleVideoInput",
+  "input": {
+    "$refName": "WorkflowUtilitiesScaleVideoInput",
+    "description": "Input model for scaling/resizing a video to specific dimensions",
+    "properties": {
+      "width": {
+        "description": "Target width in pixels. If only width is provided, height is auto-calculated to preserve aspect ratio. At least one of width or height must be provided.",
+        "anyOf": [
+          {
+            "maximum": 7680,
+            "type": "integer",
+            "minimum": 2
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "examples": [
+          1920,
+          3840,
+          1280
+        ]
+      },
+      "pad_color": {
+        "description": "Padding color when mode is 'pad'. Ignored for other modes.",
+        "enum": [
+          "black",
+          "white",
+          "red",
+          "green",
+          "blue",
+          "gray"
+        ],
+        "type": "string",
+        "default": "black"
+      },
+      "video_url": {
+        "description": "URL of the video file to scale/resize. Height and Width of the video must be even numbers for compatibility with video codecs.",
+        "type": "string",
+        "examples": [
+          "https://storage.googleapis.com/falserverless/example_outputs/wan-25-i2v-output.mp4"
+        ],
+        "max_file_size": 500000000
+      },
+      "height": {
+        "description": "Target height in pixels. If only height is provided, width is auto-calculated to preserve aspect ratio. At least one of width or height must be provided.",
+        "anyOf": [
+          {
+            "maximum": 4320,
+            "type": "integer",
+            "minimum": 2
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "examples": [
+          1080,
+          2160,
+          720
+        ]
+      },
+      "mode": {
+        "description": "Scaling mode. 'stretch' scales the video to the exact target dimensions (may distort aspect ratio). 'pad' scales to fit within the target dimensions while preserving aspect ratio, then pads with the chosen color to fill the remaining space (letterbox/pillarbox). 'crop' scales to cover the target dimensions while preserving aspect ratio, then center-crops to the exact target size.",
+        "enum": [
+          "stretch",
+          "pad",
+          "crop"
+        ],
+        "type": "string",
+        "default": "stretch"
+      },
+      "preset": {
+        "description": "Encoding speed preset. Slower presets give better compression but take longer.",
+        "enum": [
+          "ultrafast",
+          "fast",
+          "medium",
+          "slow"
+        ],
+        "type": "string",
+        "default": "fast"
+      },
+      "codec": {
+        "description": "Video codec to use for encoding. libx264 (H.264) is widely compatible, libx265 (H.265/HEVC) offers better compression.",
+        "enum": [
+          "libx264",
+          "libx265"
+        ],
+        "type": "string",
+        "default": "libx264"
+      },
+      "crf": {
+        "maximum": 51,
+        "description": "Constant Rate Factor for quality (0-51). Lower values mean better quality and larger files. 18 is visually lossless for most content.",
+        "type": "integer",
+        "minimum": 0,
+        "default": 18
+      }
+    },
+    "type": "object",
+    "required": [
+      "video_url"
+    ]
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "WorkflowUtilitiesScaleVideoInput",
+    "WorkflowUtilitiesScaleVideoOutput",
+    "File"
+  ]
+}

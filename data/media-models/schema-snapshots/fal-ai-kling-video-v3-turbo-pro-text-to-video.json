@@ -1,0 +1,171 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/kling-video/v3/turbo/pro/text-to-video",
+  "task": "text-to-video",
+  "source_url": "https://fal.ai/models/fal-ai/kling-video/v3/turbo/pro/text-to-video",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fkling-video%2Fv3%2Fturbo%2Fpro%2Ftext-to-video",
+  "retrieved_at": "2026-10-04T19:47:20.321Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "text-to-video",
+  "bytes_sha256": "8fa0c01dbe5bd84ce3a9d0dc9640786b49dd542605f5379849e34230f48b98cd",
+  "queue_path": "/fal-ai/kling-video/v3/turbo/pro/text-to-video",
+  "input_name": "KlingVideoV3TurboProTextToVideoInput",
+  "input": {
+    "$refName": "KlingVideoV3TurboProTextToVideoInput",
+    "description": "Kling 3.0 Turbo (pro, 1080p) text-to-video input.",
+    "type": "object",
+    "properties": {
+      "multi_prompt": {
+        "anyOf": [
+          {
+            "type": "array",
+            "items": {
+              "$refName": "KlingV3MultiPromptElement",
+              "required": [
+                "prompt"
+              ],
+              "type": "object",
+              "properties": {
+                "prompt": {
+                  "description": "The prompt for this shot.",
+                  "type": "string"
+                },
+                "duration": {
+                  "description": "The duration of this shot in seconds",
+                  "type": "string",
+                  "default": "5",
+                  "enum": [
+                    "1",
+                    "2",
+                    "3",
+                    "4",
+                    "5",
+                    "6",
+                    "7",
+                    "8",
+                    "9",
+                    "10",
+                    "11",
+                    "12",
+                    "13",
+                    "14",
+                    "15"
+                  ]
+                }
+              }
+            }
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "Multi-shot storyboard (1-6 shots). Each shot has its own prompt and duration; the total duration must not exceed 15s. Mutually exclusive with `prompt`.",
+        "examples": [
+          null
+        ]
+      },
+      "prompt": {
+        "anyOf": [
+          {
+            "type": "string",
+            "maxLength": 3072
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "Text prompt to generate the video with. For best results keep the prompt under 2500 characters. Mutually exclusive with `multi_prompt`.",
+        "examples": [
+          "A jazz saxophonist sways gently into the note, cheeks pressing, sweat glistening, smoke drifting through the warm light. The camera eases in slowly. Photorealistic, soulful, moody."
+        ]
+      },
+      "duration": {
+        "description": "Video length in seconds.",
+        "type": "string",
+        "default": "5",
+        "enum": [
+          "3",
+          "4",
+          "5",
+          "6",
+          "7",
+          "8",
+          "9",
+          "10",
+          "11",
+          "12",
+          "13",
+          "14",
+          "15"
+        ]
+      },
+      "aspect_ratio": {
+        "description": "The aspect ratio (width:height) of the generated video.",
+        "type": "string",
+        "default": "16:9",
+        "enum": [
+          "16:9",
+          "9:16",
+          "1:1"
+        ]
+      }
+    }
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "KlingVideoV3TurboProTextToVideoInput",
+    "KlingVideoV3TurboProTextToVideoOutput",
+    "KlingV3MultiPromptElement",
+    "File"
+  ]
+}

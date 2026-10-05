@@ -1,0 +1,194 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/glm-image/image-to-image",
+  "task": "image-to-image",
+  "source_url": "https://fal.ai/models/fal-ai/glm-image/image-to-image",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fglm-image%2Fimage-to-image",
+  "retrieved_at": "2026-10-04T19:45:19.394Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "image-to-image",
+  "bytes_sha256": "a7331bcec523e002ef3025b8b2baf737d97628878a02f35d25605b830f99277d",
+  "queue_path": "/fal-ai/glm-image/image-to-image",
+  "input_name": "GlmImageImageToImageInput",
+  "input": {
+    "$refName": "GlmImageImageToImageInput",
+    "type": "object",
+    "properties": {
+      "seed": {
+        "description": "Random seed for reproducibility. The same seed with the same prompt will produce the same image.",
+        "anyOf": [
+          {
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "num_inference_steps": {
+        "minimum": 10,
+        "type": "integer",
+        "maximum": 100,
+        "description": "Number of diffusion denoising steps. More steps generally produce higher quality images.",
+        "default": 30
+      },
+      "guidance_scale": {
+        "minimum": 1,
+        "type": "number",
+        "maximum": 10,
+        "description": "Classifier-free guidance scale. Higher values make the model follow the prompt more closely.",
+        "default": 1.5
+      },
+      "enable_safety_checker": {
+        "type": "boolean",
+        "description": "Enable NSFW safety checking on the generated images. Disabling it requires account authorization; unauthorized requests are always checked, and images flagged as unsafe are returned as black images.",
+        "default": true
+      },
+      "num_images": {
+        "minimum": 1,
+        "type": "integer",
+        "maximum": 4,
+        "description": "Number of images to generate.",
+        "default": 1
+      },
+      "image_urls": {
+        "type": "array",
+        "examples": [
+          "https://storage.googleapis.com/falserverless/example_inputs/catwalk.png"
+        ],
+        "items": {
+          "type": "string"
+        },
+        "description": "URL(s) of the condition image(s) for image-to-image generation. Supports up to 4 URLs for multi-image references."
+      },
+      "output_format": {
+        "enum": [
+          "jpeg",
+          "png"
+        ],
+        "type": "string",
+        "description": "Output image format.",
+        "default": "jpeg"
+      },
+      "image_size": {
+        "default": "square_hd",
+        "description": "Output image size.",
+        "anyOf": [
+          {
+            "$refName": "ImageSize",
+            "type": "object",
+            "properties": {
+              "width": {
+                "exclusiveMinimum": 0,
+                "type": "integer",
+                "maximum": 14142,
+                "description": "The width of the generated image.",
+                "default": 512
+              },
+              "height": {
+                "exclusiveMinimum": 0,
+                "type": "integer",
+                "maximum": 14142,
+                "description": "The height of the generated image.",
+                "default": 512
+              }
+            }
+          },
+          {
+            "enum": [
+              "square_hd",
+              "square",
+              "portrait_4_3",
+              "portrait_16_9",
+              "landscape_4_3",
+              "landscape_16_9",
+              "portrait_3_2",
+              "landscape_3_2",
+              "portrait_hd",
+              "landscape_hd"
+            ],
+            "type": "string"
+          }
+        ]
+      },
+      "prompt": {
+        "type": "string",
+        "examples": [
+          "Make the dress red."
+        ],
+        "description": "Text prompt for image generation."
+      },
+      "sync_mode": {
+        "type": "boolean",
+        "description": "If True, the image will be returned as a base64 data URI instead of a URL.",
+        "default": false
+      },
+      "enable_prompt_expansion": {
+        "type": "boolean",
+        "description": "If True, the prompt will be enhanced using an LLM for more detailed and higher quality results.",
+        "default": false
+      }
+    },
+    "required": [
+      "prompt",
+      "image_urls"
+    ]
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "GlmImageImageToImageInput",
+    "GlmImageImageToImageOutput",
+    "ImageSize",
+    "Image"
+  ]
+}

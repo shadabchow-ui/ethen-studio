@@ -1,0 +1,264 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/workflow-utilities/auto-subtitle",
+  "task": "unknown",
+  "source_url": "https://fal.ai/models/fal-ai/workflow-utilities/auto-subtitle",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fworkflow-utilities%2Fauto-subtitle",
+  "retrieved_at": "2026-10-04T19:53:14.004Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "video-to-video",
+  "bytes_sha256": "77d4953cbbde2f3c092b66f1d6751dc979760fe9657cf09393a9fe71d9ef03c6",
+  "queue_path": "/fal-ai/workflow-utilities/auto-subtitle",
+  "input_name": "WorkflowUtilitiesAutoSubtitleInput",
+  "input": {
+    "$refName": "WorkflowUtilitiesAutoSubtitleInput",
+    "description": "Input model for automatic subtitle generation and styling",
+    "properties": {
+      "words_per_subtitle": {
+        "maximum": 12,
+        "description": "Maximum number of words per subtitle segment. Use 1 for single-word display, 2-3 for short phrases, or 8-12 for full sentences.",
+        "type": "integer",
+        "minimum": 1,
+        "examples": [
+          1,
+          3,
+          6,
+          12
+        ],
+        "default": 3
+      },
+      "font_name": {
+        "description": "Any Google Font name from fonts.google.com (e.g., 'Montserrat', 'Poppins', 'BBH Sans Hegarty')",
+        "type": "string",
+        "default": "Montserrat",
+        "examples": [
+          "Montserrat",
+          "Poppins",
+          "Bebas Neue",
+          "Oswald",
+          "Inter",
+          "Roboto",
+          "BBH Sans Hegarty"
+        ]
+      },
+      "y_offset": {
+        "maximum": 200,
+        "description": "Vertical offset in pixels (positive = move down, negative = move up)",
+        "type": "integer",
+        "minimum": -200,
+        "default": 75
+      },
+      "background_opacity": {
+        "maximum": 1,
+        "description": "Background opacity (0.0 = fully transparent, 1.0 = fully opaque)",
+        "type": "number",
+        "minimum": 0,
+        "default": 0
+      },
+      "enable_animation": {
+        "description": "Enable animation effects for subtitles (bounce style entrance)",
+        "type": "boolean",
+        "default": true
+      },
+      "position": {
+        "description": "Vertical position of subtitles",
+        "enum": [
+          "top",
+          "center",
+          "bottom"
+        ],
+        "type": "string",
+        "default": "bottom"
+      },
+      "font_color": {
+        "description": "Subtitle text color for non-active words",
+        "enum": [
+          "white",
+          "black",
+          "red",
+          "green",
+          "blue",
+          "yellow",
+          "orange",
+          "purple",
+          "pink",
+          "brown",
+          "gray",
+          "cyan",
+          "magenta"
+        ],
+        "type": "string",
+        "default": "white"
+      },
+      "language": {
+        "description": "Language code for transcription (e.g., 'en', 'es', 'fr', 'de', 'it', 'pt', 'nl', 'ja', 'zh', 'ko') or 3-letter ISO code (e.g., 'eng', 'spa', 'fra')",
+        "type": "string",
+        "default": "en",
+        "examples": [
+          "en",
+          "es",
+          "fr",
+          "de",
+          "it",
+          "eng",
+          "spa",
+          "fra"
+        ]
+      },
+      "background_color": {
+        "description": "Background color behind text ('none' or 'transparent' for no background)",
+        "enum": [
+          "black",
+          "white",
+          "red",
+          "green",
+          "blue",
+          "yellow",
+          "orange",
+          "purple",
+          "pink",
+          "brown",
+          "gray",
+          "cyan",
+          "magenta",
+          "none",
+          "transparent"
+        ],
+        "type": "string",
+        "default": "none"
+      },
+      "stroke_width": {
+        "maximum": 10,
+        "description": "Text stroke/outline width in pixels (0 for no stroke)",
+        "type": "integer",
+        "minimum": 0,
+        "default": 3
+      },
+      "font_weight": {
+        "description": "Font weight (TikTok style typically uses bold or black)",
+        "enum": [
+          "normal",
+          "bold",
+          "black"
+        ],
+        "type": "string",
+        "default": "bold"
+      },
+      "video_url": {
+        "description": "URL of the video file to add automatic subtitles to",
+        "type": "string",
+        "examples": [
+          "https://v3b.fal.media/files/b/kangaroo/oUCiZjQwEy6bIQdPUSLDF_output.mp4"
+        ],
+        "max_file_size": 100000000
+      },
+      "font_size": {
+        "maximum": 150,
+        "description": "Font size for subtitles (TikTok style uses larger text)",
+        "type": "integer",
+        "minimum": 20,
+        "default": 100
+      },
+      "stroke_color": {
+        "description": "Text stroke/outline color",
+        "enum": [
+          "black",
+          "white",
+          "red",
+          "green",
+          "blue",
+          "yellow",
+          "orange",
+          "purple",
+          "pink",
+          "brown",
+          "gray",
+          "cyan",
+          "magenta"
+        ],
+        "type": "string",
+        "default": "black"
+      },
+      "highlight_color": {
+        "description": "Color for the currently speaking word (karaoke-style highlight)",
+        "enum": [
+          "white",
+          "black",
+          "red",
+          "green",
+          "blue",
+          "yellow",
+          "orange",
+          "purple",
+          "pink",
+          "brown",
+          "gray",
+          "cyan",
+          "magenta"
+        ],
+        "type": "string",
+        "default": "purple"
+      }
+    },
+    "type": "object",
+    "required": [
+      "video_url"
+    ]
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "WorkflowUtilitiesAutoSubtitleInput",
+    "WorkflowUtilitiesAutoSubtitleOutput",
+    "File"
+  ]
+}

@@ -1,0 +1,101 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "decart/lucy2-vton/realtime",
+  "task": "unknown",
+  "source_url": "https://fal.ai/models/decart/lucy2-vton/realtime",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=decart%2Flucy2-vton%2Frealtime",
+  "retrieved_at": "2026-10-04T19:42:24.527Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "video-to-video",
+  "bytes_sha256": "ebdf7ec752c369d8bddd55d9da4e5224e6dc0a11fd63e885b0c6e08e53f4830a",
+  "queue_path": "/decart/lucy2-vton/realtime",
+  "input_name": "Lucy2VtonRealtimeInput",
+  "input": {
+    "$refName": "Lucy2VtonRealtimeInput",
+    "description": "Input model for the Lucy 2 RT signaling proxy.\n\nUses extra=\"allow\" so WebRTC signaling messages ({type: \"offer\", sdp: ...})\npass validation alongside application messages. The schema exposes prompt,\nimage_url, and reference_image_url for playground form rendering.",
+    "type": "object",
+    "properties": {
+      "reference_image_url": {
+        "anyOf": [
+          {
+            "ui": {
+              "field": "url"
+            },
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "Reference image URL or data URI. When set, Lucy 2 will use this as a character reference for the transformation.",
+        "default": "https://v3b.fal.media/files/b/0a985506/y57_APcgGHlPxOOHIOqYO_15129.png"
+      },
+      "prompt": {
+        "description": "Text prompt for the real-time transformation.",
+        "type": "string",
+        "default": "Substitute the current top with the outfit from the reference image, matching its color, material, and fit"
+      },
+      "image_url": {
+        "description": "Image data URI or HTTP(S) URL for realtime frame input. Data URI format: data:image/<type>;base64,...",
+        "type": "string",
+        "default": ""
+      }
+    },
+    "additionalProperties": true
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "Lucy2VtonRealtimeInput",
+    "Lucy2VtonRealtimeOutput"
+  ]
+}

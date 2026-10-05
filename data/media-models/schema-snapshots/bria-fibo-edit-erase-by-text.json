@@ -1,0 +1,93 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "bria/fibo-edit/erase_by_text",
+  "task": "unknown",
+  "source_url": "https://fal.ai/models/bria/fibo-edit/erase_by_text",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=bria%2Ffibo-edit%2Ferase_by_text",
+  "retrieved_at": "2026-10-04T19:41:41.024Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "image-to-image",
+  "bytes_sha256": "66e0e962815ec9b6ca0cf0d63fd84dee6164a5f7d978bc64e5827321114140d7",
+  "queue_path": "/bria/fibo-edit/erase_by_text",
+  "input_name": "FiboEditErase_by_textInput",
+  "input": {
+    "$refName": "FiboEditErase_by_textInput",
+    "required": [
+      "image_url",
+      "object_name"
+    ],
+    "type": "object",
+    "properties": {
+      "object_name": {
+        "examples": [
+          "Table"
+        ],
+        "type": "string",
+        "description": "The name of the object to remove."
+      },
+      "image_url": {
+        "examples": [
+          "https://bria-datasets.s3.us-east-1.amazonaws.com/Liza/an_empty_table_in_living_room.png"
+        ],
+        "type": "string",
+        "description": "The source image."
+      }
+    }
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "FiboEditErase_by_textInput",
+    "FiboEditErase_by_textOutput",
+    "Image"
+  ]
+}

@@ -1,0 +1,118 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "imagineart/imagineart-1.5-pro-preview/text-to-image",
+  "task": "text-to-image",
+  "source_url": "https://fal.ai/models/imagineart/imagineart-1.5-pro-preview/text-to-image",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=imagineart%2Fimagineart-1.5-pro-preview%2Ftext-to-image",
+  "retrieved_at": "2026-10-04T19:53:52.429Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "text-to-image",
+  "bytes_sha256": "8e62381d7eda923bbe8dbe62e34f48fca64d90980dcee946785019a7bf4d3e15",
+  "queue_path": "/imagineart/imagineart-1.5-pro-preview/text-to-image",
+  "input_name": "Imagineart15ProPreviewTextToImageInput",
+  "input": {
+    "$refName": "Imagineart15ProPreviewTextToImageInput",
+    "type": "object",
+    "required": [
+      "prompt"
+    ],
+    "properties": {
+      "prompt": {
+        "type": "string",
+        "description": "Text prompt describing the desired image. Accepts either a raw string or a JSON string/fenced JSON with positive_prompt and optional negative_prompt.",
+        "examples": [
+          "Photorealistic cinematic portrait of a stressed young woman with dark skin and long brown dreadlocks styled in a messy high bun, wearing black-rimmed glasses and a peach-colored collared shirt. She is sitting at a desk, sipping coffee from a white ceramic mug held in her right hand, with a focused and slightly overwhelmed expression while looking at a silver laptop in front of her.\n\nHer face, hair, glasses, and entire upper body are completely covered with dozens of colorful sticky notes in yellow, pink, blue, orange, red, and green, many with no written text. Sticky notes are stuck to her forehead, cheeks, dreadlocks, and all over her shirt.\n\nThe scene is set in a modern office with soft cool blue-toned natural lighting coming from the side. Blurred green plants are visible in the background and \"ImagineArt\" is written on the Wall. On the desk in the foreground there is another white mug, scattered papers, and more sticky notes.\n\nHighly detailed, sharp focus on the woman, shallow depth of field, realistic skin texture, natural fabric folds, cinematic lighting, moody atmosphere capturing information overload and multitasking, 8k resolution, photorealistic."
+        ]
+      },
+      "aspect_ratio": {
+        "type": "string",
+        "description": "Image aspect ratio: 1:1, 3:1, 1:3, 16:9, 9:16, 4:3, 3:4, 3:2, 2:3",
+        "default": "1:1",
+        "examples": [
+          "1:1"
+        ],
+        "enum": [
+          "1:1",
+          "3:1",
+          "1:3",
+          "16:9",
+          "9:16",
+          "4:3",
+          "3:4",
+          "3:2",
+          "2:3"
+        ]
+      },
+      "seed": {
+        "anyOf": [
+          {
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "Seed for generation. 0 and -1 are treated as random.",
+        "examples": [
+          0
+        ]
+      }
+    }
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "Imagineart15ProPreviewTextToImageInput",
+    "Imagineart15ProPreviewTextToImageOutput",
+    "Image"
+  ]
+}

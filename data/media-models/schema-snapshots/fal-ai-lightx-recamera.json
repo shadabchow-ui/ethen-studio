@@ -1,0 +1,275 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/lightx/recamera",
+  "task": "unknown",
+  "source_url": "https://fal.ai/models/fal-ai/lightx/recamera",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Flightx%2Frecamera",
+  "retrieved_at": "2026-10-04T19:47:28.679Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "video-to-video",
+  "bytes_sha256": "366e56a00ab9fa5996c65dca88c1533681d0b8dcecb16d5e0fe203cff9a4d803",
+  "queue_path": "/fal-ai/lightx/recamera",
+  "input_name": "LightxRecameraInput",
+  "input": {
+    "$refName": "LightxRecameraInput",
+    "properties": {
+      "trajectory": {
+        "anyOf": [
+          {
+            "$refName": "TrajectoryParameters",
+            "properties": {
+              "radius": {
+                "description": "Camera distance scaling factors for each keyframe.",
+                "examples": [
+                  [
+                    0,
+                    0.02,
+                    0.09,
+                    0.16,
+                    0.25,
+                    0.2,
+                    0.09,
+                    0
+                  ]
+                ],
+                "items": {
+                  "type": "number"
+                },
+                "type": "array"
+              },
+              "theta": {
+                "description": "Horizontal rotation angles (degrees) for each keyframe.",
+                "examples": [
+                  [
+                    0,
+                    2,
+                    8,
+                    10,
+                    5,
+                    3,
+                    0,
+                    -2,
+                    -5,
+                    -8,
+                    -5,
+                    -3,
+                    0
+                  ]
+                ],
+                "items": {
+                  "type": "number"
+                },
+                "type": "array"
+              },
+              "phi": {
+                "description": "Vertical rotation angles (degrees) for each keyframe.",
+                "examples": [
+                  [
+                    0,
+                    -3,
+                    -8,
+                    -15,
+                    -20,
+                    -15,
+                    -10,
+                    -5,
+                    0
+                  ]
+                ],
+                "items": {
+                  "type": "number"
+                },
+                "type": "array"
+              }
+            },
+            "required": [
+              "theta",
+              "phi",
+              "radius"
+            ],
+            "description": "Camera trajectory parameters for re-camera operations.\n\nEach list represents interpolation values across frames:\n- theta: Horizontal rotation angles (degrees)\n- phi: Vertical rotation angles (degrees)\n- radius: Camera distance scaling factors",
+            "type": "object"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "Camera trajectory parameters (required for recamera mode).",
+        "examples": [
+          {
+            "radius": [
+              0,
+              0.02,
+              0.09,
+              0.16,
+              0.25,
+              0.2,
+              0.09,
+              0
+            ],
+            "theta": [
+              0,
+              2,
+              8,
+              10,
+              5,
+              3,
+              0,
+              -2,
+              -5,
+              -8,
+              -5,
+              -3,
+              0
+            ],
+            "phi": [
+              0,
+              -3,
+              -8,
+              -15,
+              -20,
+              -15,
+              -10,
+              -5,
+              0
+            ]
+          }
+        ]
+      },
+      "mode": {
+        "default": "gradual",
+        "enum": [
+          "gradual",
+          "bullet",
+          "direct",
+          "dolly-zoom"
+        ],
+        "description": "Camera motion mode.",
+        "type": "string"
+      },
+      "camera": {
+        "default": "traj",
+        "enum": [
+          "traj",
+          "target"
+        ],
+        "description": "Camera control mode.",
+        "type": "string"
+      },
+      "video_url": {
+        "description": "URL of the input video.",
+        "examples": [
+          "https://storage.googleapis.com/falserverless/example_inputs/lightx_video.mp4"
+        ],
+        "type": "string"
+      },
+      "target_pose": {
+        "anyOf": [
+          {
+            "items": {
+              "type": "number"
+            },
+            "type": "array"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "Target camera pose [theta, phi, radius, x, y] (required when camera='target').",
+        "examples": [
+          [
+            10,
+            -15,
+            0.2,
+            0,
+            0
+          ]
+        ]
+      },
+      "seed": {
+        "anyOf": [
+          {
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "Random seed for reproducibility. If None, a random seed is chosen."
+      },
+      "prompt": {
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "Optional text prompt. If omitted, Light-X will auto-caption the video."
+      }
+    },
+    "required": [
+      "video_url"
+    ],
+    "description": "Re-camera-only request (minimal schema).",
+    "type": "object"
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "LightxRecameraInput",
+    "LightxRecameraOutput",
+    "TrajectoryParameters",
+    "File"
+  ]
+}

@@ -1,0 +1,258 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/playground-v25/inpainting",
+  "task": "unknown",
+  "source_url": "https://fal.ai/models/fal-ai/playground-v25/inpainting",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fplayground-v25%2Finpainting",
+  "retrieved_at": "2026-10-04T19:50:26.629Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "image-to-image",
+  "bytes_sha256": "5133fe968253a19f5c34d6504431f5ad3657e60abab29bdfd51e7d3bc73ba1b4",
+  "queue_path": "/fal-ai/playground-v25/inpainting",
+  "input_name": "PlaygroundV25InpaintingInput",
+  "input": {
+    "$refName": "PlaygroundV25InpaintingInput",
+    "required": [
+      "image_url",
+      "mask_url",
+      "prompt"
+    ],
+    "type": "object",
+    "properties": {
+      "enable_safety_checker": {
+        "type": "boolean",
+        "default": true,
+        "description": "If set to true, the safety checker will be enabled."
+      },
+      "negative_prompt": {
+        "type": "string",
+        "examples": [
+          "cartoon, illustration, animation. face. male, female"
+        ],
+        "default": "",
+        "description": "\n            The negative prompt to use.Use it to address details that you don't want\n            in the image. This could be colors, objects, scenery and even the small details\n            (e.g. moustache, blurry, low resolution).\n        "
+      },
+      "safety_checker_version": {
+        "type": "string",
+        "default": "v1",
+        "enum": [
+          "v1",
+          "v2"
+        ],
+        "description": "The version of the safety checker to use. v1 is the default CompVis safety checker. v2 uses a custom ViT model."
+      },
+      "strength": {
+        "maximum": 1,
+        "type": "number",
+        "default": 0.95,
+        "minimum": 0.01,
+        "description": "determines how much the generated image resembles the initial image"
+      },
+      "format": {
+        "type": "string",
+        "default": "jpeg",
+        "enum": [
+          "jpeg",
+          "png"
+        ],
+        "description": "The format of the generated image."
+      },
+      "num_images": {
+        "maximum": 8,
+        "type": "integer",
+        "default": 1,
+        "minimum": 1,
+        "description": "The number of images to generate."
+      },
+      "expand_prompt": {
+        "type": "boolean",
+        "default": false,
+        "description": "If set to true, the prompt will be expanded with additional prompts."
+      },
+      "embeddings": {
+        "type": "array",
+        "items": {
+          "$refName": "Embedding",
+          "required": [
+            "path"
+          ],
+          "type": "object",
+          "properties": {
+            "tokens": {
+              "default": null,
+              "anyOf": [
+                {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "\n            The list of tokens to use for the embedding. When omitted, tokens\n            are generated as <s0>, <s1>, ... to match the number of vectors in\n            the embedding file.\n        "
+            },
+            "path": {
+              "type": "string",
+              "examples": [
+                "https://civitai.com/api/download/models/135931",
+                "https://filebin.net/3chfqasxpqu21y8n/my-custom-lora-v1.safetensors"
+              ],
+              "description": "URL or the path to the embedding weights."
+            }
+          }
+        },
+        "default": [],
+        "description": "The list of embeddings to use."
+      },
+      "num_inference_steps": {
+        "maximum": 65,
+        "type": "integer",
+        "default": 25,
+        "minimum": 1,
+        "description": "The number of inference steps to perform."
+      },
+      "image_url": {
+        "type": "string",
+        "examples": [
+          "https://raw.githubusercontent.com/CompVis/latent-diffusion/main/data/inpainting_examples/overture-creations-5sI6fQgYIuo.png"
+        ],
+        "description": "The URL of the image to use as a starting point for the generation."
+      },
+      "guidance_scale": {
+        "maximum": 20,
+        "type": "number",
+        "default": 3,
+        "minimum": 0,
+        "description": "\n            The CFG (Classifier Free Guidance) scale is a measure of how close you want\n            the model to stick to your prompt when looking for a related image to show you.\n        "
+      },
+      "seed": {
+        "default": null,
+        "anyOf": [
+          {
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "\n            The same seed and the same prompt given to the same version of Stable Diffusion\n            will output the same image every time.\n        "
+      },
+      "prompt": {
+        "type": "string",
+        "examples": [
+          "a tiger sitting on a park bench"
+        ],
+        "description": "The prompt to use for generating the image. Be as descriptive as possible for best results."
+      },
+      "mask_url": {
+        "type": "string",
+        "examples": [
+          "https://raw.githubusercontent.com/CompVis/latent-diffusion/main/data/inpainting_examples/overture-creations-5sI6fQgYIuo_mask.png"
+        ],
+        "description": "The URL of the mask to use for inpainting."
+      },
+      "request_id": {
+        "type": "string",
+        "default": "",
+        "description": "\n            An id bound to a request, can be used with response to identify the request\n            itself.\n        "
+      },
+      "image_size": {
+        "default": "square_hd",
+        "anyOf": [
+          {
+            "$refName": "ImageSize",
+            "properties": {
+              "height": {
+                "maximum": 14142,
+                "type": "integer",
+                "exclusiveMinimum": 0,
+                "default": 512,
+                "description": "The height of the generated image."
+              },
+              "width": {
+                "maximum": 14142,
+                "type": "integer",
+                "exclusiveMinimum": 0,
+                "default": 512,
+                "description": "The width of the generated image."
+              }
+            },
+            "type": "object"
+          },
+          {
+            "type": "string",
+            "enum": [
+              "square_hd",
+              "square",
+              "portrait_4_3",
+              "portrait_16_9",
+              "landscape_4_3",
+              "landscape_16_9"
+            ]
+          }
+        ],
+        "description": "The size of the generated image."
+      }
+    }
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "PlaygroundV25InpaintingInput",
+    "PlaygroundV25InpaintingOutput",
+    "Embedding",
+    "ImageSize",
+    "Image"
+  ]
+}

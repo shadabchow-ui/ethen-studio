@@ -1,0 +1,95 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/imageutils/rembg",
+  "task": "unknown",
+  "source_url": "https://fal.ai/models/fal-ai/imageutils/rembg",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fimageutils%2Frembg",
+  "retrieved_at": "2026-10-04T19:46:37.645Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "image-to-image",
+  "bytes_sha256": "3577d6d1c4115d1e4e6e524e367c59f3fdee9ab63e8d0451c081d9998fa6b8e0",
+  "queue_path": "/fal-ai/imageutils/rembg",
+  "input_name": "ImageutilsRembgInput",
+  "input": {
+    "$refName": "ImageutilsRembgInput",
+    "properties": {
+      "crop_to_bbox": {
+        "default": false,
+        "description": "\n            If set to true, the resulting image be cropped to a bounding box around the subject\n        ",
+        "type": "boolean"
+      },
+      "image_url": {
+        "examples": [
+          "https://storage.googleapis.com/falserverless/model_tests/remove_background/elephant.jpg"
+        ],
+        "type": "string",
+        "description": "Input image url."
+      },
+      "sync_mode": {
+        "default": false,
+        "description": "If `True`, the media will be returned as a data URI and the output data won't be available in the request history.",
+        "type": "boolean"
+      }
+    },
+    "required": [
+      "image_url"
+    ],
+    "type": "object"
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "ImageutilsRembgInput",
+    "ImageutilsRembgOutput",
+    "Image"
+  ]
+}

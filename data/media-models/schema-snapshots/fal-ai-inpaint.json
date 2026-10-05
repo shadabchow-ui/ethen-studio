@@ -1,0 +1,149 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/inpaint",
+  "task": "unknown",
+  "source_url": "https://fal.ai/models/fal-ai/inpaint",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Finpaint",
+  "retrieved_at": "2026-10-04T19:46:40.233Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "image-to-image",
+  "bytes_sha256": "9d100a200c0a260b88a71956a359865dc6a67aa6115506b634ebf4e98ccb444c",
+  "queue_path": "/fal-ai/inpaint",
+  "input_name": "InpaintInput",
+  "input": {
+    "$refName": "InpaintInput",
+    "properties": {
+      "num_inference_steps": {
+        "maximum": 150,
+        "minimum": 0,
+        "default": 30,
+        "description": "\n            Increasing the amount of steps tells Stable Diffusion that it should take more steps\n            to generate your final result which can increase the amount of detail in your image.\n        ",
+        "type": "integer"
+      },
+      "image_url": {
+        "description": "Input image for img2img or inpaint mode",
+        "type": "string",
+        "examples": [
+          "https://raw.githubusercontent.com/CompVis/latent-diffusion/main/data/inpainting_examples/overture-creations-5sI6fQgYIuo.png"
+        ]
+      },
+      "mask_url": {
+        "description": "Input mask for inpaint mode. Black areas will be preserved, white areas will be inpainted.",
+        "type": "string",
+        "examples": [
+          "https://raw.githubusercontent.com/CompVis/latent-diffusion/main/data/inpainting_examples/overture-creations-5sI6fQgYIuo_mask.png"
+        ]
+      },
+      "prompt": {
+        "description": "The prompt to use for generating the image. Be as descriptive as possible for best results.",
+        "type": "string",
+        "examples": [
+          "a photo of a cat"
+        ]
+      },
+      "seed": {
+        "examples": [
+          1234
+        ],
+        "description": "\n            The same seed and the same prompt given to the same version of Stable Diffusion\n            will output the same image every time.\n        ",
+        "anyOf": [
+          {
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "model_name": {
+        "description": "URL or HuggingFace ID of the base model to generate the image.",
+        "type": "string",
+        "examples": [
+          "diffusers/stable-diffusion-xl-1.0-inpainting-0.1",
+          "stabilityai/stable-diffusion-xl-base-1.0",
+          "runwayml/stable-diffusion-v1-5",
+          "SG161222/Realistic_Vision_V2.0"
+        ]
+      },
+      "negative_prompt": {
+        "description": "\n            The negative prompt to use. Use it to address details that you don't want\n            in the image. This could be colors, objects, scenery and even the small details\n            (e.g. moustache, blurry, low resolution).\n        ",
+        "default": "",
+        "type": "string",
+        "examples": [
+          "cartoon, painting, illustration, (worst quality, low quality, normal quality:2)",
+          "nsfw, cartoon, (epicnegative:0.9)"
+        ]
+      },
+      "guidance_scale": {
+        "maximum": 20,
+        "minimum": 0,
+        "default": 7.5,
+        "description": "\n            The CFG (Classifier Free Guidance) scale is a measure of how close you want\n            the model to stick to your prompt when looking for a related image to show you.\n        ",
+        "type": "number"
+      }
+    },
+    "required": [
+      "model_name",
+      "prompt",
+      "image_url",
+      "mask_url"
+    ],
+    "type": "object"
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "InpaintInput",
+    "InpaintOutput",
+    "Image"
+  ]
+}

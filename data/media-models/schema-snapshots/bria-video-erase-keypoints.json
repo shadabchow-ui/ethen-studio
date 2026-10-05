@@ -1,0 +1,128 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "bria/video/erase/keypoints",
+  "task": "image-editing",
+  "source_url": "https://fal.ai/models/bria/video/erase/keypoints",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=bria%2Fvideo%2Ferase%2Fkeypoints",
+  "retrieved_at": "2026-10-04T19:41:53.610Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "video-to-video",
+  "bytes_sha256": "611d504205f6196606a55c905010e1a14c5c2faaa1e9478b83a68187924e0446",
+  "queue_path": "/bria/video/erase/keypoints",
+  "input_name": "VideoEraseKeypointsInput",
+  "input": {
+    "$refName": "VideoEraseKeypointsInput",
+    "properties": {
+      "video_url": {
+        "type": "string",
+        "description": "Input video to erase object from. duration must be less than 5s.",
+        "examples": [
+          "https://bria-test-images.s3.us-east-1.amazonaws.com/videos/eraser_mask/woman_right_side.mov"
+        ]
+      },
+      "auto_trim": {
+        "type": "boolean",
+        "default": true,
+        "description": "auto trim the video, to working duration ( 5s )"
+      },
+      "preserve_audio": {
+        "type": "boolean",
+        "default": true,
+        "description": "If true, audio will be preserved in the output video."
+      },
+      "keypoints": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        },
+        "examples": [
+          [
+            "{'x': 765, 'y': 344, 'type': 'positive'}",
+            "{'x': 200, 'y': 200, 'type': 'negative'}"
+          ]
+        ],
+        "description": "Input keypoints [x,y] to erase or keep from the video. Format like so: {'x':100, 'y':100, 'type':'positive/negative'}"
+      },
+      "output_container_and_codec": {
+        "type": "string",
+        "default": "mp4_h264",
+        "enum": [
+          "mp4_h265",
+          "mp4_h264",
+          "webm_vp9",
+          "gif",
+          "mov_h264",
+          "mov_h265",
+          "mov_proresks",
+          "mkv_h264",
+          "mkv_h265",
+          "mkv_vp9",
+          "mkv_mpeg4"
+        ],
+        "description": "Output container and codec. Options: mp4_h265, mp4_h264, webm_vp9, gif, mov_h264, mov_h265, mov_proresks, mkv_h264, mkv_h265, mkv_vp9, mkv_mpeg4."
+      }
+    },
+    "required": [
+      "keypoints",
+      "video_url"
+    ],
+    "type": "object"
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "VideoEraseKeypointsInput",
+    "VideoEraseKeypointsOutput",
+    "Video",
+    "File"
+  ]
+}

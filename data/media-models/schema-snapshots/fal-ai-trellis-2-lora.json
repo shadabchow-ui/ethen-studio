@@ -1,0 +1,278 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/trellis-2-lora",
+  "task": "unknown",
+  "source_url": "https://fal.ai/models/fal-ai/trellis-2-lora",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Ftrellis-2-lora",
+  "retrieved_at": "2026-10-04T19:52:00.871Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "image-to-3d",
+  "bytes_sha256": "d10a23adf38d731415af8325c6ee9a4dfa31bb4decf794f5f06eb20a359ad402",
+  "queue_path": "/fal-ai/trellis-2-lora",
+  "input_name": "Trellis2LoraInput",
+  "input": {
+    "$refName": "Trellis2LoraInput",
+    "properties": {
+      "image_url": {
+        "description": "URL of the input image to convert to a 3D model.",
+        "type": "string"
+      },
+      "shape_slat_sampling_steps": {
+        "description": "Number of denoising steps for the shape stage.",
+        "maximum": 50,
+        "type": "integer",
+        "minimum": 1,
+        "default": 12
+      },
+      "geometry_lora_url": {
+        "description": "Optional safetensors LoRA checkpoint trained for the geometry denoiser.",
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "tex_slat_rescale_t": {
+        "description": "Noise-schedule sharpness for the texture stage.",
+        "maximum": 6,
+        "type": "number",
+        "minimum": 1,
+        "default": 3
+      },
+      "shape_slat_rescale_t": {
+        "description": "Noise-schedule sharpness for the shape stage.",
+        "maximum": 6,
+        "type": "number",
+        "minimum": 1,
+        "default": 3
+      },
+      "tex_slat_sampling_steps": {
+        "description": "Number of denoising steps for the texture stage.",
+        "maximum": 50,
+        "type": "integer",
+        "minimum": 1,
+        "default": 12
+      },
+      "decimation_target": {
+        "description": "Target vertex count for the exported GLB.",
+        "maximum": 2000000,
+        "type": "integer",
+        "minimum": 5000,
+        "default": 500000
+      },
+      "sparse_structure_lora_url": {
+        "description": "Optional safetensors LoRA checkpoint trained for the sparse structure denoiser.",
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "ss_guidance_rescale": {
+        "description": "Guidance rescale for the sparse-structure stage; higher stabilizes output.",
+        "maximum": 1,
+        "type": "number",
+        "minimum": 0,
+        "default": 0.7
+      },
+      "ss_rescale_t": {
+        "description": "Noise-schedule sharpness for the sparse-structure stage.",
+        "maximum": 6,
+        "type": "number",
+        "minimum": 1,
+        "default": 5
+      },
+      "shape_slat_guidance_interval_start": {
+        "description": "Denoising fraction at which guidance starts for the shape stage.",
+        "maximum": 1,
+        "type": "number",
+        "minimum": 0,
+        "default": 0.6
+      },
+      "ss_guidance_interval_end": {
+        "description": "Denoising fraction at which guidance ends for the sparse-structure stage. Must be >= ss_guidance_interval_start.",
+        "maximum": 1,
+        "type": "number",
+        "minimum": 0,
+        "default": 1
+      },
+      "texture_lora_url": {
+        "description": "Optional safetensors LoRA checkpoint trained for the texture denoiser.",
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "ss_guidance_interval_start": {
+        "description": "Denoising fraction at which guidance starts for the sparse-structure stage.",
+        "maximum": 1,
+        "type": "number",
+        "minimum": 0,
+        "default": 0.6
+      },
+      "tex_slat_guidance_rescale": {
+        "description": "Guidance rescale for the texture stage; increase if textures look noisy.",
+        "maximum": 1,
+        "type": "number",
+        "minimum": 0,
+        "default": 0
+      },
+      "shape_slat_guidance_interval_end": {
+        "description": "Denoising fraction at which guidance ends for the shape stage. Must be >= shape_slat_guidance_interval_start.",
+        "maximum": 1,
+        "type": "number",
+        "minimum": 0,
+        "default": 1
+      },
+      "tex_slat_guidance_strength": {
+        "description": "Classifier-free guidance strength for the texture stage.",
+        "maximum": 10,
+        "type": "number",
+        "minimum": 0,
+        "default": 1
+      },
+      "shape_slat_guidance_rescale": {
+        "description": "Guidance rescale for the shape stage; increase if geometry looks noisy.",
+        "maximum": 1,
+        "type": "number",
+        "minimum": 0,
+        "default": 0.5
+      },
+      "texture_size": {
+        "description": "Texture resolution baked into the exported GLB.",
+        "type": "integer",
+        "default": 2048,
+        "enum": [
+          1024,
+          2048,
+          4096
+        ]
+      },
+      "ss_sampling_steps": {
+        "description": "Number of denoising steps for the sparse-structure stage.",
+        "maximum": 50,
+        "type": "integer",
+        "minimum": 1,
+        "default": 12
+      },
+      "shape_slat_guidance_strength": {
+        "description": "Classifier-free guidance strength for the shape stage.",
+        "maximum": 10,
+        "type": "number",
+        "minimum": 0,
+        "default": 7.5
+      },
+      "seed": {
+        "description": "Random seed for reproducible generation.",
+        "anyOf": [
+          {
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "resolution": {
+        "description": "Generation resolution. Must match the resolution the provided LoRA adapters were trained at (1024 runs the cascade pipeline).",
+        "type": "integer",
+        "default": 512,
+        "enum": [
+          512,
+          1024
+        ]
+      },
+      "ss_guidance_strength": {
+        "description": "Classifier-free guidance strength for the sparse-structure stage.",
+        "maximum": 10,
+        "type": "number",
+        "minimum": 0,
+        "default": 7.5
+      },
+      "tex_slat_guidance_interval_start": {
+        "description": "Denoising fraction at which guidance starts for the texture stage.",
+        "maximum": 1,
+        "type": "number",
+        "minimum": 0,
+        "default": 0.6
+      },
+      "tex_slat_guidance_interval_end": {
+        "description": "Denoising fraction at which guidance ends for the texture stage. Must be >= tex_slat_guidance_interval_start.",
+        "maximum": 1,
+        "type": "number",
+        "minimum": 0,
+        "default": 0.9
+      }
+    },
+    "type": "object",
+    "required": [
+      "image_url"
+    ]
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "Trellis2LoraInput",
+    "Trellis2LoraOutput",
+    "File"
+  ]
+}

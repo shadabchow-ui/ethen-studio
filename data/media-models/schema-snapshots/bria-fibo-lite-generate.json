@@ -1,0 +1,377 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "bria/fibo-lite/generate",
+  "task": "unknown",
+  "source_url": "https://fal.ai/models/bria/fibo-lite/generate",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=bria%2Ffibo-lite%2Fgenerate",
+  "retrieved_at": "2026-10-04T19:41:45.661Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "text-to-image",
+  "bytes_sha256": "bab6158c6d655721e033929df03d2eef9df89cd88d4fd49763b96b61cb2247a8",
+  "queue_path": "/bria/fibo-lite/generate",
+  "input_name": "FiboLiteGenerateInput",
+  "input": {
+    "$refName": "FiboLiteGenerateInput",
+    "properties": {
+      "sync_mode": {
+        "description": "If true, returns the image directly in the response (increases latency).",
+        "default": false,
+        "type": "boolean"
+      },
+      "prompt": {
+        "description": "The prompt to generate.",
+        "examples": [
+          "Oil painting of a fluffy, wide-eyed cat sitting upright, holding a small wooden sign reading \"Feed Me.\" Rich textures, dramatic brushstrokes, warm tones, and vintage charm."
+        ],
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "seed": {
+        "description": "Seed for the random number generator.",
+        "default": 7,
+        "type": "integer"
+      },
+      "structured_prompt": {
+        "description": "The structured prompt to generate.",
+        "anyOf": [
+          {
+            "$refName": "StructuredPrompt",
+            "required": [
+              "short_description",
+              "objects",
+              "background_setting",
+              "lighting",
+              "aesthetics",
+              "context",
+              "artistic_style"
+            ],
+            "properties": {
+              "objects": {
+                "description": "List of prominent foreground/midground objects.",
+                "type": "array",
+                "items": {
+                  "$refName": "ObjectDescription",
+                  "description": "Detailed object description with all attributes.",
+                  "required": [
+                    "description",
+                    "location",
+                    "relationship"
+                  ],
+                  "properties": {
+                    "expression": {
+                      "unsupported": "depth-exceeded"
+                    },
+                    "number_of_objects": {
+                      "unsupported": "depth-exceeded"
+                    },
+                    "relative_size": {
+                      "unsupported": "depth-exceeded"
+                    },
+                    "shape_and_color": {
+                      "unsupported": "depth-exceeded"
+                    },
+                    "location": {
+                      "unsupported": "depth-exceeded"
+                    },
+                    "pose": {
+                      "unsupported": "depth-exceeded"
+                    },
+                    "skin_tone_and_texture": {
+                      "unsupported": "depth-exceeded"
+                    },
+                    "action": {
+                      "unsupported": "depth-exceeded"
+                    },
+                    "orientation": {
+                      "unsupported": "depth-exceeded"
+                    },
+                    "description": {
+                      "unsupported": "depth-exceeded"
+                    },
+                    "relationship": {
+                      "unsupported": "depth-exceeded"
+                    },
+                    "texture": {
+                      "unsupported": "depth-exceeded"
+                    },
+                    "gender": {
+                      "unsupported": "depth-exceeded"
+                    },
+                    "appearance_details": {
+                      "unsupported": "depth-exceeded"
+                    },
+                    "clothing": {
+                      "unsupported": "depth-exceeded"
+                    }
+                  },
+                  "type": "object"
+                }
+              },
+              "lighting": {
+                "$refName": "LightingDetails",
+                "description": "Details about the lighting.",
+                "required": [
+                  "conditions",
+                  "direction"
+                ],
+                "properties": {
+                  "direction": {
+                    "description": "E.g., 'front-lit', 'backlit', 'side-lit from left'.",
+                    "type": "string"
+                  },
+                  "shadows": {
+                    "description": "Describe the presence of shadows.",
+                    "anyOf": [
+                      {
+                        "unsupported": "depth-exceeded"
+                      },
+                      {
+                        "unsupported": "depth-exceeded"
+                      }
+                    ]
+                  },
+                  "conditions": {
+                    "description": "E.g., 'bright daylight', 'dim indoor', 'studio lighting', 'golden hour'.",
+                    "type": "string"
+                  }
+                },
+                "type": "object"
+              },
+              "short_description": {
+                "description": "A concise summary of the image content, 200 words maximum.",
+                "type": "string"
+              },
+              "text_render": {
+                "description": "List of text renders in the image.",
+                "anyOf": [
+                  {
+                    "items": {
+                      "$refName": "TextRender",
+                      "description": "Text rendering information in the image.",
+                      "required": [
+                        "text",
+                        "location",
+                        "size",
+                        "color",
+                        "font"
+                      ],
+                      "properties": {
+                        "unsupported": "depth-exceeded"
+                      },
+                      "type": "object"
+                    },
+                    "type": "array"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "subject_emotions": {
+                "description": "Explicitly describe any visible emotions or expressions on subjects.",
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "aesthetics": {
+                "$refName": "AestheticsDetails",
+                "description": "Details about the image aesthetics.",
+                "required": [
+                  "composition",
+                  "color_scheme",
+                  "mood_atmosphere",
+                  "aesthetic_score",
+                  "preference_score"
+                ],
+                "properties": {
+                  "color_scheme": {
+                    "description": "E.g., 'monochromatic blue', 'warm complementary colors', 'high contrast'.",
+                    "type": "string"
+                  },
+                  "aesthetic_score": {
+                    "description": "E.g., 'very low', 'low', 'medium', 'high', 'very high'.",
+                    "type": "string"
+                  },
+                  "preference_score": {
+                    "description": "E.g., 'very low', 'low', 'medium', 'high', 'very high'.",
+                    "type": "string"
+                  },
+                  "mood_atmosphere": {
+                    "description": "E.g., 'serene', 'energetic', 'mysterious', 'joyful'.",
+                    "type": "string"
+                  },
+                  "composition": {
+                    "description": "E.g., 'rule of thirds', 'symmetrical', 'centered', 'leading lines'.",
+                    "type": "string"
+                  }
+                },
+                "type": "object"
+              },
+              "context": {
+                "description": "Provide any additional context that helps understand the image better.",
+                "type": "string"
+              },
+              "photographic_characteristics": {
+                "description": "Details about photographic characteristics.",
+                "anyOf": [
+                  {
+                    "$refName": "PhotographicCharacteristicsDetails",
+                    "description": "Photographic characteristics of the image.",
+                    "required": [
+                      "depth_of_field",
+                      "focus",
+                      "camera_angle",
+                      "lens_focal_length"
+                    ],
+                    "properties": {
+                      "focus": {
+                        "unsupported": "depth-exceeded"
+                      },
+                      "depth_of_field": {
+                        "unsupported": "depth-exceeded"
+                      },
+                      "lens_focal_length": {
+                        "unsupported": "depth-exceeded"
+                      },
+                      "camera_angle": {
+                        "unsupported": "depth-exceeded"
+                      }
+                    },
+                    "type": "object"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "background_setting": {
+                "description": "Describe the overall environment, setting, or background, including any notable background elements.",
+                "type": "string"
+              },
+              "style_medium": {
+                "description": "Identify the artistic style or medium.",
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "artistic_style": {
+                "description": "describe specific artistic characteristics, 3 words maximum.",
+                "type": "string"
+              }
+            },
+            "type": "object"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "image_url": {
+        "description": "Input image URL",
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "aspect_ratio": {
+        "description": "Aspect ratio. Options: 1:1, 2:3, 3:2, 3:4, 4:3, 4:5, 5:4, 9:16, 16:9",
+        "default": "1:1",
+        "enum": [
+          "1:1",
+          "2:3",
+          "3:2",
+          "3:4",
+          "4:3",
+          "4:5",
+          "5:4",
+          "9:16",
+          "16:9"
+        ],
+        "type": "string"
+      }
+    },
+    "type": "object"
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "FiboLiteGenerateInput",
+    "FiboLiteGenerateOutput",
+    "StructuredPrompt",
+    "Image",
+    "ObjectDescription",
+    "LightingDetails",
+    "TextRender",
+    "AestheticsDetails",
+    "PhotographicCharacteristicsDetails"
+  ]
+}

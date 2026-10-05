@@ -1,0 +1,109 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/wan-pro/image-to-video",
+  "task": "image-to-video",
+  "source_url": "https://fal.ai/models/fal-ai/wan-pro/image-to-video",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fwan-pro%2Fimage-to-video",
+  "retrieved_at": "2026-10-04T19:52:43.531Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "image-to-video",
+  "bytes_sha256": "e32a9299e4aede94a4f8e37cf98d1726186c153542dea66a7a10550d1aae0376",
+  "queue_path": "/fal-ai/wan-pro/image-to-video",
+  "input_name": "WanProImageToVideoInput",
+  "input": {
+    "$refName": "WanProImageToVideoInput",
+    "properties": {
+      "image_url": {
+        "type": "string",
+        "examples": [
+          "https://storage.googleapis.com/falserverless/model_tests/wan/dragon-warrior.jpg"
+        ],
+        "description": "The URL of the image to generate the video from"
+      },
+      "prompt": {
+        "type": "string",
+        "examples": [
+          "A stylish woman walks down a Tokyo street filled with warm glowing neon and animated city signage."
+        ],
+        "description": "The prompt to generate the video"
+      },
+      "seed": {
+        "anyOf": [
+          {
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "Random seed for reproducibility. If None, a random seed is chosen."
+      },
+      "enable_safety_checker": {
+        "type": "boolean",
+        "default": true,
+        "description": "Whether to enable the safety checker"
+      }
+    },
+    "type": "object",
+    "required": [
+      "prompt",
+      "image_url"
+    ]
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "WanProImageToVideoInput",
+    "WanProImageToVideoOutput",
+    "File"
+  ]
+}

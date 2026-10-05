@@ -1,0 +1,268 @@
+{
+  "snapshot_version": 1,
+  "endpoint_id": "fal-ai/ltxv-13b-098-distilled",
+  "task": "unknown",
+  "source_url": "https://fal.ai/models/fal-ai/ltxv-13b-098-distilled",
+  "schema_url": "https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=fal-ai%2Fltxv-13b-098-distilled",
+  "retrieved_at": "2026-10-04T19:48:52.879Z",
+  "openapi_version": "3.0.4",
+  "info_version": "1.0.0",
+  "category": "text-to-video",
+  "bytes_sha256": "d2b5dea587960c3605c2f79f086658fa9a40cde31d9f63e84536650d444edb05",
+  "queue_path": "/fal-ai/ltxv-13b-098-distilled",
+  "input_name": "Ltxv13b098DistilledInput",
+  "input": {
+    "$refName": "Ltxv13b098DistilledInput",
+    "type": "object",
+    "properties": {
+      "prompt": {
+        "type": "string",
+        "examples": [
+          "A cinematic fast-tracking shot follows a vintage, teal camper van as it descends a winding mountain trail. The van, slightly weathered but well-maintained, is the central focus, its retro design emphasized by the motion blur. Medium shot reveals the dusty, ochre trail, edged with vibrant green pine trees. Close-up on the van's tires shows the gravel spraying, highlighting the speed and rugged terrain. Sunlight filters through the trees, casting dappled shadows on the van and the trail. The background is a hazy, majestic mountain range bathed in warm, golden light. The overall mood is adventurous and exhilarating. High resolution 4k movie scene."
+        ],
+        "description": "Text prompt to guide generation"
+      },
+      "num_frames": {
+        "minimum": 9,
+        "type": "integer",
+        "examples": [
+          121
+        ],
+        "description": "The number of frames in the video.",
+        "maximum": 1441,
+        "default": 121
+      },
+      "seed": {
+        "description": "Random seed for generation",
+        "anyOf": [
+          {
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "reverse_video": {
+        "type": "boolean",
+        "examples": [
+          false
+        ],
+        "description": "Whether to reverse the video.",
+        "default": false
+      },
+      "enable_safety_checker": {
+        "type": "boolean",
+        "examples": [
+          true
+        ],
+        "description": "Whether to enable the safety checker. Disabling it requires account authorization; unauthorized requests are always checked.",
+        "default": true
+      },
+      "second_pass_skip_initial_steps": {
+        "minimum": 1,
+        "type": "integer",
+        "examples": [
+          5
+        ],
+        "description": "The number of inference steps to skip in the initial steps of the second pass. By skipping some steps at the beginning, the second pass can focus on smaller details instead of larger changes.",
+        "maximum": 11,
+        "default": 5
+      },
+      "loras": {
+        "type": "array",
+        "items": {
+          "$refName": "LoRAWeight",
+          "type": "object",
+          "properties": {
+            "weight_name": {
+              "description": "Name of the LoRA weight. Only used if `path` is a HuggingFace repository, and is only required when the repository contains multiple LoRA weights.",
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "path": {
+              "type": "string",
+              "description": "URL or path to the LoRA weights."
+            },
+            "scale": {
+              "minimum": 0,
+              "type": "number",
+              "description": "Scale of the LoRA weight. This is a multiplier applied to the LoRA weight when loading it.",
+              "maximum": 4,
+              "default": 1
+            }
+          },
+          "required": [
+            "path"
+          ]
+        },
+        "description": "LoRA weights to use for generation",
+        "default": []
+      },
+      "temporal_adain_factor": {
+        "minimum": 0,
+        "type": "number",
+        "description": "The factor for adaptive instance normalization (AdaIN) applied to generated video chunks after the first. This can help deal with a gradual increase in saturation/contrast in the generated video by normalizing the color distribution across the video. A high value will ensure the color distribution is more consistent across the video, while a low value will allow for more variation in color distribution.",
+        "multipleOf": 0.05,
+        "examples": [
+          0.5
+        ],
+        "maximum": 1,
+        "default": 0.5
+      },
+      "frame_rate": {
+        "minimum": 1,
+        "type": "integer",
+        "examples": [
+          24
+        ],
+        "description": "The frame rate of the video.",
+        "maximum": 60,
+        "default": 24
+      },
+      "first_pass_num_inference_steps": {
+        "minimum": 2,
+        "type": "integer",
+        "examples": [
+          8
+        ],
+        "description": "Number of inference steps during the first pass.",
+        "maximum": 12,
+        "default": 8
+      },
+      "second_pass_num_inference_steps": {
+        "minimum": 2,
+        "type": "integer",
+        "examples": [
+          8
+        ],
+        "description": "Number of inference steps during the second pass.",
+        "maximum": 12,
+        "default": 8
+      },
+      "negative_prompt": {
+        "type": "string",
+        "description": "Negative prompt for generation",
+        "default": "worst quality, inconsistent motion, blurry, jittery, distorted"
+      },
+      "aspect_ratio": {
+        "enum": [
+          "9:16",
+          "1:1",
+          "16:9"
+        ],
+        "type": "string",
+        "examples": [
+          "16:9"
+        ],
+        "description": "Aspect ratio of the generated video.",
+        "default": "16:9"
+      },
+      "enable_detail_pass": {
+        "type": "boolean",
+        "examples": [
+          false
+        ],
+        "description": "Whether to use a detail pass. If True, the model will perform a second pass to refine the video and enhance details. This incurs a 2.0x cost multiplier on the base price.",
+        "default": false
+      },
+      "resolution": {
+        "enum": [
+          "480p",
+          "720p"
+        ],
+        "type": "string",
+        "examples": [
+          "720p"
+        ],
+        "description": "Resolution of the generated video.",
+        "default": "720p"
+      },
+      "expand_prompt": {
+        "type": "boolean",
+        "examples": [
+          false
+        ],
+        "description": "Whether to expand the prompt using a language model.",
+        "default": false
+      },
+      "tone_map_compression_ratio": {
+        "minimum": 0,
+        "type": "number",
+        "description": "The compression ratio for tone mapping. This is used to compress the dynamic range of the video to improve visual quality. A value of 0.0 means no compression, while a value of 1.0 means maximum compression.",
+        "multipleOf": 0.05,
+        "examples": [
+          0
+        ],
+        "maximum": 1,
+        "default": 0
+      }
+    },
+    "description": "Distilled model input",
+    "required": [
+      "prompt"
+    ]
+  },
+  "output_name": "QueueStatus",
+  "output": {
+    "$refName": "QueueStatus",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "IN_QUEUE",
+          "IN_PROGRESS",
+          "COMPLETED"
+        ]
+      },
+      "request_id": {
+        "type": "string",
+        "description": "The request id."
+      },
+      "response_url": {
+        "type": "string",
+        "description": "The response url."
+      },
+      "status_url": {
+        "type": "string",
+        "description": "The status url."
+      },
+      "cancel_url": {
+        "type": "string",
+        "description": "The cancel url."
+      },
+      "logs": {
+        "type": "object",
+        "description": "The logs.",
+        "additionalProperties": true
+      },
+      "metrics": {
+        "type": "object",
+        "description": "The metrics.",
+        "additionalProperties": true
+      },
+      "queue_position": {
+        "type": "integer",
+        "description": "The queue position."
+      }
+    },
+    "required": [
+      "status",
+      "request_id"
+    ]
+  },
+  "refs_available": [
+    "QueueStatus",
+    "Ltxv13b098DistilledInput",
+    "Ltxv13b098DistilledOutput",
+    "LoRAWeight",
+    "File"
+  ]
+}
