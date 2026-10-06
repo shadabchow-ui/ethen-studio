@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState, useSyncExternalStore } from "react";
+import { useEffect, useMemo, useRef, useState, useSyncExternalStore } from "react";
 import Link, { useLinkStatus } from "next/link";
 import { usePathname } from "next/navigation";
 import {
@@ -9,6 +9,7 @@ import {
   moveRovingIndex,
   preserveStudioQuery,
   resolveStudioV5Entry,
+  studioNavAccessibleNames,
 } from "./navigation-model";
 import { StudioNavIcon } from "./studio-nav-icons";
 import { STUDIO_FOCUS_RING_CLASS } from "./tokens";
@@ -71,6 +72,9 @@ export function StudioNavigation({
   // useSearchParams Suspense requirement in shared chrome.
   const currentSearch = useSyncExternalStore(subscribeSearch, getSearchSnapshot, getSearchServerSnapshot);
   const sections = getStudioV5NavSections();
+  // RC13 — section-qualified accessible names for labels repeated across
+  // sections (visual labels unchanged).
+  const accessibleNames = useMemo(() => studioNavAccessibleNames(), []);
   const [groupState, setGroupState] = useState<Record<string, boolean>>(DEFAULT_COLLAPSED);
   useEffect(() => {
     try {
@@ -181,7 +185,7 @@ export function StudioNavigation({
                           role="link"
                           aria-disabled="true"
                           title={resolved.disabledReason ?? undefined}
-                          aria-label={`${label} (${resolved.disabledReason ?? "unavailable"})`}
+                          aria-label={`${accessibleNames.get(entry.id) ?? label} (${resolved.disabledReason ?? "unavailable"})`}
                           onKeyDown={(event) => onKeyDown(event, index)}
                           onFocus={() => setFocusIndex(index)}
                           className={`${styles.row} ${STUDIO_FOCUS_RING_CLASS}`}
@@ -202,7 +206,7 @@ export function StudioNavigation({
                         href={preserveStudioQuery(resolved.resolvedHref, currentSearch)}
                         tabIndex={tabIndex}
                         aria-current={active ? "page" : undefined}
-                        aria-label={collapsed ? label : undefined}
+                        aria-label={accessibleNames.get(entry.id) ?? (collapsed ? label : undefined)}
                         title={collapsed ? label : undefined}
                         onKeyDown={(event) => onKeyDown(event, index)}
                         onFocus={() => setFocusIndex(index)}

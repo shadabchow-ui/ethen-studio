@@ -239,6 +239,41 @@ export function preserveStudioQuery(href: string, currentSearch: string): string
   return `${cleanBase}${query ? `?${query}` : ""}${hash !== undefined ? `#${hash}` : ""}`;
 }
 
+function navConceptKey(label: string): string {
+  const normalized = label.trim().toLowerCase();
+  // Create "Dub" and Pro "Dubbing" are one concept with different labels.
+  if (normalized === "dub" || normalized === "dubbing") return "dub";
+  return normalized;
+}
+
+/**
+ * RC13 — accessible-name overrides for rail items. Labels that repeat
+ * across sections (Create/Pro Image, Video, Dub/Dubbing) gain a section
+ * qualifier ("Image (Create)"); anything else keeps its visible text.
+ * Returns only the overridden ids (missing = no override).
+ */
+export function studioNavAccessibleNames(
+  sections: readonly StudioV5NavSection[] = getStudioV5NavSections(),
+): ReadonlyMap<string, string> {
+  const sectionsByConcept = new Map<string, Set<string>>();
+  for (const section of sections) {
+    for (const entry of section.entries) {
+      const key = navConceptKey(entry.label);
+      const set = sectionsByConcept.get(key) ?? new Set<string>();
+      set.add(section.id);
+      sectionsByConcept.set(key, set);
+    }
+  }
+  const names = new Map<string, string>();
+  for (const section of sections) {
+    for (const entry of section.entries) {
+      const shared = (sectionsByConcept.get(navConceptKey(entry.label)) ?? new Set()).size > 1;
+      if (shared) names.set(entry.id, `${entry.label} (${section.label})`);
+    }
+  }
+  return names;
+}
+
 /** Roving-tabindex movement for the sidebar (Arrow/Home/End, wrapping). */
 export function moveRovingIndex(current: number, count: number, key: string): number {
   if (count <= 0) return 0;

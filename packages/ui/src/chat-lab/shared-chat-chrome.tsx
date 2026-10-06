@@ -133,7 +133,11 @@ export function SharedChatChrome({
   }, [onPaletteChange]);
 
   const openSearch = React.useCallback(() => {
+    // RC13 — record the invoker on the button path too (the drawer path
+    // inherits the drawer's return); otherwise closing the palette after
+    // a sidebar-search click restores focus to a stale element or nowhere.
     if (drawer) paletteReturnRef.current = drawerReturnRef.current;
+    else paletteReturnRef.current = document.activeElement as HTMLElement;
     onDrawerChange(false);
     onPaletteChange(true);
   }, [drawer, onDrawerChange, onPaletteChange]);
