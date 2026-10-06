@@ -109,11 +109,13 @@ export {
   deleteJson,
   formatDate,
   postJson,
+  resolveAsyncDataOutcome,
   useAsyncData,
 } from "./settings-data";
 export type {
   AccountInfo,
   AsyncData,
+  AsyncDataStatus,
   BillingResponse,
   ConnectorConnection,
   ConnectorDef,

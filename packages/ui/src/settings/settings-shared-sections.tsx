@@ -270,7 +270,7 @@ export function AccountSection({ ctx, onSignOut }: { ctx: SectionCtx; onSignOut?
 
   return (
     <SettingsSection id="account" title="Account" meta="Sessions, devices and deletion. Shared across Chat and Designer.">
-      {account.loading ? (
+      {account.status === "loading" ? (
         <p role="status" style={{ fontSize: 13 }}>Checking session…</p>
       ) : identityState === "identity_pending" || identityState === "identity_unavailable" ? (
         <>
@@ -295,13 +295,13 @@ export function AccountSection({ ctx, onSignOut }: { ctx: SectionCtx; onSignOut?
             />
           ) : null}
         </>
-      ) : account.error === "signed_out" || info?.signedIn === false ? (
+      ) : account.status === "signed_out" || info?.signedIn === false ? (
         <>
           <SettingsRow title="Session" detail="Not signed in — actions that need an account will ask you to sign in first" />
           <SettingsRow title="Sign in" detail="Continue with your Ethen account" action={<Link href="/sign-in" style={{ fontSize: 13 }}>Sign in</Link>} />
         </>
-      ) : account.error ? (
-        <SettingsErrorState message={account.error} onRetry={() => void account.refresh()} />
+      ) : account.status === "setup" || account.status === "error" ? (
+        <SettingsErrorState message={account.error ?? "Session could not be checked."} onRetry={() => void account.refresh()} />
       ) : (
         <>
           <SettingsRow title="Session" detail="Signed in — settings sync across Chat and Designer" />
@@ -319,12 +319,12 @@ export function AccountSection({ ctx, onSignOut }: { ctx: SectionCtx; onSignOut?
       )}
 
       <SettingsGroup label="Active sessions">
-        {sessions.loading ? (
+        {sessions.status === "loading" ? (
           <p role="status" style={{ fontSize: 13 }}>Loading sessions…</p>
-        ) : sessions.error === "signed_out" ? (
+        ) : sessions.status === "signed_out" ? (
           <p style={{ fontSize: 13 }}>Sign in to see sessions.</p>
-        ) : sessions.error ? (
-          <SettingsErrorState message={sessions.error} onRetry={() => void sessions.refresh()} />
+        ) : sessions.status === "setup" || sessions.status === "error" ? (
+          <SettingsErrorState message={sessions.error ?? "Sessions could not be loaded."} onRetry={() => void sessions.refresh()} />
         ) : (
           <>
             {sessions.data?.scopeNote ? (
@@ -356,10 +356,12 @@ export function AccountSection({ ctx, onSignOut }: { ctx: SectionCtx; onSignOut?
         )}
       </SettingsGroup>
 
-      <SettingsGroup label="Danger zone">
-        <LogoutAllRow onDone={() => { window.location.href = "/sign-in"; }} />
-        <DeleteAccountRow />
-      </SettingsGroup>
+      {info?.signedIn === true ? (
+        <SettingsGroup label="Danger zone">
+          <LogoutAllRow onDone={() => { window.location.href = "/sign-in"; }} />
+          <DeleteAccountRow />
+        </SettingsGroup>
+      ) : null}
     </SettingsSection>
   );
 }
