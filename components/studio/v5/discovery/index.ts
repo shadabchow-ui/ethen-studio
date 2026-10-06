@@ -3,7 +3,7 @@
  * Templates libraries plus the catalog client consumed by later jobs.
  */
 export * from "./catalog-client";
-export { useCatalogProjection } from "./useCatalogProjection";
+export { useCatalogProjection, useCatalogSummary } from "./useCatalogProjection";
 export { StudioHome } from "./StudioHome";
 export { StudioHomePrompt, homePromptHref, isHomePromptToolId } from "./StudioHomePrompt";
 export { HomeMediaFigure, homeSectionTiles } from "./StudioHomeMedia";

@@ -279,8 +279,40 @@
   .iconButton { width: 44px; height: 44px; }
 }
 
+/* RC11 — per-link pending hint (useLinkStatus). Fixed-size and
+ * space-reserving so it never shifts layout; fades in only after 100ms
+ * so fast navigations never flash. */
+.pendingHint {
+  flex: none;
+  width: 6px;
+  height: 6px;
+  margin-left: auto;
+  border-radius: 9999px;
+  background: currentColor;
+  opacity: 0;
+  visibility: hidden;
+}
+.pendingHint.isPending {
+  visibility: visible;
+  animation-name: nav-hint-fade-in, nav-hint-pulse;
+  animation-duration: 200ms, 1s;
+  animation-delay: 100ms, 100ms;
+  animation-timing-function: ease, ease-in-out;
+  animation-iteration-count: 1, infinite;
+  animation-fill-mode: forwards, none;
+}
+@keyframes nav-hint-fade-in {
+  to { opacity: 0.45; }
+}
+@keyframes nav-hint-pulse {
+  50% { opacity: 0.2; }
+}
+/* Collapsed rail has no room for the hint; the content skeleton covers it. */
+.sidebar[data-collapsed="true"] .pendingHint { display: none; }
+
 @media (prefers-reduced-motion: reduce) {
   .chevron { transition: none; }
+  .pendingHint.isPending { animation: none; visibility: visible; opacity: 0.45; }
 }
 
 @media (forced-colors: active) {

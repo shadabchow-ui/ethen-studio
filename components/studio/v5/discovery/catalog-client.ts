@@ -52,19 +52,29 @@ function asStringArray(value: unknown): string[] {
   return Array.isArray(value) ? value.filter((entry): entry is string => typeof entry === "string") : [];
 }
 
+/**
+ * RC11 — shared failure mapping for the full and summary catalog
+ * responses. Returns the terminal state for `ok:false` envelopes, or
+ * null when the body claims success (callers then validate the payload).
+ */
+function mapCatalogErrorState(body: unknown): StudioDataState | null {
+  const envelope = asRecord(body);
+  if (envelope.ok !== false) return null;
+  const error = asRecord(envelope.error);
+  const code = typeof error.code === "string" ? error.code : "UNKNOWN";
+  if (code === "SETUP_REQUIRED") return "setup";
+  // S4C: unauthenticated project-scoped reads land on the signed-out
+  // state (project-less reads serve the public catalog instead).
+  if (code === "FORBIDDEN" || code === "UNAUTHORIZED" || code === "AUTHENTICATION_REQUIRED" || code === "unauthenticated") {
+    return "permission";
+  }
+  return "error";
+}
+
 export function parseCatalogResponse(body: unknown): ParsedCatalog {
   const envelope = asRecord(body);
-  if (envelope.ok === false) {
-    const error = asRecord(envelope.error);
-    const code = typeof error.code === "string" ? error.code : "UNKNOWN";
-    if (code === "SETUP_REQUIRED") return { state: "setup", projection: null };
-    // S4C: unauthenticated project-scoped reads land on the signed-out
-    // state (project-less reads serve the public catalog instead).
-    if (code === "FORBIDDEN" || code === "UNAUTHORIZED" || code === "AUTHENTICATION_REQUIRED" || code === "unauthenticated") {
-      return { state: "permission", projection: null };
-    }
-    return { state: "error", projection: null };
-  }
+  const failure = mapCatalogErrorState(envelope);
+  if (failure) return { state: failure, projection: null };
   const data = asRecord(envelope.data !== undefined ? envelope.data : envelope);
   const catalog = asRecord(data.catalog !== undefined ? data.catalog : data);
   const rawFamilies = catalog.families;
@@ -178,4 +188,54 @@ export function endpointsForFamily(
 
 export function catalogTasks(projection: CatalogProjectionView): string[] {
   return [...new Set(projection.endpoints.map((endpoint) => endpoint.task))].sort();
+}
+
+// ── RC11: summary-only response (`?view=summary`) ────────────────────────────
+
+export interface CatalogSummaryTallies {
+  families: number;
+  endpoints: number;
+  executable: number;
+}
+
+export interface CatalogSummaryView {
+  catalogVersion: string;
+  projectedAt: string;
+  tallies: CatalogSummaryTallies;
+}
+
+export interface ParsedCatalogSummary {
+  state: StudioDataState;
+  summary: CatalogSummaryView | null;
+}
+
+function asNonNegativeInt(value: unknown): number | null {
+  return typeof value === "number" && Number.isInteger(value) && value >= 0 ? value : null;
+}
+
+/**
+ * Parse the summary-only catalog response. Tallies are strict (a missing
+ * count is an error, never a zero); stamps fall back to "unknown" so an
+ * older deployment still yields usable counts.
+ */
+export function parseCatalogSummaryResponse(body: unknown): ParsedCatalogSummary {
+  const envelope = asRecord(body);
+  const failure = mapCatalogErrorState(envelope);
+  if (failure) return { state: failure, summary: null };
+  const data = asRecord(envelope.data !== undefined ? envelope.data : envelope);
+  const summary = asRecord(data.summary !== undefined ? data.summary : data);
+  const tallies = asRecord(summary.tallies);
+  const families = asNonNegativeInt(tallies.families);
+  const endpoints = asNonNegativeInt(tallies.endpoints);
+  const executable = asNonNegativeInt(tallies.executable);
+  if (families === null || endpoints === null || executable === null) {
+    return { state: "error", summary: null };
+  }
+  const view: CatalogSummaryView = {
+    catalogVersion: typeof summary.catalogVersion === "string" ? summary.catalogVersion : "unknown",
+    projectedAt: typeof summary.projectedAt === "string" ? summary.projectedAt : "unknown",
+    tallies: { families, endpoints, executable },
+  };
+  if (endpoints === 0) return { state: "empty", summary: view };
+  return { state: "ready", summary: view };
 }
