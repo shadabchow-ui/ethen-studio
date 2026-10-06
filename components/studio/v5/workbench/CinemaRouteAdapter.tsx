@@ -6,6 +6,7 @@
 "use client";
 
 import { useCallback, useEffect, useState } from "react";
+import { useStudioAccess } from "@/components/studio/auth/use-studio-access";
 import { StudioEmptyState, StudioErrorState, StudioPageHeader, StudioSetupState } from "../shell";
 import { CinemaBoard } from "./CinemaBoard";
 import type { CinemaSceneView, CinemaSequenceView, CinemaShotView } from "./types";
@@ -26,6 +27,10 @@ export function CinemaRouteAdapter({ projectId }: { projectId: string | null }) 
   const [loaded, setLoaded] = useState(false);
   const [failed, setFailed] = useState<string | null>(null);
   const [setupDependency, setSetupDependency] = useState<string | null>(null);
+  const [reloadToken, setReloadToken] = useState(0);
+  // RC4: no-project renders the gate's reason + action (never a dead
+  // Retry); Retry survives only on real fetch errors, and re-fetches.
+  const access = useStudioAccess({ requiresProject: true, projectId, actionLabel: "cinema-open" });
 
   // Render-time readiness when no project scopes the workspace.
   if (!projectId && !loaded) setLoaded(true);
@@ -51,7 +56,7 @@ export function CinemaRouteAdapter({ projectId }: { projectId: string | null }) 
     return () => {
       cancelled = true;
     };
-  }, [projectId]);
+  }, [projectId, reloadToken]);
 
   const selectSequence = useCallback(
     async (sequenceId: string) => {
@@ -93,7 +98,12 @@ export function CinemaRouteAdapter({ projectId }: { projectId: string | null }) 
         description="Sequences, scenes and shots over canonical takes. Selection pins takes; the board stores no bytes."
       />
       {!projectId ? (
-        <StudioEmptyState title="Select a project" description="Cinema is project-scoped. Pick a project to browse sequences." actionLabel="Retry" onAction={() => setLoaded(true)} />
+        <StudioEmptyState
+          title={access.title}
+          description={access.reason ?? "Cinema is project-scoped. Pick a project to browse sequences."}
+          actionLabel={access.primaryAction?.label}
+          onAction={access.primaryAction?.run}
+        />
       ) : !loaded ? (
         <p data-testid="cinema-loading" className="py-10 text-center text-[13px] text-[var(--text-secondary)]">Loading Cinema…</p>
       ) : setupDependency !== null ? (
@@ -107,7 +117,16 @@ export function CinemaRouteAdapter({ projectId }: { projectId: string | null }) 
         </div>
       ) : failed ? (
         <div data-testid="cinema-error">
-          <StudioErrorState title="Cinema unavailable" description={failed} retryLabel="Retry" onRetry={() => setFailed(null)} />
+          <StudioErrorState
+            title="Cinema unavailable"
+            description={failed}
+            retryLabel="Retry"
+            onRetry={() => {
+              setFailed(null);
+              setLoaded(false);
+              setReloadToken((token) => token + 1);
+            }}
+          />
         </div>
       ) : (
         <CinemaBoard

@@ -4,7 +4,7 @@ import { useCallback, useEffect, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useStudioIdentity } from "../../studio-project-scope";
-import { useAuthActionGate } from "@/components/studio/auth/studio-auth-action";
+import { useStudioAccess } from "@/components/studio/auth/use-studio-access";
 import type { StudioDataState, StudioProjectSummary } from "./types";
 import { parseProjectsResponse, type ParsedProjects } from "./project-context-model";
 import { STUDIO_FOCUS_RING_CLASS } from "./tokens";
@@ -53,6 +53,7 @@ export function StudioProjectContextBar({ testId }: { testId?: string }) {
   const [state, setState] = useState<StudioDataState>("loading");
   const [creating, setCreating] = useState(false);
   const [notice, setNotice] = useState<string | null>(null);
+  const [noticeAction, setNoticeAction] = useState<{ label: string; run: () => void } | null>(null);
 
   const load = useCallback(async () => {
     try {
@@ -61,6 +62,7 @@ export function StudioProjectContextBar({ testId }: { testId?: string }) {
       setState(parsed.state);
       // A completed load supersedes any earlier creation notice.
       setNotice(null);
+      setNoticeAction(null);
     } catch {
       setProjects([]);
       setState("error");
@@ -99,18 +101,22 @@ export function StudioProjectContextBar({ testId }: { testId?: string }) {
     (projectId: string) => {
       selectProject(projectId);
       setNotice(null);
+      setNoticeAction(null);
       router.push(`/studio/projects/${encodeURIComponent(projectId)}`);
     },
     [router, selectProject],
   );
 
-  // S4C: anonymous New opens the Clerk modal instead of firing the
-  // authenticated project-creation POST.
-  const authGate = useAuthActionGate();
+  // RC4: New creates the project itself, so it requires identity — not a
+  // project. No mutation fires unless the gate is ready; blocked clicks
+  // explain why and offer the gate's action inline (never a bare
+  // "Project creation failed.").
+  const access = useStudioAccess({ requiresProject: false, actionLabel: "project-new" });
   const runNew = useCallback(async () => {
     if (creating) return;
     setCreating(true);
     setNotice(null);
+    setNoticeAction(null);
     try {
       if (identity.projectId) {
         router.push(`/studio/projects/${encodeURIComponent(identity.projectId)}/create/image`);
@@ -130,13 +136,16 @@ export function StudioProjectContextBar({ testId }: { testId?: string }) {
   const onNew = useCallback(() => {
     // Navigation to an existing project's Create surface is public (the
     // page renders signed-out; Generate itself is pre-gated). Only project
-    // CREATION requires the modal.
+    // CREATION requires the gate.
     if (identity.projectId) {
       router.push(`/studio/projects/${encodeURIComponent(identity.projectId)}/create/image`);
       return;
     }
-    authGate.runAuthed(() => void runNew(), "project-new");
-  }, [authGate, runNew, identity.projectId, router]);
+    if (!access.runWhenReady(() => void runNew())) {
+      setNotice(access.reason ?? "Checking your session…");
+      setNoticeAction(access.primaryAction);
+    }
+  }, [access, runNew, identity.projectId, router]);
 
   const selected = projects.find((project) => project.id === identity.projectId) ?? null;
 
@@ -198,7 +207,12 @@ export function StudioProjectContextBar({ testId }: { testId?: string }) {
       </button>
       {notice ? (
         <p role="alert" className="w-full text-[12px] text-[var(--text-secondary)]">
-          {notice}
+          {notice}{" "}
+          {noticeAction ? (
+            <button type="button" onClick={noticeAction.run} className={`underline ${STUDIO_FOCUS_RING_CLASS}`}>
+              {noticeAction.label}
+            </button>
+          ) : null}
         </p>
       ) : null}
     </div>

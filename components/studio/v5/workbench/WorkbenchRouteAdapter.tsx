@@ -7,6 +7,7 @@
 "use client";
 
 import { useCallback, useEffect, useState } from "react";
+import { useStudioAccess } from "@/components/studio/auth/use-studio-access";
 import { framesToTicks } from "./timecode";
 import type {
   BinItemView,
@@ -53,6 +54,9 @@ export function WorkbenchRouteAdapter({ tool, projectId }: { tool: Exclude<ProTo
   const [busy, setBusy] = useState(false);
   const [renderNotice, setRenderNotice] = useState<string | null>(null);
   const [reloadToken, setReloadToken] = useState(0);
+  // RC4: the workspace's no-project branch renders this gate's reason +
+  // action instead of a dead Retry.
+  const access = useStudioAccess({ requiresProject: true, projectId, actionLabel: "workbench-open" });
 
   // Render-time readiness when no project scopes the workspace.
   if (!projectId && uiState.state !== "setup") {
@@ -240,6 +244,7 @@ export function WorkbenchRouteAdapter({ tool, projectId }: { tool: Exclude<ProTo
   return (
     <WorkbenchWorkspace
       tool={tool}
+      access={access}
       uiState={uiState}
       heads={heads}
       head={head}

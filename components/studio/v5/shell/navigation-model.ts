@@ -16,7 +16,12 @@
 export interface StudioV5NavEntry {
   id: string;
   label: string;
-  /** Static href. Entries needing project scope use hrefFor + disabledWithoutProject. */
+  /**
+   * Static href. Entries needing project scope use hrefFor +
+   * disabledWithoutProjectReason; an entry with BOTH href and hrefFor
+   * uses the project route when a project is selected and falls back to
+   * the public href otherwise (RC4: sidebar Edit matches the tab).
+   */
   href?: string;
   hrefFor?: (projectId: string) => string;
   disabledWithoutProjectReason?: string;
@@ -63,9 +68,12 @@ export function getStudioV5NavSections(): readonly StudioV5NavSection[] {
         {
           id: "create-edit",
           label: "Edit",
+          // RC4 — same destination as the "Edit Image" mode tab when no
+          // project is selected; the project route wins when one is.
+          href: "/studio/create/edit",
           hrefFor: (projectId) => `/studio/projects/${encodeURIComponent(projectId)}/edit/image`,
           disabledWithoutProjectReason: "Select a project to edit images.",
-          activePrefixes: [],
+          activePrefixes: ["/studio/create/edit"],
           activeSuffixes: ["/edit/image"],
           icon: "edit",
         },
@@ -141,10 +149,16 @@ export function resolveStudioV5Entry(entry: StudioV5NavEntry, context: StudioNav
     return { ...entry, resolvedHref: null, disabledReason: entry.deferredReason };
   }
   if (entry.hrefFor) {
-    if (!context.projectId) {
-      return { ...entry, resolvedHref: null, disabledReason: entry.disabledWithoutProjectReason ?? "Select a project." };
+    if (context.projectId) {
+      return { ...entry, resolvedHref: entry.hrefFor(context.projectId), disabledReason: null };
     }
-    return { ...entry, resolvedHref: entry.hrefFor(context.projectId), disabledReason: null };
+    // RC4 — entries with both hrefFor and href fall back to the public
+    // href without a project (sidebar Edit matches the Edit Image tab);
+    // hrefFor-only entries keep the historical disabled behavior.
+    if (entry.href) {
+      return { ...entry, resolvedHref: entry.href, disabledReason: null };
+    }
+    return { ...entry, resolvedHref: null, disabledReason: entry.disabledWithoutProjectReason ?? "Select a project." };
   }
   return { ...entry, resolvedHref: entry.href ?? null, disabledReason: null };
 }
