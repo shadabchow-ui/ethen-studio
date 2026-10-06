@@ -28,13 +28,25 @@ import { ComposerInputField, GeneratorComposer } from "../GeneratorComposer";
 import { ProWorkbenchLink } from "../ProWorkbenchLink";
 import { adaptAudioSubmit } from "../composer-legacy-adapter";
 import { composerToolFor } from "../composer-registry";
+import {
+  dropPromptHandoff,
+  peekPromptHandoff,
+  sessionPromptHandoffStorage,
+} from "../prompt-handoff";
 import type { AudioToolDefinition } from "./types";
 import { useAudioJob } from "./useAudioJob";
 import { toAudioHistoryEntry } from "./audio-history";
 import { AudioStagePanel } from "./AudioGenerator";
 
-export function VoiceFrame({ tool, projectId, initialScript = null }: { tool: AudioToolDefinition; projectId: string | null; initialScript?: string | null }) {
-  const [script, setScript] = React.useState(initialScript ?? "");
+export function VoiceFrame({ tool, projectId, initialScript = null, promptRef = null }: { tool: AudioToolDefinition; projectId: string | null; initialScript?: string | null; promptRef?: string | null }) {
+  // RC9: explicit ?prompt= wins, then the one-shot handoff (peeked here,
+  // dropped on mount so StrictMode cannot lose it).
+  const [script, setScript] = React.useState(
+    initialScript ?? peekPromptHandoff(sessionPromptHandoffStorage(), promptRef) ?? "",
+  );
+  React.useEffect(() => {
+    dropPromptHandoff(sessionPromptHandoffStorage(), promptRef);
+  }, [promptRef]);
   const [voice, setVoice] = React.useState<CreateVoiceSlotState>({ voiceIdentityId: null, bound: true });
   const [modelSelection, setModelSelection] = React.useState("auto");
   const history = useCreateHistory(projectId, "voice");
@@ -70,7 +82,7 @@ export function VoiceFrame({ tool, projectId, initialScript = null }: { tool: Au
     );
   }, [projectId, result, job.project, quote, script, history]);
   const entry = composerToolFor("voice");
-  const { model: submitModel } = adaptAudioSubmit(
+  const { model: submitModel, missing: missingFields } = adaptAudioSubmit(
     entry,
     "voice",
     {
@@ -170,6 +182,11 @@ export function VoiceFrame({ tool, projectId, initialScript = null }: { tool: Au
                 textareaClassName="max-h-[40dvh] min-h-[24px] resize-none [field-sizing:content]"
               />
               <p className="text-[11.5px] text-[var(--text-tertiary)]">{script.trim().length} characters.</p>
+              {missingFields.length > 0 ? (
+                <p role="status" className="text-[11.5px] text-[var(--text-tertiary)]">
+                  {missingFields[0]?.emptyMessage ?? ""}
+                </p>
+              ) : null}
             </section>
           }
           controls={<ProWorkbenchLink toolId="voice" projectId={projectId} />}

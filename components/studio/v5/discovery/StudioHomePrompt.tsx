@@ -3,7 +3,12 @@
 import * as React from "react";
 import { useRouter } from "next/navigation";
 import { ComposerInputField } from "../create/GeneratorComposer";
-import { composerToolFor } from "../create/composer-registry";
+import { PROMPT_URL_SAFE_LENGTH, composerToolFor } from "../create/composer-registry";
+import {
+  promptCarriageFor,
+  sessionPromptHandoffStorage,
+  storePromptHandoff,
+} from "../create/prompt-handoff";
 import { getAudioTool } from "../create/audio/audio-tool-bindings";
 import { getCreateTool } from "../create/tool-definitions";
 import { StudioNavIcon } from "../shell/studio-nav-icons";
@@ -14,11 +19,12 @@ import { STUDIO_FOCUS_RING_CLASS } from "../shell/tokens";
  * prompt tools plus voice-as-script). Upload-first tools (transcribe, dub,
  * changer) stay one click below in the tool grid: routing them with a text
  * prompt would silently drop the text. Generate routes to the chosen tool
- * with the prompt carried in `?prompt=` state.
+ * with the prompt carried in `?prompt=` state (or a `?promptRef=` handoff
+ * past the URL-safe threshold — see home-prompt-model).
  */
-const PROMPT_TOOL_IDS = ["image", "edit", "video", "voice", "music", "sfx", "3d"] as const;
-
-export type HomePromptToolId = (typeof PROMPT_TOOL_IDS)[number];
+export type { HomePromptToolId } from "./home-prompt-model";
+import { homePromptHref, homePromptToolRoute, isHomePromptToolId, type HomePromptToolId } from "./home-prompt-model";
+export { homePromptHref, isHomePromptToolId };
 
 /** Final polish — the medium switch: short labels and the sidebar glyphs. */
 const TOOL_CHIPS: Readonly<Record<HomePromptToolId, { label: string; icon: string }>> = {
@@ -33,25 +39,8 @@ const TOOL_CHIPS: Readonly<Record<HomePromptToolId, { label: string; icon: strin
 
 const CHIP_ORDER: readonly HomePromptToolId[] = ["image", "video", "edit", "3d", "voice", "music", "sfx"];
 
-export function isHomePromptToolId(value: string): value is HomePromptToolId {
-  return (PROMPT_TOOL_IDS as readonly string[]).includes(value);
-}
-
 function toolTitle(id: HomePromptToolId): string {
   return getCreateTool(id)?.title ?? getAudioTool(id)?.title ?? id;
-}
-
-function toolRoute(id: HomePromptToolId): string {
-  return getCreateTool(id)?.route ?? `/studio/create/${id}`;
-}
-
-export function homePromptHref(toolId: HomePromptToolId, projectId: string | null, prompt: string): string {
-  const params = new URLSearchParams();
-  if (projectId) params.set("projectId", projectId);
-  const trimmed = prompt.trim();
-  if (trimmed) params.set("prompt", trimmed);
-  const query = params.toString();
-  return query ? `${toolRoute(toolId)}?${query}` : toolRoute(toolId);
 }
 
 export const HOME_PROMPT_INPUT_ID = "studio-home-prompt";
@@ -81,9 +70,29 @@ export function StudioHomePrompt({
 }) {
   const router = useRouter();
   const entry = composerToolFor(toolId);
+  // RC9: short prompts ride `?prompt=`; longer ones are stashed in
+  // sessionStorage and the route carries a short `?promptRef=` instead —
+  // a giant prompt never lands in the URL.
   const submit = React.useCallback(() => {
-    router.push(homePromptHref(toolId, projectId, prompt));
+    const carriage = promptCarriageFor(prompt, PROMPT_URL_SAFE_LENGTH);
+    if (carriage.type === "inline") {
+      router.push(homePromptHref(toolId, projectId, carriage.prompt));
+      return;
+    }
+    const id = storePromptHandoff(sessionPromptHandoffStorage(), carriage.prompt);
+    if (!id) {
+      // Storage unavailable: fall back to the inline contract (functional,
+      // same as before handoffs) rather than dropping the prompt.
+      router.push(homePromptHref(toolId, projectId, carriage.prompt));
+      return;
+    }
+    const params = new URLSearchParams();
+    if (projectId) params.set("projectId", projectId);
+    params.set("promptRef", id);
+    router.push(`${homePromptToolRoute(toolId)}?${params.toString()}`);
   }, [router, toolId, projectId, prompt]);
+  const promptLength = prompt.trim().length;
+  const viaHandoff = promptLength > PROMPT_URL_SAFE_LENGTH;
   return (
     <section aria-label="Create something new" className="relative overflow-hidden rounded-[20px] border border-[var(--border-subtle)] bg-[var(--bg-surface)]">
       <div aria-hidden="true" className="pointer-events-none absolute inset-0 [background-image:radial-gradient(80%_110%_at_0%_0%,color-mix(in_srgb,var(--text-primary)_5.5%,transparent),transparent_60%)]" />
@@ -143,6 +152,7 @@ export function StudioHomePrompt({
               <p className="min-w-0 truncate text-[11.5px] text-[var(--text-tertiary)]">
                 Opens <span className="text-[var(--text-secondary)]">{toolTitle(toolId)}</span>
                 <span className="hidden sm:inline"> · ⌘/Ctrl + Enter</span>
+                <span> · {promptLength.toLocaleString()} characters{viaHandoff ? " · travels via session handoff" : ""}</span>
               </p>
               <button
                 type="button"

@@ -58,6 +58,16 @@ export interface ComposerInputCopy {
   hint: string | null;
 }
 
+/**
+ * RC9 — documented prompt limits. Prompts are capped at PROMPT_MAX_LENGTH
+ * characters (the composer counts down and blocks submit past the cap);
+ * prompts longer than PROMPT_URL_SAFE_LENGTH never travel in the URL —
+ * the home composer stashes them in sessionStorage and passes a short
+ * `?promptRef=` handoff id instead.
+ */
+export const PROMPT_MAX_LENGTH = 4000;
+export const PROMPT_URL_SAFE_LENGTH = 2000;
+
 export interface ComposerToolEntry {
   id: GeneratorToolId;
   title: string;

@@ -14,7 +14,9 @@
 
 import * as React from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { STUDIO_CANONICAL_ROUTES } from "@/lib/studio-v5/route-map";
+import type { RemixResolution } from "@/lib/studio-v5/showcase-feed";
 import { StudioEmptyState, StudioErrorState } from "../shell/states";
 import { STUDIO_FOCUS_RING_CLASS } from "../shell/tokens";
 import { useCatalogProjection } from "../discovery/useCatalogProjection";
@@ -29,7 +31,12 @@ import { CreateHistoryList, CreateResultCard } from "./CreateResult";
 import { useCreateJob } from "./useCreateJob";
 import { useCreateHistory } from "./useCreateHistory";
 import { useEndpointSpec } from "./useEndpointSpec";
-import { draftKeyFor, localStorageHistory } from "./history-model";
+import { draftKeyFor, sessionStorageDrafts } from "./history-model";
+import {
+  dropPromptHandoff,
+  peekPromptHandoff,
+  sessionPromptHandoffStorage,
+} from "./prompt-handoff";
 import { referencesToParameters, validateReferenceSet } from "./reference-model";
 import { formatIcuDollars } from "./create-api-client";
 import { QUALITY_PROFILES, applyQualityProfile, type QualityProfileId } from "./quality-profile";
@@ -37,7 +44,7 @@ import { GeneratorEmptyStage, GeneratorLayout, GeneratorModeTabs, InspectorSecti
 import { ProWorkbenchLink } from "./ProWorkbenchLink";
 import { ComposerInputField, GeneratorComposer, GeneratorSettingsButton } from "./GeneratorComposer";
 import { adaptCreateSubmit } from "./composer-legacy-adapter";
-import { LEGACY_CREATE_INPUT, composerToolFor } from "./composer-registry";
+import { LEGACY_CREATE_INPUT, PROMPT_MAX_LENGTH, composerToolFor } from "./composer-registry";
 
 const PHASE_LABELS: Record<string, string> = {
   routing: "Routing to a qualified model…",
@@ -131,16 +138,24 @@ function NewReferenceRow({
   );
 }
 
-export function CreateToolFrame({ tool, projectId, initialPrompt = null }: { tool: CreateToolDefinition; projectId: string | null; initialPrompt?: string | null }) {
+export function CreateToolFrame({ tool, projectId, initialPrompt = null, promptRef = null, remix = null }: { tool: CreateToolDefinition; projectId: string | null; initialPrompt?: string | null; promptRef?: string | null; remix?: RemixResolution | null }) {
   const unavailableReason = toolUnavailableReason(tool);
   const task = toolTaskName(tool);
   const modality = modalityFor(tool.id);
-  // Drafts persist under a draft-only key; they never enter history. The
-  // initial draft derives at mount (the route adapter keys by scope, so a
-  // scope change remounts); null on the server, storage value in browser.
+  // RC9 prefill priority: explicit ?prompt=, then the one-shot handoff,
+  // then the resolved remix prompt, then the session draft. This peeks
+  // (never removes) so StrictMode double-mounts cannot lose the handoff;
+  // null on the server, storage values in the browser.
   const [input, setInput] = React.useState(() =>
-    initialPrompt ?? (projectId ? (localStorageHistory()?.getItem(draftKeyFor(projectId, tool.id)) ?? "") : ""),
+    initialPrompt ??
+    peekPromptHandoff(sessionPromptHandoffStorage(), promptRef) ??
+    remix?.prompt ??
+    (projectId ? (sessionStorageDrafts()?.getItem(draftKeyFor(projectId, tool.id)) ?? "") : ""),
   );
+  // One-shot handoff consumption (idempotent: removal survives remounts).
+  React.useEffect(() => {
+    dropPromptHandoff(sessionPromptHandoffStorage(), promptRef);
+  }, [promptRef]);
   const [uploadAssetId, setUploadAssetId] = React.useState("");
   const [modelSelection, setModelSelection] = React.useState("auto");
   const [pickerOpen, setPickerOpen] = React.useState(false);
@@ -153,7 +168,10 @@ export function CreateToolFrame({ tool, projectId, initialPrompt = null }: { too
     setSchemaProblems(problems);
   }, []);
   const [references, setReferences] = React.useState<readonly CreateReferenceBinding[]>([]);
-  const [referencesOpen, setReferencesOpen] = React.useState(false);
+  // RC9.6 — an image-to-video remix surfaces its mode: the source-image
+  // affordance opens with the frame (the video heading + mode tab are
+  // selected by the route itself).
+  const [referencesOpen, setReferencesOpen] = React.useState(remix?.mode === "image-to-video");
   const [voiceIdentityId, setVoiceIdentityId] = React.useState("");
   const [capDollars, setCapDollars] = React.useState("");
   const modelButtonRef = React.useRef<HTMLButtonElement | null>(null);
@@ -170,7 +188,7 @@ export function CreateToolFrame({ tool, projectId, initialPrompt = null }: { too
 
   React.useEffect(() => {
     if (!projectId) return;
-    const storage = localStorageHistory();
+    const storage = sessionStorageDrafts();
     if (!storage) return;
     const handle = window.setTimeout(() => {
       if (input) storage.setItem(draftKeyFor(projectId, tool.id), input);
@@ -331,10 +349,19 @@ export function CreateToolFrame({ tool, projectId, initialPrompt = null }: { too
   const referenceCheck = validateReferenceSet(references, new Set(references.map((ref) => ref.referenceAssetId)));
   const inputValid =
     tool.inputVariant === "upload" ? uploadAssetId.trim().length > 0 : input.trim().length > 0;
+  // RC9.4/9.5 — empty prompts stay inline (no navigation: submit is
+  // disabled); text inputs are capped at the documented length.
+  const usesTextInput = tool.inputVariant !== "upload";
+  const overCap = usesTextInput && input.length > PROMPT_MAX_LENGTH;
+  const emptyFieldMessage =
+    !inputValid && usesTextInput
+      ? (entry.requiredFields.find((field) => field.control === "composer-input")?.emptyMessage ?? null)
+      : null;
   const canGenerate =
     !unavailableReason &&
     task !== null &&
     inputValid &&
+    !overCap &&
     schemaValid &&
     referenceCheck.ok &&
     !generation.busy &&
@@ -356,6 +383,20 @@ export function CreateToolFrame({ tool, projectId, initialPrompt = null }: { too
   const providers = [...new Set(qualified.map((endpoint) => endpoint.providerId))];
   const selectedEndpoint = resolvedEndpointId ? taskEndpoints.find((endpoint) => endpoint.endpointId === resolvedEndpointId) ?? null : null;
   const modelLabel = modelSelection === "auto" ? "Ethen Auto" : (selectedEndpoint ? `${selectedEndpoint.familyLabel} — ${selectedEndpoint.label}` : modelSelection);
+
+  // RC9 remix banner: the resolved mode + a model hint (labelled from the
+  // live catalog only — never a raw id). Clearing drops ?remix= from the
+  // URL and keeps the prompt text as the user's draft.
+  const router = useRouter();
+  const remixModelHint = remix?.modelFamilyId
+    ? (projection?.families.find((family) => family.familyId === remix.modelFamilyId)?.label ?? null)
+    : null;
+  const clearRemix = React.useCallback(() => {
+    const params = new URLSearchParams(window.location.search);
+    params.delete("remix");
+    const query = params.toString();
+    router.replace(query ? `${window.location.pathname}?${query}` : window.location.pathname, { scroll: false });
+  }, [router]);
 
   const stage = currentResult ? (
     <div className="flex flex-1 items-center justify-center px-4 py-8 sm:px-8">
@@ -414,6 +455,27 @@ export function CreateToolFrame({ tool, projectId, initialPrompt = null }: { too
       label={`${tool.title} composer`}
       input={
         <>
+          {remix ? (
+            <div className="mb-2 flex items-center gap-2.5 rounded-[10px] border border-[var(--border-default)] bg-[var(--bg-surface)] px-3 py-2">
+              <img src={remix.posterUrl} alt="" aria-hidden="true" className="h-8 w-8 shrink-0 rounded-[6px] object-cover" />
+              <p className="min-w-0 flex-1 truncate text-[12px] text-[var(--text-secondary)]">
+                Remixing{" "}
+                <Link href={remix.creationHref} className={`font-medium text-[var(--text-primary)] underline ${focus}`}>
+                  {remix.title}
+                </Link>
+                <span> · {remix.modeLabel}</span>
+                {remixModelHint ? <span> · Suggested model: {remixModelHint}</span> : null}
+              </p>
+              <button
+                type="button"
+                onClick={clearRemix}
+                aria-label="Clear remix"
+                className={`inline-flex min-h-[44px] shrink-0 items-center rounded-[8px] px-2.5 text-[12px] text-[var(--text-secondary)] hover:bg-[var(--bg-elevated)] hover:text-[var(--text-primary)] pointer-fine:min-h-[28px] ${focus}`}
+              >
+                Clear
+              </button>
+            </div>
+          ) : null}
           {tool.inputVariant === "upload" ? (
             <ComposerInputField
               copy={inputCopy}
@@ -437,6 +499,16 @@ export function CreateToolFrame({ tool, projectId, initialPrompt = null }: { too
               textareaClassName="max-h-[40dvh] min-h-[24px] resize-none [field-sizing:content]"
             />
           )}
+          {usesTextInput ? (
+            <div className="flex items-baseline justify-between gap-2 px-1.5 pb-1 pt-1">
+              <p role="status" className={`min-h-[16px] text-[11.5px] ${overCap ? "text-[var(--status-danger)]" : "text-[var(--text-tertiary)]"}`}>
+                {overCap ? `Keep prompts under ${PROMPT_MAX_LENGTH.toLocaleString()} characters.` : (emptyFieldMessage ?? "")}
+              </p>
+              <p aria-label={`${input.length} of ${PROMPT_MAX_LENGTH} characters`} className={`shrink-0 text-[11.5px] tabular-nums ${overCap ? "text-[var(--status-danger)]" : "text-[var(--text-tertiary)]"}`}>
+                {input.length.toLocaleString()} / {PROMPT_MAX_LENGTH.toLocaleString()}
+              </p>
+            </div>
+          ) : null}
           {tool.secondaryVariants.includes("upload") && referencesOpen ? (
             <label className="mb-3 block space-y-1 px-1.5 text-[11.5px] text-[var(--text-secondary)]">
               Source image asset id (optional, for image-to-video and edits)
