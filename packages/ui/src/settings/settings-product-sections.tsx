@@ -205,12 +205,12 @@ export function SkillsSection({ ctx, product }: { ctx: SectionCtx; product: "cha
         <label htmlFor="skills-search" style={{ fontSize: 13, fontWeight: 600 }}>Search skills</label>
         <input id="skills-search" type="search" value={query} onChange={(e) => setQuery(e.target.value)} placeholder="Search installed skills" style={{ width: "100%", minHeight: 34, marginTop: 4, padding: "0 10px", border: "1px solid var(--eds-rule-hair)", borderRadius: 8, background: "transparent", color: "inherit", font: "inherit", fontSize: 13 }} />
       </div>
-      {skills.loading ? (
+      {skills.status === "loading" ? (
         <p role="status" style={{ fontSize: 13 }}>Loading skills…</p>
-      ) : skills.error === "signed_out" ? (
+      ) : skills.status === "signed_out" ? (
         <p style={{ fontSize: 13 }}>Sign in to manage skills.</p>
-      ) : skills.error ? (
-        <SettingsErrorState message={skills.error} onRetry={() => void skills.refresh()} />
+      ) : skills.status === "setup" || skills.status === "error" ? (
+        <SettingsErrorState message={skills.error ?? "Skills could not be loaded."} onRetry={() => void skills.refresh()} />
       ) : list.length === 0 ? (
         <SettingsEmptyState message={query ? `No skills match “${query}”.` : "No skills ship with this deployment yet."} />
       ) : (
@@ -338,12 +338,12 @@ export function ConnectorsSection({ ctx, product }: { ctx: SectionCtx; product: 
         ))}
         <input type="search" aria-label="Search connectors" value={query} onChange={(e) => setQuery(e.target.value)} placeholder="Search" style={{ minHeight: 30, padding: "0 10px", border: "1px solid var(--eds-rule-hair)", borderRadius: 8, background: "transparent", color: "inherit", font: "inherit", fontSize: 12 }} />
       </div>
-      {connectors.loading ? (
+      {connectors.status === "loading" ? (
         <p role="status" style={{ fontSize: 13 }}>Loading connectors…</p>
-      ) : connectors.error === "signed_out" ? (
+      ) : connectors.status === "signed_out" ? (
         <p style={{ fontSize: 13 }}>Sign in to manage connectors.</p>
-      ) : connectors.error ? (
-        <SettingsErrorState message={connectors.error} onRetry={() => void connectors.refresh()} />
+      ) : connectors.status === "setup" || connectors.status === "error" ? (
+        <SettingsErrorState message={connectors.error ?? "Connectors could not be loaded."} onRetry={() => void connectors.refresh()} />
       ) : visible.length === 0 ? (
         <SettingsEmptyState message="No connectors match. Connectors you add appear here." />
       ) : (

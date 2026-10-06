@@ -445,7 +445,22 @@ export function StudioHome() {
       </section>
 
       <p className="text-[12px] text-[var(--text-tertiary)]" role="status">
-        {tallies ? `${tallies.families} model families · ${tallies.endpoints} endpoints · ${tallies.executable} ready to run` : "Catalog summary unavailable."}
+        {catalog.state === "loading" && !tallies ? (
+          "Loading catalog summary…"
+        ) : tallies ? (
+          `${tallies.families} model families · ${tallies.endpoints} endpoints · ${tallies.executable} ready to run`
+        ) : (
+          <>
+            Catalog summary unavailable.{" "}
+            <button
+              type="button"
+              onClick={catalog.retry}
+              className={`underline ${STUDIO_FOCUS_RING_CLASS}`}
+            >
+              Retry
+            </button>
+          </>
+        )}
       </p>
 
     </div>

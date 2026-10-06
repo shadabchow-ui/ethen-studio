@@ -7,10 +7,19 @@
 
 import * as React from "react";
 
+/**
+ * RC3 — explicit fetch status. Loading, signed-out, setup-incomplete, and
+ * error are distinct states; consumers branch on `status` instead of
+ * inferring from `data`/`error`, so signed-out never renders
+ * connection-error copy and errors never render as perpetual loading.
+ */
+export type AsyncDataStatus = "loading" | "ready" | "signed_out" | "setup" | "error";
+
 export interface AsyncData<T> {
   data: T | null;
   error: string | null;
   loading: boolean;
+  status: AsyncDataStatus;
   refresh: () => Promise<void>;
 }
 
@@ -25,33 +34,65 @@ async function readJson(url: string, init?: RequestInit): Promise<{ status: numb
   return { status: response.status, body };
 }
 
+function errorMessageOf(body: unknown, fallback: string): string {
+  return body && typeof body === "object" && "error" in body && typeof (body as { error: unknown }).error === "string"
+    ? ((body as { error: string }).error)
+    : fallback;
+}
+
+/**
+ * RC3 — pure HTTP-outcome classifier behind `useAsyncData` (unit-tested;
+ * the hook itself needs a renderer). 401/403 → signed_out (the legacy
+ * "signed_out" error string is preserved for backward compatibility);
+ * 503 → setup; 2xx → ready; anything else → error.
+ */
+export function resolveAsyncDataOutcome(
+  httpStatus: number,
+  body: unknown,
+): { status: AsyncDataStatus; error: string | null } {
+  if (httpStatus === 401 || httpStatus === 403) {
+    return { status: "signed_out", error: "signed_out" };
+  }
+  if (httpStatus >= 200 && httpStatus < 300) {
+    return { status: "ready", error: null };
+  }
+  if (httpStatus === 503) {
+    const message = errorMessageOf(body, "Setup is incomplete.");
+    return { status: "setup", error: message === "setup_required" ? "Setup is incomplete." : message };
+  }
+  return {
+    status: "error",
+    error: errorMessageOf(body, "Could not be loaded. Check your connection and try again."),
+  };
+}
+
 export function useAsyncData<T>(url: string | null): AsyncData<T> {
   const [data, setData] = React.useState<T | null>(null);
   const [error, setError] = React.useState<string | null>(null);
   const [loading, setLoading] = React.useState(url !== null);
+  // A null url means "no request": settled with nothing to load.
+  const [status, setStatus] = React.useState<AsyncDataStatus>(url !== null ? "loading" : "ready");
 
   const refresh = React.useCallback(async () => {
     if (!url) return;
     setLoading(true);
+    setStatus("loading");
     setError(null);
     try {
-      const { status, body } = await readJson(url);
-      if (status === 401 || status === 403) {
-        setData(null);
-        setError("signed_out");
-        return;
-      }
-      if (status >= 200 && status < 300) {
+      const { status: httpStatus, body } = await readJson(url);
+      const outcome = resolveAsyncDataOutcome(httpStatus, body);
+      if (outcome.status === "ready") {
         setData(body as T);
-        return;
+      } else if (outcome.status === "signed_out") {
+        setData(null);
       }
-      const message =
-        body && typeof body === "object" && "error" in body && typeof (body as { error: unknown }).error === "string"
-          ? ((body as { error: string }).error)
-          : "Could not be loaded. Check your connection and try again.";
-      setError(message);
+      // setup/error keep stale data (historical behavior); consumers
+      // branch on `status` to decide what the stale data means.
+      setError(outcome.error);
+      setStatus(outcome.status);
     } catch {
       setError("Could not be loaded. Check your connection and try again.");
+      setStatus("error");
     } finally {
       setLoading(false);
     }
@@ -64,7 +105,7 @@ export function useAsyncData<T>(url: string | null): AsyncData<T> {
     return () => clearTimeout(handle);
   }, [refresh, url]);
 
-  return { data, error, loading, refresh };
+  return { data, error, loading, status, refresh };
 }
 
 export async function postJson<T>(url: string, payload?: unknown): Promise<{ ok: boolean; data: T | null; error: string | null; status: number }> {
