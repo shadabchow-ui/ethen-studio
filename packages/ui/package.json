@@ -294,6 +294,8 @@
     "./selectable-card": "./src/selectable-card.tsx",
     "./selector": "./src/selector.tsx",
     "./send-stop-button": "./src/send-stop-button.tsx",
+    "./settings/numeric-draft": "./src/settings/numeric-draft.ts",
+    "./settings/settings-schema": "./src/settings/settings-schema.ts",
     "./settings/settings-sections": "./src/settings/settings-sections.ts",
     "./settings/studio-settings": "./src/settings/studio-settings.ts",
     "./skeleton": "./src/skeleton.tsx",

@@ -93,6 +93,7 @@ export {
   SettingsEmptyState,
   SettingsErrorState,
   SettingsGroup,
+  SettingsNumberField,
   SettingsRow,
   SettingsSaveState,
   SettingsSection,
@@ -102,6 +103,7 @@ export {
   SettingsTextarea,
   SettingsTextField,
   SettingsToggle,
+  commitNumericDraft,
 } from "./settings-shell";
 export type { SettingsShellProps, ShellSection } from "./settings-shell";
 

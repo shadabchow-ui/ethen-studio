@@ -11,7 +11,10 @@
 import * as React from "react";
 import type { SettingsGroup, SettingsSearchEntry } from "./settings-sections";
 import { CUSTOMIZE_GROUP_LABEL } from "./settings-sections";
+import { commitNumericDraft } from "./numeric-draft";
 import styles from "./settings-shell.module.css";
+
+export { commitNumericDraft };
 
 // ── Shell ────────────────────────────────────────────────────────────────────
 
@@ -104,8 +107,12 @@ export function SettingsShell({
       node?.focus();
       const previouslyFocused = document.activeElement as HTMLElement | null;
       void previouslyFocused;
-    } else {
-      searchRef.current?.focus?.();
+    } else if (!window.matchMedia("(max-width: 640px)").matches) {
+      // RC10 — no autofocus on narrow viewports: the mobile keyboard pop
+      // scrolls back to the header after the deep-link scroll, hiding the
+      // ?section= content. preventScroll keeps desktop focus from fighting
+      // section scrolling either.
+      searchRef.current?.focus?.({ preventScroll: true });
     }
     return () => {
       const launcher = launcherRef.current as HTMLElement | null;
@@ -526,6 +533,58 @@ export function SettingsTextField({
   );
 }
 
+/**
+ * RC10 — shared numeric field: draft string state, commit on blur/Enter,
+ * Escape reverts. Decimal-safe by construction (no per-keystroke parse).
+ */
+export function SettingsNumberField({
+  id,
+  label,
+  value,
+  min,
+  max,
+  integer = false,
+  detail,
+  onCommit,
+}: {
+  id: string;
+  label: string;
+  value: number;
+  min: number;
+  max: number;
+  integer?: boolean;
+  detail?: string;
+  onCommit: (next: number) => void;
+}) {
+  const [draft, setDraft] = React.useState<string | null>(null);
+  const commit = () => {
+    if (draft === null) return;
+    onCommit(commitNumericDraft(draft, { min, max, integer, fallback: value }));
+    setDraft(null);
+  };
+  return (
+    <span className={styles.fieldWrap}>
+      <label htmlFor={id} className={styles.fieldLabel}>
+        {label}
+      </label>
+      {detail ? <small className={styles.rowDetail}>{detail}</small> : null}
+      <input
+        id={id}
+        type="text"
+        inputMode="decimal"
+        value={draft ?? String(value)}
+        onChange={(event) => setDraft(event.target.value)}
+        onBlur={commit}
+        onKeyDown={(event) => {
+          if (event.key === "Enter") (event.target as HTMLInputElement).blur();
+          else if (event.key === "Escape") setDraft(null);
+        }}
+        className={styles.input}
+      />
+    </span>
+  );
+}
+
 export function SettingsTextarea({
   id,
   label,
@@ -676,11 +735,13 @@ export function SettingsSaveState({
   phase,
   error,
   persistence,
+  product,
   onRetry,
 }: {
   phase: "loading" | "ready" | "saving" | "error";
   error: string | null;
   persistence: "server" | "local";
+  product?: "chat" | "designer" | "studio";
   onRetry?: () => void;
 }) {
   if (phase === "loading") return <p role="status" className={styles.saveState}>Loading settings…</p>;
@@ -699,7 +760,11 @@ export function SettingsSaveState({
   }
   return (
     <p role="status" className={styles.saveState}>
-      {persistence === "server" ? "Synced across Chat and Designer." : "Stored in this browser only — sign in to sync."}
+      {persistence === "server"
+        ? product === "studio"
+          ? "Synced across Ethen products."
+          : "Synced across Chat and Designer."
+        : "Stored in this browser only — sign in to sync."}
     </p>
   );
 }

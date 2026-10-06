@@ -172,14 +172,15 @@ export function StudioSettingsInner() {
               phase={state.phase}
               error={state.error}
               persistence={state.persistence}
+              product="studio"
               onRetry={() => void state.refresh()}
             />
             {studioError ? <span role="alert">{studioError}</span> : null}
           </>
         }
       >
-        {section === "general" ? <GeneralSection ctx={ctx} /> : null}
-        {section === "account" ? <AccountSection ctx={ctx} onSignOut={signOut} /> : null}
+        {section === "general" ? <GeneralSection ctx={ctx} product="studio" /> : null}
+        {section === "account" ? <AccountSection ctx={ctx} product="studio" onSignOut={signOut} /> : null}
         {section === "privacy" ? <PrivacySection ctx={ctx} /> : null}
         {section === "billing" ? <BillingSection ctx={ctx} product="studio" /> : null}
         {section === "capabilities" ? <CapabilitiesSection ctx={ctx} /> : null}
