@@ -23,6 +23,8 @@ import { SearchPalette, type PaletteAction } from "@ethen/ui/chat-lab/search-pal
 import type { SearchResult } from "@ethen/ui/chat-lab/chat-fixtures";
 import type { StudioNavEntry, StudioPaletteEntry } from "@ethen/navigation";
 import { STUDIO_CANONICAL_ROUTES } from "@/lib/studio-v5/route-map";
+import { buildStudioSearchIndex } from "./v5/search/studio-search-index";
+import { useCatalogProjection } from "./v5/discovery/useCatalogProjection";
 import { StudioSidebar } from "./v5/shell/StudioSidebar";
 import {
   StudioAuthActionProvider,
@@ -145,12 +147,22 @@ export function StudioWorkbenchChrome({
 
   // Singular hierarchy: registry rows are not rendered as a second nav.
   void navEntries;
-  const paletteResults = React.useMemo(() => toPaletteResults(paletteEntries), [paletteEntries]);
+  // RC7 — public catalog families feed the Models group; the index builds
+  // from static entries immediately and families merge in when loaded.
+  const { projection } = useCatalogProjection(null);
+  const searchIndex = React.useMemo(
+    () => buildStudioSearchIndex(projection?.families ?? []),
+    [projection],
+  );
+  const paletteResults = React.useMemo(
+    () => [...searchIndex.results, ...toPaletteResults(paletteEntries)],
+    [searchIndex, paletteEntries],
+  );
   const paletteHrefs = React.useMemo(() => {
-    const map = new Map<string, string>();
+    const map = new Map<string, string>(searchIndex.hrefs);
     for (const entry of paletteEntries) map.set(entry.id, entry.href);
     return map;
-  }, [paletteEntries]);
+  }, [searchIndex, paletteEntries]);
 
   const handleNavigate = React.useCallback(
     (href: string) => {
@@ -261,6 +273,9 @@ export function StudioWorkbenchChrome({
           onClose={controls.closePalette}
           live
           results={paletteResults}
+          dialogLabel="Search Studio"
+          searchPlaceholder="Search tools, models, templates, pages, and settings"
+          emptyHint="Try a tool, model family, template, page, or settings section."
           actions={STUDIO_ACTIONS}
           onActivate={(result) => {
             if (result.id === "new-studio-project") {

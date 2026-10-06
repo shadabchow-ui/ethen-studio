@@ -400,10 +400,20 @@ so the surfaced element is the same one in both themes.
 
 // ── Search palette ────────────────────────────────────────────────────────
 
+/** RC7 — Studio palette groups (additive; chat groups unchanged). */
+export type StudioSearchGroup =
+  | "Create"
+  | "Pro"
+  | "Apps"
+  | "Templates"
+  | "Models"
+  | "Pages"
+  | "Settings";
+
 export type SearchResult = Readonly<{
   id: string;
   title: string;
-  group: "Chats" | "Projects" | "Artifacts" | "Ethen Platform" | "Studio";
+  group: "Chats" | "Projects" | "Artifacts" | "Ethen Platform" | "Studio" | StudioSearchGroup;
   detail: string;
   /** CHAT_A5.1 — local chat id opened on activation (Chats group only). */
   chatId?: string;

@@ -26,7 +26,7 @@ export type PaletteAction = Readonly<{
   beta?: boolean;
 }>;
 
-const GROUP_ORDER: readonly SearchResult["group"][] = ["Chats", "Projects", "Artifacts", "Ethen Platform", "Studio"];
+const GROUP_ORDER: readonly SearchResult["group"][] = ["Chats", "Projects", "Artifacts", "Ethen Platform", "Create", "Pro", "Apps", "Templates", "Models", "Pages", "Settings", "Studio"];
 
 export function SearchPalette({
   open,
@@ -37,6 +37,9 @@ export function SearchPalette({
   live = false,
   actions,
   onAction,
+  dialogLabel = "Search Ethen Chat",
+  searchPlaceholder = "Search chats, projects and artifacts",
+  emptyHint,
 }: {
   open: boolean;
   onClose: () => void;
@@ -51,6 +54,12 @@ export function SearchPalette({
   actions?: readonly PaletteAction[];
   /** S3.5 — action handler. Absent closes without acting. */
   onAction?: (action: PaletteAction) => void;
+  /** RC7 — product-aware dialog title/aria (Studio passes "Search Studio"). */
+  dialogLabel?: string;
+  /** RC7 — product-aware input placeholder/aria. */
+  searchPlaceholder?: string;
+  /** RC7 — scope hint rendered under the no-results state. */
+  emptyHint?: string;
 }) {
   const [query, setQuery] = React.useState(initialQuery);
   const [activeIndex, setActiveIndex] = React.useState(0);
@@ -164,7 +173,7 @@ export function SearchPalette({
         ref={dialogRef}
         role="dialog"
         aria-modal="true"
-        aria-label="Search Ethen Chat"
+        aria-label={dialogLabel}
         className={styles.palette}
         onPointerDown={(event) => event.stopPropagation()}
       >
@@ -175,8 +184,8 @@ export function SearchPalette({
             className={styles.input}
             type="text"
             value={query}
-            placeholder="Search chats, projects and artifacts"
-            aria-label="Search chats, projects and artifacts"
+            placeholder={searchPlaceholder}
+            aria-label={searchPlaceholder}
             aria-controls="chat-palette-results"
             role="combobox"
             aria-expanded="true"
@@ -195,7 +204,10 @@ export function SearchPalette({
 
         <div className={styles.results} id="chat-palette-results" role="listbox" aria-label="Results">
           {grouped.length === 0 && (actions ?? []).length === 0 ? (
-            <p className={styles.empty}>Nothing matches “{query}”.</p>
+            <div>
+              <p className={styles.empty}>Nothing matches “{query}”.</p>
+              {emptyHint ? <p className={styles.empty}>{emptyHint}</p> : null}
+            </div>
           ) : (
             grouped.map((entry) => (
               <div className={styles.group} key={entry.group} role="presentation">
