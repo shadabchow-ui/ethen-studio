@@ -14,6 +14,7 @@
 
 import * as React from "react";
 import { GatewaySettings } from "./v5/gateway/GatewaySettings";
+import { useStudioSignOut } from "./auth/use-studio-sign-out";
 import {
   UserSettingsProvider,
   useUserSettings,
@@ -76,6 +77,7 @@ const serverSection = () => "general";
 
 export function StudioSettingsInner() {
   const state = useUserSettings();
+  const { signOut } = useStudioSignOut();
   const [picked, setSection] = React.useState<string | null>(null);
   const locationSection = React.useSyncExternalStore(subscribeNever, initialSection, serverSection);
   const section = picked ?? locationSection;
@@ -176,7 +178,7 @@ export function StudioSettingsInner() {
         }
       >
         {section === "general" ? <GeneralSection ctx={ctx} /> : null}
-        {section === "account" ? <AccountSection ctx={ctx} /> : null}
+        {section === "account" ? <AccountSection ctx={ctx} onSignOut={signOut} /> : null}
         {section === "privacy" ? <PrivacySection ctx={ctx} /> : null}
         {section === "billing" ? <BillingSection ctx={ctx} /> : null}
         {section === "capabilities" ? <CapabilitiesSection ctx={ctx} /> : null}

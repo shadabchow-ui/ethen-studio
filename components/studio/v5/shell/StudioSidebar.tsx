@@ -38,6 +38,7 @@ export function StudioSidebar({
   onUpgrade,
   onSignIn,
   onSignOut,
+  onFinishSetup,
 }: {
   variant: "rail" | "drawer";
   collapsed: boolean;
@@ -51,6 +52,12 @@ export function StudioSidebar({
   onUpgrade: () => void;
   onSignIn: () => void;
   onSignOut: () => void;
+  /**
+   * RC1 — when non-null, the account menu offers "Finish setup" (the
+   * identity-pending dialog with Retry + Sign out) instead of Sign out, so
+   * a Clerk-signed-in user is never offered the no-op "Sign in".
+   */
+  onFinishSetup?: (() => void) | null;
 }) {
   const { identity, projects, selectProject } = useActiveProject();
   const railCollapsed = variant === "rail" && collapsed;
@@ -195,7 +202,15 @@ export function StudioSidebar({
                 { id: "upgrade", label: "Upgrade" },
               ],
             },
-            { items: [signedOut ? { id: "signin", label: "Sign in" } : { id: "signout", label: "Sign out" }] },
+            {
+              items: [
+                signedOut
+                  ? { id: "signin", label: "Sign in" }
+                  : onFinishSetup
+                    ? { id: "finishsetup", label: "Finish setup" }
+                    : { id: "signout", label: "Sign out" },
+              ],
+            },
           ]}
           onSelect={(id) => {
             setAccountOpen(false);
@@ -203,6 +218,7 @@ export function StudioSidebar({
             else if (id === "plan") onOpenSettings("plan");
             else if (id === "upgrade") onUpgrade();
             else if (id === "signin") onSignIn();
+            else if (id === "finishsetup") onFinishSetup?.();
             else if (id === "signout") onSignOut();
           }}
         />
