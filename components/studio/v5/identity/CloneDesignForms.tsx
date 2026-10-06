@@ -10,6 +10,7 @@
  */
 import { useState } from "react";
 import { useAuthActionGate } from "@/components/studio/auth/studio-auth-action";
+import { StudioAccessGate, useStudioAccess } from "@/components/studio/auth/use-studio-access";
 import { StudioInspectorDrawer } from "../shell/InspectorDrawer";
 import { STUDIO_FOCUS_RING_CLASS } from "../shell/tokens";
 import type { IdentityCreationDraft, IdentityCreationFlow } from "./types";
@@ -67,6 +68,10 @@ export function CloneDesignForms({
   // S4C: anonymous voice-clone submit opens the Clerk modal and sends NO
   // request; the draft stays in component state for retry after sign-in.
   const authGate = useAuthActionGate();
+  // RC4: the submit stays enabled whenever the form is submittable; clicks
+  // route through the shared gate, which explains blocks inline.
+  const access = useStudioAccess({ requiresProject: true, projectId, actionLabel: "voice-clone" });
+  const [showGate, setShowGate] = useState(false);
   const runSubmit = async (): Promise<void> => {
     if (!projectId || submitting) return;
     setSubmitting(true);
@@ -117,7 +122,9 @@ export function CloneDesignForms({
   };
 
   const submit = (): void => {
-    authGate.runAuthed(() => void runSubmit(), "voice-clone");
+    if (!access.runWhenReady(() => authGate.runAuthed(() => void runSubmit(), "voice-clone"))) {
+      setShowGate(true);
+    }
   };
 
   return (
@@ -220,10 +227,11 @@ export function CloneDesignForms({
             {error}
           </p>
         ) : null}
+        {showGate && access.state !== "ready" ? <StudioAccessGate access={access} /> : null}
         <div className="flex gap-2">
           <button
             type="submit"
-            disabled={submitting || !projectId}
+            disabled={submitting}
             className={`inline-flex min-h-[44px] items-center rounded-[10px] bg-[var(--bg-elevated)] px-4 py-2.5 text-[12.5px] font-medium text-[var(--text-primary)] transition hover:bg-[var(--studio-bg-selected)] disabled:cursor-not-allowed disabled:opacity-60 ${STUDIO_FOCUS_RING_CLASS}`}
           >
             {submitting ? "Submitting…" : copy.submit}

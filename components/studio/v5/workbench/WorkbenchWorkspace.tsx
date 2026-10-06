@@ -5,6 +5,7 @@
  */
 "use client";
 
+import type { StudioAccess } from "@/components/studio/auth/use-studio-access";
 import { StudioEmptyState, StudioErrorState, StudioPageHeader, StudioSetupState } from "../shell";
 import { STUDIO_FOCUS_RING_CLASS } from "../shell/tokens";
 import { BinRail } from "./BinRail";
@@ -29,6 +30,7 @@ const TOOL_LABEL: Record<Exclude<ProTool, "cinema">, string> = {
 
 export function WorkbenchWorkspace({
   tool,
+  access,
   uiState,
   heads,
   head,
@@ -56,6 +58,8 @@ export function WorkbenchWorkspace({
   onRetry,
 }: {
   tool: Exclude<ProTool, "cinema">;
+  /** RC4 — shared access gate; the no-project branch renders its reason + action. */
+  access?: StudioAccess | null;
   uiState: WorkbenchUiState;
   heads: WorkbenchHeadView[];
   head: WorkbenchHeadView | null;
@@ -135,7 +139,12 @@ export function WorkbenchWorkspace({
                 <p className="px-6 text-center text-[12.5px] text-[var(--text-tertiary)]">Stage preview appears once a project is selected.</p>
               </div>
             </section>
-            <StudioEmptyState title="Project setup needed" description={uiState.message} actionLabel="Retry" onAction={onRetry} />
+            <StudioEmptyState
+              title={access?.title || "Project setup needed"}
+              description={access?.reason ?? uiState.message}
+              actionLabel={access?.primaryAction?.label}
+              onAction={access?.primaryAction?.run}
+            />
           </>
         )
       ) : null}

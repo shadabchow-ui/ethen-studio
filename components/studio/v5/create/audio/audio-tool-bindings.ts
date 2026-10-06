@@ -43,7 +43,8 @@ export const AUDIO_TOOL_DEFINITIONS: Readonly<Record<AudioToolId, AudioToolDefin
     route: "/studio/create/changer",
     actionLabel: "Transform",
     inputVariant: "upload",
-    description: "Transform uploaded audio to a target voice. Available only when a qualified capability exists.",
+    // RC4 — plain language plus a next step (was "qualified capability" jargon).
+    description: "Transform uploaded audio to a target voice. Needs an approved voice model to run — browse Models to see what's available.",
   },
 };
 
