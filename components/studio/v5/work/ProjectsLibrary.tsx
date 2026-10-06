@@ -61,6 +61,7 @@ export function ProjectsLibrary({
         onSearchChange={setSearch}
         view={view}
         onViewChange={setView}
+        tableAvailable
         selectionCount={0}
         state={state}
         emptyProps={{

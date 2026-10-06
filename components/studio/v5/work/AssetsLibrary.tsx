@@ -96,6 +96,7 @@ export function AssetsLibrary({
         onSearchChange={setSearch}
         view={view}
         onViewChange={setView}
+        tableAvailable
         filters={
           <div role="group" aria-label="Filter assets by kind" className="flex flex-wrap gap-1.5">
             {KIND_FILTERS.map((option) => (

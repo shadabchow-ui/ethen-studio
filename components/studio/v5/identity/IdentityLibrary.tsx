@@ -55,6 +55,7 @@ export function IdentityLibrary({
         onSearchChange={onSearchChange}
         view={view}
         onViewChange={setView}
+        tableAvailable
         switcher={[
           { id: "characters", label: "Characters", href: "/studio/identities/characters" },
           { id: "products", label: "Products", href: "/studio/identities/products" },

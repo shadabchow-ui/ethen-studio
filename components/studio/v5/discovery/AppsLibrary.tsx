@@ -72,6 +72,7 @@ export function StudioAppsLibrary({ compact = false }: { compact?: boolean }) {
         onSearchChange={setQuery}
         view={view}
         onViewChange={setView}
+        tableAvailable
         selectionCount={0}
         state={entries.length === 0 && tab === "workspace" ? "empty" : "ready"}
         emptyProps={{
@@ -87,12 +88,13 @@ export function StudioAppsLibrary({ compact = false }: { compact?: boolean }) {
         ]}
         activeSwitcherId={tab}
         filters={
-          <span role="status" className="inline-flex min-h-[44px] items-center px-2 text-[12px] text-[var(--text-tertiary)]">
+          <span role="status" className="inline-flex min-h-[44px] items-center whitespace-nowrap px-2 text-[12px] text-[var(--text-tertiary)]">
             {entries.length} apps · versions and rights shown on each entry
           </span>
         }
       >
-        <ul className="grid grid-cols-[repeat(1,minmax(0,1fr))] gap-3 sm:grid-cols-[repeat(2,minmax(0,1fr))] lg:grid-cols-[repeat(3,minmax(0,1fr))]">
+        {view === "cards" ? (
+        <ul aria-label="Apps" className="grid grid-cols-[repeat(1,minmax(0,1fr))] gap-3 sm:grid-cols-[repeat(2,minmax(0,1fr))] lg:grid-cols-[repeat(3,minmax(0,1fr))]">
           {entries.map((entry) => (
             <li key={entry.id}>
               <Link
@@ -116,6 +118,34 @@ export function StudioAppsLibrary({ compact = false }: { compact?: boolean }) {
             </li>
           ))}
         </ul>
+        ) : (
+          <div className="overflow-x-auto rounded-[12px] border border-[var(--border-default)]">
+            <table className="w-full text-left text-[12.5px]">
+              <thead>
+                <tr className="bg-[var(--bg-surface)] text-[var(--text-tertiary)]">
+                  <th scope="col" className="px-4 py-2.5 font-medium">App</th>
+                  <th scope="col" className="px-4 py-2.5 font-medium">Description</th>
+                  <th scope="col" className="px-4 py-2.5 font-medium">Version</th>
+                  <th scope="col" className="px-4 py-2.5 font-medium">Rights</th>
+                </tr>
+              </thead>
+              <tbody>
+                {entries.map((entry) => (
+                  <tr key={entry.id} className="border-t border-[var(--border-default)]">
+                    <td className="px-4 py-2.5">
+                      <Link href={entry.href} className={`font-medium text-[var(--text-primary)] underline ${STUDIO_FOCUS_RING_CLASS}`}>
+                        {entry.title}
+                      </Link>
+                    </td>
+                    <td className="px-4 py-2.5 text-[var(--text-secondary)]">{entry.description}</td>
+                    <td className="px-4 py-2.5 text-[var(--text-secondary)]">{entry.versionLabel}</td>
+                    <td className="px-4 py-2.5 text-[var(--text-secondary)]">{entry.rightsLabel}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        )}
       </StudioLibraryFrame>
     </div>
   );

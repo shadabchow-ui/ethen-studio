@@ -1,10 +1,12 @@
 "use client";
 
 import Link from "next/link";
+import { useId, useRef } from "react";
 import { useAuth } from "@clerk/nextjs";
 import type { StudioLibraryFrameProps } from "./types";
 import { STUDIO_FOCUS_RING_CLASS } from "./tokens";
 import { StudioEmptyState, StudioErrorState } from "./states";
+import { rovingTabTarget } from "./roving-tabs";
 import { isStudioClerkConfigured, requestStudioSignIn } from "@/components/studio/auth/studio-auth-action";
 
 /**
@@ -43,6 +45,7 @@ export function StudioLibraryFrame({
   onSearchChange,
   view,
   onViewChange,
+  tableAvailable = false,
   filters,
   switcher,
   activeSwitcherId,
@@ -54,6 +57,25 @@ export function StudioLibraryFrame({
   onRetry,
   children,
 }: StudioLibraryFrameProps) {
+  // RC8 — WAI-ARIA tabs: roving tabIndex across the focusable tabs,
+  // ArrowLeft/Right/Home/End move focus (manual activation, so Link tabs
+  // keep native Enter-to-navigate), and tabs point at the tabpanel below.
+  const frameId = useId();
+  const panelId = `${frameId}-panel`;
+  const tabRefs = useRef(new Map<string, HTMLElement>());
+  const focusableIds = (switcher ?? []).filter((option) => option.href || option.onSelect).map((option) => option.id);
+  const rovingId = activeSwitcherId && focusableIds.includes(activeSwitcherId) ? activeSwitcherId : focusableIds[0];
+  const tabIdFor = (id: string) => `${frameId}-tab-${id}`;
+  const setTabRef = (id: string) => (node: HTMLElement | null) => {
+    if (node) tabRefs.current.set(id, node);
+    else tabRefs.current.delete(id);
+  };
+  const onTabKeyDown = (event: { key: string; preventDefault: () => void }, id: string) => {
+    const target = rovingTabTarget(focusableIds, id, event.key);
+    if (!target) return;
+    event.preventDefault();
+    tabRefs.current.get(target)?.focus();
+  };
   return (
     <section aria-label={title} className="space-y-4">
       <div className="flex flex-col gap-3">
@@ -72,7 +94,19 @@ export function StudioLibraryFrame({
               } ${disabled ? "cursor-not-allowed opacity-60" : ""}`;
               if (option.onSelect) {
                 return (
-                  <button key={option.id} type="button" role="tab" aria-selected={active} onClick={option.onSelect} className={className}>
+                  <button
+                    key={option.id}
+                    type="button"
+                    role="tab"
+                    id={tabIdFor(option.id)}
+                    aria-selected={active}
+                    aria-controls={panelId}
+                    tabIndex={option.id === rovingId ? 0 : -1}
+                    ref={setTabRef(option.id)}
+                    onKeyDown={(event) => onTabKeyDown(event, option.id)}
+                    onClick={option.onSelect}
+                    className={className}
+                  >
                     {option.label}
                   </button>
                 );
@@ -85,7 +119,18 @@ export function StudioLibraryFrame({
                 );
               }
               return (
-                <Link key={option.id} href={option.href} role="tab" aria-selected={active} className={className}>
+                <Link
+                  key={option.id}
+                  href={option.href}
+                  role="tab"
+                  id={tabIdFor(option.id)}
+                  aria-selected={active}
+                  aria-controls={panelId}
+                  tabIndex={option.id === rovingId ? 0 : -1}
+                  ref={setTabRef(option.id)}
+                  onKeyDown={(event) => onTabKeyDown(event, option.id)}
+                  className={className}
+                >
                   {option.label}
                 </Link>
               );
@@ -104,24 +149,26 @@ export function StudioLibraryFrame({
               className="w-full bg-transparent py-2.5 text-[13px] text-[var(--text-primary)] outline-none placeholder:text-[var(--text-tertiary)]"
             />
           </label>
-          <div role="group" aria-label="Layout" className="flex gap-1">
-            {(["cards", "table"] as const).map((option) => (
-              <button
-                key={option}
-                type="button"
-                onClick={() => onViewChange(option)}
-                aria-pressed={view === option}
-                aria-label={`${option === "cards" ? "Card" : "Table"} layout`}
-                className={`inline-flex min-h-[44px] items-center rounded-[10px] px-3.5 py-2 text-[12.5px] font-medium transition-colors duration-150 ${STUDIO_FOCUS_RING_CLASS} ${
-                  view === option
-                    ? "bg-[var(--bg-elevated)] text-[var(--text-primary)]"
-                    : "text-[var(--text-secondary)] hover:text-[var(--text-primary)]"
-                }`}
-              >
-                {option === "cards" ? "Cards" : "Table"}
-              </button>
-            ))}
-          </div>
+          {tableAvailable ? (
+            <div role="group" aria-label="Layout" className="flex gap-1">
+              {(["cards", "table"] as const).map((option) => (
+                <button
+                  key={option}
+                  type="button"
+                  onClick={() => onViewChange(option)}
+                  aria-pressed={view === option}
+                  aria-label={`${option === "cards" ? "Card" : "Table"} layout`}
+                  className={`inline-flex min-h-[44px] items-center rounded-[10px] px-3.5 py-2 text-[12.5px] font-medium transition-colors duration-150 ${STUDIO_FOCUS_RING_CLASS} ${
+                    view === option
+                      ? "bg-[var(--bg-elevated)] text-[var(--text-primary)]"
+                      : "text-[var(--text-secondary)] hover:text-[var(--text-primary)]"
+                  }`}
+                >
+                  {option === "cards" ? "Cards" : "Table"}
+                </button>
+              ))}
+            </div>
+          ) : null}
         </div>
         {filters ? <div className="flex flex-wrap gap-2">{filters}</div> : null}
         {selectionCount > 0 ? (
@@ -151,7 +198,15 @@ export function StudioLibraryFrame({
           {isStudioClerkConfigured() ? <PermissionSignInButton /> : null}
         </>
       ) : null}
-      {state === "ready" ? children : null}
+      {state === "ready" ? (
+        switcher && switcher.length > 0 ? (
+          <div role="tabpanel" id={panelId} aria-labelledby={rovingId ? tabIdFor(rovingId) : undefined}>
+            {children}
+          </div>
+        ) : (
+          children
+        )
+      ) : null}
     </section>
   );
 }
