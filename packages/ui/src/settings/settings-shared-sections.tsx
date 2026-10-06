@@ -591,7 +591,7 @@ export function PrivacySection({ ctx, attachmentsSectionId }: { ctx: SectionCtx;
 
 // ── Billing & usage ──────────────────────────────────────────────────────────
 
-export function BillingSection({ ctx }: { ctx: SectionCtx }) {
+export function BillingSection({ ctx, product }: { ctx: SectionCtx; product?: "chat" | "designer" | "studio" }) {
   const billing = useAsyncData<BillingResponse>("/api/settings/billing");
   const usage = useAsyncData<UsageResponse>("/api/settings/usage");
   const [portalBusy, setPortalBusy] = React.useState(false);
@@ -625,10 +625,15 @@ export function BillingSection({ ctx }: { ctx: SectionCtx }) {
           message={b.reason ?? "Billing is unavailable."}
           action={
             <>
-              <SettingsButton onClick={() => void billing.refresh()}>Retry</SettingsButton>{" "}
-              <a href="/upgrade" style={{ fontSize: 13 }}>
-                View plans
-              </a>
+              <SettingsButton onClick={() => void billing.refresh()}>Retry</SettingsButton>
+              {product === "studio" ? null : (
+                <>
+                  {" "}
+                  <a href="/upgrade" style={{ fontSize: 13 }}>
+                    View plans
+                  </a>
+                </>
+              )}
             </>
           }
         />

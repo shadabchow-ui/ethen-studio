@@ -13,6 +13,8 @@
  */
 
 import * as React from "react";
+import { useRouter, useSearchParams } from "next/navigation";
+import { resolveSettingsSectionId } from "@/lib/studio-v5/route-map";
 import { GatewaySettings } from "./v5/gateway/GatewaySettings";
 import { useStudioSignOut } from "./auth/use-studio-sign-out";
 import {
@@ -64,23 +66,26 @@ const GATEWAY_SECTION = {
   keywords: ["api", "keys", "tokens", "scopes", "revoke", "webhooks", "byok", "deliveries"],
 } as const;
 
-const VALID = new Set([...sectionsForProduct("studio").map((s) => s.id), GATEWAY_SECTION.id]);
-
-function initialSection(): string {
-  if (typeof window === "undefined") return "general";
-  const requested = new URLSearchParams(window.location.search).get("section");
-  return requested && VALID.has(requested) ? requested : "general";
-}
-
-const subscribeNever = () => () => {};
-const serverSection = () => "general";
+// RC5 — valid section ids for the shared resolver (registry + gateway).
+const VALID_IDS: readonly string[] = [...sectionsForProduct("studio").map((s) => s.id), GATEWAY_SECTION.id];
 
 export function StudioSettingsInner() {
   const state = useUserSettings();
   const { signOut } = useStudioSignOut();
-  const [picked, setSection] = React.useState<string | null>(null);
-  const locationSection = React.useSyncExternalStore(subscribeNever, initialSection, serverSection);
-  const section = picked ?? locationSection;
+  // RC5 — the URL is the single source of truth for the open section: one
+  // resolver (aliases + validation) reacts to initial load, in-page
+  // clicks, and external client navigation alike.
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const requestedSection = searchParams.get("section");
+  const section = resolveSettingsSectionId(requestedSection, VALID_IDS);
+  // Canonicalize aliased/unknown section params in place (replace, so
+  // legacy ?section=plan bookmarks settle on ?section=billing).
+  React.useEffect(() => {
+    if (requestedSection !== null && requestedSection !== section) {
+      router.replace(`/studio/settings?section=${section}`, { scroll: false });
+    }
+  }, [requestedSection, section, router]);
   const [query, setQuery] = React.useState("");
   const [highlight, setHighlight] = React.useState<string | null>(null);
   const studioPrefs = React.useSyncExternalStore(
@@ -110,20 +115,16 @@ export function StudioSettingsInner() {
   );
 
   const goSection = React.useCallback((id: string) => {
-    if (!VALID.has(id)) return;
-    setSection(id);
+    const next = resolveSettingsSectionId(id, VALID_IDS);
     setQuery("");
-    try {
-      const url = new URL(window.location.href);
-      url.searchParams.set("section", id);
-      window.history.replaceState(null, "", url.toString());
-    } catch {
-      /* ignore */
-    }
+    router.replace(`/studio/settings?section=${next}`, { scroll: false });
+  }, [router]);
+
+  React.useEffect(() => {
     requestAnimationFrame(() => {
-      document.getElementById(`settings-section-${id}`)?.scrollIntoView({ block: "start" });
+      document.getElementById(`settings-section-${section}`)?.scrollIntoView({ block: "start" });
     });
-  }, []);
+  }, [section]);
 
   const onSearchSelect = React.useCallback(
     (entry: { sectionId: string }) => {
@@ -180,7 +181,7 @@ export function StudioSettingsInner() {
         {section === "general" ? <GeneralSection ctx={ctx} /> : null}
         {section === "account" ? <AccountSection ctx={ctx} onSignOut={signOut} /> : null}
         {section === "privacy" ? <PrivacySection ctx={ctx} /> : null}
-        {section === "billing" ? <BillingSection ctx={ctx} /> : null}
+        {section === "billing" ? <BillingSection ctx={ctx} product="studio" /> : null}
         {section === "capabilities" ? <CapabilitiesSection ctx={ctx} /> : null}
         {section === "memory" ? (
           <MemorySection

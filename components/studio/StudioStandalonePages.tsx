@@ -256,13 +256,13 @@ export function StudioProjectsPage({ routeMarker }: { routeMarker?: string }) {
       actions={
         <>
           <Link
-            href="/studio/canvas"
+            href="/studio/workflows"
             className="inline-flex rounded-[9px] bg-[var(--accent)] px-4 py-2.5 text-[12.5px] font-semibold text-[var(--accent-fg)] transition-colors hover:bg-[var(--accent-hover)] active:scale-[0.985]"
           >
             Plan in Canvas
           </Link>
           <Link
-            href="/studio/assets"
+            href="/studio/work/assets"
             className="inline-flex rounded-[9px] bg-[var(--bg-surface)] px-4 py-2.5 text-[12.5px] font-medium text-[var(--text-primary)] transition-colors hover:bg-[var(--bg-elevated)] active:scale-[0.985]"
           >
             View Assets
@@ -487,7 +487,7 @@ export function StudioJobsPage({ routeMarker }: { routeMarker?: string }) {
       description="Browse recent media generation jobs with status, progress, and metadata. Jobs persist to local disk and survive server restarts, but are not production-durable cloud storage."
       actions={
         <Link
-          href="/studio/assets"
+          href="/studio/work/assets"
           className="inline-flex rounded-[9px] bg-[var(--bg-surface)] px-4 py-2.5 text-[12.5px] font-medium text-[var(--text-primary)] transition hover:bg-[var(--bg-elevated)] active:scale-[0.97]"
         >
           View Assets
@@ -701,7 +701,7 @@ function JobCard({ job, ledgerEntry, onRetry }: { job: MediaJob; ledgerEntry?: {
         )}
         {isRemixable && (
           <Link
-            href={`/studio/apps/${job.toolId === "media.generate_video" ? "create-video" : job.toolId === "media.image_to_video" ? "image-to-video" : "create-image"}`}
+            href={job.toolId === "media.generate_video" ? "/studio/create/video" : job.toolId === "media.image_to_video" ? "/studio/create/video?mode=image-to-video" : "/studio/create/image"}
             className="rounded-full bg-[var(--bg-surface)] px-3 py-1 text-[10px] text-[var(--text-secondary)] transition hover:bg-[var(--bg-elevated)] hover:text-[var(--text-primary)] active:scale-[0.96]"
           >
             Remix
@@ -710,7 +710,7 @@ function JobCard({ job, ledgerEntry, onRetry }: { job: MediaJob; ledgerEntry?: {
         {isCompleted && (
           <>
             <Link
-              href="/studio/assets"
+              href="/studio/work/assets"
               className="rounded-full bg-[var(--bg-surface)] px-3 py-1 text-[10px] text-[var(--text-secondary)] transition hover:bg-[var(--bg-elevated)] hover:text-[var(--text-primary)] active:scale-[0.96]"
             >
               View Asset

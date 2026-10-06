@@ -7,7 +7,7 @@ export const metadata: Metadata = {
   title: "Cinema",
   description: "Sequences, scenes, and shots over canonical takes on the V1 reference layer.",
   alternates: {
-    canonical: "/studio/cinema",
+    canonical: "/studio/pro/cinema",
   },
 };
 

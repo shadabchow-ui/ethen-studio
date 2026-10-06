@@ -9,6 +9,7 @@
  * consent state — never provider internals.
  */
 import { useState } from "react";
+import { STUDIO_CANONICAL_ROUTES } from "@/lib/studio-v5/route-map";
 import { StudioLibraryFrame } from "../shell/LibraryFrame";
 import { STUDIO_FOCUS_RING_CLASS } from "../shell/tokens";
 import type { StudioDataState } from "../shell/types";
@@ -75,7 +76,7 @@ export function IdentityLibrary({
                   title: "Pick a project first",
                   description: "Identity libraries are project-scoped.",
                   secondaryLabel: "Go to projects",
-                  secondaryHref: "/studio/projects",
+                  secondaryHref: STUDIO_CANONICAL_ROUTES.projects,
                 }
               : {
                   title: "Library is unavailable",

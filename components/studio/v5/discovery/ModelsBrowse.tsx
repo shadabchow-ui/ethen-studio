@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useState, useSyncExternalStore } from "react";
 import type { StudioEndpoint } from "@/lib/media/endpoint-registry";
+import { STUDIO_CANONICAL_ROUTES } from "@/lib/studio-v5/route-map";
 import Link from "next/link";
 import { useModelFavorites, useModelRecents } from "../../studio-model-favorites";
 import { useStudioIdentity } from "../../studio-project-scope";
@@ -116,7 +117,7 @@ export function StudioModelsBrowse() {
                 title: "Select a project to browse models",
                 description: "Model availability is resolved per project. Pick a project above, or press New to create one.",
                 actionLabel: "Go to projects",
-                actionHref: "/studio/projects",
+                actionHref: STUDIO_CANONICAL_ROUTES.projects,
               }
             : {
                 title: "No models match",
@@ -135,7 +136,7 @@ export function StudioModelsBrowse() {
                 title: "Catalog setup required",
                 description: "Project storage is being set up, so model availability cannot load yet. Your work is safe.",
                 secondaryLabel: "All projects",
-                secondaryHref: "/studio/projects",
+                secondaryHref: STUDIO_CANONICAL_ROUTES.projects,
               }
             : state === "permission"
               ? {

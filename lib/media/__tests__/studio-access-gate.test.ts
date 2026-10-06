@@ -139,12 +139,13 @@ test("RC4 sidebar Edit resolves like the Edit Image tab", () => {
     .flatMap((section) => section.entries)
     .find((entry) => entry.id === "create-edit");
   assert.ok(edit, "create-edit entry exists");
+  // RC5 supersedes the project-route branch: /studio/projects/.../edit is
+  // a legacy redirect source, so the entry links the public edit runtime
+  // in both cases (project scope rides the preserved ?projectId= query).
   assert.equal(resolveStudioV5Entry(edit, { projectId: null }).resolvedHref, "/studio/create/edit");
   assert.equal(resolveStudioV5Entry(edit, { projectId: null }).disabledReason, null);
-  assert.equal(
-    resolveStudioV5Entry(edit, { projectId: "p1" }).resolvedHref,
-    "/studio/projects/p1/edit/image",
-  );
+  assert.equal(resolveStudioV5Entry(edit, { projectId: "p1" }).resolvedHref, "/studio/create/edit");
+  assert.equal(resolveStudioV5Entry(edit, { projectId: "p1" }).disabledReason, null);
 });
 
 // ── RC4: wiring tripwires (browser-verified locally) ───────────────────

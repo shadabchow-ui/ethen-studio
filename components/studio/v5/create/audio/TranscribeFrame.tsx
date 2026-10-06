@@ -10,6 +10,7 @@
 
 import * as React from "react";
 import { translateStudioAuthFailure } from "@/components/studio/auth/studio-auth-action";
+import { STUDIO_CANONICAL_ROUTES } from "@/lib/studio-v5/route-map";
 import { StudioEmptyState, StudioErrorState } from "../../shell/states";
 import { STUDIO_FOCUS_RING_CLASS } from "../../shell/tokens";
 import { EstimateBar } from "../EstimateBar";
@@ -147,7 +148,7 @@ export function TranscribeFrame({ tool, projectId }: { tool: AudioToolDefinition
                 title="Select a project to start"
                 description="Transcriptions belong to a project. Pick one to unlock source selection and history."
                 actionLabel="Open projects"
-                actionHref="/studio/projects"
+                actionHref={STUDIO_CANONICAL_ROUTES.projects}
                 testId="create-no-project"
                 compact
               />

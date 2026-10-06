@@ -25,6 +25,8 @@ export interface StudioV5NavEntry {
   href?: string;
   hrefFor?: (projectId: string) => string;
   disabledWithoutProjectReason?: string;
+  /** Full workbench title derived by pro pages (RC5: no generic "Pro Workbench"). */
+  title?: string;
   /** Deferred feature; renders disabled with this reason. */
   deferredReason?: string;
   /** Route prefixes that mark this entry active (deep-link aware). */
@@ -68,11 +70,10 @@ export function getStudioV5NavSections(): readonly StudioV5NavSection[] {
         {
           id: "create-edit",
           label: "Edit",
-          // RC4 — same destination as the "Edit Image" mode tab when no
-          // project is selected; the project route wins when one is.
+          // RC5 — the project edit route is a legacy redirect source, so
+          // the sidebar links the public edit runtime like the mode tab;
+          // project scope rides the preserved ?projectId= query.
           href: "/studio/create/edit",
-          hrefFor: (projectId) => `/studio/projects/${encodeURIComponent(projectId)}/edit/image`,
-          disabledWithoutProjectReason: "Select a project to edit images.",
           activePrefixes: ["/studio/create/edit"],
           activeSuffixes: ["/edit/image"],
           icon: "edit",
@@ -115,11 +116,11 @@ export function getStudioV5NavSections(): readonly StudioV5NavSection[] {
       label: "Pro",
       expandable: true,
       entries: [
-        { id: "pro-image", label: "Image", href: "/studio/pro/image", activePrefixes: ["/studio/pro/image"], icon: "image" },
-        { id: "pro-video", label: "Video", href: "/studio/pro/video", activePrefixes: ["/studio/pro/video"], icon: "video" },
-        { id: "pro-audio", label: "Audio", href: "/studio/pro/audio", activePrefixes: ["/studio/pro/audio"], icon: "audio" },
-        { id: "pro-dubbing", label: "Dubbing", href: "/studio/pro/dubbing", activePrefixes: ["/studio/pro/dubbing"], icon: "dubbing" },
-        { id: "pro-cinema", label: "Cinema", href: "/studio/pro/cinema", activePrefixes: ["/studio/pro/cinema"], icon: "cinema" },
+        { id: "pro-image", label: "Image", title: "Image Studio", href: "/studio/pro/image", activePrefixes: ["/studio/pro/image"], icon: "image" },
+        { id: "pro-video", label: "Video", title: "Video Studio", href: "/studio/pro/video", activePrefixes: ["/studio/pro/video"], icon: "video" },
+        { id: "pro-audio", label: "Audio", title: "Audio Studio", href: "/studio/pro/audio", activePrefixes: ["/studio/pro/audio"], icon: "audio" },
+        { id: "pro-dubbing", label: "Dubbing", title: "Dubbing Studio", href: "/studio/pro/dubbing", activePrefixes: ["/studio/pro/dubbing"], icon: "dubbing" },
+        { id: "pro-cinema", label: "Cinema", title: "Cinema Studio", href: "/studio/pro/cinema", activePrefixes: ["/studio/pro/cinema"], icon: "cinema" },
       ],
     },
     {
@@ -201,10 +202,22 @@ export function findActiveStudioEntryId(pathname: string): string | null {
 }
 
 /**
+ * RC5 — pro workbench title for a tool slug, derived from the nav
+ * registry so page metadata and headers match sidebar/app naming.
+ */
+export function studioProTitleForTool(tool: string): string | null {
+  const pro = getStudioV5NavSections().find((section) => section.id === "pro");
+  const entry = pro?.entries.find((candidate) => candidate.id === `pro-${tool}`);
+  return entry?.title ?? null;
+}
+
+/**
  * Preserve discovery context across navigation: project selection and
  * browse filters survive tool switches. Only allowlisted keys carry over.
+ * Page-scoped params (`view`) never leak across pages (RC5: no more
+ * `?view=expert` on Templates).
  */
-const PRESERVED_QUERY_KEYS = ["projectId", "q", "task", "category", "view"] as const;
+const PRESERVED_QUERY_KEYS = ["projectId", "q", "task", "category"] as const;
 
 export function preserveStudioQuery(href: string, currentSearch: string): string {
   let current: URLSearchParams;

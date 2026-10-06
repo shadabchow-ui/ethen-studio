@@ -7,6 +7,7 @@
 
 import type { StudioAccess } from "@/components/studio/auth/use-studio-access";
 import { StudioEmptyState, StudioErrorState, StudioPageHeader, StudioSetupState } from "../shell";
+import { studioProTitleForTool } from "../shell/navigation-model";
 import { STUDIO_FOCUS_RING_CLASS } from "../shell/tokens";
 import { BinRail } from "./BinRail";
 import { Inspector } from "./Inspector";
@@ -21,12 +22,10 @@ import type {
   WorkbenchUiState,
 } from "./types";
 
-const TOOL_LABEL: Record<Exclude<ProTool, "cinema">, string> = {
-  image: "Image pro workbench",
-  video: "Video pro workbench",
-  audio: "Audio pro workbench",
-  dubbing: "Dubbing pro workbench",
-};
+/** RC5 — workbench header titles derive from the nav registry. */
+function toolTitle(tool: Exclude<ProTool, "cinema">): string {
+  return studioProTitleForTool(tool) ?? "Pro Workbench";
+}
 
 export function WorkbenchWorkspace({
   tool,
@@ -94,7 +93,7 @@ export function WorkbenchWorkspace({
     <div data-testid="workbench-workspace" data-tool={tool} className="flex flex-col gap-4">
       <StudioPageHeader
         eyebrow="PRO WORKBENCH"
-        title={TOOL_LABEL[tool]}
+        title={toolTitle(tool)}
         description="Nondestructive timeline edits over pinned sources. Nothing here modifies original media."
       />
       <div className="flex flex-wrap items-center gap-2" role="group" aria-label="Timelines">

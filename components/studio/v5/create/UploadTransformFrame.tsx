@@ -9,6 +9,7 @@
 "use client";
 
 import * as React from "react";
+import { STUDIO_CANONICAL_ROUTES } from "@/lib/studio-v5/route-map";
 import { StudioPageHeader } from "../shell/PageHeader";
 import { StudioEmptyState } from "../shell/states";
 import { STUDIO_FOCUS_RING_CLASS } from "../shell/tokens";
@@ -32,7 +33,7 @@ export function UploadTransformFrame({ tool, projectId }: { tool: CreateToolDefi
           title="Select a project to start"
           description="Transcriptions belong to a project. Pick one to unlock source selection and history."
           actionLabel="Open projects"
-          actionHref="/studio/projects"
+          actionHref={STUDIO_CANONICAL_ROUTES.projects}
           testId="create-no-project"
         />
       </div>

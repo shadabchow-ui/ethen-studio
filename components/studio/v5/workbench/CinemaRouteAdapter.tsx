@@ -8,6 +8,7 @@
 import { useCallback, useEffect, useState } from "react";
 import { useStudioAccess } from "@/components/studio/auth/use-studio-access";
 import { StudioEmptyState, StudioErrorState, StudioPageHeader, StudioSetupState } from "../shell";
+import { studioProTitleForTool } from "../shell/navigation-model";
 import { CinemaBoard } from "./CinemaBoard";
 import type { CinemaSceneView, CinemaSequenceView, CinemaShotView } from "./types";
 import { WorkbenchApiError, createSequence, fetchSequenceDetail, fetchSequences } from "./workbench-api-client";
@@ -94,7 +95,7 @@ export function CinemaRouteAdapter({ projectId }: { projectId: string | null }) 
     <div data-testid="cinema-workspace" className="flex flex-col gap-4">
       <StudioPageHeader
         eyebrow="CINEMA"
-        title="Cinema"
+        title={studioProTitleForTool("cinema") ?? "Cinema"}
         description="Sequences, scenes and shots over canonical takes. Selection pins takes; the board stores no bytes."
       />
       {!projectId ? (

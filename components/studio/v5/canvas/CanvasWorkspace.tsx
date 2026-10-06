@@ -10,6 +10,7 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
+import { STUDIO_CANONICAL_ROUTES } from "@/lib/studio-v5/route-map";
 import { StudioPageHeader } from "../shell/PageHeader";
 import { StudioEmptyState, StudioErrorState } from "../shell/states";
 import { StudioSetupState } from "../shell/StudioSetupState";
@@ -134,7 +135,7 @@ export function CanvasWorkspace(props: CanvasWorkspaceData) {
           title="Select a project to open Canvas"
           description="Canvas graphs live inside a project. Choose a project, then open or start a graph."
           actionLabel="Open projects"
-          actionHref="/studio/projects"
+          actionHref={STUDIO_CANONICAL_ROUTES.projects}
           testId="canvas-no-project"
         />
       </div>

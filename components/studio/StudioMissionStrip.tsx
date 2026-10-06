@@ -19,13 +19,13 @@ export function StudioMissionStrip() {
         </div>
         <div className="flex flex-wrap items-center gap-2.5">
           <Link
-            href="/studio/image"
+            href="/studio/create/image"
             className="ethen-liquid-white-button"
           >
             Create Image
           </Link>
           <Link
-            href="/studio/canvas"
+            href="/studio/workflows"
             className="ethen-secondary-button"
           >
             Open Canvas

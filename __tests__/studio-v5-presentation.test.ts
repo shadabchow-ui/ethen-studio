@@ -19,10 +19,14 @@ test("every editorial workflow resolves to a live Studio route", () => {
   }
 });
 
-test("project-dependent creation is scoped, and missing scope goes to projects", () => {
-  assert.equal(studioWorkflowHref("text-to-image", null), "/studio/projects");
-  assert.equal(studioWorkflowHref("text-to-video", projectId), `/studio/projects/${projectId}/create/video`);
-  assert.equal(studioWorkflowHref("edit-image", projectId), `/studio/projects/${projectId}/edit/image`);
+test("project-dependent creation is scoped, and missing scope opens the public runtime", () => {
+  // RC5 — nested /studio/projects/... generator paths are legacy redirect
+  // sources; destinations are canonical with ?projectId= scope, and the
+  // unscoped case opens the public runtime (gated inside) instead of the
+  // retired projects picker.
+  assert.equal(studioWorkflowHref("text-to-image", null), "/studio/create/image");
+  assert.equal(studioWorkflowHref("text-to-video", projectId), `/studio/create/video?projectId=${projectId}`);
+  assert.equal(studioWorkflowHref("edit-image", projectId), `/studio/create/edit?projectId=${projectId}`);
 });
 
 test("every app card resolves to a live Studio destination", () => {

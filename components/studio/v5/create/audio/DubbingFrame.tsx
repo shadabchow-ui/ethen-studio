@@ -9,6 +9,7 @@
 
 import * as React from "react";
 import { translateStudioAuthFailure } from "@/components/studio/auth/studio-auth-action";
+import { STUDIO_CANONICAL_ROUTES } from "@/lib/studio-v5/route-map";
 import { StudioEmptyState, StudioErrorState } from "../../shell/states";
 import { STUDIO_FOCUS_RING_CLASS } from "../../shell/tokens";
 import { VoicePreview } from "../../identity/VoicePreview";
@@ -173,7 +174,7 @@ export function DubbingFrame({ tool, projectId }: { tool: AudioToolDefinition; p
                 title="Select a project to start"
                 description="Dubbing runs belong to a project. Pick one to unlock the dubbing form."
                 actionLabel="Open projects"
-                actionHref="/studio/projects"
+                actionHref={STUDIO_CANONICAL_ROUTES.projects}
                 testId="create-no-project"
                 compact
               />

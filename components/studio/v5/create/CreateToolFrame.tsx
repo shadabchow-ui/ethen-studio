@@ -14,6 +14,7 @@
 
 import * as React from "react";
 import Link from "next/link";
+import { STUDIO_CANONICAL_ROUTES } from "@/lib/studio-v5/route-map";
 import { StudioEmptyState, StudioErrorState } from "../shell/states";
 import { STUDIO_FOCUS_RING_CLASS } from "../shell/tokens";
 import { useCatalogProjection } from "../discovery/useCatalogProjection";
@@ -291,7 +292,7 @@ export function CreateToolFrame({ tool, projectId, initialPrompt = null }: { too
               title="Select a project to start creating"
               description="Creations belong to a project. Pick one to unlock the model picker, estimates, and history."
               actionLabel="Open projects"
-              actionHref="/studio/projects"
+              actionHref={STUDIO_CANONICAL_ROUTES.projects}
               testId="create-no-project"
               compact
             />

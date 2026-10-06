@@ -26,9 +26,24 @@ export const STUDIO_CANONICAL_ROUTES = {
   apps: "/studio/apps",
   models: "/studio/models",
   cinema: "/studio/pro/cinema",
+  // RC5 — create runtimes (project scope rides `?projectId=`).
+  createImage: "/studio/create/image",
+  createVideo: "/studio/create/video",
+  createVoice: "/studio/create/voice",
+  createEdit: "/studio/create/edit",
+  // RC5 — standalone products (top-level by URL-scheme decision).
+  marketing: "/studio/marketing",
+  influencer: "/studio/influencer",
+  // RC5 — upgrade intent and settings targets (no /upgrade page exists).
+  settings: "/studio/settings",
+  settingsBilling: "/studio/settings?section=billing",
+  upgrade: "/studio/settings?section=billing",
 } as const;
 
 export const STUDIO_LEGACY_REDIRECTS: readonly StudioLegacyRedirect[] = [
+  // RC5 — no /upgrade or /pricing page exists; both land on billing settings.
+  { source: "/upgrade", destination: STUDIO_CANONICAL_ROUTES.upgrade },
+  { source: "/pricing", destination: STUDIO_CANONICAL_ROUTES.upgrade },
   { source: "/studio/projects", destination: STUDIO_CANONICAL_ROUTES.projects },
   { source: "/studio/assets", destination: STUDIO_CANONICAL_ROUTES.assets },
   { source: "/studio/jobs", destination: STUDIO_CANONICAL_ROUTES.history },

@@ -6,15 +6,32 @@ import { STUDIO_PAGE_CLASS } from "@/components/studio/v5/shell/tokens";
 import { CinemaRouteAdapter } from "@/components/studio/v5/workbench/CinemaRouteAdapter";
 import { WorkbenchRouteAdapter } from "@/components/studio/v5/workbench/WorkbenchRouteAdapter";
 import { isProTool } from "@/components/studio/v5/workbench/types";
+import { studioProTitleForTool } from "@/components/studio/v5/shell/navigation-model";
 import { resolvePageProjectId } from "@/lib/studio-v5/active-project-server";
 
-export const metadata: Metadata = {
-  title: "Pro Workbench",
-  description: "Shared image, video, audio and dubbing pro frame with timeline and Cinema.",
-  alternates: {
-    canonical: "/studio/pro/[tool]",
-  },
-};
+/**
+ * RC5 — per-tool metadata derived from the nav registry, so the browser
+ * tab and headers match sidebar/app naming (Cinema Studio, not the
+ * generic "Pro Workbench").
+ */
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ tool: string }>;
+}): Promise<Metadata> {
+  const { tool } = await params;
+  const title = studioProTitleForTool(tool) ?? "Pro Workbench";
+  return {
+    title,
+    description:
+      tool === "cinema"
+        ? "Cinema Studio editorial board: sequences, scenes and shots over canonical takes."
+        : "Pro workbench: nondestructive timeline edits over pinned sources.",
+    alternates: {
+      canonical: `/studio/pro/${tool}`,
+    },
+  };
+}
 
 /**
  * STUDIO_14 — first-class pro workbench routes. image/video/audio/dubbing

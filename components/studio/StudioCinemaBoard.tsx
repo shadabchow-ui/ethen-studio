@@ -145,7 +145,7 @@ export function StudioCinemaBoard() {
       title="Cinema"
       description="Sequences, scenes, and shots over canonical takes. Selection pins takes; durations are unmeasured on the V1 reference layer."
       actions={
-        <Link href="/studio/assets" className="inline-flex rounded-[9px] bg-[var(--bg-surface)] px-4 py-2.5 text-[12.5px] font-medium text-[var(--text-primary)] hover:bg-[var(--bg-elevated)]">
+        <Link href="/studio/work/assets" className="inline-flex rounded-[9px] bg-[var(--bg-surface)] px-4 py-2.5 text-[12.5px] font-medium text-[var(--text-primary)] hover:bg-[var(--bg-elevated)]">
           Open Assets
         </Link>
       }

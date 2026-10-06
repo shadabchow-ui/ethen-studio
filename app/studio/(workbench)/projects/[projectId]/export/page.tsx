@@ -3,13 +3,20 @@ import { StudioShell } from "@ethen/ui/design-system/v2/shells/StudioShell";
 
 import { StudioExportsPanel } from "@/components/studio/StudioExportsPanel";
 
-export const metadata: Metadata = {
-  title: "Project export",
-  description: "Verified export bytes with pinned provenance and review links.",
-  alternates: {
-    canonical: "/studio/projects",
-  },
-};
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ projectId: string }>;
+}): Promise<Metadata> {
+  const { projectId } = await params;
+  return {
+    title: "Project export",
+    description: "Verified export bytes with pinned provenance and review links.",
+    alternates: {
+      canonical: `/studio/projects/${projectId}/export`,
+    },
+  };
+}
 
 export default async function StudioProjectExportRoute({ params }: { params: Promise<{ projectId: string }> }) {
   const { projectId } = await params;

@@ -2,6 +2,7 @@
 
 import * as React from "react";
 import Link from "next/link";
+import { studioSettingsHref } from "@/lib/studio-v5/route-map";
 import { ChatMenu } from "@ethen/ui/chat-lab/chat-menu";
 import { StudioNavigation } from "./StudioNavigation";
 import { StudioNavIcon } from "./studio-nav-icons";
@@ -164,7 +165,7 @@ export function StudioSidebar({
           </div>
         )}
         <Link
-          href="/studio/settings?section=plan"
+          href={studioSettingsHref("billing")}
           className={styles.usageRow}
           aria-label="Usage and billing"
           title="Usage and billing"
@@ -215,7 +216,7 @@ export function StudioSidebar({
           onSelect={(id) => {
             setAccountOpen(false);
             if (id === "settings") onOpenSettings();
-            else if (id === "plan") onOpenSettings("plan");
+            else if (id === "plan") onOpenSettings("billing");
             else if (id === "upgrade") onUpgrade();
             else if (id === "signin") onSignIn();
             else if (id === "finishsetup") onFinishSetup?.();

@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { Suspense } from "react";
 
 import { StudioSettingsClient } from "@/components/studio/StudioSettingsInner";
 import { STUDIO_PAGE_CLASS } from "@/components/studio/v5/shell/tokens";
@@ -21,7 +22,10 @@ export const metadata: Metadata = {
 export default function StudioSettingsRoute() {
   return (
     <div className={STUDIO_PAGE_CLASS}>
-      <StudioSettingsClient />
+      {/* RC5 — the section resolver reads ?section= via useSearchParams. */}
+      <Suspense fallback={<p role="status">Loading settings…</p>}>
+        <StudioSettingsClient />
+      </Suspense>
     </div>
   );
 }
