@@ -207,6 +207,8 @@ export function SkillsSection({ ctx, product }: { ctx: SectionCtx; product: "cha
       </div>
       {skills.status === "loading" ? (
         <p role="status" style={{ fontSize: 13 }}>Loading skills…</p>
+      ) : skills.code === "NOT_AVAILABLE_IN_STUDIO" ? (
+        <SettingsEmptyState message={skills.error ?? "Skills are not available in Studio."} />
       ) : skills.status === "signed_out" ? (
         <p style={{ fontSize: 13 }}>Sign in to manage skills.</p>
       ) : skills.status === "setup" || skills.status === "error" ? (
@@ -340,6 +342,8 @@ export function ConnectorsSection({ ctx, product }: { ctx: SectionCtx; product: 
       </div>
       {connectors.status === "loading" ? (
         <p role="status" style={{ fontSize: 13 }}>Loading connectors…</p>
+      ) : connectors.code === "NOT_AVAILABLE_IN_STUDIO" ? (
+        <SettingsEmptyState message={connectors.error ?? "Connectors are not available in Studio."} />
       ) : connectors.status === "signed_out" ? (
         <p style={{ fontSize: 13 }}>Sign in to manage connectors.</p>
       ) : connectors.status === "setup" || connectors.status === "error" ? (
