@@ -91,7 +91,7 @@ const EXPLORE_GROUPS: ReadonlyArray<{ label: string; links: ReadonlyArray<{ labe
       { label: "Canvas", href: "/studio/workflows" },
       { label: "Creative Agent", href: "/studio/agent" },
       { label: "Voice Agents", href: "/studio/voice-agents" },
-      { label: "Timelines", href: "/studio/pro/video" },
+      { label: "Video Studio", href: "/studio/pro/video" },
       { label: "All apps", href: "/studio/apps" },
     ],
   },

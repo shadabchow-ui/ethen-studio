@@ -280,8 +280,8 @@ function buildViralPresets(): string[] {
 export const FEATURED_TILES = buildPreviewTiles("hero", 4, FEATURED_ACCENTS);
 
 export const QUICK_LAUNCH_ITEMS: StudioQuickLaunchItem[] = [
-  { id: "create-image", title: "Create Image", subtitle: "Text to still", icon: "image", href: "/studio/apps/create-image" },
-  { id: "image-to-video", title: "Image to Video", subtitle: "Animate any frame", icon: "video", href: "/studio/apps/image-to-video" },
+  { id: "create-image", title: "Create Image", subtitle: "Text to still", icon: "image", href: "/studio/create/image" },
+  { id: "image-to-video", title: "Image to Video", subtitle: "Animate any frame", icon: "video", href: "/studio/create/video?mode=image-to-video" },
 ];
 
 export const CINEMATIC_TILES = buildPreviewTiles("cinema", 8);

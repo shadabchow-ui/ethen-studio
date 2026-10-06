@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { studioSettingsHref } from "@/lib/studio-v5/route-map";
 import { formatIcuDollars } from "../create/create-api-client";
 import { STUDIO_FOCUS_RING_CLASS } from "../shell/tokens";
 import { useCreditBalance } from "./use-credit-balance";
@@ -15,7 +16,7 @@ export function StudioCreditMeter({ projectId }: { projectId: string | null }) {
   const balance = useCreditBalance(projectId);
   return (
     <Link
-      href="/studio/settings?section=plan"
+      href={studioSettingsHref("billing")}
       aria-label={
         balance.state === "ready" && balance.balanceIcu !== null
           ? `Credit balance ${formatIcuDollars(balance.balanceIcu)}. Open Billing and Usage settings.`

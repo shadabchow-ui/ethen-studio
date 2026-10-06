@@ -1,52 +1,46 @@
-/**
- * Studio V2 Job 13 — studio route map (pruned).
- *
- * Only the app-id route resolver remains live (home directory links).
- * Top-nav items, mega menus, tab routes, and nav classes were retired with
- * the forked Studio shell: sidebar/topbar/palette navigation now derives
- * from the canonical portfolio registry via `@ethen/navigation/studio`.
- */
+import { STUDIO_CANONICAL_ROUTES } from "@/lib/studio-v5/route-map";
 
+/**
+ * Canonical Studio routes for LAB_APPS ids.
+ *
+ * RC5 — every value is a canonical destination built from the route map
+ * (retired `/studio/apps/*` aliases, `/studio/image|video|audio|canvas`
+ * singles, and nested project generator paths all converge here).
+ * Anything missing falls back to the workbench entry point.
+ */
 const APP_ROUTE_OVERRIDES: Record<string, string> = {
-  "create-image": "/studio/apps/create-image",
-  relight: "/studio/image",
-  inpaint: "/studio/image",
-  "image-upscale": "/studio/image",
-  "image-to-video": "/studio/apps/image-to-video",
-  "text-to-video": "/studio/apps/text-to-video",
-  "create-video": "/studio/video",
-  "video-upscale": "/studio/video",
-  "product-url-to-ad": "/studio/apps/product-ad",
-  "marketing-studio": "/studio/apps/marketing",
-  "ai-influencer": "/studio/apps/ai-influencer",
-  "soul-id-character": "/studio/apps/ai-influencer",
-  canvas: "/studio/canvas",
-  moodboard: "/studio/canvas",
-  storyboard: "/studio/canvas",
-  "campaign-board": "/studio/canvas",
-  "brand-kit": "/studio/canvas",
-  "game-asset-generator": "/studio/apps/game-assets",
-  "sprite-pack-generator": "/studio/apps/game-assets",
-  "character-pack-generator": "/studio/apps/game-assets",
-  "game-ui-mockup-generator": "/studio/apps/game-assets",
-  "tileset-generator": "/studio/apps/game-assets",
-  "icon-pack-generator": "/studio/apps/game-assets",
-  "background-generator": "/studio/apps/game-assets",
-  "cinema-studio": "/studio/apps/cinematic-scene",
-  "cinema-shot-builder": "/studio/apps/cinematic-scene",
-  "cinematic-cameras": "/studio/apps/cinematic-scene",
-  "character-motion": "/studio/apps/character-motion",
-  voiceover: "/studio/audio",
-  "voice-change": "/studio/audio",
-  "speech-translation": "/studio/audio",
-  "sound-effects": "/studio/audio",
-  "music-bed": "/studio/audio",
-  "audio-for-video": "/studio/audio",
-  "provider-status": "/studio/models",
-  "credit-ledger": "/studio/models",
-  "safety-review": "/studio/models",
+  "create-image": STUDIO_CANONICAL_ROUTES.createImage,
+  "create-video": STUDIO_CANONICAL_ROUTES.createVideo,
+  "text-to-video": STUDIO_CANONICAL_ROUTES.createVideo,
+  "image-to-video": `${STUDIO_CANONICAL_ROUTES.createVideo}?mode=image-to-video`,
+  "video-upscale": STUDIO_CANONICAL_ROUTES.createVideo,
+  relight: STUDIO_CANONICAL_ROUTES.createImage,
+  inpaint: STUDIO_CANONICAL_ROUTES.createImage,
+  "image-upscale": STUDIO_CANONICAL_ROUTES.createImage,
+  "product-url-to-ad": STUDIO_CANONICAL_ROUTES.marketing,
+  "marketing-studio": STUDIO_CANONICAL_ROUTES.marketing,
+  "ai-influencer": STUDIO_CANONICAL_ROUTES.influencer,
+  "soul-id-character": STUDIO_CANONICAL_ROUTES.influencer,
+  canvas: STUDIO_CANONICAL_ROUTES.canvas,
+  moodboard: STUDIO_CANONICAL_ROUTES.canvas,
+  storyboard: STUDIO_CANONICAL_ROUTES.canvas,
+  "campaign-board": STUDIO_CANONICAL_ROUTES.canvas,
+  "brand-kit": STUDIO_CANONICAL_ROUTES.canvas,
+  "cinema-studio": STUDIO_CANONICAL_ROUTES.cinema,
+  "cinema-shot": STUDIO_CANONICAL_ROUTES.cinema,
+  "cinema-story": STUDIO_CANONICAL_ROUTES.cinema,
+  "game-asset-generator": `${STUDIO_CANONICAL_ROUTES.createImage}?preset=game-assets`,
+  "game-sprite-sheet": `${STUDIO_CANONICAL_ROUTES.createImage}?preset=game-assets`,
+  "game-world-builder": `${STUDIO_CANONICAL_ROUTES.createImage}?preset=game-assets`,
+  "character-motion": `${STUDIO_CANONICAL_ROUTES.createVideo}?mode=image-to-video&preset=character-motion`,
+  "voice-clone": STUDIO_CANONICAL_ROUTES.createVoice,
+  "voice-changer": STUDIO_CANONICAL_ROUTES.createVoice,
+  voiceover: STUDIO_CANONICAL_ROUTES.createVoice,
+  "provider-status": STUDIO_CANONICAL_ROUTES.models,
+  "credit-ledger": STUDIO_CANONICAL_ROUTES.models,
+  "safety-review": STUDIO_CANONICAL_ROUTES.models,
 };
 
 export function getStudioRouteForAppId(appId: string): string {
-  return APP_ROUTE_OVERRIDES[appId] ?? "/studio/apps";
+  return APP_ROUTE_OVERRIDES[appId] ?? "/studio";
 }

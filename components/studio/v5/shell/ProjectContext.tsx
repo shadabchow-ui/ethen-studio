@@ -4,6 +4,7 @@ import { useCallback, useEffect, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useStudioIdentity } from "../../studio-project-scope";
+import { studioCreateHref } from "@/lib/studio-v5/showcase";
 import { useStudioAccess } from "@/components/studio/auth/use-studio-access";
 import type { StudioDataState, StudioProjectSummary } from "./types";
 import { parseProjectsResponse, type ParsedProjects } from "./project-context-model";
@@ -119,13 +120,13 @@ export function StudioProjectContextBar({ testId }: { testId?: string }) {
     setNoticeAction(null);
     try {
       if (identity.projectId) {
-        router.push(`/studio/projects/${encodeURIComponent(identity.projectId)}/create/image`);
+        router.push(studioCreateHref("image", identity.projectId));
         return;
       }
       const result = await ensureDefaultProjectClient();
       if ("projectId" in result) {
         selectProject(result.projectId);
-        router.push(`/studio/projects/${encodeURIComponent(result.projectId)}/create/image`);
+        router.push(studioCreateHref("image", result.projectId));
       } else {
         setNotice(result.error);
       }
@@ -138,7 +139,7 @@ export function StudioProjectContextBar({ testId }: { testId?: string }) {
     // page renders signed-out; Generate itself is pre-gated). Only project
     // CREATION requires the gate.
     if (identity.projectId) {
-      router.push(`/studio/projects/${encodeURIComponent(identity.projectId)}/create/image`);
+      router.push(studioCreateHref("image", identity.projectId));
       return;
     }
     if (!access.runWhenReady(() => void runNew())) {

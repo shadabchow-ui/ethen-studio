@@ -8,6 +8,7 @@
 
 import * as React from "react";
 import Link from "next/link";
+import { STUDIO_CANONICAL_ROUTES } from "@/lib/studio-v5/route-map";
 import { StudioEmptyState, StudioErrorState } from "../../shell/states";
 import { STUDIO_FOCUS_RING_CLASS } from "../../shell/tokens";
 import { CreateVoiceSlotBinding } from "../../identity/CreateVoiceSlotBinding";
@@ -126,7 +127,7 @@ export function ChangerFrame({ tool, projectId }: { tool: AudioToolDefinition; p
                 title="Select a project to start"
                 description="Voice changes belong to a project. Pick one to unlock the changer form."
                 actionLabel="Open projects"
-                actionHref="/studio/projects"
+                actionHref={STUDIO_CANONICAL_ROUTES.projects}
                 testId="create-no-project"
                 compact
               />

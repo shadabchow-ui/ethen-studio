@@ -34,10 +34,10 @@ const STUDIO_ENTRY_DEFINITIONS: ReadonlyArray<{
   surface: DiscoverySurface;
 }> = [
   { id: "studio", label: "Studio", icon: "sparkle", href: "/studio", surface: "navigation" },
-  { id: "studio-projects", label: "Projects", icon: "project", href: "/studio/projects", surface: "navigation" },
-  { id: "studio-assets", label: "Assets", icon: "files", href: "/studio/assets", surface: "navigation" },
-  { id: "studio-jobs", label: "Jobs", icon: "clock", href: "/studio/jobs", surface: "navigation" },
-  { id: "studio-canvas", label: "Canvas", icon: "grid", href: "/studio/canvas", surface: "navigation" },
+  { id: "studio-projects", label: "Projects", icon: "project", href: "/studio/work/projects", surface: "navigation" },
+  { id: "studio-assets", label: "Assets", icon: "files", href: "/studio/work/assets", surface: "navigation" },
+  { id: "studio-jobs", label: "Jobs", icon: "clock", href: "/studio/work/jobs", surface: "navigation" },
+  { id: "studio-canvas", label: "Canvas", icon: "grid", href: "/studio/workflows", surface: "navigation" },
 ];
 
 const STUDIO_PALETTE_DEFINITIONS: ReadonlyArray<{
@@ -46,8 +46,8 @@ const STUDIO_PALETTE_DEFINITIONS: ReadonlyArray<{
   href: string;
 }> = [
   { id: "studio-open", label: "Open Studio", href: "/studio" },
-  { id: "studio-new", label: "New Studio project", href: "/studio/projects" },
-  { id: "studio-jobs-open", label: "Open Studio jobs", href: "/studio/jobs" },
+  { id: "studio-new", label: "New Studio project", href: "/studio/work/projects" },
+  { id: "studio-jobs-open", label: "Open Studio jobs", href: "/studio/work/jobs" },
 ];
 
 export interface StudioPaletteEntry {

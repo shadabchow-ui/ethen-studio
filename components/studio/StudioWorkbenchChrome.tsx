@@ -22,6 +22,7 @@ import { SharedChatChrome } from "@ethen/ui/chat-lab/shared-chat-chrome";
 import { SearchPalette, type PaletteAction } from "@ethen/ui/chat-lab/search-palette";
 import type { SearchResult } from "@ethen/ui/chat-lab/chat-fixtures";
 import type { StudioNavEntry, StudioPaletteEntry } from "@ethen/navigation";
+import { STUDIO_CANONICAL_ROUTES } from "@/lib/studio-v5/route-map";
 import { StudioSidebar } from "./v5/shell/StudioSidebar";
 import {
   StudioAuthActionProvider,
@@ -190,8 +191,11 @@ export function StudioWorkbenchChrome({
     void signOut();
   }, [signOut]);
 
+  // RC5 — no /upgrade page exists; Upgrade navigates the canonical
+  // billing-settings target directly (the /upgrade redirect stays for
+  // bookmarks and external links).
   const handleUpgrade = React.useCallback(() => {
-    router.push("/upgrade");
+    router.push(STUDIO_CANONICAL_ROUTES.upgrade);
   }, [router]);
 
   // Job 06B — account footer mirrors Chat's states exactly: an account

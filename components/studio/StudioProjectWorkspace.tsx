@@ -19,13 +19,19 @@ const PROJECT_TABS: Array<{ id: string; label: string; href: (projectId: string)
   { id: "create-image", label: "Create", href: (p) => `/studio/create/image?projectId=${encodeURIComponent(p)}` },
   { id: "edit-image", label: "Edit", href: (p) => `/studio/create/edit?projectId=${encodeURIComponent(p)}` },
   { id: "create-video", label: "Video", href: (p) => `/studio/create/video?projectId=${encodeURIComponent(p)}` },
-  { id: "assets", label: "Assets", href: (p) => `/studio/projects/${p}/assets` },
-  { id: "characters", label: "Characters", href: (p) => `/studio/projects/${p}/characters` },
-  { id: "products", label: "Products", href: (p) => `/studio/projects/${p}/products` },
-  { id: "brands", label: "Brands", href: (p) => `/studio/projects/${p}/brands` },
-  { id: "review", label: "Review", href: (p) => `/studio/projects/${p}/review` },
+  // RC5 — library tabs converged on canonical surfaces (the nested
+  // /studio/projects/[id]/<library> shapes are legacy redirect sources).
+  { id: "assets", label: "Assets", href: (p) => `/studio/work/assets?projectId=${encodeURIComponent(p)}` },
+  { id: "characters", label: "Characters", href: (p) => `/studio/identities/characters?projectId=${encodeURIComponent(p)}` },
+  { id: "products", label: "Products", href: (p) => `/studio/identities/products?projectId=${encodeURIComponent(p)}` },
+  { id: "brands", label: "Brands", href: (p) => `/studio/identities/brands?projectId=${encodeURIComponent(p)}` },
+  { id: "review", label: "Review", href: (p) => `/studio/work/reviews?projectId=${encodeURIComponent(p)}` },
   { id: "export", label: "Export", href: (p) => `/studio/projects/${p}/export` },
 ];
+
+function projectTabHref(tabId: string, projectId: string): string | null {
+  return PROJECT_TABS.find((tab) => tab.id === tabId)?.href(projectId) ?? null;
+}
 
 export function StudioProjectTabs({ projectId, active }: { projectId: string; active: string }) {
   return (
@@ -56,16 +62,9 @@ export function StudioProjectOverview({ projectId }: { projectId: string }) {
 
   const lastJob = identity?.lastJobByProject[projectId] ?? null;
   const lastView = identity?.lastViewByProject[projectId] ?? null;
-  const resumeHref =
-    lastView === "create-image"
-      ? `/studio/create/image?projectId=${encodeURIComponent(projectId)}`
-      : lastView === "edit-image"
-        ? `/studio/create/edit?projectId=${encodeURIComponent(projectId)}`
-        : lastView === "create-video"
-          ? `/studio/create/video?projectId=${encodeURIComponent(projectId)}`
-          : lastView
-            ? `/studio/projects/${projectId}/${lastView}`
-            : null;
+  // RC5 — resume resolves through the canonical tab table (unknown views
+  // offer no link instead of guessing a nested project path).
+  const resumeHref = lastView ? projectTabHref(lastView, projectId) : null;
 
   return (
     <div className="space-y-4">
@@ -85,11 +84,11 @@ export function StudioProjectOverview({ projectId }: { projectId: string }) {
         </Link>
       </div>
       <div className="grid gap-4 md:grid-cols-3">
-        <Link href={`/studio/projects/${projectId}/assets`} className="rounded-[16px] border border-[var(--border-default)] bg-[var(--bg-elevated)] p-5 hover:border-[var(--accent)]">
+        <Link href={`/studio/work/assets?projectId=${encodeURIComponent(projectId)}`} className="rounded-[16px] border border-[var(--border-default)] bg-[var(--bg-elevated)] p-5 hover:border-[var(--accent)]">
           <p className="text-[14px] font-medium text-[var(--text-primary)]">Assets</p>
           <p className="mt-1 text-[12.5px] text-[var(--text-secondary)]">Project library with open, download, provenance and actions.</p>
         </Link>
-        <Link href={`/studio/projects/${projectId}/review`} className="rounded-[16px] border border-[var(--border-default)] bg-[var(--bg-elevated)] p-5 hover:border-[var(--accent)]">
+        <Link href={`/studio/work/reviews?projectId=${encodeURIComponent(projectId)}`} className="rounded-[16px] border border-[var(--border-default)] bg-[var(--bg-elevated)] p-5 hover:border-[var(--accent)]">
           <p className="text-[14px] font-medium text-[var(--text-primary)]">Review</p>
           <p className="mt-1 text-[12.5px] text-[var(--text-secondary)]">Compare, accept, reject and comment with job evidence.</p>
         </Link>

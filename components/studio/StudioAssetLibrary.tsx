@@ -108,13 +108,13 @@ export function StudioAssetLibrary({ routeMarker }: { routeMarker?: string }) {
       actions={
         <div className="flex flex-wrap items-center gap-2.5">
           <Link
-            href="/studio/apps/create-image"
+            href="/studio/create/image"
             className="inline-flex rounded-[9px] bg-[#f5f5f5] px-4 py-2.5 text-[12.5px] font-semibold text-[#0a0a0a] transition hover:bg-[#ffffff] active:scale-[0.97]"
           >
             Create an Image
           </Link>
           <Link
-            href="/studio/projects"
+            href="/studio/work/projects"
             className="inline-flex rounded-[9px] bg-[var(--bg-surface)] px-4 py-2.5 text-[12.5px] font-medium text-[var(--text-primary)] transition hover:bg-[var(--bg-elevated)] active:scale-[0.97]"
           >
             Open Projects
@@ -260,7 +260,7 @@ export function StudioAssetLibrary({ routeMarker }: { routeMarker?: string }) {
         </div>
         <div className="grid gap-3 md:grid-cols-3">
           <Link
-            href="/studio/image"
+            href="/studio/create/image"
             className="block rounded-[18px] bg-[var(--bg-elevated)] px-5 py-5 transition-colors hover:bg-[var(--bg-surface)]"
           >
             <h3 className="text-[15px] text-[var(--text-primary)]">Image Studio</h3>
@@ -290,7 +290,7 @@ export function StudioAssetLibrary({ routeMarker }: { routeMarker?: string }) {
             </span>
           </Link>
           <Link
-            href="/studio/projects"
+            href="/studio/work/projects"
             className="block rounded-[18px] bg-[var(--bg-elevated)] px-5 py-5 transition-colors hover:bg-[var(--bg-surface)]"
           >
             <h3 className="text-[15px] text-[var(--text-primary)]">Projects</h3>

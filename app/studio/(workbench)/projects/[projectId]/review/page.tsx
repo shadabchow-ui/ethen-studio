@@ -5,13 +5,22 @@ import { StudioPageFrame } from "@/components/studio/StudioPageFrame";
 import { StudioProjectTabs } from "@/components/studio/StudioProjectWorkspace";
 import { StudioProjectReview } from "@/components/studio/StudioProjectReview";
 
-export const metadata: Metadata = {
-  title: "Project review",
-  description: "Compare, accept, reject and comment on project outputs with job evidence.",
-  alternates: {
-    canonical: "/studio/projects",
-  },
-};
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ projectId: string }>;
+}): Promise<Metadata> {
+  const { projectId } = await params;
+  return {
+    title: "Project review",
+    description: "Compare, accept, reject and comment on project outputs with job evidence.",
+    alternates: {
+      // RC5 — this nested review path is a legacy redirect source; the
+      // canonical review surface carries ?projectId=.
+      canonical: `/studio/work/reviews?projectId=${projectId}`,
+    },
+  };
+}
 
 export default async function StudioProjectReviewRoute({ params }: { params: Promise<{ projectId: string }> }) {
   const { projectId } = await params;

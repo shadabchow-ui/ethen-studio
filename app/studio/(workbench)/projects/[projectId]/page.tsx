@@ -4,13 +4,20 @@ import { StudioShell } from "@ethen/ui/design-system/v2/shells/StudioShell";
 import { StudioPageFrame } from "@/components/studio/StudioPageFrame";
 import { StudioProjectOverview } from "@/components/studio/StudioProjectWorkspace";
 
-export const metadata: Metadata = {
-  title: "Project workspace",
-  description: "Project-scoped Studio workspace: create, assets, review and export.",
-  alternates: {
-    canonical: "/studio/projects",
-  },
-};
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ projectId: string }>;
+}): Promise<Metadata> {
+  const { projectId } = await params;
+  return {
+    title: "Project workspace",
+    description: "Project-scoped Studio workspace: create, assets, review and export.",
+    alternates: {
+      canonical: `/studio/projects/${projectId}`,
+    },
+  };
+}
 
 export default async function StudioProjectRoute({ params }: { params: Promise<{ projectId: string }> }) {
   const { projectId } = await params;

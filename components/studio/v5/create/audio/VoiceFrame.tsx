@@ -12,6 +12,7 @@
 "use client";
 
 import * as React from "react";
+import { STUDIO_CANONICAL_ROUTES } from "@/lib/studio-v5/route-map";
 import { StudioEmptyState, StudioErrorState } from "../../shell/states";
 import { STUDIO_FOCUS_RING_CLASS } from "../../shell/tokens";
 import { CreateVoiceSlotBinding } from "../../identity/CreateVoiceSlotBinding";
@@ -97,7 +98,7 @@ export function VoiceFrame({ tool, projectId, initialScript = null }: { tool: Au
                 title="Select a project to start"
                 description="Voice generations belong to a project. Pick one to unlock the script composer and history."
                 actionLabel="Open projects"
-                actionHref="/studio/projects"
+                actionHref={STUDIO_CANONICAL_ROUTES.projects}
                 testId="create-no-project"
                 compact
               />

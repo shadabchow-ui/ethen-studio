@@ -13,6 +13,7 @@
 import { labMedia, labMediaById, type LabMediaPlacement, type LabWorkflowId, type ResolvedLabMedia } from "./media-manifest";
 import { LAB_APPS, LAB_MENUS, LAB_RECIPES, type LabMenuId } from "./workflows";
 import { studioAppHref, studioWorkflowHref } from "./live-destinations";
+import { STUDIO_CANONICAL_ROUTES } from "./route-map";
 export type StudioAppPanelId =
   | "create-image"
   | "text-to-video"
@@ -65,7 +66,7 @@ export function studioDestinations(projectId: string | null) {
     agent: withProject("/studio/agent", projectId),
     marketing: withProject("/studio/marketing", projectId),
     influencer: withProject("/studio/influencer", projectId),
-    cinema: "/studio/cinema",
+    cinema: STUDIO_CANONICAL_ROUTES.cinema,
     characters: "/studio/identities/characters",
     models: "/studio/models",
   } as const;
