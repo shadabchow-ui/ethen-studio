@@ -110,6 +110,7 @@ export function StudioModelsBrowse() {
         onSearchChange={(value) => resetAnd(setQuery, value)}
         view={view}
         onViewChange={setView}
+        tableAvailable
         selectionCount={0}
         state={!identity.projectId ? "empty" : state}
         emptyProps={
@@ -187,9 +188,8 @@ export function StudioModelsBrowse() {
               Available now
             </button>
             {projection ? (
-              <span role="status" className="inline-flex min-h-[44px] items-center px-2 text-[12px] text-[var(--text-tertiary)]">
-                {filtered.families.length} of {projection.tallies.families} families · {filtered.endpoints.length} of{" "}
-                {projection.tallies.endpoints} endpoints
+              <span role="status" className="inline-flex min-h-[44px] items-center whitespace-nowrap px-2 text-[12px] text-[var(--text-tertiary)]">
+                {`${filtered.families.length} of ${projection.tallies.families} families · ${filtered.endpoints.length} of ${projection.tallies.endpoints} endpoints`}
               </span>
             ) : null}
           </>

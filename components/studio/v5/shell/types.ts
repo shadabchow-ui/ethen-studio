@@ -82,6 +82,8 @@ export interface StudioLibraryFrameProps {
   onSearchChange: (value: string) => void;
   view: "cards" | "table";
   onViewChange: (view: "cards" | "table") => void;
+  /** RC8 — the layout toggle renders only when the consumer implements a table renderer. */
+  tableAvailable?: boolean;
   filters?: React.ReactNode;
   switcher?: readonly StudioLibrarySwitcherOption[];
   activeSwitcherId?: string;
