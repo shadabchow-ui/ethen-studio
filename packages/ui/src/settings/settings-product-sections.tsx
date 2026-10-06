@@ -16,6 +16,7 @@ import {
   SettingsEmptyState,
   SettingsErrorState,
   SettingsGroup,
+  SettingsNumberField,
   SettingsRow,
   SettingsSection,
   SettingsSelect,
@@ -200,7 +201,7 @@ export function SkillsSection({ ctx, product }: { ctx: SectionCtx; product: "cha
   };
 
   return (
-    <SettingsSection id="skills" title="Skills" meta="Installed skills and discovery. One inventory for Chat and Designer, with per-product enablement.">
+    <SettingsSection id="skills" title="Skills" meta={product === "studio" ? "Installed skills and discovery. One inventory across Ethen products, with per-product enablement." : "Installed skills and discovery. One inventory for Chat and Designer, with per-product enablement."}>
       <div style={{ maxWidth: 420, marginBottom: 8 }}>
         <label htmlFor="skills-search" style={{ fontSize: 13, fontWeight: 600 }}>Search skills</label>
         <input id="skills-search" type="search" value={query} onChange={(e) => setQuery(e.target.value)} placeholder="Search installed skills" style={{ width: "100%", minHeight: 34, marginTop: 4, padding: "0 10px", border: "1px solid var(--eds-rule-hair)", borderRadius: 8, background: "transparent", color: "inherit", font: "inherit", fontSize: 13 }} />
@@ -322,7 +323,7 @@ export function ConnectorsSection({ ctx, product }: { ctx: SectionCtx; product: 
   };
 
   return (
-    <SettingsSection id="connectors" title="Connectors" meta={`One registry for Chat and Designer${product === "designer" ? " — Designer-relevant services first" : ""}. OAuth tokens stay server-side.`}>
+    <SettingsSection id="connectors" title="Connectors" meta={product === "studio" ? "One registry across Ethen products. OAuth tokens stay server-side." : `One registry for Chat and Designer${product === "designer" ? " — Designer-relevant services first" : ""}. OAuth tokens stay server-side.`}>
       {!settings.capabilities.connectorDiscovery ? (
         <p style={{ fontSize: 12, color: "var(--eds-text-secondary)" }}>Automatic connector suggestions are off (Capabilities) — browse manually.</p>
       ) : null}
@@ -910,8 +911,8 @@ export function StudioGenerationSection({ data }: { data: StudioData }) {
   return (
     <SettingsSection id="generation" title="Generation" meta={`Image defaults. ${STUDIO_PENDING}`}>
       <SettingsSelect id="sg-quality" label="Default quality" value={g.defaultQuality} detail={STUDIO_PENDING} onChange={(v) => save({ ...prefs, generation: { ...g, defaultQuality: v as typeof g.defaultQuality } })} options={["draft", "standard", "high"].map((v) => ({ value: v, label: v }))} />
-      <SettingsTextField id="sg-steps" label="Steps (1–50)" value={String(g.steps)} detail={STUDIO_PENDING} onChange={(v) => save({ ...prefs, generation: { ...g, steps: Number(v) } })} />
-      <SettingsTextField id="sg-guidance" label="Guidance (0–20)" value={String(g.guidance)} detail={STUDIO_PENDING} onChange={(v) => save({ ...prefs, generation: { ...g, guidance: Number(v) } })} />
+      <SettingsNumberField id="sg-steps" label="Steps (1–50)" value={g.steps} min={1} max={50} integer detail={STUDIO_PENDING} onCommit={(steps) => save({ ...prefs, generation: { ...g, steps } })} />
+      <SettingsNumberField id="sg-guidance" label="Guidance (0–20)" value={g.guidance} min={0} max={20} detail={STUDIO_PENDING} onCommit={(guidance) => save({ ...prefs, generation: { ...g, guidance } })} />
       <SettingsRow title="Lock seed" detail={`Reuse the last seed for comparable runs. ${STUDIO_PENDING}`} action={<SettingsToggle label="Lock seed" checked={g.lockSeed} onChange={(v) => save({ ...prefs, generation: { ...g, lockSeed: v } })} />} />
     </SettingsSection>
   );
@@ -958,7 +959,7 @@ export function StudioExportSection({ data }: { data: StudioData }) {
   return (
     <SettingsSection id="export" title="Export" meta={`Download defaults. ${STUDIO_PENDING}`}>
       <SettingsSelect id="se-format" label="Default format" value={e.defaultFormat} detail={STUDIO_PENDING} onChange={(v) => save({ ...prefs, export: { ...e, defaultFormat: v as typeof e.defaultFormat } })} options={["png", "jpg", "webp", "mp4"].map((v) => ({ value: v, label: v }))} />
-      <SettingsTextField id="se-quality" label="Quality (1–100)" value={String(e.quality)} detail={STUDIO_PENDING} onChange={(v) => save({ ...prefs, export: { ...e, quality: Number(v) } })} />
+      <SettingsNumberField id="se-quality" label="Quality (1–100)" value={e.quality} min={1} max={100} integer detail={STUDIO_PENDING} onCommit={(quality) => save({ ...prefs, export: { ...e, quality } })} />
       <SettingsRow title="Watermark" detail={`Stamp exports with the workspace mark. ${STUDIO_PENDING}`} action={<SettingsToggle label="Watermark" checked={e.watermark} onChange={(v) => save({ ...prefs, export: { ...e, watermark: v } })} />} />
     </SettingsSection>
   );

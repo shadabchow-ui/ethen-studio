@@ -69,7 +69,9 @@ export const CUSTOMIZE_GROUP_LABEL = "Customize";
 export function sectionsForProduct(product: "chat" | "designer" | "studio"): SettingsSectionDef[] {
   if (product === "chat") return [...SHARED_SECTIONS, ...CHAT_SECTIONS];
   if (product === "designer") return [...SHARED_SECTIONS, ...DESIGNER_SECTIONS];
-  return [...SHARED_SECTIONS, ...STUDIO_SECTIONS];
+  // RC10 — Studio surfaces its own sections first (Generation…Keyboard,
+  // including Export) instead of burying them after the twelve shared ones.
+  return [...STUDIO_SECTIONS, ...SHARED_SECTIONS];
 }
 
 // ── Search (spec §17 — index holds section metadata only, never secrets) ─────

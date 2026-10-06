@@ -55,7 +55,7 @@ function useCtxState(ctx: SectionCtx): UserSettings {
 
 // ── General (profile + appearance + language) ────────────────────────────────
 
-export function GeneralSection({ ctx }: { ctx: SectionCtx }) {
+export function GeneralSection({ ctx, product }: { ctx: SectionCtx; product?: "chat" | "designer" | "studio" }) {
   const { state, onNavigate } = ctx;
   const settings = useCtxState(ctx);
   const [, setTheme] = useThemePreference();
@@ -119,7 +119,7 @@ export function GeneralSection({ ctx }: { ctx: SectionCtx }) {
   });
 
   return (
-    <SettingsSection id="general" title="General" meta="Profile, appearance and language. Shared across Chat and Designer.">
+    <SettingsSection id="general" title="General" meta={product === "studio" ? "Profile, appearance and language. Shared across Ethen products." : "Profile, appearance and language. Shared across Chat and Designer."}>
       <SettingsGroup label="Profile">
         <SettingsRow
           id="setting-avatar"
@@ -185,14 +185,16 @@ export function GeneralSection({ ctx }: { ctx: SectionCtx }) {
             label="Interface font"
             value={settings.appearance.interfaceFont}
             detail="Default: Instrument Sans"
-            onChange={(v) => void state.update({ appearance: { ...settings.appearance, interfaceFont: v.slice(0, 80) || "Instrument Sans" } })}
+            placeholder="Use default"
+            onChange={(v) => void state.update({ appearance: { ...settings.appearance, interfaceFont: v.slice(0, 80) } })}
           />
           <SettingsTextField
             id="setting-content-font"
             label="Content font"
             value={settings.appearance.contentFont}
             detail="Default: Newsreader"
-            onChange={(v) => void state.update({ appearance: { ...settings.appearance, contentFont: v.slice(0, 80) || "Newsreader" } })}
+            placeholder="Use default"
+            onChange={(v) => void state.update({ appearance: { ...settings.appearance, contentFont: v.slice(0, 80) } })}
           />
           <SettingsSelect
             id="setting-motion"
@@ -249,7 +251,7 @@ export function GeneralSection({ ctx }: { ctx: SectionCtx }) {
 
 // ── Account & security ───────────────────────────────────────────────────────
 
-export function AccountSection({ ctx, onSignOut }: { ctx: SectionCtx; onSignOut?: () => void | Promise<unknown> }) {
+export function AccountSection({ ctx, product, onSignOut }: { ctx: SectionCtx; product?: "chat" | "designer" | "studio"; onSignOut?: () => void | Promise<unknown> }) {
   const account = useAsyncData<AccountInfo>("/api/settings/account");
   const sessions = useAsyncData<SessionsResponse>("/api/settings/sessions");
   const [loggingOut, setLoggingOut] = React.useState(false);
@@ -276,7 +278,7 @@ export function AccountSection({ ctx, onSignOut }: { ctx: SectionCtx; onSignOut?
   const identityState = info?.state;
 
   return (
-    <SettingsSection id="account" title="Account" meta="Sessions, devices and deletion. Shared across Chat and Designer.">
+    <SettingsSection id="account" title="Account" meta={product === "studio" ? "Sessions, devices and deletion. Shared across Ethen products." : "Sessions, devices and deletion. Shared across Chat and Designer."}>
       {account.status === "loading" ? (
         <p role="status" style={{ fontSize: 13 }}>Checking session…</p>
       ) : identityState === "identity_pending" || identityState === "identity_unavailable" ? (
@@ -311,7 +313,7 @@ export function AccountSection({ ctx, onSignOut }: { ctx: SectionCtx; onSignOut?
         <SettingsErrorState message={account.error ?? "Session could not be checked."} onRetry={() => void account.refresh()} />
       ) : (
         <>
-          <SettingsRow title="Session" detail="Signed in — settings sync across Chat and Designer" />
+          <SettingsRow title="Session" detail={product === "studio" ? "Signed in — settings sync across Ethen products" : "Signed in — settings sync across Chat and Designer"} />
           <SettingsRow title="Account ID" detail={info?.accountId ?? info?.actorId ?? "Unknown"} />
           {typeof info?.ownerReview === "boolean" ? (
             <SettingsRow title="Environment" detail={info.ownerReview ? "Local review" : "Managed deployment"} />
@@ -722,12 +724,12 @@ export function BillingSection({ ctx, product }: { ctx: SectionCtx; product?: "c
         ) : null}
       </SettingsGroup>
 
-      {ctx.state.settings ? (
+      {ctx.state.settings && b?.available ? (
         <p style={{ fontSize: 12, color: "var(--eds-text-secondary)" }}>
           Usage credits beyond plan and monthly spend caps are not offered in this deployment, so those sections are hidden rather than mocked.
         </p>
       ) : null}
-      <SettingsSaveState phase={ctx.state.phase} error={ctx.state.error} persistence={ctx.state.persistence} onRetry={() => void ctx.state.refresh()} />
+      <SettingsSaveState phase={ctx.state.phase} error={ctx.state.error} persistence={ctx.state.persistence} product={product} onRetry={() => void ctx.state.refresh()} />
     </SettingsSection>
   );
 }

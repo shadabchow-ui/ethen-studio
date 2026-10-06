@@ -145,8 +145,8 @@ export function applyAppearance(settings: UserSettings): void {
   root.dataset.ethenDensity = a.density;
   root.dataset.ethenContentSize = a.contentSize;
   root.dataset.ethenContentWidth = a.contentWidth;
-  root.style.setProperty("--ethen-interface-font", a.interfaceFont);
-  root.style.setProperty("--ethen-content-font", a.contentFont);
+  root.style.setProperty("--ethen-interface-font", a.interfaceFont || DEFAULT_SETTINGS.appearance.interfaceFont);
+  root.style.setProperty("--ethen-content-font", a.contentFont || DEFAULT_SETTINGS.appearance.contentFont);
   root.style.setProperty("--ethen-code-font", a.codeFont);
   try {
     const reduceOs = window.matchMedia("(prefers-reduced-motion: reduce)").matches;

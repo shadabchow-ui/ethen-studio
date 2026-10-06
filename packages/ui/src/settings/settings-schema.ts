@@ -367,8 +367,8 @@ export function validateUserSettings(input: unknown): UserSettings {
     },
     appearance: {
       theme: oneOf(a.theme, ["light", "dark", "system"] as const, d.appearance.theme),
-      interfaceFont: str(a.interfaceFont, d.appearance.interfaceFont, 80),
-      contentFont: str(a.contentFont, d.appearance.contentFont, 80),
+      interfaceFont: optStr(a.interfaceFont, 80).trim(),
+      contentFont: optStr(a.contentFont, 80).trim(),
       codeFont: str(a.codeFont, d.appearance.codeFont, 80),
       lightCodeTheme: str(a.lightCodeTheme, d.appearance.lightCodeTheme, 80),
       darkCodeTheme: str(a.darkCodeTheme, d.appearance.darkCodeTheme, 80),
