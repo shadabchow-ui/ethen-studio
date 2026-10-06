@@ -141,8 +141,11 @@ export interface DiscoverableEndpoint {
   /** M2: input/output media modalities (text, image, video, audio, model). */
   modalityIn: readonly string[];
   modalityOut: readonly string[];
-  /** M2: parameter form derived from the hash-pinned schema snapshot. */
-  parameterForm: readonly ParameterFormField[];
+  /**
+   * M2: parameter form derived from the hash-pinned schema snapshot.
+   * Omitted when empty (RC6); no catalog consumer reads this field.
+   */
+  parameterForm?: readonly ParameterFormField[];
   /** M2: machine-readable BLOCKED_* codes behind the disabled reasons. */
   blockedCodes: readonly string[];
 }

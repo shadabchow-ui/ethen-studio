@@ -29,6 +29,7 @@ import {
   filterCatalog,
   type DiscoverableEndpointView,
 } from "./catalog-client";
+import { taskLabel } from "@ethen/studio-core/catalog/task-labels";
 
 /** Pagination size for the browse list (a number, not an inventory). */
 const BROWSE_PAGE_SIZE = 36;
@@ -170,7 +171,7 @@ export function StudioModelsBrowse() {
                 <option value="">All tasks</option>
                 {tasks.map((option) => (
                   <option key={option} value={option}>
-                    {option}
+                    {taskLabel(option)}
                   </option>
                 ))}
               </select>
@@ -215,7 +216,7 @@ export function StudioModelsBrowse() {
                       {family.endpointCount} endpoint{family.endpointCount === 1 ? "" : "s"} · {family.executableCount} available
                     </span>
                     <span className="mt-0.5 block truncate text-[11.5px] text-[var(--text-tertiary)]">
-                      {family.tasks.join(", ") || "no tasks"}
+                      {family.tasks.map(taskLabel).join(", ") || "no tasks"}
                     </span>
                   </span>
                 </button>
@@ -243,7 +244,7 @@ export function StudioModelsBrowse() {
                     </td>
                     <td className="px-4 py-2.5 text-[var(--text-secondary)]">{family.endpointCount}</td>
                     <td className="px-4 py-2.5 text-[var(--text-secondary)]">{family.executableCount}</td>
-                    <td className="px-4 py-2.5 text-[var(--text-secondary)]">{family.tasks.join(", ")}</td>
+                    <td className="px-4 py-2.5 text-[var(--text-secondary)]">{family.tasks.map(taskLabel).join(", ")}</td>
                   </tr>
                 ))}
               </tbody>
@@ -339,7 +340,7 @@ export function StudioModelsBrowse() {
         <div className="overflow-x-auto"><table className="w-full text-left text-[12px] text-[var(--text-primary)]"><thead><tr><th scope="col">Property</th>{comparison.map((endpoint) => <th key={endpoint.endpointId} scope="col" className="p-2 break-all">{endpoint.label}</th>)}</tr></thead><tbody>{[
           { label: "Endpoint", value: (endpoint: DiscoverableEndpointView) => endpoint.endpointId },
           { label: "Provider", value: (endpoint: DiscoverableEndpointView) => endpoint.providerId },
-          { label: "Task", value: (endpoint: DiscoverableEndpointView) => endpoint.task },
+          { label: "Task", value: (endpoint: DiscoverableEndpointView) => taskLabel(endpoint.task) },
           { label: "Availability", value: (endpoint: DiscoverableEndpointView) => endpoint.executable ? "Available" : endpoint.disabledReasons.join(" ") || "Setup required" },
           { label: "License", value: (endpoint: DiscoverableEndpointView) => metadata[endpoint.endpointId]?.license?.id ?? "Unknown" },
           { label: "Openness", value: (endpoint: DiscoverableEndpointView) => metadata[endpoint.endpointId]?.openness ?? "Unknown" },

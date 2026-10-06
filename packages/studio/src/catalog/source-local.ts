@@ -62,6 +62,8 @@ export interface LocalCatalogJsonEndpoint {
   disposition_reason: string | null;
   pricing: { raw_hash: string | null } | null;
   schema: { status: string; snapshot: string | null };
+  /** Input summary embedded at projection time (RC6); preferred over snapshots. */
+  capabilities?: { required_inputs: readonly string[] | null; supported_inputs: readonly string[] | null } | null;
 }
 
 /** Minimal view of one hash-pinned schema snapshot this builder reads. */
@@ -180,9 +182,20 @@ export function buildLocalSource(
       const mapped = mapFalSlug(endpoint.task);
       const snapshotPath = endpoint.schema?.status === "supported" ? endpoint.schema.snapshot : null;
       const snapshot = snapshotPath ? snapshots[snapshotPath] : undefined;
+      // RC6: control names come from the input summary embedded in the
+      // generated registry; snapshot files are the fallback for callers
+      // with pre-RC6 JSON. Serverless reads no snapshot files, so prod and
+      // dev project identical parameters. Full typed forms still need the
+      // snapshot and stay empty when it is absent (no consumer reads forms
+      // from the catalog projection; execution resolves specs separately).
+      const embeddedSupported = endpoint.capabilities?.supported_inputs;
+      const embedded: readonly string[] | null =
+        Array.isArray(embeddedSupported) && embeddedSupported.length > 0 ? embeddedSupported : null;
       const properties = snapshot?.input?.properties ?? {};
-      const required = new Set(snapshot?.input?.required ?? []);
-      const propertyNames = new Set(Object.keys(properties));
+      const required = new Set(
+        embedded ? (endpoint.capabilities?.required_inputs ?? []) : (snapshot?.input?.required ?? []),
+      );
+      const propertyNames = new Set(embedded ?? Object.keys(properties));
       const schemaKnown = snapshotPath !== null && propertyNames.size > 0;
       const tags = [...mapped.capabilityTags];
       if (schemaKnown) {

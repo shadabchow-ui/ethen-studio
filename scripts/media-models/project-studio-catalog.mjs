@@ -7,7 +7,7 @@
 import { readFileSync, writeFileSync, mkdirSync } from "node:fs";
 import { join } from "node:path";
 import { createHash } from "node:crypto";
-import { stableStringify } from "./lib.mjs";
+import { classifyFromSnapshot, dispositionForTask, stableStringify } from "./lib.mjs";
 
 const ROOT = new URL("../..", import.meta.url).pathname;
 const CANON = join(ROOT, "data/media-models/canonical-media-models.jsonl");
@@ -20,10 +20,9 @@ const OPENNESS_VALUES = new Set(["open-weights", "mixed", "unknown"]);
 
 // MUSE-004: summarize snapshot-declared input bounds as endpoint limits.
 // Pure derivation from the verified snapshot; null when no snapshot.
-function summarizeLimits(snapPath) {
-  if (!snapPath) return null;
+function summarizeLimits(snapDoc) {
+  if (!snapDoc) return null;
   try {
-    const snapDoc = JSON.parse(readFileSync(join(ROOT, snapPath), "utf8"));
     const props = snapDoc.input?.properties ?? {};
     const limits = {};
     for (const [name, prop] of Object.entries(props)) {
@@ -49,7 +48,9 @@ const TASK_LABELS = {
   "video-editing": "Video Editing", "3d-generation": "3D Generation",
   "lora-training": "LoRA Training", speech: "Speech", "text-to-audio": "Text to Audio",
   "music-generation": "Music Generation", "language-model": "Language Model",
-  "video-to-audio": "Video to Audio",
+  "video-to-audio": "Video to Audio", "audio-to-audio": "Audio to Audio",
+  "speech-to-text": "Speech to Text", "text-to-vector": "Text to Vector",
+  "image-to-vector": "Image to Vector",
 };
 const AUDIO_CATEGORIES = new Set(["audio", "speech", "music"]);
 const raw = readFileSync(CANON, "utf8");
@@ -65,12 +66,88 @@ try {
 } catch { /* no coverage yet */ }
 
 const tallies = { eligible: 0, quarantined: 0, excluded: 0 };
+let missingSnapshots = 0;
+let reclassified = 0;
 const records = raw.trim().split("\n").map((l) => JSON.parse(l)).map((r) => {
-  const tasks = r.media.tasks;
+  const openness = OPENNESS_VALUES.has(r.media.openness) ? r.media.openness : "unknown";
+  const endpoints = r.media.member_endpoints.map((e) => {
+      const row = byId.get(e.endpoint_id);
+      const priorTask = e.task ?? row?.task ?? "unknown";
+      const snap = checkpoint.done?.[e.endpoint_id];
+      const snapPath = snap?.status === "supported" ? snap.snapshot : null;
+      let snapDoc = null;
+      if (snapPath) {
+        try {
+          snapDoc = JSON.parse(readFileSync(join(ROOT, snapPath), "utf8"));
+        } catch {
+          // A checkpoint-claimed snapshot that will not parse is a logged,
+          // counted condition: the endpoint keeps its prior task and the
+          // run reports how many snapshots went missing.
+          missingSnapshots += 1;
+        }
+      }
+      const requiredInputs = snapDoc ? [...(snapDoc.input?.required ?? [])] : null;
+      const supportedInputs = snapDoc ? Object.keys(snapDoc.input?.properties ?? {}) : null;
+      // RC6: re-derive the task from the verified snapshot (schema-first),
+      // then synonyms, then the prior task. Snapshot pins, provenance,
+      // pricing, and refs pass through untouched.
+      const { task: newTask, task_evidence: taskEvidence } = classifyFromSnapshot({
+        url: row?.url ?? null,
+        identifier: row?.name_raw ?? "",
+        category: snapDoc?.category ?? null,
+        inputNames: supportedInputs ?? [],
+        schemaNames: snapDoc ? [snapDoc.input_name, ...(snapDoc.refs_available ?? [])].filter(Boolean) : [],
+        priorTask,
+        priorEvidence: row?.task_evidence ?? null,
+      });
+      let disp = e.disposition ?? row?.disposition ?? "quarantined";
+      let dispReason = row?.disposition_reason ?? null;
+      if (newTask !== priorTask) {
+        reclassified += 1;
+        const next = dispositionForTask(newTask);
+        disp = next.disposition;
+        dispReason = next.reason;
+      }
+      if (tallies[disp] !== undefined) tallies[disp] += 1;
+      return {
+        endpoint_id: e.endpoint_id,
+        task: newTask,
+        task_evidence: taskEvidence,
+        disposition: disp,
+        disposition_reason: dispReason,
+        developer: row?.developer ?? "unknown",
+        developer_clues: (row?.developer_clues ?? []).map((c) => `${c.kind ?? "clue"}:${c.value ?? ""}`),
+        page_url: row?.url ?? null,
+        row_sha256: row?.row_sha256 ?? null,
+        license: e.license ?? null,
+        pricing: {
+          status: row?.pricing?.normalized?.status === "known" ? "known" : "unknown",
+          sentences: row?.pricing?.price_sentences ?? [],
+          raw_hash: row?.pricing?.raw_hash ?? null,
+          unit: row?.pricing?.normalized?.unit ?? null,
+          amount: row?.pricing?.normalized?.amount ?? null,
+        },
+        limits: summarizeLimits(snapDoc),
+        schema: snapPath
+          ? { status: "supported", snapshot: snapPath, verified_at: snap.at ?? null }
+          : {
+              status: "unavailable",
+              snapshot: null,
+              reason: snap?.status === "failed" ? `import ${snap.reason}` : "not yet imported",
+            },
+        health: { status: "unknown", reason: "job-3-runtime" },
+        capabilities: { required_inputs: requiredInputs, supported_inputs: supportedInputs },
+      };
+    });
+  // Family tasks are the union of reclassified member tasks (`unknown`
+  // survives only when every member is unclassified); modality and the
+  // fine-tuning flag derive from the same union.
+  const memberTasks = [...new Set(endpoints.map((x) => x.task))].sort();
+  const knownTasks = memberTasks.filter((t) => t !== "unknown");
+  const tasks = knownTasks.length > 0 ? knownTasks : memberTasks.slice(0, 1);
   // Modality is a browse grouping only; execution stays gated by qualified routes.
   const modality = r.media.category === "video" || tasks.some((t) => t.includes("video")) ? "video"
     : AUDIO_CATEGORIES.has(r.media.category) ? "audio" : "image";
-  const openness = OPENNESS_VALUES.has(r.media.openness) ? r.media.openness : "unknown";
   return {
     family_id: r.identity.repo_id,
     name: r.identity.name,
@@ -85,50 +162,7 @@ const records = raw.trim().split("\n").map((l) => JSON.parse(l)).map((r) => {
     openness,
     license: r.media.license ?? null,
     supports_fine_tuning: tasks.includes("lora-training"),
-    endpoints: r.media.member_endpoints.map((e) => {
-      const row = byId.get(e.endpoint_id);
-      const disp = e.disposition ?? row?.disposition ?? "quarantined";
-      if (tallies[disp] !== undefined) tallies[disp] += 1;
-      const snap = checkpoint.done?.[e.endpoint_id];
-      const snapPath = snap?.status === "supported" ? snap.snapshot : null;
-      let requiredInputs = null;
-      let supportedInputs = null;
-      if (snapPath) {
-        try {
-          const snapDoc = JSON.parse(readFileSync(join(ROOT, snapPath), "utf8"));
-          requiredInputs = [...(snapDoc.input?.required ?? [])];
-          supportedInputs = Object.keys(snapDoc.input?.properties ?? {});
-        } catch { /* snapshot unreadable: inputs stay unknown */ }
-      }
-      return {
-        endpoint_id: e.endpoint_id,
-        task: e.task ?? row?.task ?? "unknown",
-        disposition: disp,
-        disposition_reason: row?.disposition_reason ?? null,
-        developer: row?.developer ?? "unknown",
-        developer_clues: (row?.developer_clues ?? []).map((c) => `${c.kind ?? "clue"}:${c.value ?? ""}`),
-        page_url: row?.url ?? null,
-        row_sha256: row?.row_sha256 ?? null,
-        license: e.license ?? null,
-        pricing: {
-          status: row?.pricing?.normalized?.status === "known" ? "known" : "unknown",
-          sentences: row?.pricing?.price_sentences ?? [],
-          raw_hash: row?.pricing?.raw_hash ?? null,
-          unit: row?.pricing?.normalized?.unit ?? null,
-          amount: row?.pricing?.normalized?.amount ?? null,
-        },
-        limits: summarizeLimits(snapPath),
-        schema: snapPath
-          ? { status: "supported", snapshot: snapPath, verified_at: snap.at ?? null }
-          : {
-              status: "unavailable",
-              snapshot: null,
-              reason: snap?.status === "failed" ? `import ${snap.reason}` : "not yet imported",
-            },
-        health: { status: "unknown", reason: "job-3-runtime" },
-        capabilities: { required_inputs: requiredInputs, supported_inputs: supportedInputs },
-      };
-    }),
+    endpoints,
   };
 });
 records.sort((a, b) => a.family_id.localeCompare(b.family_id));
@@ -177,4 +211,8 @@ const search = {
 mkdirSync(join(OUT, ".."), { recursive: true });
 writeFileSync(OUT, `${stableStringify(catalog)}\n`);
 writeFileSync(SEARCH_OUT, `${stableStringify(search)}\n`);
-console.log(JSON.stringify({ ok: true, records: records.length, endpoints: endpointCount, sha: catalog.canonical_sha256.slice(0, 12) }));
+const unknownTasks = records.reduce((n, r) => n + r.endpoints.filter((e) => e.task === "unknown").length, 0);
+console.log(JSON.stringify({ ok: true, records: records.length, endpoints: endpointCount, sha: catalog.canonical_sha256.slice(0, 12), reclassified, unknownTasks, missingSnapshots, dispositions: tallies }));
+if (missingSnapshots > 0) {
+  console.warn(`[catalog:project] ${missingSnapshots} checkpoint-claimed snapshots were unreadable; affected endpoints kept their prior task.`);
+}

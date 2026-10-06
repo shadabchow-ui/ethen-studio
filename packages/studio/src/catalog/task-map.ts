@@ -2,7 +2,7 @@
 import type { TaskName } from "../contracts/tasks";
 
 /** Bumped whenever the slug table changes; recorded on every projection. */
-export const TASK_MAP_VERSION = "1.0.0" as const;
+export const TASK_MAP_VERSION = "1.1.0" as const;
 
 /** Browse-only reason for slugs with no canonical task. */
 export const BLOCKED_UNMAPPED_TASK = "BLOCKED_UNMAPPED_TASK" as const;
@@ -34,6 +34,12 @@ export const FAL_TASK_MAP: Readonly<Record<string, FalTaskMapping>> = {
   "music-generation": { tasks: ["music.generate"], capabilityTags: [] },
   "video-to-audio": { tasks: ["audio.generate"], capabilityTags: ["input:video"] },
   "3d-generation": { tasks: ["mesh.generate"], capabilityTags: ["input:text"] },
+  // RC6: audio-to-audio (voice conversion, enhancement, separation),
+  // speech-to-text (transcription), and vector outputs (recraft line).
+  "audio-to-audio": { tasks: ["audio.transform"], capabilityTags: ["input:audio"] },
+  "speech-to-text": { tasks: ["speech.transcribe"], capabilityTags: [] },
+  "text-to-vector": { tasks: ["image.generate"], capabilityTags: ["input:text"] },
+  "image-to-vector": { tasks: ["image.generate"], capabilityTags: ["input:image", "variation"] },
 };
 
 /** Slugs deliberately browse-only (no canonical task exists). */

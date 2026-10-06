@@ -191,6 +191,10 @@ const TASK_LABELS: Readonly<Record<string, string>> = {
   "music-generation": "Music Generation",
   "language-model": "Language Model",
   "video-to-audio": "Video to Audio",
+  "audio-to-audio": "Audio to Audio",
+  "speech-to-text": "Speech to Text",
+  "text-to-vector": "Text to Vector",
+  "image-to-vector": "Image to Vector",
 };
 
 function searchFamilies(): MediaModel[] {
