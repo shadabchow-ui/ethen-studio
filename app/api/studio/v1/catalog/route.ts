@@ -3,7 +3,7 @@ import { NextRequest } from "next/server";
 import { studioError, studioSuccess } from "@/lib/media/api-v1";
 import { setupRequiredResponse } from "@/lib/media/studio-setup";
 import { isTaskName, type TaskName } from "@ethen/studio-core/contracts";
-import { projectCatalog } from "@ethen/studio-core/catalog/projection";
+import { projectCatalog, summarizeCatalogProjection, type CatalogProjectionV2 } from "@ethen/studio-core/catalog/projection";
 import { specToCatalogSource } from "@ethen/studio-core/catalog/source-local";
 import type { QualificationAttestation } from "@ethen/studio-core/catalog/types";
 import { resolveProjectScope } from "../_lib/supabase-data";
@@ -38,6 +38,18 @@ async function projectPublicCatalog(taskFilter: TaskName | null) {
   });
 }
 
+/**
+ * RC11 — respond with the full projection or, for `?view=summary`, the
+ * tallies-only slice. Auth semantics are untouched: the project-less
+ * summary stays on the proxy's allowlisted path (no projectId, same GET).
+ */
+function respondWithProjection(projection: CatalogProjectionV2, view: string | null): Response {
+  if (view === "summary") {
+    return studioSuccess({ summary: summarizeCatalogProjection(projection) });
+  }
+  return studioSuccess({ catalog: projection });
+}
+
 export async function GET(request: NextRequest): Promise<Response> {
   try {
     const projectId = request.nextUrl.searchParams.get("projectId");
@@ -46,12 +58,16 @@ export async function GET(request: NextRequest): Promise<Response> {
       return studioError("VALIDATION_ERROR", `task is unknown: ${taskParam}.`);
     }
     const taskFilter = taskParam as TaskName | null;
+    const view = request.nextUrl.searchParams.get("view");
+    if (view !== null && view !== "summary") {
+      return studioError("VALIDATION_ERROR", `view is unknown: ${view}.`);
+    }
     // S4C public catalog: without a project scope, serve the checked-in
     // generated registry (release metadata, no user data) with no session.
     // The proxy allowlists exactly this branch; project-scoped reads below
     // still require session + membership.
     if (!projectId) {
-      return studioSuccess({ catalog: await projectPublicCatalog(taskFilter) });
+      return respondWithProjection(await projectPublicCatalog(taskFilter), view);
     }
     const session = await requireUserSession();
     if (session.response) return session.response;
@@ -61,7 +77,7 @@ export async function GET(request: NextRequest): Promise<Response> {
     // it the checked-in generated registry through the same projection;
     // never promote catalog membership to executable availability.
     if (await isStudioLocalRequest()) {
-      return studioSuccess({ catalog: await projectPublicCatalog(taskFilter) });
+      return respondWithProjection(await projectPublicCatalog(taskFilter), view);
     }
     const resolved = await resolveProjectScope(projectId);
     if (!resolved) return studioError("SETUP_REQUIRED", "Project has no Studio data scope yet.");
@@ -82,7 +98,7 @@ export async function GET(request: NextRequest): Promise<Response> {
       catalogVersion: "supabase-live",
       taskFilter,
     });
-    return studioSuccess({ catalog: projection });
+    return respondWithProjection(projection, view);
   } catch (error) {
     // P01 catalog truth: a truly unreadable catalog file is a setup
     // condition, not a server crash. Other families are untouched (P03).

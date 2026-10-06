@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState, useSyncExternalStore } from "react";
-import Link from "next/link";
+import Link, { useLinkStatus } from "next/link";
 import { usePathname } from "next/navigation";
 import {
   getStudioV5NavSections,
@@ -28,6 +28,23 @@ function getSearchServerSnapshot(): string {
 }
 
 const COLLAPSE_STORAGE_KEY = "ethen.studio.nav.groups.v1";
+
+/**
+ * RC11 — per-link pending hint (Next `useLinkStatus`). Covers the window
+ * where navigation itself is blocked (prefetch incomplete) before the
+ * (workbench) loading skeleton can take over. Fixed-size and delayed so
+ * fast navigations never flash or shift layout.
+ */
+function NavPendingHint() {
+  const { pending } = useLinkStatus();
+  return (
+    <span
+      aria-hidden="true"
+      data-testid="nav-pending-hint"
+      className={`${styles.pendingHint}${pending ? ` ${styles.isPending}` : ""}`}
+    />
+  );
+}
 /** Pro and Products start closed so the rail fits common desktop heights. */
 const DEFAULT_COLLAPSED: Record<string, boolean> = { pro: true, products: true };
 
@@ -195,6 +212,7 @@ export function StudioNavigation({
                         data-nav-entry={entry.id}
                       >
                         {content}
+                        <NavPendingHint />
                       </Link>
                     </li>
                   );

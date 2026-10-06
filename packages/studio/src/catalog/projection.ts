@@ -197,3 +197,30 @@ export function projectCatalog(
     },
   };
 }
+
+export interface CatalogSummaryProjection {
+  catalogVersion: string;
+  projectedAt: string;
+  tallies: {
+    families: number;
+    endpoints: number;
+    executable: number;
+  };
+}
+
+/**
+ * RC11 — summary-only slice of a catalog projection for `?view=summary`.
+ * Counts are the projection's own tallies (never recomputed); families
+ * and endpoints are dropped, shrinking the 1.29 MB payload to ~1 KB.
+ */
+export function summarizeCatalogProjection(projection: CatalogProjectionV2): CatalogSummaryProjection {
+  return {
+    catalogVersion: projection.catalogVersion,
+    projectedAt: projection.projectedAt,
+    tallies: {
+      families: projection.tallies.families,
+      endpoints: projection.tallies.endpoints,
+      executable: projection.tallies.executable,
+    },
+  };
+}

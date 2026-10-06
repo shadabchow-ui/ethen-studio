@@ -14,7 +14,7 @@ import type { HomeMediaSection } from "@/lib/studio-v5/media-manifest";
 import { sectionItems, showcaseForApp, type StudioShowcaseItem } from "@/lib/studio-v5/showcase-feed";
 import { curatedEntries } from "./AppsLibrary";
 import { CURATED_TEMPLATES } from "./TemplatesLibrary";
-import { useCatalogProjection } from "./useCatalogProjection";
+import { useCatalogProjection, useCatalogSummary } from "./useCatalogProjection";
 import { HomeMediaFigure, homeSectionTiles, homeSectionTitle, homeSectionViewAll } from "./StudioHomeMedia";
 import { APP_MOTIF, APP_STEPS, HomeFeatureCard, HomeRail, HomeSectionHead, RAIL_ITEM_CLASS, TEMPLATE_MOTIF, type HomeToolTile } from "./StudioHomeCards";
 import { StudioHomePrompt, type HomePromptToolId, HOME_PROMPT_INPUT_ID } from "./StudioHomePrompt";
@@ -151,7 +151,11 @@ export function StudioHome() {
   const [assets, setAssets] = useState<readonly StudioRecentAsset[]>([]);
   const [assetsState, setAssetsState] = useState<"loading" | "ready" | "empty" | "error" | "setup">("loading");
   const [reload, setReload] = useState(0);
-  const catalog = useCatalogProjection(projectId);
+  // RC11 — the footer reads tallies from the summary-only response so it
+  // never waits on (or re-transfers) the full registry; the spotlight
+  // below still consumes the full projection.
+  const catalog = useCatalogSummary(projectId);
+  const spotlightCatalog = useCatalogProjection(projectId);
   const { items } = useShowcaseFeed();
 
   useEffect(() => {
@@ -180,7 +184,7 @@ export function StudioHome() {
   const visibleAssets = useMemo(() => (projectId ? assets : []), [projectId, assets]);
   const visibleAssetsState = projectId ? assetsState : "setup";
   const recent = useMemo(() => visibleAssets.filter((asset) => asset.thumbnailUrl).slice(0, 10), [visibleAssets]);
-  const tallies = catalog.projection?.tallies ?? null;
+  const tallies = catalog.tallies;
 
   // Every visual section renders at its full slot count; placeholders hold
   // the geometry until final showcase media replaces them (discovery-media.ts).
@@ -355,7 +359,7 @@ export function StudioHome() {
           projectId={projectId}
           items={items}
           viewAllHref="/studio/models"
-          catalog={catalog}
+          catalog={spotlightCatalog}
         />
       </section>
 
