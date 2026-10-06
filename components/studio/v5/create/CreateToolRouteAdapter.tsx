@@ -13,8 +13,9 @@ import { StudioErrorState } from "../shell/states";
 import { getCreateTool } from "./tool-definitions";
 import { CreateToolFrame } from "./CreateToolFrame";
 import { UploadTransformFrame } from "./UploadTransformFrame";
+import type { RemixResolution } from "@/lib/studio-v5/showcase-feed";
 
-export function CreateToolRouteAdapter({ toolId, projectId, initialPrompt = null }: { toolId: string; projectId: string | null; initialPrompt?: string | null }) {
+export function CreateToolRouteAdapter({ toolId, projectId, initialPrompt = null, promptRef = null, remix = null }: { toolId: string; projectId: string | null; initialPrompt?: string | null; promptRef?: string | null; remix?: RemixResolution | null }) {
   const tool = getCreateTool(toolId);
   if (!tool) {
     return (
@@ -38,5 +39,5 @@ export function CreateToolRouteAdapter({ toolId, projectId, initialPrompt = null
   if (tool.id === "transcribe") {
     return <UploadTransformFrame key={`${projectId}:${tool.id}`} tool={tool} projectId={projectId} />;
   }
-  return <CreateToolFrame key={`${projectId}:${tool.id}`} tool={tool} projectId={projectId} initialPrompt={initialPrompt} />;
+  return <CreateToolFrame key={`${projectId}:${tool.id}`} tool={tool} projectId={projectId} initialPrompt={initialPrompt} promptRef={promptRef} remix={remix} />;
 }

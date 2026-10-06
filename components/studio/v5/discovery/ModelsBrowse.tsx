@@ -1,6 +1,7 @@
 "use client";
 
-import { useEffect, useMemo, useState, useSyncExternalStore } from "react";
+import { useEffect, useMemo, useRef, useState, useSyncExternalStore } from "react";
+import { useRouter } from "next/navigation";
 import type { StudioEndpoint } from "@/lib/media/endpoint-registry";
 import { STUDIO_CANONICAL_ROUTES } from "@/lib/studio-v5/route-map";
 import Link from "next/link";
@@ -42,21 +43,70 @@ const BROWSE_PAGE_SIZE = 36;
 export function StudioModelsBrowse() {
   const { identity } = useStudioIdentity();
   const { state, projection, retry } = useCatalogProjection(identity.projectId);
-  // Shareable ?q=&task=&family= deep links, derived from the URL with
-  // user overrides (no useSearchParams Suspense requirement, no effects).
+  // RC9 — q/task/layout (/family) live in the URL: every change writes
+  // via router.replace (no history spam), and back/forward/refresh restore
+  // by clearing the keystroke overrides. (No useSearchParams: popstate +
+  // live location reads, no Suspense requirement.)
+  const router = useRouter();
   const search = useSyncExternalStore(subscribeSearch, getSearchSnapshot, getSearchServerSnapshot);
   const urlParams = useMemo(() => new URLSearchParams(search.startsWith("?") ? search.slice(1) : search), [search]);
   const [queryOverride, setQueryOverride] = useState<string | null>(null);
   const [taskOverride, setTaskOverride] = useState<string | null | undefined>(undefined);
   const [familyOverride, setFamilyOverride] = useState<string | null | undefined>(undefined);
+  const [layoutOverride, setLayoutOverride] = useState<"cards" | "table" | undefined>(undefined);
   const query = queryOverride ?? urlParams.get("q") ?? "";
   const task = taskOverride === undefined ? urlParams.get("task") : taskOverride;
   const openFamilyId = familyOverride === undefined ? urlParams.get("family") : familyOverride;
-  const setQuery = (value: string) => setQueryOverride(value);
-  const setTask = (value: string | null) => setTaskOverride(value);
-  const setOpenFamilyId = (value: string | null) => setFamilyOverride(value);
+  const view = layoutOverride ?? (urlParams.get("layout") === "table" ? "table" : "cards");
+  const lastWritten = useRef<string | null>(null);
+  const writeParams = (mutate: (params: URLSearchParams) => void) => {
+    // Live location (not the subscribed snapshot): back-to-back writes merge.
+    const live = window.location.search;
+    const next = new URLSearchParams(live.startsWith("?") ? live.slice(1) : live);
+    mutate(next);
+    const serialized = next.toString();
+    lastWritten.current = serialized;
+    router.replace(serialized ? `${window.location.pathname}?${serialized}` : window.location.pathname, { scroll: false });
+  };
+  useEffect(() => {
+    // Our own replaces land here via re-render: skip them. Anything else
+    // (back/forward) restores URL state by dropping the overrides.
+    const current = search.startsWith("?") ? search.slice(1) : search;
+    if (lastWritten.current === current) return;
+    lastWritten.current = null;
+    setQueryOverride(null);
+    setTaskOverride(undefined);
+    setFamilyOverride(undefined);
+    setLayoutOverride(undefined);
+  }, [search]);
+  const setQuery = (value: string) => {
+    setQueryOverride(value);
+    writeParams((next) => {
+      if (value) next.set("q", value);
+      else next.delete("q");
+    });
+  };
+  const setTask = (value: string | null) => {
+    setTaskOverride(value);
+    writeParams((next) => {
+      if (value) next.set("task", value);
+      else next.delete("task");
+    });
+  };
+  const setOpenFamilyId = (value: string | null) => {
+    setFamilyOverride(value);
+    writeParams((next) => {
+      if (value) next.set("family", value);
+      else next.delete("family");
+    });
+  };
+  const setView = (value: "cards" | "table") => {
+    setLayoutOverride(value);
+    writeParams((next) => {
+      next.set("layout", value);
+    });
+  };
   const [executableOnly, setExecutableOnly] = useState(false);
-  const [view, setView] = useState<"cards" | "table">("cards");
   const [detail, setDetail] = useState<DiscoverableEndpointView | null>(null);
   const [visibleCount, setVisibleCount] = useState(BROWSE_PAGE_SIZE);
 

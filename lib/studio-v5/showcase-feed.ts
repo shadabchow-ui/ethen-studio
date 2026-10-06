@@ -20,6 +20,7 @@ import {
   type DiscoverySourceType,
   type ShowcaseCategory,
 } from "./discovery-media";
+import { LAB_WORKFLOWS } from "./workflows";
 
 export type { DiscoverySection, ShowcaseCategory } from "./discovery-media";
 
@@ -179,9 +180,48 @@ export function workflowTool(workflow: LabWorkflowId | null): ShowcaseTool | nul
 }
 
 /**
- * Remix handoff over the existing create-route contract: tool + active
- * project + prompt (only when the item shares it). Model and settings are
- * not carried — the create route has no seed contract for them yet.
+ * RC9 — the create route resolves a remix id into everything the composer
+ * needs: the reproducing tool, the workflow mode, the prompt (only when
+ * the item shares it), a model-family hint, and the source asset. Null
+ * when the id is unknown, not remixable, or has no reproducing tool.
+ */
+export interface RemixResolution {
+  creationId: string;
+  title: string;
+  tool: ShowcaseTool;
+  mode: LabWorkflowId;
+  modeLabel: string;
+  prompt: string | null;
+  modelFamilyId: string | null;
+  posterUrl: string;
+  videoUrl: string | null;
+  creationHref: string;
+}
+
+export function resolveRemix(creationId: string): RemixResolution | null {
+  const item = showcaseById(creationId);
+  if (!item || !item.allowRemix) return null;
+  const tool = workflowTool(item.workflow);
+  if (!tool || !item.workflow) return null;
+  return {
+    creationId: item.id,
+    title: itemTitle(item),
+    tool,
+    mode: item.workflow,
+    modeLabel: LAB_WORKFLOWS[item.workflow]?.label ?? item.workflow,
+    prompt: item.allowPromptReuse ? item.promptExcerpt : null,
+    modelFamilyId: item.modelFamilyId,
+    posterUrl: item.posterUrl,
+    videoUrl: item.videoUrl,
+    creationHref: creationHref(item),
+  };
+}
+
+/**
+ * Remix handoff: tool route + `?remix=<creationId>` (+ project scope). The
+ * prompt is NOT inlined — the create route resolves the id and prefills
+ * only when the item shares its prompt. `?prompt=` stays the home
+ * composer's contract.
  */
 export function remixHref(item: StudioShowcaseItem, projectId: string | null): string | null {
   if (!item.allowRemix) return null;
@@ -189,9 +229,8 @@ export function remixHref(item: StudioShowcaseItem, projectId: string | null): s
   if (!tool) return null;
   const params = new URLSearchParams();
   if (projectId) params.set("projectId", projectId);
-  if (item.allowPromptReuse && item.promptExcerpt) params.set("prompt", item.promptExcerpt);
-  const query = params.toString();
-  return `/studio/create/${tool}${query ? `?${query}` : ""}`;
+  params.set("remix", item.id);
+  return `/studio/create/${tool}?${params.toString()}`;
 }
 
 export function creationHref(item: StudioShowcaseItem): string {

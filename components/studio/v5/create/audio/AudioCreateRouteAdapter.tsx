@@ -15,16 +15,17 @@ import { VoiceFrame } from "./VoiceFrame";
 import { TranscribeFrame } from "./TranscribeFrame";
 import { DubbingFrame } from "./DubbingFrame";
 import { ChangerFrame } from "./ChangerFrame";
+import type { RemixResolution } from "@/lib/studio-v5/showcase-feed";
 
-export function AudioCreateRouteAdapter({ toolId, projectId, initialPrompt = null }: { toolId: string; projectId: string | null; initialPrompt?: string | null }) {
+export function AudioCreateRouteAdapter({ toolId, projectId, initialPrompt = null, promptRef = null, remix = null }: { toolId: string; projectId: string | null; initialPrompt?: string | null; promptRef?: string | null; remix?: RemixResolution | null }) {
   const audioTool = getAudioTool(toolId);
   if (!audioTool) {
-    return <CreateToolRouteAdapter toolId={toolId} projectId={projectId} initialPrompt={initialPrompt} />;
+    return <CreateToolRouteAdapter toolId={toolId} projectId={projectId} initialPrompt={initialPrompt} promptRef={promptRef} remix={remix} />;
   }
   const key = `${projectId}:${audioTool.id}`;
   switch (audioTool.id) {
     case "voice":
-      return <VoiceFrame key={key} tool={audioTool} projectId={projectId} initialScript={initialPrompt} />;
+      return <VoiceFrame key={key} tool={audioTool} projectId={projectId} initialScript={initialPrompt} promptRef={promptRef} />;
     case "transcribe":
       return <TranscribeFrame key={key} tool={audioTool} projectId={projectId} />;
     case "dub":

@@ -98,3 +98,16 @@ export function localStorageHistory(): HistoryStorage | null {
     return null;
   }
 }
+
+/**
+ * RC9 — composer drafts live in sessionStorage (per tool, project-scoped
+ * key): a draft never survives the session and never enters history.
+ */
+export function sessionStorageDrafts(): HistoryStorage | null {
+  if (typeof window === "undefined") return null;
+  try {
+    return window.sessionStorage;
+  } catch {
+    return null;
+  }
+}
