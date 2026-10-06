@@ -32,6 +32,7 @@ import {
   sidebarAccountForIdentity,
 } from "./auth/studio-auth-action";
 import { useStudioIdentity } from "./auth/use-studio-identity";
+import { useStudioSignOut } from "./auth/use-studio-sign-out";
 
 const STUDIO_ACTIONS: readonly PaletteAction[] = [
   { id: "new-studio-project", label: "New Studio project", beta: true },
@@ -180,18 +181,14 @@ export function StudioWorkbenchChrome({
     requestStudioSignIn({ action: "chrome-sign-in" });
   }, []);
 
-  const handleSignOut = React.useCallback(async () => {
+  // RC2 — sign-out ends the Clerk session (the missing call that left the
+  // proxy bouncing /sign-in back to /studio) after the server revocation,
+  // then lands signed-out on public /studio with no bounce loop.
+  const { signOut } = useStudioSignOut();
+  const handleSignOut = React.useCallback(() => {
     setSignedOutFlip(true);
-    try {
-      await fetch("/api/settings/sessions/current", { method: "DELETE" });
-    } catch {
-      // Server-owned cookie; a failed call still ends here.
-    }
-    // Intentional hard navigation: the session ends server-side above; Studio
-    // has no /sign-out Clear-Site-Data route, so land on /sign-in directly.
-    // eslint-disable-next-line @next/next/no-location-assign-relative-destination
-    if (typeof window !== "undefined") window.location.assign("/sign-in");
-  }, []);
+    void signOut();
+  }, [signOut]);
 
   const handleUpgrade = React.useCallback(() => {
     router.push("/upgrade");

@@ -249,13 +249,20 @@ export function GeneralSection({ ctx }: { ctx: SectionCtx }) {
 
 // ── Account & security ───────────────────────────────────────────────────────
 
-export function AccountSection({ ctx, onSignOut }: { ctx: SectionCtx; onSignOut?: () => void }) {
+export function AccountSection({ ctx, onSignOut }: { ctx: SectionCtx; onSignOut?: () => void | Promise<unknown> }) {
   const account = useAsyncData<AccountInfo>("/api/settings/account");
   const sessions = useAsyncData<SessionsResponse>("/api/settings/sessions");
   const [loggingOut, setLoggingOut] = React.useState(false);
 
   const logoutCurrent = async () => {
     setLoggingOut(true);
+    // RC2 — Studio supplies its Clerk sign-out (server revoke, then Clerk
+    // signOut, landing on public /studio); other products keep the legacy
+    // server-revoke-then-/sign-in flow.
+    if (onSignOut) {
+      await onSignOut();
+      return;
+    }
     await deleteJson("/api/settings/sessions/current");
     window.location.href = "/sign-in";
   };
@@ -407,23 +414,31 @@ function LogoutAllRow({ onDone }: { onDone: () => void }) {
 }
 
 function DeleteAccountRow() {
-  const [stage, setStage] = React.useState<"idle" | "checking" | "ready" | "blocked" | "confirming" | "done">("idle");
+  const [stage, setStage] = React.useState<"idle" | "checking" | "ready" | "blocked" | "confirming" | "done" | "unavailable">("idle");
   const [eligibility, setEligibility] = React.useState<DeleteEligibility | null>(null);
   const [error, setError] = React.useState<string | null>(null);
+  const [unavailableReason, setUnavailableReason] = React.useState<string | null>(null);
 
+  // RC2 — eligibility is a GET-only check; nothing POSTs before the user
+  // explicitly confirms deletion in the danger action below.
   const check = async () => {
     setStage("checking");
     setError(null);
-    const result = await postJson<DeleteEligibility>("/api/settings/account/delete", {});
-    // Eligibility is a GET; a POST without confirm returns 400 with guidance.
-    // Fetch GET directly for the check.
     try {
       const response = await fetch("/api/settings/account/delete", { cache: "no-store" });
+      if (response.status === 501) {
+        const body = (await response.json().catch(() => null)) as { error?: unknown } | null;
+        setUnavailableReason(
+          typeof body?.error === "string" ? body.error : "Delete account is not available in Studio.",
+        );
+        setStage("unavailable");
+        return;
+      }
       const body = (await response.json()) as DeleteEligibility;
       setEligibility(body);
       setStage(body.eligible ? "ready" : "blocked");
     } catch {
-      setError(result.error ?? "Eligibility could not be checked.");
+      setError("Eligibility could not be checked.");
       setStage("idle");
     }
   };
@@ -433,8 +448,11 @@ function DeleteAccountRow() {
       <SettingsRow
         title="Delete account"
         detail="Deletes settings, connection metadata and revokes sessions"
-        action={<SettingsButton onClick={() => void check()} disabled={stage === "checking"}>{stage === "checking" ? "Checking…" : "Delete…"}</SettingsButton>}
+        action={<SettingsButton onClick={() => void check()} disabled={stage === "checking" || stage === "unavailable"}>{stage === "checking" ? "Checking…" : "Delete…"}</SettingsButton>}
       />
+      {stage === "unavailable" ? (
+        <p role="status" style={{ fontSize: 13 }}>{unavailableReason}</p>
+      ) : null}
       {stage === "blocked" && eligibility ? (
         <p role="status" style={{ fontSize: 13 }}>{eligibility.blockedReason}</p>
       ) : null}
@@ -470,6 +488,7 @@ export function PrivacySection({ ctx, attachmentsSectionId }: { ctx: SectionCtx;
   const [exporting, setExporting] = React.useState(false);
   const [exportError, setExportError] = React.useState<string | null>(null);
   const [exported, setExported] = React.useState(false);
+  const [exportUnavailable, setExportUnavailable] = React.useState<string | null>(null);
 
   const runExport = async () => {
     setExporting(true);
@@ -477,6 +496,15 @@ export function PrivacySection({ ctx, attachmentsSectionId }: { ctx: SectionCtx;
     setExported(false);
     try {
       const response = await fetch("/api/settings/privacy/export", { method: "POST" });
+      if (response.status === 501) {
+        // RC2 — the deployment has no export capability: say so plainly,
+        // persistently, and without a Retry that could never succeed.
+        const body = (await response.json().catch(() => null)) as { error?: unknown } | null;
+        setExportUnavailable(
+          typeof body?.error === "string" ? body.error : "Data export is not available in Studio.",
+        );
+        return;
+      }
       if (!response.ok) {
         setExportError("Export could not be started. Try again.");
         return;
@@ -537,8 +565,9 @@ export function PrivacySection({ ctx, attachmentsSectionId }: { ctx: SectionCtx;
         <SettingsRow
           title="Export my data"
           detail="Settings, connection metadata and recent usage as JSON. Assembled server-side — the page never freezes."
-          action={<SettingsButton onClick={() => void runExport()} disabled={exporting}>{exporting ? "Preparing…" : "Export"}</SettingsButton>}
+          action={<SettingsButton onClick={() => void runExport()} disabled={exporting || exportUnavailable !== null}>{exporting ? "Preparing…" : "Export"}</SettingsButton>}
         />
+        {exportUnavailable ? <p role="status" style={{ fontSize: 13 }}>{exportUnavailable}</p> : null}
         {exportError ? <p role="alert" style={{ fontSize: 13 }}>{exportError} <button type="button" onClick={() => void runExport()} style={{ textDecoration: "underline", background: "none", border: 0, font: "inherit", cursor: "pointer", color: "inherit" }}>Retry</button></p> : null}
         {exported ? <p role="status" style={{ fontSize: 12, color: "var(--eds-text-secondary)" }}>Export downloaded.</p> : null}
       </SettingsGroup>

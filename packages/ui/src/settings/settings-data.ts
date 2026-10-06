@@ -20,6 +20,12 @@ export interface AsyncData<T> {
   error: string | null;
   loading: boolean;
   status: AsyncDataStatus;
+  /**
+   * RC2 — response `code` when the body carried one (e.g.
+   * `NOT_AVAILABLE_IN_STUDIO`), so sections can render explicit
+   * capability-absence states instead of generic errors.
+   */
+  code: string | null;
   refresh: () => Promise<void>;
 }
 
@@ -38,6 +44,12 @@ function errorMessageOf(body: unknown, fallback: string): string {
   return body && typeof body === "object" && "error" in body && typeof (body as { error: unknown }).error === "string"
     ? ((body as { error: string }).error)
     : fallback;
+}
+
+function codeOf(body: unknown): string | null {
+  return body && typeof body === "object" && "code" in body && typeof (body as { code: unknown }).code === "string"
+    ? ((body as { code: string }).code)
+    : null;
 }
 
 /**
@@ -72,12 +84,14 @@ export function useAsyncData<T>(url: string | null): AsyncData<T> {
   const [loading, setLoading] = React.useState(url !== null);
   // A null url means "no request": settled with nothing to load.
   const [status, setStatus] = React.useState<AsyncDataStatus>(url !== null ? "loading" : "ready");
+  const [code, setCode] = React.useState<string | null>(null);
 
   const refresh = React.useCallback(async () => {
     if (!url) return;
     setLoading(true);
     setStatus("loading");
     setError(null);
+    setCode(null);
     try {
       const { status: httpStatus, body } = await readJson(url);
       const outcome = resolveAsyncDataOutcome(httpStatus, body);
@@ -90,9 +104,11 @@ export function useAsyncData<T>(url: string | null): AsyncData<T> {
       // branch on `status` to decide what the stale data means.
       setError(outcome.error);
       setStatus(outcome.status);
+      setCode(codeOf(body));
     } catch {
       setError("Could not be loaded. Check your connection and try again.");
       setStatus("error");
+      setCode(null);
     } finally {
       setLoading(false);
     }
@@ -105,7 +121,7 @@ export function useAsyncData<T>(url: string | null): AsyncData<T> {
     return () => clearTimeout(handle);
   }, [refresh, url]);
 
-  return { data, error, loading, status, refresh };
+  return { data, error, loading, status, code, refresh };
 }
 
 export async function postJson<T>(url: string, payload?: unknown): Promise<{ ok: boolean; data: T | null; error: string | null; status: number }> {
