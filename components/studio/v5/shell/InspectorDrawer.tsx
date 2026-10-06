@@ -6,6 +6,8 @@ import { STUDIO_FOCUS_RING_CLASS } from "./tokens";
 /** Open-drawer stack so Escape always closes the topmost drawer only. */
 const drawerStack: symbol[] = [];
 
+const FOCUSABLE = 'a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])';
+
 /**
  * STUDIO_08 — shared right inspector drawer. Escape closes, focus
  * returns to the invoker, and content is labelled for assistive tech.
@@ -37,6 +39,28 @@ export function StudioInspectorDrawer({
     invokerRef.current = typeof document !== "undefined" ? document.activeElement : null;
     panelRef.current?.focus();
     const onKey = (event: KeyboardEvent) => {
+      if (event.key === "Tab") {
+        // RC13 — modal trap: Tab cycles inside the topmost drawer instead
+        // of walking the page behind it.
+        if (drawerStack[drawerStack.length - 1] !== id) return;
+        const nodes = [...(panelRef.current?.querySelectorAll<HTMLElement>(FOCUSABLE) ?? [])].filter(
+          (node) => node.offsetParent !== null,
+        );
+        if (nodes.length === 0) {
+          event.preventDefault();
+          return;
+        }
+        const first = nodes[0]!;
+        const last = nodes[nodes.length - 1]!;
+        if (event.shiftKey && (document.activeElement === first || !panelRef.current?.contains(document.activeElement))) {
+          event.preventDefault();
+          last.focus();
+        } else if (!event.shiftKey && document.activeElement === last) {
+          event.preventDefault();
+          first.focus();
+        }
+        return;
+      }
       if (event.key !== "Escape") return;
       if (drawerStack[drawerStack.length - 1] !== id) return;
       event.stopPropagation();
