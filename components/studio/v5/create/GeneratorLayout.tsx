@@ -51,7 +51,7 @@ export function generatorModeTabs(modality: GeneratorModality, projectId: string
     { id: "edit", label: "Edit Image", href: studioCreateHref("edit", projectId) },
     { id: "video", label: "Create Video", href: to.createVideo },
     { id: "3d", label: "Create 3D", href: studioCreateHref("3d", projectId) },
-    { id: "product-ad", label: "Product Ad", href: productAd.href, status: productAd.statusLabel },
+    { id: "product-ad", label: "Marketing Studio", href: productAd.href, status: productAd.statusLabel },
     { id: "influencer", label: "AI Influencer", href: to.influencer },
     { id: "cinema", label: "Cinema", href: to.cinema },
   ];

@@ -39,6 +39,9 @@ const PATHS: Record<string, string> = {
   close: "M6 6l12 12M18 6 6 18",
   remix: "M4 12a8 8 0 0 1 14-5.3M20 4v4h-4M20 12a8 8 0 0 1-14 5.3M4 20v-4h4",
   open: "M7 17 17 7M9 7h8v8",
+  download: "M12 4v11m0 0 4.5-4.5M12 15 7.5 10.5M4 20h16",
+  fullscreen: "M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5",
+  "exit-fullscreen": "M9 4v5H4M15 4v5h5M9 20v-5H4M15 20v-5h5",
   compass: "M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18zM15.5 8.5l-2 5-5 2 2-5z",
   play: "M8 5v14l11-7z",
 };

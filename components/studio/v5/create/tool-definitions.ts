@@ -113,7 +113,7 @@ const DEFINITIONS: Record<CreateToolId, CreateToolDefinition> = {
     secondaryVariants: ["upload"],
     binding: TASK_BINDING["3d"]!,
     referenceKinds: ["IMAGE", "STYLE"],
-    description: "Describe the model; generation runs as a durable mesh job and the glb result stages below.",
+    description: "Describe the model; generation runs as a durable mesh job and the .glb result stages below.",
   },
 };
 
