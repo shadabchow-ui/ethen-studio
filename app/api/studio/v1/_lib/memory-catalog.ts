@@ -1,7 +1,7 @@
 /**
  * Studio V5 M2 — local-lane catalog repository. The explicit loopback-only
  * bypass has no Supabase service client, so it loads the same rows the sync
- * script persists (generated catalog JSON + hash-pinned schema snapshots)
+ * script persists (generated catalog JSON with the embedded input summary)
  * into a process-memory repository and projects through the one function.
  *
  * No `server-only` marker: `node:fs` already confines this module to the
@@ -14,7 +14,6 @@ import {
   buildLocalSource,
   type CatalogSourceEndpoint,
   type LocalCatalogJson,
-  type SchemaSnapshotDoc,
 } from "@ethen/studio-core/catalog/source-local";
 import { mapFalSlug } from "@ethen/studio-core/catalog/task-map";
 import { parsePriceSentences } from "@ethen/studio-core/server/economics/fal-price-parser";
@@ -108,20 +107,13 @@ function load(): LocalCatalogCache {
     throw error;
   }
   const catalog = JSON.parse(readFileSync(located.file, "utf8")) as LocalCatalogJson;
-  const snapshots: Record<string, SchemaSnapshotDoc> = {};
-  for (const record of catalog.records) {
-    for (const endpoint of record.endpoints) {
-      const snapPath = endpoint.schema?.status === "supported" ? endpoint.schema.snapshot : null;
-      if (snapPath && !(snapPath in snapshots)) {
-        try {
-          snapshots[snapPath] = JSON.parse(readFileSync(join(located.root, snapPath), "utf8")) as SchemaSnapshotDoc;
-        } catch {
-          // Unreadable snapshot: the endpoint stays schema-unknown. Never throw.
-        }
-      }
-    }
-  }
-  const source = buildLocalSource(catalog, snapshots);
+  // RC6: control names come from the input summary embedded in the generated
+  // registry at projection time. No snapshot files are read here, so
+  // serverless serves identical parameters to local dev (previously prod
+  // served zero supportedParameters because snapshots were never traced
+  // into the bundle). The fixture lane still passes snapshots for
+  // execution specs; this catalog path needs names only.
+  const source = buildLocalSource(catalog, {});
   const prices = new Map<string, PriceRowView>();
   for (const record of catalog.records) {
     for (const endpoint of record.endpoints) {

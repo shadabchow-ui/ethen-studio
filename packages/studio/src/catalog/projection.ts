@@ -141,7 +141,10 @@ export function projectCatalog(
       capabilityTags: row.capabilityTags,
       modalityIn: row.modalityIn,
       modalityOut: row.modalityOut,
-      parameterForm: row.parameterForm,
+      // RC6: empty forms are omitted (the local lane embeds names only),
+      // keeping the catalog payload flat. Non-empty Supabase-lane forms
+      // still project; no catalog consumer reads this field today.
+      ...(row.parameterForm.length > 0 ? { parameterForm: row.parameterForm } : {}),
       blockedCodes,
     };
   });

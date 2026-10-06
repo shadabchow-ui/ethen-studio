@@ -27,6 +27,7 @@ import {
   type SwitcherRow,
   type SwitcherTab,
 } from "./model-switcher-model";
+import { taskLabel } from "@ethen/studio-core/catalog/task-labels";
 
 /** Dense switcher rows (M3B): one 32px line per endpoint. */
 const ROW_HEIGHT = 32;
@@ -397,7 +398,7 @@ export function StudioModelSwitcher({
         </div>
         {catalogState === "ready" && task && selection.scoped.length === 0 ? (
           <p role="note" className="px-4 pb-1.5 text-[12px] text-[var(--text-secondary)]">
-            No catalog models serve {task} yet.{" "}
+            No catalog models serve {task ? taskLabel(task) : task} yet.{" "}
             <Link
               href={projectId ? `/studio/models?projectId=${encodeURIComponent(projectId)}` : "/studio/models"}
               className={`underline underline-offset-2 hover:text-[var(--text-primary)] ${RING}`}

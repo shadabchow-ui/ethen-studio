@@ -46,6 +46,10 @@ export type LabTaskId =
   | "3d-generation"
   | "lora-training"
   | "language-model"
+  | "audio-to-audio"
+  | "speech-to-text"
+  | "text-to-vector"
+  | "image-to-vector"
   | "unspecified";
 
 export const LAB_CATEGORY_LABELS: Readonly<Record<LabCategory, string>> = {
@@ -84,6 +88,10 @@ const TASK_META: Readonly<Record<LabTaskId, TaskMeta>> = {
   "3d-generation": { label: "3D Generation", category: "3d", edit: false, consumes: "image" },
   "lora-training": { label: "Custom Training", category: "utility", edit: false, consumes: "image" },
   "language-model": { label: "Language", category: "utility", edit: false, consumes: "none" },
+  "audio-to-audio": { label: "Audio → Audio", category: "audio", edit: true, consumes: "audio" },
+  "speech-to-text": { label: "Speech → Text", category: "audio", edit: false, consumes: "audio" },
+  "text-to-vector": { label: "Text → Vector", category: "image", edit: false, consumes: "none" },
+  "image-to-vector": { label: "Image → Vector", category: "image", edit: true, consumes: "image" },
   unspecified: { label: "Unspecified", category: "utility", edit: false, consumes: "none" },
 };
 

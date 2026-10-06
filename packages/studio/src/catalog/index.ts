@@ -6,6 +6,7 @@ export * from "./eligibility";
 export * from "./routing";
 export * from "./favorites";
 export * from "./task-map";
+export * from "./task-labels";
 export * from "./price-states";
 export * from "./source-local";
 export * from "./projection";

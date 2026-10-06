@@ -107,18 +107,36 @@ export function falPathSegments(url) {
   return m[1].replace(/\/+$/, "").split("/").filter(Boolean);
 }
 // Ordered task rules: first match wins. Evidence records which signal fired.
+// RC6 synonym expansion: abbreviations (t2v/i2v/v2v/t2i/i2i/a2a/v2a), edit verbs
+// (inpaint/outpaint/redux/reframe/upscale/relight/try-on/depth/extend/transition/
+// lipsync/erase/background), train variants (trainer/training), media-qualified
+// splits (upscale+video vs bare upscale), and new-slug literals (audio-to-audio,
+// speech-to-text, text-to-vector, image-to-vector). Specific rules precede the
+// generic media catch-alls. At projection time classifyFromSnapshot runs first
+// and these keyword rules are the fallback, so trainer/abbreviation collisions
+// (wan-trainer/t2v, ideogram/v2a) resolve from the snapshot, not the name.
 const TASK_RULES = [
-  ["text-to-video", /\btext-to-video\b/i],
-  ["image-to-video", /\bimage-to-video\b/i],
+  ["text-to-video", /\btext-to-video\b|\bt2v\b/i],
+  ["image-to-video", /\bimage-to-video\b|\bi2v\b|\baudio-to-video\b/i],
   ["reference-to-video", /\breference-to-video\b/i],
-  ["video-to-video", /\bvideo-to-video\b/i],
-  ["text-to-image", /\btext-to-image\b/i],
-  ["image-to-image", /\bimage-to-image\b/i],
-  ["image-editing", /\/(edit|inpaint|outpaint|background-removal|erase|upscale)(\/|$)/i],
-  ["lora-training", /\/(lora|dreambooth|train|fine-?tune)(\/|$)/i],
-  ["text-to-audio", /\btext-to-(audio|speech)\b|\btts\b/i],
-  ["music-generation", /\bmusic\b/i],
-  ["speech", /\b(speech|voice|transcri|lip-sync)\b/i],
+  ["video-to-video", /\bvideo-to-video\b|\bv2v\b/i],
+  ["video-to-audio", /\bvideo-to-audio\b|\bv2a\b|foley/i],
+  ["text-to-image", /\btext-to-image\b|\bt2i\b/i],
+  ["image-to-image", /\bimage-to-image\b|\bi2i\b|\bredux\b/i],
+  ["audio-to-audio", /\baudio-to-audio\b|\ba2a\b|\bspeech-to-speech\b|\baudio[-_ ]?(inpaint|outpaint)\b|\b(inpaint|outpaint)[-_ ]?audio\b/i],
+  ["video-editing", /\bvideo\b.{0,32}\b(upscale\w*|inpaint\w*|outpaint\w*|eras\w*|relight\w*|reframe|depth|extend|transition|background\w*|watermark)\b|\b(upscale\w*|inpaint\w*|outpaint\w*|eras\w*|relight\w*|reframe|depth|extend|transition|background\w*|watermark)\b.{0,32}\bvideo\b|\breframe\b|\bextend\b|\btransition\b|\blipsync\b|\blip[-_ ]?sync\b/i],
+  ["lora-training", /\/(lora|dreambooth|train(ing|er)?|fine-?tune)(\/|$|-)/i],
+  ["lora-training", /\btrainer\b|\btraining\b/i],
+  ["image-editing", /\/(edit|inpaint|outpaint|background-remov(al|e)|erase|upscale|relight)(\/|$|-)/i],
+  ["image-editing", /\binpaint|\boutpaint|\btry-?on\b|\bvton\b|\bremov(e|al)[-_ ]?background\b|\bbackground\b|\bdepth\b|\brelight(ing)?\b|\beras(e|er|ing)?\b|\bwatermark\b|\bupscal|\bsuper[-_ ]?resolution\b|\bincreas(e|ing)[-_ ]?resolution\b/i],
+  ["speech-to-text", /\btranscri|\bstt\b|\baudio-to-text\b/i],
+  ["text-to-audio", /\btext-to-audio\b|\bprompt-to-audio\b/i],
+  ["music-generation", /\bmusic\b|rhythm/i],
+  ["speech", /\btts\b|\btext-to-speech\b|\b(speech|voice|transcri|lip-sync)\b/i],
+  ["text-to-vector", /\btext-to-vector\b/i],
+  ["image-to-vector", /\bimage-to-vector\b|\bvectoriz|\bvectoris/i],
+  ["3d-generation", /\b(image-to-3d|text-to-3d|3d-to-3d)\b/i],
+  ["language-model", /\b(image-to-text|video-to-text|image-to-json|text-to-json|embeddings?|router)\b/i],
   ["video-editing", /\bvideo\b/i],
   ["image-generation", /\bimage\b/i],
   ["3d-generation", /\b3d\b|tripo|hunyuan|mesh/i],
@@ -130,17 +148,239 @@ const MEDIA_CLASS_BY_TASK = {
   "text-to-image": "image", "image-to-image": "image", "image-editing": "image",
   "image-generation": "image", "lora-training": "adjacent-media",
   "text-to-audio": "audio", "music-generation": "audio", speech: "audio",
-  "video-to-audio": "audio",
+  "video-to-audio": "audio", "audio-to-audio": "audio", "speech-to-text": "audio",
+  "text-to-vector": "image", "image-to-vector": "image",
   "3d-generation": "adjacent-media", "language-model": "text-llm",
 };
+
+/**
+ * RC6: disposition for one task slug. Same mapping normalizeSource applies
+ * at import time; the projector reuses it when it reclassifies an endpoint.
+ */
+export function dispositionForTask(task) {
+  const mediaClass = MEDIA_CLASS_BY_TASK[task] || "unknown";
+  if (mediaClass === "image" || mediaClass === "video" || mediaClass === "adjacent-media" || mediaClass === "audio") {
+    return { disposition: "eligible", reason: `media_class=${mediaClass};task=${task}` };
+  }
+  if (mediaClass === "text-llm") {
+    return { disposition: "excluded", reason: `text/llm utility-only;task=${task}` };
+  }
+  return { disposition: "quarantined", reason: "unknown media class; reviewable" };
+}
 const VARIANT_ALIASES = new Set(["fast", "turbo", "pro", "dev", "schnell", "lightning", "edit", "lora", "v1", "v2", "v3"]);
 const VERSION_SEGMENT = /^(v\d+([._-]\d+)*|\d+([._]\d+)+|20\d{2}[-_]\d{2}([-_]\d{2})?)$/i;
 
 export function classifyTask(urlPath, identifier) {
-  const hay = `${urlPath} ${identifier}`;
+  // Underscores separate words in fal ids (erase_by_text) but are invisible
+  // to \b; normalize them so verb rules read snake_case and kebab-case alike.
+  const hay = `${urlPath} ${identifier}`.replace(/_/g, "-");
   for (const [task, re] of TASK_RULES) {
     if (re.test(hay)) return { task, task_evidence: `keyword:${re.source}` };
   }
+  return { task: "unknown", task_evidence: "no-taxonomy-signal" };
+}
+
+// Exact fal URL slugs: fal's own declaration, honored before inference so a
+// schema can refine an unknown or heuristic task but never demote an explicit
+// one (reference-to-video endpoints whose snapshots say image-to-video keep
+// their slug; bare abbreviations stay heuristic and do not veto the schema).
+const EXACT_SLUG_RULES = [
+  ["text-to-video", /\btext-to-video\b/i],
+  ["image-to-video", /\bimage-to-video\b/i],
+  ["reference-to-video", /\breference-to-video\b/i],
+  ["video-to-video", /\bvideo-to-video\b/i],
+  ["video-to-audio", /\bvideo-to-audio\b/i],
+  ["text-to-image", /\btext-to-image\b/i],
+  ["image-to-image", /\bimage-to-image\b/i],
+  ["image-editing", /\bimage-editing\b/i],
+  ["video-editing", /\bvideo-editing\b/i],
+  ["image-generation", /\bimage-generation\b/i],
+  ["music-generation", /\bmusic-generation\b/i],
+  ["lora-training", /\blora-training\b/i],
+  ["text-to-audio", /\btext-to-audio\b|\bprompt-to-audio\b/i],
+  ["audio-to-audio", /\baudio-to-audio\b/i],
+  ["speech-to-text", /\bspeech-to-text\b/i],
+  ["text-to-vector", /\btext-to-vector\b/i],
+  ["image-to-vector", /\bimage-to-vector\b/i],
+  ["speech", /\btext-to-speech\b/i],
+  ["3d-generation", /\b(image-to-3d|text-to-3d|3d-to-3d)\b/i],
+];
+
+// Config/parameter names that mention a medium without carrying one
+// (num_images, video_quality, generate_audio, match_video_length, ...).
+const IMAGE_CONFIG_NAME = /(size|num_images|number_of|format|strength|quality|guidance|steps|weight|seed|count|resolution|aspect|max_|min_|encoder|archive|cfg_|stg_|modality|rescaling|match_|preserve|enable_|texture|preprocess|openpose|conditioning)/;
+const VIDEO_CONFIG_NAME = /(quality|write_mode|output_type|size|strength|cfg_|stg_|modality|rescaling|match_|preserve|reverse|num_|number|length|rate|seconds)/;
+const AUDIO_CONFIG_NAME = /(strength|preserve|normalize|setting|stg_|cfg_|modality|rescaling|match_|generate_|length|switch|preprocess)/;
+const MASK_CONFIG_NAME = /(start_seconds|end_seconds|max_|_only|expansion|away_clip)/;
+const REFERENCE_CONFIG_NAME = /(strength|start|end|temporal|downscale|text)/;
+const TEXT_INPUT_NAMES = new Set(["prompt", "text", "negative_prompt", "text_prompt", "text_input", "system_prompt"]);
+const IMAGE_INPUT_NAMES_EXACT = new Set(["image", "images", "input_image", "input_images", "reference_image", "reference_images"]);
+
+// Snapshot input names -> media-input signature. Pure derivation; anything
+// ambiguous is left unset and the classifier falls through to keywords.
+function inputSignature(names) {
+  const list = Array.isArray(names) ? names : [];
+  const image = list.some(
+    (n) =>
+      IMAGE_INPUT_NAMES_EXACT.has(n) ||
+      (n.includes("image") && !IMAGE_CONFIG_NAME.test(n)) ||
+      (n.includes("frame") && /_urls?$/.test(n)) ||
+      n === "controlnets" ||
+      n === "easycontrols",
+  );
+  const video = list.some(
+    (n) => n === "video" || n === "videos" || (n.includes("video") && !VIDEO_CONFIG_NAME.test(n)),
+  );
+  const audio = list.some(
+    (n) =>
+      (n.includes("audio") && n !== "audio" && !AUDIO_CONFIG_NAME.test(n)) ||
+      (/^voice_/.test(n) && /_urls?$/.test(n)),
+  );
+  const mask = list.some((n) => n.includes("mask") && !MASK_CONFIG_NAME.test(n));
+  const reference = list.some((n) => n.includes("reference") && !REFERENCE_CONFIG_NAME.test(n));
+  const text = list.some((n) => TEXT_INPUT_NAMES.has(n));
+  return { image, video, audio, mask, reference, text };
+}
+
+function signatureWords(sig, vector) {
+  const words = [];
+  if (sig.image) words.push("image");
+  if (sig.video) words.push("video");
+  if (sig.audio) words.push("audio");
+  if (sig.mask) words.push("mask");
+  if (sig.reference) words.push("reference");
+  if (sig.text) words.push("text");
+  if (vector) words.push("vector");
+  return words.length > 0 ? words.join("+") : "none";
+}
+
+// Fal-declared snapshot category x input signature -> task slug, or null when
+// the schema carries no task signal (workflow/unknown category, or media
+// inputs that contradict every bucket). Decisive categories (training, 3d,
+// speech/audio, text utilities) ignore inputs; image/video categories let
+// inputs arbitrate the variant.
+function schemaTaskForCategory(category, sig) {
+  switch (category) {
+    case "text-to-image":
+      return sig.image ? "image-to-image" : "text-to-image";
+    case "image-to-image":
+      return sig.mask ? "image-editing" : "image-to-image";
+    case "text-to-video":
+      if (sig.video) return "video-to-video";
+      return sig.image ? "image-to-video" : "text-to-video";
+    case "image-to-video":
+      if (sig.reference && !sig.video) return "reference-to-video";
+      if (sig.video && !sig.image) return "video-to-video";
+      return "image-to-video";
+    case "video-to-video":
+      return "video-to-video";
+    case "audio-to-video":
+      if (sig.image) return sig.reference && !sig.video ? "reference-to-video" : "image-to-video";
+      if (sig.video) return "video-to-video";
+      return null;
+    case "text-to-audio":
+      return "text-to-audio";
+    case "text-to-speech":
+      return "speech";
+    case "speech-to-text":
+    case "audio-to-text":
+      return "speech-to-text";
+    case "speech-to-speech":
+    case "audio-to-audio":
+      return "audio-to-audio";
+    case "video-to-audio":
+      return "video-to-audio";
+    case "image-to-3d":
+    case "text-to-3d":
+    case "3d-to-3d":
+      return "3d-generation";
+    case "training":
+      return "lora-training";
+    case "vision":
+    case "image-to-text":
+    case "video-to-text":
+    case "image-to-json":
+    case "text-to-json":
+    case "json":
+    case "llm":
+      return "language-model";
+    default:
+      return null;
+  }
+}
+
+// Split fal PascalCase schema names (HappyHorseImageToVideoInput) into
+// hyphen words so the keyword table can read them.
+function decamelize(name) {
+  return String(name || "")
+    .replace(/([a-z0-9])([A-Z])/g, "$1-$2")
+    .replace(/([A-Z]+)([A-Z][a-z])/g, "$1-$2")
+    .toLowerCase();
+}
+
+/**
+ * RC6: classify one endpoint from its verified schema snapshot first.
+ *
+ * Stages: (1) an exact fal URL slug wins outright; (2) fal
+ * workflow-utility ops without a usable category stay unclassified instead
+ * of inheriting generative labels from name fragments (exact still wins);
+ * (3) snapshot category x input signature maps to a slug, with vector and
+ * music-name refinements; (4) the keyword/synonym table over the URL,
+ * identifier, and fal schema names; (5) the prior task when known, else
+ * `unknown`. Evidence records the firing stage (`keyword:` /
+ * `schema:category=<c>+in=<sig>` / prior passthrough).
+ */
+export function classifyFromSnapshot({
+  url = null,
+  identifier = "",
+  category = null,
+  inputNames = [],
+  schemaNames = [],
+  priorTask = "unknown",
+  priorEvidence = null,
+} = {}) {
+  const path = (() => {
+    try {
+      const segs = falPathSegments(url || "");
+      if (segs) return `/${segs.join("/")}`;
+    } catch {
+      // fall through to the identifier-only haystack
+    }
+    return "";
+  })();
+  const idText = identifier && identifier !== "unknown" ? identifier : "";
+  const decamelized = (Array.isArray(schemaNames) ? schemaNames : []).map(decamelize).join(" ");
+  const hay = `${path} ${idText} ${decamelized}`.trim().replace(/_/g, "-");
+  let exact = null;
+  for (const [task, re] of EXACT_SLUG_RULES) {
+    if (re.test(hay)) {
+      exact = { task, task_evidence: `keyword:${re.source}` };
+      break;
+    }
+  }
+  if (/\/workflow-utilities\//.test(`${path} ${idText}`) && (category === "workflow" || category === "unknown" || !category)) {
+    if (exact) return exact;
+    return { task: "unknown", task_evidence: "no-taxonomy-signal" };
+  }
+  if (exact) return exact;
+  const sig = inputSignature(inputNames);
+  const vector = /vector/i.test(decamelized);
+  if (vector) {
+    const task = sig.image ? "image-to-vector" : "text-to-vector";
+    return { task, task_evidence: `schema:category=${category}+in=${signatureWords(sig, true)}` };
+  }
+  // Fal lumps music under text-to-audio/video-to-audio; the name disambiguates.
+  if ((category === "text-to-audio" || category === "video-to-audio") && /(\bmusic\b|rhythm)/i.test(hay)) {
+    return { task: "music-generation", task_evidence: `schema:category=${category}+in=${signatureWords(sig, false)}+music` };
+  }
+  const viaSchema = schemaTaskForCategory(category, sig);
+  if (viaSchema) {
+    return { task: viaSchema, task_evidence: `schema:category=${category}+in=${signatureWords(sig, false)}` };
+  }
+  for (const [task, re] of TASK_RULES) {
+    if (re.test(hay)) return { task, task_evidence: `keyword:${re.source}` };
+  }
+  if (priorTask && priorTask !== "unknown") return { task: priorTask, task_evidence: priorEvidence || "prior:no-evidence" };
   return { task: "unknown", task_evidence: "no-taxonomy-signal" };
 }
 
