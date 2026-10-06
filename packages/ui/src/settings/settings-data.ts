@@ -131,6 +131,15 @@ export interface AccountInfo {
   ownerReview?: boolean;
   model?: string | null;
   provider?: string | null;
+  /**
+   * RC1 — Studio identity contract state. Mirrors `StudioIdentityState`
+   * (`components/studio/auth/identity-state.ts`) structurally; this shared
+   * package must not import Studio-owned modules. Absent on responses that
+   * predate the contract — treat missing as legacy `signedIn`-only.
+   */
+  state?: "signed_out" | "identity_pending" | "identity_unavailable" | "signed_in";
+  /** Short server code for the state (mapping state); never user data. */
+  code?: string;
 }
 
 export interface SessionInfo {

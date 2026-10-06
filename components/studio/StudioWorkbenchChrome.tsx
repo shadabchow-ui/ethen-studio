@@ -21,10 +21,17 @@ import { usePathname, useRouter } from "next/navigation";
 import { SharedChatChrome } from "@ethen/ui/chat-lab/shared-chat-chrome";
 import { SearchPalette, type PaletteAction } from "@ethen/ui/chat-lab/search-palette";
 import type { SearchResult } from "@ethen/ui/chat-lab/chat-fixtures";
-import { useAsyncData, type AccountInfo } from "@ethen/ui/settings/settings-data";
 import type { StudioNavEntry, StudioPaletteEntry } from "@ethen/navigation";
 import { StudioSidebar } from "./v5/shell/StudioSidebar";
-import { StudioAuthActionProvider, requestStudioSignIn } from "./auth/studio-auth-action";
+import {
+  StudioAuthActionProvider,
+  accountMenuActionForIdentity,
+  isStudioClerkConfigured,
+  requestStudioIdentityPending,
+  requestStudioSignIn,
+  sidebarAccountForIdentity,
+} from "./auth/studio-auth-action";
+import { useStudioIdentity } from "./auth/use-studio-identity";
 
 const STUDIO_ACTIONS: readonly PaletteAction[] = [
   { id: "new-studio-project", label: "New Studio project", beta: true },
@@ -108,10 +115,12 @@ export function StudioWorkbenchChrome({
   const [drawer, setDrawer] = React.useState(false);
   const [paletteOpen, setPaletteOpen] = React.useState(false);
   const [signedOutFlip, setSignedOutFlip] = React.useState(false);
-  const account = useAsyncData<AccountInfo>("/api/settings/account");
+  // RC1 — one Studio identity (Clerk + server account); the footer and
+  // account menu branch on its status, never on a bare signedIn boolean.
+  const identity = useStudioIdentity();
   // Job 06B — profile display name mirrors Chat (never the raw auth subject).
   const [profileName, setProfileName] = React.useState<string | null>(null);
-  const accountSignedIn = account.data?.signedIn === true;
+  const accountSignedIn = identity.signedIn;
   React.useEffect(() => {
     if (!accountSignedIn) return;
     let cancelled = false;
@@ -191,20 +200,23 @@ export function StudioWorkbenchChrome({
   // Job 06B — account footer mirrors Chat's states exactly: an account
   // object is always passed (loading/signed-out/signed-in), so the lab
   // fixture never flashes; detail is the product name like Chat's.
-  const sidebarAccount = React.useMemo(() => {
-    if (!account.data) return { name: "Loading…", detail: "Checking session", initial: "…" };
-    if (!account.data.signedIn || !account.data.actorId) {
-      return { name: "Not signed in", detail: "Sign in required", initial: "?" };
-    }
-    const name = profileName ?? "Signed in";
-    return {
-      name,
-      detail: account.data.ownerReview ? "Local review" : "Ethen Studio",
-      initial: name.slice(0, 1).toUpperCase(),
-    };
-  }, [account.data, profileName]);
+  // RC1 — pending/unavailable settle to their own footer states (never a
+  // perpetual "Checking session"), and the menu never offers the no-op
+  // "Sign in" to a Clerk-signed-in user.
+  const sidebarAccount = React.useMemo(
+    () =>
+      sidebarAccountForIdentity(identity.status, {
+        profileName,
+        ownerReview: identity.account?.ownerReview === true,
+      }),
+    [identity.status, identity.account, profileName],
+  );
 
-  const signedOut = signedOutFlip || (account.data ? !account.data.signedIn : false);
+  const menuAction = accountMenuActionForIdentity(identity.status, isStudioClerkConfigured());
+  const signedOut = signedOutFlip || menuAction === "signin";
+  const handleFinishSetup = React.useCallback(() => {
+    requestStudioIdentityPending({ action: "chrome-finish-setup" });
+  }, []);
 
   return (
     <SharedChatChrome
@@ -226,6 +238,7 @@ export function StudioWorkbenchChrome({
           onUpgrade={handleUpgrade}
           onSignIn={handleSignIn}
           onSignOut={handleSignOut}
+          onFinishSetup={menuAction === "finish-setup" ? handleFinishSetup : null}
         />
       )}
       onNew={handleNewCreation}

@@ -249,7 +249,7 @@ export function GeneralSection({ ctx }: { ctx: SectionCtx }) {
 
 // ── Account & security ───────────────────────────────────────────────────────
 
-export function AccountSection({ ctx }: { ctx: SectionCtx }) {
+export function AccountSection({ ctx, onSignOut }: { ctx: SectionCtx; onSignOut?: () => void }) {
   const account = useAsyncData<AccountInfo>("/api/settings/account");
   const sessions = useAsyncData<SessionsResponse>("/api/settings/sessions");
   const [loggingOut, setLoggingOut] = React.useState(false);
@@ -262,11 +262,39 @@ export function AccountSection({ ctx }: { ctx: SectionCtx }) {
 
   const info = account.data;
   const list = sessions.data?.sessions ?? [];
+  // RC1 — the account response carries the Studio identity `state`. A
+  // Clerk-signed-in user whose Studio mapping is pending must never see
+  // the signed-out "Sign in" row (it would no-op); show the pending state
+  // with Retry (+ Sign out when the host product supplies it) instead.
+  const identityState = info?.state;
 
   return (
     <SettingsSection id="account" title="Account" meta="Sessions, devices and deletion. Shared across Chat and Designer.">
       {account.loading ? (
         <p role="status" style={{ fontSize: 13 }}>Checking session…</p>
+      ) : identityState === "identity_pending" || identityState === "identity_unavailable" ? (
+        <>
+          <SettingsRow
+            title="Session"
+            detail={
+              identityState === "identity_pending"
+                ? "Finishing your Studio account setup — you are signed in, but Studio is still setting up your account."
+                : "Studio could not verify your account just now — retry, or sign out and back in."
+            }
+          />
+          <SettingsRow
+            title="Retry setup check"
+            detail="Provisioning may have just finished"
+            action={<SettingsButton onClick={() => void account.refresh()}>Retry</SettingsButton>}
+          />
+          {onSignOut ? (
+            <SettingsRow
+              title="Sign out"
+              detail="Ends the current session"
+              action={<SettingsButton onClick={() => { void onSignOut(); }}>Sign out</SettingsButton>}
+            />
+          ) : null}
+        </>
       ) : account.error === "signed_out" || info?.signedIn === false ? (
         <>
           <SettingsRow title="Session" detail="Not signed in — actions that need an account will ask you to sign in first" />
