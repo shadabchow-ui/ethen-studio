@@ -22,12 +22,12 @@ import {
   EXPLORE_PAGE_SIZE,
   IMAGE_CATEGORIES,
   VIDEO_CATEGORIES,
+  exploreImages,
+  exploreVideos,
   populatedCategories,
   sectionItems,
   showcaseForApp,
-  showcaseImages,
   showcaseInCategory,
-  showcaseVideos,
   type ShowcaseCategory,
   type StudioShowcaseItem,
 } from "../../../../../lib/studio-v5/showcase-feed";
@@ -74,7 +74,7 @@ export function ExploreRoute({ type, category }: { type?: string; category?: str
   const projectId = identity.projectId;
   const { items } = useShowcaseFeed();
 
-  const mediaItems = view === "video" ? showcaseVideos(items) : view === "images" ? showcaseImages(items) : [];
+  const mediaItems = view === "video" ? exploreVideos(items) : view === "images" ? exploreImages(items) : [];
   const categories = view === "video" ? populatedCategories(mediaItems, VIDEO_CATEGORIES) : view === "images" ? populatedCategories(mediaItems, IMAGE_CATEGORIES) : [];
   // An unpopulated category in the URL falls back to All.
   const activeCategory = categories.some((entry) => entry.id === category) ? (category as ShowcaseCategory) : null;
@@ -191,7 +191,7 @@ function FeaturedView({ items, projectId }: { items: readonly StudioShowcaseItem
   const videoWall = sectionItems(items, "home-video");
   const imageWall = sectionItems(items, "home-image");
   const shownIds = new Set([...videoWall, ...imageWall].map((item) => item.id));
-  const more = items.filter((item) => !shownIds.has(item.id)).slice(0, 24);
+  const more = items.filter((item) => !item.placeholder && !shownIds.has(item.id)).slice(0, 24);
   return (
     <div className="space-y-12">
       <section aria-label="Video showcase">

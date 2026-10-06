@@ -49,6 +49,29 @@ export function CreationDetail({ creationId, mode, headingId }: { creationId: st
   const reducedMotion = useReducedMotion();
   const [videoFailed, setVideoFailed] = React.useState(false);
   const [promptOpen, setPromptOpen] = React.useState(false);
+  // RC12 — still-viewer controls (images + video-still fallback).
+  const viewerFrameRef = React.useRef<HTMLDivElement | null>(null);
+  const [zoom, setZoom] = React.useState(1);
+  const [fullscreen, setFullscreen] = React.useState(false);
+
+  React.useEffect(() => {
+    setZoom(1);
+  }, [creationId]);
+
+  React.useEffect(() => {
+    if (!fullscreen) return;
+    const frame = viewerFrameRef.current;
+    if (!frame?.requestFullscreen) {
+      setFullscreen(false);
+      return;
+    }
+    void frame.requestFullscreen().catch(() => setFullscreen(false));
+    const onChange = () => {
+      if (!document.fullscreenElement) setFullscreen(false);
+    };
+    document.addEventListener("fullscreenchange", onChange);
+    return () => document.removeEventListener("fullscreenchange", onChange);
+  }, [fullscreen]);
 
   if (!item) {
     return (
@@ -86,13 +109,22 @@ export function CreationDetail({ creationId, mode, headingId }: { creationId: st
   ];
   const aspect = item.aspectRatio.replace("/", " / ");
 
+  const showingVideo = item.mediaType === "video" && item.videoUrl !== null && !videoFailed;
+  const stillZoom = (delta: number) => setZoom((value) => Math.min(4, Math.max(1, Math.round((value + delta) * 100) / 100)));
+  const viewerButtonClass =
+    "inline-flex h-8 min-w-8 items-center justify-center rounded-[8px] bg-black/55 px-2 text-[12px] font-medium text-white backdrop-blur-sm transition-colors hover:bg-black/70 outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)]";
+
   const viewer = (
     <div className="relative flex h-full min-h-[240px] items-center justify-center bg-[var(--studio-bg-app)] p-3 sm:p-6">
-      <div className="relative max-h-full w-full max-w-full overflow-hidden rounded-[10px]" style={{ aspectRatio: aspect, maxHeight: mode === "dialog" ? "min(76dvh, 760px)" : "70dvh", width: "auto", height: "100%" }}>
-        {item.mediaType === "video" && item.videoUrl && !videoFailed ? (
+      <div
+        ref={viewerFrameRef}
+        className="relative max-h-full w-full max-w-full overflow-hidden rounded-[10px] bg-[var(--studio-bg-app)]"
+        style={{ aspectRatio: aspect, maxHeight: mode === "dialog" ? "min(76dvh, 760px)" : "70dvh", width: "auto", height: "100%" }}
+      >
+        {showingVideo ? (
           <video
             key={item.id}
-            src={item.videoUrl}
+            src={item.videoUrl!}
             poster={item.posterUrl}
             controls
             muted
@@ -106,9 +138,42 @@ export function CreationDetail({ creationId, mode, headingId }: { creationId: st
           />
         ) : (
           // eslint-disable-next-line @next/next/no-img-element -- static manifest media
-          <img src={item.posterUrl} alt={title} className="h-full w-full object-contain" />
+          <img src={item.posterUrl} alt={title} className="h-full w-full object-contain" style={zoom !== 1 ? { transform: `scale(${zoom})` } : undefined} />
         )}
         {videoFailed ? <span className="absolute left-3 top-3 rounded-[6px] bg-black/60 px-2 py-0.5 text-[11px] text-white">Video unavailable — showing still</span> : null}
+        {showingVideo ? null : (
+          <div role="toolbar" aria-label="Image viewer actions" className="absolute right-2 top-2 flex items-center gap-1">
+            <a href={item.posterUrl} target="_blank" rel="noreferrer" aria-label="Open original" title="Open original" className={viewerButtonClass}>
+              <StudioNavIcon name="open" size={13} />
+            </a>
+            <a href={item.posterUrl} download aria-label="Download image" title="Download image" className={viewerButtonClass}>
+              <StudioNavIcon name="download" size={13} />
+            </a>
+            <button type="button" onClick={() => stillZoom(-0.25)} disabled={zoom <= 1} aria-label="Zoom out" title="Zoom out" className={`${viewerButtonClass} disabled:cursor-not-allowed disabled:opacity-40`}>
+              −
+            </button>
+            <span aria-live="polite" aria-label={`Zoom ${Math.round(zoom * 100)} percent`} className="min-w-[40px] rounded-[8px] bg-black/55 px-1 py-1 text-center text-[11px] tabular-nums text-white backdrop-blur-sm">
+              {Math.round(zoom * 100)}%
+            </span>
+            <button type="button" onClick={() => stillZoom(0.25)} disabled={zoom >= 4} aria-label="Zoom in" title="Zoom in" className={`${viewerButtonClass} disabled:cursor-not-allowed disabled:opacity-40`}>
+              +
+            </button>
+            {zoom !== 1 ? (
+              <button type="button" onClick={() => setZoom(1)} aria-label="Reset zoom" title="Reset zoom" className={viewerButtonClass}>
+                1:1
+              </button>
+            ) : null}
+            <button
+              type="button"
+              onClick={() => (fullscreen ? void document.exitFullscreen().catch(() => setFullscreen(false)) : setFullscreen(true))}
+              aria-label={fullscreen ? "Exit fullscreen" : "Fullscreen"}
+              title={fullscreen ? "Exit fullscreen" : "Fullscreen"}
+              className={viewerButtonClass}
+            >
+              <StudioNavIcon name={fullscreen ? "exit-fullscreen" : "fullscreen"} size={13} />
+            </button>
+          </div>
+        )}
       </div>
     </div>
   );

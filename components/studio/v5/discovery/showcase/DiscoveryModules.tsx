@@ -164,7 +164,7 @@ export function FlagshipPanel({
             <div className="grid grid-cols-[repeat(3,minmax(0,1fr))] gap-1.5 p-1.5 lg:h-full">
               {wall.map((item, index) => (
                 // Phones show one row of three; the full 3×2 wall from sm.
-                <ShowcaseTile key={item.id} item={item} projectId={null} className={`aspect-[4/5] sm:aspect-[16/10] lg:aspect-auto ${index >= 3 ? "hidden sm:block" : ""}`} attribution={showcaseAttribution(item)} actions={false} />
+                <ShowcaseTile key={item.id} item={item} projectId={null} className={`aspect-[4/5] sm:aspect-[16/10] lg:aspect-auto ${index >= 3 ? "hidden sm:block" : ""}`} attribution={showcaseAttribution(item)} />
               ))}
             </div>
           ) : (
@@ -318,7 +318,7 @@ export function ModelSpotlight({
             return (
               <li key={family.familyId} className="group relative overflow-hidden rounded-[10px] bg-[var(--bg-surface)]">
                 {preview ? (
-                  <ShowcaseTile item={preview} projectId={projectId} className="aspect-[16/9]" actions={false} decorative />
+                  <ShowcaseTile item={preview} projectId={projectId} className="aspect-[16/9]" decorative />
                 ) : (
                   <HomeArt motif={motif} className="aspect-[16/9]" />
                 )}
@@ -371,7 +371,7 @@ export function AppDirectoryCard({
       className={`group flex h-full min-h-[44px] flex-col overflow-hidden rounded-[12px] border border-[var(--border-subtle)] bg-[var(--bg-surface)] transition-colors hover:border-[var(--border-default)] hover:bg-[var(--bg-elevated)] ${focus}`}
     >
       {output ? (
-        <ShowcaseTile item={output} projectId={null} className="aspect-[16/9] rounded-none sm:aspect-[4/3]" actions={false} decorative />
+        <ShowcaseTile item={output} projectId={null} className="aspect-[16/9] rounded-none sm:aspect-[4/3]" decorative />
       ) : (
         <HomeArt motif={art} steps={steps} className="aspect-[16/9] transition-[filter] duration-150 group-hover:brightness-125 sm:aspect-[4/3]" />
       )}
@@ -439,7 +439,7 @@ export function SpecializedBand({
             };
             return (
             <div key={item.id} className={styles.fanCard} style={style}>
-              <ShowcaseTile item={item} projectId={projectId} className="h-full w-full" attribution={showcaseAttribution(item)} actions={false} />
+              <ShowcaseTile item={item} projectId={projectId} className="h-full w-full" attribution={showcaseAttribution(item)} />
             </div>
             );
           })}

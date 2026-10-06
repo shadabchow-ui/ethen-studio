@@ -271,7 +271,7 @@ export function StudioHome() {
                   <StudioNavIcon name={tool.icon} size={14} />
                 </span>
                 <span className="min-w-0">
-                  <span className="block truncate text-[12.5px] font-medium text-[var(--text-primary)]">{tool.title}</span>
+                  <span className="block text-[12.5px] font-medium leading-snug text-[var(--text-primary)]">{tool.title}</span>
                   <span className="block truncate text-[11px] text-[var(--text-tertiary)]">{tool.purpose}</span>
                 </span>
               </Link>

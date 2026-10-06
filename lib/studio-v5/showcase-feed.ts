@@ -135,6 +135,26 @@ export function showcaseImages(items: readonly StudioShowcaseItem[]): StudioShow
   return items.filter((item) => item.mediaType === "image");
 }
 
+/**
+ * RC12 — Explore walls show browsable showcase only. Placeholders hold
+ * home-section geometry (sectionItems) but must never appear as filter
+ * results ("Sample video" tiles in public filters); feature-rail-only
+ * key art is a home placement, not browsable media (video-19 keeps its
+ * id and workflow for key-art lookup and remix, but leaves Images).
+ */
+function isExploreBrowsable(item: StudioShowcaseItem): boolean {
+  if (item.placeholder) return false;
+  return !(item.sections.length === 1 && item.sections[0] === "feature-rail");
+}
+
+export function exploreVideos(items: readonly StudioShowcaseItem[]): StudioShowcaseItem[] {
+  return items.filter((item) => item.mediaType === "video" && isExploreBrowsable(item));
+}
+
+export function exploreImages(items: readonly StudioShowcaseItem[]): StudioShowcaseItem[] {
+  return items.filter((item) => item.mediaType === "image" && isExploreBrowsable(item));
+}
+
 export function showcaseForApp(items: readonly StudioShowcaseItem[], appId: string): StudioShowcaseItem[] {
   return items.filter((item) => item.appId === appId);
 }

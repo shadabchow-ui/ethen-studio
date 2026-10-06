@@ -7,19 +7,17 @@
  * of mouse hover, or the touch play button. One preview plays page-wide
  * (preview-manager), muted and looped; it stops on leave, when the tile
  * falls under 25% visible, and never starts under reduced motion or data
- * saver. The whole tile is a link to creation detail; Remix / Open are
- * separate controls revealed on hover AND keyboard focus (never hover-only).
+ * saver. The whole tile is one link to creation detail (RC12: Remix /
+ * Open live there, not on the tile).
  */
 
 import * as React from "react";
 import Link from "next/link";
-import { StudioNavIcon } from "../../shell/studio-nav-icons";
 import {
   aspectLabel,
   creationHref,
   formatDuration,
   itemTitle,
-  remixHref,
   type StudioShowcaseItem,
 } from "../../../../../lib/studio-v5/showcase-feed";
 import { claimPreview, previewAllowed, releasePreview } from "./preview-manager";
@@ -35,9 +33,7 @@ export interface ShowcaseTileProps {
   /** Attribution line 1 (app title or model label); omitted when null. */
   attribution?: string | null;
   eager?: boolean;
-  /** Hide the Remix/Open cluster (e.g. tiles inside a single-link card). */
-  actions?: boolean;
-  /** Tile is a decorative preview inside another link: no own link. */
+  /** Tile is a decorative preview inside another link: no own link, no badges. */
   decorative?: boolean;
   onHidden?: (id: string) => void;
 }
@@ -48,7 +44,6 @@ export function ShowcaseTile({
   className = "",
   attribution = null,
   eager = false,
-  actions = true,
   decorative = false,
   onHidden,
 }: ShowcaseTileProps) {
@@ -109,7 +104,6 @@ export function ShowcaseTile({
   if (posterFailed) return null;
 
   const duration = formatDuration(item.durationSeconds);
-  const remix = remixHref(item, projectId);
   const label = `${itemTitle(item)} — ${item.mediaType === "video" ? "video" : "image"}, ${aspectLabel(item.aspectRatio)}${duration ? `, ${duration}` : ""}`;
   const lineOne = attribution;
   const lineTwo = `${aspectLabel(item.aspectRatio)}${item.mediaType === "video" ? (duration ? ` · ${duration}` : " · Video") : " · Image"}`;
@@ -196,9 +190,11 @@ export function ShowcaseTile({
         />
       )}
 
-      {/* Persistent chrome: duration (video) and provenance chips. */}
-      {duration && !playing ? (
-        <span className="pointer-events-none absolute bottom-2 right-2 z-[4] rounded-[6px] bg-black/55 px-1.5 py-0.5 text-[10.5px] font-medium tabular-nums text-white backdrop-blur-sm transition-opacity duration-150 group-hover/tile:opacity-0 group-focus-within/tile:opacity-0">
+      {/* Persistent chrome: duration (video) and provenance chips. The badge
+        is aria-hidden (the duration already ships in the tile's accessible
+        name) and omitted on decorative tiles (no stray 0:08 on app cards). */}
+      {duration && !playing && !decorative ? (
+        <span aria-hidden="true" className="pointer-events-none absolute bottom-2 right-2 z-[4] rounded-[6px] bg-black/55 px-1.5 py-0.5 text-[10.5px] font-medium tabular-nums text-white backdrop-blur-sm transition-opacity duration-150 group-hover/tile:opacity-0 group-focus-within/tile:opacity-0">
           {videoFailed ? "Still preview" : duration}
         </span>
       ) : null}
@@ -219,30 +215,9 @@ export function ShowcaseTile({
         </button>
       ) : null}
 
-      {actions && !decorative ? (
-        <div className="absolute bottom-2.5 right-2.5 z-[5] flex items-center gap-1.5 opacity-0 transition-opacity duration-150 group-hover/tile:opacity-100 group-focus-within/tile:opacity-100 pointer-coarse:hidden">
-          {remix ? (
-            <Link
-              href={remix}
-              aria-label={`Remix ${itemTitle(item)}`}
-              className="inline-flex h-[30px] items-center gap-1 rounded-[8px] bg-[var(--accent)] px-2.5 text-[12px] font-semibold text-[var(--accent-fg)] outline-none transition-opacity hover:opacity-90 active:opacity-80 focus-visible:ring-2 focus-visible:ring-[var(--accent)] focus-visible:ring-offset-2 focus-visible:ring-offset-black"
-            >
-              <StudioNavIcon name="remix" size={13} />
-              Remix
-            </Link>
-          ) : null}
-          <Link
-            href={creationHref(item)}
-            scroll={false}
-            onClick={(event) => rememberInvoker(event.currentTarget)}
-            aria-label={`Open details for ${label}`}
-            className="inline-flex h-[30px] w-[30px] items-center justify-center rounded-[8px] bg-black/45 text-white outline-none backdrop-blur-sm transition-colors hover:bg-black/60 focus-visible:ring-2 focus-visible:ring-[var(--accent)]"
-          >
-            <StudioNavIcon name="open" size={13} />
-          </Link>
-        </div>
-      ) : null}
-
+      {/* RC12 — one primary tab stop per tile (the detail link above).
+        Remix / Open live in the creation detail view instead. The touch
+        preview button stays: coarse pointers have no hover intent. */}
       {playing ? (
         <span aria-hidden="true" className="pointer-events-none absolute inset-x-0 bottom-0 z-[6] h-[2px] origin-left bg-white/80" style={{ transform: `scaleX(${progress})` }} />
       ) : null}

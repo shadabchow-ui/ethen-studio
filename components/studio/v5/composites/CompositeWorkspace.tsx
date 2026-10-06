@@ -110,7 +110,7 @@ export function CompositeWorkspace(props: CompositeWorkspaceProps) {
           <StudioPageHeader eyebrow={kind === "marketing" ? "Marketing" : "Influencer"} title={kind === "marketing" ? "Marketing Studio" : "AI Influencer"} description={kind === "marketing" ? "Brief-led product campaigns across formats." : "Character-led story episodes across formats."} routeMarker={kind === "marketing" ? "studio-marketing" : "studio-influencer"} />
           <div className="mt-6" data-testid="composites-setup">
             <StudioSetupState
-              what="Campaigns"
+              what={kind === "marketing" ? "Campaigns" : "Series"}
               dependency={setupDependency}
               primaryLabel="Go to Assets"
               primaryHref={typeof window !== "undefined" ? `/studio/work/assets?projectId=${encodeURIComponent(new URLSearchParams(window.location.search).get("projectId") ?? "")}` : "/studio/work/assets"}
@@ -123,11 +123,11 @@ export function CompositeWorkspace(props: CompositeWorkspaceProps) {
       <main data-testid="composites-workspace" aria-label={kind === "marketing" ? "Marketing Studio" : "AI Influencer"}>
         <StudioPageHeader eyebrow={kind === "marketing" ? "Marketing" : "Influencer"} title={kind === "marketing" ? "Marketing Studio" : "AI Influencer"} description={kind === "marketing" ? "Brief-led product campaigns across formats." : "Character-led story episodes across formats."} routeMarker={kind === "marketing" ? "studio-marketing" : "studio-influencer"} />
         {setup ? (
-          <section aria-label="Campaign preview (locked)" className="mt-4 space-y-2 rounded-[16px] border border-[var(--border-subtle)] p-4 opacity-80">
-            <p className="text-[12.5px] font-medium text-[var(--text-primary)]">Campaign brief preview</p>
+          <section aria-label={kind === "marketing" ? "Campaign preview (locked)" : "Series preview (locked)"} className="mt-4 space-y-2 rounded-[16px] border border-[var(--border-subtle)] p-4 opacity-80">
+            <p className="text-[12.5px] font-medium text-[var(--text-primary)]">{kind === "marketing" ? "Campaign brief preview" : "Series brief preview"}</p>
             <div className="space-y-1 text-[11px] text-[var(--text-tertiary)]">
-              Audience
-              <input disabled aria-label="Audience preview" placeholder="Who is this for?" className="w-full rounded-[12px] bg-[var(--bg-elevated)] px-3 py-2.5 text-[12px] disabled:cursor-not-allowed disabled:opacity-60" />
+              {kind === "marketing" ? "Audience" : "Lead character"}
+              <input disabled aria-label={kind === "marketing" ? "Audience preview" : "Lead character preview"} placeholder={kind === "marketing" ? "Who is this for?" : "Which character leads this series?"} className="w-full rounded-[12px] bg-[var(--bg-elevated)] px-3 py-2.5 text-[12px] disabled:cursor-not-allowed disabled:opacity-60" />
             </div>
           </section>
         ) : null}
