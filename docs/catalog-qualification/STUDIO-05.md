@@ -68,7 +68,7 @@ The cause is intentional policy plus missing data, **not** a clear code defect. 
 `DERIVED` through would lower the price-verification bar, which is an owner decision. The relevant code was not
 touched; none of the FORBIDDEN PATHS was needed.
 
-Added `lib/media/__tests__/studio-catalog-qualification.test.ts` (17 tests, run by `pnpm test` through the
+Added `lib/media/__tests__/studio-catalog-qualification.test.ts` (20 tests, run by `pnpm test` through the
 `lib/media/__tests__` glob in `scripts/run-studio-tests.mjs`). It pins:
 
 - `resolvePriceState` (null/UNKNOWN, hash match, STALE demotion, missing hash cannot demote);
@@ -78,7 +78,9 @@ Added `lib/media/__tests__/studio-catalog-qualification.test.ts` (17 tests, run 
   attestation;
 - the real registry: 1500 endpoints, 391 DERIVED all blocked, 0 VERIFIED/QUALIFIED/executable. This exact-count test
   is deliberately brittle: when the registry is regenerated, update the numbers and this document;
-- the seed SPEC (below), as a projection model only.
+- the seed SPEC (below), as a projection model only, plus structural checks on the SQL: the nested `verify_prices` gate
+  with two `\endif`, no UPDATE assigning `evidence_hash`, each UPDATE pinned to its section-B hash, and a VERIFIED row
+  that keeps the source hash projecting as VERIFIED while a different hash projects as STALE.
 
 ## (c) Seed SPEC for owner review
 
@@ -103,7 +105,18 @@ Inserts only (`WHERE NOT EXISTS`): endpoint rows, `DERIVED` price rows, and `exe
 is copied from the endpoint row so it always self-matches. It runs in one transaction that ends in `ROLLBACK`.
 It has `ON_ERROR_STOP`, and attestations need `-v attested_by` and a per-family `-v canary_evidence_<family>`
 variable; an undefined variable is a syntax error, so no canary evidence means no attestation. An optional,
-off-by-default section D promotes prices to `VERIFIED` only with `-v verify_prices=1` plus per-family evidence.
+off-by-default section D promotes the six prices to `VERIFIED`. It runs only when `verify_prices` is defined **and**
+true (nested `\if :{?verify_prices}` / `\if :verify_prices`), so `-v verify_prices=0` skips it. It also requires a
+per-family `-v price_evidence_<family>`, referenced in plain `SELECT` statements so an undefined variable aborts and the
+reference lands in the run log. Section D changes **only** `price_status`:
+
+- `VERIFIED` rows keep `evidence_hash = pricing.raw_hash`. `resolvePriceState` compares that column with the current
+  source hash (`price-states.ts:32`); overwriting it with a reconciliation reference would demote the row to `STALE`.
+- Each UPDATE adds `and evidence_hash = '<section-B raw_hash>'`, so only the row derived from the current source is
+  promoted.
+- Reconciliation evidence (invoice or dashboard reference) must be stored separately. That is an owner decision; no
+  column for it is known from this repo.
+
 A test checks these safety properties.
 
 ### Owner must resolve before running (limitations of this SPEC)
@@ -126,7 +139,7 @@ A test checks these safety properties.
    the project-scoped Supabase lane (`route.ts:82-101`). Making the public lane reflect attestations is a design change
    left out of this job.
 5. **Qualified is not price-verified.** Seeded endpoints become `QUALIFIED` + `executable` but keep
-   `BLOCKED_PRICE_UNKNOWN` until a `VERIFIED` price row exists (section D, after invoice reconciliation).
+   `BLOCKED_PRICE_UNKNOWN` until a `VERIFIED` price row exists (section D, after invoice reconciliation, with `-v verify_prices=1`).
 6. **Credentials are not modelled.** `projection.ts:105` hard-codes `credentialMissing:false`; a qualified endpoint can
    still fail at submit if no fal key is configured.
 7. **Staleness is partly blind in the Supabase lane.** `catalog/route.ts:95` calls `specToCatalogSource` without

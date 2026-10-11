@@ -15,8 +15,12 @@
 --     variable leaves a literal :'name' in the statement => syntax error =>
 --     abort. No canary evidence, no attestation.
 --   * Nothing here writes price_status = 'VERIFIED' unless you also pass
---     -v verify_prices=1 AND per-endpoint -v price_evidence_<family>=<hash>.
---   * Inserts only (WHERE NOT EXISTS); no UPDATE/DELETE of existing rows.
+--     -v verify_prices=<true value: 1/on/true/yes> AND per-endpoint
+--     -v price_evidence_<family>=<reconciliation reference>. verify_prices=0
+--     (or off/false/no) skips section D. Promotion changes ONLY price_status; it
+--     never rewrites evidence_hash, which must stay equal to pricing.raw_hash.
+--   * Inserts only (WHERE NOT EXISTS), except the opt-in section D, whose only
+--     statements are the six price_status UPDATEs; no DELETE anywhere.
 --
 -- UNVERIFIED ASSUMPTIONS (the migration DDL lives in the monolith repo, not here):
 --   Column names below are taken from the code that reads these tables
@@ -253,22 +257,46 @@ where e.endpoint_id = 'fal-ai/triposr' and e.enabled
     and a.adapter_version = e.adapter_version and a.schema_version = e.schema_version
     and a.policy_profile = e.policy_profile and a.price_version = e.price_version and a.expires_at > now());
 
--- D. OPTIONAL price promotion DERIVED -> VERIFIED. Runs only with -v verify_prices=1
---    and requires per-family reconciliation evidence. Do NOT enable until each
---    price has been reconciled against a real provider invoice/dashboard.
+-- D. OPTIONAL price promotion DERIVED -> VERIFIED. Runs only when verify_prices is
+--    defined AND true (-v verify_prices=1; verify_prices=0 skips the block). The
+--    nested \if is deliberate: \if :{?verify_prices} alone would also run for 0.
+--    Requires per-family reconciliation evidence. Do NOT enable until each price has
+--    been reconciled against a real provider invoice/dashboard.
+--    Only price_status changes. evidence_hash stays = pricing.raw_hash (the source
+--    hash resolvePriceState compares); the WHERE clause pins each UPDATE to the
+--    row derived from the current source (section B hash). Store the
+--    reconciliation evidence elsewhere (owner decision; no column is known).
+--    The select statements below make an undefined price_evidence_<family> abort
+--    (psql leaves it literal in a SQL statement) and record the reference in the
+--    run log; they do not write anything.
 \if :{?verify_prices}
-update public.studio_v5_price_configs set price_status = 'VERIFIED', evidence_hash = :'price_evidence_image'
-  where endpoint_id = 'fal-ai/bytedance/seedream/v4/text-to-image' and price_version = '1.0.0' and price_status = 'DERIVED' and retired_at is null;
-update public.studio_v5_price_configs set price_status = 'VERIFIED', evidence_hash = :'price_evidence_video'
-  where endpoint_id = 'fal-ai/minimax/video-01' and price_version = '1.0.0' and price_status = 'DERIVED' and retired_at is null;
-update public.studio_v5_price_configs set price_status = 'VERIFIED', evidence_hash = :'price_evidence_audio'
-  where endpoint_id = 'fal-ai/mmaudio-v2/text-to-audio' and price_version = '1.0.0' and price_status = 'DERIVED' and retired_at is null;
-update public.studio_v5_price_configs set price_status = 'VERIFIED', evidence_hash = :'price_evidence_speech'
-  where endpoint_id = 'fal-ai/kling-video/v1/tts' and price_version = '1.0.0' and price_status = 'DERIVED' and retired_at is null;
-update public.studio_v5_price_configs set price_status = 'VERIFIED', evidence_hash = :'price_evidence_music'
-  where endpoint_id = 'fal-ai/minimax-music/v1.5' and price_version = '1.0.0' and price_status = 'DERIVED' and retired_at is null;
-update public.studio_v5_price_configs set price_status = 'VERIFIED', evidence_hash = :'price_evidence_mesh'
-  where endpoint_id = 'fal-ai/triposr' and price_version = '1.0.0' and price_status = 'DERIVED' and retired_at is null;
+\if :verify_prices
+select :'price_evidence_image' as price_evidence_image;
+select :'price_evidence_video' as price_evidence_video;
+select :'price_evidence_audio' as price_evidence_audio;
+select :'price_evidence_speech' as price_evidence_speech;
+select :'price_evidence_music' as price_evidence_music;
+select :'price_evidence_mesh' as price_evidence_mesh;
+
+update public.studio_v5_price_configs set price_status = 'VERIFIED'
+  where endpoint_id = 'fal-ai/bytedance/seedream/v4/text-to-image' and price_version = '1.0.0' and price_status = 'DERIVED' and retired_at is null
+    and evidence_hash = '407660ce6e3754333ddbd5d66ff6ce1049d4a078d7800a9282390b5661180b48';
+update public.studio_v5_price_configs set price_status = 'VERIFIED'
+  where endpoint_id = 'fal-ai/minimax/video-01' and price_version = '1.0.0' and price_status = 'DERIVED' and retired_at is null
+    and evidence_hash = '2cb4f80ee481dc99118e4d5247ad0396854335cbcec2735d67f664cf71df8eb2';
+update public.studio_v5_price_configs set price_status = 'VERIFIED'
+  where endpoint_id = 'fal-ai/mmaudio-v2/text-to-audio' and price_version = '1.0.0' and price_status = 'DERIVED' and retired_at is null
+    and evidence_hash = '79040d3361522b65a89022f5dd647263adb16cf9ececd60e47ed4e67ac8d8262';
+update public.studio_v5_price_configs set price_status = 'VERIFIED'
+  where endpoint_id = 'fal-ai/kling-video/v1/tts' and price_version = '1.0.0' and price_status = 'DERIVED' and retired_at is null
+    and evidence_hash = 'af2a1557c883f60b90cfb8c461058549558e6cc1057de80533a82abdaa4779d3';
+update public.studio_v5_price_configs set price_status = 'VERIFIED'
+  where endpoint_id = 'fal-ai/minimax-music/v1.5' and price_version = '1.0.0' and price_status = 'DERIVED' and retired_at is null
+    and evidence_hash = '6f74e2b76916d19459d7870cb852dc8c8ea38e06ceb6f0d1fe2163c2d0f49946';
+update public.studio_v5_price_configs set price_status = 'VERIFIED'
+  where endpoint_id = 'fal-ai/triposr' and price_version = '1.0.0' and price_status = 'DERIVED' and retired_at is null
+    and evidence_hash = '5c33f28a552f4d97f45d0cff92b989b9c226ac59c05c36883e1e21381da944ce';
+\endif
 \endif
 
 -- E. Dry-run read-back (what the project-scoped catalog route will see).

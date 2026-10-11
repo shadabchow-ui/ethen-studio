@@ -374,15 +374,107 @@ test("seed SPEC: SQL is fail-closed (single transaction, rollback default, no un
   assert.match(statements, /^rollback;$/m);
   assert.doesNotMatch(statements, /^commit;$/im);
   assert.doesNotMatch(statements, /\bdelete\s+from\b|\btruncate\b|\bdrop\b/i);
-  // The only UPDATE is the opt-in VERIFIED promotion, inside \if :{?verify_prices}.
-  const ifStart = statements.indexOf("\\if :{?verify_prices}");
-  const ifEnd = statements.indexOf("\\endif");
-  assert.ok(ifStart >= 0 && ifEnd > ifStart);
+  // The only UPDATEs are the opt-in VERIFIED promotion, inside the nested verify_prices gate.
+  const gate = sectionD(statements);
   for (const m of statements.matchAll(/\bupdate\s+public\./gi)) {
-    assert.ok(m.index! > ifStart && m.index! < ifEnd, "UPDATE outside the verify_prices gate");
+    assert.ok(m.index! > gate.start && m.index! < gate.end, "UPDATE outside the verify_prices gate");
   }
-  assert.doesNotMatch(statements.slice(0, ifStart) + statements.slice(ifEnd), /'VERIFIED'/);
+  assert.doesNotMatch(statements.slice(0, gate.start) + statements.slice(gate.end), /'VERIFIED'/);
   // Attestations require owner-supplied evidence variables.
   assert.match(statements, /:'attested_by'/);
   assert.match(statements, /:'canary_evidence_image'/);
+});
+
+// --- Section D (VERIFIED promotion) corrections ------------------------------
+
+/** SQL with `--` comment lines removed (psql meta-commands and statements only). */
+function sqlStatements(): string {
+  return readFileSync(join(ROOT, "docs/catalog-qualification/STUDIO-05-seed.sql"), "utf8")
+    .split("\n")
+    .filter((line) => !line.trimStart().startsWith("--"))
+    .join("\n");
+}
+
+/** Offsets of the outer `\if :{?verify_prices}` and the end of its closing `\endif`. */
+function sectionD(statements: string): { start: number; end: number } {
+  const start = statements.indexOf("\\if :{?verify_prices}");
+  const lastEndif = statements.lastIndexOf("\\endif");
+  assert.ok(start >= 0 && lastEndif > start, "section D gate missing");
+  return { start, end: lastEndif + "\\endif".length };
+}
+
+test("seed SPEC: section D runs only when verify_prices is defined AND true (nested \\if, two \\endif)", () => {
+  const statements = sqlStatements();
+  const lines = statements.split("\n").map((line) => line.trim());
+  const outer = lines.indexOf("\\if :{?verify_prices}");
+  assert.ok(outer >= 0, "outer defined-guard missing");
+  assert.equal(lines[outer + 1], "\\if :verify_prices", "true-guard must immediately follow the defined-guard");
+  assert.equal(lines.filter((line) => line.startsWith("\\if")).length, 2, "exactly two \\if");
+  assert.equal(lines.filter((line) => line === "\\endif").length, 2, "exactly two \\endif closing them");
+  // Both \endif sit after every UPDATE: the last two non-empty lines of the gate.
+  const gate = sectionD(statements);
+  const inner = statements.indexOf("\\if :verify_prices");
+  assert.ok(inner > gate.start);
+  const updates = [...statements.matchAll(/\bupdate\s+public\./gi)];
+  assert.equal(updates.length, 6);
+  const firstEndif = statements.indexOf("\\endif");
+  for (const m of updates) {
+    assert.ok(m.index! > inner, "UPDATE before the inner guard");
+    assert.ok(m.index! < firstEndif, "UPDATE after the inner \\endif");
+  }
+  assert.ok(statements.indexOf("\\endif", firstEndif + 1) === gate.end - "\\endif".length, "second \\endif closes the outer guard");
+  // Reconciliation references are plain SELECTs (not \echo) so an undefined variable aborts.
+  for (const family of ["image", "video", "audio", "speech", "music", "mesh"]) {
+    const select = `select :'price_evidence_${family}' as price_evidence_${family};`;
+    const at = statements.indexOf(select);
+    assert.ok(at > inner && at < firstEndif, `${select} missing inside the gate`);
+  }
+  assert.doesNotMatch(statements, /\\echo/);
+});
+
+test("seed SPEC: VERIFIED promotion never rewrites evidence_hash and pins each row to its section-B hash", () => {
+  const statements = sqlStatements();
+  // Section B: endpoint -> evidence_hash of the DERIVED row it inserts.
+  const derived = new Map<string, string>();
+  for (const m of statements.matchAll(/select '[^']*', '([^']+)', '1\.0\.0', '[^']+', \d+, \d+, \d+,\s*now\(\), null, 'DERIVED', '([0-9a-f]{64})'/g)) {
+    derived.set(m[1]!, m[2]!);
+  }
+  assert.equal(derived.size, seedEndpoints().length);
+
+  const updates = [...statements.matchAll(/update\s+public\.studio_v5_price_configs\s+set\s+([^;]*?)\s+where\s+([^;]*);/gi)];
+  assert.equal(updates.length, derived.size);
+  const promoted = new Set<string>();
+  for (const [, setClause, whereClause] of updates) {
+    assert.doesNotMatch(setClause!, /evidence_hash/i, "UPDATE must not assign evidence_hash");
+    assert.match(setClause!, /^price_status\s*=\s*'VERIFIED'$/);
+    const endpoint = /endpoint_id\s*=\s*'([^']+)'/.exec(whereClause!)?.[1];
+    assert.ok(endpoint, "UPDATE has no endpoint_id predicate");
+    const pinned = /evidence_hash\s*=\s*'([0-9a-f]{64})'/.exec(whereClause!)?.[1];
+    assert.ok(pinned, `${endpoint}: WHERE lacks evidence_hash = '<64-hex>'`);
+    assert.equal(pinned, derived.get(endpoint!), `${endpoint}: pinned hash differs from section B`);
+    promoted.add(endpoint!);
+  }
+  assert.deepEqual([...promoted].sort(), [...derived.keys()].sort());
+});
+
+test("projection: VERIFIED row keeps the source hash => VERIFIED; a different hash => STALE", () => {
+  const r = row({ pricingSourceHash: SOURCE_HASH });
+  // What section D leaves behind: price_status flipped, evidence_hash untouched.
+  const kept = project(
+    [r],
+    new Map(),
+    new Map([[r.endpointId, { status: "VERIFIED", evidenceHash: SOURCE_HASH }]]),
+  ).endpoints[0]!;
+  assert.equal(kept.priceState, "VERIFIED");
+  assert.equal(kept.blockedCodes.length, 0);
+  assert.ok(!kept.blockedCodes.includes(BLOCKED_PRICE_UNKNOWN));
+
+  // Overwriting evidence_hash with a reconciliation reference would demote it.
+  const overwritten = project(
+    [r],
+    new Map(),
+    new Map([[r.endpointId, { status: "VERIFIED", evidenceHash: "owner-reconciliation-ref" }]]),
+  ).endpoints[0]!;
+  assert.equal(overwritten.priceState, "STALE");
+  assert.deepEqual(overwritten.blockedCodes, [BLOCKED_PRICE_UNKNOWN]);
 });
