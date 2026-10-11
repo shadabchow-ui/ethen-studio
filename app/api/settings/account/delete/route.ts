@@ -1,17 +1,33 @@
 import "server-only";
 
-import { notAvailableInStudioResponse } from "../../_lib/clerk-sessions";
+import { NextResponse } from "next/server";
+import { productionDeletionDeps } from "./_lib/deps";
+import { handleDelete, handleEligibility } from "./_lib/handler";
 
 /**
- * RC2 — account deletion is not a Studio capability in this deployment.
- * Honest 501 for both the eligibility check (GET) and the confirmed
- * deletion (POST), never an HTML 404. The UI checks eligibility with GET
- * only and never POSTs before explicit confirmation.
+ * STUDIO-DEL-01 — in-app account deletion.
+ *
+ * GET  — eligibility preview (read-only): subscription requirement, what is
+ *        deleted, what is retained, and outstanding credits.
+ * POST — confirmed deletion (`{ confirm: "DELETE" }`). Requires the caller's
+ *        own Clerk session; idempotent; resumes a partially completed run.
+ *        Large blobs are deleted asynchronously: 202 until none are pending.
+ *
+ * All behaviour lives in `_lib/handler.ts` behind a storage port; this file
+ * only adapts it to HTTP.
  */
 export async function GET() {
-  return notAvailableInStudioResponse("Delete account");
+  const result = await handleEligibility(productionDeletionDeps());
+  return NextResponse.json(result.body, { status: result.status });
 }
 
-export async function POST() {
-  return notAvailableInStudioResponse("Delete account");
+export async function POST(request: Request) {
+  let body: unknown = {};
+  try {
+    body = await request.json();
+  } catch {
+    body = {};
+  }
+  const result = await handleDelete(productionDeletionDeps(), body);
+  return NextResponse.json(result.body, { status: result.status });
 }

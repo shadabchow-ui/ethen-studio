@@ -116,7 +116,6 @@ test("RC2 unsupported capabilities answer honest 501 JSON", () => {
     "app/api/settings/connectors/[id]/route.ts",
     "app/api/settings/billing/portal/route.ts",
     "app/api/settings/privacy/export/route.ts",
-    "app/api/settings/account/delete/route.ts",
   ]) {
     assert.ok(source(route).includes("notAvailableInStudioResponse"), `${route} answers the honest 501`);
   }
